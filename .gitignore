@@ -42,3 +42,34 @@ Thumbs.db
 # Output
 output/charts/*.png
 output/charts/*.jpg
+
+# 환경변수 (절대 커밋 금지)
+.env
+*.env
+
+# 환경변수
+.env
+*.env
+
+# 임시 테스트 파일
+Untitled-1.py
+qwen test.py
+SOLAR TEST.py
+from pathlib import Path.py
+1 Action*.txt
+
+# 개인 데이터/출력
+Claude outputs/
+output/
+logs/
+.run/
+
+# 압축파일
+*.zip
+
+# 대용량/원본 데이터 (커밋 제외)
+data/customs_korea/
+data/issues/
+data/semiconductor_trade/
+data/uncomtrade/
+scripts/data/

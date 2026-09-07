@@ -1,0 +1,252 @@
+"""
+정부 발표 수집 모듈 (초안 v1)
+==============================
+
+목적: Wikipedia Pageviews(대중 관심도) + FRED/IMF(경제 지표)에 이어서,
+"각국 정부가 이 이슈에 대해 공식적으로 뭐라고 말했는가"라는 세 번째 신호를
+추가합니다. 나중에 LLM(SOLAR 등)에 이 발표문들을 같이 넣어주면
+"신호 vs 실제 발표"를 비교해서 정부 의도를 역추적하는 근거 자료가 됩니다.
+
+검증된 RSS 피드 (2026-09-05, 브라우저로 직접 접속해서 실데이터 확인함):
+  - 한국 외교부 보도자료: http://www.mofa.go.kr/www/brd/rss.do?brdId=235
+      * 주의: Content-Type은 text/plain이지만 실제 인코딩은 EUC-KR입니다.
+        (document.characterSet으로 직접 확인) UTF-8로 그냥 디코딩하면
+        깨지므로 반드시 encoding="euc-kr"로 디코딩해야 합니다.
+  - 미국 국무부(State Dept): www.state.gov/rss-feed/.../feed/
+      * 표준 WordPress RSS, UTF-8, 지역별(동아시아·유럽·중동·아프리카 등)
+        피드가 따로 있어서 이슈 매칭 정확도를 높일 수 있습니다.
+
+아직 "초안"인 이유 (다음에 더 다듬을 것):
+  1. 이슈 매칭이 단순 키워드 포함 여부라 오탐/누락이 있을 수 있음
+     (issue_data_collector.py의 ISSUE_KEYWORDS와 통합해서 관리하는 게 이상적)
+  2. 한국 외교부 외에 다른 나라 정부 발표(중국 외교부, 일본 외무성 등)는
+     아직 없음 - 대부분 RSS가 아니라 웹스크래핑이 필요해서 별도 작업 필요
+  3. issue_data_collector.py의 main() 파이프라인에는 아직 연결 안 함
+     (독립 실행 가능한 상태로만 우선 만듦 - 검증되면 5번째 스텝으로 추가)
+
+사용법:
+    python scripts/gov_announcements_collector.py
+"""
+
+import requests
+import xml.etree.ElementTree as ET
+from datetime import datetime
+import json
+import os
+import time
+
+DATA_DIR = "data/gov_announcements"
+os.makedirs(DATA_DIR, exist_ok=True)
+
+# NOTE (수정 사항 v1.1): 첫 실행에서 State Dept 피드 8개가 전부 403으로
+# 막혔습니다. 브라우저로 접속했을 땐 멀쩡했던 걸 보면, state.gov의 방화벽이
+# 우리가 붙인 리서치용 User-Agent를 "봇"으로 감지해서 차단한 것으로
+# 보입니다 (외교부는 이 UA로도 문제없이 통과됨). 일반 브라우저처럼 보이는
+# User-Agent와 Accept 헤더로 바꿔서 우회합니다.
+REQUEST_HEADERS = {
+    "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                    "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"),
+    "Accept": "application/rss+xml, application/xml;q=0.9, text/xml;q=0.8, */*;q=0.7",
+    "Accept-Language": "en-US,en;q=0.9,ko;q=0.8",
+}
+
+# ============================================================================
+# 검증된 정부 RSS 피드 목록
+# ============================================================================
+GOV_FEEDS = {
+    "한국 외교부 보도자료": {
+        "url": "http://www.mofa.go.kr/www/brd/rss.do?brdId=235",
+        "encoding": "euc-kr",  # 중요: UTF-8 아님! (본문 상단 NOTE 참고)
+        "country": "KR",
+        "lang": "ko",
+    },
+    "US State Dept - Press Releases": {
+        "url": "https://www.state.gov/rss-feed/press-releases/feed/",
+        "encoding": "utf-8",
+        "country": "US",
+        "lang": "en",
+    },
+    "US State Dept - East Asia & Pacific": {
+        "url": "https://www.state.gov/rss-feed/east-asia-and-the-pacific/feed/",
+        "encoding": "utf-8",
+        "country": "US",
+        "lang": "en",
+    },
+    "US State Dept - Europe & Eurasia": {
+        "url": "https://www.state.gov/rss-feed/europe-and-eurasia/feed/",
+        "encoding": "utf-8",
+        "country": "US",
+        "lang": "en",
+    },
+    "US State Dept - Near East": {
+        "url": "https://www.state.gov/rss-feed/near-east/feed/",
+        "encoding": "utf-8",
+        "country": "US",
+        "lang": "en",
+    },
+    "US State Dept - Africa": {
+        "url": "https://www.state.gov/rss-feed/africa/feed/",
+        "encoding": "utf-8",
+        "country": "US",
+        "lang": "en",
+    },
+    "US State Dept - South & Central Asia": {
+        "url": "https://www.state.gov/rss-feed/south-and-central-asia/feed/",
+        "encoding": "utf-8",
+        "country": "US",
+        "lang": "en",
+    },
+    "US State Dept - Western Hemisphere": {
+        "url": "https://www.state.gov/rss-feed/western-hemisphere/feed/",
+        "encoding": "utf-8",
+        "country": "US",
+        "lang": "en",
+    },
+    "US State Dept - Press Briefings": {
+        "url": "https://www.state.gov/rss-feed/department-press-briefings/feed/",
+        "encoding": "utf-8",
+        "country": "US",
+        "lang": "en",
+    },
+}
+
+# 이슈 매칭용 키워드. issue_data_collector.py의 ISSUE_KEYWORDS와 같은 이슈
+# 체계를 쓰되, 여기서는 "기사 제목/요약에 이 단어가 있으면 이 이슈다"라는
+# 더 느슨한 매칭용 키워드라서 형태가 조금 다릅니다.
+# (나중에 두 파일을 공통 config.py/json으로 합치는 걸 추천합니다.)
+#
+# NOTE (수정 사항 v1.1): 첫 실행에서 외교부 보도자료 29건이 전부
+# 매칭 실패로 나왔는데, 원인은 키워드가 전부 영어라서 였습니다.
+# 외교부 보도자료는 당연히 한글이니까 영어 키워드론 하나도 안 걸립니다.
+# -> 소스 언어에 상관없이 매칭되도록 한글 키워드를 같이 넣었습니다.
+# "핵"처럼 너무 짧고 흔한 한글자는 Iran_Nuclear/North_Korea_Nuclear가
+# 서로 오염시키니까 피하고, "북한 핵"/"이란 핵"처럼 묶어서 씁니다.
+ISSUE_MATCH_KEYWORDS = {
+    "US_Canada_Trade": ["canada", "usmca", "캐나다"],
+    "US_Mexico_Migration": ["mexico", "migration", "border", "immigration", "deportation",
+                             "멕시코", "불법 이민", "국경"],
+    "Trump_Economy": ["tariff", "trade war", "economic policy", "관세", "무역전쟁", "트럼프 행정부"],
+    "Venezuela_Crisis": ["venezuela", "maduro", "베네수엘라", "마두로"],
+    "Brazil_Politics": ["brazil", "lula", "브라질", "룰라"],
+    "Argentina_Economy": ["argentina", "milei", "아르헨티나", "밀레이"],
+    "Ukraine_War": ["ukraine", "russian invasion", "우크라이나"],
+    "EU_Russia": ["russia", "sanctions", "european union", "러시아 제재", "유럽연합", "대러 제재"],
+    "Baltic_Security": ["baltic", "nato", "nordic", "발트", "나토", "북유럽 안보"],
+    "Iran_Nuclear": ["iran", "enrichment", "이란 핵", "이란 우라늄", "이란 협상"],
+    "Israel_Palestine": ["israel", "palestin", "gaza", "hamas", "이스라엘", "팔레스타인", "가자", "하마스"],
+    "Middle_East_Energy": ["opec", "oil price", "saudi", "석유", "사우디", "오펙"],
+    "Sudan_Conflict": ["sudan", "수단"],
+    "Ethiopia_Crisis": ["ethiopia", "에티오피아"],
+    "Congo_Minerals": ["congo", "cobalt", "coltan", "콩고", "코발트"],
+    "North_Korea_Nuclear": ["north korea", "dprk", "kim jong", "북한 핵", "북핵", "김정은"],
+    "Taiwan_Strait": ["taiwan", "cross-strait", "cross strait", "대만", "양안"],
+    "India_Pakistan": ["india", "pakistan", "kashmir", "인도", "파키스탄", "카슈미르"],
+    "South_China_Sea": ["south china sea", "freedom of navigation", "남중국해"],
+    "Japan_Korea": ["japan", "일본", "한일"],
+    "Myanmar_Crisis": ["myanmar", "burma", "미얀마"],
+}
+
+
+def fetch_rss_feed(name, feed_info, timeout=20, max_retries=3):
+    """
+    RSS 피드 하나를 받아서 [{title, link, pub_date, description}, ...] 형태로 파싱.
+    EUC-KR처럼 UTF-8이 아닌 인코딩도 명시적으로 처리합니다.
+    """
+    url = feed_info["url"]
+    encoding = feed_info.get("encoding", "utf-8")
+
+    for attempt in range(1, max_retries + 1):
+        try:
+            r = requests.get(url, headers=REQUEST_HEADERS, timeout=timeout)
+            r.raise_for_status()
+
+            # requests가 자동 감지한 인코딩(r.encoding)을 신뢰하지 않고,
+            # feed_info에 우리가 직접 확인해서 지정한 인코딩으로 디코딩합니다.
+            # (외교부 피드는 Content-Type 헤더가 실제 인코딩과 다르게 찍혀 있어서
+            #  requests의 자동 감지에 맡기면 깨집니다.)
+            raw = r.content.decode(encoding, errors="replace")
+
+            root = ET.fromstring(raw)
+            items = []
+            for item in root.findall(".//item"):
+                title = (item.findtext("title") or "").strip()
+                link = (item.findtext("link") or "").strip()
+                pub_date = (item.findtext("pubDate") or "").strip()
+                desc = item.findtext("description") or ""
+                items.append({
+                    "source": name,
+                    "title": title,
+                    "link": link,
+                    "pub_date": pub_date,
+                    "description": desc[:500],
+                })
+            return items
+
+        except (requests.exceptions.RequestException, ET.ParseError) as e:
+            print(f"  ✗ {name} 시도 {attempt}/{max_retries} 실패: {str(e)[:150]}")
+            if attempt < max_retries:
+                time.sleep(3 * attempt)
+
+    return []
+
+
+def match_issue(title, description):
+    """
+    기사 제목+요약에 어떤 이슈 키워드가 들어있는지 확인해서
+    매칭되는 이슈 이름 리스트를 반환합니다. (여러 이슈에 매칭될 수 있음)
+    """
+    text = f"{title} {description}".lower()
+    matched = []
+    for issue_name, keywords in ISSUE_MATCH_KEYWORDS.items():
+        if any(kw.lower() in text for kw in keywords):
+            matched.append(issue_name)
+    return matched
+
+
+def collect_all_gov_announcements():
+    """
+    전체 정부 RSS 피드를 수집하고, 이슈별로 매칭해서 저장합니다.
+    """
+    print("\n" + "=" * 60)
+    print("🏛  Government Announcements Collection (초안 v1)")
+    print("=" * 60)
+
+    all_items = []
+    for name, feed_info in GOV_FEEDS.items():
+        print(f"\n📡 수집 중: {name}")
+        print(f"   {feed_info['url']}")
+        items = fetch_rss_feed(name, feed_info)
+        print(f"   ✓ {len(items)}건 수집")
+        for item in items:
+            item["matched_issues"] = match_issue(item["title"], item["description"])
+        all_items.extend(items)
+        time.sleep(1.0)  # 매너 있게 요청 사이 간격 두기
+
+    # 이슈별로 재구성 -- 어떤 정부가 어떤 이슈에 대해 언제 뭐라고 했는지
+    by_issue = {}
+    for item in all_items:
+        for issue in item["matched_issues"]:
+            by_issue.setdefault(issue, []).append(item)
+
+    today = datetime.now().strftime("%Y%m%d")
+
+    all_path = f"{DATA_DIR}/all_announcements_{today}.json"
+    with open(all_path, "w", encoding="utf-8") as f:
+        json.dump(all_items, f, ensure_ascii=False, indent=2)
+    print(f"\n✓ 전체 {len(all_items)}건 저장: {all_path}")
+
+    by_issue_path = f"{DATA_DIR}/by_issue_{today}.json"
+    with open(by_issue_path, "w", encoding="utf-8") as f:
+        json.dump(by_issue, f, ensure_ascii=False, indent=2)
+    print(f"✓ 이슈별 매칭 결과 저장: {by_issue_path}")
+
+    unmatched = [item for item in all_items if not item["matched_issues"]]
+    print(f"\n📊 이슈별 매칭 건수 (매칭 안 된 {len(unmatched)}건 제외):")
+    for issue, items in sorted(by_issue.items(), key=lambda x: -len(x[1])):
+        print(f"   • {issue}: {len(items)}건")
+
+    return all_items, by_issue
+
+
+if __name__ == "__main__":
+    collect_all_gov_announcements()
