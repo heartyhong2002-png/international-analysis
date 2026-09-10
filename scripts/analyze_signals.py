@@ -44,7 +44,13 @@ REPORTS_DIR = "reports"
 os.makedirs(REPORTS_DIR, exist_ok=True)
 
 OLLAMA_API = "http://localhost:11434/api/generate"
-DEFAULT_MODEL = "qwen2.5:7b"
+# NOTE (수정 사항 v1.2): Qwen2.5:7b와 EXAONE 3.5:7.8b를 같은 프롬프트로
+# 비교 테스트해봤는데, EXAONE이 더 자연스럽고 뉘앙스 있는 한국어를 냈다
+# (LG AI Research가 처음부터 한국어+영어 이중언어로 설계한 모델이라
+# Qwen처럼 다국어 중 하나로 한국어를 지원하는 것과는 차이가 있었다).
+# -> 기본 모델을 EXAONE 3.5로 변경. Qwen2.5는 --model 옵션으로 언제든
+#    다시 비교 가능하도록 남겨둠.
+DEFAULT_MODEL = "exaone3.5:7.8b"
 REQUEST_TIMEOUT_SEC = 180  # CPU 추론이라 길게 잡음 (GPU 없는 노트북 기준)
 
 # NOTE (수정 사항 v1.1 — 환각/hallucination 방지):

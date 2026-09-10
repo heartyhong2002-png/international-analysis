@@ -67,7 +67,16 @@ if sys.platform == "win32":
 load_dotenv()
 
 # Configuration
-DATA_DIR = "data/issues"
+# NOTE (수정 사항 v5.4 — 작업 디렉터리 문제): DATA_DIR을 "data/issues"처럼
+# 상대경로로 두면, 이 스크립트를 어디서 실행하느냐(프로젝트 루트 터미널 /
+# scripts 폴더 안 터미널 / VS Code의 "Run" 버튼 - 기본적으로 파일이 있는
+# 폴더를 작업 디렉터리로 잡음)에 따라 매번 다른 곳에 data 폴더가 생겨서,
+# 실행할 때마다 데이터가 서로 다른 곳에 흩어지는 문제가 있었습니다
+# (build_database.py를 돌렸는데 파일을 못 찾던 원인이 바로 이것).
+# 항상 이 스크립트 파일이 있는 위치(scripts/) 기준으로 고정해서,
+# 어디서 실행하든 같은 data/issues 폴더를 쓰게 만듭니다.
+_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(_SCRIPT_DIR, "data", "issues")
 os.makedirs(DATA_DIR, exist_ok=True)
 
 RESUME_MODE = "--resume" in sys.argv
@@ -892,9 +901,29 @@ def main():
     fred_data = fetch_fred_issue_indicators()
     print(f"✓ Collected {len(fred_data)} economic indicators")
 
+    # NOTE (수정 사항 v5.3): fred_data/sanctions_data가 이 함수 안에서만
+    # 쓰이고 파일로 저장된 적이 없었습니다 (build_database.py로 SQLite에
+    # 옮기려다가 발견함). 다른 수집 결과(Wikipedia, IMF)는 다 CSV/JSON으로
+    # 남는데 이 둘만 실행할 때마다 메모리에서 사라지고 있었습니다.
+    if fred_data:
+        fred_rows = []
+        for name, series in fred_data.items():
+            for date, value in zip(series["dates"], series["values"]):
+                fred_rows.append({"indicator": name, "date": date, "value": value})
+        fred_path = f"{DATA_DIR}/fred_indicators_{datetime.now().strftime('%Y%m%d')}.csv"
+        pd.DataFrame(fred_rows).to_csv(fred_path, index=False)
+        print(f"   - Data saved: {fred_path}")
+
     # 3. 국제 제재 현황
     print("\n[3/4] Collecting Sanctions Data...")
     sanctions_data = fetch_sanctions_data()
+
+    sanctions_rows = [
+        {"country": country, **info} for country, info in sanctions_data.items()
+    ]
+    sanctions_path = f"{DATA_DIR}/sanctions_{datetime.now().strftime('%Y%m%d')}.csv"
+    pd.DataFrame(sanctions_rows).to_csv(sanctions_path, index=False)
+    print(f"   - Data saved: {sanctions_path}")
 
     # 4. 주요 국가 간 무역 데이터 (IMF IMTS - 구 DOTS / UN Comtrade 대체)
     print("\n[4/4] Collecting Trade Data (via IMF IMTS)...")
