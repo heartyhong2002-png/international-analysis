@@ -73,3 +73,8 @@ data/issues/
 data/semiconductor_trade/
 data/uncomtrade/
 scripts/data/
+
+# 백업 및 임시 CSV
+*backup*.csv
+auto_deleted_*.csv
+deleted_*.csv

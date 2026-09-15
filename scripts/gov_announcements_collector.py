@@ -22,12 +22,38 @@
       * 중동 전역(이스라엘-팔레스타인, 걸프, 이란 등)을 폭넓게 다루는 전체 뉴스
         피드라, Middle_East_Energy/Israel_Palestine 커버리지를 채워줍니다.
         완전 독립언론은 아니고 카타르 정부 소유라는 점은 참고.
+  - 영국 FCDO (외교·영연방·개발부) 보도자료: 준기님이 업로드하신
+    "서방_중동_주요국_정부_데이터_API_조사.md"(2026-09-14, 다른 트랙 작성)의
+    조사 결과를 제가 직접 재검증해서 추가함 (2026-09-14 확인).
+      * https://www.gov.uk/search/news-and-communications.atom?organisations%5B%5D=foreign-commonwealth-development-office
+      * ⚠️ RSS 2.0이 아니라 **Atom 1.0**입니다 (root가 <rss>가 아니라 <feed>,
+        <item> 대신 <entry>, <pubDate> 대신 <updated>, <description> 대신
+        <summary>, <link>는 텍스트가 아니라 href 속성). fetch_rss_feed()에
+        format="atom" 분기를 새로 추가해서 처리합니다 (실제 응답 캡처해서
+        파싱 로직 검증 완료 — 아래 v1.6 NOTE 참고).
+  - 독일 외교부(Auswärtiges Amt) 보도자료·연설문 RSS: 같은 조사 보고서 기반,
+    직접 재검증 (2026-09-14 확인).
+      * https://www.auswaertiges-amt.de/static/includes/rss/Presse-RSS-Feed.xml
+      * ⚠️ 보고서에 적힌 `.../newsletter/rss` URL은 실제 피드가 아니라 "RSS가
+        뭔지 설명하고 진짜 피드 링크를 안내하는" HTML 소개 페이지였습니다.
+        진짜 피드는 위 `/static/includes/rss/...xml` 경로입니다. 표준 RSS 2.0,
+        UTF-8, 독일어 원문.
   - 확인해봤지만 안 되는 것들 (다음에 또 시도하지 않도록 기록):
       * Saudi Press Agency(SPA, spa.gov.sa) — RSS로 추정되는 경로들이 실제로는
         전부 일반 HTML 페이지를 반환함 (200이지만 content-type이 rss 아님).
         진짜 RSS 엔드포인트를 못 찾음.
       * Times of Israel (timesofisrael.com) — Cloudflare 봇 챌린지 페이지가
         떠서 requests로는 막힘. cloudscraper 같은 별도 라이브러리 없이는 불가.
+      * 튀르키예 외교부(mfa.gov.tr) RSS — 조사 보고서에 `mfa.gov.tr/rss.en.mfa`로
+        적혀있었는데, 이것도 독일과 마찬가지로 실제 피드가 아니라 안내 페이지였음
+        (2026-09-14 확인). 안내 페이지에서 실제 링크
+        (`en.rss.mfa?<UUID>` 형태, 예:
+        `https://www.mfa.gov.tr/en.rss.mfa?ad9093da-8e71-4678-a1b6-05f297baadc4`)를
+        찾아서 다시 요청해봤지만 빈 응답만 돌아옴 — URL에 붙은 UUID가 페이지
+        로드시마다 발급되는 세션성 토큰이라 고정 API 엔드포인트로 쓸 수 없는
+        것으로 추정됨. 자동화 파이프라인에는 넣지 않음 (나중에 requests 세션으로
+        먼저 안내 페이지를 받고 그 안의 링크를 매번 새로 파싱하는 2단계 방식이면
+        될 수도 있으나, 지금은 우선순위 낮음으로 보류).
 
 아직 "초안"인 이유 (다음에 더 다듬을 것):
   1. 이슈 매칭이 단순 키워드 포함 여부라 오탐/누락이 있을 수 있음
@@ -72,72 +98,115 @@ REQUEST_HEADERS = {
 # ============================================================================
 # 검증된 정부 RSS 피드 목록
 # ============================================================================
+# NOTE (수정 사항 v1.5 — ADR-001 연동): 오픈소스 LLM 트랙이 2026-09-10에 작성한
+# ADR-001("LLM 역할정의 및 감성분석 휴먼인더루프")의 2번 결정 — "정부 공식
+# 보도자료는 뉴스와 분리된 '공식 입장' 레이어로 저장" — 을 따르기 위해
+# source_type을 추가합니다.
+#   - "official_statement": 정부 기관이 직접 운영하는 보도자료 채널
+#     (외교부/국무부). LLM은 이걸 "발표주체·날짜·상대국·핵심주장·정책액션"으로
+#     구조화 추출하는 입력으로 씁니다.
+#   - "state_media_news": 국영/국가 소유 매체지만 보도자료 채널이 아니라
+#     광범위한 주제를 다루는 뉴스 매체(IRNA, Al Jazeera). ADR의 "뉴스" 레이어에
+#     더 가깝습니다 — 실제로 Iran_Nuclear 키워드 과매칭 버그도 IRNA가 핵과 무관한
+#     일반 뉴스까지 쏟아내서 생긴 문제였습니다(주제 범위가 진짜 보도자료 채널과
+#     다름을 데이터로 확인한 셈).
 GOV_FEEDS = {
     "한국 외교부 보도자료": {
         "url": "http://www.mofa.go.kr/www/brd/rss.do?brdId=235",
         "encoding": "euc-kr",  # 중요: UTF-8 아님! (본문 상단 NOTE 참고)
         "country": "KR",
         "lang": "ko",
+        "source_type": "official_statement",
     },
     "US State Dept - Press Releases": {
         "url": "https://www.state.gov/rss-feed/press-releases/feed/",
         "encoding": "utf-8",
         "country": "US",
         "lang": "en",
+        "source_type": "official_statement",
     },
     "US State Dept - East Asia & Pacific": {
         "url": "https://www.state.gov/rss-feed/east-asia-and-the-pacific/feed/",
         "encoding": "utf-8",
         "country": "US",
         "lang": "en",
+        "source_type": "official_statement",
     },
     "US State Dept - Europe & Eurasia": {
         "url": "https://www.state.gov/rss-feed/europe-and-eurasia/feed/",
         "encoding": "utf-8",
         "country": "US",
         "lang": "en",
+        "source_type": "official_statement",
     },
     "US State Dept - Near East": {
         "url": "https://www.state.gov/rss-feed/near-east/feed/",
         "encoding": "utf-8",
         "country": "US",
         "lang": "en",
+        "source_type": "official_statement",
     },
     "US State Dept - Africa": {
         "url": "https://www.state.gov/rss-feed/africa/feed/",
         "encoding": "utf-8",
         "country": "US",
         "lang": "en",
+        "source_type": "official_statement",
     },
     "US State Dept - South & Central Asia": {
         "url": "https://www.state.gov/rss-feed/south-and-central-asia/feed/",
         "encoding": "utf-8",
         "country": "US",
         "lang": "en",
+        "source_type": "official_statement",
     },
     "US State Dept - Western Hemisphere": {
         "url": "https://www.state.gov/rss-feed/western-hemisphere/feed/",
         "encoding": "utf-8",
         "country": "US",
         "lang": "en",
+        "source_type": "official_statement",
     },
     "US State Dept - Press Briefings": {
         "url": "https://www.state.gov/rss-feed/department-press-briefings/feed/",
         "encoding": "utf-8",
         "country": "US",
         "lang": "en",
+        "source_type": "official_statement",
     },
     "IRNA (이란 국영 통신사)": {
         "url": "https://en.irna.ir/rss",
         "encoding": "utf-8",
         "country": "IR",
         "lang": "en",
+        "source_type": "state_media_news",
     },
     "Al Jazeera": {
         "url": "https://www.aljazeera.com/xml/rss/all.xml",
         "encoding": "utf-8",
         "country": "QA",
         "lang": "en",
+        "source_type": "state_media_news",
+    },
+    # NOTE (수정 사항 v1.6 — 서방·중동 6개국 조사 반영, 2026-09-14): 다른 트랙이
+    # 작성한 조사 보고서를 컨트롤타워가 직접 재검증해서 추가. 영국/독일 외에
+    # 이스라엘·이란·사우디·튀르키예도 조사됐지만: 이스라엘/이란/사우디는 외교부
+    # 자체 RSS가 없어서(웹크롤링 필요, 지금 범위 밖) 이번엔 보류, 튀르키예는
+    # 바로 위 "확인해봤지만 안 되는 것들"에 적은 이유로 제외.
+    "영국 FCDO (외교·영연방·개발부)": {
+        "url": "https://www.gov.uk/search/news-and-communications.atom?organisations%5B%5D=foreign-commonwealth-development-office",
+        "encoding": "utf-8",
+        "format": "atom",  # RSS 2.0이 아니라 Atom 1.0 — fetch_rss_feed()가 이 필드로 분기
+        "country": "GB",
+        "lang": "en",
+        "source_type": "official_statement",
+    },
+    "독일 외교부 (Auswärtiges Amt)": {
+        "url": "https://www.auswaertiges-amt.de/static/includes/rss/Presse-RSS-Feed.xml",
+        "encoding": "utf-8",
+        "country": "DE",
+        "lang": "de",
+        "source_type": "official_statement",
     },
 }
 
@@ -188,10 +257,17 @@ ISSUE_MATCH_KEYWORDS = {
 
 _XML_PROLOG_ENCODING_RE = re.compile(rb'<\?xml[^>]*encoding=["\']([\w-]+)["\']', re.IGNORECASE)
 
+# NOTE (수정 사항 v1.6): 영국 FCDO가 RSS 2.0이 아니라 Atom 1.0을 쓰길래
+# 추가함. Atom은 네임스페이스가 붙은 <entry>/<title>/<link>/<updated>/<summary>
+# 구조라 기존 "<item>" 기반 파싱과 태그 이름·구조가 다름 (특히 link는 텍스트가
+# 아니라 href 속성). feed_info에 "format": "atom"이 있으면 이 네임스페이스로
+# 파싱하고, 없으면(기본값) 기존 RSS 2.0 방식을 그대로 씁니다.
+_ATOM_NS = "{http://www.w3.org/2005/Atom}"
+
 
 def fetch_rss_feed(name, feed_info, timeout=20, max_retries=3):
     """
-    RSS 피드 하나를 받아서 [{title, link, pub_date, description}, ...] 형태로 파싱.
+    RSS(또는 Atom) 피드 하나를 받아서 [{title, link, pub_date, description}, ...] 형태로 파싱.
 
     NOTE (수정 사항 v1.3 — 인코딩 재확인): 원래는 feed_info에 미리 적어둔 인코딩
     (외교부는 "euc-kr")을 무조건 믿고 그걸로 디코딩했는데, 실제로 브라우저에서
@@ -223,18 +299,41 @@ def fetch_rss_feed(name, feed_info, timeout=20, max_retries=3):
 
             root = ET.fromstring(raw)
             items = []
-            for item in root.findall(".//item"):
-                title = (item.findtext("title") or "").strip()
-                link = (item.findtext("link") or "").strip()
-                pub_date = (item.findtext("pubDate") or "").strip()
-                desc = item.findtext("description") or ""
-                items.append({
-                    "source": name,
-                    "title": title,
-                    "link": link,
-                    "pub_date": pub_date,
-                    "description": desc[:500],
-                })
+
+            if feed_info.get("format") == "atom":
+                for entry in root.findall(f"{_ATOM_NS}entry"):
+                    title = (entry.findtext(f"{_ATOM_NS}title") or "").strip()
+                    link = ""
+                    for link_el in entry.findall(f"{_ATOM_NS}link"):
+                        # rel 속성이 없으면 기본이 "alternate"(사람이 읽는 HTML 페이지).
+                        # self/다른 rel도 섞여 나올 수 있어서 alternate만 골라 씀.
+                        if link_el.get("rel", "alternate") == "alternate":
+                            link = link_el.get("href", "").strip()
+                            break
+                    pub_date = (entry.findtext(f"{_ATOM_NS}updated") or "").strip()
+                    desc = entry.findtext(f"{_ATOM_NS}summary") or entry.findtext(f"{_ATOM_NS}content") or ""
+                    items.append({
+                        "source": name,
+                        "source_type": feed_info.get("source_type", "unknown"),
+                        "title": title,
+                        "link": link,
+                        "pub_date": pub_date,
+                        "description": desc[:500],
+                    })
+            else:
+                for item in root.findall(".//item"):
+                    title = (item.findtext("title") or "").strip()
+                    link = (item.findtext("link") or "").strip()
+                    pub_date = (item.findtext("pubDate") or "").strip()
+                    desc = item.findtext("description") or ""
+                    items.append({
+                        "source": name,
+                        "source_type": feed_info.get("source_type", "unknown"),
+                        "title": title,
+                        "link": link,
+                        "pub_date": pub_date,
+                        "description": desc[:500],
+                    })
             return items
 
         except (requests.exceptions.RequestException, ET.ParseError) as e:

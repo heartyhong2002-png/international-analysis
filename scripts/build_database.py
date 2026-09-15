@@ -70,6 +70,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
 # NOTE (수정 사항 v1.1 — 작업 디렉터리 문제): issue_data_collector.py /
 # gov_announcements_collector.py와 동일하게, 실행 위치에 상관없이 이 스크립트
 # 파일 기준(scripts/data/...)으로 고정합니다. 실제로 사용자 환경에서
@@ -190,6 +197,7 @@ def create_schema(conn):
         CREATE TABLE IF NOT EXISTS gov_announcements (
             id              INT AUTO_INCREMENT PRIMARY KEY,
             source          VARCHAR(100) NOT NULL,
+            source_type     VARCHAR(50)  DEFAULT 'official_statement',
             title           VARCHAR(255) NOT NULL,
             link            TEXT,
             pub_date        VARCHAR(60)  NOT NULL,
@@ -206,6 +214,65 @@ def create_schema(conn):
             PRIMARY KEY (announcement_id, issue),
             FOREIGN KEY (announcement_id) REFERENCES gov_announcements(id)
                 ON DELETE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS official_statement_extractions (
+            id                  INT AUTO_INCREMENT PRIMARY KEY,
+            announcement_id     INT NOT NULL,
+            extracted_entity    VARCHAR(200),
+            statement_date      VARCHAR(60),
+            mentioned_countries VARCHAR(500),
+            key_claim           TEXT,
+            policy_action       TEXT,
+            extraction_model    VARCHAR(100),
+            extracted_at        DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (announcement_id) REFERENCES gov_announcements(id)
+                ON DELETE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS tone_review_log (
+            id                  INT AUTO_INCREMENT PRIMARY KEY,
+            article_id          VARCHAR(64) NOT NULL,
+            announcement_id     INT NULL,
+            language            VARCHAR(10),
+            issue_ids           VARCHAR(200),
+            continent           VARCHAR(50),
+            countries_involved  VARCHAR(255),
+            tag_status          VARCHAR(50),
+            source_type         VARCHAR(50),
+            outlet_bias         VARCHAR(50),
+            title               VARCHAR(500),
+            link                TEXT,
+            llm_label           VARCHAR(20),
+            llm_evidence_quote  TEXT,
+            human_label         VARCHAR(20),
+            correction_note     TEXT,
+            reviewed_at         DATETIME NULL,
+            collected_at        VARCHAR(50),
+            created_at          DATETIME DEFAULT CURRENT_TIMESTAMP,
+            INDEX idx_article_id (article_id),
+            INDEX idx_announcement_id (announcement_id),
+            UNIQUE KEY uniq_review_article (article_id, issue_ids(100)),
+            FOREIGN KEY (announcement_id) REFERENCES gov_announcements(id)
+                ON DELETE SET NULL
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS expert_analysis_extractions (
+            id                 INT AUTO_INCREMENT PRIMARY KEY,
+            article_id         VARCHAR(64) NOT NULL,
+            source_name        VARCHAR(200),
+            author_or_org      VARCHAR(200),
+            key_argument       TEXT,
+            forecast           TEXT,
+            forecast_horizon   VARCHAR(100),
+            evidence_basis     TEXT,
+            stance_toward      VARCHAR(200),
+            extraction_model   VARCHAR(100),
+            extracted_at       DATETIME DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE KEY uniq_expert_article (article_id)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
         """,
         """
@@ -247,6 +314,45 @@ def create_schema(conn):
         cur.execute(stmt)
     conn.commit()
     cur.close()
+
+
+def ensure_schema_migrations(conn):
+    """
+    이미 생성되어 있는 기존 테이블에 신규 컬럼이 없을 경우 ALTER TABLE로 안전하게 추가합니다.
+    """
+    cur = conn.cursor()
+    # 1. gov_announcements.source_type
+    cur.execute("""
+        SELECT COUNT(*) FROM information_schema.columns
+        WHERE table_schema = %s AND table_name = 'gov_announcements' AND column_name = 'source_type'
+    """, (MYSQL_DATABASE,))
+    if cur.fetchone()[0] == 0:
+        try:
+            cur.execute("""
+                ALTER TABLE gov_announcements
+                ADD COLUMN source_type VARCHAR(50) DEFAULT 'official_statement' AFTER source
+            """)
+            conn.commit()
+            print("  🔒 gov_announcements에 source_type 컬럼 추가 완료")
+        except mysql.connector.Error as e:
+            print(f"  ⚠ gov_announcements.source_type 추가 실패: {e}")
+    cur.close()
+
+
+def parse_datetime_safe(dt_str):
+    """
+    ISO 또는 기타 문자열 형태의 datetime을 MySQL DATETIME(YYYY-MM-DD HH:MM:SS) 형식으로 변환하거나 None을 반환.
+    """
+    if not dt_str or not str(dt_str).strip():
+        return None
+    s = str(dt_str).strip()
+    try:
+        if "T" in s:
+            s = s.split("+")[0].split("Z")[0]
+            return datetime.fromisoformat(s).strftime("%Y-%m-%d %H:%M:%S")
+        return s[:19]
+    except Exception:
+        return None
 
 
 def load_issue_summary(conn):
@@ -298,7 +404,7 @@ def load_wikipedia_pageviews(conn):
 
 
 def load_gov_announcements(conn):
-    cur = conn.cursor()
+    cur = conn.cursor(buffered=True)
 
     # NOTE (수정 사항 v1.2 — issue_gov_match 스테일 데이터 버그): 이 테이블은
     # JSON의 matched_issues를 그대로 옮겨 적은 "파생 데이터"라서, 원본 텍스트가
@@ -319,14 +425,15 @@ def load_gov_announcements(conn):
             items = json.load(f)
         for item in items:
             source = (item.get("source") or "")[:100]
+            source_type = (item.get("source_type") or "official_statement")[:50]
             title = (item.get("title") or "")[:255]
             pub_date = (item.get("pub_date") or "")[:60]
 
             cur.execute("""
                 INSERT IGNORE INTO gov_announcements
-                    (source, title, link, pub_date, description, collected_date, source_file)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
-            """, (source, title, item.get("link"), pub_date,
+                    (source, source_type, title, link, pub_date, description, collected_date, source_file)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            """, (source, source_type, title, item.get("link"), pub_date,
                   item.get("description"), collected_date, path))
             total_items += 1
 
@@ -338,15 +445,18 @@ def load_gov_announcements(conn):
             # link로 먼저 찾고, 없을 때만 기존 방식으로 폴백합니다.
             link_val = item.get("link")
             if link_val:
-                cur.execute("SELECT id FROM gov_announcements WHERE link = %s", (link_val,))
+                cur.execute("SELECT id, source_type FROM gov_announcements WHERE link = %s", (link_val,))
             else:
                 cur.execute("""
-                    SELECT id FROM gov_announcements WHERE source = %s AND title = %s AND pub_date = %s
+                    SELECT id, source_type FROM gov_announcements WHERE source = %s AND title = %s AND pub_date = %s
                 """, (source, title, pub_date))
             row = cur.fetchone()
             if not row:
                 continue
             announcement_id = row[0]
+            if (not row[1] or row[1] == 'official_statement') and item.get("source_type"):
+                cur.execute("UPDATE gov_announcements SET source_type = %s WHERE id = %s", (source_type, announcement_id))
+
             for issue in item.get("matched_issues", []):
                 cur.execute("""
                     INSERT IGNORE INTO issue_gov_match (announcement_id, issue)
@@ -535,6 +645,113 @@ def load_imf_trade(conn):
     print(f"  ✓ imf_trade: {total}행 적재 ({len(files)}개 파일)")
 
 
+def load_tone_review_logs(conn):
+    """
+    review_log.csv 및 local_expert_review_log.csv의 톤 검수 내역을 tone_review_log에 적재합니다.
+    """
+    review_files = []
+    for d in [os.path.join(_SCRIPT_DIR, "..", "data"), os.path.join(_SCRIPT_DIR, "data")]:
+        for pattern in ["review_log*.csv", "*expert_review_log*.csv"]:
+            review_files.extend(glob.glob(os.path.join(d, pattern)))
+    review_files = sorted(set(review_files))
+    if not review_files:
+        return
+
+    cur = conn.cursor()
+    total = 0
+    for path in review_files:
+        try:
+            with open(path, "r", encoding="utf-8-sig") as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    article_id = (row.get("article_id") or "").strip()
+                    if not article_id:
+                        continue
+                    language = clean(row.get("language"))
+                    issue_ids = clean(row.get("issue_ids") or row.get("issue_id"))
+                    continent = clean(row.get("continent"))
+                    countries = clean(row.get("countries_involved"))
+                    tag_status = clean(row.get("tag_status"))
+                    source_type = clean(row.get("source_type"))
+                    outlet_bias = clean(row.get("outlet_bias"))
+                    title = clean(row.get("title"))
+                    if title and len(str(title)) > 500:
+                        title = str(title)[:500]
+                    link = clean(row.get("link"))
+                    llm_label = clean(row.get("llm_label"))
+                    evidence = clean(row.get("llm_evidence_quote"))
+                    human_label = clean(row.get("human_label"))
+                    correction_note = clean(row.get("correction_note"))
+                    reviewed_at = parse_datetime_safe(row.get("reviewed_at"))
+                    collected_at = clean(row.get("collected_at"))
+
+                    cur.execute("""
+                        REPLACE INTO tone_review_log
+                            (article_id, language, issue_ids, continent, countries_involved,
+                             tag_status, source_type, outlet_bias, title, link,
+                             llm_label, llm_evidence_quote, human_label, correction_note,
+                             reviewed_at, collected_at)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    """, (article_id, language, str(issue_ids) if issue_ids else None,
+                          continent, str(countries) if countries else None, tag_status,
+                          source_type, outlet_bias, title, link, llm_label, evidence,
+                          human_label, correction_note, reviewed_at, collected_at))
+                    total += 1
+        except Exception as e:
+            print(f"  ⚠ {os.path.basename(path)} 읽기 실패: {e}")
+    conn.commit()
+    cur.close()
+    print(f"  ✓ tone_review_log: {total}행 적재 ({len(review_files)}개 파일)")
+
+
+def load_expert_analysis_extractions(conn):
+    """
+    local_expert_review_log.csv 등에서 전문가 분석 구조화 추출 결과를 expert_analysis_extractions에 적재합니다.
+    """
+    expert_files = []
+    for d in [os.path.join(_SCRIPT_DIR, "..", "data"), os.path.join(_SCRIPT_DIR, "data")]:
+        expert_files.extend(glob.glob(os.path.join(d, "*expert_review_log*.csv")))
+    expert_files = sorted(set(expert_files))
+    if not expert_files:
+        return
+
+    cur = conn.cursor()
+    total = 0
+    for path in expert_files:
+        try:
+            with open(path, "r", encoding="utf-8-sig") as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    article_id = (row.get("article_id") or "").strip()
+                    if not article_id:
+                        continue
+                    author_or_org = clean(row.get("author_or_org"))
+                    key_argument = clean(row.get("key_argument"))
+                    forecast = clean(row.get("forecast"))
+                    if not (author_or_org or key_argument or forecast):
+                        continue
+
+                    source_name = clean(row.get("source_name"))
+                    forecast_horizon = clean(row.get("forecast_horizon"))
+                    evidence_basis = clean(row.get("evidence_basis"))
+                    stance_toward = clean(row.get("stance_toward"))
+                    extraction_model = clean(row.get("extraction_model"))
+
+                    cur.execute("""
+                        REPLACE INTO expert_analysis_extractions
+                            (article_id, source_name, author_or_org, key_argument, forecast,
+                             forecast_horizon, evidence_basis, stance_toward, extraction_model)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    """, (article_id, source_name, author_or_org, key_argument, forecast,
+                          forecast_horizon, evidence_basis, stance_toward, extraction_model))
+                    total += 1
+        except Exception as e:
+            print(f"  ⚠ {os.path.basename(path)} 전문가 분석 적재 실패: {e}")
+    conn.commit()
+    cur.close()
+    print(f"  ✓ expert_analysis_extractions: {total}행 적재 ({len(expert_files)}개 파일)")
+
+
 def print_verification_queries(conn):
     """
     적재가 끝난 뒤, 실제로 JOIN/GROUP BY가 되는지 보여주는 샘플 쿼리 몇 개를
@@ -593,6 +810,43 @@ def print_verification_queries(conn):
         gap = "🔴 관심은 높은데 정부 발표 없음" if row[1] and row[1] > 50 and row[2] == 0 else ""
         print(f"   {row[0]:<30} intensity={row[1]:.1f}  gov_matches={row[2]}  {gap}")
 
+    print("\n" + "=" * 60)
+    print("📊 검증 쿼리 4: 정부 발표/뉴스 source_type별 수집 건수")
+    print("=" * 60)
+    cur.execute("""
+        SELECT COALESCE(source_type, '(null)') AS source_type, COUNT(*) AS cnt
+        FROM gov_announcements
+        GROUP BY source_type
+        ORDER BY cnt DESC
+    """)
+    for row in cur.fetchall():
+        print(f"   {row[0]:<30} {row[1]}건")
+
+    print("\n" + "=" * 60)
+    print("📊 검증 쿼리 5: 톤 검수 로그(tone_review_log) 현황")
+    print("=" * 60)
+    cur.execute("""
+        SELECT COALESCE(source_type, '(기타)') AS source_type,
+               COUNT(*) AS total_articles,
+               COUNT(llm_label) AS llm_classified,
+               COUNT(human_label) AS human_reviewed
+        FROM tone_review_log
+        GROUP BY source_type
+    """)
+    rows = cur.fetchall()
+    if rows:
+        for row in rows:
+            print(f"   {row[0]:<20} 전체={row[1]}건, LLM분류={row[2]}건, 사람검수={row[3]}건")
+    else:
+        print("   (아직 tone_review_log에 데이터 없음)")
+
+    print("\n" + "=" * 60)
+    print("📊 검증 쿼리 6: 전문가 분석 추출(expert_analysis_extractions) 건수")
+    print("=" * 60)
+    cur.execute("SELECT COUNT(*) FROM expert_analysis_extractions")
+    cnt = cur.fetchone()[0]
+    print(f"   총 {cnt}건의 전문가 주장/전망 추출 데이터 적재됨")
+
     cur.close()
 
 
@@ -618,6 +872,7 @@ def main():
                      # 이 스크립트를 subprocess로 호출하는 쪽에서 실패를 못 알아챕니다.
 
     create_schema(conn)
+    ensure_schema_migrations(conn)
 
     print("\n[적재 중]")
     load_issue_summary(conn)
@@ -631,6 +886,8 @@ def main():
     load_fred_indicators(conn)
     load_sanctions(conn)
     load_imf_trade(conn)
+    load_tone_review_logs(conn)
+    load_expert_analysis_extractions(conn)
 
     print_verification_queries(conn)
 
