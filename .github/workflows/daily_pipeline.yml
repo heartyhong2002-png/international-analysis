@@ -1,0 +1,71 @@
+name: Daily Geopolitics Data Collection
+
+on:
+  schedule:
+    # 매일 한국 시간 07:00 AM (UTC 22:00)에 자동 실행
+    - cron: '0 22 * * *'
+  workflow_dispatch:
+    # GitHub 웹 콘솔에서 'Run workflow' 버튼으로 수동 실행 지원
+    inputs:
+      with_kaggle:
+        description: 'Kaggle 데이터셋(Kayhan 아카이브 등) 동기화 포함'
+        required: true
+        type: boolean
+        default: true
+      skip_gov:
+        description: '정부 발표(RSS) 수집 건너뛰기'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  collect-and-sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. 저장소 체크아웃
+        uses: actions/checkout@v4
+
+      - name: 2. Python 환경 설정 (3.11)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 3. 의존성 패키지 설치
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 4. Kaggle 데이터셋 동기화
+        if: ${{ github.event_name == 'schedule' || inputs.with_kaggle }}
+        env:
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+        run: |
+          python scripts/fetch_kaggle_datasets.py
+
+      - name: 5. 이슈 데이터 증분 수집 (Wikipedia, FRED, 제재 등)
+        run: |
+          python scripts/issue_data_collector.py --resume
+
+      - name: 6. 정부 공식 발표 수집 (RSS)
+        if: ${{ github.event_name == 'schedule' || !inputs.skip_gov }}
+        run: |
+          python scripts/gov_announcements_collector.py
+
+      - name: 7. 변경된 데이터 자동 커밋 & 푸시
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --staged --quiet; then
+            echo "ℹ️ 새로 수집되거나 변경된 데이터가 없습니다."
+          else
+            echo "✓ 신규 데이터 발견, 리포지토리에 자동 푸시합니다."
+            git commit -m "auto: daily data collection sync [skip ci]"
+            git push
+          fi

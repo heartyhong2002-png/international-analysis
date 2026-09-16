@@ -59,10 +59,14 @@ def main():
                          help="gov_announcements_collector.py 재실행 생략 (기존에 수집된 정부 발표 데이터를 그대로 씀)")
     parser.add_argument("--only-db", action="store_true",
                          help="수집 단계(1, 2번)는 건너뛰고 build_database.py만 실행")
+    parser.add_argument("--with-kaggle", action="store_true",
+                         help="Kaggle 공개 데이터셋(Kayhan 아카이브 등) 자동 다운로드/동기화 실행")
     args = parser.parse_args()
 
     steps = []
     if not args.only_db:
+        if args.with_kaggle:
+            steps.append(("Kaggle 데이터셋 동기화 (Kayhan 등)", "fetch_kaggle_datasets.py", []))
         collector_args = ["--resume"] if args.resume else []
         steps.append(("이슈 데이터 수집 (Wikipedia + FRED + 제재 + 무역)",
                        "issue_data_collector.py", collector_args))
