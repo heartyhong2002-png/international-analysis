@@ -629,20 +629,83 @@ def run(with_llm: bool = False, articles: list[dict] | None = None) -> list[dict
 
 def _write_review_log(rows: list[dict]) -> None:
     REVIEW_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+    # 기존 검수 이력 및 LLM 분류 결과 보존 (데이터 유실 방지)
+    existing_history = {}
+    for p in [REVIEW_LOG_PATH, DATA_DIR / "review_log-1.csv"]:
+        if p.exists():
+            try:
+                with open(p, "r", encoding="utf-8-sig") as f:
+                    reader = csv.DictReader(f)
+                    for r in reader:
+                        art_id = (r.get("article_id") or "").strip()
+                        link = (r.get("link") or "").strip()
+                        title = (r.get("title") or "").strip()
+
+                        h_label = (r.get("human_label") or "").strip()
+                        c_note = (r.get("correction_note") or "").strip()
+                        r_at = (r.get("reviewed_at") or "").strip()
+                        l_label = (r.get("llm_label") or "").strip()
+                        l_quote = (r.get("llm_evidence_quote") or "").strip()
+
+                        if h_label or c_note or l_label:
+                            item = {
+                                "human_label": h_label,
+                                "correction_note": c_note,
+                                "reviewed_at": r_at,
+                                "llm_label": l_label,
+                                "llm_evidence_quote": l_quote,
+                            }
+                            if art_id:
+                                existing_history[art_id] = item
+                            if link:
+                                existing_history[link] = item
+                            if title:
+                                existing_history[title] = item
+            except Exception:
+                pass
+
     with open(REVIEW_LOG_PATH, "w", newline="", encoding="utf-8-sig") as f:
         writer = csv.DictWriter(f, fieldnames=REVIEW_LOG_FIELDS, extrasaction="ignore")
         writer.writeheader()
         for row in rows:
             row = dict(row)
-            row["human_label"] = ""
-            row["correction_note"] = ""
-            row["reviewed_at"] = ""
+            art_id = (row.get("article_id") or "").strip()
+            link = (row.get("link") or "").strip()
+            title = (row.get("title") or "").strip()
+
+            past = existing_history.get(art_id) or existing_history.get(link) or existing_history.get(title)
+            if past:
+                # 인간 검수 결과 보존
+                if not (row.get("human_label") or "").strip() and past.get("human_label"):
+                    row["human_label"] = past["human_label"]
+                    row["correction_note"] = past.get("correction_note", "")
+                    row["reviewed_at"] = past.get("reviewed_at", "")
+                # LLM 분류 결과 보존 (현재 실행에서 LLM을 호출하지 않았을 때 기존 결과 보존)
+                if not (row.get("llm_label") or "").strip() and past.get("llm_label"):
+                    row["llm_label"] = past["llm_label"]
+                    if not row.get("llm_evidence_quote"):
+                        row["llm_evidence_quote"] = past.get("llm_evidence_quote", "")
+
+            row.setdefault("human_label", "")
+            row.setdefault("correction_note", "")
+            row.setdefault("reviewed_at", "")
             writer.writerow(row)
-    print(f"[pipeline] {len(rows)}건을 {REVIEW_LOG_PATH}에 저장했습니다. (2차 검수용)")
+    print(f"[pipeline] {len(rows)}건을 {REVIEW_LOG_PATH}에 저장했습니다. (기존 검수 이력 보존 완료)")
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--with-llm", action="store_true", help="Ollama 호출까지 실행 (노트북 전용)")
+    parser.add_argument("--sample-review", action="store_true", help="수집 후 검수 표본(pending_human_review.csv) 자동 추출")
+    parser.add_argument("--sample-rate", type=float, default=0.20, help="기본 표본 추출 비율 (기본값: 0.20)")
     args = parser.parse_args()
     run(with_llm=args.with_llm)
+
+    if args.sample_review:
+        try:
+            from scripts.sample_for_review import create_sample_batch
+            create_sample_batch(rate=args.sample_rate)
+        except Exception as e:
+            print(f"[pipeline] 표본 추출 실행 오류: {e}")
+
