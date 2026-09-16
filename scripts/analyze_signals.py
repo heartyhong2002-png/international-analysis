@@ -38,9 +38,26 @@ from datetime import datetime
 import pandas as pd
 import requests
 
-ISSUES_DIR = "data/issues"
-GOV_DIR = "data/gov_announcements"
-REPORTS_DIR = "reports"
+def _resolve_data_dir(dir_name: str) -> str:
+    # 1. 실행 위치 기준 scripts/data/<dir_name> (프로젝트 루트에서 실행 시 최신 데이터)
+    p1 = os.path.join("scripts", "data", dir_name)
+    if os.path.exists(p1) and glob.glob(os.path.join(p1, "*")):
+        return p1
+    # 2. 실행 위치 기준 data/<dir_name> (scripts 폴더 안에서 실행 시)
+    p2 = os.path.join("data", dir_name)
+    if os.path.exists(p2) and glob.glob(os.path.join(p2, "*")):
+        return p2
+    # 3. 스크립트 파일 위치 기준 ../scripts/data or ./data
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    p3 = os.path.join(script_dir, "data", dir_name)
+    if os.path.exists(p3) and glob.glob(os.path.join(p3, "*")):
+        return p3
+    return p1
+
+ISSUES_DIR = _resolve_data_dir("issues")
+GOV_DIR = _resolve_data_dir("gov_announcements")
+
+REPORTS_DIR = "reports" if os.path.exists("reports") else os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "reports")
 os.makedirs(REPORTS_DIR, exist_ok=True)
 
 OLLAMA_API = "http://localhost:11434/api/generate"
@@ -204,6 +221,8 @@ def main():
                          help=f"사용할 Ollama 모델 이름 (기본값: {DEFAULT_MODEL})")
     parser.add_argument("--min-intensity", type=float, default=1.0,
                          help="이 값 미만인 이슈는 건너뜀 (기본값: 1.0, 0으로 주면 다 포함)")
+    parser.add_argument("--limit", type=int, default=None,
+                        help="분석할 최대 이슈 개수 (기본값: 전체)")
     args = parser.parse_args()
 
     print("\n" + "=" * 60)
@@ -227,6 +246,8 @@ def main():
         return (w, g)
 
     all_issues.sort(key=sort_key, reverse=True)
+    if args.limit and args.limit > 0:
+        all_issues = all_issues[:args.limit]
 
     report_sections = []
     analyzed_count = 0
