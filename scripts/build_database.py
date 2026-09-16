@@ -752,6 +752,35 @@ def load_expert_analysis_extractions(conn):
     print(f"  ✓ expert_analysis_extractions: {total}행 적재 ({len(expert_files)}개 파일)")
 
 
+def create_analytics_views(conn):
+    """
+    scripts/create_views.sql을 읽어서 포트폴리오용 고급 분석 뷰 4종을 생성/갱신합니다.
+    (v_issue_public_vs_gov_daily, v_issue_media_framing_summary,
+     v_human_in_the_loop_audit, v_issue_geopolitical_risk_matrix)
+    """
+    views_sql_path = os.path.join(_SCRIPT_DIR, "create_views.sql")
+    if not os.path.exists(views_sql_path):
+        return
+
+    cur = conn.cursor(buffered=True)
+    with open(views_sql_path, "r", encoding="utf-8") as f:
+        sql_text = f.read()
+
+    created_count = 0
+    for s in sql_text.split(";"):
+        lines = [line for line in s.strip().splitlines() if not line.strip().startswith("--")]
+        stmt = "\n".join(lines).strip()
+        if stmt and not stmt.upper().startswith("USE"):
+            try:
+                cur.execute(stmt)
+                created_count += 1
+            except mysql.connector.Error as e:
+                print(f"  ⚠ 뷰 생성 오류: {e}")
+    conn.commit()
+    cur.close()
+    print(f"  ✓ 분석 뷰(Views) {created_count}개 생성/갱신 완료 (create_views.sql)")
+
+
 def print_verification_queries(conn):
     """
     적재가 끝난 뒤, 실제로 JOIN/GROUP BY가 되는지 보여주는 샘플 쿼리 몇 개를
@@ -828,8 +857,8 @@ def print_verification_queries(conn):
     cur.execute("""
         SELECT COALESCE(source_type, '(기타)') AS source_type,
                COUNT(*) AS total_articles,
-               COUNT(llm_label) AS llm_classified,
-               COUNT(human_label) AS human_reviewed
+               COUNT(CASE WHEN llm_label IS NOT NULL AND llm_label != '' THEN 1 END) AS llm_classified,
+               COUNT(CASE WHEN human_label IS NOT NULL AND human_label != '' THEN 1 END) AS human_reviewed
         FROM tone_review_log
         GROUP BY source_type
     """)
@@ -846,6 +875,30 @@ def print_verification_queries(conn):
     cur.execute("SELECT COUNT(*) FROM expert_analysis_extractions")
     cnt = cur.fetchone()[0]
     print(f"   총 {cnt}건의 전문가 주장/전망 추출 데이터 적재됨")
+
+    print("\n" + "=" * 60)
+    print("📊 검증 쿼리 7: 지정학적 리스크 매트릭스 뷰 (v_issue_geopolitical_risk_matrix) Top 5")
+    print("=" * 60)
+    cur.execute("""
+        SELECT attention_gap_rank, issue, public_intensity, total_gov_matches, diplomatic_status
+        FROM v_issue_geopolitical_risk_matrix
+        ORDER BY attention_gap_rank
+        LIMIT 5
+    """)
+    for row in cur.fetchall():
+        print(f"   [Rank {row[0]}] {row[1]:<25} intensity={row[2]:.1f} | gov={row[3]}건 | {row[4]}")
+
+    print("\n" + "=" * 60)
+    print("📊 검증 쿼리 8: ADR-001 모델 정확도 감사 뷰 (v_human_in_the_loop_audit)")
+    print("=" * 60)
+    cur.execute("""
+        SELECT language, source_type, total_samples, human_reviewed_count,
+               model_accuracy_pct, llm_over_critical_count
+        FROM v_human_in_the_loop_audit
+    """)
+    for row in cur.fetchall():
+        acc = f"{row[4]:.1f}%" if row[4] is not None else "검수 대기"
+        print(f"   {row[0]}/{row[1]:<15} 전체={row[2]}건 | 검수완료={row[3]}건 | 정확도={acc} | 과잉비판오판={row[5]}건")
 
     cur.close()
 
@@ -888,6 +941,9 @@ def main():
     load_imf_trade(conn)
     load_tone_review_logs(conn)
     load_expert_analysis_extractions(conn)
+
+    print("\n[분석 뷰(Views) 생성]")
+    create_analytics_views(conn)
 
     print_verification_queries(conn)
 

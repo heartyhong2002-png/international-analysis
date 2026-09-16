@@ -69,75 +69,80 @@ MYSQL_DATABASE=international_analysis
 pip install mysql-connector-python python-dotenv
 ```
 
-## 5. DB 스키마 (`international_analysis`)
+## 5. DB 스키마 (`international_analysis`) — 테이블 10종 + 뷰 4종
+
+### 5.1 기본 테이블 (10개)
 
 | 테이블 | Primary/Unique Key | 비고 |
 |---|---|---|
 | `issue_summary` | (issue, collected_date) | 이슈별 intensity/article_count. 날짜별로 누적됨 |
-| `wikipedia_pageviews` | (issue, keyword, date) | 위키백과 일별 조회수 |
-| `gov_announcements` | id (AUTO_INCREMENT), UNIQUE(source, title, pub_date) | 정부 발표 원문 |
-| `issue_gov_match` | (announcement_id, issue) | gov_announcements ↔ issue 다대다 매칭 |
-| `fred_indicators` | (indicator, date) | WTI 유가, 환율, 금리 등 |
-| `sanctions` | (country, collected_date) | OpenSanctions 제재 건수 |
-| `imf_trade` | (pair, year, flow, collected_date) | 국가쌍 수출입 데이터 |
+| `wikipedia_pageviews` | (issue, keyword, date) | 위키백과 일별 조회수 (30일치 시계열) |
+| `gov_announcements` | id (AUTO_INCREMENT), UNIQUE(link(768)) | 외교부/국무부 발표문 원문 (`source_type` 컬럼 포함) |
+| `issue_gov_match` | (announcement_id, issue) | gov_announcements ↔ issue 다대다 매칭 테이블 |
+| `official_statement_extractions` | id (AUTO_INCREMENT), FK(announcement_id) | LLM이 정부 발표문에서 추출한 핵심 주장 및 정책 액션 |
+| `tone_review_log` | id (AUTO_INCREMENT), UNIQUE(article_id, issue_ids) | ADR-001 3단계 휴먼인더루프 톤/감성 검수 로그 (206+건) |
+| `expert_analysis_extractions` | id (AUTO_INCREMENT), UNIQUE(article_id) | 싱크탱크/전문가 칼럼에서 추출한 전망 및 스탠스 데이터 |
+| `fred_indicators` | (indicator, date) | WTI 유가, 환율, 금리 등 거시경제 지표 |
+| `sanctions` | (country, collected_date) | OpenSanctions 제재 건수 통계 |
+| `imf_trade` | (pair, year, flow, collected_date) | 국가쌍 수출입 무역 데이터 |
 
 모든 테이블에 `collected_date`(수집 시점)와 `source_file`(원본 파일 경로)이 있어서 이력
 추적이 가능합니다. `REPLACE INTO`/`INSERT IGNORE` + 위 키 제약으로, 스크립트를 여러 번
-실행해도 중복이 쌓이지 않습니다(멱등성 — 직접 재실행 테스트로 확인함).
+실행해도 중복이 쌓이지 않습니다(멱등성).
 
-### 검증용 샘플 쿼리 (JOIN/GROUP BY)
+---
+
+### 5.2 포트폴리오용 4대 고급 분석 뷰 (`scripts/create_views.sql`)
+
+면접 및 포트폴리오에서 **고급 SQL(Window 함수, CTE, 피벗 조건부 집계)** 역량을 증명하기 위해
+구축된 분석 뷰입니다:
+
+1. **`v_issue_public_vs_gov_daily` (대중 관심도 7일 이동평균 & 외교 대응 시차 뷰)**
+   - **기법**: `AVG() OVER (ROWS 6 PRECEDING)` (7일 이동평균), `LAG()` (전일 대비 증감율 DoD %)
+   - **용도**: 대중의 검색량 급증과 정부의 공식 발표 간의 시계열적 반응 시차(Lag) 분석
+
+2. **`v_issue_media_framing_summary` (언론 성향별 프레이밍 & 톤 분석 뷰)**
+   - **기법**: `CASE WHEN` 피벗 조건부 집계, 톤별 비율(%) 정규화
+   - **용도**: 동일 이슈에 대한 매체 유형(뉴스 vs 현지언론 vs 국영매체) 및 성향(Left, Center, Right)별 보도 톤 비교
+
+3. **`v_human_in_the_loop_audit` (ADR-001 모델 품질 및 정확도 감사 뷰)**
+   - **기법**: 혼동 행렬(Confusion Matrix) 집계, 검수 커버리지 % 및 모델 정확도(Agreement Rate %) 산출
+   - **용도**: LLM 1차 라벨과 사람 2차 검수 간 일치율 측정 및 과잉비판(Over-critical) 오분류 모니터링
+
+4. **`v_issue_geopolitical_risk_matrix` (지정학적 리스크 매트릭스 & 외교 사각지대 뷰)**
+   - **기법**: 다중 CTE(`WITH`), Window 순위 함수 `DENSE_RANK() OVER (ORDER BY intensity DESC, total_gov ASC)`
+   - **용도**: 대중 관심도(`intensity`)는 최상위인데 정부 발표가 전무한 사각지대 이슈(`CRITICAL_GAP`) 자동 탐지
+
+---
+
+### 5.3 포트폴리오/면접 추천 대표 쿼리 (Top 4)
 
 ```sql
--- 이슈별 최신 intensity Top 5
-SELECT issue, intensity, article_count, collected_date
-FROM issue_summary
-WHERE collected_date = (SELECT MAX(collected_date) FROM issue_summary)
-ORDER BY intensity DESC LIMIT 5;
+-- 1. 외교적 사각지대(관심 극대 / 정부 발표 전무) 이슈 Top 5
+SELECT attention_gap_rank, issue, public_intensity, total_gov_matches, diplomatic_status
+FROM v_issue_geopolitical_risk_matrix
+ORDER BY attention_gap_rank LIMIT 5;
 
--- 이슈별 정부 발표 매칭 건수 (JOIN)
-SELECT m.issue, COUNT(*) AS matched_count
-FROM issue_gov_match m
-JOIN gov_announcements g ON g.id = m.announcement_id
-GROUP BY m.issue ORDER BY matched_count DESC;
+-- 2. ADR-001 LLM 모델 분류 정확도 및 인간 검수율
+SELECT language, source_type, total_samples, human_reviewed_count,
+       review_coverage_pct, model_accuracy_pct, llm_over_critical_count
+FROM v_human_in_the_loop_audit;
 
--- 대중 관심(intensity) vs 정부 발표 매칭 비교 (LEFT JOIN + COALESCE)
-SELECT s.issue, s.intensity, COALESCE(g.matched_count, 0) AS gov_matches
-FROM issue_summary s
-LEFT JOIN (
-    SELECT issue, COUNT(*) AS matched_count FROM issue_gov_match GROUP BY issue
-) g ON g.issue = s.issue
-WHERE s.collected_date = (SELECT MAX(collected_date) FROM issue_summary)
-ORDER BY s.intensity DESC LIMIT 10;
+-- 3. 특정 이슈에 대한 매체 성향별(Left/Center/Right) 비판적 보도 비중
+SELECT issue, source_type, outlet_bias, total_articles, critical_pct
+FROM v_issue_media_framing_summary
+WHERE issue = 'Trump_Economy'
+ORDER BY total_articles DESC;
+
+-- 4. 특정 이슈의 일별 대중 관심도 7일 이동평균 및 정부 개입 여부
+SELECT issue, date, total_pageviews, pageviews_7d_ma, dod_growth_pct, gov_reaction_flag
+FROM v_issue_public_vs_gov_daily
+WHERE issue = 'Israel_Palestine' AND date >= '2026-09-01'
+ORDER BY date DESC;
 ```
 
-`build_database.py`를 실행하면 이 세 쿼리를 자동으로 실행해서 콘솔에 결과를 보여줍니다.
-
-### CLI로 직접 확인하는 법
-
-```
-mysql -u root -p international_analysis
-```
-```sql
-SHOW TABLES;
-SELECT 'issue_summary', COUNT(*) FROM issue_summary
-UNION ALL SELECT 'wikipedia_pageviews', COUNT(*) FROM wikipedia_pageviews
-UNION ALL SELECT 'gov_announcements', COUNT(*) FROM gov_announcements
-UNION ALL SELECT 'issue_gov_match', COUNT(*) FROM issue_gov_match
-UNION ALL SELECT 'fred_indicators', COUNT(*) FROM fred_indicators
-UNION ALL SELECT 'sanctions', COUNT(*) FROM sanctions
-UNION ALL SELECT 'imf_trade', COUNT(*) FROM imf_trade;
-```
-
-가장 최근 확인된 결과 (2026-09-08, 수집 2회분 누적):
-```
-issue_summary        42   (이슈 21개 × 수집 2회)
-wikipedia_pageviews 1798
-gov_announcements    113
-issue_gov_match       26  (MOFA 인코딩 버그 수정 후 재수집하면 27로 늘어남 — 아래 6번 참고)
-fred_indicators      900  (처음으로 저장되기 시작한 데이터)
-sanctions              5
-imf_trade             28
-```
+`build_database.py`를 실행하면 데이터 적재 후 위 뷰들을 자동 생성(`create_views.sql`)하고,
+검증 쿼리 결과를 콘솔에 자동으로 출력합니다.
 
 ## 6. 이번 작업 중 실제로 발견/수정한 버그 (중요 — 재발 방지용 기록)
 

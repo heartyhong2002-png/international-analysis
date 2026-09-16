@@ -255,20 +255,96 @@ def tag_article(article: dict) -> dict:
     return article
 
 
+def tag_article_with_source_awareness(article: dict) -> dict:
+    """tag_article()를 그대로 호출하되, source_type이 local_media/expert_analysis인
+    경우엔 "국가는 맞고 이슈 키워드는 안 맞아서 unclassified로 빠진" 케이스를
+    ambiguous로 승격시킨다.
+
+    이유: local_media/expert_analysis는 사람이 직접 골라 붙인 전문 소스라
+    무관한 기사가 섞일 위험이 낮음. "국가만 맞아도" 관련 있을 확률이 높아서
+    LLM 판단에 맡기는 게 더 유용함. news에는 적용 안 함 (무관한 기사 필터링 필요).
+    """
+    article = tag_article(article)
+    if (
+        article.get("source_type") in ("local_media", "expert_analysis")
+        and article.get("tag_status") == "unclassified"
+        and article.get("countries_involved")
+    ):
+        article["tag_status"] = "ambiguous"
+        article["llm_review_needed"] = True
+        article["tag_upgrade_reason"] = "source_aware_upgrade: country matched, issue keyword did not"
+    else:
+        article["tag_upgrade_reason"] = None
+    return article
+
+
 # ============================================================
 # [원래 rss_fetch.py] RSS 수집
 # ============================================================
 
 RSS_FEEDS = [
-    "https://feeds.npr.org/1004/rss.xml",
-    "http://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml",
+    {"url": "https://feeds.npr.org/1004/rss.xml", "source_type": "news", "lang": "en"},
+    {"url": "http://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml", "source_type": "news", "lang": "en"},
 ]
 
+# 현지언론(local_media) + 전문가분석(expert_analysis) 피드 (prototype_local_expert_sources.py에서 병합)
+LOCAL_EXPERT_FEEDS = [
+    {
+        "name": "The Moscow Times (영문판)",
+        "url": "https://www.themoscowtimes.com/rss/news",
+        "source_type": "local_media",
+        "country": "RU",
+        "lang": "en",
+        "orientation": "independent-in-exile (2022년 러시아 내 활동 금지 이후 암스테르담/베를린 기반으로 계속 운영)",
+        "related_issues": ["Ukraine_War", "EU_Russia", "Baltic_Security"],
+    },
+    {
+        "name": "Al-Monitor (중동 전문 매체)",
+        "url": "https://www.al-monitor.com/rss",
+        "source_type": "expert_analysis",
+        "country": "US",
+        "lang": "en",
+        "orientation": "중동 전문 저널리즘 (현지 통신원 기고 모델, 특정 정부 소유 아님)",
+        "related_issues": ["Israel_Palestine", "Iran_Nuclear", "Middle_East_Energy"],
+    },
+    {
+        "name": "Chatham House — Expert Comment",
+        "url": "https://www.chathamhouse.org/path/83/feed.xml",
+        "source_type": "expert_analysis",
+        "country": "GB",
+        "lang": "en",
+        "orientation": "영국 소재 초당파 국제정세 싱크탱크",
+        "related_issues": [],
+    },
+    {
+        "name": "International Crisis Group — Global",
+        "url": "https://www.crisisgroup.org/rss",
+        "source_type": "expert_analysis",
+        "country": "BE",
+        "lang": "en",
+        "orientation": "분쟁 예방 전문 싱크탱크 (CrisisWatch 월간 국가별 추적 운영)",
+        "related_issues": ["Sudan_Conflict", "Ethiopia_Crisis", "Congo_Minerals", "Myanmar_Crisis", "Venezuela_Crisis"],
+    },
+    {
+        "name": "38 North (북한 전문 분석)",
+        "url": "https://www.38north.org/feed/",
+        "source_type": "expert_analysis",
+        "country": "US",
+        "lang": "en",
+        "orientation": "Stimson Center 산하 북한 전문 분석 플랫폼",
+        "related_issues": ["North_Korea_Nuclear"],
+    },
+]
 
-def fetch_articles(feed_urls: list[str] | None = None) -> list[dict]:
-    feed_urls = feed_urls or RSS_FEEDS
+# 통합 피드 목록
+ALL_FEEDS = RSS_FEEDS + LOCAL_EXPERT_FEEDS
+
+
+def fetch_articles(feed_metas: list[dict] | None = None) -> list[dict]:
+    feed_metas = feed_metas or ALL_FEEDS
     articles = []
-    for feed_url in feed_urls:
+    for feed_meta in feed_metas:
+        feed_url = feed_meta["url"] if isinstance(feed_meta, dict) else feed_meta
         parsed_feed = feedparser.parse(feed_url)
         if parsed_feed.bozo:
             print(f"[rss_fetch] 경고: {feed_url} 파싱 중 문제 발생 - {parsed_feed.bozo_exception}")
@@ -281,7 +357,11 @@ def fetch_articles(feed_urls: list[str] | None = None) -> list[dict]:
                 "link": entry.get("link", ""),
                 "published": entry.get("published", ""),
                 "source_url": source_domain,
-                "language": "en",
+                "language": feed_meta.get("lang", "en") if isinstance(feed_meta, dict) else "en",
+                "source_type": feed_meta.get("source_type", "news") if isinstance(feed_meta, dict) else "news",
+                "source_name": feed_meta.get("name", source_domain) if isinstance(feed_meta, dict) else source_domain,
+                "source_orientation": feed_meta.get("orientation") if isinstance(feed_meta, dict) else None,
+                "country": feed_meta.get("country") if isinstance(feed_meta, dict) else None,
             })
     print(f"[rss_fetch] 총 {len(articles)}건 수집")
     return articles
@@ -290,6 +370,66 @@ def fetch_articles(feed_urls: list[str] | None = None) -> list[dict]:
 # ============================================================
 # [원래 ollama_client.py] LLM 구조화 추출 + 톤 분류 (노트북 전용)
 # ============================================================
+
+# 전문가 분석 전용 추출 스키마 (톤 분류 대신)
+EXPERT_ANALYSIS_PROMPT = """다음은 싱크탱크/전문가 분석 글이다. 이 글은 원래부터 주장하는
+글이므로 "우호적/중립적/비판적" 같은 톤 분류는 하지 않는다. 대신 아래 항목을 뽑아라.
+
+기사 제목: {title}
+기사 본문: {summary}
+
+1. author_or_org: 글쓴이 또는 발행 기관명 (모르면 발행처 이름)
+2. key_argument: 이 글의 핵심 주장을 한 문장으로 (narrative 평가 여부와 무관하게 있는 그대로)
+3. forecast: 이 글이 명시적으로 예측/전망하는 내용이 있으면 한 문장으로, 없으면 null
+4. forecast_horizon: 전망이 가리키는 시점 (예: "3개월 내", "2027년 총선 이후" 등), 없으면 null
+5. evidence_basis: 주장의 근거로 든 사실/데이터/사건을 한 가지만 짧게
+6. stance_toward: 이 글이 지지하거나 비판하는 대상(국가/기관/인물명), 다수면 대표 1개, 없으면 null
+
+반드시 아래 JSON 형식으로만 답하라. 다른 설명은 절대 붙이지 마라.
+{{
+  "author_or_org": "...",
+  "key_argument": "...",
+  "forecast": "..." 또는 null,
+  "forecast_horizon": "..." 또는 null,
+  "evidence_basis": "...",
+  "stance_toward": "..." 또는 null
+}}"""
+
+import re
+_JSON_BLOCK_RE = re.compile(r"\{.*\}", re.DOTALL)
+_EXPECTED_EXPERT_KEYS = {
+    "author_or_org", "key_argument", "forecast",
+    "forecast_horizon", "evidence_basis", "stance_toward",
+}
+
+
+def parse_expert_response(raw_text: str) -> dict | None:
+    """EXPERT_ANALYSIS_PROMPT 응답을 파싱. 필수 키가 하나라도 없으면 None을 반환한다."""
+    match = _JSON_BLOCK_RE.search(raw_text)
+    if not match:
+        return None
+    try:
+        data = json.loads(match.group(0))
+    except json.JSONDecodeError:
+        return None
+    if not _EXPECTED_EXPERT_KEYS.issubset(data.keys()):
+        return None
+    return data
+
+
+def extract_expert_argument(article: dict) -> dict:
+    """expert_analysis 기사 하나에 대해 주장/전망 구조화 추출을 수행."""
+    model = MODEL_BY_LANGUAGE.get(article.get("language", "en"), "mistral")
+    prompt = EXPERT_ANALYSIS_PROMPT.format(
+        title=article.get("title", ""),
+        summary=(article.get("summary", "") or "")[:1200],
+    )
+    raw = _call_ollama(model, prompt, temperature=0.3)
+    if isinstance(raw, dict) and _EXPECTED_EXPERT_KEYS.issubset(raw.keys()):
+        article["expert_extraction"] = raw
+    else:
+        article["expert_extraction"] = None
+    return article
 
 OLLAMA_HOST = "http://localhost:11434"
 
@@ -427,8 +567,14 @@ REVIEW_LOG_PATH = DATA_DIR / "review_log.csv"
 
 REVIEW_LOG_FIELDS = [
     "article_id", "language", "issue_ids", "continent", "countries_involved", "tag_status",
-    "llm_review_needed", "source_type", "source_url", "outlet_bias", "title", "link",
-    "llm_label", "llm_evidence_quote", "human_label", "correction_note", "reviewed_at", "collected_at",
+    "tag_upgrade_reason",  # source_aware_upgrade 표시용
+    "llm_review_needed", "source_type", "source_name", "source_url", "source_orientation",
+    "outlet_bias", "country", "title", "link",
+    "llm_label", "llm_evidence_quote",  # local_media 전용 (기존 TONE_PROMPT 재사용)
+    # expert_analysis 전용
+    "author_or_org", "key_argument", "forecast", "forecast_horizon",
+    "evidence_basis", "stance_toward",
+    "human_label", "correction_note", "reviewed_at", "collected_at",
 ]
 
 
@@ -439,19 +585,34 @@ def run(with_llm: bool = False, articles: list[dict] | None = None) -> list[dict
     rows = []
     for article in articles:
         article["article_id"] = str(uuid.uuid4())[:8]
-        article["source_type"] = "news"
+        # source_type은 이미 fetch_articles()에서 설정됨
         article["collected_at"] = datetime.now(timezone.utc).isoformat()
 
-        article = tag_article(article)
+        # source-aware 태깅 적용 (local_media/expert_analysis에만 unclassified→ambiguous 승격)
+        article = tag_article_with_source_awareness(article)
         article = bias_lookup.tag_article(article)
 
-        # tag_status가 'unclassified'(우리 18개 이슈 범위 밖)인 기사는 LLM을 아예 부르지 않는다.
+        # tag_status가 'unclassified'인 기사는 LLM을 아예 부르지 않는다.
         # 실제 수집 결과(review_log.csv)를 보면 NPR+BBC 32건 중 27건이 여기 해당했다 -
         # 이걸 다 LLM에 태우면 7B 모델 기준 건당 15~45초씩 낭비하는 셈이라 자원 낭비가 크다.
         if with_llm and article["tag_status"] != "unclassified":
             try:
-                article = extract_structured(article)
-                article = classify_tone(article)
+                if article["source_type"] == "expert_analysis":
+                    # 전문가 분석: 주장/전망 구조화 추출 (톤 분류 안 함)
+                    article = extract_expert_argument(article)
+                    extraction = article.get("expert_extraction") or {}
+                    article.update({
+                        "author_or_org": extraction.get("author_or_org"),
+                        "key_argument": extraction.get("key_argument"),
+                        "forecast": extraction.get("forecast"),
+                        "forecast_horizon": extraction.get("forecast_horizon"),
+                        "evidence_basis": extraction.get("evidence_basis"),
+                        "stance_toward": extraction.get("stance_toward"),
+                    })
+                else:
+                    # news, local_media: 기존 구조화 추출 + 톤 분류
+                    article = extract_structured(article)
+                    article = classify_tone(article)
             except Exception as e:  # noqa: BLE001 - 프로토타입 단계의 방어적 처리
                 print(f"[pipeline] LLM 처리 실패 ({article.get('title', '')[:30]}...): {e}")
                 article["llm_label"] = None
