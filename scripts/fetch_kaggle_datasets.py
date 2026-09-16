@@ -465,22 +465,169 @@ def download_from_kaggle(dataset_slug: str, target_dir: str) -> bool:
             copied_files.append(item)
 
         print(f"✓ {len(copied_files)}개 파일 로컬 동기화 완료: {target_dir}")
-        return True
     except Exception as e:
         print(f"⚠️ Kaggle 다운로드 중 오류 발생 ({e})")
         return False
 
 
+def search_kaggle_datasets(keyword: str, max_results: int = 5, sort_by: str = "votes") -> list:
+    """Kaggle 공개 Search API를 통해 키워드 기반 데이터셋 검색"""
+    import urllib.parse
+    import requests
+
+    encoded_kw = urllib.parse.quote(keyword)
+    url = f"https://www.kaggle.com/api/v1/datasets/list?search={encoded_kw}&page=1"
+    headers = {"User-Agent": "InternationalAnalysisBot/1.0"}
+
+    try:
+        res = requests.get(url, headers=headers, timeout=10)
+        if res.status_code != 200:
+            print(f"⚠️ 검색 실패 (HTTP {res.status_code}): {keyword}")
+            return []
+        items = res.json()
+    except Exception as e:
+        print(f"⚠️ 검색 요청 에러 ({e}): {keyword}")
+        return []
+
+    results = []
+    for it in items[:max_results]:
+        ref = it.get("ref")
+        if not ref:
+            continue
+        title = it.get("titleNullable") or it.get("title") or ref
+        votes = it.get("voteCount") or it.get("voteCountNullable") or 0
+        downloads = it.get("downloadCount") or 0
+        last_updated = (it.get("lastUpdated") or "")[:10]
+        license_name = it.get("licenseNameNullable") or it.get("licenseName") or "Unknown"
+        usability = it.get("usabilityRating") or it.get("usabilityRatingNullable") or 0.0
+        ds_url = it.get("urlNullable") or f"https://www.kaggle.com/datasets/{ref}"
+
+        results.append({
+            "keyword": keyword,
+            "ref": ref,
+            "title": title,
+            "votes": votes,
+            "downloads": downloads,
+            "usability": round(float(usability), 2),
+            "last_updated": last_updated,
+            "license": license_name,
+            "url": ds_url
+        })
+
+    return results
+
+
+def run_keyword_discovery(config_path: str, max_per_keyword: int = 3, download_top: int = 0) -> pd.DataFrame:
+    """설정 파일 내 모든 카테고리/키워드로 캐글 데이터셋을 자동 탐색하고 리포트 생성"""
+    import json
+
+    if not os.path.exists(config_path):
+        print(f"⚠️ 설정 파일을 찾을 수 없습니다: {config_path}")
+        return pd.DataFrame()
+
+    with open(config_path, "r", encoding="utf-8") as f:
+        cfg = json.load(f)
+
+    categories = cfg.get("categories", {})
+    all_results = []
+
+    print("\n" + "=" * 65)
+    print("🔍 [Kaggle 국제정세 데이터셋 키워드 자동 탐색 시작]")
+    print("=" * 65)
+
+    for cat_name, kw_list in categories.items():
+        print(f"\n📂 [카테고리: {cat_name}] ({len(kw_list)}개 키워드)")
+        for kw in kw_list:
+            items = search_kaggle_datasets(kw, max_results=max_per_keyword)
+            print(f"  • '{kw}': {len(items)}개 데이터셋 포착")
+            for it in items:
+                it["category"] = cat_name
+                all_results.append(it)
+
+    if not all_results:
+        print("\n⚠️ 탐색된 데이터셋이 없습니다.")
+        return pd.DataFrame()
+
+    df = pd.DataFrame(all_results)
+    # 중복 제거 (여러 키워드에 동시 매칭된 데이터셋)
+    df_unique = df.drop_duplicates(subset=["ref"]).sort_values(by=["votes", "downloads"], ascending=False)
+
+    report_dir = os.path.join(PROJECT_ROOT, "data", "sources")
+    os.makedirs(report_dir, exist_ok=True)
+    report_file = os.path.join(report_dir, "kaggle_discovered_datasets.csv")
+    df_unique.to_csv(report_file, index=False, encoding="utf-8-sig")
+
+    print("\n" + "=" * 65)
+    print(f"✨ 탐색 완료! 고유 데이터셋 {len(df_unique)}개 발굴됨")
+    print(f"📊 탐색 결과 리포트 저장: {report_file}")
+    print("=" * 65)
+
+    print("\n🏆 [추천수(Votes) 상위 Top 5 데이터셋]")
+    for idx, row in df_unique.head(5).iterrows():
+        print(f"  [{row['category']}] {row['title']}")
+        print(f"   - 식별자(Slug): {row['ref']}")
+        print(f"   - 추천수: {row['votes']} | 다운로드: {row['downloads']} | 최종수정: {row['last_updated']}")
+        print(f"   - 링크: {row['url']}\n")
+
+    # 상위 N개 자동 다운로드 옵션이 켜져 있는 경우
+    if download_top > 0:
+        print(f"\n📥 상위 {download_top}개 데이터셋 자동 다운로드 시작...")
+        for _, row in df_unique.head(download_top).iterrows():
+            slug = row["ref"]
+            clean_name = slug.replace("/", "_")
+            dl_target = os.path.join(PROJECT_ROOT, "data", "sources", clean_name)
+            download_from_kaggle(slug, dl_target)
+
+    return df_unique
+
+
 def main():
-    parser = argparse.ArgumentParser(description="Kaggle 데이터셋 자동 동기화 및 검증 도구")
+    default_config = os.path.join(PROJECT_ROOT, "config", "kaggle_search_keywords.json")
+
+    parser = argparse.ArgumentParser(description="Kaggle 데이터셋 자동 동기화 및 키워드 탐색 도구")
     parser.add_argument("--dataset", type=str, default=DEFAULT_DATASET,
-                        help=f"Kaggle 데이터셋 슬러그 (기본값: {DEFAULT_DATASET})")
+                        help=f"다운로드할 Kaggle 데이터셋 슬러그 (기본값: {DEFAULT_DATASET})")
     parser.add_argument("--target-dir", type=str, default=DEFAULT_TARGET_DIR,
                         help=f"로컬 저장 경로 (기본값: {DEFAULT_TARGET_DIR})")
     parser.add_argument("--force-seed", action="store_true",
                         help="Kaggle 다운로드를 건너뛰고 내장 시드 데이터를 바로 저장")
+    
+    # 키워드 탐색 모드 인자 추가
+    parser.add_argument("--search", type=str, default=None,
+                        help="특정 단일 키워드로 Kaggle 데이터셋 즉시 검색 (예: --search 'iran nuclear')")
+    parser.add_argument("--search-all", action="store_true",
+                        help="config 파일 내 모든 국제정세 카테고리/키워드로 일괄 탐색 실행")
+    parser.add_argument("--config", type=str, default=default_config,
+                        help=f"키워드 설정 파일 경로 (기본값: {default_config})")
+    parser.add_argument("--download-top", type=int, default=0,
+                        help="--search-all 또는 --search 시 상위 N개 데이터셋 자동 다운로드 (기본값: 0)")
+
     args = parser.parse_args()
 
+    # 1. 단일 키워드 검색 모드
+    if args.search:
+        print(f"\n🔍 [단일 키워드 검색]: '{args.search}'")
+        items = search_kaggle_datasets(args.search, max_results=10)
+        if not items:
+            print("검색 결과가 없습니다.")
+            return
+        df = pd.DataFrame(items)
+        for _, r in df.iterrows():
+            print(f"• {r['title']}")
+            print(f"  - Slug: {r['ref']} | 추천수: {r['votes']} | 다운로드: {r['downloads']} | 수정일: {r['last_updated']}")
+            print(f"  - URL: {r['url']}")
+        if args.download_top > 0:
+            top_item = items[0]
+            dl_dir = os.path.join(PROJECT_ROOT, "data", "sources", top_item["ref"].replace("/", "_"))
+            download_from_kaggle(top_item["ref"], dl_dir)
+        return
+
+    # 2. 전체 카테고리 키워드 일괄 발굴 모드
+    if args.search_all:
+        run_keyword_discovery(args.config, max_per_keyword=3, download_top=args.download_top)
+        return
+
+    # 3. 기본 모드: 지정 데이터셋(Kayhan 아카이브 등) 동기화
     target_dir = os.path.abspath(args.target_dir)
     os.makedirs(target_dir, exist_ok=True)
 
@@ -490,7 +637,6 @@ def main():
 
     manifest_path = os.path.join(target_dir, "kayhan_issues_manifest.csv")
     if not success or not os.path.exists(manifest_path):
-        # CSV 파일이 없거나 다운로드 실패 시 시드 데이터로 폴백
         manifest_path = seed_fallback(target_dir)
 
     # 매니페스트 무결성 점검

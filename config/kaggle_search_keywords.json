@@ -1,0 +1,36 @@
+{
+  "description": "국제정세 분석 프로젝트용 Kaggle 데이터셋 자동 탐색 키워드 설정",
+  "categories": {
+    "Middle_East": [
+      "iran nuclear",
+      "middle east conflict",
+      "gaza israel conflict",
+      "opec crude oil",
+      "iran sanctions"
+    ],
+    "Asia_Pacific": [
+      "taiwan strait",
+      "semiconductor supply chain",
+      "us china trade war",
+      "south china sea",
+      "north korea missile"
+    ],
+    "Europe_Russia": [
+      "ukraine war",
+      "russia sanctions",
+      "nato defense spending",
+      "europe energy crisis"
+    ],
+    "Americas": [
+      "us mexico border",
+      "venezuela economic crisis",
+      "argentina inflation",
+      "us canada trade"
+    ],
+    "Africa": [
+      "sudan conflict",
+      "critical minerals congo",
+      "ethiopia crisis"
+    ]
+  }
+}
