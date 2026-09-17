@@ -26,6 +26,13 @@ import subprocess
 import sys
 import time
 
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -61,10 +68,14 @@ def main():
                          help="수집 단계(1, 2번)는 건너뛰고 build_database.py만 실행")
     parser.add_argument("--with-kaggle", action="store_true",
                          help="Kaggle 공개 데이터셋(Kayhan 아카이브 등) 자동 다운로드/동기화 실행")
+    parser.add_argument("--skip-us", action="store_true",
+                         help="미국 거시/정치/외교 데이터 수집 생략")
     args = parser.parse_args()
 
     steps = []
     if not args.only_db:
+        if not args.skip_us:
+            steps.append(("미국 종합 시그널 수집 (정치·경제·금융·외교)", "fetch_us_macro_signals.py", []))
         if args.with_kaggle:
             steps.append(("Kaggle 데이터셋 동기화 (Kayhan 등)", "fetch_kaggle_datasets.py", []))
         collector_args = ["--resume"] if args.resume else []
@@ -73,6 +84,7 @@ def main():
         if not args.skip_gov:
             steps.append(("정부 발표 수집 (RSS)", "gov_announcements_collector.py", []))
     steps.append(("MySQL DB로 통합", "build_database.py", []))
+    steps.append(("인터랙티브 HTML 대시보드 생성", "generate_dashboard_v2.py", []))
 
     print("\n" + "=" * 60)
     print("🚀 국제정세 분석 파이프라인 시작")

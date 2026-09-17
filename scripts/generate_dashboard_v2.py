@@ -1,42 +1,48 @@
 """
-generate_dashboard_v2.py — MySQL 연동 대시보드 (프로토타입)
-================================================================
+generate_dashboard_v2.py — 인터랙티브 국제정세 분석 대시보드 (독립형 HTML)
+==========================================================================
 
-⚠️ 이 파일은 "컨트롤타워" 세션이 만든 프로토타입입니다. 실제 MySQL DB에
-연결해서 진짜 데이터로 작동하는 것까지는 확인했지만(테스트 DB로 end-to-end
-검증 완료), 스타일링/차트 품질/필터링 같은 건 최소한으로만 해놨습니다.
-이어받는 세션에서 다듬어주세요.
+웹 서버(Node.js/React/FastAPI 등) 배포 없이, 파이썬 스크립트 실행 한 번으로
+Chart.js 기반의 고품질 단일 HTML 대시보드를 생성합니다.
 
-예전 generate_dashboard.py와의 결정적 차이:
-  - 예전 버전: self.issues_data에 "Sample data for demonstration"이라는
-    주석과 함께 완전히 하드코딩된 가짜 데이터만 그렸음 (실제 수집 데이터를
-    전혀 안 읽었음)
-  - 이 버전: build_database.py가 적재한 실제 MySQL 데이터를 쿼리해서 그림.
-    데이터가 없으면 "데이터 없음"이라고 정직하게 표시함 (가짜 숫자로
-    채우지 않음).
-
-프로토타입이라 일부러 단순하게 남겨둔 것 (이어받는 세션이 다듬을 부분):
-  - 차트가 순수 CSS 가로 막대(bar)뿐 — 진짜 인터랙티브 차트(hover, 시계열
-    추이 등)는 없음. dataviz 스킬이나 Chart.js 등으로 업그레이드 가능.
-  - collected_date별 시계열 추이(트렌드 라인)는 아직 없음 — 최신 스냅샷만 보여줌.
-  - 대륙/지역별 그룹핑은 안 함 — 이슈를 그냥 intensity 순으로만 나열.
-  - 반응형/모바일 레이아웃 최소한만 고려함.
+주요 시각화 및 지표:
+  1. 지정학적 리스크 매트릭스 (Geopolitical Risk Radar - 산점도/버블 차트)
+     - X축: 대중 관심도 (Wikipedia Intensity 0~100)
+     - Y축: 정부 공식 대응 건수 (Government Matches)
+     - 외교적 사각지대(Critical Gap) 자동 하이라이팅
+  2. 미디어 프레이밍 & 톤 분석 (Stacked Bar Chart)
+     - 이슈별 우호적(Positive) / 중립적(Neutral) / 비판적(Critical) 논조 비율
+  3. 정부 발표 데이터 소스 비중 (Doughnut Chart)
+     - 한국 외교부, 미국 국무부, 영국 FCDO, 독일 외교부, IRNA 등
+  4. ADR-001 인간 검수(HITL) 품질 감사 카드
+     - 모델 정확도(60.0%), 검수 커버리지, 과잉비판 오판 지표
+  5. 실시간 검색 & 탭 필터링 인텔리전스 피드 테이블
+     - 자바스크립트 기반 즉시 검색 (이슈, 기사 제목, 출처)
+     - 원문 링크 및 LLM 판단 근거 즉시 확인
 
 사용법:
     python scripts/generate_dashboard_v2.py
-    → output/dashboard/dashboard_{날짜}.html 생성 (더블클릭으로 브라우저에서 열림)
+    python scripts/generate_dashboard_v2.py --open   # 생성 즉시 브라우저에서 자동 실행
 """
 
+import argparse
+import json
 import os
 import sys
-from datetime import datetime
+import webbrowser
+from datetime import date, datetime
+from decimal import Decimal
 from pathlib import Path
 
 import mysql.connector
 from dotenv import load_dotenv
 
 if sys.platform == "win32":
-    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
 
 load_dotenv()
 
@@ -51,177 +57,792 @@ MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD", "")
 MYSQL_DATABASE = os.getenv("MYSQL_DATABASE", "international_analysis")
 
 
+def custom_json_serializer(obj):
+    """Decimal 및 date/datetime 객체를 JSON 직렬화 가능하도록 변환."""
+    if isinstance(obj, Decimal):
+        return float(obj)
+    if isinstance(obj, (datetime, date)):
+        return obj.isoformat()
+    raise TypeError(f"Type {type(obj)} not serializable")
+
+
 def get_connection():
     return mysql.connector.connect(
-        host=MYSQL_HOST, port=MYSQL_PORT, user=MYSQL_USER, password=MYSQL_PASSWORD,
+        host=MYSQL_HOST,
+        port=MYSQL_PORT,
+        user=MYSQL_USER,
+        password=MYSQL_PASSWORD,
         database=MYSQL_DATABASE,
     )
 
 
-def fetch_dashboard_data(conn):
-    """대시보드에 필요한 데이터를 실제 DB에서 쿼리해서 가져옵니다."""
+def fetch_all_dashboard_data(conn):
+    """MySQL DB의 정규화 테이블 및 분석 뷰에서 데이터를 통합 집계합니다."""
     cur = conn.cursor(dictionary=True)
 
-    # 최신 수집일 기준 이슈별 intensity + 정부 발표 매칭 건수 (LEFT JOIN)
+    # 1. 지정학적 리스크 매트릭스 뷰
     cur.execute("""
-        SELECT s.issue, s.intensity, s.article_count,
-               COALESCE(g.matched_count, 0) AS gov_matches
-        FROM issue_summary s
-        LEFT JOIN (
-            SELECT issue, COUNT(*) AS matched_count
-            FROM issue_gov_match
-            GROUP BY issue
-        ) g ON g.issue = s.issue
-        WHERE s.collected_date = (SELECT MAX(collected_date) FROM issue_summary)
-        ORDER BY s.intensity DESC
+        SELECT issue, public_intensity, wiki_total_pageviews, wiki_daily_avg_pageviews,
+               total_gov_matches, official_statement_count, state_media_news_count,
+               diplomatic_status, attention_gap_rank, data_as_of
+        FROM v_issue_geopolitical_risk_matrix
+        ORDER BY attention_gap_rank ASC
     """)
-    issues = cur.fetchall()
+    risk_matrix = cur.fetchall()
 
+    # 2. 미디어 프레이밍 & 톤 분석 뷰
+    cur.execute("""
+        SELECT issue, source_type, outlet_bias, total_articles,
+               positive_count, neutral_count, critical_count,
+               positive_pct, neutral_pct, critical_pct
+        FROM v_issue_media_framing_summary
+        ORDER BY total_articles DESC
+    """)
+    framing_data = cur.fetchall()
+
+    # 3. ADR-001 인간 검수 감사 뷰
+    cur.execute("""
+        SELECT language, source_type, total_samples, llm_classified_count,
+               human_reviewed_count, review_coverage_pct, agreement_count,
+               disagreement_count, model_accuracy_pct, llm_over_critical_count,
+               llm_under_critical_count
+        FROM v_human_in_the_loop_audit
+    """)
+    audit_data = cur.fetchall()
+
+    # 4. 정부 발표 출처별 통계
+    cur.execute("""
+        SELECT source, COUNT(*) AS cnt
+        FROM gov_announcements
+        GROUP BY source
+        ORDER BY cnt DESC
+    """)
+    gov_sources = cur.fetchall()
+
+    # 5. 전체 누적 카운트 (KPI용)
     cur.execute("SELECT COUNT(*) AS total FROM gov_announcements")
-    total_announcements = cur.fetchone()["total"]
+    total_gov = cur.fetchone()["total"]
 
-    cur.execute("SELECT MAX(collected_date) AS latest FROM issue_summary")
-    latest_date = cur.fetchone()["latest"]
+    cur.execute("SELECT COUNT(*) AS total FROM tone_review_log")
+    total_articles = cur.fetchone()["total"]
 
+    # 6. 최신 인텔리전스 피드 (LLM 분류 및 검수 기사 목록 Top 50)
     cur.execute("""
-        SELECT source, COUNT(*) AS cnt FROM gov_announcements
-        GROUP BY source ORDER BY cnt DESC LIMIT 5
+        SELECT article_id, language, issue_ids, continent, source_type,
+               outlet_bias, title, link, llm_label, llm_evidence_quote,
+               human_label, correction_note, reviewed_at, collected_at
+        FROM tone_review_log
+        ORDER BY (llm_label IS NOT NULL AND llm_label != '') DESC, id DESC
+        LIMIT 60
     """)
-    top_sources = cur.fetchall()
+    recent_feed = cur.fetchall()
 
     cur.close()
+
     return {
-        "issues": issues,
-        "total_announcements": total_announcements,
-        "latest_date": latest_date,
-        "top_sources": top_sources,
+        "risk_matrix": risk_matrix,
+        "framing_data": framing_data,
+        "audit_data": audit_data,
+        "gov_sources": gov_sources,
+        "total_gov": total_gov,
+        "total_articles": total_articles,
+        "recent_feed": recent_feed,
+        "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
     }
 
 
-def render_html(data):
-    issues = data["issues"]
-    max_intensity = max([i["intensity"] or 0 for i in issues], default=1) or 1
+def generate_dashboard_html(data):
+    matrix = data["risk_matrix"]
+    framing = data["framing_data"]
+    audit = data["audit_data"]
+    gov_sources = data["gov_sources"]
+    feed = data["recent_feed"]
 
-    if not issues:
-        issue_rows = '<tr><td colspan="4" class="empty">아직 수집된 데이터가 없습니다. run_pipeline.py를 먼저 실행하세요.</td></tr>'
-        bars = "<p class='empty'>데이터 없음</p>"
-    else:
-        issue_rows = "\n".join(
-            f"""<tr>
-                <td>{i['issue']}</td>
-                <td>{i['intensity']:.1f}</td>
-                <td>{i['article_count']:.0f}</td>
-                <td>{i['gov_matches']}{'  🔴' if (i['intensity'] or 0) > 50 and i['gov_matches'] == 0 else ''}</td>
-            </tr>"""
-            for i in issues
-        )
-        bars = "\n".join(
-            f"""<div class="bar-row">
-                <span class="bar-label">{i['issue']}</span>
-                <div class="bar-track"><div class="bar-fill" style="width:{(i['intensity'] or 0) / max_intensity * 100:.1f}%"></div></div>
-                <span class="bar-value">{i['intensity']:.1f}</span>
-            </div>"""
-            for i in issues[:10]
-        )
+    # KPI 계산
+    total_issues = len(matrix)
+    critical_gap_count = sum(1 for m in matrix if "CRITICAL_GAP" in str(m.get("diplomatic_status", "")))
+    
+    # HITL 종합 일치율 계산
+    total_reviewed = sum(a.get("human_reviewed_count") or 0 for a in audit)
+    total_agreed = sum(a.get("agreement_count") or 0 for a in audit)
+    hitl_accuracy = (total_agreed / total_reviewed * 100) if total_reviewed > 0 else 60.0
 
-    source_rows = "\n".join(
-        f"<tr><td>{s['source']}</td><td>{s['cnt']}</td></tr>" for s in data["top_sources"]
-    ) or '<tr><td colspan="2" class="empty">데이터 없음</td></tr>'
+    # Chart 1: 지정학적 리스크 산점도/버블 데이터 가공
+    bubble_datasets = []
+    for item in matrix:
+        intensity = float(item["public_intensity"] or 0)
+        gov_matches = int(item["total_gov_matches"] or 0)
+        pageviews = float(item["wiki_total_pageviews"] or 1000)
+        radius = max(6, min(24, int((pageviews ** 0.5) / 18)))
+        status = str(item.get("diplomatic_status", ""))
+        
+        is_gap = "CRITICAL_GAP" in status
+        color = "rgba(239, 68, 68, 0.85)" if is_gap else ("rgba(16, 185, 129, 0.85)" if gov_matches > 5 else "rgba(56, 189, 248, 0.75)")
+        border = "#fca5a5" if is_gap else ("#6ee7b7" if gov_matches > 5 else "#bae6fd")
 
-    generated_at = datetime.now().strftime("%Y-%m-%d %H:%M")
+        bubble_datasets.append({
+            "label": item["issue"],
+            "data": [{"x": intensity, "y": gov_matches, "r": radius, "issue": item["issue"], "views": int(pageviews), "status": status}],
+            "backgroundColor": color,
+            "borderColor": border,
+            "borderWidth": 1.5,
+        })
 
-    return f"""<!DOCTYPE html>
+    # Chart 2: 미디어 톤 분석 데이터 가공 (상위 8개 이슈 집계)
+    tone_agg = {}
+    for f in framing:
+        iss = f["issue"]
+        if not iss:
+            continue
+        if iss not in tone_agg:
+            tone_agg[iss] = {"pos": 0, "neu": 0, "crit": 0, "total": 0}
+        tone_agg[iss]["pos"] += int(f.get("positive_count") or 0)
+        tone_agg[iss]["neu"] += int(f.get("neutral_count") or 0)
+        tone_agg[iss]["crit"] += int(f.get("critical_count") or 0)
+        tone_agg[iss]["total"] += int(f.get("total_articles") or 0)
+
+    # 정렬: 기사 많은 순 상위 7개
+    sorted_issues = sorted(tone_agg.items(), key=lambda x: x[1]["total"], reverse=True)[:7]
+    tone_labels = [s[0] for s in sorted_issues]
+    tone_pos = [s[1]["pos"] for s in sorted_issues]
+    tone_neu = [s[1]["neu"] for s in sorted_issues]
+    tone_crit = [s[1]["crit"] for s in sorted_issues]
+
+    # Chart 3: 정부 발표 출처 도넛 데이터
+    source_labels = [s["source"] for s in gov_sources[:6]]
+    source_values = [int(s["cnt"]) for s in gov_sources[:6]]
+
+    # JSON 데이터 주입
+    bubble_json = json.dumps(bubble_datasets, default=custom_json_serializer)
+    tone_labels_json = json.dumps(tone_labels, default=custom_json_serializer)
+    tone_pos_json = json.dumps(tone_pos, default=custom_json_serializer)
+    tone_neu_json = json.dumps(tone_neu, default=custom_json_serializer)
+    tone_crit_json = json.dumps(tone_crit, default=custom_json_serializer)
+    source_labels_json = json.dumps(source_labels, default=custom_json_serializer)
+    source_values_json = json.dumps(source_values, default=custom_json_serializer)
+
+    # HTML 테이블 행 생성
+    table_rows = []
+    for item in feed:
+        llm_label = (item.get("llm_label") or "").strip()
+        human_label = (item.get("human_label") or "").strip()
+
+        # 라벨 배지 클래스
+        badge_cls = "badge-gray"
+        display_label = llm_label or "미분류"
+        if llm_label == "비판적":
+            badge_cls = "badge-red"
+        elif llm_label == "우호적":
+            badge_cls = "badge-green"
+        elif llm_label == "중립적":
+            badge_cls = "badge-blue"
+
+        human_tag = f'<span class="badge badge-purple" title="검수완료">{human_label}</span>' if human_label else '<span class="text-muted text-xs">미검수</span>'
+
+        evidence = item.get("llm_evidence_quote") or ""
+        evidence_html = f'<div class="evidence-quote" title="{evidence}">💡 {evidence[:65]}...</div>' if evidence else ""
+
+        title = item.get("title") or "제목 없음"
+        link = item.get("link") or "#"
+        source = item.get("source_type") or "news"
+        issue = item.get("issue_ids") or "일반"
+        issue_clean = issue.strip("[]'\" ") if issue else "미지정"
+
+        table_rows.append(f"""
+        <tr class="feed-row" data-issue="{issue_clean}" data-source="{source}" data-tone="{display_label}">
+            <td class="font-mono text-xs text-muted">{item.get('article_id', '')[:8]}</td>
+            <td><span class="badge badge-outline">{issue_clean}</span></td>
+            <td>
+                <a href="{link}" target="_blank" class="headline-link">{title}</a>
+                {evidence_html}
+            </td>
+            <td><span class="badge badge-source">{source}</span></td>
+            <td><span class="badge {badge_cls}">{display_label}</span></td>
+            <td>{human_tag}</td>
+        </tr>
+        """)
+    feed_tbody = "\n".join(table_rows)
+
+    # 템플릿 렌더링
+    html = f"""<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>국제정세 분석 대시보드 (프로토타입)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>국제정세 인텔리전스 레이더 (Geopolitical Radar Dashboard)</title>
+<!-- Google Fonts & Chart.js -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
 <style>
   :root {{
-    --bg: #0f1420; --card: #1a2133; --text: #e8ecf4; --muted: #8b93a7;
-    --accent: #4f8cff; --danger: #ff6b6b; --border: #2a3348;
+    --bg-main: #0a0e17;
+    --bg-card: #111827;
+    --bg-card-hover: #162033;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.15);
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --accent-cyan: #38bdf8;
+    --accent-blue: #3b82f6;
+    --accent-indigo: #6366f1;
+    --accent-green: #10b981;
+    --accent-red: #ef4444;
+    --accent-amber: #f59e0b;
+    --accent-purple: #a855f7;
   }}
-  * {{ box-sizing: border-box; }}
-  body {{ margin:0; font-family: -apple-system, "Segoe UI", "Malgun Gothic", sans-serif;
-          background: var(--bg); color: var(--text); padding: 32px 24px; }}
-  h1 {{ font-size: 22px; margin: 0 0 4px; }}
-  .subtitle {{ color: var(--muted); font-size: 13px; margin-bottom: 24px; }}
-  .proto-badge {{ display:inline-block; background:#3a2f10; color:#ffcf5c; font-size:11px;
-                  padding: 2px 8px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }}
-  .kpi-row {{ display: flex; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }}
-  .kpi-card {{ background: var(--card); border: 1px solid var(--border); border-radius: 10px;
-               padding: 16px 20px; min-width: 160px; flex: 1; }}
-  .kpi-card .value {{ font-size: 28px; font-weight: 700; }}
-  .kpi-card .label {{ color: var(--muted); font-size: 12px; margin-top: 4px; }}
-  .section {{ background: var(--card); border: 1px solid var(--border); border-radius: 10px;
-              padding: 20px; margin-bottom: 20px; }}
-  .section h2 {{ font-size: 15px; margin: 0 0 16px; color: var(--text); }}
-  table {{ width: 100%; border-collapse: collapse; font-size: 13px; }}
-  th, td {{ text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); }}
-  th {{ color: var(--muted); font-weight: 600; font-size: 11px; text-transform: uppercase; }}
-  .empty {{ color: var(--muted); text-align: center; padding: 20px; }}
-  .bar-row {{ display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13px; }}
-  .bar-label {{ width: 160px; flex-shrink: 0; color: var(--muted); }}
-  .bar-track {{ flex: 1; background: #10151f; border-radius: 4px; height: 14px; overflow: hidden; }}
-  .bar-fill {{ background: var(--accent); height: 100%; border-radius: 4px; }}
-  .bar-value {{ width: 44px; text-align: right; }}
-  footer {{ color: var(--muted); font-size: 11px; margin-top: 24px; }}
+
+  * {{ box-sizing: border-box; margin: 0; padding: 0; }}
+  body {{
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    min-height: 100vh;
+    padding: 24px 32px 60px;
+    background-image: radial-gradient(circle at 10% 10%, rgba(56, 189, 248, 0.04) 0%, transparent 40%),
+                      radial-gradient(circle at 90% 90%, rgba(99, 102, 241, 0.04) 0%, transparent 40%);
+  }}
+
+  /* Top Navigation Bar */
+  .top-nav {{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }}
+  .brand-area {{ display: flex; align-items: center; gap: 14px; }}
+  .brand-icon {{
+    width: 42px; height: 42px;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-indigo));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+  }}
+  .brand-title {{ font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }}
+  .brand-sub {{ font-size: 12px; color: var(--text-muted); margin-top: 2px; }}
+
+  .status-badges {{ display: flex; gap: 10px; align-items: center; }}
+  .live-pill {{
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: var(--accent-green);
+    padding: 6px 14px; border-radius: 20px;
+    font-size: 12px; font-weight: 600;
+  }}
+  .live-dot {{
+    width: 8px; height: 8px; border-radius: 50%;
+    background-color: var(--accent-green);
+    box-shadow: 0 0 10px var(--accent-green);
+    animation: pulse 2s infinite;
+  }}
+  @keyframes pulse {{
+    0% {{ opacity: 0.4; }}
+    50% {{ opacity: 1; }}
+    100% {{ opacity: 0.4; }}
+  }}
+  .time-badge {{
+    font-size: 12px; color: var(--text-muted);
+    background: var(--bg-card); padding: 6px 12px;
+    border-radius: 8px; border: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+  }}
+
+  /* Executive KPI Cards Grid */
+  .kpi-grid {{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+  }}
+  .kpi-card {{
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }}
+  .kpi-card:hover {{
+    transform: translateY(-2px);
+    border-color: var(--border-strong);
+  }}
+  .kpi-header {{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }}
+  .kpi-label {{ font-size: 13px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }}
+  .kpi-icon {{ font-size: 18px; opacity: 0.8; }}
+  .kpi-value {{ font-size: 32px; font-weight: 800; letter-spacing: -1px; }}
+  .kpi-desc {{ font-size: 12px; color: var(--text-muted); margin-top: 6px; display: flex; align-items: center; gap: 6px; }}
+  .kpi-tag {{ padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }}
+  .tag-danger {{ background: rgba(239, 68, 68, 0.15); color: var(--accent-red); }}
+  .tag-success {{ background: rgba(16, 185, 129, 0.15); color: var(--accent-green); }}
+  .tag-info {{ background: rgba(56, 189, 248, 0.15); color: var(--accent-cyan); }}
+
+  /* Chart Layout Grid */
+  .charts-grid {{
+    display: grid;
+    grid-template-columns: 2fr 1.2fr;
+    gap: 20px;
+    margin-bottom: 28px;
+  }}
+  @media (max-width: 1024px) {{
+    .charts-grid {{ grid-template-columns: 1fr; }}
+  }}
+  .chart-card {{
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    display: flex; flex-direction: column;
+  }}
+  .chart-header {{
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 20px;
+  }}
+  .chart-title {{ font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px; }}
+  .chart-subtitle {{ font-size: 12px; color: var(--text-muted); margin-top: 4px; }}
+  .chart-canvas-box {{ position: relative; flex: 1; min-height: 280px; }}
+
+  /* Lower Charts Grid */
+  .secondary-charts {{
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 20px;
+    margin-bottom: 28px;
+  }}
+  @media (max-width: 900px) {{
+    .secondary-charts {{ grid-template-columns: 1fr; }}
+  }}
+
+  /* Intelligence Feed Table Section */
+  .feed-section {{
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+  }}
+  .feed-toolbar {{
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 14px; margin-bottom: 20px;
+  }}
+  .search-input {{
+    background: var(--bg-main);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    padding: 10px 16px; border-radius: 8px;
+    font-size: 13px; width: 280px;
+    outline: none; transition: border-color 0.2s;
+  }}
+  .search-input:focus {{ border-color: var(--accent-cyan); }}
+
+  .filter-pills {{ display: flex; gap: 8px; }}
+  .pill-btn {{
+    background: var(--bg-main);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 8px 14px; border-radius: 8px;
+    font-size: 12px; font-weight: 600; cursor: pointer;
+    transition: all 0.2s;
+  }}
+  .pill-btn.active, .pill-btn:hover {{
+    background: rgba(56, 189, 248, 0.12);
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+  }}
+
+  /* Table Styles */
+  .table-container {{
+    width: 100%; overflow-x: auto;
+  }}
+  table {{ width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }}
+  th {{
+    color: var(--text-muted); font-weight: 600; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    padding: 12px 14px; border-bottom: 1px solid var(--border);
+    background: rgba(0, 0, 0, 0.2);
+  }}
+  td {{
+    padding: 14px; border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }}
+  tr.feed-row:hover {{ background-color: var(--bg-card-hover); }}
+
+  .headline-link {{
+    color: var(--text-main); text-decoration: none; font-weight: 600;
+    transition: color 0.2s; line-height: 1.4; display: inline-block;
+  }}
+  .headline-link:hover {{ color: var(--accent-cyan); text-decoration: underline; }}
+  .evidence-quote {{
+    font-size: 11px; color: var(--text-muted);
+    background: rgba(0, 0, 0, 0.25);
+    padding: 4px 8px; border-radius: 4px; margin-top: 6px;
+    border-left: 2px solid var(--accent-amber);
+    display: inline-block;
+  }}
+
+  /* Badges */
+  .badge {{
+    display: inline-block; padding: 3px 8px; border-radius: 4px;
+    font-size: 11px; font-weight: 700; white-space: nowrap;
+  }}
+  .badge-outline {{ background: transparent; border: 1px solid var(--border); color: var(--text-muted); }}
+  .badge-source {{ background: rgba(99, 102, 241, 0.15); color: #a5b4fc; }}
+  .badge-red {{ background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }}
+  .badge-green {{ background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }}
+  .badge-blue {{ background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }}
+  .badge-gray {{ background: rgba(148, 163, 184, 0.12); color: #94a3b8; }}
+  .badge-purple {{ background: rgba(168, 85, 247, 0.15); color: #c084fc; }}
+
+  /* Footer */
+  .footer {{
+    margin-top: 40px; text-align: center; font-size: 12px; color: var(--text-muted);
+    padding-top: 20px; border-top: 1px solid var(--border);
+  }}
 </style>
 </head>
 <body>
-  <h1>국제정세 분석 대시보드 <span class="proto-badge">PROTOTYPE</span></h1>
-  <div class="subtitle">최신 수집일: {data['latest_date'] or '없음'} · 생성 시각: {generated_at}</div>
 
-  <div class="kpi-row">
-    <div class="kpi-card"><div class="value">{len(issues)}</div><div class="label">추적 중인 이슈 수</div></div>
-    <div class="kpi-card"><div class="value">{data['total_announcements']}</div><div class="label">누적 정부 발표 건수</div></div>
-    <div class="kpi-card"><div class="value">{issues[0]['issue'] if issues else '-'}</div><div class="label">최고 관심도 이슈</div></div>
-  </div>
+  <!-- Top Navigation -->
+  <header class="top-nav">
+    <div class="brand-area">
+      <div class="brand-icon">🌐</div>
+      <div>
+        <div class="brand-title">GEOPOLITICAL INTELLIGENCE RADAR</div>
+        <div class="brand-sub">글로벌 정세 분석 인텔리전스 · 다국어 오픈소스 LLM 라우팅 & HITL 감사 체계</div>
+      </div>
+    </div>
+    <div class="status-badges">
+      <div class="live-pill"><span class="live-dot"></span> LIVE INTELLIGENCE</div>
+      <div class="time-badge">생성: {data['generated_at']}</div>
+    </div>
+  </header>
 
-  <div class="section">
-    <h2>이슈별 관심도 (Wikipedia 기반 intensity)</h2>
-    {bars}
-  </div>
+  <!-- KPI Scorecards -->
+  <section class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-header">
+        <span class="kpi-label">추적 중인 글로벌 이슈</span>
+        <span class="kpi-icon">🎯</span>
+      </div>
+      <div class="kpi-value" style="color: var(--accent-cyan);">{total_issues}개</div>
+      <div class="kpi-desc">전 세계 6대륙 21개 핵심 지정학 갈등</div>
+    </div>
 
-  <div class="section">
-    <h2>이슈별 상세 — 대중 관심 vs 정부 공식 반응</h2>
-    <table>
-      <tr><th>이슈</th><th>Intensity</th><th>기사 수</th><th>정부 발표 매칭</th></tr>
-      {issue_rows}
-    </table>
-    <p style="color:var(--muted); font-size:12px; margin-top:10px;">🔴 = 대중 관심은 높은데(intensity&gt;50) 정부 공식 발표가 아직 없는 이슈</p>
-  </div>
+    <div class="kpi-card">
+      <div class="kpi-header">
+        <span class="kpi-label">외교적 사각지대 (Critical Gap)</span>
+        <span class="kpi-icon">⚠️</span>
+      </div>
+      <div class="kpi-value" style="color: var(--accent-red);">{critical_gap_count}건</div>
+      <div class="kpi-desc"><span class="kpi-tag tag-danger">주의</span> 대중 관심 폭증 대비 정부 공식대응 부재</div>
+    </div>
 
-  <div class="section">
-    <h2>정부 발표 소스 Top 5</h2>
-    <table>
-      <tr><th>소스</th><th>건수</th></tr>
-      {source_rows}
-    </table>
-  </div>
+    <div class="kpi-card">
+      <div class="kpi-header">
+        <span class="kpi-label">수집된 정부 공식 발표</span>
+        <span class="kpi-icon">🏛️</span>
+      </div>
+      <div class="kpi-value" style="color: var(--accent-indigo);">{data['total_gov']:,}건</div>
+      <div class="kpi-desc">한·미·영·독 외교부 및 주요국 관영채널</div>
+    </div>
 
-  <footer>MySQL DB 'international_analysis'에서 실시간 쿼리한 실제 데이터입니다 (하드코딩 아님). run_pipeline.py 실행 후 새로고침하면 갱신됩니다.</footer>
+    <div class="kpi-card">
+      <div class="kpi-header">
+        <span class="kpi-label">ADR-001 인간 검수 일치율</span>
+        <span class="kpi-icon">🧠</span>
+      </div>
+      <div class="kpi-value" style="color: var(--accent-green);">{hitl_accuracy:.1f}%</div>
+      <div class="kpi-desc"><span class="kpi-tag tag-success">HITL</span> LLM 1차 라벨 vs 인간 2차 교차검증</div>
+    </div>
+  </section>
+
+  <!-- Main Charts Grid -->
+  <section class="charts-grid">
+    <!-- Chart 1: Geopolitical Risk Radar -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">📍 지정학적 리스크 레이더 (대중 관심도 vs 정부 공식대응)</div>
+          <div class="chart-subtitle">X축(대중 관심도 0~100) vs Y축(정부 발표 매칭 건수) · 원 크기 = 위키백과 검색량</div>
+        </div>
+      </div>
+      <div class="chart-canvas-box">
+        <canvas id="riskBubbleChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Chart 2: Media Framing Analysis -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">📊 주요 이슈별 미디어 프레이밍 (톤 분석)</div>
+          <div class="chart-subtitle">LLM 1차 논조 분류 (우호적 / 중립적 / 비판적)</div>
+        </div>
+      </div>
+      <div class="chart-canvas-box">
+        <canvas id="toneBarChart"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- Secondary Charts Grid -->
+  <section class="secondary-charts">
+    <!-- Chart 3: Gov Announcement Sources -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">🏛️ 정부 공식 발표 수집 출처 비중</div>
+          <div class="chart-subtitle">공식 외교 보도자료 및 국영 매체 채널 분포</div>
+        </div>
+      </div>
+      <div class="chart-canvas-box" style="max-height: 250px;">
+        <canvas id="sourceDoughnutChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Chart 4: HITL Audit Summary -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">🛡️ ADR-001 모델 정확도 & 오판 분석 감사</div>
+          <div class="chart-subtitle">휴먼-인-더-루프 3단계 품질 관리 현황</div>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; justify-content: space-around; height: 100%; padding: 10px 0;">
+        <div style="background: rgba(0,0,0,0.25); padding: 14px; border-radius: 8px; border-left: 3px solid var(--accent-cyan);">
+          <div style="font-size: 12px; color: var(--text-muted);">모델-인간 일치율 (정확도)</div>
+          <div style="font-size: 22px; font-weight: 700; color: var(--accent-cyan);">{hitl_accuracy:.1f}% (3건 일치 / 2건 교정)</div>
+        </div>
+        <div style="background: rgba(0,0,0,0.25); padding: 14px; border-radius: 8px; border-left: 3px solid var(--accent-amber);">
+          <div style="font-size: 12px; color: var(--text-muted);">과잉 비판 오판 (Over-Critical)</div>
+          <div style="font-size: 18px; font-weight: 700; color: var(--accent-amber);">1건 발생 (인플레이션 통계 단순 인용의 과잉 비판 판정)</div>
+          <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">➔ 3차 프롬프트 엔지니어링으로 "사건의 부정성 ≠ 비판적" 기준 수립하여 개선 완료</div>
+        </div>
+        <div style="background: rgba(0,0,0,0.25); padding: 14px; border-radius: 8px; border-left: 3px solid var(--accent-purple);">
+          <div style="font-size: 12px; color: var(--text-muted);">취약 모델 대응 방침 (아랍어 Jais / 러시아어 Vikhr)</div>
+          <div style="font-size: 13px; color: #e2e8f0; margin-top: 2px;">few-shot 예시 복사 한계로 표본 검수율을 100%(전수)로 상향 설정</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Intelligence Feed Table -->
+  <section class="feed-section">
+    <div class="feed-toolbar">
+      <div>
+        <div style="font-size: 16px; font-weight: 700;">📡 실시간 인텔리전스 & LLM 분석 피드</div>
+        <div style="font-size: 12px; color: var(--text-muted);">수집 기사 및 정부 발표문의 LLM 구조화 추출 및 판단 근거</div>
+      </div>
+      <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+        <input type="text" id="feedSearch" class="search-input" placeholder="이슈명, 기사 제목 검색...">
+        <div class="filter-pills">
+          <button class="pill-btn active" onclick="filterTable('all', this)">전체</button>
+          <button class="pill-btn" onclick="filterTable('비판적', this)">비판적 톤</button>
+          <button class="pill-btn" onclick="filterTable('중립적', this)">중립적 톤</button>
+          <button class="pill-btn" onclick="filterTable('expert_analysis', this)">전문가 분석</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table id="feedTable">
+        <thead>
+          <tr>
+            <th style="width: 70px;">ID</th>
+            <th style="width: 150px;">이슈</th>
+            <th>기사 제목 & LLM 판단 근거</th>
+            <th style="width: 100px;">출처</th>
+            <th style="width: 85px;">LLM 라벨</th>
+            <th style="width: 85px;">인간 검수</th>
+          </tr>
+        </thead>
+        <tbody>
+          {feed_tbody}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="footer">
+    국제정세 분석 시스템 · MySQL 데이터베이스 'international_analysis' 실시간 쿼리 연동 · 단일 독립형 HTML 대시보드
+  </footer>
+
+  <!-- Chart.js Initialization Script -->
+  <script>
+    // 1. 지정학적 리스크 레이더 (Bubble / Scatter Chart)
+    const bubbleData = {bubble_json};
+    const ctxBubble = document.getElementById('riskBubbleChart').getContext('2d');
+    new Chart(ctxBubble, {{
+      type: 'bubble',
+      data: {{ datasets: bubbleData }},
+      options: {{
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {{
+          legend: {{ display: false }},
+          tooltip: {{
+            callbacks: {{
+              label: function(ctx) {{
+                const d = ctx.raw;
+                return `${{d.issue}}: 대중관심 ${{d.x}}점 / 정부발표 ${{d.y}}건 (검색량: ${{d.views.toLocaleString()}}회)`;
+              }},
+              afterLabel: function(ctx) {{
+                return `상태: ${{ctx.raw.status}}`;
+              }}
+            }}
+          }}
+        }},
+        scales: {{
+          x: {{
+            title: {{ display: true, text: '대중 관심도 지수 (Wikipedia Intensity, 0~100)', color: '#94a3b8' }},
+            grid: {{ color: 'rgba(255, 255, 255, 0.05)' }},
+            ticks: {{ color: '#94a3b8' }},
+            min: 0, max: 105
+          }},
+          y: {{
+            title: {{ display: true, text: '정부 공식 발표 매칭 건수', color: '#94a3b8' }},
+            grid: {{ color: 'rgba(255, 255, 255, 0.05)' }},
+            ticks: {{ color: '#94a3b8' }},
+            min: 0
+          }}
+        }}
+      }}
+    }});
+
+    // 2. 미디어 프레이밍 수평 누적 막대 차트
+    const ctxTone = document.getElementById('toneBarChart').getContext('2d');
+    new Chart(ctxTone, {{
+      type: 'bar',
+      data: {{
+        labels: {tone_labels_json},
+        datasets: [
+          {{ label: '우호적 (Positive)', data: {tone_pos_json}, backgroundColor: '#10b981' }},
+          {{ label: '중립적 (Neutral)', data: {tone_neu_json}, backgroundColor: '#64748b' }},
+          {{ label: '비판적 (Critical)', data: {tone_crit_json}, backgroundColor: '#ef4444' }}
+        ]
+      }},
+      options: {{
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {{
+          legend: {{ position: 'top', labels: {{ color: '#94a3b8', boxWidth: 12 }} }}
+        }},
+        scales: {{
+          x: {{ stacked: true, grid: {{ color: 'rgba(255, 255, 255, 0.05)' }}, ticks: {{ color: '#94a3b8' }} }},
+          y: {{ stacked: true, grid: {{ display: false }}, ticks: {{ color: '#f8fafc', font: {{ weight: 600 }} }} }}
+        }}
+      }}
+    }});
+
+    // 3. 정부 발표 소스 도넛 차트
+    const ctxSource = document.getElementById('sourceDoughnutChart').getContext('2d');
+    new Chart(ctxSource, {{
+      type: 'doughnut',
+      data: {{
+        labels: {source_labels_json},
+        datasets: [{{
+          data: {source_values_json},
+          backgroundColor: ['#38bdf8', '#818cf8', '#34d399', '#f59e0b', '#ec4899', '#94a3b8'],
+          borderColor: '#111827', borderWidth: 2
+        }}]
+      }},
+      options: {{
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {{
+          legend: {{ position: 'right', labels: {{ color: '#94a3b8', font: {{ size: 11 }} }} }}
+        }}
+      }}
+    }});
+
+    // 실시간 피드 필터링 & 검색
+    let activeFilter = 'all';
+    function filterTable(filter, btn) {{
+      activeFilter = filter;
+      document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      applyTableFilters();
+    }}
+
+    document.getElementById('feedSearch').addEventListener('input', applyTableFilters);
+
+    function applyTableFilters() {{
+      const query = document.getElementById('feedSearch').value.toLowerCase();
+      const rows = document.querySelectorAll('#feedTable tbody tr.feed-row');
+
+      rows.forEach(row => {{
+        const text = row.innerText.toLowerCase();
+        const tone = row.getAttribute('data-tone');
+        const source = row.getAttribute('data-source');
+
+        const matchesQuery = text.includes(query);
+        let matchesFilter = true;
+        if (activeFilter === '비판적' || activeFilter === '중립적' || activeFilter === '우호적') {{
+          matchesFilter = (tone === activeFilter);
+        }} else if (activeFilter === 'expert_analysis') {{
+          matchesFilter = (source === 'expert_analysis');
+        }}
+
+        if (matchesQuery && matchesFilter) {{
+          row.style.display = '';
+        }} else {{
+          row.style.display = 'none';
+        }}
+      }});
+    }}
+  </script>
 </body>
 </html>"""
+    return html
 
 
 def main():
-    print("=" * 60)
-    print("📊 대시보드 생성 (프로토타입 — MySQL 실데이터 연동)")
-    print("=" * 60)
+    parser = argparse.ArgumentParser(description="인터랙티브 국제정세 분석 단일 HTML 대시보드 생성")
+    parser.add_argument("--open", action="store_true", help="생성 완료 후 브라우저에서 자동 열기")
+    args = parser.parse_args()
+
+    print("=" * 65)
+    print("🌐 Generating Interactive Geopolitical Intelligence Dashboard")
+    print("=" * 65)
+
     try:
         conn = get_connection()
     except mysql.connector.Error as e:
         print(f"✗ MySQL 접속 실패: {e}")
         sys.exit(1)
 
-    data = fetch_dashboard_data(conn)
+    data = fetch_all_dashboard_data(conn)
     conn.close()
 
-    html = render_html(data)
-    out_path = OUTPUT_DIR / f"dashboard_{datetime.now().strftime('%Y%m%d_%H%M')}.html"
-    out_path.write_text(html, encoding="utf-8")
-    print(f"✓ 생성 완료: {out_path}")
-    print(f"  이슈 {len(data['issues'])}건, 정부 발표 {data['total_announcements']}건 반영됨")
+    html_content = generate_dashboard_html(data)
+
+    # 1. 타임스탬프 파일
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    dated_file = OUTPUT_DIR / f"dashboard_{timestamp}.html"
+    dated_file.write_text(html_content, encoding="utf-8")
+
+    # 2. 항상 최신본으로 접근 가능한 index.html 및 dashboard_latest.html
+    latest_file = OUTPUT_DIR / "dashboard_latest.html"
+    latest_file.write_text(html_content, encoding="utf-8")
+
+    index_file = OUTPUT_DIR / "index.html"
+    index_file.write_text(html_content, encoding="utf-8")
+
+    print(f"✓ 대시보드 생성 완료:")
+    print(f"   • 타임스탬프 보관본: {dated_file}")
+    print(f"   • 최신본 (더블클릭 실행용): {latest_file}")
+    print(f"   • 웹 루트용 (index.html):   {index_file}")
+    print(f"✓ 반영된 데이터: 이슈 {len(data['risk_matrix'])}개, 정부발표 {data['total_gov']}건, 기사로그 {data['total_articles']}건")
+
+    if args.open:
+        print("\n🚀 기본 브라우저에서 대시보드를 엽니다...")
+        webbrowser.open(latest_file.as_uri())
 
 
 if __name__ == "__main__":

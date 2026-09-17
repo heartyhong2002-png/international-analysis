@@ -48,11 +48,15 @@ jobs:
         run: |
           python scripts/fetch_kaggle_datasets.py
 
-      - name: 5. 이슈 데이터 증분 수집 (Wikipedia, FRED, 제재 등)
+      - name: 5. 미국 종합 시그널 수집 (정치·경제·금융·외교)
+        run: |
+          python scripts/fetch_us_macro_signals.py
+
+      - name: 6. 이슈 데이터 증분 수집 (Wikipedia, FRED, 제재 등)
         run: |
           python scripts/issue_data_collector.py --resume
 
-      - name: 6. 정부 공식 발표 수집 (RSS)
+      - name: 7. 정부 공식 발표 수집 (RSS)
         if: ${{ github.event_name == 'schedule' || !inputs.skip_gov }}
         run: |
           python scripts/gov_announcements_collector.py
