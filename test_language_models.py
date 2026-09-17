@@ -44,9 +44,22 @@ SAMPLES = {
         "title": "美国对进口商品加征关税",
         "summary": "美国政府宣布对进口商品提高关税。分析人士警告称此举可能导致物价上涨。",
     },
+    # 유럽 주요국 (mistral-nemo 검증용)
+    "de": {
+        "title": "USA erheben zusätzliche Zölle auf Importe",
+        "summary": "Die US-Regierung hat zusätzliche Zölle auf Importwaren angekündigt. Analysten warnen vor steigenden Verbraucherpreisen.",
+    },
+    "fr": {
+        "title": "Les États-Unis augmentent les droits de douane sur les importations",
+        "summary": "Le gouvernement américain a annoncé une hausse des droits de douane sur les produits importés. Les analystes mettent en garde contre une hausse des prix.",
+    },
+    "it": {
+        "title": "Gli Stati Uniti aumentano i dazi sulle importazioni",
+        "summary": "Il governo statunitense ha annunciato un aumento dei dazi sui beni importati. Gli analisti mettono in guardia contro il rischio di aumento dei prezzi.",
+    },
 }
 
-TARGET_LANGUAGES = ["ja", "ru", "ar", "en", "ko", "zh"]
+TARGET_LANGUAGES = ["ja", "ru", "ar", "en", "ko", "zh", "de", "fr", "it"]
 
 
 def main():

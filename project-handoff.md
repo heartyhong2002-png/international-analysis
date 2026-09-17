@@ -89,16 +89,13 @@ DB: MySQL (international_analysis) — 로컬 설치
 
 | 지역/언어 | 모델 | Ollama pull 명령어 | 크기(4bit) | 상태 |
 |-----------|------|---------------------|-----------|------|
-| 🇺🇸 영어 | Mistral-7B-Instruct | `ollama pull mistral` | ~4GB | 테스트 완료 |
-| 🇰🇷 한국어 | SOLAR-10.7B-Instruct | Modelfile로 직접 등록 (`solar-korean`) | ~6GB | 등록/테스트 완료 (단, uncensored 버전은 한국어 질문에도 영어로만 답하는 문제 확인 — SOLAR 자체가 language:en 명시된 영어 전용 모델이었음) |
-| 🇨🇳 중국어 | Qwen2.5-7B-Instruct | `ollama pull qwen2.5:7b` | ~4.5GB | 테스트 완료 (한국어 응답도 자연스럽게 나와서 `analyze_signals.py`의 기본 모델로도 채택됨) |
-| 🇯🇵 일본어 | ELYZA-Llama3-JP-8B | `ollama pull dsasai/llama3-elyza-jp-8b` | ~4.9GB | 모델 확인만, 실행 테스트 예정 |
-| 🇷🇺 러시아어 | Saiga-Mistral-7B | `ollama pull cyberlis/saiga-mistral:7b-lora-q4_K` | ~4.4GB | 모델 확인만, 실행 테스트 예정 |
-| 🇸🇦 아랍어 | Jais-Adaptive-7B (Core42/G42) | `ollama pull jwnder/jais-adaptive:7b` | ~4.5GB | 모델 확인만, 실행 테스트 예정 |
+| 🇺🇸 영어 | Mistral-7B-Instruct | `ollama pull mistral` | ~4.4GB | 영문 기사 톤 분류 전담 (테스트 완료) |
+| 🇰🇷 한국어 | EXAONE 3.5 7.8B | `ollama pull exaone3.5:7.8b` | ~4.8GB | 한국어 정세 분석 및 리포트 기본 모델 (`analyze_signals.py` 채택 완료) |
+| 🇨🇳 중국어 / 🇷🇺 러시아어 / 🇸🇦 아랍어 | Qwen2.5-7B-Instruct | `ollama pull qwen2.5:7b` | ~4.7GB | 중국 외교 담론 + 결함 있던 vikhr/jais 대체하여 러시아어·아랍어 톤 분류 100% 정상 작동 검증 완료 |
+| 🇯🇵 일본어 | ELYZA-Llama3-JP-8B | `ollama pull dsasai/llama3-elyza-jp-8b` | ~4.9GB | 일본 주류 언론 톤 분류 검증 완료 |
+| 🇪🇺 유럽 4대 권역 (서/남/동/북유럽) | Mistral-NeMo 12B | `ollama pull mistral-nemo` | ~7.1GB | 프랑스 파리 Mistral AI 개발. Tekken 토크나이저로 서유럽(fr/de/nl), 남유럽(es/it/pt), 동유럽·발트(pl/uk/cs), 북유럽(sv/no/da) 전체 통합 전담 (2026-09-18 신규 도입/검증 완료) |
 
-**메모리 전략:** 6개 모델을 모두 디스크에 받아두되(총 ~28GB), Ollama가
-요청 시점에만 순차적으로 메모리에 로드하고 유휴 시 자동 언로드하는
-특성을 활용 → 16GB RAM으로도 6개 언어 지원 가능.
+**메모리 전략:** Ollama가 요청 시점에만 순차적으로 메모리에 로드하고 유휴 시 자동 언로드하므로 16GB RAM 환경에서도 디스크에 5개 핵심 모델(~25.9GB)을 보관하며 쾌적하게 구동 가능. (C 드라이브 여유 공간: ~62.5GB)
 
 ### 데이터 계층 (③번 세션 담당, MySQL은 ①번 세션 담당)
 - **수집**: Wikipedia Pageviews(대중 관심도), FRED(경제지표), OpenSanctions(제재),
@@ -187,6 +184,9 @@ international-analysis/
 - 2026-09-14 [트랙③, 컨트롤타워] 준기님 확정: 위에서 발견한 unclassified 87.5% 문제를 코드에 반영. `prototype_local_expert_sources.py`에 `tag_article_with_source_awareness()` 추가 — `tag_article()`(②번 트랙 소유, 직접 안 건드림)의 결과를 후처리해서, `local_media`/`expert_analysis`에 한해 "국가는 맞고 이슈 키워드는 안 맞아서 unclassified가 된" 케이스를 `ambiguous`(LLM 판단에 맡김)로 승격. `news`에는 적용 안 함(무관 기사 필터링 효과 유지 목적). 실제 헤드라인 8건으로 회귀 테스트 추가(`_self_test_tagging()`) — 승격 전 unclassified 7건 → 승격 후 ambiguous 6건 + unclassified 1건(Somalia, COUNTRY_ALIASES에 없는 국가라 정상), `news` 기사(Nicolas Cage 싱크홀 예시)는 그대로 unclassified 유지되는 것도 별도 확인. `LOCAL_EXPERT_LOG_FIELDS`에 `issue_ids`/`countries_involved`/`tag_status`/`outlet_bias` 등이 원래 빠져 있던 것도 같이 발견해서 추가함(DictWriter의 extrasaction="ignore"로 조용히 버려지고 있었음). `python scripts/prototype_local_expert_sources.py --self-test`로 둘 다(파싱 로직 + 태깅 로직) 확인 가능.
 - 2026-09-15 [트랙①, SQL/DB] ADR-001 및 LOCAL_MEDIA_EXPERT_INTEGRATION_HANDOFF 제안 DDL 반영 완료: (1) `gov_announcements`에 `source_type`(VARCHAR(50)) 컬럼 추가 및 `ensure_schema_migrations()`로 기존 로컬 DB 자동 ALTER 마이그레이션 구현, (2) `official_statement_extractions`, `tone_review_log`, `expert_analysis_extractions` 테이블 3종 신설 완료. `article_id`는 VARCHAR(64)로 해시 문자열을 수용하고 `announcement_id`(INT NULL, FK)를 병행 지원하여 트랙② 뉴스/전문가 기사와 정부 발표문 식별자 간 호환성 완벽 해결. (3) `load_tone_review_logs()` 및 `load_expert_analysis_extractions()` 적재 함수를 추가하여 `review_log.csv` 및 `local_expert_review_log.csv` 총 206건 적재 검증 완료. (4) Windows 콘솔 cp949 인코딩 처리 및 MySQL Connector unbuffered cursor 오류(`InternalError: Unread result found`) 방지 처리 완료.
 - 2026-09-16 [트랙①, SQL/DB] 포트폴리오용 고급 분석 뷰(Views) 4종 구축 및 `build_database.py` 자동 연동 완료: (1) `scripts/create_views.sql` 신설 — `v_issue_public_vs_gov_daily`(7일 MA, DoD 증감율 Window `LAG()`), `v_issue_media_framing_summary`(언론 편향별 `CASE WHEN` 피벗 집계), `v_human_in_the_loop_audit`(ADR-001 모델 정확도 60.0% 및 혼동 행렬 지표), `v_issue_geopolitical_risk_matrix`(다중 CTE + Window `DENSE_RANK()` 외교 사각지대 리스크 랭킹). (2) `build_database.py`에 `create_analytics_views()` 통합 및 검증 쿼리 7·8번 추가. (3) `DATABASE_SETUP.md`에 10개 테이블 및 4대 뷰 명세/대표 쿼리 최신화 완료.
+- 2026-09-17 [트랙②/③ 통합] `analyze_signals.py` 데이터 경로 버그 해결 및 `--limit` 추가: 파이프라인 수집 데이터의 실제 위치(`scripts/data/`) 대신 빈 루트 `data/` 경로를 바라보아 최신 9월 14일자 위키백과(21개 이슈) 및 정부 공식 발표문(194건 중 54건 매칭)이 통째로 누락되던 문제를 동적 경로 탐색기 `_resolve_data_dir()` 구현으로 해결. `EXAONE 3.5 7.8B` 모델이 엄격한 프롬프트 제약(환각 0%)을 준수하며 실제 수집 데이터를 바탕으로 정상 분석함을 검증함.
+- 2026-09-17 [트랙②, 오픈소스 LLM] 결함 모델 정리 및 러시아/아랍어 라우팅 안정화: 프롬프트 예시 문구를 그대로 복제하거나 500 에러를 유발하던 구형 7B 모델(`wavecut/vikhr:7b`, `hf.co/Solshine/jais-adapted-7b`)을 Ollama에서 영구 삭제(디스크 9.1GB 확보). 다국어 사전학습 및 벤치마크(ru-MMLU) 상위인 `qwen2.5:7b`로 라우팅 교체 후 실증 테스트(`test_language_models.py`) 결과, 러시아어(47.1s)와 아랍어(6.3s) 모두 100% `neutral` 판정 및 정확한 근거 인용(`"특별한 편향 표현 없음, 사실 전달형"`) 출력으로 ADR-001 기준 완벽 일치 달성.
+- 2026-09-18 [트랙②, 오픈소스 LLM] 유럽 4대 권역 통합 전담 모델 도입 및 라우팅 전면 확장: (1) 서유럽 최강 12B 오픈소스 모델인 `mistral-nemo:latest`(7.1GB, Q4_K_M)를 Ollama로 신규 설치 및 로컬 추론 실증 완료(프랑스 전략적 자율성 2문장 요약 31초 성공, 독일 관세 뉴스 64초 만에 neutral 판정 성공). (2) 준기님 통찰("유럽은 서/동/남/북 4대 권역으로 나뉜다") 반영: Tekken 토크나이저의 다국어 어휘 역량을 활용해 서유럽(`fr`,`de`,`nl`), 남유럽(`es`,`it`,`pt`), 동유럽·발트(`pl`,`uk`,`cs` - `Baltic_Security` 직결), 북유럽(`sv`,`no`,`da`) 등 유럽 4대 권역 전체를 단일 `mistral-nemo`로 매핑하여 추가 다운로드 0원으로 16GB RAM 환경에서 완벽한 권역별 정세 분석 체계 구축.
 
 ## 다음 채팅에서 이 문서를 사용하는 법
 

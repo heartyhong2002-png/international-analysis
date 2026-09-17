@@ -438,13 +438,15 @@ MODEL_BY_LANGUAGE = {
     "ko": "exaone3.5:7.8b",
     "zh": "qwen2.5:7b",
     "ja": "dsasai/llama3-elyza-jp-8b",
-    # cyberlis/saiga-mistral:7b-lora-q4_K는 구식 raw-completion 템플릿 방식이라
-    # Ollama 0.34.0의 템플릿 파서와 호환이 안 돼 모든 요청에서 서버가 패닉하는 걸 확인
-    # (2026-09-14, ollama serve 로그의 "interface conversion: parse.Node is nil" 스택트레이스로
-    # 원인 규명). ChatML 스타일 템플릿을 쓰는 이 모델로 교체함 — 크래시는 해결됨, 지시 이해력은
-    # 검증 중 (test_language_models.py로 확인).
-    "ru": "wavecut/vikhr:7b-instruct_0.4-Q4_1",
-    "ar": "hf.co/Solshine/jais-adapted-7b-chat-Q4_K_M-GGUF",
+    # 러시아어: 기존 vikhr/saiga의 프롬프트 복제 및 템플릿 결함을 해결하기 위해
+    # 다국어 및 러시아어 벤치마크(ru-MMLU) 최상위인 qwen2.5:7b로 교체 (2026-09-17)
+    "ru": "qwen2.5:7b",
+    # 아랍어: 기존 jais의 프롬프트 복제 결함 해결을 위해 안정적인 qwen2.5:7b 우선 적용
+    "ar": "qwen2.5:7b",
+    # 유럽 주요국 (프랑스/독일/이탈리아): 유럽 네이티브 12B 모델 mistral-nemo 배치 (2026-09-17)
+    "fr": "mistral-nemo:latest",
+    "de": "mistral-nemo:latest",
+    "it": "mistral-nemo:latest",
 }
 
 EXTRACTION_PROMPT = """다음 뉴스 기사를 읽고, 아래 JSON 형식으로만 답하시오. 설명이나 다른 텍스트는 쓰지 마시오.
