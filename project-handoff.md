@@ -164,6 +164,8 @@ international-analysis/
 - [ ] (③) `analyze_signals.py`를 `run_pipeline.py`에 연결
 - [ ] (③) 대시보드/리포트 자동 생성 — 기존 `generate_dashboard.py`는 하드코딩된
       가짜 데이터만 그리는 죽은 코드라 삭제함, 실제 DB 연동으로 새로 설계 필요
+- [x] ~~3대 모델 교차 검증 합의 엔진 및 Google Fact Check API 연동~~ (`verify_model_consensus.py`, `verify_factcheck_api.py` 완료, 2026-09-18)
+- [ ] (새 세션 / 트랙②·③ 인수인계) AllSides 공식 RSS + 3대 LLM 합의 + Google Fact Check 기반 무개입 자동 벤치마크 검증기(`scripts/auto_benchmark_verifier.py`) 구현 및 실행 — `AUTO_BENCHMARK_VERIFICATION_HANDOFF.md` 참고
 - [ ] 실제 GitHub 저장소에 push 완료 여부 확인
 - [ ] 주간/월간 리포트 자동 발행 스케줄링
 
@@ -188,6 +190,7 @@ international-analysis/
 - 2026-09-17 [트랙②, 오픈소스 LLM] 결함 모델 정리 및 러시아/아랍어 라우팅 안정화: 프롬프트 예시 문구를 그대로 복제하거나 500 에러를 유발하던 구형 7B 모델(`wavecut/vikhr:7b`, `hf.co/Solshine/jais-adapted-7b`)을 Ollama에서 영구 삭제(디스크 9.1GB 확보). 다국어 사전학습 및 벤치마크(ru-MMLU) 상위인 `qwen2.5:7b`로 라우팅 교체 후 실증 테스트(`test_language_models.py`) 결과, 러시아어(47.1s)와 아랍어(6.3s) 모두 100% `neutral` 판정 및 정확한 근거 인용(`"특별한 편향 표현 없음, 사실 전달형"`) 출력으로 ADR-001 기준 완벽 일치 달성.
 - 2026-09-18 [트랙②, 오픈소스 LLM] 유럽 4대 권역 통합 전담 모델 도입 및 라우팅 전면 확장: (1) 서유럽 최강 12B 오픈소스 모델인 `mistral-nemo:latest`(7.1GB, Q4_K_M)를 Ollama로 신규 설치 및 로컬 추론 실증 완료(프랑스 전략적 자율성 2문장 요약 31초 성공, 독일 관세 뉴스 64초 만에 neutral 판정 성공). (2) 준기님 통찰("유럽은 서/동/남/북 4대 권역으로 나뉜다") 반영: Tekken 토크나이저의 다국어 어휘 역량을 활용해 서유럽(`fr`,`de`,`nl`), 남유럽(`es`,`it`,`pt`), 동유럽·발트(`pl`,`uk`,`cs` - `Baltic_Security` 직결), 북유럽(`sv`,`no`,`da`) 등 유럽 4대 권역 전체를 단일 `mistral-nemo`로 매핑하여 추가 다운로드 0원으로 16GB RAM 환경에서 완벽한 권역별 정세 분석 체계 구축.
 - 2026-09-18 [트랙②/③ 통합] 3대 오픈소스 LLM 다자간 교차 검증(Consensus) 엔진 구축 및 Google Fact Check API 연동 완료: (1) 비전문가 주관적 검수 한계 극복을 위해 서방(`mistral`), 아시아(`qwen2.5`), 한국(`exaone3.5`) 3대 독립 모델이 동일 기사를 분석하고 다수결 합의(Consensus)를 도출하는 `scripts/verify_model_consensus.py` 구현. 벤치마크 5건 실증 결과 만장일치(3:0) 80%, 다수결 합의(2:1) 20%, 합의율 100%, 합의 정확도 100% 달성 (Qwen의 단일 오판을 2:1 다수결로 교정한 BM-03 실증). (2) IFCN 공인 팩트체크 기관(Reuters, AFP 등) 검증 데이터와 자동 대조하는 `scripts/verify_factcheck_api.py` 구현 및 연동 완료.
+- 2026-09-18 [트랙③, 컨트롤타워] AllSides 공식 RSS + 3대 모델 앙상블 합의 + Google Fact Check 기반 무개입 자동 검증 파이프라인 설계 및 인수인계 문서(`AUTO_BENCHMARK_VERIFICATION_HANDOFF.md`) 작성 완료. 다음 새 세션이 문서를 보고 바로 `scripts/auto_benchmark_verifier.py`를 구현/실행할 수 있도록 수집 엔드포인트, 채점 로직, 리포트 템플릿 정리.
 
 ## 다음 채팅에서 이 문서를 사용하는 법
 
