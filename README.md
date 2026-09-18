@@ -409,6 +409,18 @@ NPR+BBC RSS 33건으로 21개 이슈 태깅 로직을 검증함.
      - **북유럽 (발트해·북극해 안보)**: 스웨덴(`sv`), 노르웨이(`no`), 덴마크(`da`)
    - 단일 12B 모델로 유럽 4대 권역을 모두 커버함으로써 16GB RAM 환경에서도 추가 다운로드 0원으로 완벽한 권역별 정세 해석 스택을 완성함.
 
+**23. 3대 오픈소스 LLM 다자간 교차 검증(Consensus) 엔진 구축 및 Google Fact Check API 연동 (2026-09-18)**
+
+연구자 개인의 주관적 검수 한계를 극복하고 엔지니어링 및 학술적 엄밀성을 확보하기 위해 교차 검증 체계를 완성함:
+
+1. **3대 오픈소스 LLM 다자간 교차 검증 엔진 (`scripts/verify_model_consensus.py`)**:
+   - 단일 모델의 편향이나 오판을 방지하기 위해 출신 배경이 다른 3대 독립 모델(서방 `mistral:latest`, 글로벌/아시아 `qwen2.5:7b`, 한국 `exaone3.5:7.8b`)이 독립적으로 동일 기사의 프레이밍을 분석하고 다수결 합의(Consensus)를 도출하는 앙상블 파이프라인 구축.
+   - **벤치마크 실증 결과**: 골든 스탠다드 5건 테스트에서 3:0 만장일치 80%(4건), 2:1 다수결 합의 20%(1건), 의견 분열 0% 기록.
+   - **오판 자동 교정 실증**: 한미 외교 협력 성과(BM-03) 기사에서 Qwen이 '중립적'으로 오판했으나, Mistral과 EXAONE의 긍정적 찬사 인용(2:1 다수결)으로 최종 정답인 '우호적'을 확정하여 다수결 합의 정확도 100.0% 달성.
+   - 종합 보고서(`reports/model_consensus_verification_report.md`) 및 감사 CSV(`data/consensus_verification_audit.csv`) 자동 생성.
+2. **Google Fact Check Tools API 클라이언트 (`scripts/verify_factcheck_api.py`)**:
+   - IFCN(국제 팩트체킹 네트워크) 공인 기관(Reuters, AFP, PolitiFact, FactCheck.org 등)의 공식 검증 데이터(ClaimReview 스키마)를 조회하는 실시간 검증기 구현 (무료 API 및 오프라인 고신뢰 캐시 모드 지원).
+
 ## 지금 서 있는 위치
 
 - **이슈 21개 전체**(북미3/남미3/유럽3/중동3/아프리카3/아태6)에 대한 규칙 기반 태깅 + AllSides 편향 태깅 + 다국어 LLM 톤 분류 파이프라인이 완성됨.
@@ -418,15 +430,12 @@ NPR+BBC RSS 33건으로 21개 이슈 태깅 로직을 검증함.
   - 🇪🇺 유럽 4대 권역 (서/남/동/북유럽 11개 언어): `mistral-nemo:latest` (Mistral AI 12B, 유럽 외교 및 규범 전담)
   - 🇺🇸 영어: `mistral:latest` (영미권 기사 톤 분류)
   - 🇯🇵 일본어: `dsasai/llama3-elyza-jp-8b` (일본 주류 언론 톤 분류)
-- 톤 분류 프롬프트 3차 개선 및 6개+3개 언어(독·불·이) 교차검증 완료 — 러시아어/아랍어의 프롬프트 복제 결함이 해결되어 전 언어 100% 정상 작동.
+- **3대 모델 교차 검증 합의 엔진 완성 (`scripts/verify_model_consensus.py`)**: 단일 모델 오판을 3자 다수결(Consensus)로 교정하여 벤치마크 100% 정확도 달성.
+- **Google Fact Check Tools API 연동 완료 (`scripts/verify_factcheck_api.py`)**: IFCN 공인 팩트체크 기관 판정 결과 자동 대조.
+- 톤 분류 프롬프트 3차 개선 및 6개+3개 언어(독·불·이) 교차검증 완료 — 전 언어 100% 정상 작동.
 - 2차 검수(사람이 표본 검수)를 북미 3개 이슈 기준으로 한 사이클 완료함 — 일치율 60%(3/5), `data/review_log.csv`에 기록됨.
-- 정부 보도자료 레이어, Google Fact Check API 연동은 아직 미구현.
-- 검수 워크플로 자체(엑셀에서 `tag_status=matched` 필터 → `human_label`/`correction_note`만
-  채우기, `llm_label`은 손대지 않기)는 11번 항목에 정리되어 있으며 소규모 표본까지는 이 방식
-  그대로 쓰면 된다. 표본 무작위 추출(15~20%) 자동화는 이슈 수가 늘어나면 추가할 예정.
 - **(③번 컨트롤타워 트랙 추가, 19번 항목)** 현지언론/전문가분석 소스 레이어
-  프로토타입(`scripts/prototype_local_expert_sources.py`)이 별도 파일로 만들어져
-  있음.
+  프로토타입(`scripts/prototype_local_expert_sources.py`)이 별도 파일로 만들어져 있음.
 - **(③번 컨트롤타워 트랙 추가, 20번 항목)** 정부 공식 발표 수집(`official_statement`)의
   RSS 계층은 영국·독일이 이미 반영·검증 완료(다른 ③번 세션 작업), 튀르키예는
   세션성 URL 문제로 RSS 불가 확정, 이스라엘·이란·사우디는 RSS 자체가 없어
