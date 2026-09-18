@@ -85,10 +85,16 @@ pip install mysql-connector-python python-dotenv
 | `fred_indicators` | (indicator, date) | WTI 유가, 환율, 금리 등 거시경제 지표 |
 | `sanctions` | (country, collected_date) | OpenSanctions 제재 건수 통계 |
 | `imf_trade` | (pair, year, flow, collected_date) | 국가쌍 수출입 무역 데이터 |
+| `analysis_reports` | (report_type, issue_key, collected_date) | 생성된 정세 분석 리포트 전문(LONGTEXT) 및 데스크톱 저장 경로 |
 
-모든 테이블에 `collected_date`(수집 시점)와 `source_file`(원본 파일 경로)이 있어서 이력
+모든 테이블에 `collected_date`(수집 시점)와 `source_file`(또는 `file_path`)이 있어서 이력
 추적이 가능합니다. `REPLACE INTO`/`INSERT IGNORE` + 위 키 제약으로, 스크립트를 여러 번
 실행해도 중복이 쌓이지 않습니다(멱등성).
+
+> **💡 보고서 자동 저장 위치**:
+> - 데스크톱: `C:\Users\홍준기\Desktop\분석보고서`
+> - 프로젝트 내: `reports/issues/` 및 `reports/`
+> - DB: `international_analysis.analysis_reports` 테이블에 마크다운 전문 및 메타데이터 자동 적재 (`scripts/report_db_saver.py`)
 
 ---
 

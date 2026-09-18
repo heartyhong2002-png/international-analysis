@@ -38,6 +38,17 @@ from datetime import datetime
 import pandas as pd
 import requests
 
+_PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, _PROJECT_ROOT)
+_SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
+if _SCRIPTS_DIR not in sys.path:
+    sys.path.insert(0, _SCRIPTS_DIR)
+try:
+    from report_db_saver import save_report_to_desktop_and_db
+except ImportError:
+    from scripts.report_db_saver import save_report_to_desktop_and_db
+
 def _resolve_data_dir(dir_name: str) -> str:
     # 1. 실행 위치 기준 scripts/data/<dir_name> (프로젝트 루트에서 실행 시 최신 데이터)
     p1 = os.path.join("scripts", "data", dir_name)
@@ -297,12 +308,26 @@ def main():
         + "\n\n---\n\n"
     )
 
+    full_content = header + "\n".join(report_sections)
     with open(report_path, "w", encoding="utf-8") as f:
-        f.write(header + "\n".join(report_sections))
+        f.write(full_content)
 
     print("\n" + "=" * 60)
-    print(f"✅ 리포트 저장 완료: {report_path}")
+    print(f"✅ 프로젝트 리포트 저장 완료: {report_path}")
     print(f"   ({analyzed_count}개 이슈 분석)")
+
+    # 데스크톱 및 DB 저장 연동
+    print("  [DB & 데스크톱 저장] 신호 분석 리포트...")
+    today_dash = datetime.now().strftime("%Y-%m-%d")
+    save_report_to_desktop_and_db(
+        filename=f"analysis_{today}.md",
+        title=f"국제정세 신호 분석 일일 리포트 ({today_dash})",
+        content=full_content,
+        report_type="daily_signals",
+        issue_key="ALL",
+        intensity=None,
+        collected_date=today_dash
+    )
     print("=" * 60)
 
 
