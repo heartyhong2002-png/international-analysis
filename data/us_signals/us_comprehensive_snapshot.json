@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T00:00:43.581729",
+  "updated_at": "2026-09-19T00:02:40.656549",
   "macro_and_finance": {
     "Consumer_Price_Index": {
       "series_id": "CPIAUCSL",
@@ -34,20 +34,20 @@
     "Yield_Curve_Spread_10Y2Y": {
       "series_id": "T10Y2Y",
       "category": "Finance",
-      "value": 0.27,
+      "value": 0.25,
       "prev_value": 0.27,
-      "change": 0.0,
-      "date": "2026-09-17",
+      "change": -0.02,
+      "date": "2026-09-18",
       "description": "장단기 금리차 (10년-2년, 경기침체 선행지표)",
       "unit": "%"
     },
     "Treasury_Yield_10Y": {
       "series_id": "DGS10",
       "category": "Finance",
-      "value": 5.01,
-      "prev_value": 5.0,
-      "change": 0.01,
-      "date": "2026-09-16",
+      "value": 4.94,
+      "prev_value": 5.01,
+      "change": -0.07,
+      "date": "2026-09-17",
       "description": "미 국채 10년물 금리",
       "unit": "%"
     },
@@ -65,9 +65,9 @@
       "series_id": "BAMLH0A0HYM2",
       "category": "Finance",
       "value": 2.7,
-      "prev_value": 2.76,
-      "change": -0.06,
-      "date": "2026-09-16",
+      "prev_value": 2.7,
+      "change": 0.0,
+      "date": "2026-09-17",
       "description": "미국 하이일드 채권 스프레드 (기업 부도/신용 리스크)",
       "unit": "%"
     },
@@ -84,37 +84,47 @@
     "VIX_Volatility_Index": {
       "series_id": "VIXCLS",
       "category": "Finance",
-      "value": 17.71,
-      "prev_value": 17.2,
-      "change": 0.51,
-      "date": "2026-09-16",
+      "value": 15.44,
+      "prev_value": 17.71,
+      "change": -2.27,
+      "date": "2026-09-17",
       "description": "CBOE VIX 변동성지수 (시장 공포 지수)",
       "unit": "Index"
     },
     "SP500_Stock_Index": {
       "series_id": "SP500",
       "category": "Finance",
-      "value": 7551.81,
-      "prev_value": 7585.73,
-      "change": -33.92,
-      "date": "2026-09-16",
+      "value": 7637.76,
+      "prev_value": 7551.81,
+      "change": 85.95,
+      "date": "2026-09-17",
       "description": "S&P 500 주가지수",
       "unit": "Points"
     },
     "Economic_Policy_Uncertainty": {
       "series_id": "USEPUINDXD",
       "category": "Politics",
-      "value": 106.54,
-      "prev_value": 256.32,
-      "change": -149.78,
-      "date": "2026-09-16",
+      "value": 342.15,
+      "prev_value": 179.28,
+      "change": 162.87,
+      "date": "2026-09-17",
       "description": "미국 경제/정치 정책 불확실성 지수",
       "unit": "Index"
     }
   },
   "recent_presidential_actions_count": 30,
-  "recent_diplomatic_statements_count": 44,
+  "recent_diplomatic_statements_count": 45,
   "recent_top_presidential_actions": [
+    {
+      "date": "2026-09-18",
+      "type": "Presidential Document",
+      "title": "Presidential Determination on Major Drug Transit or Major Illicit Drug Producing Countries for Fiscal Year 2027",
+      "executive_order_number": null,
+      "abstract": "",
+      "html_url": "https://www.federalregister.gov/documents/2026/09/18/2026-19251/presidential-determination-on-major-drug-transit-or-major-illicit-drug-producing-countries-for",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-09-18/pdf/2026-19251.pdf",
+      "source": "Federal_Register_Presidential_Documents"
+    },
     {
       "date": "2026-09-16",
       "type": "Presidential Document",
@@ -154,57 +164,47 @@
       "html_url": "https://www.federalregister.gov/documents/2026/09/14/2026-18838/modifying-the-scope-of-products-of-canada-subject-to-the-additional-duties-imposed-to-offset",
       "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-09-14/pdf/2026-18838.pdf",
       "source": "Federal_Register_Presidential_Documents"
-    },
-    {
-      "date": "2026-09-14",
-      "type": "Presidential Document",
-      "title": "Excluding Certain Canadian Products From Importation Into the United States in Response to Continued Discrimination Against the Commerce of the United States With Respect to Motor Vehicles",
-      "executive_order_number": null,
-      "abstract": "",
-      "html_url": "https://www.federalregister.gov/documents/2026/09/14/2026-18837/excluding-certain-canadian-products-from-importation-into-the-united-states-in-response-to-continued",
-      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-09-14/pdf/2026-18837.pdf",
-      "source": "Federal_Register_Presidential_Documents"
     }
   ],
   "recent_top_diplomatic_statements": [
     {
-      "date": "2026-09-17",
+      "date": "2026-09-19",
       "category": "Press_Releases",
-      "title": "Operation Economic Outcast Dismantles Iran’s Sanctions Evasion Network",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/09/operation-economic-outcast-dismantles-irans-sanctions-evasion-network/",
-      "description": "<p>Thomas &quot;Tommy&quot; Pigott, SpokesmanOffice of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block",
-      "source": "US_Department_of_State"
-    },
-    {
-      "date": "2026-09-17",
-      "category": "Press_Releases",
-      "title": "Secretary of State Marco Rubio and Lithuanian Foreign Minister Kęstutis Budrys at the Critical Minerals Framework Memorandum of Understanding Signing Ceremony",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/09/secretary-of-state-marco-rubio-and-lithuanian-foreign-minister-kestutis-budrys-at-the-critical-minerals-framework-memorandum-of-understanding-signing-ceremony/",
-      "description": "<p>Marco Rubio, Secretary of State</p>\n<p>Kęstutis Budrys, Lithuanian Foreign Minister</p>\n<p>Washington, D.C.</p>\n<p>Colin L. Powell Treaty Room</p>\n\n<section class=\"wp-block-default-hero-container w",
-      "source": "US_Department_of_State"
-    },
-    {
-      "date": "2026-09-17",
-      "category": "Press_Releases",
-      "title": "Further Sanctions on Cuba’s Mineral Wealth and Military Modernization Apparatus Fact Sheet",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/09/further-sanctions-on-cubas-mineral-wealth-and-military-modernization-apparatus-fact-sheet/",
-      "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
-      "source": "US_Department_of_State"
-    },
-    {
-      "date": "2026-09-17",
-      "category": "Press_Releases",
-      "title": "Secretary Rubio’s Meeting with Costa Rican Foreign Minister Tovar",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/09/secretary-rubios-meeting-with-costa-rican-foreign-minister-tovar/",
-      "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
-      "source": "US_Department_of_State"
-    },
-    {
-      "date": "2026-09-17",
-      "category": "Press_Releases",
-      "title": "Further Sanctions on Cuba’s Mineral Wealth and Military Modernization Apparatus",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/09/further-sanctions-on-cubas-mineral-wealth-and-military-modernization-apparatus/",
+      "title": "Nepal Constitution Day",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/09/nepal-constitution-day-2/",
       "description": "<p>Marco Rubio, Secretary of State</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-cont",
+      "source": "US_Department_of_State"
+    },
+    {
+      "date": "2026-09-18",
+      "category": "Press_Releases",
+      "title": "Chile National Day",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/09/chile-national-day-2/",
+      "description": "<p>Marco Rubio, Secretary of State</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-cont",
+      "source": "US_Department_of_State"
+    },
+    {
+      "date": "2026-09-18",
+      "category": "Press_Releases",
+      "title": "Appointment of Luke J. Lindberg as Executive Director of UN World Food Program",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/09/appointment-of-luke-j-lindberg-as-executive-director-of-un-world-food-program/",
+      "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
+      "source": "US_Department_of_State"
+    },
+    {
+      "date": "2026-09-18",
+      "category": "Press_Releases",
+      "title": "Secretary Rubio’s Travel to the United Nations for the 81st UN General Assembly High-Level Week",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/09/secretary-rubios-travel-to-the-united-nations-for-the-81st-un-general-assembly-high-level-week/",
+      "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
+      "source": "US_Department_of_State"
+    },
+    {
+      "date": "2026-09-18",
+      "category": "Press_Releases",
+      "title": "Office of the Historian, Bureau of Administration Releases Foreign Relations of the United States, 1981-1988, Volume XVI, South America: Ecuador, Paraguay, Uruguay, and Venezuela Chapters",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/09/office-of-the-historian-bureau-of-administration-releases-foreign-relations-of-the-united-states-1981-1988-volume-xvi-south-america-ecuador-paraguay-uruguay-and-venezuela-chapters/",
+      "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
       "source": "US_Department_of_State"
     }
   ]
