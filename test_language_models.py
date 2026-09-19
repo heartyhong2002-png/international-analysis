@@ -13,6 +13,7 @@ test_language_models.py
 CPU 전용 환경에서는 모델 하나당(특히 8B급) 수십 초~2분 정도 걸릴 수 있다.
 """
 
+import sys
 import time
 
 from prototype_all_in_one import MODEL_BY_LANGUAGE, _call_ollama, TONE_PROMPT
@@ -63,9 +64,10 @@ TARGET_LANGUAGES = ["ja", "ru", "ar", "en", "ko", "zh", "de", "fr", "it"]
 
 
 def main():
+    targets = [arg for arg in sys.argv[1:] if arg in SAMPLES] or TARGET_LANGUAGES
     print(f"{'언어':<6}{'모델':<45}{'결과':<10}{'소요시간':<10}")
     print("-" * 90)
-    for lang in TARGET_LANGUAGES:
+    for lang in targets:
         model = MODEL_BY_LANGUAGE[lang]
         sample = SAMPLES[lang]
         prompt = TONE_PROMPT.format(title=sample["title"], summary=sample["summary"])

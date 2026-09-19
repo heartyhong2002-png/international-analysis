@@ -1,0 +1,51 @@
+{
+  "generated_at": "2026-09-18T16:21:42.083004+00:00",
+  "total_polls": 12,
+  "by_organization": {
+    "Pew Research Center": 6,
+    "ECFR": 3,
+    "Ipsos": 3
+  },
+  "recent_highlights": [
+    {
+      "org": "Pew Research Center",
+      "title": "Politics: Sept. 18",
+      "topic": "Politics: Sept. 18",
+      "metrics": "66%",
+      "implication": "로컬 LLM 정밀 분석 대기 (규칙 기반 수집 완료)",
+      "link": "https://www.pewresearch.org/newsletter/politics/politics-sept-18/"
+    },
+    {
+      "org": "Pew Research Center",
+      "title": "Americans value press freedom but differ on its limits",
+      "topic": "Americans value press freedom but differ on its li",
+      "metrics": "원문 요약 참조",
+      "implication": "로컬 LLM 정밀 분석 대기 (규칙 기반 수집 완료)",
+      "link": "https://www.pewresearch.org/newsletter/the-briefing/americans-value-press-freedom-but-differ-on-its-limits/"
+    },
+    {
+      "org": "Pew Research Center",
+      "title": "Acknowledgments",
+      "topic": "Artificial Intelligence, Global Tech & Cybersecurity, International Technology",
+      "metrics": "원문 요약 참조",
+      "implication": "로컬 LLM 정밀 분석 대기 (규칙 기반 수집 완료)",
+      "link": "https://www.pewresearch.org/global/2026/09/17/acknowledgments-global-ai-2026/"
+    },
+    {
+      "org": "Pew Research Center",
+      "title": "Politics: Sept. 18",
+      "topic": "Politics: Sept. 18",
+      "metrics": "66%",
+      "implication": "로컬 LLM 정밀 분석 대기 (규칙 기반 수집 완료)",
+      "link": "https://www.pewresearch.org/newsletter/politics/politics-sept-18/"
+    },
+    {
+      "org": "Pew Research Center",
+      "title": "Americans value press freedom but differ on its limits",
+      "topic": "Americans value press freedom but differ on its li",
+      "metrics": "원문 요약 참조",
+      "implication": "로컬 LLM 정밀 분석 대기 (규칙 기반 수집 완료)",
+      "link": "https://www.pewresearch.org/newsletter/the-briefing/americans-value-press-freedom-but-differ-on-its-limits/"
+    }
+  ]
+}

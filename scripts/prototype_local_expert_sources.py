@@ -307,7 +307,7 @@ def parse_expert_response(raw_text: str) -> dict | None:
 
 def extract_expert_argument(article: dict) -> dict:
     """expert_analysis 기사 하나에 대해 주장/전망 구조화 추출을 수행."""
-    model = MODEL_BY_LANGUAGE.get(article.get("language", "en"), "mistral")
+    model = MODEL_BY_LANGUAGE.get(article.get("language", "en"), "mistral-nemo:latest")
     prompt = EXPERT_ANALYSIS_PROMPT.format(
         title=article.get("title", ""),
         summary=(article.get("summary", "") or "")[:1200],

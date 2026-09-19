@@ -53,7 +53,7 @@ OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
 
 # 교차 검증에 투입되는 3대 독립 모델
 CONSENSUS_MODELS = [
-    {"name": "mistral:latest", "role": "Western/US Perspective (영미권/서방)", "origin": "Mistral AI (France/US)"},
+    {"name": "mistral-nemo:latest", "role": "Western/US Perspective (영미권/서방)", "origin": "Mistral AI (France/US)"},
     {"name": "qwen2.5:7b", "role": "Multilingual/Asian Perspective (아시아/글로벌)", "origin": "Alibaba (China)"},
     {"name": "exaone3.5:7.8b", "role": "Korean/East Asian Perspective (한국 기준)", "origin": "LG AI Research (Korea)"},
 ]
@@ -426,7 +426,7 @@ def save_audit_report(results: list[dict], summary: dict, mode: str = "benchmark
 - **실행 일시**: {timestamp}
 - **검증 모드**: {mode.upper()}
 - **참여 모델**:
-  - `mistral:latest` (Mistral AI — 영미권/서방 시각)
+  - `mistral-nemo:latest` (Mistral AI — 영미권/서방 시각)
   - `qwen2.5:7b` (Alibaba — 아시아/글로벌 다국어 시각)
   - `exaone3.5:7.8b` (LG AI Research — 한국/동아시아 외교 시각)
 

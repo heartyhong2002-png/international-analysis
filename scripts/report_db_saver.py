@@ -104,14 +104,18 @@ def save_report_to_desktop_and_db(
     if not collected_date:
         collected_date = datetime.now().strftime("%Y-%m-%d")
 
-    # 1. 데스크톱 폴더 확인 및 생성
+    # 1. 데스크톱 폴더 확인 및 생성 (텍스트 파일인 경우에만 write, 바이너리 PDF는 건너뜀)
+    desktop_file_path = DESKTOP_REPORTS_DIR / filename
+    saved_file = str(desktop_file_path)
     try:
         DESKTOP_REPORTS_DIR.mkdir(parents=True, exist_ok=True)
-        desktop_file_path = DESKTOP_REPORTS_DIR / filename
-        with open(desktop_file_path, "w", encoding="utf-8") as f:
-            f.write(content)
-        saved_file = str(desktop_file_path)
-        print(f"  📁 [데스크톱 저장 완료] {saved_file}")
+        if not filename.lower().endswith(".pdf"):
+            with open(desktop_file_path, "w", encoding="utf-8") as f:
+                f.write(content)
+            print(f"  📁 [데스크톱 저장 완료] {saved_file}")
+        else:
+            if desktop_file_path.exists():
+                print(f"  📁 [데스크톱 PDF 확인 완료] {saved_file}")
     except Exception as e:
         print(f"  ⚠️ [데스크톱 저장 실패] {e}")
         saved_file = filename

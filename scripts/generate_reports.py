@@ -895,6 +895,14 @@ def main():
     generator = IssueReportGenerator()
     generator.generate_reports()
 
+    # 정통 GAO 스타일 2페이지 PDF 보고서 및 종합 단행본 PDF 생성
+    try:
+        from pdf_report_generator import GAOPdfGenerator
+        pdf_gen = GAOPdfGenerator()
+        pdf_gen.generate_all_pdfs()
+    except Exception as e:
+        print(f"⚠️  [PDF 자동 생성 실패] {e}")
+
 
 if __name__ == "__main__":
     main()

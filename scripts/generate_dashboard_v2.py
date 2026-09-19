@@ -127,12 +127,24 @@ def fetch_all_dashboard_data(conn):
     total_articles = cur.fetchone()["total"]
 
     # 6. 최신 인텔리전스 피드 (LLM 분류 및 검수 기사 목록 Top 50)
+    # PHASE2_THINKTANK_REDDIT_HANDOFF.md 작업 2 반영: [전문가 분석(Think Tank)] 기사를
+    # 최우선 노출하도록 정렬 1순위에 source_type='expert_analysis' 추가.
+    # ⚠️ 이 클라우드 세션에는 MySQL 접속이 없어 이 쿼리를 실제 DB로 실행 검증하지
+    # 못했습니다. `tone_review_log`에 expert_analysis 행이 실제로 들어오는지는
+    # build_database.py(①SQL 트랙 소유, 이 파일에서 직접 건드리지 않음)의
+    # load_tone_review_logs()/load_expert_analysis_extractions() 구현에 달려 있습니다
+    # — 만약 expert_analysis가 별도 테이블(expert_analysis_extractions)로만 적재되고
+    # tone_review_log에는 전혀 없다면 이 ORDER BY 변경은 안전하게 아무 효과가 없습니다
+    # (에러는 안 남). 로컬에서 대시보드를 열어 "전문가 분석" 필터 탭에 실제로 뭔가
+    # 잡히는지 확인 권장 — 안 잡히면 ①SQL 트랙과 조율해서 두 테이블을 UNION하는
+    # 추가 작업이 필요합니다.
     cur.execute("""
         SELECT article_id, language, issue_ids, continent, source_type,
                outlet_bias, title, link, llm_label, llm_evidence_quote,
                human_label, correction_note, reviewed_at, collected_at
         FROM tone_review_log
-        ORDER BY (llm_label IS NOT NULL AND llm_label != '') DESC, id DESC
+        ORDER BY (source_type = 'expert_analysis') DESC,
+                 (llm_label IS NOT NULL AND llm_label != '') DESC, id DESC
         LIMIT 60
     """)
     recent_feed = cur.fetchall()
@@ -248,6 +260,13 @@ def generate_dashboard_html(data):
         issue = item.get("issue_ids") or "일반"
         issue_clean = issue.strip("[]'\" ") if issue else "미지정"
 
+        # PHASE2_THINKTANK_REDDIT_HANDOFF.md: expert_analysis(싱크탱크)는 일반
+        # badge-source 대신 별도 골드 뱃지로 시각적으로 최우선 강조.
+        if source == "expert_analysis":
+            source_badge = '<span class="badge badge-thinktank">🧠 전문가 분석 (Think Tank)</span>'
+        else:
+            source_badge = f'<span class="badge badge-source">{source}</span>'
+
         table_rows.append(f"""
         <tr class="feed-row" data-issue="{issue_clean}" data-source="{source}" data-tone="{display_label}">
             <td class="font-mono text-xs text-muted">{item.get('article_id', '')[:8]}</td>
@@ -256,7 +275,7 @@ def generate_dashboard_html(data):
                 <a href="{link}" target="_blank" class="headline-link">{title}</a>
                 {evidence_html}
             </td>
-            <td><span class="badge badge-source">{source}</span></td>
+            <td>{source_badge}</td>
             <td><span class="badge {badge_cls}">{display_label}</span></td>
             <td>{human_tag}</td>
         </tr>
@@ -497,6 +516,12 @@ def generate_dashboard_html(data):
   .badge-blue {{ background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }}
   .badge-gray {{ background: rgba(148, 163, 184, 0.12); color: #94a3b8; }}
   .badge-purple {{ background: rgba(168, 85, 247, 0.15); color: #c084fc; }}
+  .badge-thinktank {{
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.18), rgba(245, 158, 11, 0.08));
+    color: var(--accent-amber);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    font-weight: 800;
+  }}
 
   /* Footer */
   .footer {{

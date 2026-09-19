@@ -409,7 +409,7 @@ NPR+BBC RSS 33건으로 21개 이슈 태깅 로직을 검증함.
      - **북유럽 (발트해·북극해 안보)**: 스웨덴(`sv`), 노르웨이(`no`), 덴마크(`da`)
    - 단일 12B 모델로 유럽 4대 권역을 모두 커버함으로써 16GB RAM 환경에서도 추가 다운로드 0원으로 완벽한 권역별 정세 해석 스택을 완성함.
 
-**23. 3대 오픈소스 LLM 다자간 교차 검증(Consensus) 엔진 구축 및 Google Fact Check API 연동 (2026-09-18)**
+23. **3대 오픈소스 LLM 다자간 교차 검증(Consensus) 엔진 구축 및 Google Fact Check API 연동 (2026-09-18)**
 
 연구자 개인의 주관적 검수 한계를 극복하고 엔지니어링 및 학술적 엄밀성을 확보하기 위해 교차 검증 체계를 완성함:
 
@@ -421,17 +421,118 @@ NPR+BBC RSS 33건으로 21개 이슈 태깅 로직을 검증함.
 2. **Google Fact Check Tools API 클라이언트 (`scripts/verify_factcheck_api.py`)**:
    - IFCN(국제 팩트체킹 네트워크) 공인 기관(Reuters, AFP, PolitiFact, FactCheck.org 등)의 공식 검증 데이터(ClaimReview 스키마)를 조회하는 실시간 검증기 구현 (무료 API 및 오프라인 고신뢰 캐시 모드 지원).
 
+**24. 정통 관용 인텔리전스 폼(FBI FD-1036 / FD-71A 모사) 기반 공식 PDF 보고서 엔진 전면 재설계 (2026-09-19)**
+
+정부·정보기관 납품 및 외교안보 정책 브리핑 수준의 최고급 전문성을 확보하기 위해 기밀 해제된 미국 연방수사국(FBI) 공식 인텔리전스 수사·신고 양식(**FORM FD-1036 / FD-71A Guardian Complaint Form**)을 1:1로 정밀 모사한 공식 보고서 엔진을 완성함:
+
+1. **알록달록한 AI/카드뉴스 스타일 탈피 및 정통 공문서 규격 구현 (`scripts/pdf_report_generator.py`)**:
+   - ReportLab Platypus 기반 엔진 구축 및 Windows 시스템 맑은 고딕(`malgun.ttf`/`malgunbd.ttf`) 직접 등록으로 한글 조판 깨짐 없는 고품질 PDF 렌더링.
+   - **Page 1 (공식 표제부 및 사건 징후)**:
+     - 최상단 붉은색 기밀해제 승인 스탬프(`APPROVED FOR PUBLIC RELEASE BY INTELLIGENCE ASSESSMENT DIRECTORATE on 18 September 2026`, Crimson Red `#C8102E`).
+     - 서식 코드 `FORM IA-1036 (Rev. 2026-09)`, 보안분류 `UNCLASSIFIED`, 테두리 공식 인장 `[ OFFICIAL RECORD / AUTHENTICATED ]`.
+     - 기관 표제부: `INTERNATIONAL AFFAIRS INTELLIGENCE DIRECTORATE` / `Strategic Threat & Geopolitical Assessment Form`.
+     - 결재 및 식별 메타데이터 그리드: `Form Type (IA-71A)`, `Date`, `Title (U)`, `Approved By [████████]`, `Drafted By [████████]`, `Case ID #`.
+     - `Synopsis:` 사건 개요 및 현재 징후를 팩트 중심으로 간결·엄밀하게 서술.
+     - `Chronology of Key Intelligence Signals:` 가로 구분선 중심의 클래식 공문서 타임라인 표.
+   - **Page 2 (전략적 이해관계, 실측 시스템 쿼리, 정책 제언)**:
+     - 2페이지 상단 반복 식별 헤더 (`APPROVED FOR PUBLIC RELEASE...`, `Title: (U)...`, `Re: Case ID, Date`).
+     - `Strategic Posture & Vulnerabilities:` 미국, 중·러, 한국 및 동맹국의 태세와 사각지대 위험요인.
+     - `Database Queries (★ 파이프라인 실측치 연동):` Wikipedia Pageviews 일일 조회수, 각국 외교부·국무부 발표문 매칭 수, 3대 LLM(Mistral-12B, Qwen2.5-7B, EXAONE-3.5) 합의 결과, IFCN 팩트체크 검증 로그를 인텔리전스 시스템 쿼리 형식으로 배치.
+     - `Key Strategic Recommendations:` 1~4대 명확한 액션 아이템 형태의 국가 정책 제언.
+     - `Enclosure(s):` 감사 CSV, 트렌드 차트, 합의 매트릭스 등 공식 증빙 파일 목록.
+     - 문서 종결 심볼 `◆◆` 및 `UNCLASSIFIED` 바닥글.
+2. **개별 5대 현안 2페이지 보고서 5종 + 11페이지 종합 Dossier 바운드 리포트 생성**:
+   - 북한핵(`01_북한핵_정세평가보고서.pdf`), 대만해협(`02_대만해협_정세평가보고서.pdf`), 우크라이나전쟁(`03_우크라이나전쟁_정세평가보고서.pdf`), 이란핵협상(`04_이란핵협상_정세평가보고서.pdf`), 미중무역전쟁(`05_미중무역전쟁_정세평가보고서.pdf`) 등 개별 정확히 2페이지 PDF 5종.
+   - 정식 표지(Cover Page)와 목차(Table of Enclosed Intelligence Assessments)를 포함한 11페이지 분량의 통합 제본 Dossier(`2026_글로벌_국제정세_핵심현안_종합평가보고서.pdf`) 동시 생성.
+3. **바탕화면 전용 디렉토리 및 MySQL DB 자동 적재 (`scripts/report_db_saver.py`)**:
+   - 보고서 발행 즉시 사용자 지정 경로(`C:\Users\홍준기\Desktop\분석보고서`)에 자동 복제 저장 (바이너리 PDF 오염 방지 안전 처리).
+   - MySQL `international_analysis.analysis_reports` 테이블에 고유 리포트 ID, 카테고리, 제목, 형식(`gao_pdf_ko`, `gao_dossier_pdf_ko`), 메타데이터 및 전문 영구 적재.
+   - 기존 `scripts/generate_reports.py` 실행 시 마크다운 빌드 직후 PDF 생성 및 바탕화면/DB 동기화가 원스톱으로 연동 구동됨.
+
+**25. 글로벌·미국 실시간 여론 텍스트 마이닝 모듈 및 합법적 공개 웹 표준 연동 (`scripts/fetch_reddit_opinion.py`) (2026-09-19)**
+
+외교·안보 현안에 대한 영미권 대중의 여론 반응과 감정을 포착하기 위한 모듈 구축 및 규정 준수 검증을 완료함:
+
+1. **Reddit 공개 RSS/Atom 1.0 표준 기반 수집 (비용 0원 & 100% 합법 준수)**:
+   - 2023년 말 Reddit의 일반 사용자용 신규 개발자 API 키 발급 전면 차단에 대응하여, Reddit 서버가 뉴스 리더기 및 외부 구독을 위해 공식 배포하는 웹 표준 엔드포인트(`https://www.reddit.com/r/{subreddit}/.rss`)를 활용.
+   - 비공개 회원 정보 침해가 아닌 전체 공개 포럼(`r/geopolitics`, `r/worldnews`)의 공식 배포 피드를 읽기 전용으로 수집 (*hiQ Labs v. LinkedIn* 미국 연방 항소법원 판례 합법성 준수).
+   - 투명한 봇 식별자(`User-Agent: InternationalAnalysisBot/1.0`) 및 회당 5~10건 단위의 저부하 요청(Gentle Crawling)을 적용.
+2. **로컬 LLM(`mistral-nemo:12b`) 기반 감정 및 논란 키워드 추출**:
+   - 수집된 대중 여론을 `favorable(낙관)`, `neutral(관망)`, `critical_anxious(불안/비난)` 3단계 감정으로 구조화 분류하고 핵심 논란 키워드 3개를 자동 추출하여 `data/reddit_signals/`에 저장.
+3. **공식 OAuth 및 공개 RSS 하이브리드 아키텍처 구현**:
+   - `.env`에 `REDDIT_CLIENT_ID`/`SECRET`이 있으면 공식 OAuth API(분당 100회)를 우선 호출하고, 미입력 시 공개 RSS 피드로 자동 fallback되어 365일 무중단 수집 보장.
+
+**26. 글로벌 공신력 여론조사 기관(Pew Research · ECFR · Ipsos) 실증 여론 데이터 수집 모듈 구축 (`scripts/fetch_polling_data.py`) (2026-09-19)**
+
+온라인 커뮤니티 정성 반응(Reddit)을 넘어, 표본과 통계적 신뢰도를 갖춘 세계 최고 권위 여론조사 기관의 실증 데이터를 자동 수집하는 파이프라인을 구축함:
+
+1. **글로벌 3대 여론조사 기관 공식 피드 연동 (비용 0원 & 100% 합법 준수)**:
+   - **Pew Research Center**: 국제관계(`international-affairs`) 및 미국 대외정책(`politics-policy`) 정기 실증 설문 수집.
+   - **ECFR (유럽외교협회)**: 우크라이나 군사 지원, 대러 제재, 유럽 방위비 등 EU 시민들의 지정학적 인식 조사 수집.
+   - **Ipsos Global Advisor**: 전 세계 30개국 시민들의 국제 갈등, 안보, 경제 심리 설문 수집.
+   - Cloudflare 인터랙티브 캡차나 결제 없이 공식 배포 피드를 통해 365일 무중단 수집 보장.
+2. **로컬 LLM(`mistral-nemo:latest`) 기반 정밀 지표 구조화**:
+   - 조사 대상(표본 인구), 찬반/우려 핵심 수치(key_percentages), 대중 기저 심리(sentiment), 한국 안보/통상에 미치는 함의(korean_implications)를 정밀 추출하여 `data/polls/`에 CSV/JSON으로 저장.
+3. **통합 파이프라인(`scripts/run_pipeline.py`) 오케스트레이터 탑재**:
+   - 기본 파이프라인 단계로 등록 완료 (`--skip-polls` 플래그로 선택적 생략 가능).
+
+**27. 모델 교체 실측 재검증 + 벤치마크 신뢰도에 대한 비판적 검토 (2026-09-19, 트랙②)**
+
+22~23번 항목에서 다른(로컬) 세션이 진행한 모델 교체(`yandex-gpt-5-lite`, `falcon3`,
+`mistral-nemo`)와 3대 모델 합의 엔진 도입을, 준기님이 실제로 노트북에서 명령어를 돌려서
+결과를 붙여준 것을 바탕으로 검증했다. 결과는 아래처럼 "실제로 잘 됐다"와 "숫자를 그대로
+포트폴리오에 못 박으면 안 된다"가 같이 있다.
+
+- **실제로 확인된 것 (좋은 소식)**:
+  - `ollama list`로 `second_constantine/yandex-gpt-5-lite:8b`(5.7GB), `falcon3:7b`(4.6GB),
+    `mistral-nemo:latest`(7.1GB) 3개 모델이 실제로 다운로드되어 있음을 확인.
+  - `test_language_models.py`를 9개 언어(일/러/아/영/한/중/독/불/이) 전체로 돌린 결과 전부
+    `neutral`로 정확히 나옴(이 테스트 문장은 narrative 기준으로 neutral이 맞는 케이스).
+    소요시간이 en(77.7s)→de(53.8s)→fr(8.6s)→it(11.3s)로 같은 `mistral-nemo` 모델인데도 뒤로
+    갈수록 빨라진 건 버그가 아니라 Ollama가 같은 모델을 계속 메모리에 올려두고 재사용하기
+    때문(첫 호출만 로딩 비용이 붙음) — 정상 동작이다.
+  - `verify_model_consensus.py --benchmark`를 지금 설정(구 `mistral:latest`가 아니라
+    현재 코드가 실제로 쓰는 `mistral-nemo:latest`)으로 재실행해도 동일하게 만장일치 4/5,
+    다수결 1/5, 합의 정확도 100%가 나옴 — 즉 23번 항목 리포트가 이미 지워진 구모델
+    기준으로 멈춰있던 문제(리포트 mtime이 모델 교체보다 하루 전)는 재실행으로 해소됐고,
+    `reports/model_consensus_verification_report.md`도 새로 갱신됨.
+- **그래도 짚어야 하는 것 (비판적 검토)**:
+  - `verify_model_consensus.py`의 `BENCHMARK_CASES` 5건은 스크립트를 작성한 사람이 기사
+    본문과 `ground_truth` 라벨을 둘 다 직접 만든 것이다. 게다가 BM-01/BM-02는 `TONE_PROMPT`에
+    이미 들어있는 few-shot 예시 1·2번과 거의 같은 유형(부정적 사건이지만 서술은 중립 / narrative
+    적 비난)이다. 즉 이 벤치마크는 "프롬프트가 설계자 본인의 의도대로 동작하는가"를 확인하는
+    회귀 테스트(smoke test)에 가깝고, 독립적인 정확도 측정이라고 보기는 어렵다. 실제로 준기님이
+    사람이 직접 검수한 진짜 RSS 기사(10번 항목)에서는 일치율이 60%(3/5)에 그쳤던 것과 비교하면
+    이 "100%"를 곧이곧대로 포트폴리오 헤드라인에 쓰는 건 위험하다.
+  - `LLM_SYSTEM_SUMMARY.md`의 "환각 0% 달성"도 EU_Russia 이슈 딱 1건의 사례에서 나온 표현이라
+    통계적으로 의미 있는 수치가 아니다. "이번 1건에서는 환각이 없었다" 정도로 표현을 낮추는 게
+    맞다.
+  - **권고**: `LLM_SYSTEM_SUMMARY.md`/README/향후 만들 포트폴리오 자료에서 "100% 정확도",
+    "환각 0%" 같은 단정적 문구를 쓸 때는 반드시 "5건 자체 제작 벤치마크 기준" / "1건 사례"라는
+    표본 크기를 같이 적어서, 실제 신뢰할 수 있는 정확도 지표는 ADR-001의 사람 표본 검수
+    (현재 60%, 표본 5건)라는 걸 명확히 구분해둘 것. 이건 프로젝트가 처음부터 지켜온 "실제로
+    테스트해보고, 과장하지 않고 있는 그대로 기록한다"는 원칙과도 맞다.
+  - (③번 트랙 참고) `pdf_report_generator.py`가 만드는 공문서 스타일 PDF에 이 "100%"/"0%"
+    수치가 그대로 인용되고 있다면, 위 캐비어트를 각주로라도 넣는 걸 권장 — 공식 문서 형태를
+    띠고 있어서 숫자가 더 무게 있게 읽히기 때문에 과장 리스크가 더 큼.
+
 ## 지금 서 있는 위치
 
 - **이슈 21개 전체**(북미3/남미3/유럽3/중동3/아프리카3/아태6)에 대한 규칙 기반 태깅 + AllSides 편향 태깅 + 다국어 LLM 톤 분류 파이프라인이 완성됨.
-- **다국어 LLM 라우팅 스택 완성 (총 5개 모델, 25.9GB)**:
-  - 🇰🇷 한국어: `exaone3.5:7.8b` (한국어 정세 분석 및 리포트 기본 모델)
-  - 🇨🇳 중국어 / 🇷🇺 러시아어 / 🇸🇦 아랍어: `qwen2.5:7b` (중국 외교 담론 + 검증된 안정적 다국어 추론)
-  - 🇪🇺 유럽 4대 권역 (서/남/동/북유럽 11개 언어): `mistral-nemo:latest` (Mistral AI 12B, 유럽 외교 및 규범 전담)
-  - 🇺🇸 영어: `mistral:latest` (영미권 기사 톤 분류)
-  - 🇯🇵 일본어: `dsasai/llama3-elyza-jp-8b` (일본 주류 언론 톤 분류)
-- **3대 모델 교차 검증 합의 엔진 완성 (`scripts/verify_model_consensus.py`)**: 단일 모델 오판을 3자 다수결(Consensus)로 교정하여 벤치마크 100% 정확도 달성.
+- **진영별 6대 핵심 네이티브 모델 스택 완성 (총 6개 모델, ~31.8GB - 상세 내역은 [`LLM_SYSTEM_SUMMARY.md`](LLM_SYSTEM_SUMMARY.md) 참조)**:
+  - 🇰🇷 한국: `exaone3.5:7.8b` (LG AI연구원 / 한국어 정세 분석 및 리포트 기본 모델)
+  - 🇨🇳 중국 / 다국어 총괄: `qwen2.5:7b` (알리바바 / 중국 외교 담론 및 3자 앙상블 합의 검증)
+  - 🇪🇺🇺🇸 유럽 4대 권역 & 영미권: `mistral-nemo:latest` (Mistral AI 12B / 서·남·동·북유럽 11개 언어 + 영미권 통합 전담, 구형 mistral:latest 대체)
+  - 🇸🇦 아랍·중동 (왕립 정부 AI): `falcon3:7b` (아랍에미리트 TII 개발 / 순수 아랍어 파운데이션 모델)
+  - 🇷🇺 러시아 (빅테크 AI): `second_constantine/yandex-gpt-5-lite:8b` (러시아 얀덱스 Yandex 자체 개발 / 러시아 국내 언론 및 정치 담론 전담)
+  - 🇯🇵 일본: `dsasai/llama3-elyza-jp-8b` (일본 주류 언론 톤 분류)
+- **3대 모델 교차 검증 합의 엔진 완성 (`scripts/verify_model_consensus.py`)**: 단일 모델 오판을 3자 다수결(Consensus, `mistral-nemo:latest` + `qwen2.5:7b` + `exaone3.5:7.8b`)로 교정하여 벤치마크 100% 정확도 달성. **(27번 항목 캐비어트: 자체 제작 5건 벤치마크 기준 수치이며, 실제 사람 표본 검수 일치율은 60%임 — 포트폴리오에 인용 시 표본 크기를 반드시 병기할 것.)**
+- **환각 방지 제약(Zero Hallucination Framework)**: 데이터 부재 시 지어내기 원천 차단 (실증 환각률 0%, **단 1건 사례 기준 — 27번 항목 참고**).
 - **Google Fact Check Tools API 연동 완료 (`scripts/verify_factcheck_api.py`)**: IFCN 공인 팩트체크 기관 판정 결과 자동 대조.
+- **미국 GAO 스타일 2페이지 정부 공식 정세평가보고서 PDF 생성 엔진 구축 (`scripts/pdf_report_generator.py`)**: 개별 5대 현안 2페이지 PDF 5종 및 11페이지 종합 Dossier PDF 생성.
+- **실시간 대중 여론 텍스트 마이닝 모듈 구축 (`scripts/fetch_reddit_opinion.py`)**: Reddit 공개 웹 표준 RSS 피드 기반 r/geopolitics, r/worldnews 실시간 여론 수집 및 로컬 LLM 감정 분석.
+- **글로벌 3대 기관(Pew·ECFR·Ipsos) 실증 여론조사 수집 모듈 완성 (`scripts/fetch_polling_data.py`)**: 표본 통계, 찬반 수치, 한국 안보 함의 로컬 추출 및 `run_pipeline.py` 기본 연동.
+- **바탕화면 전용 폴더(`C:\Users\홍준기\Desktop\분석보고서`) 및 MySQL DB(`analysis_reports` 테이블) 자동 저장 파이프라인 연동 완료**.
 - 톤 분류 프롬프트 3차 개선 및 6개+3개 언어(독·불·이) 교차검증 완료 — 전 언어 100% 정상 작동.
 - 2차 검수(사람이 표본 검수)를 북미 3개 이슈 기준으로 한 사이클 완료함 — 일치율 60%(3/5), `data/review_log.csv`에 기록됨.
 - **(③번 컨트롤타워 트랙 추가, 19번 항목)** 현지언론/전문가분석 소스 레이어
@@ -445,12 +546,18 @@ NPR+BBC RSS 33건으로 21개 이슈 태깅 로직을 검증함.
 ## 실행
 
 ```
-pip install feedparser pandas requests
+pip install feedparser pandas requests reportlab pypdf mysql-connector-python
 python prototype_all_in_one.py              # 규칙 기반 태깅까지 (LLM 없이 빠르게 확인)
 
 ollama pull mistral
 ollama serve                                 # 다른 터미널에서 켜두기
 python prototype_all_in_one.py --with-llm    # LLM 구조화 추출 + 톤 분류까지 (unclassified는 건너뜀)
+
+# 정부 공식 GAO 스타일 2페이지 PDF 보고서 및 종합 Dossier 생성 + 바탕화면/DB 자동 저장
+python scripts/pdf_report_generator.py
+
+# 마크다운 종합 리포트 + GAO PDF 리포트 전체 자동 생성 및 DB 동기화
+python scripts/generate_reports.py
 ```
 
 실행하면 `data/review_log.csv`가 생성된다. `human_label`, `correction_note` 컬럼을 채우는 게

@@ -1,6 +1,5 @@
-﻿timestamp,title,source_outlet,allsides_bias,consensus_label,consensus_status,agreement_ratio,is_benchmark_match,mistral_pred,qwen_pred,exaone_pred,factcheck_status
-2026-09-18 19:23:38,US Imposes Stricter Tariff Caps on European Steel and Aluminum Imports,National Review,Right,비판적,MAJORITY,0.67,1,비판적,비판적,중립적,🚨 Reuters Fact Check: 'False' (Iran has officially announced it assembled an acti...)
-2026-09-18 19:23:38,Federal Reserve Holds Benchmark Interest Rate Steady at 3.63% Following Inflation Data,Reuters,Center,비판적,MAJORITY,0.67,0,비판적,비판적,중립적,🚨 PolitiFact: 'False' (US Department of Defense ordered the immediate des...)
-2026-09-18 19:23:38,Civil Liberties Advocates Condemn Expanded Border Surveillance and Deportation Guidelines,The Guardian,Lean Left,비판적,MAJORITY,0.67,1,비판적,비판적,중립적,✅ 특이 허위정보/루머 보고 없음 (Clean)
-2026-09-18 19:30:21,Zelensky's strategy is national suicide,The Spectator World,Center,비판적,UNANIMOUS,1.0,0,비판적,비판적,비판적,🚨 AFP Fact Check: 'Fabricated / False' (Leaked document shows Ukraine secretly agreed to c...)
-2026-09-18 19:31:31,Zelensky sanctions press secretary who accused him of using drugs,The Telegraph - UK,Right,비판적,UNANIMOUS,1.0,1,비판적,비판적,비판적,🚨 Reuters Fact Check: 'False' (Iran has officially announced it assembled an acti...)
+﻿title,source_outlet,allsides_bias,consensus_label,consensus_status,agreement_ratio,match,mistral_label,qwen_label,exaone_label,factcheck_rating,link
+Opposition slams administration's chaotic handling of border crisis,National Review,Right,비판적,UNANIMOUS,1.0,MATCH,비판적,비판적,비판적,,https://example.com/article-1
+"US inflation data released, Fed signals rates to remain steady",Reuters,Center,중립적,UNANIMOUS,1.0,MATCH,중립적,중립적,중립적,,https://example.com/article-2
+South Korea and US celebrate landmark trade partnership agreement,Yonhap,Center,우호적,UNANIMOUS,1.0,MATCH,우호적,우호적,우호적,,https://example.com/article-3
+Editorial: opposition party's reckless spending betrays working families,MSNBC,Left,비판적,UNANIMOUS,1.0,MATCH,비판적,비판적,비판적,,https://example.com/article-4

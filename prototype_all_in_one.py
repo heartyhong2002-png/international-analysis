@@ -419,7 +419,7 @@ def parse_expert_response(raw_text: str) -> dict | None:
 
 def extract_expert_argument(article: dict) -> dict:
     """expert_analysis 기사 하나에 대해 주장/전망 구조화 추출을 수행."""
-    model = MODEL_BY_LANGUAGE.get(article.get("language", "en"), "mistral")
+    model = MODEL_BY_LANGUAGE.get(article.get("language", "en"), "mistral-nemo:latest")
     prompt = EXPERT_ANALYSIS_PROMPT.format(
         title=article.get("title", ""),
         summary=(article.get("summary", "") or "")[:1200],
@@ -434,19 +434,29 @@ def extract_expert_argument(article: dict) -> dict:
 OLLAMA_HOST = "http://localhost:11434"
 
 MODEL_BY_LANGUAGE = {
-    "en": "mistral",
+    "en": "mistral-nemo:latest",  # Mistral AI 12B 모델 (영어/유럽 통합 전담)
     "ko": "exaone3.5:7.8b",
     "zh": "qwen2.5:7b",
     "ja": "dsasai/llama3-elyza-jp-8b",
-    # 러시아어: 기존 vikhr/saiga의 프롬프트 복제 및 템플릿 결함을 해결하기 위해
-    # 다국어 및 러시아어 벤치마크(ru-MMLU) 최상위인 qwen2.5:7b로 교체 (2026-09-17)
-    "ru": "qwen2.5:7b",
-    # 아랍어: 기존 jais의 프롬프트 복제 결함 해결을 위해 안정적인 qwen2.5:7b 우선 적용
-    "ar": "qwen2.5:7b",
-    # 유럽 주요국 (프랑스/독일/이탈리아): 유럽 네이티브 12B 모델 mistral-nemo 배치 (2026-09-17)
+    "ru": "second_constantine/yandex-gpt-5-lite:8b",  # 러시아 최대 빅테크 Yandex 자체 개발 8B 모델 (검증 완료)
+    "ar": "falcon3:7b",  # 아랍에미리트(UAE) 아부다비 국영 TII 개발 아랍어 파운데이션 모델 (검증 완료)
+    # 유럽 4대 권역 (Mistral AI 12B 모델 mistral-nemo:latest 전담)
+    # 1. 서유럽 (Western Europe)
     "fr": "mistral-nemo:latest",
     "de": "mistral-nemo:latest",
+    "nl": "mistral-nemo:latest",
+    # 2. 남유럽·지중해 (Southern Europe)
+    "es": "mistral-nemo:latest",
     "it": "mistral-nemo:latest",
+    "pt": "mistral-nemo:latest",
+    # 3. 동유럽·발트 (Eastern Europe & Baltics - Baltic_Security/Ukraine 직결)
+    "pl": "mistral-nemo:latest",
+    "uk": "mistral-nemo:latest",
+    "cs": "mistral-nemo:latest",
+    # 4. 북유럽 (Nordics - 발트해/북극해 안보)
+    "sv": "mistral-nemo:latest",
+    "no": "mistral-nemo:latest",
+    "da": "mistral-nemo:latest",
 }
 
 EXTRACTION_PROMPT = """다음 뉴스 기사를 읽고, 아래 JSON 형식으로만 답하시오. 설명이나 다른 텍스트는 쓰지 마시오.
@@ -542,14 +552,14 @@ def _call_ollama(model: str, prompt: str, temperature: float = 0.3) -> dict:
 
 
 def extract_structured(article: dict) -> dict:
-    model = MODEL_BY_LANGUAGE.get(article.get("language", "en"), "mistral")
+    model = MODEL_BY_LANGUAGE.get(article.get("language", "en"), "mistral-nemo:latest")
     prompt = EXTRACTION_PROMPT.format(title=article.get("title", ""), summary=article.get("summary", ""))
     article["llm_extraction"] = _call_ollama(model, prompt, temperature=0.3)
     return article
 
 
 def classify_tone(article: dict) -> dict:
-    model = MODEL_BY_LANGUAGE.get(article.get("language", "en"), "mistral")
+    model = MODEL_BY_LANGUAGE.get(article.get("language", "en"), "mistral-nemo:latest")
     prompt = TONE_PROMPT.format(title=article.get("title", ""), summary=article.get("summary", ""))
     result = _call_ollama(model, prompt, temperature=0.3)
     raw_label = str(result.get("label", "")).strip().lower()

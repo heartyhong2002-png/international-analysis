@@ -66,16 +66,106 @@ data/
 
 1. https://newsapi.org 접속
 2. 무료 API 키 발급
-3. `scripts/fetch_data.py`에 API 키 추가
+3. 프로젝트 최상단에 있는 `.env` 파일에 API 키 추가
 
-```python
-NEWS_API_KEY = "your_api_key_here"
+```env
+NEWSAPI_API_KEY=your_api_key_here
 ```
+*(참고: 스크립트 실행 시 `.env` 파일의 키를 안전하게 자동으로 불러오도록 구현되어 있습니다.)*
 
 **수집 키워드**
 - "USA international policy"
 - "Middle East conflict"
 - "US-China trade war"
+
+### 2.3 Reddit 공개 RSS(Atom 1.0) 기반 실시간 여론 텍스트 마이닝
+
+**어떤 데이터?**
+- 글로벌/미국 최대 온라인 커뮤니티 Reddit의 지정학·국제뉴스 전문 서브레딧(`r/geopolitics`, `r/worldnews`) 실시간 토론 글 및 주요 반응.
+- 외교 현안에 대한 영미권 대중의 여론 감정(favorable / neutral / critical_anxious) 및 핵심 논란 키워드 3개.
+
+**수집 원리 및 법적/기술적 준수성 (100% 합법 & 비용 0원)**
+- **공개 웹 표준 엔드포인트 활용**: Reddit 서버가 뉴스 리더기 및 외부 공개 구독을 위해 자체 배포하는 공식 공개 URL(`https://www.reddit.com/r/{subreddit}/.rss`)을 사용.
+- **법적 안전성**:
+  - 비밀번호나 비공개 회원 데이터를 탈취하는 방식이 아닌, **누구나 브라우저로 접근 가능한 100% 공개 포럼**의 데이터를 읽기 전용으로 수집 (*hiQ Labs v. LinkedIn* 미국 연방 항소법원 판례에 부합).
+  - 2023년 이후 Reddit이 일반 사용자의 신규 개발자 API 키 발급을 전면 차단함에 따라, 복잡한 서류 심사나 유료 결제 없이도 합법적으로 실시간 여론을 수집할 수 있는 공식 개방 통로를 활용.
+- **예의 있는 수집(Gentle Crawling)**:
+  - 서버 과부하를 주지 않도록 파이프라인 1회당 최신 5~10건 내외의 헤더만 수집.
+  - 헤더에 명확한 식별용 봇 이름(`User-Agent: InternationalAnalysisBot/1.0`)을 투명하게 명시.
+  - (선택 사항) 공식 OAuth 개발자 키를 보유한 사용자는 `.env`에 `REDDIT_CLIENT_ID` / `REDDIT_CLIENT_SECRET`을 입력하면 초고속 공식 API 모드(분당 100회)로 자동 승격되며, 키가 없으면 공개 RSS로 안전하게 자동 동작함.
+
+**실행 방법**
+```bash
+# 기본 수집 (r/geopolitics, r/worldnews 각 10건)
+python scripts/fetch_reddit_opinion.py
+
+# 로컬 LLM(mistral-nemo:12b)으로 감정분석 및 논란 키워드 추출까지 원스톱 실행
+python scripts/fetch_reddit_opinion.py --with-llm
+```
+
+**산출물**
+```
+data/reddit_signals/
+├── reddit_opinion_latest.csv      # 수집 게시물 원문, 감정 라벨, 논란 키워드
+└── reddit_opinion_summary.json     # 서브레딧별 여론 감정 분포 및 상위 키워드 요약
+```
+
+### 2.4 RealClearPolling 여론조사 (Playwright 자동 수집)
+
+**어떤 데이터?**
+- 미국 대통령 국정 지지율 (RCP Average)
+- 각 여론조사 기관별 지지율 수치 (미국의 국제 영향력, 즉 `USA_Influence_Index` 평가를 위한 객관적 지표로 활용)
+
+**수집 원리 및 합법성**
+- 봇 차단(Cloudflare)을 우회하기 위해 `Playwright`라는 헤드리스 브라우저(Headless Browser) 기술을 사용합니다. 백그라운드에서 가상의 크롬 브라우저를 띄워 사람처럼 사이트에 접속한 뒤, 표(Table) 데이터를 파이썬으로 긁어옵니다.
+- **합법성**: 로그인 없이 누구나 볼 수 있는 웹사이트의 '공개된 수치(사실 데이터)'를 수집하는 것은 저작권 침해나 해킹에 해당하지 않습니다. 악의적인 디도스(DDoS) 공격이나 상업적 재판매 목적이 아닌, 개인의 정세 분석 및 학술/연구를 위해 주 1~2회 스크립트를 통해 접근하는 것은 데이터 사이언스 분야에서 널리 쓰이는 합법적인 '공정 이용(Fair Use)'입니다.
+
+**사전 설치 방법**
+스크립트를 처음 실행하기 전 터미널에 아래 명령어를 한 번 입력해야 합니다. (현재 환경에는 이미 설치 완료됨)
+```bash
+python -m pip install --upgrade pip
+pip install playwright lxml html5lib
+playwright install chromium
+```
+
+**수집 결과**
+- `data/rcp_approval_polls.csv`
+
+### 2.5 글로벌 실증 여론조사 자동 수집 (Pew Research Center · ECFR · Ipsos Global)
+
+**어떤 데이터?**
+- 전 세계 최고 수준의 공신력을 지닌 여론조사 기관들의 실증 설문조사 데이터:
+  1. **Pew Research Center (미국/글로벌)**: 국제관계(`topic/international-affairs`), 미국 정치·대외정책(`topic/politics-policy`) 정기 설문조사 (표본 수, 세부 찬반 비율, 신뢰도 등).
+  2. **ECFR (European Council on Foreign Relations, 유럽)**: 우크라이나 군사 지원, 대러 제재 찬반, 유럽 방위비 증액 등 유럽 연합 시민들의 지정학적 인식 조사.
+  3. **Ipsos Global (글로벌 어드바이저)**: 주요 30여 개국 시민들의 글로벌 정세 신뢰도, 군사적 갈등 및 경제 불안 인식 지표.
+- 로컬 경량 LLM(`mistral-nemo:12b` 또는 규칙 기반 파서)을 통해 설문 표본(demographics), 핵심 수치(key_percentages), 대중 기저 심리(sentiment), 한국 안보/통상에 미치는 함의(korean_implications)를 정밀 추출.
+
+**수집 원리 및 비용/법적 준수성 (100% 무료 & 합법)**
+- **공식 공개 RSS/XML 배포 채널 활용**: 각 기관이 학술 및 언론 공공 배포를 목적으로 제공하는 공식 공개 피드를 호출하므로 API 키나 유료 결제가 필요 없음.
+- **봇 차단 없음 & 영구 안정성**: Cloudflare Turnstile 인터랙티브 캡차나 비공개 회원 로그인을 요구하지 않는 순수 공개 웹 표준 규격.
+- **규칙 기반 + LLM 하이브리드 파싱**: 네트워크 요청만으로 핵심 수치를 즉시 추출하며, 필요 시 로컬 오픈소스 LLM을 가동하여 100% 로컬 오프라인 환경에서 지정학적 함의를 추출(비용 0원, 데이터 외부 유출 없음).
+
+**실행 방법**
+```bash
+# 기본 수집 (Pew 2종, ECFR, Ipsos 각 5건 수집 및 규칙 기반 수치 파싱)
+python scripts/fetch_polling_data.py
+
+# 로컬 LLM(mistral-nemo:12b)으로 지정학적 함의 및 감정 지표 구조화까지 원스톱 실행
+python scripts/fetch_polling_data.py --with-llm
+
+# 특정 기관만 수집 또는 수집 개수 지정
+python scripts/fetch_polling_data.py --source pew_intl --limit 10
+
+# 네트워크/LLM 없이 파이프라인 무결성 자체 검증
+python scripts/fetch_polling_data.py --self-test
+```
+
+**산출물**
+```
+data/polls/
+├── polls_latest.csv      # 기관명, 제목, 설문 URL, 표본/핵심 수치, 감정 라벨, 한국 안보 함의
+└── polls_summary.json     # 수집 일시, 총 건수, 기관별 수집 현황 메타데이터
+```
 
 ---
 
