@@ -437,8 +437,8 @@ MODEL_BY_LANGUAGE = {
     "en": "mistral-nemo:latest",  # Mistral AI 12B 모델 (영어/유럽 통합 전담)
     "ko": "exaone3.5:7.8b",
     "zh": "qwen2.5:7b",
-    "ja": "dsasai/llama3-elyza-jp-8b",
-    "ru": "qwen2.5:7b",  # 러시아어 네이티브 모델(Yandex) 용량 문제로 다국어 범용 qwen2.5:7b로 폴백
+    "ja": "dsasai/llama3-elyza-jp-8b",  # 일본 주류 언론 톤 분류 전담 (일본어 네이티브)
+    "ru": "second_constantine/yandex-gpt-5-lite:8b",  # 러시아 최대 빅테크 Yandex 자체 개발 8B 모델 (검증 완료)
     "ar": "falcon3:7b",  # 아랍에미리트(UAE) 아부다비 국영 TII 개발 아랍어 파운데이션 모델 (검증 완료)
     # 유럽 4대 권역 (Mistral AI 12B 모델 mistral-nemo:latest 전담)
     # 1. 서유럽 (Western Europe)

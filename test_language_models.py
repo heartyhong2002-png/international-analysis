@@ -68,7 +68,7 @@ def main():
     print(f"{'언어':<6}{'모델':<45}{'결과':<10}{'소요시간':<10}")
     print("-" * 90)
     for lang in targets:
-        model = MODEL_BY_LANGUAGE[lang]
+        model = MODEL_BY_LANGUAGE.get(lang, "mistral-nemo:latest")
         sample = SAMPLES[lang]
         prompt = TONE_PROMPT.format(title=sample["title"], summary=sample["summary"])
 
