@@ -1,0 +1,10 @@
+# 챗봇 프로토타입 실행에 필요한 최소 의존성.
+# 기존 scripts/ 파이프라인의 requirements(pandas, feedparser 등)는 여기 포함하지 않음 —
+# 이미 설치되어 있다는 전제. 새로 추가되는 건 API 서버 관련 3개뿐.
+
+fastapi>=0.110
+uvicorn[standard]>=0.29
+pydantic>=2.0
+
+# 선택 사항 — 실제 MySQL 연결을 쓸 경우에만 필요 (CHATBOT_MYSQL_DSN 환경변수 설정 시)
+# mysql-connector-python>=8.0

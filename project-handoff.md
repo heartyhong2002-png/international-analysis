@@ -42,7 +42,7 @@ DB: MySQL (international_analysis) — 로컬 설치
 | 트랙 | 로컬 연결 | 담당 범위 | 담당 파일 (건드려도 되는 것) |
 |---|---|---|---|
 | **① SQL/DB 담당** | ✅ 로컬 | MySQL 스키마 설계, 데이터 무결성, 중복/인코딩 정리 | `scripts/build_database.py`, `scripts/check_duplicates.py`, `scripts/clean_orphan_broken.py`, `scripts/dedupe_gov_announcements.py` |
-| **② 오픈소스 LLM 담당** | ❌ 로컬 아님 | 다국어(6개 언어) 로컬 LLM 라우팅, Ollama 모델 선정/테스트 | `src/model_router.py`, `src/news_pipeline.py`(예정), `src/report_generator.py`(예정), 언어별 Modelfile |
+| **② 오픈소스 LLM 담당** | ❌ 로컬 아님 | 다국어 로컬 LLM 라우팅, Ollama 모델 선정/테스트 | `prototype_all_in_one.py`(루트 — 2026-09-20 정정: `src/model_router.py` 등은 실제로 생성되지 않았고, 이 파일 하나로 통합됨) |
 | **③ 컨트롤타워 (이 세션)** | ✅ 로컬 | 새 아이디어가 나오면 프로토타입을 만들어서 검증한 뒤, 실제 구현은 ①/②번 세션(또는 새 세션)에 인수인계. 여러 트랙의 산출물을 융합해서 최종 결과물 도출. 기존에 이미 만든 수집 파이프라인(`issue_data_collector.py`, `gov_announcements_collector.py`, `run_pipeline.py`, `rematch_gov_issues.py`)은 계속 유지보수 | 위 기존 수집 파이프라인 파일들 + `*_prototype*`/`*_v2*`처럼 이름에 프로토타입임을 명시한 신규 파일 |
 
 **규칙:**
@@ -64,9 +64,7 @@ DB: MySQL (international_analysis) — 로컬 설치
   - `scripts/analyze_signals.py` (③번 세션 담당 범위 안, 이미 작동함) —
     수집된 Wikipedia/정부발표 데이터를 Ollama(Qwen2.5)에 넣어서 한국어
     분석 리포트(`reports/analysis_YYYYMMDD.md`)를 만듦.
-  - `src/model_router.py` + `src/news_pipeline.py` (②번 세션 담당, 아직
-    미완성) — 6개 언어별로 다른 로컬 LLM을 라우팅해서 다국어 분석/요약을
-    하려는 목적.
+  - (2026-09-20 정정: `src/model_router.py`/`src/news_pipeline.py`는 실제로 만들어지지 않았음. 아래 언어 라우팅은 `prototype_all_in_one.py`의 `MODEL_BY_LANGUAGE`로 구현·완료됨.)
   - **이 둘을 나중에 합칠지, 따로 둘지(예: `analyze_signals.py`는 한국어
     전용 빠른 요약, `model_router.py` 쪽은 다국어 심층 분석) 사람이 결정
     필요.** 지금 당장은 각자 진행하되, 최종 산출물(리포트/대시보드)이 두
@@ -128,20 +126,20 @@ DB: MySQL (international_analysis) — 로컬 설치
 
 ```
 international-analysis/
-├── README.md                          # 프로젝트 개요/아키텍처/실행법
-├── scripts/                           # 실제 작동하는 수집/DB 파이프라인 (③, ① 세션)
-├── src/                                # 다국어 LLM 라우팅 (②번 세션, 아직 진행 중)
-│   └── model_router.py
-├── data/                               # 수집 데이터 (scripts/data/ 가 실제 경로 — 혼동 주의)
-├── reports/                             # 분석 리포트
-├── output/                              # 대시보드 등 산출물
-└── requirements.txt
+├── prototype_all_in_one.py            # 언어 라우팅·태깅·톤 분류 핵심 로직 (src/ 아님)
+├── scripts/                           # 수집기·DB 적재·리포트/대시보드 생성 스크립트 전부
+│   └── data/                          # gov_announcements, issues 등 일부 수집 원본
+├── data/                              # 파이프라인이 실제로 쓰는 최신 수집 데이터
+├── reports/                           # 분석 리포트
+├── output/dashboard/                  # 최종 결과물(대시보드)
+└── docs/archive/                      # 목적이 끝났거나 방향이 바뀐 문서 보관함
 ```
 
-**⚠️ 참고:** `data/`가 프로젝트 루트와 `scripts/data/` 두 군데 있을 수
-있는데, **파이프라인이 실제로 쓰는 건 `scripts/data/`쪽**입니다(스크립트
-파일 위치 기준으로 고정되어 있음). 루트의 `data/`는 예전 흔적일 수 있으니
-헷갈리면 `scripts/data/`를 기준으로 보세요.
+**⚠️ 2026-09-20 정정:** 위 "파이프라인이 실제로 쓰는 건 `scripts/data/`쪽"이라는
+과거 안내는 틀렸습니다. `analyze_signals.py` 데이터 경로 버그를 고친 이후(9-17
+작업 로그 참고) **파이프라인이 실제로 쓰는 건 루트 `data/`**입니다. `scripts/data/`는
+`gov_announcements`/`issues` 등 일부 원본 수집 파일만 남아있습니다. 최신 구조는
+`README.md` 참고.
 
 ## 참고 중인 프로젝트 원본 문서 (Claude 프로젝트 파일로 업로드되어 있음)
 
@@ -228,6 +226,28 @@ international-analysis/
 
 - 2026-09-20 [트랙②, 오픈소스 LLM] 위 29번 항목의 재검증 요청에 준기님이 바로 `python test_language_models.py ru ar`를 실행해줌 — 러시아어(qwen2.5, 36.3s)와 아랍어(qwen2.5, 5.6s) 모두 `neutral` 정확 판정 + 근거 인용 정상. falcon3/yandex 전용 모델이 처리했던 것과 같은 결과가 qwen2.5 통합 후에도 재현됨을 확인, README 29번 항목에 결과 반영 완료. 이걸로 러시아어·아랍어→qwen2.5 통합이 최소한의 회귀 테스트는 통과했다고 보고 `ollama rm falcon3:7b` / `ollama rm second_constantine/yandex-gpt-5-lite:8b` 실행해도 안전하다고 판단함(단, 언어당 샘플 1개짜리 테스트라는 한계는 여전함 — 27번 항목과 같은 맥락, 실제 검증은 앞으로의 2차 인간 검수에서 계속 확인 필요).
 
+- 2026-09-20 [트랙③, 컨트롤타워] 준기님이 "감사 내용(`문서감사_2026-09-18_프로젝트_정체성_정리.md`) 정리하고 넘어가자"고 요청 → 감사 문서가 사람에게 결정하라고 남긴 두 가지를 확정함: **목적 = 교과목/졸업 과제물**(기존 "기업 제출용 포트폴리오" 선언에서 변경), **최종 결과물 = 종합 대시보드(`output/dashboard/index.html`)**, 나머지 5종 산출물(이슈리포트/GAO-FBI PDF/일일분석/벤치마크검증/DB뷰)은 증거 자료로 강등. **추가 발견**: 이 결정을 실행하려고 파일을 다시 열어보다가, 같은 날(9-20) 작성된 `챗봇_서비스_전환_전략.md`(Claude 프로젝트 문서)가 "대시보드는 정적이라 부족하다"며 프로젝트 전체를 챗봇으로 전환하자고 제안해둔 상태였고, 실제로 `chatbot_core/`(FastAPI 백엔드)·`frontend/`까지 이미 만들어져 있었음 — 방금 정한 결정과 정면 충돌이라 준기님께 별도로 확인함. **준기님 결정: 챗봇 전환은 보류, 대시보드로 확정.** **문서 재구조화 실행**: 목적이 충돌하던 문서(`PLANNING.md`, `CONTINENTAL_ISSUES_ANALYSIS.md`)와 역할이 끝난 인수인계 문서 5종(`ADR001_INTEGRATION_HANDOFF.md`, `AUTOMATION_PROTOTYPE_HANDOFF.md`, `AUTO_BENCHMARK_VERIFICATION_HANDOFF.md`, `LOCAL_MEDIA_EXPERT_INTEGRATION_HANDOFF.md`, `PHASE2_THINKTANK_REDDIT_HANDOFF.md`), 그리고 `data_collection_checklist.md`/`GOVERNMENT_API_GUIDE.md`를 `docs/archive/`로 이동. 챗봇 관련 일체(`chatbot_core/`, `frontend/`, 프로토타입 zip 2개, 그쪽 자체 README, `로컬_채팅_테스트_점검표.md`)는 `docs/archive/parked_chatbot_pivot/`로 이동(삭제 아님 — `HOLD.md`에 재개 방법 기록). 기존 `README.md`(26개+ 항목 개발일지, 62KB)는 `docs/archive/DEVELOPMENT_LOG_README_HISTORY.md`로 통째로 보존하고, 대외용 1페이지 `README.md`를 새로 작성(목적/최종결과물/실행법/구조/한계 요약, 상세 히스토리는 `project-handoff.md`와 archive로 안내). **이 파일 자체도 수정**: 2026-09-08 당시 작성된 "담당 파일" 표와 "GitHub 저장소 구조" 다이어그램이 `src/model_router.py` 등 실제로 없는 경로를 담당 파일로 지목하고, "파이프라인이 실제로 쓰는 건 `scripts/data/`"라고 틀리게 안내하고 있던 걸 발견(문서감사 4번 항목과 동일 지적) — 둘 다 정정함(실제로는 `prototype_all_in_one.py`에 통합, 루트 `data/`가 실제 경로).
+
+- 2026-09-21 [트랙②, 인프라 및 오픈소스 LLM] **C드라이브 81.81GB 확보에 따른 6대 프리미엄 네이티브 모델 아키텍처 완전 복구 완료**:
+  1. 준기님이 로컬 C드라이브 디스크 정리를 대대적으로 완료하여 무려 **81.81GB**의 여유 공간을 확보함.
+  2. 이에 따라 어제 디스크 용량 한계로 부득이하게 임시 채택했던 '다국어 모델 통폐합(Qwen2.5/Mistral-NeMo 몰아주기)' 전략을 전면 철회하고, 졸업작품의 기술적 차별성을 극대화하기 위해 원래 기획인 **'권역별 최고 성능 네이티브 6대 모델 1:1 전담 배치 체제'**로 완전 원상복구(업그레이드)함.
+  3. 삭제했던 러시아 1등 모델 `second_constantine/yandex-gpt-5-lite:8b`(5.7GB) 백그라운드 재설치(Pull) 100% 완료 검증.
+  4. 아직 로컬에 남아있던 `falcon3:7b`(아랍어)와 `dsasai/llama3-elyza-jp-8b`(일본어)를 코드 라우팅(`prototype_all_in_one.py`)에 원상 복구하고 `test_language_models.py` 실행 목록에 `ja` 재배치 완료.
+  5. 이로써 `LLM_SYSTEM_SUMMARY.md`에 기술된 6대 파운데이션 모델 아키텍처(`mistral-nemo`, `exaone3.5`, `qwen2.5`, `elyza`, `falcon3`, `yandex-gpt-5-lite`)와 실제 로컬 환경/코드가 100% 정합성을 회복함.
+
+- 2026-09-21 [트랙①/③, 전략 피벗 및 데이터셋 확장 설계] **교수님 피드백 반영: '예측(Prediction)'에서 '공급망 조기경보 & 신호 괴리율(Signal Gap)'로 졸업작품 정체성 피벗 및 권위주의 데이터 수집 파이프라인 설계**:
+  1. **교수님 피드백 분석 및 전략 피벗**:
+     - 피드백: "AI로 미래 국제정세를 예측한다는 것은 학술적으로 검증 불가(퇴짜)이며, 레딧 감성 분석도 노이즈가 심해 쉽지 않다."
+     - 대응 피벗 (데이터사이언스경영 전공 맞춤형):
+       - 허황된 '미래 정세 예측' 목표를 전면 폐기하고, **"한국 수출·제조 기업을 위한 글로벌 공급망 리스크 조기경보(Early-Warning) 및 이상 징후 탐지 시스템"**으로 과제 성격을 명확히 재정의.
+       - 레딧은 주 데이터가 아닌 '보조 정성 지표'로 한정하고, 핵심 분석 알고리즘은 **[정부 공식 발표/국영 매체] ↔ [현지 망명 독립 언론 / 검열 삭제 아카이브] 간의 '신호 괴리율(Signal Gap Discrepancy Rate)' 정량화**에 집중.
+  2. **권위주의/통제 국가 데이터 수집을 위한 3자 교차 수집(Triangulated Collection) 설계 (데이터셋 섹션 구현 대기)**:
+     - **러시아권**: 국영 선전(타스 TASS) ↔ **해외 망명 독립 언론(Meduza RSS: `https://meduza.io/rss/all`)** ↔ 텔레그램 공개 채널 (`@mediazzzona` 등)
+     - **중국권**: 관영 신화통신 ↔ **UC 버클리 검열 삭제 글 실시간 아카이브(China Digital Times CDT RSS: `https://chinadigitaltimes.net/chinese/feed/`)** ↔ 해외 검열 프리 중문 포럼(Reddit `r/China_irl`)
+     - **중동/이란권**: 왕정/신정 국영 매체 ↔ **디아스포라 독립 탐사보도(Iran International, Raseef22 RSS)** ↔ 반체제 커뮤니티(Reddit `r/NewIran`, `r/arabs`)
+     - **글로벌 사우스 대표 정론지**: **알자지라(Al Jazeera) 영문/아랍어 RSS (`https://www.aljazeera.com/xml/rss/all.xml`)**를 서방 언론(BBC/NPR) 편향 교정 축으로 편입.
+  3. **실행 계획**: 위 3자 교차 수집용 RSS 및 Reddit 엔드포인트는 차기 '데이터셋 다운로드 및 크롤러 확장' 스프린트에서 전용 수집기로 일괄 구현하기로 확정.
+
 ## 다음 채팅에서 이 문서를 사용하는 법
 
 새 대화를 시작할 때 이 파일(`project-handoff.md`)을 첨부하고 이렇게
@@ -239,5 +259,3 @@ international-analysis/
 이렇게 하면 하드웨어 제약, 이미 확정된 기술 스택, 겪었던 에러들, 그리고
 **다른 세션이 뭘 하고 있는지**까지 Claude가 다시 물어보지 않고 바로
 이어서 작업할 수 있습니다.
-
-- 2026-09-21 [트랙②, 오픈소스 LLM] 준기님이 C드라이브 디스크 정리를 크게 수행하여 81GB 이상의 여유 공간을 확보함에 따라, 어제 어쩔 수 없이 채택했던 '다국어 모델 통폐합(qwen2.5/mistral-nemo)' 전략을 전면 폐기하고, 원래 기획했던 **'국가별 최고 성능 네이티브 6대 모델 1:1 전담 아키텍처'**로 롤백(업그레이드)함. 삭제했던 `yandex-gpt-5-lite:8b`를 재설치하고, 아직 지우지 않았던 `falcon3:7b`와 `dsasai/llama3-elyza-jp-8b`를 코드 상의 라우팅으로 복구함(`prototype_all_in_one.py`). `test_language_models.py` 테스트 실행 대상에도 `ja` 복구 완료. 이로써 `LLM_SYSTEM_SUMMARY.md` 문서에 기술된 6대 프리미엄 모델 아키텍처와 실제 코드가 100% 다시 일치하게 됨.

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>국제정세 분석 챗봇</title>
+<style>
+  :root {
+    --bg: #0f1420;
+    --panel: #171e2e;
+    --border: #2a3348;
+    --text: #e8ecf4;
+    --muted: #8b96ab;
+    --accent: #4d7cfe;
+    --user-bubble: #2a3f6b;
+    --bot-bubble: #1e2536;
+    --warn: #d98c2b;
+    --ok: #3fae6a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: -apple-system, "Pretendard", "Malgun Gothic", sans-serif;
+    background: var(--bg); color: var(--text);
+    display: flex; flex-direction: column; align-items: center; min-height: 100vh;
+  }
+  .wrap { width: 100%; max-width: 860px; padding: 20px 16px 40px; }
+  header { text-align: center; margin-bottom: 18px; }
+  header h1 { font-size: 1.4rem; margin: 0 0 4px; }
+  header p { color: var(--muted); font-size: 0.85rem; margin: 0; }
+
+  .status-bar {
+    display: flex; gap: 8px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap;
+  }
+  .badge {
+    font-size: 0.72rem; padding: 3px 10px; border-radius: 20px; border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .chat-container {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+    height: 58vh; min-height: 360px; overflow-y: auto; padding: 16px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .message { max-width: 85%; padding: 10px 14px; border-radius: 12px; line-height: 1.55; font-size: 0.92rem; white-space: pre-wrap; }
+  .message.user { align-self: flex-end; background: var(--user-bubble); border-bottom-right-radius: 3px; }
+  .message.bot { align-self: flex-start; background: var(--bot-bubble); border-bottom-left-radius: 3px; width: 100%; max-width: 92%; }
+  .message.system { align-self: center; color: var(--muted); font-size: 0.8rem; background: none; }
+
+  .meta-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .meta-chip { font-size: 0.72rem; padding: 2px 8px; border-radius: 6px; background: rgba(255,255,255,0.06); color: var(--muted); }
+  .meta-chip.mode-llm { color: var(--ok); }
+  .meta-chip.mode-template_fallback { color: var(--warn); }
+
+  .factcheck-note { font-size: 0.78rem; color: var(--warn); margin-top: 6px; padding-left: 4px; border-left: 2px solid var(--warn); }
+  .sources { font-size: 0.78rem; color: var(--muted); margin-top: 6px; }
+
+  .input-row { display: flex; gap: 8px; margin-top: 14px; }
+  input[type=text] {
+    flex: 1; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--border);
+    background: var(--panel); color: var(--text); font-size: 0.95rem;
+  }
+  input[type=text]:focus { outline: none; border-color: var(--accent); }
+  button {
+    padding: 0 20px; border-radius: 10px; border: none; background: var(--accent);
+    color: white; font-size: 0.95rem; cursor: pointer;
+  }
+  button:hover { opacity: 0.9; }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .examples { margin-top: 16px; }
+  .examples p { color: var(--muted); font-size: 0.8rem; margin: 0 0 8px; }
+  .example-chip {
+    display: inline-block; margin: 3px 4px 3px 0; padding: 6px 12px; font-size: 0.82rem;
+    border: 1px solid var(--border); border-radius: 20px; cursor: pointer; color: var(--text);
+  }
+  .example-chip:hover { border-color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🌍 국제정세 분석 챗봇 <span style="font-size:0.6em; color:var(--muted);">(프로토타입)</span></h1>
+    <p>21개 국제 이슈 × 다국어 로컬 LLM × 데이터 근거 명시형 응답</p>
+  </header>
+
+  <div class="status-bar">
+    <span class="badge" id="apiStatus">API 확인 중...</span>
+    <span class="badge" id="issueCount">이슈 로딩 중...</span>
+  </div>
+
+  <div class="chat-container" id="chatContainer">
+    <div class="message system">질문을 입력하면 수집된 데이터를 근거로 답변합니다. 출처와 톤 분포가 항상 함께 표시됩니다.</div>
+  </div>
+
+  <div class="input-row">
+    <input type="text" id="messageInput" placeholder="예: 미중 무역 전쟁 지금 어때?" autocomplete="off">
+    <button id="sendBtn" onclick="sendMessage()">전송</button>
+  </div>
+
+  <div class="examples">
+    <p>예시 질문</p>
+    <span class="example-chip" onclick="fillExample(this)">미중 무역 전쟁 지금 어때?</span>
+    <span class="example-chip" onclick="fillExample(this)">이란 핵협상이 뭐야?</span>
+    <span class="example-chip" onclick="fillExample(this)">한일관계 앞으로 어떻게 될까?</span>
+    <span class="example-chip" onclick="fillExample(this)">최근 대만 해협에서 뭐가 일어났어?</span>
+    <span class="example-chip" onclick="fillExample(this)">북한 핵 위협 얼마나 심각해?</span>
+  </div>
+</div>
+
+<script>
+// API 서버 주소 — 로컬 실행 시 uvicorn 기본 포트. 배포 시 이 값만 바꾸면 됨.
+const API_URL = "http://localhost:8000";
+let sessionId = null;
+
+async function checkStatus() {
+  try {
+    const res = await fetch(`${API_URL}/`);
+    const data = await res.json();
+    document.getElementById("apiStatus").textContent = "✓ API 연결됨";
+    document.getElementById("apiStatus").style.color = "#3fae6a";
+
+    const issuesRes = await fetch(`${API_URL}/issues`);
+    const issues = await issuesRes.json();
+    document.getElementById("issueCount").textContent = `${issues.length}개 이슈 추적 중`;
+  } catch (e) {
+    document.getElementById("apiStatus").textContent = "✗ API 연결 실패 (서버를 먼저 켜주세요)";
+    document.getElementById("apiStatus").style.color = "#d9534f";
+  }
+}
+
+function fillExample(el) {
+  document.getElementById("messageInput").value = el.textContent;
+  sendMessage();
+}
+
+function addMessage(html, sender) {
+  const container = document.getElementById("chatContainer");
+  const div = document.createElement("div");
+  div.className = `message ${sender}`;
+  div.innerHTML = html;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+  return div;
+}
+
+function escapeHtml(text) {
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+async function sendMessage() {
+  const input = document.getElementById("messageInput");
+  const btn = document.getElementById("sendBtn");
+  const message = input.value.trim();
+  if (!message) return;
+
+  addMessage(escapeHtml(message), "user");
+  input.value = "";
+  btn.disabled = true;
+  const loadingEl = addMessage("생각 중...", "bot system");
+
+  try {
+    const res = await fetch(`${API_URL}/chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message, session_id: sessionId, language: "ko" }),
+    });
+    if (!res.ok) throw new Error(`서버 오류 (HTTP ${res.status})`);
+    const data = await res.json();
+    sessionId = data.session_id;
+
+    loadingEl.remove();
+
+    let html = `<div>${escapeHtml(data.response).replace(/\n/g, "<br>")}</div>`;
+
+    html += `<div class="meta-row">`;
+    html += `<span class="meta-chip mode-${data.mode}">${data.mode === "llm" ? "🟢 LLM 응답" : "🟡 템플릿 폴백"}</span>`;
+    if (data.issue_name) html += `<span class="meta-chip">📌 ${data.issue_name}</span>`;
+    html += `<span class="meta-chip">📊 ${data.tone_distribution}</span>`;
+    html += `</div>`;
+
+    if (data.factcheck_notes && data.factcheck_notes.length) {
+      for (const note of data.factcheck_notes) {
+        html += `<div class="factcheck-note">${escapeHtml(note)}</div>`;
+      }
+    }
+
+    if (data.sources && data.sources.length) {
+      html += `<div class="sources">출처: ${data.sources.map(escapeHtml).join(", ")}</div>`;
+    }
+
+    addMessage(html, "bot");
+  } catch (error) {
+    loadingEl.remove();
+    addMessage(`❌ ${escapeHtml(error.message)}<br><span style="color:var(--muted); font-size:0.8rem;">API 서버(uvicorn)가 켜져 있는지 확인하세요.</span>`, "bot system");
+  } finally {
+    btn.disabled = false;
+    input.focus();
+  }
+}
+
+document.getElementById("messageInput").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") sendMessage();
+});
+
+checkStatus();
+</script>
+</body>
+</html>
