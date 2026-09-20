@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-19T00:02:40.656549",
+  "updated_at": "2026-09-19T23:59:22.656226",
   "macro_and_finance": {
     "Consumer_Price_Index": {
       "series_id": "CPIAUCSL",
@@ -113,7 +113,7 @@
     }
   },
   "recent_presidential_actions_count": 30,
-  "recent_diplomatic_statements_count": 45,
+  "recent_diplomatic_statements_count": 46,
   "recent_top_presidential_actions": [
     {
       "date": "2026-09-18",
@@ -170,9 +170,25 @@
     {
       "date": "2026-09-19",
       "category": "Press_Releases",
+      "title": "Saint Kitts and Nevis National Day",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/09/saint-kitts-and-nevis-national-day-2/",
+      "description": "<p>Marco Rubio, Secretary of State</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-cont",
+      "source": "US_Department_of_State"
+    },
+    {
+      "date": "2026-09-19",
+      "category": "Press_Releases",
       "title": "Nepal Constitution Day",
       "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/09/nepal-constitution-day-2/",
       "description": "<p>Marco Rubio, Secretary of State</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-cont",
+      "source": "US_Department_of_State"
+    },
+    {
+      "date": "2026-09-18",
+      "category": "Press_Releases",
+      "title": "Secretary Rubio’s Meeting with Republic of Korea Foreign Minister Cho",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/09/secretary-rubios-meeting-with-republic-of-korea-foreign-minister-cho-4/",
+      "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
       "source": "US_Department_of_State"
     },
     {
@@ -188,22 +204,6 @@
       "category": "Press_Releases",
       "title": "Appointment of Luke J. Lindberg as Executive Director of UN World Food Program",
       "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/09/appointment-of-luke-j-lindberg-as-executive-director-of-un-world-food-program/",
-      "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
-      "source": "US_Department_of_State"
-    },
-    {
-      "date": "2026-09-18",
-      "category": "Press_Releases",
-      "title": "Secretary Rubio’s Travel to the United Nations for the 81st UN General Assembly High-Level Week",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/09/secretary-rubios-travel-to-the-united-nations-for-the-81st-un-general-assembly-high-level-week/",
-      "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
-      "source": "US_Department_of_State"
-    },
-    {
-      "date": "2026-09-18",
-      "category": "Press_Releases",
-      "title": "Office of the Historian, Bureau of Administration Releases Foreign Relations of the United States, 1981-1988, Volume XVI, South America: Ecuador, Paraguay, Uruguay, and Venezuela Chapters",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/09/office-of-the-historian-bureau-of-administration-releases-foreign-relations-of-the-united-states-1981-1988-volume-xvi-south-america-ecuador-paraguay-uruguay-and-venezuela-chapters/",
       "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
       "source": "US_Department_of_State"
     }
