@@ -167,6 +167,26 @@ data/polls/
 └── polls_summary.json     # 수집 일시, 총 건수, 기관별 수집 현황 메타데이터
 ```
 
+### 2.6 권위주의·통제 국가 정보 비대칭 해소를 위한 3자 교차 수집 (러시아·중국·중동·이란 & 알자지라)
+> **상태:** 차기 데이터셋 다운로드 스프린트 구현 대기 (Blueprint Confirmed)
+
+**문제의식 (권위주의 정보 왜곡):**
+러시아, 중국, 중동(왕정·이란 신정) 등 권위주의 및 언론 통제 국가는 국영/관영 매체(TASS, 신화통신, IRNA 등)에 정권 홍보 및 심각한 검열·왜곡이 내재되어 있습니다. 공식 발표만 수집할 경우 모델이 확증 편향에 빠지며, 현지의 실제 경제 위기나 민심 이반을 포착할 수 없습니다.
+
+**수집 프레임워크 (3자 교차 검증 파이프라인, Triangulated OSINT):**
+본 프로젝트는 **[국영 공식 프로파간다] ↔ [해외 망명 독립 언론 / 검열 삭제 아카이브] ↔ [익명 소셜 여론]**의 3각 크로스 수집을 통해 **'공식 발표와 실제 내부 여론 간의 신호 괴리율(Signal Gap)'**을 정량화합니다.
+
+| 권역 | 체제 특성 | 1. 공식 발표 / 관영 매체 | 2. 해외 망명 독립 언론 / 아카이브 | 3. 대중 여론 / 커뮤니티 | 담당 로컬 LLM |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **러시아권** | 권위주의·전시 통제 | 타스 통신 (TASS), RIA | **메두자 (Meduza, 라트비아 소재)**<br>RSS: `https://meduza.io/rss/all`<br>노바야 가제타 유럽 (`feed/rss`) | 텔레그램 공개 채널 (`t.me/s/...`)<br>독립 탐사보도 채널 (`@mediazzzona`) | `second_constantine/yandex-gpt-5-lite:8b` (러시아 Yandex) |
+| **중국권** | 1당 독재·만리방화벽 | 신화통신, 인민일보 | **China Digital Times (CDT, UC버클리)**<br>*(검열 삭제 글 실시간 아카이빙)*<br>RSS: `https://chinadigitaltimes.net/chinese/feed/`<br>단미디어(Initium), RFA 중문판 | Reddit `r/China_irl`<br>*(검열 없는 해외 거주 중국인 포럼)* | `qwen2.5:7b` (중국 알리바바) |
+| **중동/이란** | 왕정·이슬람 신정 체제 | 사우디/UAE 국영, 이란 IRNA | **이란 인터내셔널 (Iran International)**<br>라디오 파르다 (Radio Farda)<br>라시프22 (Raseef22, 아랍어 독립 웹진) | Reddit `r/NewIran` *(이란 민주화/청년)*<br>Reddit `r/arabs` *(범아랍 비판 여론)* | `falcon3:7b` (UAE 국영 TII)<br>`qwen2.5:7b` (다국어/페르시아어) |
+| **글로벌 사우스** | 비서방 신흥국 연합 | 각국 국영 매체 | **알자지라 (Al Jazeera English/Arabic)**<br>*(카타르 기반 글로벌 사우스 최고급 정론지)*<br>RSS: `https://www.aljazeera.com/xml/rss/all.xml` | 영미권 주류 언론(BBC/NPR)과의 시각 교정 대조 | `mistral-nemo:latest`<br>`falcon3:7b` |
+
+**실행 계획 (Dataset Download 섹션):**
+- 다음 데이터 파이프라인 개발 단계에서 위 Meduza, CDT, Al Jazeera, Raseef22의 RSS 피드를 기존 수집기(`prototype_local_expert_sources.py` 및 신규 수집 스크립트)에 정식 연동.
+- Reddit 파이프라인(`scripts/fetch_reddit_opinion.py`)에 타겟 서브레딧(`r/China_irl`, `r/NewIran`, `r/arabs`) 추가 확장.
+
 ---
 
 ## 3. 수동 데이터 입력

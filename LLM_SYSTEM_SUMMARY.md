@@ -1,6 +1,6 @@
 # 🧠 국제정세 분석 시스템 LLM 통합 아키텍처 및 업데이트 종합 가이드
 **문서 식별자:** `LLM_SYSTEM_SUMMARY.md`  
-**최종 업데이트:** 2026-09-18  
+**최종 업데이트:** 2026-09-21  
 **상태:** Production Ready / Benchmark Verified  
 
 ---
@@ -45,8 +45,8 @@ flowchart TD
 | :--- | :--- | :--- | :--- |
 | **대한민국** | `ko` | `exaone3.5:7.8b` (4.8GB) | LG AI Research 개발. 한·영 이중언어로 설계되어 외교·정치 전문 용어 및 문맥 파악에서 외산 다국어 모델 대비 압도적 품질. 보고서 총괄 작성 담당 |
 | **중국권** | `zh` | `qwen2.5:7b` (4.7GB) | 알리바바의 최상위 오픈소스 모델로 중국어 어휘 및 관영 매체 프레이밍 분석 최적. 3대 모델 다자간 교차 검증 참여 |
-| **러시아권** | `ru` | `second_constantine/yandex-gpt-5-lite:8b` (5.7GB) | *(구 `vikhr:7b` 결함 교체)* 러시아 최대 빅테크 얀덱스(Yandex) 자체 개발 8B 모델. 서방 모델의 러시아 편향을 배제하고 러시아 현지 국내 언론 및 안보 담론 정밀 해석 |
-| **중동/아랍권** | `ar` | `falcon3:7b` (4.6GB) | *(구 `jais:7b` 결함 교체)* 아랍에미리트(UAE) 아부다비 국영 첨단기술연구원(TII) 자체 개발 7B 모델. 아랍어 네이티브 토크나이저와 중동 외교 맥락 해석 역량 보유 |
+| **러시아권** | `ru` | `second_constantine/yandex-gpt-5-lite:8b` (5.7GB) | 러시아 최대 빅테크 얀덱스(Yandex) 자체 개발 8B 모델. 서방 모델의 러시아 편향을 배제하고 러시아 현지 국내 언론 및 안보 담론 정밀 해석 (설치 및 검증 완료) |
+| **중동/아랍권** | `ar` | `falcon3:7b` (4.6GB) | 아랍에미리트(UAE) 아부다비 국영 첨단기술연구원(TII) 자체 개발 7B 모델. 아랍어 네이티브 토크나이저와 중동 외교 맥락 해석 역량 보유 (**2026-09-21 설치 및 추론 정상 검증 완료**) |
 | **영미권 및 유럽 4대 권역** (12개 언어) | `en`<br>`fr`, `de`, `nl`<br>`es`, `it`, `pt`<br>`pl`, `uk`, `cs`<br>`sv`, `no`, `da` | `mistral-nemo:latest` (7.1GB, 12B) | Mistral AI-NVIDIA 합작 모델. 128k 컨텍스트와 Tekken 대용량 토크나이저를 통해 영미권 뉴스 기본 톤 분석, 3대 모델 교차 검증 서방 대표, 서유럽·남유럽·동유럽/발트(`Baltic_Security`)·북유럽 전역을 통합 전담 (구형 `mistral:latest` 완전 대체) |
 | **일본권** | `ja` | `dsasai/llama3-elyza-jp-8b` (4.9GB) | 도쿄대 마츠오 랩 기반 ELYZA 모델로 일본 언론 특유의 정중어/완곡어법 뉘앙스 포착 |
 
@@ -160,3 +160,70 @@ flowchart TD
 | [`scripts/verify_model_consensus.py`](file:///c:/Users/홍준기/Desktop/international-analysis/scripts/verify_model_consensus.py) | 3대 모델 다자간 교차 검증 및 합의 감사 엔진 | `python scripts/verify_model_consensus.py --benchmark` |
 | [`scripts/auto_benchmark_verifier.py`](file:///c:/Users/홍준기/Desktop/international-analysis/scripts/auto_benchmark_verifier.py) | AllSides RSS + Google Fact Check + 3-Model Consensus 종합 파이프라인 | `python scripts/auto_benchmark_verifier.py --self-test` |
 | [`test_language_models.py`](file:///c:/Users/홍준기/Desktop/international-analysis/test_language_models.py) | Ollama 로컬 풀 내 9개 언어 모델 정상 작동 회귀 테스트 | `python test_language_models.py` |
+
+---
+
+## 🏛️ 8. 분석(Analysis) 전담 vs 출력(Output/Synthesis) 전담 LLM 이원화 아키텍처 (2026-09-21)
+
+국제정세 분석 시스템은 **각 권역별 현지 분석관(Regional Analysis LLMs)**과 **최종 종합 보고서 작성관(Chief Intelligence Officer / Output LLM)**의 역할을 명확히 분리하는 다중 에이전트 계층 구조를 채택합니다.
+
+```mermaid
+flowchart TD
+    subgraph DataCollection [1단계: 다원화 데이터 수집]
+        D1[다국어 RSS / 언론 기사]
+        D2[정부 공식 발표 RSS]
+        D3[싱크탱크 및 현지 전문가 분석]
+        D4[실증 여론조사 Pew / ECFR / Ipsos]
+    end
+
+    subgraph RegionalAnalysts [2단계: 권역별 현지 분석관 (분석 전담 LLMs)]
+        A1[🇷🇺 Yandex GPT-5 Lite 8B: 러시아 대외 전략 및 내부 담론]
+        A2[🇸🇦 Falcon3 7B: 아랍·중동 안보 및 이슬람권 현지 여론]
+        A3[🇨🇳 Qwen 2.5 7B: 중국 외교 담론 및 아시아 안보 역학]
+        A4[🇪🇺🇺🇸 Mistral-NeMo 12B: 서방·유럽 11개국 정책 및 나토 연대]
+        A5[🇯🇵 Llama3-Elyza-JP 8B: 일본 주류 언론 뉘앙스 분석]
+    end
+
+    subgraph OutputSynthesizer [3단계: 수석 총괄 보고서 작성관 (출력 전담 LLM)]
+        OutLLM[🇰🇷 EXAONE 3.5 7.8B 또는 상위 추론 모델<br/>- 각국 분석 결과 JSON 취합 및 상충 지점 대조<br/>- 한국 안보·공급망 국익 관점의 함의 도출<br/>- 4대 실행 정책 제언 및 최종 공문서/대시보드 출력]
+    end
+
+    DataCollection --> RegionalAnalysts
+    RegionalAnalysts -->|구조화된 정량 지표 및 JSON 분석 결과| OutputSynthesizer
+```
+
+### 출력 전담 LLM 후보군 및 하드웨어 적합성 평가
+
+2026-09-21 기준 C 드라이브 실측 여유 공간(**67.60 GB**)을 바탕으로 한 출력 모델 선정 가이드:
+
+1. **`exaone3.5:7.8b` (설치 완료 / 추가 용량 0MB)**:
+   - 한국어 공문서/외교안보 전문 문체(`~으로 판단됨`, `~가 긴요함`) 구사력 최상.
+   - 번역투가 전혀 없으며 FBI/GAO 인텔리전스 폼 작성에 즉시 투입 가능.
+2. **`deepseek-r1:8b` (신규 고려 / 약 4.9GB)**:
+   - Chain-of-Thought(`<think>`) 추론을 통해 각국 현지 모델 간의 모순과 외교적 수사를 스스로 파헤쳐 전략적 결론 도출.
+3. **`teddylee777/bllossom:8b` (신규 고려 / 약 4.9GB)**:
+   - 국책연구원 및 언론사 정세 칼럼 스타일에 적합한 가장 자연스러운 한국어 문체 지원.
+4. **Google Gemini 2.0 Flash (클라우드 하이브리드 / 디스크 0MB 소모)**:
+   - 로컬에서는 현지 언어 분석만 100% 비공개로 완결하고, 방대한 텍스트 종합 출력만 무료 API 티어로 초고속 생성.
+
+---
+
+## 🎯 9. 비즈니스 가치: 미래 예측(Prediction)에서 공급망 조기경보(Early-Warning) 및 신호 괴리율(Signal Gap)로의 피벗
+
+### 1) 학술적/현실적 한계 극복 (교수님 피드백 반영)
+- **기존 한계**: AI 모델로 미래의 전쟁이나 외교적 분쟁을 '예측(Prediction)'하겠다는 접근은 Ground Truth(정답) 검증이 불가능하고 인과적 타당성이 결여되어 학술 연구로서 성립하기 어려움.
+- **피벗 방향**: 데이터사이언스경영 전공의 본질에 맞춰, **'한국 수출·제조 기업을 위한 글로벌 공급망 리스크 조기경보(Early-Warning) 및 이상 징후 탐지(Anomaly Detection) 시스템'**으로 목표를 명확히 재정의.
+
+### 2) 핵심 메커니즘: 권위주의 국가의 신호 괴리율(Signal Gap) 정량화
+권위주의 및 통제 국가의 공식 발표(TASS, 신화통신 등)는 정권 홍보로 왜곡되어 있으므로, 다음 3각 크로스 수집 데이터를 대조하여 괴리율을 산출합니다:
+- **정부 공식 입장**: 국영 통신사(TASS, 신화통신, IRNA) 발표 논조 (Tone_gov)
+- **현지 독립/비판 시각**: 해외 망명 독립 언론(Meduza, Raseef22) 및 검열 삭제 아카이브(China Digital Times CDT) 논조 (Tone_indep)
+- **대중 기저 심리**: 검열 프리 해외 커뮤니티(Reddit r/China_irl, r/NewIran) 감성 지표 (Sentiment_public)
+
+\text{Signal Gap Discrepancy} = |\text{Tone}_{\text{gov}} - \text{Tone}_{\text{indep}}| \times \text{Volume Weight}
+
+👉 정부는 '공급망과 경제가 안정적이다'라고 발표하지만 독립 언론과 현지 여론에서 '원자재 수출 통제 및 물류 위기' 신호가 급증할 경우, 괴리율이 급상승하여 **'공급망 이상 징후(Red Alert)'**를 기업 의사결정권자에게 조기 경보합니다.
+
+### 3) 최종 산출물 체계
+1. **수출 전략 임원용 일일 브리핑**: 6대 로컬 LLM이 매일 아침 자동 발행하는 공문서 스타일 PDF (pdf_report_generator.py)
+2. **공급망 리스크 인터랙티브 대시보드**: 신호 괴리율 및 21개 이슈별 리스크 지수를 실시간 시각화 (output/dashboard/index.html)
