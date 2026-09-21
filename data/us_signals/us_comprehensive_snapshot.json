@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-19T23:59:22.656226",
+  "updated_at": "2026-09-21T00:00:15.668605",
   "macro_and_finance": {
     "Consumer_Price_Index": {
       "series_id": "CPIAUCSL",
@@ -116,6 +116,46 @@
   "recent_diplomatic_statements_count": 46,
   "recent_top_presidential_actions": [
     {
+      "date": "2026-09-21",
+      "type": "Presidential Document",
+      "title": "Restoring Reciprocity in Government Procurement",
+      "executive_order_number": null,
+      "abstract": "",
+      "html_url": "https://www.federalregister.gov/documents/2026/09/21/2026-19336/restoring-reciprocity-in-government-procurement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-09-21/pdf/2026-19336.pdf",
+      "source": "Federal_Register_Presidential_Documents"
+    },
+    {
+      "date": "2026-09-21",
+      "type": "Presidential Document",
+      "title": "Providing Meaningful Water Quality Improvements Through Collaboration and Oversight of Federal Support",
+      "executive_order_number": null,
+      "abstract": "",
+      "html_url": "https://www.federalregister.gov/documents/2026/09/21/2026-19335/providing-meaningful-water-quality-improvements-through-collaboration-and-oversight-of-federal",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-09-21/pdf/2026-19335.pdf",
+      "source": "Federal_Register_Presidential_Documents"
+    },
+    {
+      "date": "2026-09-21",
+      "type": "Presidential Document",
+      "title": "National POW/MIA Recognition Day, 2026",
+      "executive_order_number": null,
+      "abstract": "",
+      "html_url": "https://www.federalregister.gov/documents/2026/09/21/2026-19334/national-powmia-recognition-day-2026",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-09-21/pdf/2026-19334.pdf",
+      "source": "Federal_Register_Presidential_Documents"
+    },
+    {
+      "date": "2026-09-21",
+      "type": "Presidential Document",
+      "title": "Constitution Day, Citizenship Day, and Constitution Week, 2026",
+      "executive_order_number": null,
+      "abstract": "",
+      "html_url": "https://www.federalregister.gov/documents/2026/09/21/2026-19333/constitution-day-citizenship-day-and-constitution-week-2026",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-09-21/pdf/2026-19333.pdf",
+      "source": "Federal_Register_Presidential_Documents"
+    },
+    {
       "date": "2026-09-18",
       "type": "Presidential Document",
       "title": "Presidential Determination on Major Drug Transit or Major Illicit Drug Producing Countries for Fiscal Year 2027",
@@ -123,46 +163,6 @@
       "abstract": "",
       "html_url": "https://www.federalregister.gov/documents/2026/09/18/2026-19251/presidential-determination-on-major-drug-transit-or-major-illicit-drug-producing-countries-for",
       "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-09-18/pdf/2026-19251.pdf",
-      "source": "Federal_Register_Presidential_Documents"
-    },
-    {
-      "date": "2026-09-16",
-      "type": "Presidential Document",
-      "title": "Continuation of the National Emergency With Respect to Persons Who Commit, Threaten To Commit, or Support Terrorism",
-      "executive_order_number": null,
-      "abstract": "",
-      "html_url": "https://www.federalregister.gov/documents/2026/09/16/2026-19053/continuation-of-the-national-emergency-with-respect-to-persons-who-commit-threaten-to-commit-or",
-      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-09-16/pdf/2026-19053.pdf",
-      "source": "Federal_Register_Presidential_Documents"
-    },
-    {
-      "date": "2026-09-15",
-      "type": "Presidential Document",
-      "title": "Patriot Day 2026, the 25th Anniversary of the September 11 Terrorist Attacks",
-      "executive_order_number": null,
-      "abstract": "",
-      "html_url": "https://www.federalregister.gov/documents/2026/09/15/2026-18959/patriot-day-2026-the-25th-anniversary-of-the-september-11-terrorist-attacks",
-      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-09-15/pdf/2026-18959.pdf",
-      "source": "Federal_Register_Presidential_Documents"
-    },
-    {
-      "date": "2026-09-14",
-      "type": "Presidential Document",
-      "title": "Modifying the Scope of Products of Canada Subject to the Additional Duties Imposed To Offset Canadian Discrimination Against the Commerce of the United States With Respect to Motor Vehicles",
-      "executive_order_number": null,
-      "abstract": "",
-      "html_url": "https://www.federalregister.gov/documents/2026/09/14/2026-18839/modifying-the-scope-of-products-of-canada-subject-to-the-additional-duties-imposed-to-offset",
-      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-09-14/pdf/2026-18839.pdf",
-      "source": "Federal_Register_Presidential_Documents"
-    },
-    {
-      "date": "2026-09-14",
-      "type": "Presidential Document",
-      "title": "Modifying the Scope of Products of Canada Subject to the Additional Duties Imposed To Offset Canadian Discrimination Against the Commerce of the United States With Respect to Alcoholic Beverages",
-      "executive_order_number": null,
-      "abstract": "",
-      "html_url": "https://www.federalregister.gov/documents/2026/09/14/2026-18838/modifying-the-scope-of-products-of-canada-subject-to-the-additional-duties-imposed-to-offset",
-      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-09-14/pdf/2026-18838.pdf",
       "source": "Federal_Register_Presidential_Documents"
     }
   ],
