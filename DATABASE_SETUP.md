@@ -92,7 +92,7 @@ pip install mysql-connector-python python-dotenv
 실행해도 중복이 쌓이지 않습니다(멱등성).
 
 > **💡 보고서 자동 저장 위치**:
-> - 데스크톱: `C:\Users\홍준기\Desktop\분석보고서`
+> - 분석보고서 폴더: `C:\Users\홍준기\Desktop\international-analysis\분석보고서`
 > - 프로젝트 내: `reports/issues/` 및 `reports/`
 > - DB: `international_analysis.analysis_reports` 테이블에 마크다운 전문 및 메타데이터 자동 적재 (`scripts/report_db_saver.py`)
 

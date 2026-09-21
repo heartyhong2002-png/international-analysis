@@ -25,9 +25,10 @@ if sys.platform == "win32":
     except Exception:
         pass
 
-# 데스크톱 보고서 저장 기본 경로
-DEFAULT_DESKTOP_DIR = Path(r"C:\Users\홍준기\Desktop\분석보고서")
-DESKTOP_REPORTS_DIR = Path(os.getenv("DESKTOP_REPORTS_DIR", str(DEFAULT_DESKTOP_DIR)))
+# 보고서 저장 기본 경로 (프로젝트 폴더 내 분석보고서)
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+DEFAULT_REPORTS_DIR = PROJECT_ROOT / "분석보고서"
+DESKTOP_REPORTS_DIR = Path(os.getenv("DESKTOP_REPORTS_DIR", str(DEFAULT_REPORTS_DIR)))
 
 MYSQL_HOST = os.getenv("MYSQL_HOST", "localhost")
 MYSQL_PORT = int(os.getenv("MYSQL_PORT", "3306"))
@@ -109,13 +110,14 @@ def save_report_to_desktop_and_db(
     saved_file = str(desktop_file_path)
     try:
         DESKTOP_REPORTS_DIR.mkdir(parents=True, exist_ok=True)
-        if not filename.lower().endswith(".pdf"):
+        is_binary = filename.lower().endswith(".pdf") or filename.lower().endswith(".docx")
+        if not is_binary:
             with open(desktop_file_path, "w", encoding="utf-8") as f:
                 f.write(content)
             print(f"  📁 [데스크톱 저장 완료] {saved_file}")
         else:
             if desktop_file_path.exists():
-                print(f"  📁 [데스크톱 PDF 확인 완료] {saved_file}")
+                print(f"  📁 [데스크톱 바이너리 파일 확인 완료] {saved_file}")
     except Exception as e:
         print(f"  ⚠️ [데스크톱 저장 실패] {e}")
         saved_file = filename

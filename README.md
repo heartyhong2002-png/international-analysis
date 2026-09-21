@@ -33,9 +33,10 @@ output/dashboard/dashboard_latest.html
 python scripts/generate_dashboard_v2.py
 ```
 
-나머지 산출물(이슈별 심층 리포트, GAO 스타일 PDF, 일일 분석, 벤치마크 검증 리포트, MySQL
+나머지 산출물(이슈별 심층 리포트, 정통 인텔리전스 폼 PDF·Word 공식 보고서, 일일 분석, 벤치마크 검증 리포트, MySQL
 분석 뷰)은 전부 이 대시보드를 뒷받침하는 **증거 자료**로 취급한다 — 각자 별도의
-"최종 결과물"이 아니다.
+"최종 결과물"이 아니다. (단, 공식 보고서 제출·인쇄용으로 `reports/issues/pdf/` 및 `reports/issues/docx/`에
+생성되며, 프로젝트 내 `분석보고서/`(`C:\Users\홍준기\Desktop\international-analysis\분석보고서`) 및 MySQL `analysis_reports` 테이블에 실시간 자동 동기화된다.)
 
 ## 3. 실행
 

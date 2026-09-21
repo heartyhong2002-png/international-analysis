@@ -1,0 +1,18 @@
+=== 중동 OSINT 공급망 리스크 보고서 ===
+
+[현지 AI 분석 원문 (Falcon3)]
+1. The intercepted messages suggest potential threats to the Red Sea and the infrastructure, as the Yemeni Armed Forces describe their military operations targeting facilities in Saudi Arabia, including the targeting of "Aramco" facilities in Yanbu and "sensitive sites" in the Saudi capital, Riyadh. These actions could have implications for regional oil supply chains and stability.
+
+2. The messages reveal a defensive stance by the Yemeni Armed Forces, countering what they perceive as false propaganda by the Saudi enemy. They confirm their military operations against Saudi targets, aiming to weaken the Saudi enemy's capabilities and infrastructure, with the ultimate goal of ending aggression and lifting the blockade on Yemen.
+
+[한국 기업 대응 리포트 (EXAONE)]
+한국 정유사 및 해운사(물류)가 대비해야 할 단기 리스크 요약:
+
+- **석유 공급 불안정 리스크**:
+  - 사우디아라비아의 주요 인프라, 특히 아람코 시설에 대한 공격 가능성으로 인해 중동 지역의 석유 생산 및 수송에 차질이 생길 수 있습니다. 이는 한국 정유사의 원유 수입 불안정과 가격 변동 리스크를 증가시킵니다.
+
+- **물류 경로 차질 리스크**:
+  - 예니부와 리야드 등 주요 시설에 대한 공격은 지역 내 해운 경로를 차단하거나 지연시킬 수 있어, 한국 해운사의 물류 운송 시간 증가와 비용 상승 위험이 있습니다.
+
+- **경제적 제재 및 보험 비용 상승 리스크**:
+  - Yemen 지역의 지속적인 긴장 상태는 추가적인 경제 제재 가능성을 높이고, 중동 해역의 불안정성으로 인해 선박 보험 비용 상승과 리스크 관리 비용 증가가 예상됩니다.

@@ -16,7 +16,7 @@
         UNCLASSIFIED // FOR OFFICIAL USE ONLY
       </div>
       <div style="font-size: 11px; color: #4B5563; margin-top: 2px;">
-        2026년 09월 18일
+        2026년 09월 21일
       </div>
     </div>
   </div>

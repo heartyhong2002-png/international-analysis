@@ -1,0 +1,14 @@
+{
+  "Russia": {
+    "model_used": "second_constantine/yandex-gpt-5-lite:8b",
+    "discrepancy_score": 85,
+    "narrative_differences": "The official state media focuses on international politics and events, such as incidents related to the Ukrainian conflict and diplomatic issues. In contrast, the independent/exiled media covers domestic political events like election results and mobilization in Russia. The reporting styles and emphasized topics are vastly different, with the official media highlighting geopolitical tensions and the independent media focusing on internal political developments and social activism.",
+    "analyzed_at": "2026-09-21 15:44:50"
+  },
+  "Middle_East": {
+    "model_used": "falcon3:7b",
+    "discrepancy_score": 85,
+    "narrative_differences": "The official state media focuses on Iran's economic and diplomatic activities, including trade relations, a visit by a delegation, and a contract signing for oil production. In contrast, the independent/exiled media covers a range of topics, including U.S. diplomatic efforts, the strategic importance of a small Spanish city, personal relationships, cultural preferences, and the issue of Sahrawi citizenship, showing a significant difference in focus and content.",
+    "analyzed_at": "2026-09-21 15:45:48"
+  }
+}

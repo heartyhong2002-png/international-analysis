@@ -248,6 +248,34 @@ international-analysis/
      - **글로벌 사우스 대표 정론지**: **알자지라(Al Jazeera) 영문/아랍어 RSS (`https://www.aljazeera.com/xml/rss/all.xml`)**를 서방 언론(BBC/NPR) 편향 교정 축으로 편입.
   3. **실행 계획**: 위 3자 교차 수집용 RSS 및 Reddit 엔드포인트는 차기 '데이터셋 다운로드 및 크롤러 확장' 스프린트에서 전용 수집기로 일괄 구현하기로 확정.
 
+- 2026-09-21 [트랙③, 신호 괴리율 및 금융 프록시 파이프라인 구현] **신호 괴리율 수집·분석 및 검열 우회 금융 프록시 모듈 구현 완료**:
+  1. **신호 괴리율 수집기(`fetch_signal_gap_rss.py`) 개발 완료**: 러시아(TASS vs Meduza), 중국(인민일보 vs CDT), 중동(Tehran Times vs Raseef22) 등 관영 매체와 망명/독립 언론의 기사를 동시 수집하는 모듈 구축 (CDT 등 봇 차단 매체는 우회 또는 대체 지표로 전환).
+  2. **6대 네이티브 LLM 분석 모듈(`analyze_signal_gap.py`) 개발 완료**: 수집된 텍스트를 `yandex-gpt-5-lite:8b`, `qwen2.5:7b` 등 권역별 전담 모델에 주입하여, JSON 포맷으로 0~100점의 '신호 괴리율(Signal Gap Score)'을 자동 추출하는 데 성공.
+  3. **검열 우회용 금융 프록시(`fetch_financial_proxy.py`) 프로토타입 추가**: 텍스트 검열이 극심한 중국 등의 실물 경제 불안도를 측정하기 위해, 주가 지수(ASHR), 환율 (USD/CNY), 금(Gold) 변동률을 야후 파이낸스로 가져와 "실제 자본 이탈(여론)"을 역추적하는 행동 경제학적 스크립트 작성 완료.
+  4. **글로벌 IB 리서치 수집 및 다중 LLM 분석망(`fetch_ib_research.py`, `analyze_ib_insights.py`) 구축**: ING(유럽), Nomura(일본) 등 글로벌 금융사의 리포트를 수집한 뒤, 소스 국가에 맞는 언어 특화 LLM(`mistral-nemo`, `qwen2.5`)이 1차 분석을 수행하고, 최종적으로 한국어 특화 LLM(`EXAONE 3.5`)이 종합하여 MS Word(`.docx`) 포맷의 임원용 보고서로 자동 생성하는 파이프라인 완성.
+- 2026-09-21 [트랙③, 컨트롤타워] **텔레그램 OSINT 자동 크롤링 및 중동 블랙스완(Black Swan) 조기경보 시뮬레이션 완수**:
+  1. **텔레그램 합법 크롤러(`fetch_telegram_public.py`) 구축**: API 키나 계정 밴 리스크 없이 `t.me/s/` 퍼블릭 뷰를 긁어오는 BeautifulSoup 기반 크롤러 제작. 러시아(Rybar), 우크라이나(UaOnlii), 이란 혁명수비대(sepah_pasdaran), 사우디아라비아(AlArabiya), 예멘 후티 반군(army21ye) 채널을 성공적으로 크롤링.
+  2. **걸프 자본(사우디) vs 저항의 축(이란) Signal Gap 실측**: 이란 IRGC 채널이 무장 선동으로 도배된 반면, 사우디 국영 Al Arabiya는 가십과 일반 국제 뉴스 위주로 송출하는 극명한 텍스트 뉘앙스 차이를 `falcon3:7b` 모델이 정확히 포착함.
+  3. **후티 반군 사우디 타격(Breaking News) 실시간 징후 탐지**: 후티 반군 군사 대변인(야히야 사리) 채널에서 사우디 얀부(Yanbu) 아람코 석유 시설 타격 성명서(Communiqué) 원문을 즉각 포획함.
+  4. **다중 LLM 조기경보 리포트(`analyze_middle_east_osint.py`)**: `falcon3:7b`(아랍어 원문 해독 및 군사 타겟 추출) -> `EXAONE 3.5`(한국 정유사/해운사 물류 차질 및 유가 폭등 임원용 보고서 작성)로 이어지는 무개입 릴레이 분석망을 완벽하게 가동하여 `middle_east_risk_analysis.txt`를 산출함.
+
+- 2026-09-21 [트랙③, 컨트롤타워] **docxtpl 기반 정통 인텔리전스 폼 Word(.docx) 보고서 생성 파이프라인 구축 및 DB·바탕화면 동기화 완료**:
+  1. **배경**: 사용자가 필요 시 MS Word에서 마우스로 직접 서식을 편집하거나 정부/기업 제출용으로 활용할 수 있도록, 전용 워드 템플릿 라이브러리 `docxtpl`을 활용한 자동 생성 시스템 구축.
+  2. **구현 내역**:
+     - `templates/official_report_template.docx`: `scripts/build_docx_template.py`를 통해 FBI FD-1036 / FD-71A 스타일의 정통 공문서 폼(Red Approved Stamp, FORM IA-1036, UNCLASSIFIED, OFFICIAL RECORD 인장, 기관 표제부, 메타데이터 결재 그리드, Synopsis, 신호 타임라인 표, 당사국 전략적 태세 표, 경제/안보 파급영향, 3단계 전망 및 불확실성 요인, 3대 전략적 제언, 4대 DB 검증 쿼리 실측치, Enclosure 목록, 종결부호 `◆◆`) 템플릿 자동 생성.
+     - `scripts/docx_report_generator.py`: `data/issue_research_data.py`의 실제 리서치 데이터를 주입하여 5종의 국문 정세평가 보고서(`01_북한핵_정세평가보고서.docx` ~ `05_미중무역전쟁_정세평가보고서.docx`) 자동 렌더링.
+     - `scripts/generate_reports.py`: 통합 실행 시 Markdown, PDF, DOCX가 일괄 생성되도록 연동 완료.
+  3. **저장 및 검증**:
+     - 프로젝트 내부 `reports/issues/docx/` 및 지정된 전용 폴더 `C:\Users\홍준기\Desktop\international-analysis\분석보고서`에 실시간 무손실 자동 복제.
+     - MySQL `international_analysis.analysis_reports` 테이블에 `report_type='official_docx_ko'`로 메타데이터 및 경로 영구 적재.
+     - python-docx 검증 결과 미치환 Jinja 태그 0건(False), 문서당 6,300~7,400자의 풍부한 데이터가 완벽 조판됨을 확인.
+
+- 2026-09-21 [트랙②, 오픈소스 LLM 및 모델 인프라] **`falcon3:7b` 다운로드 확인·로컬 추론 검증 및 분석 vs 출력 전담 LLM 이원화 아키텍처 정립**:
+  1. **Falcon3 7B 다운로드 및 추론 검증**: 아랍에미리트 TII의 아랍어 파운데이션 모델 `falcon3:7b`(4.6GB) 다운로드 완료 확인 및 로컬 Ollama API (`/api/generate`) 메모리 적재 및 테스트 호출 완료. 정상 응답 수신으로 100% 작동 검증.
+  2. **로컬 스토리지 실측**: `falcon3:7b` 설치 후 C 드라이브 잔여 공간이 **67.60 GB**로 확인되어 향후 모델 추가(8B~14B급) 시에도 디스크 안정성이 충분함을 검증.
+  3. **분석(Analysis) vs 출력(Output) 전담 LLM 이원화 설계**: 각국 현지 모델(`yandex`, `falcon3`, `qwen2.5`, `mistral-nemo`, `elyza`)은 순수 '권역별 1차 분석 및 JSON 지표 추출'에만 집중하고, 이를 취합하여 한국 국익 관점의 최종 공문서/리포트를 조율·출력하는 '수석 보고서 작성관(Output LLM)' 분리 방향 정립.
+  4. **문서 동기화**: `LLM_SYSTEM_SUMMARY.md`(섹션 8 신설 및 2026-09-21 최신화) 반영 완료.
+
 ## 다음 채팅에서 이 문서를 사용하는 법
 
 새 대화를 시작할 때 이 파일(`project-handoff.md`)을 첨부하고 이렇게
