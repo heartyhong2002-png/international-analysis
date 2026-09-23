@@ -72,6 +72,7 @@ international-analysis/
 
 ## 5. 더 읽을거리
 
+- `PROJECT_CONTEXT.md` — 다른 AI/새 세션이 가장 먼저 읽어야 하는 현재 방향 안내서
 - `project-handoff.md` — 이 프로젝트의 상세한 의사결정 히스토리, 세션 간 조율 기록. 새 세션은 이 파일을 먼저 읽는다.
 - `LLM_SYSTEM_SUMMARY.md` — LLM 아키텍처 상세
 - `docs/current/PROJECT_PLAN.md` — 현재 조기경보 시스템 기준의 최신 프로젝트 계획
