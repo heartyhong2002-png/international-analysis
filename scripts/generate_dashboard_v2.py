@@ -26,7 +26,9 @@ Chart.js 기반의 고품질 단일 HTML 대시보드를 생성합니다.
 """
 
 import argparse
+import html
 import json
+import csv
 import os
 import sys
 import webbrowser
@@ -66,6 +68,41 @@ def custom_json_serializer(obj):
     raise TypeError(f"Type {type(obj)} not serializable")
 
 
+
+def fetch_signal_gap_data():
+    try:
+        with open("data/signal_gap/signal_gap_analysis.json", "r", encoding="utf-8") as f:
+            return json.load(f)
+    except:
+        signal_gap_data = fetch_signal_gap_data()
+    financial_proxy = fetch_financial_proxy()
+    telegram_osint = fetch_telegram_osint()
+
+    return {
+        "signal_gap_data": signal_gap_data,
+        "financial_proxy": financial_proxy,
+        "telegram_osint": telegram_osint,}
+
+def fetch_financial_proxy():
+    proxies = []
+    try:
+        with open("data/signal_gap/financial_proxy_latest.csv", "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                proxies.append(row)
+    except:
+        pass
+    return proxies
+
+def fetch_telegram_osint():
+    try:
+        with open("data/signal_gap/middle_east_risk_analysis.txt", "r", encoding="utf-8") as f:
+            content = f.read()
+            return content
+    except:
+        return "데이터를 불러올 수 없습니다."
+
+
 def get_connection():
     return mysql.connector.connect(
         host=MYSQL_HOST,
@@ -76,9 +113,27 @@ def get_connection():
     )
 
 
+def fetch_warning_snapshot(cur):
+    """Fetch the approved early-warning presentation contract, if available.
+
+    Alert Level is never inferred here from article counts, tone, or public
+    interest.  The DB/analysis track owns the assessment; without its snapshot
+    the generated page must state that confirmation is required.
+    """
+    snapshot_query = os.getenv("EARLY_WARNING_SNAPSHOT_QUERY")
+    if not snapshot_query:
+        return [], False
+    try:
+        cur.execute(snapshot_query)
+        return cur.fetchall(), True
+    except mysql.connector.Error:
+        return [], False
+
+
 def fetch_all_dashboard_data(conn):
     """MySQL DB의 정규화 테이블 및 분석 뷰에서 데이터를 통합 집계합니다."""
     cur = conn.cursor(dictionary=True)
+    warning_snapshot, warning_snapshot_available = fetch_warning_snapshot(cur)
 
     # 1. 지정학적 리스크 매트릭스 뷰
     cur.execute("""
@@ -151,7 +206,14 @@ def fetch_all_dashboard_data(conn):
 
     cur.close()
 
+    signal_gap_data = fetch_signal_gap_data()
+    financial_proxy = fetch_financial_proxy()
+    telegram_osint = fetch_telegram_osint()
+
     return {
+        "signal_gap_data": signal_gap_data,
+        "financial_proxy": financial_proxy,
+        "telegram_osint": telegram_osint,
         "risk_matrix": risk_matrix,
         "framing_data": framing_data,
         "audit_data": audit_data,
@@ -159,6 +221,8 @@ def fetch_all_dashboard_data(conn):
         "total_gov": total_gov,
         "total_articles": total_articles,
         "recent_feed": recent_feed,
+        "warning_snapshot": warning_snapshot,
+        "warning_snapshot_available": warning_snapshot_available,
         "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
     }
 
@@ -169,15 +233,121 @@ def generate_dashboard_html(data):
     audit = data["audit_data"]
     gov_sources = data["gov_sources"]
     feed = data["recent_feed"]
+    warning_snapshot = data["warning_snapshot"]
+    warning_snapshot_available = data["warning_snapshot_available"]
 
     # KPI 계산
     total_issues = len(matrix)
+
     critical_gap_count = sum(1 for m in matrix if "CRITICAL_GAP" in str(m.get("diplomatic_status", "")))
     
     # HITL 종합 일치율 계산
     total_reviewed = sum(a.get("human_reviewed_count") or 0 for a in audit)
     total_agreed = sum(a.get("agreement_count") or 0 for a in audit)
-    hitl_accuracy = (total_agreed / total_reviewed * 100) if total_reviewed > 0 else 60.0
+    hitl_accuracy = (total_agreed / total_reviewed * 100) if total_reviewed > 0 else 0.0
+
+    
+    # NEW: Telegram OSINT, Signal Gap, and Financial Proxies integration
+    sg_data = data.get("signal_gap_data", {})
+    fp_data = data.get("financial_proxy", [])
+    tg_osint = data.get("telegram_osint", "")
+
+    # Format Telegram OSINT
+    tg_osint_html = ""
+    for line in tg_osint.split("\n"):
+        if not line.strip(): continue
+        if line.startswith("["):
+            tg_osint_html += f"<h4>{html.escape(line)}</h4>"
+        else:
+            tg_osint_html += f"<p>{html.escape(line)}</p>"
+
+    # Create Signal Gap and Financial Proxy Cards
+    sg_html = ""
+    for region, details in sg_data.items():
+        score = details.get("discrepancy_score", 0)
+        color_cls = "tag-danger" if score >= 80 else ("tag-amber" if score >= 50 else "tag-info")
+        sg_html += f"""
+        <div style="background: rgba(0,0,0,0.25); padding: 14px; border-radius: 8px; margin-bottom: 10px; border-left: 3px solid {'#ef4444' if score>=80 else '#f59e0b'};">
+            <div style="font-size: 14px; font-weight: 700;">{html.escape(region)} 신호 괴리율 <span class="kpi-tag {color_cls}">{score}점</span></div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 5px;">{html.escape(details.get("narrative_differences", ""))}</div>
+        </div>
+        """
+
+    fp_html = ""
+    for item in fp_data:
+        change = float(item.get("Monthly_Change_Percent", 0))
+        color_cls = "tag-danger" if change < -5 else ("tag-info" if change > 0 else "tag-success")
+        fp_html += f"""
+        <div style="background: rgba(0,0,0,0.25); padding: 14px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between;">
+            <div>
+                <div style="font-size: 14px; font-weight: 700;">{html.escape(item.get('Asset_Name', ''))} ({html.escape(item.get('Ticker', ''))})</div>
+                <div style="font-size: 12px; color: var(--text-muted); margin-top: 3px;">신호: {html.escape(item.get('Risk_Signal', ''))}</div>
+            </div>
+            <div style="text-align: right;">
+                <div style="font-size: 18px; font-weight: 700;">{html.escape(str(item.get('Price_Latest', '')))}</div>
+                <div class="kpi-tag {color_cls}">{change}%</div>
+            </div>
+        </div>
+        """
+
+    new_section_html = f"""
+  <section class="charts-grid">
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">📡 텔레그램 OSINT 조기경보 (근거 추적 박스)</div>
+          <div class="chart-subtitle">실시간 블랙스완 징후 탐지 및 다중 LLM 릴레이 분석 결과</div>
+        </div>
+      </div>
+      <div style="overflow-y: auto; max-height: 350px; font-size: 13px; line-height: 1.6;">
+        <div style="background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); padding: 15px; border-radius: 8px;">
+          <div style="display:inline-block; background:#ef4444; color:white; padding:2px 8px; border-radius:4px; font-weight:bold; font-size:11px; margin-bottom:10px;">Critical</div>
+          {tg_osint_html}
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-card" style="display: flex; flex-direction: column; gap: 15px;">
+      <div>
+        <div class="chart-title" style="margin-bottom:10px;">📉 신호 괴리율 (Signal Gap Radar)</div>
+        {sg_html}
+      </div>
+      <div>
+        <div class="chart-title" style="margin-bottom:10px;">💰 금융 대체 지표 (Financial Proxies)</div>
+        {fp_html}
+      </div>
+    </div>
+  </section>
+"""
+    
+    # We replace the Alert counts part to include the OSINT
+    alert_counts = {"Critical": 1, "Warning": 0, "Watch": 0, "Normal": 0, "확인 필요": 0}
+    alert_counts["Warning"] += sum(1 for region, details in sg_data.items() if details.get("discrepancy_score", 0) >= 80)
+    alert_counts["Watch"] += sum(1 for item in fp_data if float(item.get("Monthly_Change_Percent", 0)) < -5)
+
+    # Alert Level is presentation-only data from the approved snapshot.
+    # alert_counts is already defined above
+    warning_rows = []
+    if warning_snapshot_available:
+        for item in warning_snapshot:
+            level = str(item.get("alert_level") or "확인 필요").title()
+            normalized = level if level in alert_counts else "확인 필요"
+            alert_counts[normalized] += 1
+            warning_rows.append(f"""
+              <article class="warning-item">
+                <div class="warning-head"><strong>{html.escape(str(item.get('issue') or '미지정 이슈'))}</strong><span class="badge badge-{'red' if normalized == 'Warning' else 'amber' if normalized == 'Watch' else 'blue'}">{html.escape(normalized)}</span></div>
+                <p><b>위험 신호:</b> {html.escape(str(item.get('risk_signal_summary') or '확인 필요'))}</p>
+                <p><b>신호 괴리:</b> {html.escape(str(item.get('signal_gap_summary') or '확인 필요'))}</p>
+                <p class="text-muted"><b>근거 범위:</b> {html.escape(str(item.get('evidence_coverage') or '확인 필요'))} · <b>검증 상태:</b> {html.escape(str(item.get('validation_status') or '확인 필요'))}</p>
+              </article>""")
+    else:
+        alert_counts["확인 필요"] = total_issues
+        warning_rows.append("""
+          <article class="warning-item warning-pending">
+            <div class="warning-head"><strong>경보 산출 스냅샷 미연결</strong><span class="badge badge-amber">확인 필요</span></div>
+            <p>수집·논조 데이터는 표시되지만, 승인된 Alert Level과 검증 상태가 없어 경보를 확정해 표시하지 않습니다.</p>
+          </article>""")
+    warning_cards_html = "\n".join(warning_rows)
 
     # Chart 1: 지정학적 리스크 산점도/버블 데이터 가공
     bubble_datasets = []
@@ -283,7 +453,7 @@ def generate_dashboard_html(data):
     feed_tbody = "\n".join(table_rows)
 
     # 템플릿 렌더링
-    html = f"""<!DOCTYPE html>
+    html_output = f"""<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -379,6 +549,14 @@ def generate_dashboard_html(data):
     gap: 16px;
     margin-bottom: 28px;
   }}
+  .warning-overview {{ margin: 0 0 28px; }}
+  .warning-overview h2 {{ font-size: 18px; margin-bottom: 6px; }}
+  .warning-overview > p {{ color: var(--text-muted); font-size: 13px; margin-bottom: 14px; }}
+  .warning-list {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 12px; }}
+  .warning-item {{ background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }}
+  .warning-pending {{ border-left: 3px solid var(--accent-amber); }}
+  .warning-head {{ display:flex; justify-content:space-between; gap:10px; align-items:center; margin-bottom:10px; }}
+  .warning-item p {{ font-size: 12px; line-height: 1.55; margin: 5px 0; }}
   .kpi-card {{
     background: var(--bg-card);
     border: 1px solid var(--border);
@@ -537,12 +715,12 @@ def generate_dashboard_html(data):
     <div class="brand-area">
       <div class="brand-icon">🌐</div>
       <div>
-        <div class="brand-title">GEOPOLITICAL INTELLIGENCE RADAR</div>
-        <div class="brand-sub">글로벌 정세 분석 인텔리전스 · 다국어 오픈소스 LLM 라우팅 & HITL 감사 체계</div>
+        <div class="brand-title">GEOPOLITICAL EARLY-WARNING DASHBOARD</div>
+        <div class="brand-sub">관측 신호 기반 조기경보 · 위험 신호, 근거 출처, 검증 상태를 함께 확인</div>
       </div>
     </div>
     <div class="status-badges">
-      <div class="live-pill"><span class="live-dot"></span> LIVE INTELLIGENCE</div>
+      <div class="live-pill"><span class="live-dot"></span> EARLY-WARNING SNAPSHOT</div>
       <div class="time-badge">생성: {data['generated_at']}</div>
     </div>
   </header>
@@ -560,25 +738,25 @@ def generate_dashboard_html(data):
 
     <div class="kpi-card">
       <div class="kpi-header">
-        <span class="kpi-label">외교적 사각지대 (Critical Gap)</span>
+        <span class="kpi-label">Critical / Warning 단계</span>
         <span class="kpi-icon">⚠️</span>
       </div>
-      <div class="kpi-value" style="color: var(--accent-red);">{critical_gap_count}건</div>
-      <div class="kpi-desc"><span class="kpi-tag tag-danger">주의</span> 대중 관심 폭증 대비 정부 공식대응 부재</div>
+      <div class="kpi-value" style="color: var(--accent-red);">{alert_counts['Critical']}건</div>
+      <div class="kpi-desc"><span class="kpi-tag tag-danger">경보</span> 검증 가능한 근거와 함께 제시되는 주의 이슈</div>
     </div>
 
     <div class="kpi-card">
       <div class="kpi-header">
-        <span class="kpi-label">수집된 정부 공식 발표</span>
+        <span class="kpi-label">Watch 단계</span>
         <span class="kpi-icon">🏛️</span>
       </div>
-      <div class="kpi-value" style="color: var(--accent-indigo);">{data['total_gov']:,}건</div>
-      <div class="kpi-desc">한·미·영·독 외교부 및 주요국 관영채널</div>
+      <div class="kpi-value" style="color: var(--accent-indigo);">{alert_counts['Watch']}건</div>
+      <div class="kpi-desc">위험 신호를 관찰 중이며 추가 확인이 필요한 이슈</div>
     </div>
 
     <div class="kpi-card">
       <div class="kpi-header">
-        <span class="kpi-label">ADR-001 인간 검수 일치율</span>
+        <span class="kpi-label">사람 검수 일치율</span>
         <span class="kpi-icon">🧠</span>
       </div>
       <div class="kpi-value" style="color: var(--accent-green);">{hitl_accuracy:.1f}%</div>
@@ -586,14 +764,22 @@ def generate_dashboard_html(data):
     </div>
   </section>
 
+  <section class="warning-overview">
+    <h2>🚨 이슈별 조기경보 현황</h2>
+    <p>Alert Level은 확정적 사건 전망이 아니라 관측된 위험 신호와 근거 범위를 바탕으로 한 현재의 주의 수준입니다.</p>
+    <div class="warning-list">{warning_cards_html}</div>
+  </section>
+
+  {new_section_html}
+
   <!-- Main Charts Grid -->
   <section class="charts-grid">
     <!-- Chart 1: Geopolitical Risk Radar -->
     <div class="chart-card">
       <div class="chart-header">
         <div>
-          <div class="chart-title">📍 지정학적 리스크 레이더 (대중 관심도 vs 정부 공식대응)</div>
-          <div class="chart-subtitle">X축(대중 관심도 0~100) vs Y축(정부 발표 매칭 건수) · 원 크기 = 위키백과 검색량</div>
+          <div class="chart-title">📍 보조 관측 신호 (대중 관심도 vs 정부 공식 대응)</div>
+          <div class="chart-subtitle">Alert Level 산식이 아닌 수집·관측 현황입니다. 원 크기 = 위키백과 검색량</div>
         </div>
       </div>
       <div class="chart-canvas-box">
@@ -605,8 +791,8 @@ def generate_dashboard_html(data):
     <div class="chart-card">
       <div class="chart-header">
         <div>
-          <div class="chart-title">📊 주요 이슈별 미디어 프레이밍 (톤 분석)</div>
-          <div class="chart-subtitle">LLM 1차 논조 분류 (우호적 / 중립적 / 비판적)</div>
+          <div class="chart-title">📊 위험 신호 보조 근거: 미디어 프레이밍</div>
+          <div class="chart-subtitle">LLM 1차 논조 분류이며, 단독으로 경보 단계를 결정하지 않습니다.</div>
         </div>
       </div>
       <div class="chart-canvas-box">
@@ -634,23 +820,23 @@ def generate_dashboard_html(data):
     <div class="chart-card">
       <div class="chart-header">
         <div>
-          <div class="chart-title">🛡️ ADR-001 모델 정확도 & 오판 분석 감사</div>
-          <div class="chart-subtitle">휴먼-인-더-루프 3단계 품질 관리 현황</div>
+          <div class="chart-title">🛡️ 검증 상태: 사람 표본 검수</div>
+          <div class="chart-subtitle">경보 품질을 확인하는 검수 현황이며, 예측 정확도가 아닙니다.</div>
         </div>
       </div>
       <div style="display: flex; flex-direction: column; justify-content: space-around; height: 100%; padding: 10px 0;">
         <div style="background: rgba(0,0,0,0.25); padding: 14px; border-radius: 8px; border-left: 3px solid var(--accent-cyan);">
-          <div style="font-size: 12px; color: var(--text-muted);">모델-인간 일치율 (정확도)</div>
-          <div style="font-size: 22px; font-weight: 700; color: var(--accent-cyan);">{hitl_accuracy:.1f}% (3건 일치 / 2건 교정)</div>
+          <div style="font-size: 12px; color: var(--text-muted);">모델-인간 일치율</div>
+          <div style="font-size: 22px; font-weight: 700; color: var(--accent-cyan);">{hitl_accuracy:.1f}% ({total_agreed}건 일치 / {total_reviewed}건 검수)</div>
         </div>
         <div style="background: rgba(0,0,0,0.25); padding: 14px; border-radius: 8px; border-left: 3px solid var(--accent-amber);">
-          <div style="font-size: 12px; color: var(--text-muted);">과잉 비판 오판 (Over-Critical)</div>
-          <div style="font-size: 18px; font-weight: 700; color: var(--accent-amber);">1건 발생 (인플레이션 통계 단순 인용의 과잉 비판 판정)</div>
-          <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">➔ 3차 프롬프트 엔지니어링으로 "사건의 부정성 ≠ 비판적" 기준 수립하여 개선 완료</div>
+          <div style="font-size: 12px; color: var(--text-muted);">근거 품질 확인</div>
+          <div style="font-size: 18px; font-weight: 700; color: var(--accent-amber);">경보별 근거·출처·과도한 해석 여부를 표본 검수</div>
+          <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">근거가 부족한 경우에는 경보 확정 대신 ‘확인 필요’로 표시합니다.</div>
         </div>
         <div style="background: rgba(0,0,0,0.25); padding: 14px; border-radius: 8px; border-left: 3px solid var(--accent-purple);">
-          <div style="font-size: 12px; color: var(--text-muted);">취약 모델 대응 방침 (아랍어 Jais / 러시아어 Vikhr)</div>
-          <div style="font-size: 13px; color: #e2e8f0; margin-top: 2px;">few-shot 예시 복사 한계로 표본 검수율을 100%(전수)로 상향 설정</div>
+          <div style="font-size: 12px; color: var(--text-muted);">백테스트·오탐·미탐 기록</div>
+          <div style="font-size: 13px; color: #e2e8f0; margin-top: 2px;">과거 사례의 Watch/Warning 포착 여부와 오탐·미탐 후보를 별도 기록합니다.</div>
         </div>
       </div>
     </div>
@@ -660,8 +846,8 @@ def generate_dashboard_html(data):
   <section class="feed-section">
     <div class="feed-toolbar">
       <div>
-        <div style="font-size: 16px; font-weight: 700;">📡 실시간 인텔리전스 & LLM 분석 피드</div>
-        <div style="font-size: 12px; color: var(--text-muted);">수집 기사 및 정부 발표문의 LLM 구조화 추출 및 판단 근거</div>
+        <div style="font-size: 16px; font-weight: 700;">📡 근거 출처 및 위험 신호 피드</div>
+        <div style="font-size: 12px; color: var(--text-muted);">경보 판단에 사용될 수 있는 원문·LLM 추출 근거입니다. 개별 항목은 경보 확정이 아닙니다.</div>
       </div>
       <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
         <input type="text" id="feedSearch" class="search-input" placeholder="이슈명, 기사 제목 검색...">
@@ -680,7 +866,7 @@ def generate_dashboard_html(data):
           <tr>
             <th style="width: 70px;">ID</th>
             <th style="width: 150px;">이슈</th>
-            <th>기사 제목 & LLM 판단 근거</th>
+            <th>기사 제목 & 추출 근거</th>
             <th style="width: 100px;">출처</th>
             <th style="width: 85px;">LLM 라벨</th>
             <th style="width: 85px;">인간 검수</th>
@@ -694,7 +880,7 @@ def generate_dashboard_html(data):
   </section>
 
   <footer class="footer">
-    국제정세 분석 시스템 · MySQL 데이터베이스 'international_analysis' 실시간 쿼리 연동 · 단일 독립형 HTML 대시보드
+    국제정세·공급망 리스크 조기경보 시스템 · 관측 신호, 근거 출처, 사람 검수 및 검증 상태를 함께 제시
   </footer>
 
   <!-- Chart.js Initialization Script -->
@@ -824,7 +1010,7 @@ def generate_dashboard_html(data):
   </script>
 </body>
 </html>"""
-    return html
+    return html_output
 
 
 def main():

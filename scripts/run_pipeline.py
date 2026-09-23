@@ -101,6 +101,8 @@ def main():
             steps.append(("글로벌 실증 여론조사(Pew·ECFR·Ipsos) 수집", "fetch_polling_data.py", []))
         if args.with_reddit:
             steps.append(("Reddit 공개 커뮤니티 여론 텍스트 마이닝", "fetch_reddit_opinion.py", []))
+        steps.append(("권위주의 3자 교차 수집(Triangulated OSINT)", "fetch_signal_gap_rss.py", []))
+        steps.append(("금융 대체 지표(Financial Proxy) 수집", "fetch_financial_proxy.py", []))
     steps.append(("MySQL DB로 통합", "build_database.py", []))
     steps.append(("인터랙티브 HTML 대시보드 생성", "generate_dashboard_v2.py", []))
 

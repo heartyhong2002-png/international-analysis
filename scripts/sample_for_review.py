@@ -74,6 +74,14 @@ REVIEW_SHEET_FIELDS = [
     "title",
     "llm_label",
     "llm_evidence_quote",
+    # 조기경보 산식 결과. 없는 기존 로그도 빈 칸으로 호환된다.
+    "risk_signal_score",
+    "signal_gap_score",
+    "evidence_coverage",
+    "alert_level",
+    "alert_reason",
+    "consensus_confidence",
+    "human_review_required",
     "human_label",       # 검수자가 채울 곳 (우호적 / 중립적 / 비판적)
     "correction_note",   # 검수자가 채울 곳 (불일치 시 판단 근거)
     "reviewed_at",       # 검수 완료 일시 (비워두면 병합 시 자동 입력)
@@ -167,10 +175,19 @@ def select_stratified_samples(
         # 계층별 최소 표본 수 보장
         target_count = max(target_count, min(len(items), min_samples_per_group))
 
-        # 무작위 추출
+        # 경보 산식 또는 모델 분열이 사람 확인을 요구한 건은 표본 비율과 무관하게
+        # 전수 포함한다. 나머지는 재현 가능한 층화 무작위 표본으로 뽑는다.
+        required = [
+            item for item in items
+            if str(item.get("human_review_required", "")).strip().lower() in {"true", "1", "yes"}
+            or (item.get("alert_level") or "").strip() in {"경보", "고경보", "확인 필요"}
+        ]
         shuffled = list(items)
         rng.shuffle(shuffled)
-        sampled.extend(shuffled[:target_count])
+        required_ids = {id(item) for item in required}
+        remainder = [item for item in shuffled if id(item) not in required_ids]
+        sampled.extend(required)
+        sampled.extend(remainder[:max(0, target_count - len(required))])
 
     return sampled
 
@@ -224,7 +241,8 @@ def create_sample_batch(
     for lang, cnt in sorted(lang_counts.items()):
         is_high = " (고위험 100% 전수)" if lang in HIGH_RISK_LANGUAGES else " (20% 표본)"
         print(f"     • {lang:<4}: {cnt:>3}건{is_high}")
-    print("\n💡 엑셀 또는 CSV 편집기로 'human_label' (우호적/중립적/비판적) 컬럼을 입력한 후,")
+    print("\n💡 '경보', '고경보', '확인 필요' 또는 모델 분열 표시는 우선 검수 대상입니다.")
+    print("   엑셀 또는 CSV 편집기로 'human_label' (우호적/중립적/비판적) 컬럼을 입력한 후,")
     print(f"   'python scripts/sample_for_review.py --merge {output_csv.name}' 명령으로 반영하세요.\n")
 
     return output_rows

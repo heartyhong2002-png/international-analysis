@@ -380,8 +380,8 @@ EXPERT_ANALYSIS_PROMPT = """다음은 싱크탱크/전문가 분석 글이다. �
 
 1. author_or_org: 글쓴이 또는 발행 기관명 (모르면 발행처 이름)
 2. key_argument: 이 글의 핵심 주장을 한 문장으로 (narrative 평가 여부와 무관하게 있는 그대로)
-3. forecast: 이 글이 명시적으로 예측/전망하는 내용이 있으면 한 문장으로, 없으면 null
-4. forecast_horizon: 전망이 가리키는 시점 (예: "3개월 내", "2027년 총선 이후" 등), 없으면 null
+3. risk_signal: 이 글이 언급한 향후 관측 조건 또는 위험 신호를 한 문장으로, 없으면 null. 미래 사건을 단정하거나 발생 확정으로 표현하지 않는다.
+4. observation_timeframe: 위 관측 조건이 가리키는 시점 (예: "3개월 내", "2027년 총선 이후" 등), 없으면 null
 5. evidence_basis: 주장의 근거로 든 사실/데이터/사건을 한 가지만 짧게
 6. stance_toward: 이 글이 지지하거나 비판하는 대상(국가/기관/인물명), 다수면 대표 1개, 없으면 null
 
@@ -389,8 +389,8 @@ EXPERT_ANALYSIS_PROMPT = """다음은 싱크탱크/전문가 분석 글이다. �
 {{
   "author_or_org": "...",
   "key_argument": "...",
-  "forecast": "..." 또는 null,
-  "forecast_horizon": "..." 또는 null,
+  "risk_signal": "..." 또는 null,
+  "observation_timeframe": "..." 또는 null,
   "evidence_basis": "...",
   "stance_toward": "..." 또는 null
 }}"""
@@ -398,8 +398,8 @@ EXPERT_ANALYSIS_PROMPT = """다음은 싱크탱크/전문가 분석 글이다. �
 import re
 _JSON_BLOCK_RE = re.compile(r"\{.*\}", re.DOTALL)
 _EXPECTED_EXPERT_KEYS = {
-    "author_or_org", "key_argument", "forecast",
-    "forecast_horizon", "evidence_basis", "stance_toward",
+    "author_or_org", "key_argument", "risk_signal",
+    "observation_timeframe", "evidence_basis", "stance_toward",
 }
 
 
@@ -493,7 +493,7 @@ TONE_PROMPT = """다음 뉴스 기사의 논조를 분류하시오.
 판단 기준은 딱 하나뿐이다: **이 기사의 문장이 특정 주체(정부·인물·기업·국가)의 행동·정책·
 능력을 narrative(서술) 차원에서 비난하거나 부정적으로 평가하는 표현을 쓰는가?**
 - 그렇다 → critical
-- 아니다(사건·통계·예측·발표를 그대로 전달할 뿐이다) → neutral. **이때 그 사건 자체가 전쟁,
+- 아니다(사건·통계·관측·발표를 그대로 전달할 뿐이다) → neutral. **이때 그 사건 자체가 전쟁,
   관세, 물가 상승, 사망, 경제위기처럼 나쁜 소식이어도 상관없다 — "나쁜 소식 = critical"이 아니다.**
   "전문가들이 우려한다", "가격이 올랐다", "협상이 결렬됐다" 같은 문장은 그 자체로는 누구도
   비난하지 않으므로 neutral이다.
@@ -507,14 +507,14 @@ evidence_quote는 기사 제목/본문을 그대로 복사하지 말고, 판단�
 단어를 짧게 뽑을 것. 원문에 마땅한 표현이 없으면 "특별한 편향 표현 없음, 사실 전달형"이라고 쓸 것.
 
 --- 예시 입력/출력 (형식 참고용, 실제 판단은 아래 실제 기사에 대해서 할 것) ---
-예시 1 (부정적 사건 + 예측 인용이지만 neutral — 실제로 여러 모델이 이 유형을 critical로
+예시 1 (부정적 사건 + 관측 인용이지만 neutral — 실제로 여러 모델이 이 유형을 critical로
 잘못 판단했던 사례이니 특히 주의할 것):
 기사 제목: US raises tariffs on imports
 기사 본문: The US government announced higher tariffs on imported goods. Analysts warn of
 price increases.
 출력: {{"label": "neutral", "evidence_quote": "특별한 편향 표현 없음, 사실 전달형"}}
 (이유: 관세 인상과 물가 상승 우려라는 사건 자체는 부정적이지만, 이 문장은 정부의 발표와
-애널리스트의 예측을 그대로 전달할 뿐 정부를 무능하다거나 잘못했다고 narrative적으로 평가하지
+애널리스트의 전망을 그대로 전달할 뿐 정부를 무능하다거나 잘못했다고 narrative적으로 평가하지
 않는다.)
 
 예시 2 (같은 소재라도 narrative적 비난이 들어가면 critical):
@@ -584,7 +584,7 @@ REVIEW_LOG_FIELDS = [
     "outlet_bias", "country", "title", "link",
     "llm_label", "llm_evidence_quote",  # local_media 전용 (기존 TONE_PROMPT 재사용)
     # expert_analysis 전용
-    "author_or_org", "key_argument", "forecast", "forecast_horizon",
+    "author_or_org", "key_argument", "risk_signal", "observation_timeframe",
     "evidence_basis", "stance_toward",
     "human_label", "correction_note", "reviewed_at", "collected_at",
 ]
@@ -616,8 +616,8 @@ def run(with_llm: bool = False, articles: list[dict] | None = None) -> list[dict
                     article.update({
                         "author_or_org": extraction.get("author_or_org"),
                         "key_argument": extraction.get("key_argument"),
-                        "forecast": extraction.get("forecast"),
-                        "forecast_horizon": extraction.get("forecast_horizon"),
+                        "risk_signal": extraction.get("risk_signal"),
+                        "observation_timeframe": extraction.get("observation_timeframe"),
                         "evidence_basis": extraction.get("evidence_basis"),
                         "stance_toward": extraction.get("stance_toward"),
                     })
