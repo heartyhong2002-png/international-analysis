@@ -1,7 +1,7 @@
 # 국제정세 분석 (International Affairs Analysis)
 
 **성격:** 교과목/졸업 과제물
-**핵심 주제:** 저사양 로컬 환경(16GB RAM, GPU 없음)에서, 오픈소스 다국어 LLM의 주관적 판단(논조 분류·주장 추출)을 어떻게 신뢰 가능하게 만들 것인가. 국제정세(21개 이슈, 6개 대륙)는 이 방법론을 검증하는 소재다.
+**핵심 주제:** 저사양 로컬 환경(16GB RAM, GPU 없음)에서, 오픈소스 다국어 LLM의 주관적 판단(논조 분류·주장 추출)을 어떻게 신뢰 가능하게 만들 것인가. 현재 목표는 국제정세 사건을 단정적으로 예측하는 것이 아니라, 관측 가능한 데이터 신호를 바탕으로 공급망·지정학 리스크의 조기경보를 제공하는 것이다.
 **최종 결과물:** `output/dashboard/index.html` — 인터랙티브 HTML 대시보드
 
 ---
@@ -10,13 +10,18 @@
 
 RSS 뉴스, 정부 공식 발표, 현지언론·전문가분석, Reddit 여론, 각종 여론조사·경제지표를
 수집해서, 언어별로 라우팅된 로컬 LLM(Ollama)이 논조(우호적/중립적/비판적)와 핵심 주장을
-뽑아낸다. 이 판단은 그대로 신뢰하지 않고 3단계 절차를 거친다:
+뽑아낸다. 이 결과를 이용해 "앞으로 반드시 어떤 사건이 발생한다"고 예측하지 않고,
+이슈별 위험 신호가 평소보다 강해졌는지, 공식 발표와 독립·현지 신호 사이의 괴리가 커졌는지,
+사람이 주목해야 할 경보 단계가 올라갔는지를 판단한다. LLM 판단은 그대로 신뢰하지 않고
+3단계 절차를 거친다:
 
 1. **1차 — LLM 분류**: 고정 루브릭 + 판단 근거 문장과 함께 태깅
 2. **2차 — 사람 표본 검수**: 매주 처리분의 15~20% 검수 (실측 일치율 60%, `data/review_log.csv`)
 3. **3차 — 교정 피드백**: 사람과 LLM이 갈린 사례를 모아 few-shot 예시로 프롬프트에 반영 (재학습이 아니라 프롬프트 개선 — GPU 없는 환경이라 실제 파인튜닝 불가)
 
 여기에 AllSides 매체 편향 태깅, Google Fact Check API 대조, **미국 NIST AI RMF 1.0(신뢰성 프레임워크)** 가이드라인 기반의 **3개 모델 'LLM-as-a-judge' 앙상블 합의 엔진**을 더하고, 글로벌 IR 전문가 커뮤니티(`r/IRstudies`) 피어 리뷰를 통해 정립한 **방어적 현실주의(Defensive Realism) 6단계 구조 분석**을 적용하여 "모델의 주관적 편향"과 "데이터가 뒷받침하는 객관적 사실(Overlapping Consensus)"을 구분하려 한 것이 이 프로젝트의 기술적 핵심이다.
+
+초기에는 국제정세 사건 예측 시스템을 목표로 했지만, 미래 사건의 정답 정의와 검증 가능성 문제가 커서 현재는 **AI 기반 국제정세 및 공급망 리스크 조기경보 시스템**으로 방향을 전환했다. 변천 과정은 `docs/history/PROJECT_EVOLUTION_TIMELINE.md`에 보존한다.
 
 ## 2. 최종 결과물 — 대시보드
 
@@ -33,8 +38,8 @@ python scripts/generate_dashboard_v2.py
 
 나머지 산출물(이슈별 심층 리포트, 정통 인텔리전스 폼 PDF·Word 공식 보고서, 일일 분석, 벤치마크 검증 리포트, MySQL
 분석 뷰)은 전부 이 대시보드를 뒷받침하는 **증거 자료**로 취급한다 — 각자 별도의
-"최종 결과물"이 아니다. (단, 공식 보고서 제출·인쇄용으로 `reports/issues/pdf/` 및 `reports/issues/docx/`에
-생성되며, 프로젝트 내 `분석보고서/`(`C:\Users\홍준기\Desktop\international-analysis\분석보고서`) 및 MySQL `analysis_reports` 테이블에 실시간 자동 동기화된다.)
+"최종 결과물"이 아니다. 제출·인쇄가 필요하면 `reports/issues/pdf/` 및
+`reports/issues/docx/`의 산출물을 사용한다. 로컬 배포용 복사본은 저장소에 유지하지 않는다.
 
 ## 3. 실행
 
@@ -59,6 +64,8 @@ international-analysis/
 ├── data/                        # 파이프라인이 실제로 쓰는 최신 수집 데이터 (review_log.csv 포함)
 ├── output/dashboard/            # 최종 결과물
 ├── reports/                     # 증거 자료용 심층 리포트·PDF·검증 리포트
+├── docs/current/                 # 현재 조기경보 방향의 최신 계획 문서
+├── docs/history/                 # 예측/챗봇 등 폐기·보류된 방향의 변천 기록
 ├── project-handoff.md           # 내부 개발일지 — 세션 간 인수인계, 결정 경위, 작업 로그
 └── docs/archive/                # 목적이 끝났거나 방향이 바뀐 문서 보관함 (아래 참고)
 ```
@@ -67,8 +74,12 @@ international-analysis/
 
 - `project-handoff.md` — 이 프로젝트의 상세한 의사결정 히스토리, 세션 간 조율 기록. 새 세션은 이 파일을 먼저 읽는다.
 - `LLM_SYSTEM_SUMMARY.md` — LLM 아키텍처 상세
+- `docs/current/PROJECT_PLAN.md` — 현재 조기경보 시스템 기준의 최신 프로젝트 계획
+- `docs/current/VALIDATION_PLAN.md` — 예측이 아닌 조기경보 기준 검증 계획
+- `docs/current/DATA_COLLECTION_GUIDE.md` — 조기경보 신호 데이터 수집 기준
+- `docs/history/PROJECT_EVOLUTION_TIMELINE.md` — 예측 → 챗봇 검토 → 조기경보 피벗의 의사결정 타임라인
 - `DATABASE_SETUP.md` — MySQL 스키마
-- `DATA_COLLECTION_GUIDE.md` — 수집 운영 매뉴얼
+- `DATA_COLLECTION_GUIDE.md` — 기존 수집 운영 매뉴얼(최신 방향은 `docs/current/DATA_COLLECTION_GUIDE.md` 참고)
 - `docs/archive/` — 예전 기획서(`PLANNING.md`), 목적이 달랐던 이슈 정의 문서(`CONTINENTAL_ISSUES_ANALYSIS.md`), 역할이 끝난 인수인계 문서 5종, 예전 README의 26개 항목 전체 개발일지(`DEVELOPMENT_LOG_README_HISTORY.md`)
 - `docs/archive/parked_chatbot_pivot/` — 2026-09-20에 검토했던 "챗봇 서비스 전환" 방향 (프로토타입 코드 포함). 결과물을 대시보드로 확정하면서 보류함. 나중에 재검토할 수 있게 삭제하지 않고 남겨둠.
 
