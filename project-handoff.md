@@ -276,6 +276,21 @@ international-analysis/
   3. **분석(Analysis) vs 출력(Output) 전담 LLM 이원화 설계**: 각국 현지 모델(`yandex`, `falcon3`, `qwen2.5`, `mistral-nemo`, `elyza`)은 순수 '권역별 1차 분석 및 JSON 지표 추출'에만 집중하고, 이를 취합하여 한국 국익 관점의 최종 공문서/리포트를 조율·출력하는 '수석 보고서 작성관(Output LLM)' 분리 방향 정립.
   4. **문서 동기화**: `LLM_SYSTEM_SUMMARY.md`(섹션 8 신설 및 2026-09-21 최신화) 반영 완료.
 
+- 2026-09-23 [트랙②/③, 학술 피어 리뷰 및 글로벌 표준 신뢰성 검증] **Reddit `r/IRstudies` 전문가 커뮤니티 피어 리뷰 수행, NIST AI RMF 1.0 적용 및 재귀적 댓글 파서 구축**:
+  1. **국제정치학(IR) 레딧 커뮤니티 크라우드소싱 피어 리뷰**:
+     - 대만 해협(Taiwan Strait Tensions) 시뮬레이션 리포트를 바탕으로 글로벌 전문가 서브레딧 `r/IRstudies`에 공개 피드백을 요청(`t3_1wmezc7`, `reddit_data.json`).
+     - IR 전문가들의 핵심 피드백을 수용하여 파이프라인의 학술적 깊이를 대폭 업그레이드함.
+  2. **6단계 구조적 분석(Levels of Explanation Framework) 프롬프트 가드레일 도입**:
+     - 기존의 단순 '뉴스 요약(What)'을 넘어, 분쟁의 근본 원인(Why), 지역적 특수성, 도전자 및 현상유지국의 이익, **전쟁 억지 요인(War Avoidance) vs 전쟁 촉발 요인(War Catalyst)**을 정량화하여 위기의 궤적(Trajectory)을 모니터링하는 IR 표준 분석 프레임워크를 정립.
+  3. **비패권 중간국 관점(Middle-Power Defensive Realism)의 다중 모델 합의 철학 정립**:
+     - 강대국 사이에 낀 대한민국의 지정학적 생존 전략(방어적 현실주의)에 기반하여, 특정 패권국의 편향된 시각 대신 다국적 모델(Mistral, Qwen, Yandex, EXAONE) 간의 **'교집합적 합의(Overlapping Consensus)'**만을 하드 팩트로 추출하는 철학적 타당성 확보.
+  4. **미국 국립표준기술연구소 NIST AI RMF 1.0 체계 공식 매핑**:
+     - 시스템의 신뢰성과 공정성을 보장하기 위해 NIST 4대 기능(**Govern, Map, Measure, Manage**)을 공식 준수하도록 정립.
+     - 특히 업계 표준인 **'LLM-as-a-judge (AI 심판)'** 기법을 3자 앙상블 합의 엔진에 적용.
+  5. **Cloudflare 403 대응 및 재귀적 트리 댓글 파서(`scripts/parse_local_reddit.py`) 개발**:
+     - 보안 차단에 대응하여 브라우저 우회 수집된 JSON에서 무한히 중첩되는 대댓글(Replies)을 재귀(Recursion) 알고리즘으로 완벽히 추출하는 파이프라인 제작 완료.
+  6. **문서 동기화**: `LLM_SYSTEM_SUMMARY.md`에 섹션 10(인간-AI 협업 및 구조적 검증)과 섹션 11(NIST AI RMF 1.0 및 자동화) 신설 완료.
+
 ## 다음 채팅에서 이 문서를 사용하는 법
 
 새 대화를 시작할 때 이 파일(`project-handoff.md`)을 첨부하고 이렇게

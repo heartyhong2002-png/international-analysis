@@ -227,3 +227,48 @@ flowchart TD
 ### 3) 최종 산출물 체계
 1. **수출 전략 임원용 일일 브리핑**: 6대 로컬 LLM이 매일 아침 자동 발행하는 공문서 스타일 PDF (pdf_report_generator.py)
 2. **공급망 리스크 인터랙티브 대시보드**: 신호 괴리율 및 21개 이슈별 리스크 지수를 실시간 시각화 (output/dashboard/index.html)
+
+
+---
+
+## 🧠 10. 인간-AI 협업 및 다층 구조적 검증 프레임워크 (Human-in-the-loop & IR Structural Validation)
+
+### 1) 비패권국 시각에서의 다중 모델 앙상블 철학 (Non-hegemonic Multi-LLM Philosophy)
+- **배경**: 국제정치학(IR)에서 완벽한 중립은 존재하지 않으며, 모든 분석은 특정 국가의 전략적 이익에 의해 프레이밍됨.
+- **해결책**: 대한민국(강대국 사이에 위치한 비패권국)의 관점에서 최대한 객관적인 사실을 도출하기 위해, 단일 '중립적' AI에 의존하지 않고 **다양한 지정학적 편향을 가진 로컬 모델들(서방 Mistral, 중화권 Qwen, 러시아 Yandex 등)을 앙상블**함.
+- **핵심 목표**: 각기 다른 관점을 가진 모델들이 모두 동의하는 **'교집합(Overlapping Consensus)'**만을 객관적 사실(Hard Facts)로 추출하여 편향을 최소화함.
+
+### 2) 글로벌 전문가 네트워크(Reddit r/IRstudies)를 통한 휴먼 인 더 루프(Human-in-the-loop)
+- 도메인 전문가(IR Experts)가 부재한 개인 프로젝트의 한계를 극복하기 위해, 영문으로 번역된 AI 리포트를 레딧 지정학 커뮤니티에 공개하여 크라우드소싱 검증(Crowdsourcing Validation)을 수행함.
+- AI가 생성한 텍스트의 숨겨진 서방 중심적 편향, 환각(Hallucination), 놓친 지정학적 뉘앙스를 현지 전문가와 학도들에게 실시간으로 피드백 받음.
+
+### 3) 6단계 구조적 분석 프레임워크 (Levels of Explanation Framework)
+커뮤니티 피드백을 통해 획득한 고급 지정학 분석 방법론(Levels of Analysis)을 AI 프롬프트 하드 제약으로 통합하여, 단순한 '현상 요약'을 넘어선 '근본적 동인(Driving Mechanisms)' 분석 수행:
+1. **분쟁의 근본 원인**: 왜 이 영토/지정학적 분쟁이 발생하는가? (Why do territorial disputes happen?)
+2. **지역적 특수성**: 왜 하필 해당 지역(예: 대만, 우크라이나)이 분쟁의 중심인가? (Why is this region disputed?)
+3. **도전자(Challenger)의 이익**: 분쟁을 제기하는 국가(예: 중국/러시아)의 핵심 전략적 이익은 무엇인가?
+4. **현상유지국(Status-quo)의 이익**: 이를 방어하는 국가(예: 미국)의 핵심 전략적 이익은 무엇인가?
+5. **전쟁 억지 요인(War Avoidance)**: 왜 아직 전면전이 발생하지 않았는가? 전쟁을 피함으로써 양측이 얻는 이익은 무엇인가?
+6. **전쟁 촉발 요인(War Catalyst)**: 어떤 요인/이익이 충족되면 전쟁이 발발하는가? 이 지표를 모니터링하여 위기의 궤적(Trajectory)을 평가함.
+
+
+---
+
+## 🛡️ 11. 글로벌 표준 신뢰성 검증 및 데이터 수집 자동화 (NIST AI RMF & Automation)
+
+### 1) 미국 국립표준기술연구소(NIST) AI RMF 1.0 적용
+Reddit IR 전문가들의 리뷰를 바탕으로, 본 파이프라인의 편향(Bias) 통제 및 신호 검증 프로세스가 **NIST AI RMF(Risk Management Framework)**의 4대 핵심 기능(Core Functions)을 준수하도록 문서를 명문화하고 기능을 고도화했습니다.
+
+- **Govern (지배구조 설정)**: '방어적 현실주의(Defensive Realism)'와 비패권 중간국(Middle-Power)이라는 명확한 분석 렌즈(규칙)를 AI에 부여.
+- **Map (맥락 식별)**: 3가지 데이터 스트림(정부 공식/독립 비판/여론)을 분리하여 시스템에 주입하고, 정보의 비대칭성을 신호 괴리율(Signal Gap)로 매핑.
+- **Measure (측정 및 평가)**: 단일 모델의 환각을 방지하기 위해 업계 표준인 **'LLM-as-a-judge (AI 심판)'** 기법을 적용. 서방(Mistral), 중국(Qwen), 러시아(Yandex) 모델들이 서로의 출력을 채점 및 교차 검증하여 3:0 만장일치를 유도.
+- **Manage (위험 관리)**: 근거 데이터 부재 시 '수집된 정부 발표 없음 - 판단 불가' 출력을 강제하는 하드 가드레일(Hard Guardrails)을 통해 할루시네이션(환각) 리스크를 원천 차단.
+
+### 2) 클라우드플레어(Cloudflare) 403 차단 우회 및 자동 크롤링 구축
+레딧 등의 플랫폼에서 데이터사이언스 봇을 차단하는 보안 정책(403 Forbidden)에 대응하기 위해, 수동 및 자동 하이브리드 파싱 기법을 구축했습니다.
+
+- **로컬 JSON 파싱 파이프라인 (scripts/parse_local_reddit.py)**: 브라우저를 통해 우회 수집된 JSON 파일에서, 트리(Tree) 구조로 무한히 파고드는 대댓글(Replies)을 완벽하게 재귀적(Recursive)으로 추적 및 추출하는 알고리즘 완성.
+- **완전 자동화 우회 기법 (도입 예정)**: 
+  - rowser-cookie3를 활용한 로컬 크롬 세션 쿠키 하이재킹 방식.
+  - Playwright 기반의 스텔스(Stealth) 가상 브라우저 구동으로 봇 탐지 무력화.
+  - 향후 커뮤니티 여론 동향(Sentiment_public) 수집의 100% 자동화를 달성하기 위한 기반 아키텍처 준비 완료.
