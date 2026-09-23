@@ -64,6 +64,7 @@ Claude outputs/
 output/
 logs/
 .run/
+scratch/
 
 # 압축파일
 *.zip

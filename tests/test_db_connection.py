@@ -5,8 +5,10 @@ import mysql.connector
 from mysql.connector import errorcode
 from dotenv import load_dotenv
 import os
+from pathlib import Path
 
-load_dotenv()
+ROOT_DIR = Path(__file__).resolve().parents[1]
+load_dotenv(ROOT_DIR / ".env")
 
 MYSQL_HOST = os.getenv("MYSQL_HOST", "localhost")
 MYSQL_PORT = int(os.getenv("MYSQL_PORT", "3306"))

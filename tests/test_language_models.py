@@ -3,18 +3,23 @@ test_language_models.py
 ------------------------
 아직 실제로 톤 분류를 테스트해본 적 없는 3개 언어 모델(일본어/러시아어/아랍어)을
 간단한 샘플 기사로 실행해보는 스크립트. `ollama serve`가 켜져 있는 상태에서
-같은 폴더의 `prototype_all_in_one.py`가 정의한 MODEL_BY_LANGUAGE/프롬프트를
+프로젝트 루트의 `prototype_all_in_one.py`가 정의한 MODEL_BY_LANGUAGE/프롬프트를
 그대로 재사용한다.
 
 실행:
     ollama serve   # 다른 터미널에서 켜두기
-    python test_language_models.py
+    python tests/test_language_models.py
 
 CPU 전용 환경에서는 모델 하나당(특히 8B급) 수십 초~2분 정도 걸릴 수 있다.
 """
 
 import sys
 import time
+from pathlib import Path
+
+ROOT_DIR = Path(__file__).resolve().parents[1]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
 
 from prototype_all_in_one import MODEL_BY_LANGUAGE, _call_ollama, TONE_PROMPT
 

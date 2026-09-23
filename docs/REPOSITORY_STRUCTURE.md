@@ -9,10 +9,12 @@ Keep only high-level entrypoints and active coordination files in the repository
 - `README.md`: external overview
 - `PROJECT_CONTEXT.md`: first file for new AI sessions
 - `project-handoff.md`: long coordination log and session history
+- `DATABASE_SETUP.md`: compatibility pointer to `docs/current/DATABASE_SETUP.md`
 - `prototype_all_in_one.py`: central prototype used by current scripts
-- `requirements.txt`, `pyproject.toml`, `vercel.json`: environment and deployment metadata
+- `index.html`, `vercel.json`: dashboard deployment entrypoints
+- `requirements.txt`, `pyproject.toml`, `uv.lock`: environment metadata
 
-Avoid adding one-off handoff notes, scratch scripts, or generated reports to the root.
+Avoid adding one-off handoff notes, scratch scripts, generated reports, test scripts, or tool outputs to the root.
 
 ## Current Documentation
 
@@ -71,7 +73,17 @@ Keep executable pipeline scripts under `scripts/`.
 
 Do not reorganize scripts by role until call paths are audited. Many scripts are called directly by name or expect repository-relative paths. If a script becomes obsolete, move it to `scripts/archive/` only after checking that no active pipeline imports or calls it.
 
+## Tests
+
+Use `tests/` for manual smoke tests and regression checks.
+
+- `tests/test_db_connection.py`: verifies MySQL connectivity using the root `.env`
+- `tests/test_language_models.py`: verifies local Ollama language model routing
+
+Run these from the repository root, for example `python tests/test_language_models.py`.
+
 ## Scratch
 
 Use `scratch/` for temporary refactor helpers, search scripts, patch drafts, and one-off outputs. Scratch files are not part of the final project story unless they are promoted into `docs/`, `scripts/`, or `data/`.
 
+Generated runtime caches can be moved under `scratch/cache/` when cleaning the File Explorer view.

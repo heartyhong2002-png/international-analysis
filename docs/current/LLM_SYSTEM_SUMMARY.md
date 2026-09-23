@@ -161,7 +161,7 @@ flowchart TD
 | [`scripts/analyze_signals.py`](file:///c:/Users/홍준기/Desktop/international-analysis/scripts/analyze_signals.py) | 신호(위키+정부발표) 기반 정세 분석 및 환각 방지 리포트 생성 (기본 EXAONE 3.5) | `python scripts/analyze_signals.py` |
 | [`scripts/verify_model_consensus.py`](file:///c:/Users/홍준기/Desktop/international-analysis/scripts/verify_model_consensus.py) | 3대 모델 다자간 교차 검증 및 합의 감사 엔진 | `python scripts/verify_model_consensus.py --benchmark` |
 | [`scripts/auto_benchmark_verifier.py`](file:///c:/Users/홍준기/Desktop/international-analysis/scripts/auto_benchmark_verifier.py) | AllSides RSS + Google Fact Check + 3-Model Consensus 종합 파이프라인 | `python scripts/auto_benchmark_verifier.py --self-test` |
-| [`test_language_models.py`](file:///c:/Users/홍준기/Desktop/international-analysis/test_language_models.py) | Ollama 로컬 풀 내 9개 언어 모델 정상 작동 회귀 테스트 | `python test_language_models.py` |
+| [`tests/test_language_models.py`](file:///c:/Users/홍준기/Desktop/international-analysis/tests/test_language_models.py) | Ollama 로컬 풀 내 9개 언어 모델 정상 작동 회귀 테스트 | `python tests/test_language_models.py` |
 
 ---
 

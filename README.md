@@ -79,6 +79,7 @@ international-analysis/
 ├── prototype_all_in_one.py     # 언어 라우팅·태깅·톤 분류 핵심 로직 (src/ 아님 — 이 파일 하나에 통합됨)
 ├── scripts/                     # 수집기·DB 적재·리포트/대시보드 생성 스크립트 전부
 │   └── data/                    # gov_announcements, issues 등 일부 수집 원본
+├── tests/                       # DB 연결·언어 모델 회귀 확인용 테스트 스크립트
 ├── data/                        # 파이프라인이 실제로 쓰는 최신 수집 데이터 (review_log.csv 포함)
 ├── output/dashboard/            # 최종 결과물
 ├── reports/                     # 증거 자료용 심층 리포트·PDF·검증 리포트
@@ -104,7 +105,7 @@ international-analysis/
 - `docs/current/DATA_COLLECTION_GUIDE.md` — 조기경보 신호 데이터 수집 기준
 - `docs/history/PROJECT_EVOLUTION_TIMELINE.md` — 예측 → 챗봇 검토 → 조기경보 피벗의 의사결정 타임라인
 - `docs/archive/legacy_guides/DATA_COLLECTION_GUIDE_legacy.md` — 기존 수집 운영 매뉴얼
-- `docs/archive/` — 예전 기획서(`PLANNING.md`), 목적이 달랐던 이슈 정의 문서(`CONTINENTAL_ISSUES_ANALYSIS.md`), 역할이 끝난 인수인계 문서 5종, 예전 README의 26개 항목 전체 개발일지(`DEVELOPMENT_LOG_README_HISTORY.md`)
+- `docs/archive/` — 예전 기획서(`PLANNING.md`), 목적이 달랐던 이슈 정의 문서(`CONTINENTAL_ISSUES_ANALYSIS.md`), 역할이 끝난 인수인계 문서 5종, 예전 README의 26개 항목 전체 개발일지(`DEVELOPMENT_LOG_README_HISTORY.md`), 과거 `Claude outputs/` 산출물
 - `docs/archive/parked_chatbot_pivot/` — 2026-09-20에 검토했던 "챗봇 서비스 전환" 방향 (프로토타입 코드 포함). 결과물을 대시보드로 확정하면서 보류함. 나중에 재검토할 수 있게 삭제하지 않고 남겨둠.
 
 ## 6. 알려진 한계 (2026-09-20 기준)
