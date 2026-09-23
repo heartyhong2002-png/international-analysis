@@ -172,6 +172,8 @@ international-analysis/
 
 ## 작업 로그 (새 작업 시작 전 여기에 한 줄 남기기)
 
+- 2026-09-23 [문서화/발표] 대외 설명 구조를 정리했다. `README.md` 첫 화면에 예측→조기경보 전환의 검증 논리를 배치하고, `docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md`에 30초 소개·7장 발표 흐름·질문 대응을 추가했다. `PROJECT_PLAN.md`와 `VALIDATION_PLAN.md`에는 현재의 방어 논리와 연결 문서를 보강했다. 구현 코드는 변경하지 않았다.
+
 형식: `- YYYY-MM-DD HH:MM [트랙①/②/③] 무엇을 시작함`
 
 - 2026-09-08 [트랙③] `monthly_update.py`(고장난 예전 오케스트레이터), `generate_dashboard.py`(하드코딩 가짜 데이터) 삭제. 이 조율 문서(`project-handoff.md`) 신규 작성 — 3개 세션 분업 현황 정리.
@@ -307,14 +309,35 @@ international-analysis/
      - 루트 `README.md`에 "미래 사건 예측"이 아니라 "관측 가능한 데이터 신호 기반 조기경보"가 현재 목표임을 명시.
      - 예전 계획의 흔적은 삭제하지 않고 `docs/history/`에 보존하도록 연결.
 
+- 2026-09-23 23:30 [통합, 전 과정 종합 인수인계 보고서 작성] **새 세션 인수인계를 위한 종합 보고서(`docs/handoff/PROJECT_COMPREHENSIVE_HANDOFF_20260923.md`) 작성 및 저장소 정리 완결**:
+  1. **저장소 정리 완료**: 피벗 전 구형 검증 리포트(docs/archive/pre_pivot_validation_outputs/), 레거시 유틸리티(scripts/archive/legacy_utilities/), 레딧 피어리뷰 증거(docs/evidence/reddit_feedback_20260923/) 아카이빙 완료 (86edd5).
+  2. **종합 보고서 발행**: 프로젝트 목적, 하드웨어 제약, 5단계 기획 변천사, 6대 네이티브 LLM 아키텍처, 5계층 데이터 수집망(정부발표·신호괴리율·여론조사·금융프록시·텔레그램OSINT), 파일 맵, 그리고 다음 세션이 즉시 수행해야 할 4대 액션 아이템(대시보드 v2.5 개편, 백테스트 스크립트 작성, 파이프라인 연결, 배포)을 망라한 `docs/handoff/PROJECT_COMPREHENSIVE_HANDOFF_20260923.md` 생성 완료.
+
+- 2026-09-23 23:42 [트랙①, DB 세션 종료] `data/` 폴더의 신규 CSV(여론조사, 레딧, 텔레그램, 거시경제 등)를 모두 MySQL로 통합 적재하는 코드를 `scripts/build_database.py`에 패치하고 마이그레이션 완료. 상세 내역은 `docs/handoff/DB_TRACK_HANDOFF_20260923.md` 참조.
+
+
+- 2026-09-23 23:46 [트랙②/③, LLM 및 시각화/대시보드 전담 세션 종료] **ADR-001 2단계 표본 검수 자동화 완성 및 독립형 인터랙티브 HTML 대시보드 구축 완료**:
+  1. **ADR-001 2단계 표본 검수 자동화(`scripts/sample_for_review.py`) 구현**: 언어/이슈별 층화 표본 추출(안정 모델 20%, 약점 모델 `ru`/`ar` 100% 전수 검수), 검수 시트 생성(`data/pending_human_review.csv`), 검수 완료본 역병합(`--merge`), 혼동 행렬 감사 통계(`--stats`) 완비. 자체 단위 테스트 통과.
+  2. **파이프라인 검수 이력 유실 방지 패치(`prototype_all_in_one.py`)**: 재실행 시 기존 인간 검수 라벨(`human_label`, `correction_note`)이 초기화되던 버그를 수정하여 영구 보존 로직 적용.
+  3. **독립형 인터랙티브 HTML 대시보드(`scripts/generate_dashboard_v2.py`) 개발**: 웹 서버 없이 더블클릭만으로 열리는 단일 HTML 대시보드(`output/dashboard/dashboard_latest.html`) 완성. Chart.js 기반 지정학적 리스크 레이더(버블 차트), 미디어 프레이밍(스택 바 차트), 정부 발표 출처(도넛 차트), 실시간 검색 및 필터링 피드 테이블 탑재.
+  4. **파이프라인 자동화 통합(`scripts/run_pipeline.py`)**: Step 2/2에 대시보드 생성 스텝을 통합하여 수집-적재-시각화 원클릭 파이프라인 완성.
+  5. **인수인계 상세 문서 발행**: 상세 내역 및 실행 가이드는 `docs/handoff/LLM_AND_DASHBOARD_TRACK_HANDOFF.md` 참조.
+
+- 2026-09-23 [트랙③, 컨트롤타워] 향후 발표자료 및 최종보고서를 위한 포트폴리오 스토리보드와 목차 구조 가이드를 docs/current/PORTFOLIO_AND_REPORT_GUIDE.md 에 신규 작성함. 예측 폐기 및 조기경보 도입의 논리적 타당성(정답 모호성 및 검증가능성 확보)을 교수님/면접관에게 설득력 있게 전달하기 위한 핵심 메시지 및 Q&A 정리 포함.
+
+- 2026-09-24 [컨트롤타워, 저장소 구조 정리] **세션 분업 구조에 맞춰 문서·인수인계·임시파일 위치 재배열**:
+  1. **루트 정리 원칙 확정**: 루트에는 `README.md`, `PROJECT_CONTEXT.md`, `project-handoff.md`처럼 새 세션 진입점과 전체 조율 파일만 남기고, 상세 문서는 하위 폴더로 이동.
+  2. **현재 문서 이동**: `LLM_SYSTEM_SUMMARY.md`와 `DATABASE_SETUP.md`를 `docs/current/`로 이동. 기존 루트 `DATA_COLLECTION_GUIDE.md`는 `docs/archive/legacy_guides/DATA_COLLECTION_GUIDE_legacy.md`로 보존.
+  3. **인수인계 문서 이동**: 트랙별 핸드오프 문서(`DB_TRACK_HANDOFF_20260923.md`, `LLM_AND_DASHBOARD_TRACK_HANDOFF.md`, `PROJECT_COMPREHENSIVE_HANDOFF_20260923.md`)를 `docs/handoff/`로 이동.
+  4. **임시 파일 정리**: 일회성 패치·검색·리팩터 보조 스크립트와 텍스트 메시지를 `scratch/adhoc_20260923/` 및 `docs/handoff/agent_messages/`로 이동.
+  5. **새 안내 문서 추가**: `docs/REPOSITORY_STRUCTURE.md`에 폴더별 역할을, `docs/SESSION_PROMPTS.md`에 7개 세션별 시작 프롬프트를 문서화.
+
 ## 다음 채팅에서 이 문서를 사용하는 법
 
-새 대화를 시작할 때 이 파일(`project-handoff.md`)을 첨부하고 이렇게
-말하면 됩니다:
+새 대화를 시작할 때는 먼저 `PROJECT_CONTEXT.md`를 읽고, 필요한 경우 이 파일(`project-handoff.md`)을 이어서 읽으면 됩니다.
 
-> "이 파일이 지금까지의 프로젝트 진행 상황이야. 나는 [①/②/③]번 트랙을
-> 맡을 거고, 이어서 [하고 싶은 작업]을 진행하자."
+새 세션에는 이렇게 말하면 됩니다:
 
-이렇게 하면 하드웨어 제약, 이미 확정된 기술 스택, 겪었던 에러들, 그리고
-**다른 세션이 뭘 하고 있는지**까지 Claude가 다시 물어보지 않고 바로
-이어서 작업할 수 있습니다.
+> "먼저 PROJECT_CONTEXT.md를 읽고 현재 방향을 파악해. 이 프로젝트는 예측이 아니라 조기경보 시스템이야. 너는 [세션 역할] 담당이야."
+
+세션별 상세 프롬프트는 `docs/SESSION_PROMPTS.md`에 있습니다.

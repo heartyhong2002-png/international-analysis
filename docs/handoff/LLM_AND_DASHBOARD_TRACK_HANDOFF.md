@@ -3,7 +3,7 @@
 > **작성 일시**: 2026-09-23 23:46 (KST)  
 > **담당 트랙**: LLM 트랙 & 시각화/대시보드 트랙  
 > **대상**: 다른 Claude 세션 및 프로젝트 관리자(홍준기님)  
-> **문서 위치**: `C:\Users\홍준기\Desktop\international-analysis\LLM_AND_DASHBOARD_TRACK_HANDOFF.md`
+> **문서 위치**: `C:\Users\홍준기\Desktop\international-analysis\docs\handoff\LLM_AND_DASHBOARD_TRACK_HANDOFF.md`
 
 ---
 

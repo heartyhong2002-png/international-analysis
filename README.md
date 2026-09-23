@@ -6,6 +6,22 @@
 
 ---
 
+## 먼저 읽기 — 왜 예측을 조기경보로 바꾸었나
+
+이 프로젝트의 핵심 성과는 미래 사건을 맞히는 AI를 주장하는 데 있지 않다. 초기 예측 접근을 실제로 검토하면서 **정답 정의의 모호성, 장기 검증 필요성, 오탐·미탐 해석의 어려움**을 확인했고, 그 한계를 해결할 수 있도록 목표를 조기경보로 재설계했다.
+
+| 처음의 질문 | 현재의 질문 |
+|---|---|
+| “앞으로 어떤 사건이 발생할까?” | “현재 위험 신호가 강해졌고, 사람이 먼저 확인할 근거가 충분한가?” |
+| 사건 발생 여부로 평가 | 과거 사례 백테스트, 근거 품질, 사람 검수, 오탐·미탐 기록으로 평가 |
+| 예측값 중심 | 경보 단계와 출처·근거 중심 |
+
+따라서 이 시스템은 사건 발생을 보장하거나 단정하지 않는다. 공식 발표, 독립 언론, 대중 여론, 금융·무역 지표의 변화를 비교해 **위험 신호**, **출처 간 신호 괴리**, **경보 단계**, **근거 충분도**를 보여 주고 사람이 추가 확인할 대상을 돕는다.
+
+발표·포트폴리오용 설명 구조와 예상 질문 답변은 [docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md](docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md)에 있다.
+
+---
+
 ## 1. 이 시스템이 하는 일
 
 RSS 뉴스, 정부 공식 발표, 현지언론·전문가분석, Reddit 여론, 각종 여론조사·경제지표를
@@ -52,12 +68,14 @@ python scripts/generate_dashboard_v2.py
 ```
 
 개별 단계(정부 발표 수집, 현지언론/전문가분석 수집 등)를 따로 돌리는 방법은
-`DATA_COLLECTION_GUIDE.md`에 있다.
+`docs/current/DATA_COLLECTION_GUIDE.md`에 있다.
 
 ## 4. 프로젝트 구조 (실제 기준)
 
 ```
 international-analysis/
+├── README.md                    # 외부용 1페이지 소개
+├── PROJECT_CONTEXT.md           # 새 AI 세션이 가장 먼저 읽는 현재 방향 안내서
 ├── prototype_all_in_one.py     # 언어 라우팅·태깅·톤 분류 핵심 로직 (src/ 아님 — 이 파일 하나에 통합됨)
 ├── scripts/                     # 수집기·DB 적재·리포트/대시보드 생성 스크립트 전부
 │   └── data/                    # gov_announcements, issues 등 일부 수집 원본
@@ -65,6 +83,8 @@ international-analysis/
 ├── output/dashboard/            # 최종 결과물
 ├── reports/                     # 증거 자료용 심층 리포트·PDF·검증 리포트
 ├── docs/current/                 # 현재 조기경보 방향의 최신 계획 문서
+├── docs/handoff/                 # 트랙별 세션 인수인계 문서
+├── docs/evidence/                # 백테스트·피어리뷰 등 검증 근거
 ├── docs/history/                 # 예측/챗봇 등 폐기·보류된 방향의 변천 기록
 ├── project-handoff.md           # 내부 개발일지 — 세션 간 인수인계, 결정 경위, 작업 로그
 └── docs/archive/                # 목적이 끝났거나 방향이 바뀐 문서 보관함 (아래 참고)
@@ -73,14 +93,17 @@ international-analysis/
 ## 5. 더 읽을거리
 
 - `PROJECT_CONTEXT.md` — 다른 AI/새 세션이 가장 먼저 읽어야 하는 현재 방향 안내서
+- `docs/REPOSITORY_STRUCTURE.md` — 폴더별 역할과 이동 기준
+- `docs/SESSION_PROMPTS.md` — 7개 작업 세션별 시작 프롬프트
 - `project-handoff.md` — 이 프로젝트의 상세한 의사결정 히스토리, 세션 간 조율 기록. 새 세션은 이 파일을 먼저 읽는다.
-- `LLM_SYSTEM_SUMMARY.md` — LLM 아키텍처 상세
+- `docs/current/LLM_SYSTEM_SUMMARY.md` — LLM 아키텍처 상세
+- `docs/current/DATABASE_SETUP.md` — MySQL 스키마
 - `docs/current/PROJECT_PLAN.md` — 현재 조기경보 시스템 기준의 최신 프로젝트 계획
 - `docs/current/VALIDATION_PLAN.md` — 예측이 아닌 조기경보 기준 검증 계획
+- `docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md` — 교수·면접관 대상 발표 흐름, 핵심 메시지, 질문 대응
 - `docs/current/DATA_COLLECTION_GUIDE.md` — 조기경보 신호 데이터 수집 기준
 - `docs/history/PROJECT_EVOLUTION_TIMELINE.md` — 예측 → 챗봇 검토 → 조기경보 피벗의 의사결정 타임라인
-- `DATABASE_SETUP.md` — MySQL 스키마
-- `DATA_COLLECTION_GUIDE.md` — 기존 수집 운영 매뉴얼(최신 방향은 `docs/current/DATA_COLLECTION_GUIDE.md` 참고)
+- `docs/archive/legacy_guides/DATA_COLLECTION_GUIDE_legacy.md` — 기존 수집 운영 매뉴얼
 - `docs/archive/` — 예전 기획서(`PLANNING.md`), 목적이 달랐던 이슈 정의 문서(`CONTINENTAL_ISSUES_ANALYSIS.md`), 역할이 끝난 인수인계 문서 5종, 예전 README의 26개 항목 전체 개발일지(`DEVELOPMENT_LOG_README_HISTORY.md`)
 - `docs/archive/parked_chatbot_pivot/` — 2026-09-20에 검토했던 "챗봇 서비스 전환" 방향 (프로토타입 코드 포함). 결과물을 대시보드로 확정하면서 보류함. 나중에 재검토할 수 있게 삭제하지 않고 남겨둠.
 

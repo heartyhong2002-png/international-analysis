@@ -18,6 +18,8 @@
 - 현재 목표: 관측 가능한 데이터 신호를 기반으로 위험 증가를 탐지하는 조기경보 시스템
 - 검증 질문: "사건을 맞혔는가"가 아니라 "위험 신호를 근거 기반으로 일관되게 포착했는가"
 
+대외 문서에서는 이 전환을 기능 축소나 실패로 설명하지 않는다. 핵심 메시지는 “예측의 검증 한계를 발견했고, 이미 구축한 수집·분석 자산을 감사 가능한 조기경보 문제로 재설계했다”이다. 발표 구조와 질문 대응은 `docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md`를 기준으로 한다.
+
 예전 문서에 "예측", "챗봇 전환", "자동 게시" 같은 표현이 남아 있어도 현재 방향으로 해석하면 안 된다. 그런 문서는 이력 또는 보류 문서다.
 
 ## Recommended Reading Order
@@ -26,22 +28,31 @@
 2. `PROJECT_CONTEXT.md`
 3. `docs/current/PROJECT_PLAN.md`
 4. `docs/current/VALIDATION_PLAN.md`
-5. `docs/current/DATA_COLLECTION_GUIDE.md`
-6. `LLM_SYSTEM_SUMMARY.md`
-7. `project-handoff.md` only when detailed history or coordination context is needed
-8. `docs/history/PROJECT_EVOLUTION_TIMELINE.md` when the pivot story is needed
+5. `docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md` when explaining the project externally
+6. `docs/current/DATA_COLLECTION_GUIDE.md`
+7. `docs/current/LLM_SYSTEM_SUMMARY.md`
+8. `docs/current/DATABASE_SETUP.md` when database context is needed
+9. `docs/SESSION_PROMPTS.md` when starting role-specific AI sessions
+10. `docs/REPOSITORY_STRUCTURE.md` when moving or classifying files
+11. `project-handoff.md` only when detailed history or coordination context is needed
+12. `docs/history/PROJECT_EVOLUTION_TIMELINE.md` when the pivot story is needed
 
 ## Current Planning Documents
 
 - `docs/current/PROJECT_PLAN.md`: current early-warning project plan
 - `docs/current/DATA_COLLECTION_GUIDE.md`: data collection strategy for warning signals
 - `docs/current/VALIDATION_PLAN.md`: validation plan for warning quality, not prediction accuracy
+- `docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md`: presentation and portfolio narrative for external readers
+- `docs/current/LLM_SYSTEM_SUMMARY.md`: LLM routing and analysis architecture
+- `docs/current/DATABASE_SETUP.md`: MySQL schema and evidence storage layer
 
 ## History Documents
 
 - `docs/history/PROJECT_EVOLUTION_TIMELINE.md`: full timeline from prediction concept to early-warning pivot
 - `docs/history/PREDICTION_APPROACH_RETIRED.md`: why the prediction approach was retired
 - `docs/history/CHATBOT_PIVOT_RETIRED.md`: why the chatbot pivot was parked
+- `docs/handoff/`: handoff reports from role-specific AI sessions
+- `docs/evidence/`: backtests, peer review artifacts, and validation evidence
 - `docs/archive/`: old planning and handoff documents retained for traceability
 
 ## Reuse Policy
@@ -81,8 +92,13 @@ When updating documentation, keep current plans and retired history separate. Do
 For GitHub commits, prefer small focused commits. A good documentation-only commit is:
 
 ```bash
-git add README.md PROJECT_CONTEXT.md docs/current docs/history LLM_SYSTEM_SUMMARY.md project-handoff.md
+git add README.md PROJECT_CONTEXT.md docs/current docs/history docs/handoff docs/evidence docs/SESSION_PROMPTS.md docs/REPOSITORY_STRUCTURE.md project-handoff.md
 git commit -m "docs: clarify early warning project context"
 git push origin main
 ```
 
+## File Organization Rule
+
+Keep the repository root small. Root-level files should be entrypoints or active project-wide coordination files only. Detailed current docs go under `docs/current/`, retired plans under `docs/history/` or `docs/archive/`, role handoffs under `docs/handoff/`, validation evidence under `docs/evidence/`, and temporary scripts or scratch outputs under `scratch/`.
+
+Do not move executable scripts from `scripts/` unless you also update every caller and verify the pipeline, because many scripts assume repository-relative paths.
