@@ -1,0 +1,110 @@
+{
+  "schema_version": "1.0",
+  "status": "prototype_not_connected_to_pipeline",
+  "purpose": "Country-level collection and interpretation rules for a geopolitical early-warning system; not a political-regime score or a measure of actual public opinion.",
+  "last_reviewed": "2026-09-24",
+  "review_cadence": "annual_and_material_event_triggered",
+  "assessment_dimensions": {
+    "information_observability": "Ability to corroborate a specific issue through public, independent, and reproducible evidence. It controls verification wording, not political legitimacy.",
+    "korea_supply_chain_impact": "Potential disruption to Korean manufacturing, trade, logistics, and energy. It controls collection priority, not source reliability.",
+    "supply_chain_factors": ["critical_technology_components_and_materials", "energy_shipping_and_insurance_bottlenecks", "export_market_and_local_production_exposure", "sanctions_export_controls_and_conflict_risk", "timeliness_and_coverage_of_trade_data"]
+  },
+  "tiers": {
+    "1": "open",
+    "2": "relatively_open",
+    "3": "relatively_closed",
+    "4": "closed"
+  },
+  "profiles": [
+    {
+      "country_code": "CN",
+      "country_name_ko": "중국",
+      "environment_tier": 4,
+      "observability": "limited_but_multi_source_external_signals_available",
+      "information_observability": "low",
+      "korea_supply_chain_impact": "high",
+      "priority_exposures": ["semiconductor_supply_chain", "critical_components", "shipping_and_trade", "export_market"],
+      "rationale": "현지 공개 온라인 표현과 언론 보도를 독립 여론 또는 독립 사실 확인으로 취급하지 않는다. 공식 서사, 통제된 공개 공간의 변화, 외부 행동지표를 분리해 관측한다.",
+      "primary_sensors": ["official_statements_and_state_media", "third_country_trade_and_customs", "shipping_aviation_and_market_data", "public_satellite_or_international_organization_reports"],
+      "secondary_sensors": ["public_domestic_platform_trend_or_removal_signals_only", "independent_or_exile_media_with_corroboration"],
+      "do_not_infer": ["domestic_platform_posts_as_representative_public_opinion", "absence_of_public_discussion_as_stability", "single_exile_source_as_confirmed_fact"],
+      "alert_emphasis": ["official_narrative_change", "information_gap", "external_behavioral_mismatch"],
+      "source_basis": ["Freedom House Freedom on the Net 2025", "RSF World Press Freedom Index"]
+    },
+    {
+      "country_code": "KP",
+      "country_name_ko": "북한",
+      "environment_tier": 4,
+      "observability": "very_low_direct_observability",
+      "information_observability": "very_low",
+      "korea_supply_chain_impact": "medium",
+      "priority_exposures": ["security_escalation", "sanctions_and_border_trade", "regional_maritime_and_logistics_risk"],
+      "rationale": "독립적인 현지 공개 여론이나 언론을 직접 측정하는 것으로 설계하지 않는다. 정보 공백 자체를 결과로 표시하고, 외부에서 검증 가능한 행동 흔적을 중심으로 본다.",
+      "primary_sensors": ["third_country_trade_and_customs", "shipping_aviation_and_satellite_observations", "international_organization_and_research_institute_reports", "official_state_media_narrative_change"],
+      "secondary_sensors": ["diaspora_and_specialist_media_as_leads", "public_actor_statements"],
+      "do_not_infer": ["actual_domestic_public_opinion", "lack_of_independent_reporting_as_no_event", "single_defector_or_media_account_as_confirmed_fact"],
+      "alert_emphasis": ["low_observability", "external_behavioral_change", "official_silence_or_narrative_shift"],
+      "source_basis": ["Freedom House North Korea 2025", "RSF World Press Freedom Index"]
+    },
+    {
+      "country_code": "RU",
+      "country_name_ko": "러시아",
+      "environment_tier": 3,
+      "observability": "limited_with_public_actor_and_external_sources",
+      "information_observability": "low",
+      "korea_supply_chain_impact": "high",
+      "priority_exposures": ["energy", "industrial_metals", "sanctions_and_payment_risk", "eurasian_logistics"],
+      "rationale": "공식·친정부·독립·망명 매체와 공개 행위자 채널의 서사를 분리한다. 텔레그램·군사 블로거는 초기 징후 또는 당사자 주장으로만 취급한다.",
+      "primary_sensors": ["official_statements_and_state_media", "independent_or_exile_media_with_source_labels", "shipping_aviation_trade_and_market_data", "international_organization_reports"],
+      "secondary_sensors": ["public_telegram_actor_channels", "public_online_discussion_aggregate_signals"],
+      "do_not_infer": ["military_blogger_claim_as_event_confirmation", "public_online_expression_as_representative_opinion"],
+      "alert_emphasis": ["narrative_gap", "claim_corroboration", "external_behavioral_mismatch"],
+      "source_basis": ["RSF World Press Freedom Index", "Freedom House Freedom in the World"]
+    },
+    {
+      "country_code": "IR",
+      "country_name_ko": "이란",
+      "environment_tier": 3,
+      "observability": "limited_with_external_and_diaspora_complement",
+      "information_observability": "low",
+      "korea_supply_chain_impact": "high",
+      "priority_exposures": ["energy", "shipping_and_insurance", "sanctions_risk", "middle_east_route_disruption"],
+      "rationale": "정부·혁명수비대·국영매체의 메시지는 당사자 서사로, 해외 페르시아어권·독립 매체는 대안 서사로 분리한다. 어느 한쪽도 단독 사실 판정 근거가 아니다.",
+      "primary_sensors": ["official_and_actor_statements", "independent_and_diaspora_media_with_corroboration", "shipping_energy_market_and_trade_data", "international_organization_reports"],
+      "secondary_sensors": ["public_telegram_channels", "public_online_discussion_aggregate_signals"],
+      "do_not_infer": ["actor_claim_as_confirmed_attack_or_damage", "diaspora_media_as_automatically_independent_fact"],
+      "alert_emphasis": ["official_independent_gap", "energy_and_shipping_confirmation", "information_gap"],
+      "source_basis": ["RSF World Press Freedom Index", "Freedom House Freedom in the World"]
+    },
+    {
+      "country_code": "SA",
+      "country_name_ko": "사우디아라비아",
+      "environment_tier": 3,
+      "observability": "limited_with_strong_external_economic_observability",
+      "information_observability": "medium",
+      "korea_supply_chain_impact": "high",
+      "priority_exposures": ["energy", "petrochemicals", "red_sea_and_gulf_shipping", "regional_security"],
+      "rationale": "공식 발표·국영 자본 매체·지역 매체·국제 시장 자료를 구분한다. 안보·왕실·대외정책 관련 공개 발화는 자기검열 가능성을 포함해 해석한다.",
+      "primary_sensors": ["official_statements", "regional_and_international_media_with_source_labels", "energy_shipping_market_and_trade_data", "international_organization_reports"],
+      "secondary_sensors": ["public_actor_channels", "methodology_disclosed_polling_only"],
+      "do_not_infer": ["official_silence_as_no_security_event", "single_regional_media_claim_as_confirmation"],
+      "alert_emphasis": ["official_silence", "energy_and_shipping_change", "cross_source_confirmation"],
+      "source_basis": ["RSF World Press Freedom Index", "Freedom House Freedom in the World"]
+    },
+    {
+      "country_code": "MM",
+      "country_name_ko": "미얀마",
+      "environment_tier": 4,
+      "observability": "fragmented_and_conflict_sensitive",
+      "information_observability": "low",
+      "korea_supply_chain_impact": "medium",
+      "priority_exposures": ["critical_minerals", "border_trade", "regional_manufacturing_and_logistics", "humanitarian_disruption"],
+      "rationale": "무장 분쟁·지역별 통제·통신 차단 가능성을 전제로 한다. 정부·군부·무장단체의 메시지를 주장으로 분리하고, 인도주의·국제기구·현지 독립/망명 매체와 외부 관측을 교차한다.",
+      "primary_sensors": ["humanitarian_and_international_organization_reports", "independent_or_exile_media_with_corroboration", "border_trade_and_displacement_indicators", "public_satellite_or_external_observations"],
+      "secondary_sensors": ["official_or_military_statements", "public_actor_channels"],
+      "do_not_infer": ["absence_of_local_reporting_as_calm", "armed_actor_claim_as_confirmed_casualty_or_control"],
+      "alert_emphasis": ["communications_or_information_gap", "displacement_and_humanitarian_signals", "multi_actor_claim_conflict"],
+      "source_basis": ["Freedom House Freedom on the Net 2025", "RSF World Press Freedom Index"]
+    }
+  ]
+}
