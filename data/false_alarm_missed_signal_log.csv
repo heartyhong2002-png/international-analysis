@@ -1,0 +1,1 @@
+record_id,record_type,issue_id,observation_start,observation_end,alert_level_at_time,discovered_at,available_evidence_urls,available_evidence_summary,why_flagged,root_cause_hypothesis,corrective_action,status,owner,recheck_date,closed_at,notes

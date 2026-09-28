@@ -1,0 +1,1 @@
+backtest_id,issue_id,observation_start,observation_end,reference_date,input_freeze_at,alert_level,signal_types,evidence_urls,evidence_quotes,source_count,source_types,reviewer_id,alert_decision,evidence_support,source_quality,interpretation_assessment,post_reference_note,limitations,reviewed_at
