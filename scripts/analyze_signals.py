@@ -49,6 +49,10 @@ try:
     from report_db_saver import save_report_to_desktop_and_db
 except ImportError:
     from scripts.report_db_saver import save_report_to_desktop_and_db
+try:
+    from analyze_signal_gap import calculate_alert_assessment
+except ImportError:
+    from scripts.analyze_signal_gap import calculate_alert_assessment
 
 def _resolve_data_dir(dir_name: str) -> str:
     # 1. 실행 위치 기준 scripts/data/<dir_name> (프로젝트 루트에서 실행 시 최신 데이터)
@@ -102,7 +106,9 @@ SYSTEM_PROMPT = (
     "반드시 그대로 '수집된 정부 발표 없음 — 판단 불가'라고만 쓴다. "
     "'~것으로 보인다', '~할 것으로 시사된다' 같은 식으로 추측해서 채우지 않는다.\n"
     "4. 신호가 전반적으로 부족하면 '신호가 부족해 판단하기 어렵다'고 솔직하게 말한다.\n"
-    "5. 아래 형식을 그대로 따른다:\n"
+    "5. 미래 사건을 예측하거나 발생이 확정된 것처럼 쓰지 않는다. '위험 신호', '경보', "
+    "'근거', '확인 필요'처럼 관측 가능한 표현만 사용한다.\n"
+    "6. 아래 형식을 그대로 따른다:\n"
     "   [요약] 지금 이 이슈에서 무슨 일이 벌어지고 있는지 2~3문장\n"
     "   [정부 입장] 수집된 정부 발표에서 확인되는 공식 입장 (없으면 규칙 3 그대로 적용)\n"
     "   [주목할 점] 대중 관심도(위키백과 조회수)와 정부 발표 사이에 눈에 띄는 차이나 "
@@ -276,6 +282,16 @@ def main():
         if not prompt:
             continue
 
+        # 이 입력은 대중 관심도와 정부 발표만 포함한다. 독립 신호가 없으므로
+        # 산식은 자동 경보 상향 대신 '확인 필요'를 반환한다.
+        assessment = calculate_alert_assessment(
+            discrepancy_score=0,
+            official_count=len(gov_items),
+            independent_count=0,
+            public_count=1 if wiki_signal else 0,
+            evidence_count=len(gov_items) + (1 if wiki_signal else 0),
+        )
+
         print(f"\n📊 분석 중: {issue_name} (강도 {intensity:.1f}, 정부발표 {len(gov_items)}건)")
         analysis = call_ollama(args.model, prompt)
 
@@ -288,6 +304,8 @@ def main():
 
         report_sections.append(
             f"## {issue_name}\n\n"
+            f"- 위험 신호 점수: {assessment['risk_signal_score']:.1f}/100 · 경보 단계: {assessment['alert_level']}\n"
+            f"- 경보 근거: {assessment['alert_reason']}\n"
             f"- 이슈 강도: {intensity:.1f}/100"
             + (f" · 정부 발표 {len(gov_items)}건" if gov_items else "")
             + f"\n\n{analysis}\n"

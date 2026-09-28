@@ -8,12 +8,12 @@ data/issue_research_data.py 에 저장된, WebSearch 기반 실제 리서치 결
 하드코딩된 가짜 문구를 채워넣고 있었습니다 — 이는 버그가 아니라 파이프라인
 골격만 있고 실제 콘텐츠가 없었던 것이며, 이번에 실제 데이터로 교체했습니다.)
 
-Generates a single combined bilingual (KO/EN) report covering:
+Generates a single combined bilingual evidence report covering:
 - Executive Summary
 - Background & Timeline
 - Key Indicators / Economic-Security Impact
-- Current Situation Assessment
-- Future Outlook (short/medium/long term)
+- Current signal assessment
+- Signal context and uncertainty (not a future-event forecast)
 - Impact on Korea
 """
 
@@ -133,7 +133,7 @@ class IssueReportGenerator:
           WHAT WE FOUND
         </div>
         <p style="margin: 0 0 6px 0;">
-          <strong>종합 위험도: {severity_ko} ({intensity}/100)</strong>
+          <strong>경보 단계: 확인 필요</strong>
         </p>
         <p style="margin: 0 0 8px 0;">
           {main_indicator_ko}
@@ -263,14 +263,14 @@ class IssueReportGenerator:
 
   <!-- 7. Section 4: PERFORMANCE BENCHMARKS AND GAP ANALYSIS -->
   <h2 style="font-size: 15px; font-weight: 900; color: #0F172A; border-bottom: 1.5px solid #CBD5E1; padding-bottom: 4px; margin: 26px 0 10px 0; letter-spacing: 0.5px; text-transform: uppercase;">
-    4. RISK OUTLOOK AND UNCERTAINTY ANALYSIS
+    4. RISK SIGNAL CONTEXT AND UNCERTAINTY
   </h2>
   <div style="font-size: 13px; color: #334155; margin-bottom: 12px;">
-    <p style="margin: 0 0 6px 0;"><strong>단기 전망 (3~6개월):</strong> {short_term_outlook_ko}</p>
-    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ 가능성 높은 시나리오:</em> {likely_scenario_short_ko}</p>
-    <p style="margin: 0 0 6px 0;"><strong>중기 전망 (1~3년):</strong> {medium_term_outlook_ko}</p>
-    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ 예상 전환점:</em> {transition_point_ko}</p>
-    <p style="margin: 0 0 6px 0;"><strong>장기 구조적 변화:</strong> {long_term_outlook_ko}</p>
+    <p style="margin: 0 0 6px 0;"><strong>단기 관찰 맥락 (3~6개월):</strong> {short_term_outlook_ko}</p>
+    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ 추가 확인할 신호:</em> {likely_scenario_short_ko}</p>
+    <p style="margin: 0 0 6px 0;"><strong>중기 관찰 맥락 (1~3년):</strong> {medium_term_outlook_ko}</p>
+    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ 확인할 변화 지점:</em> {transition_point_ko}</p>
+    <p style="margin: 0 0 6px 0;"><strong>장기 구조적 맥락:</strong> {long_term_outlook_ko}</p>
     <p style="margin: 0 0 12px 0; color: #1E40AF;"><em>▶ 구조적 리스크:</em> {structural_change_ko}</p>
   </div>
 
@@ -395,7 +395,7 @@ class IssueReportGenerator:
           WHAT WE FOUND
         </div>
         <p style="margin: 0 0 6px 0;">
-          <strong>Risk Severity: {severity_en} ({intensity}/100)</strong>
+          <strong>Alert Level: Confirmation Required</strong>
         </p>
         <p style="margin: 0 0 8px 0;">
           {main_indicator_en}
@@ -523,16 +523,16 @@ class IssueReportGenerator:
     <p style="font-size: 13px; color: #334155; margin: 0;"><strong>Expert Assessment:</strong> {expert_assessment_en}</p>
   </div>
 
-  <!-- 7. Section 4: RISK OUTLOOK AND UNCERTAINTIES -->
+  <!-- 7. Section 4: RISK SIGNAL CONTEXT AND UNCERTAINTIES -->
   <h2 style="font-size: 15px; font-weight: 900; color: #0F172A; border-bottom: 1.5px solid #CBD5E1; padding-bottom: 4px; margin: 26px 0 10px 0; letter-spacing: 0.5px; text-transform: uppercase;">
-    4. PERFORMANCE BENCHMARKS AND GAP ANALYSIS
+    4. RISK SIGNAL CONTEXT AND UNCERTAINTY
   </h2>
   <div style="font-size: 13px; color: #334155; margin-bottom: 12px;">
-    <p style="margin: 0 0 6px 0;"><strong>Short Term (3-6 months):</strong> {short_term_outlook_en}</p>
-    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ Most Likely Scenario:</em> {likely_scenario_short_en}</p>
-    <p style="margin: 0 0 6px 0;"><strong>Medium Term (1-3 years):</strong> {medium_term_outlook_en}</p>
-    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ Expected Inflection Point:</em> {transition_point_en}</p>
-    <p style="margin: 0 0 6px 0;"><strong>Long Term Structural Trajectory:</strong> {long_term_outlook_en}</p>
+    <p style="margin: 0 0 6px 0;"><strong>Near-term observation context (3-6 months):</strong> {short_term_outlook_en}</p>
+    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ Signal to verify:</em> {likely_scenario_short_en}</p>
+    <p style="margin: 0 0 6px 0;"><strong>Medium-term observation context (1-3 years):</strong> {medium_term_outlook_en}</p>
+    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ Change point to verify:</em> {transition_point_en}</p>
+    <p style="margin: 0 0 6px 0;"><strong>Long-term structural context:</strong> {long_term_outlook_en}</p>
     <p style="margin: 0 0 12px 0; color: #1E40AF;"><em>▶ Structural Changes:</em> {structural_change_en}</p>
   </div>
 
@@ -601,21 +601,16 @@ class IssueReportGenerator:
         research = REAL_ISSUE_DATA[issue_key]
 
         intensity = research["intensity_assessment"]
-        if intensity >= 75:
-            severity_ko, severity_en = "위험", "HIGH"
-        elif intensity >= 50:
-            severity_ko, severity_en = "경계", "MEDIUM"
-        else:
-            severity_ko, severity_en = "관찰", "LOW"
-
         data = {
             "ko_name": issue["ko_name"],
             "en_name": issue["en_name"],
             "date": datetime.now().strftime("%Y년 %m월 %d일"),
             "now_date": datetime.now().strftime("%Y년 %m월"),
             "intensity": intensity,
-            "severity_ko": severity_ko,
-            "severity_en": severity_en,
+            # A research baseline is not an Alert Level.  The approved warning
+            # snapshot is supplied by the analysis/DB track at publication time.
+            "severity_ko": "확인 필요",
+            "severity_en": "Confirmation Required",
             "next_update_date": (datetime.now() + timedelta(days=30)).strftime("%Y-%m-%d"),
         }
         data.update(research)
@@ -646,7 +641,7 @@ class IssueReportGenerator:
         <span style="display: inline-block; width: 26px; color: #2563EB;">{i:02d}.</span> {issue['ko_name']}
       </div>
       <div style="font-size: 12px; color: #64748B;">
-        <span style="font-weight: 600; color: #1E293B;">위험 지수:</span> {intensity}/100 | <span style="font-weight: 600; color: #1E293B;">권역:</span> {issue['region']}
+        <span style="font-weight: 600; color: #1E293B;">기준자료 신호 강도:</span> {intensity}/100 | <span style="font-weight: 600; color: #1E293B;">권역:</span> {issue['region']}
       </div>
     </div>""")
 
@@ -762,7 +757,7 @@ class IssueReportGenerator:
         <span style="display: inline-block; width: 26px; color: #2563EB;">{i:02d}.</span> {issue['en_name']}
       </div>
       <div style="font-size: 12px; color: #64748B;">
-        <span style="font-weight: 600; color: #1E293B;">Risk Score:</span> {intensity}/100 | <span style="font-weight: 600; color: #1E293B;">Region:</span> {issue['region']}
+        <span style="font-weight: 600; color: #1E293B;">Baseline signal context:</span> {intensity}/100 | <span style="font-weight: 600; color: #1E293B;">Region:</span> {issue['region']}
       </div>
     </div>""")
 

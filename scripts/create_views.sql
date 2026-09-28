@@ -1,3 +1,114 @@
+
+
+-- ----------------------------------------------------------------------------
+-- NEW VIEW: v_signal_attention_gap
+-- 대중 여론(Reddit), 독립 언론(News/Independent), 공식 정부 발표(Gov/Official)의
+-- 일별 수집량을 합산하여 관심도(Attention)의 괴리를 정량화합니다.
+-- ----------------------------------------------------------------------------
+CREATE OR REPLACE VIEW v_signal_attention_gap AS
+WITH dates AS (
+    SELECT DISTINCT STR_TO_DATE(SUBSTRING(pub_date, 6, 11), '%d %b %Y') as dt
+    FROM gov_announcements WHERE pub_date IS NOT NULL
+    UNION
+    SELECT DISTINCT CAST(date AS DATE) FROM news_data WHERE date IS NOT NULL
+    UNION
+    SELECT DISTINCT CAST(SUBSTRING(published, 1, 10) AS DATE) FROM reddit_opinion WHERE published IS NOT NULL
+    UNION
+    SELECT DISTINCT STR_TO_DATE(SUBSTRING(published_date, 6, 11), '%d %b %Y') FROM rss_signal_gap WHERE published_date IS NOT NULL
+),
+gov_counts AS (
+    SELECT STR_TO_DATE(SUBSTRING(pub_date, 6, 11), '%d %b %Y') as dt, COUNT(*) as gov_count
+    FROM gov_announcements
+    GROUP BY dt
+),
+news_counts AS (
+    SELECT CAST(date AS DATE) as dt, COUNT(*) as news_count
+    FROM news_data
+    GROUP BY dt
+),
+reddit_counts AS (
+    SELECT CAST(SUBSTRING(published, 1, 10) AS DATE) as dt, COUNT(*) as reddit_count
+    FROM reddit_opinion
+    GROUP BY dt
+),
+rss_official AS (
+    SELECT STR_TO_DATE(SUBSTRING(published_date, 6, 11), '%d %b %Y') as dt, COUNT(*) as rss_gov_count
+    FROM rss_signal_gap WHERE source_type = 'Official'
+    GROUP BY dt
+),
+rss_indep AS (
+    SELECT STR_TO_DATE(SUBSTRING(published_date, 6, 11), '%d %b %Y') as dt, COUNT(*) as rss_indep_count
+    FROM rss_signal_gap WHERE source_type = 'Independent'
+    GROUP BY dt
+)
+SELECT
+    d.dt as analysis_date,
+    COALESCE(g.gov_count, 0) + COALESCE(ro.rss_gov_count, 0) as total_official_signals,
+    COALESCE(n.news_count, 0) + COALESCE(ri.rss_indep_count, 0) as total_independent_signals,
+    COALESCE(r.reddit_count, 0) as public_sentiment_signals,
+    ABS((COALESCE(g.gov_count, 0) + COALESCE(ro.rss_gov_count, 0)) - (COALESCE(n.news_count, 0) + COALESCE(ri.rss_indep_count, 0))) as signal_gap_score,
+    CASE
+        WHEN (COALESCE(n.news_count, 0) + COALESCE(ri.rss_indep_count, 0)) > (COALESCE(g.gov_count, 0) + COALESCE(ro.rss_gov_count, 0)) * 2
+             AND (COALESCE(n.news_count, 0) + COALESCE(ri.rss_indep_count, 0)) > 5 THEN 'RED ALERT: High Independent Activity'
+        WHEN (COALESCE(r.reddit_count, 0)) > 5 THEN 'WARNING: High Public Attention'
+        ELSE 'NORMAL'
+    END as gap_status
+FROM dates d
+LEFT JOIN gov_counts g ON d.dt = g.dt
+LEFT JOIN news_counts n ON d.dt = n.dt
+LEFT JOIN reddit_counts r ON d.dt = r.dt
+LEFT JOIN rss_official ro ON d.dt = ro.dt
+LEFT JOIN rss_indep ri ON d.dt = ri.dt
+WHERE d.dt IS NOT NULL
+ORDER BY d.dt DESC;
+
+-- ----------------------------------------------------------------------------
+-- NEW VIEW: v_signal_tone_gap
+-- tone_review_log에 적재된 LLM 판정 결과(우호적/중립적/비판적)를 1, 0, -1 로 치환하고
+-- 이슈별 정부 vs 민간(전문가/언론)의 감성(Tone) 온도차를 정량화합니다.
+-- ----------------------------------------------------------------------------
+CREATE OR REPLACE VIEW v_signal_tone_gap AS
+WITH scored_tones AS (
+    SELECT
+        CAST(SUBSTRING(collected_at, 1, 10) AS DATE) as dt,
+        issue_ids,
+        source_type,
+        CASE llm_label
+            WHEN '우호적' THEN 1
+            WHEN '중립적' THEN 0
+            WHEN '비판적' THEN -1
+            ELSE 0
+        END as tone_score
+    FROM tone_review_log
+    WHERE issue_ids IS NOT NULL AND collected_at IS NOT NULL
+),
+daily_issue_agg AS (
+    SELECT
+        dt,
+        issue_ids,
+        AVG(CASE WHEN source_type IN ('official_statement', 'state_media_news') THEN tone_score END) as avg_gov_tone,
+        AVG(CASE WHEN source_type IN ('local_media', 'expert_analysis', 'news') THEN tone_score END) as avg_indep_tone,
+        COUNT(CASE WHEN source_type IN ('official_statement', 'state_media_news') THEN 1 END) as gov_volume,
+        COUNT(CASE WHEN source_type IN ('local_media', 'expert_analysis', 'news') THEN 1 END) as indep_volume
+    FROM scored_tones
+    GROUP BY dt, issue_ids
+)
+SELECT
+    dt as analysis_date,
+    issue_ids,
+    ROUND(avg_gov_tone, 2) as avg_gov_tone,
+    ROUND(avg_indep_tone, 2) as avg_indep_tone,
+    gov_volume,
+    indep_volume,
+    ABS(COALESCE(avg_gov_tone, 0) - COALESCE(avg_indep_tone, 0)) as signal_tone_gap_score,
+    CASE
+        WHEN ABS(COALESCE(avg_gov_tone, 0) - COALESCE(avg_indep_tone, 0)) >= 1.5 AND gov_volume > 0 AND indep_volume > 0 THEN 'CRITICAL: Severe Tone Discrepancy'
+        WHEN ABS(COALESCE(avg_gov_tone, 0) - COALESCE(avg_indep_tone, 0)) >= 1.0 AND gov_volume > 0 AND indep_volume > 0 THEN 'WARNING: High Tone Discrepancy'
+        ELSE 'NORMAL'
+    END as tone_gap_status
+FROM daily_issue_agg
+ORDER BY dt DESC, signal_tone_gap_score DESC;
+
 -- ============================================================================
 -- create_views.sql — 포트폴리오용 MySQL 고급 분석 뷰(Views) DDL
 -- ============================================================================
@@ -183,3 +294,150 @@ SELECT
 FROM latest_summary s
 LEFT JOIN wiki_aggregate w ON s.issue = w.issue
 LEFT JOIN gov_aggregate g ON s.issue = g.issue;
+
+
+-- ----------------------------------------------------------------------------
+-- 조기경보 증거 계층 뷰 1: 대시보드의 현재 경보 목록
+-- 점수 자체로 Alert Level을 새로 판단하지 않는다. 경보 판단은 alert_events에
+-- 기록된 불변 이벤트를 사용하고, 뷰는 최신 근거와 상태를 읽기 좋게 결합한다.
+-- ----------------------------------------------------------------------------
+CREATE OR REPLACE VIEW v_dashboard_current_alerts AS
+WITH latest_run AS (
+    SELECT id, run_key, scoring_version, executed_at, window_start, window_end
+    FROM scoring_runs
+    WHERE status = 'completed'
+    ORDER BY executed_at DESC, id DESC
+    LIMIT 1
+),
+score_rollup AS (
+    SELECT
+        r.scoring_run_id,
+        r.issue_key,
+        ROUND(SUM(COALESCE(r.contribution_score, 0)), 2) AS risk_signal_score,
+        ROUND(AVG(r.confidence_score), 4) AS confidence_score,
+        SUM(r.evidence_count) AS evidence_count,
+        COUNT(DISTINCT r.signal_family) AS source_diversity,
+        MAX(r.observed_at) AS latest_observed_at,
+        SUM(CASE WHEN r.quality_status <> 'usable' THEN 1 ELSE 0 END) AS quality_flag_count
+    FROM risk_signal_scores r
+    JOIN latest_run lr ON lr.id = r.scoring_run_id
+    GROUP BY r.scoring_run_id, r.issue_key
+),
+latest_gap AS (
+    SELECT g.*,
+           ROW_NUMBER() OVER (PARTITION BY g.issue_key ORDER BY g.snapshot_at DESC, g.id DESC) AS rn
+    FROM signal_gap_snapshots g
+    JOIN latest_run lr ON lr.id = g.scoring_run_id
+),
+latest_alert AS (
+    SELECT a.*,
+           ROW_NUMBER() OVER (PARTITION BY a.issue_key ORDER BY a.triggered_at DESC, a.id DESC) AS rn
+    FROM alert_events a
+)
+SELECT
+    sr.issue_key,
+    lr.run_key,
+    lr.scoring_version,
+    lr.executed_at AS scored_at,
+    sr.risk_signal_score,
+    sr.confidence_score,
+    sr.evidence_count,
+    sr.source_diversity,
+    sr.latest_observed_at,
+    sr.quality_flag_count,
+    lg.gap_score,
+    lg.evidence_coverage_pct,
+    lg.narrative_summary AS signal_gap_summary,
+    la.id AS alert_event_id,
+    la.alert_level,
+    la.lifecycle_status AS alert_status,
+    la.triggered_at,
+    la.requires_human_review,
+    la.decision_rationale
+FROM score_rollup sr
+JOIN latest_run lr ON lr.id = sr.scoring_run_id
+LEFT JOIN latest_gap lg ON lg.issue_key = sr.issue_key AND lg.rn = 1
+LEFT JOIN latest_alert la ON la.issue_key = sr.issue_key AND la.rn = 1;
+
+
+-- ----------------------------------------------------------------------------
+-- 조기경보 증거 계층 뷰 2: 경보별 근거 추적
+-- 한 행이 하나의 근거이므로, 화면은 이 뷰를 alert_event_id로 필터링해 인용문과
+-- 원천 링크를 그대로 보여줄 수 있다.
+-- ----------------------------------------------------------------------------
+CREATE OR REPLACE VIEW v_alert_evidence_trace AS
+SELECT
+    a.id AS alert_event_id,
+    a.issue_key,
+    a.alert_level,
+    a.lifecycle_status AS alert_status,
+    a.triggered_at,
+    a.decision_rationale,
+    sr.run_key,
+    sr.scoring_version,
+    e.id AS evidence_id,
+    e.evidence_role,
+    e.source_table,
+    e.source_record_key,
+    e.source_url,
+    e.evidence_quote,
+    e.relevance_score,
+    e.observed_at,
+    rs.signal_family,
+    rs.metric_name,
+    rs.raw_value,
+    rs.normalized_score,
+    rs.weight,
+    rs.contribution_score,
+    rs.confidence_score,
+    rs.quality_status
+FROM alert_events a
+JOIN scoring_runs sr ON sr.id = a.scoring_run_id
+LEFT JOIN alert_event_evidence e ON e.alert_event_id = a.id
+LEFT JOIN risk_signal_scores rs ON rs.id = e.risk_signal_score_id;
+
+
+-- ----------------------------------------------------------------------------
+-- 조기경보 증거 계층 뷰 3: 신호 괴리 시계열
+-- 공식/독립/대중/시장 신호와 근거 충분도를 같은 시점의 스냅샷으로 제공한다.
+-- ----------------------------------------------------------------------------
+CREATE OR REPLACE VIEW v_signal_gap_trend AS
+SELECT
+    g.issue_key,
+    g.snapshot_at,
+    g.official_score,
+    g.independent_score,
+    g.public_score,
+    g.market_score,
+    g.gap_score,
+    g.evidence_coverage_pct,
+    g.source_diversity,
+    g.methodology_version,
+    g.narrative_summary,
+    sr.run_key,
+    sr.scoring_version
+FROM signal_gap_snapshots g
+JOIN scoring_runs sr ON sr.id = g.scoring_run_id;
+
+
+-- ----------------------------------------------------------------------------
+-- 조기경보 증거 계층 뷰 4: 검증 결과 요약
+-- 톤 분류 정확도와 분리해, 실제 경보의 오탐/미탐/근거 부족을 집계한다.
+-- ----------------------------------------------------------------------------
+CREATE OR REPLACE VIEW v_alert_validation_summary AS
+SELECT
+    v.issue_key,
+    COALESCE(a.alert_level, 'NO_ALERT') AS alert_level,
+    COUNT(*) AS audit_count,
+    SUM(CASE WHEN v.verdict = 'confirmed' THEN 1 ELSE 0 END) AS confirmed_count,
+    SUM(CASE WHEN v.verdict = 'false_alarm' THEN 1 ELSE 0 END) AS false_alarm_count,
+    SUM(CASE WHEN v.verdict = 'missed_signal' THEN 1 ELSE 0 END) AS missed_signal_count,
+    SUM(CASE WHEN v.verdict = 'insufficient_evidence' THEN 1 ELSE 0 END) AS insufficient_evidence_count,
+    SUM(CASE WHEN v.reviewer IS NOT NULL THEN 1 ELSE 0 END) AS human_reviewed_count,
+    ROUND(100.0 * SUM(CASE WHEN v.verdict = 'confirmed' THEN 1 ELSE 0 END)
+          / NULLIF(SUM(CASE WHEN v.verdict IN ('confirmed', 'false_alarm') THEN 1 ELSE 0 END), 0), 1)
+        AS alert_precision_pct,
+    MAX(v.reviewed_at) AS last_reviewed_at
+FROM alert_validation_audit v
+LEFT JOIN alert_events a ON a.id = v.alert_event_id
+GROUP BY v.issue_key, COALESCE(a.alert_level, 'NO_ALERT');

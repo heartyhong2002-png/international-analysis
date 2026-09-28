@@ -9,6 +9,7 @@ report_db_saver.py — 보고서 데스크톱 저장 및 MySQL DB 적재 공통 
      메타데이터 및 마크다운 전문(LONGTEXT)을 영구 적재
 """
 
+import hashlib
 import os
 import sys
 from datetime import datetime
@@ -73,12 +74,30 @@ def ensure_reports_table():
             `intensity` INT DEFAULT NULL COMMENT '위험도 지수 (0~100)',
             `file_path` VARCHAR(500) NOT NULL COMMENT '저장된 파일 경로',
             `content` LONGTEXT NOT NULL COMMENT '마크다운 전문',
+            `content_hash` CHAR(64) DEFAULT NULL COMMENT '마크다운 SHA-256',
+            `scoring_run_id` BIGINT DEFAULT NULL COMMENT '점수 계산 실행 ID',
+            `alert_event_id` BIGINT DEFAULT NULL COMMENT '연결된 경보 이벤트 ID',
             `collected_date` VARCHAR(20) NOT NULL COMMENT '기준 날짜 (YYYY-MM-DD)',
-            `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             UNIQUE KEY `uk_report_type_issue_date` (`report_type`, `issue_key`, `collected_date`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
         """
         cur.execute(create_sql)
+        for column, definition in (
+            ("content_hash", "CHAR(64) DEFAULT NULL AFTER content"),
+            ("scoring_run_id", "BIGINT DEFAULT NULL AFTER content_hash"),
+            ("alert_event_id", "BIGINT DEFAULT NULL AFTER scoring_run_id"),
+            ("updated_at", "DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER created_at"),
+        ):
+            cur.execute("""
+                SELECT COUNT(*) FROM information_schema.columns
+                WHERE table_schema = DATABASE()
+                  AND table_name = 'analysis_reports'
+                  AND column_name = %s
+            """, (column,))
+            if cur.fetchone()[0] == 0:
+                cur.execute(f"ALTER TABLE `analysis_reports` ADD COLUMN `{column}` {definition}")
         conn.commit()
         cur.close()
         conn.close()
@@ -97,10 +116,16 @@ def save_report_to_desktop_and_db(
     report_type: str = "gao_issue_ko",
     issue_key: str = "ALL",
     intensity: int = None,
-    collected_date: str = None
+    collected_date: str = None,
+    scoring_run_id: int = None,
+    alert_event_id: int = None,
 ) -> dict:
     """
     보고서를 데스크톱 디렉토리에 파일로 저장하고 MySQL DB에 적재합니다.
+
+    scoring_run_id와 alert_event_id는 선택 인자입니다. 수집기/대시보드가 아닌
+    보고서 생성자가 전달하면, 이 보고서를 만든 경보 판단과 점수 실행을 DB에서
+    추적할 수 있습니다.
     """
     if not collected_date:
         collected_date = datetime.now().strftime("%Y-%m-%d")
@@ -129,10 +154,21 @@ def save_report_to_desktop_and_db(
         conn = get_db_connection()
         if conn:
             cur = conn.cursor()
+            content_hash = hashlib.sha256(content.encode("utf-8")).hexdigest()
             upsert_sql = """
-            REPLACE INTO `analysis_reports` 
-            (`report_type`, `title`, `issue_key`, `intensity`, `file_path`, `content`, `collected_date`, `created_at`)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, NOW())
+            INSERT INTO `analysis_reports`
+            (`report_type`, `title`, `issue_key`, `intensity`, `file_path`, `content`, `content_hash`,
+             `scoring_run_id`, `alert_event_id`, `collected_date`)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            ON DUPLICATE KEY UPDATE
+                title = VALUES(title),
+                intensity = VALUES(intensity),
+                file_path = VALUES(file_path),
+                content = VALUES(content),
+                content_hash = VALUES(content_hash),
+                scoring_run_id = VALUES(scoring_run_id),
+                alert_event_id = VALUES(alert_event_id),
+                updated_at = NOW()
             """
             cur.execute(upsert_sql, (
                 report_type,
@@ -141,7 +177,10 @@ def save_report_to_desktop_and_db(
                 intensity,
                 saved_file,
                 content,
-                collected_date
+                content_hash,
+                scoring_run_id,
+                alert_event_id,
+                collected_date,
             ))
             conn.commit()
             cur.close()

@@ -1,5 +1,5 @@
 """
-pdf_report_generator.py — Official intelligence-form-style PDF report generator
+pdf_report_generator.py — early-warning evidence PDF report generator
 (English-only edition)
 ================================================================================
 
@@ -27,7 +27,7 @@ pages as it actually needs. Structure:
                                           other actors
   - 3. ECONOMIC AND SECURITY IMPACT    : security / economic / public-opinion
                                           dimensions
-  - 4. RISK OUTLOOK & UNCERTAINTY      : short/medium/long-term outlook + key
+  - 4. SIGNAL CONTEXT & UNCERTAINTY    : observed context + key uncertainty
                                           uncertainties
   - 5. KEY STRATEGIC RECOMMENDATIONS   : response strategy / diplomatic
                                           positioning / ROK-US coordination
@@ -576,22 +576,22 @@ class OfficialIntelligencePdfGenerator:
         story.append(Spacer(1, 5))
 
         # ============================================================
-        # 4. RISK OUTLOOK AND UNCERTAINTY ANALYSIS
+        # 4. SIGNAL CONTEXT AND UNCERTAINTY
         # ============================================================
-        story.append(Paragraph("<b>4. RISK OUTLOOK AND UNCERTAINTY ANALYSIS</b>", self.s_sec_head))
+        story.append(Paragraph("<b>4. SIGNAL CONTEXT AND UNCERTAINTY</b>", self.s_sec_head))
         story.append(Spacer(1, 2))
 
-        story.append(Paragraph(f"(U) <b>Short-Term Outlook (3-6 Months):</b> {d['short_term_outlook_en']}", self.s_body))
+        story.append(Paragraph(f"(U) <b>Near-Term Observation Context (3-6 Months):</b> {d['short_term_outlook_en']}", self.s_body))
         story.append(Spacer(1, 1.5))
-        story.append(Paragraph(f"▶ Likely Scenario: {d['likely_scenario_short_en']}", self.s_body_indent))
+        story.append(Paragraph(f"▶ Signal to verify: {d['likely_scenario_short_en']}", self.s_body_indent))
         story.append(Spacer(1, 2))
 
-        story.append(Paragraph(f"(U) <b>Medium-Term Outlook (1-3 Years):</b> {d['medium_term_outlook_en']}", self.s_body))
+        story.append(Paragraph(f"(U) <b>Medium-Term Observation Context (1-3 Years):</b> {d['medium_term_outlook_en']}", self.s_body))
         story.append(Spacer(1, 1.5))
         story.append(Paragraph(f"▶ Transition Point: {d['transition_point_en']}", self.s_body_indent))
         story.append(Spacer(1, 2))
 
-        story.append(Paragraph(f"(U) <b>Long-Term Structural Change:</b> {d['long_term_outlook_en']}", self.s_body))
+        story.append(Paragraph(f"(U) <b>Long-Term Structural Context:</b> {d['long_term_outlook_en']}", self.s_body))
         story.append(Spacer(1, 1.5))
         story.append(Paragraph(f"▶ Structural Risk: {d['structural_change_en']}", self.s_body_indent))
         story.append(Spacer(1, 3))
@@ -647,8 +647,9 @@ class OfficialIntelligencePdfGenerator:
         story.append(Spacer(1, 1.5))
 
         q4 = (
-            "A Sentinel query of <b>IFCN Verified Fact Checks & Media Bias Ratings</b> revealed "
-            "zero debunked claims with established bias classification across official feeds."
+            "<b>Validation status:</b> Confirmation required. This report is an evidence "
+            "dossier and does not assign an Alert Level until the approved warning snapshot "
+            "and human-review status are attached."
         )
         story.append(Paragraph(q4, self.s_body_indent))
         story.append(Spacer(1, 3))

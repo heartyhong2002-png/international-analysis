@@ -13,6 +13,7 @@ dedupe_gov_announcements.py는 "같은 link에 정상 버전이 있을 때만" �
 """
 import argparse
 import csv
+import json
 import os
 import re
 import sys
@@ -42,6 +43,27 @@ def get_connection():
         host=MYSQL_HOST, port=MYSQL_PORT, user=MYSQL_USER,
         password=MYSQL_PASSWORD, database=MYSQL_DATABASE,
     )
+
+
+def write_quality_audit(conn, record_ids, backup_path, is_dry_run):
+    """복구 불가능한 인코딩 손상 행 정리도 DB 감사 이력으로 남깁니다."""
+    cur = conn.cursor()
+    try:
+        cur.execute("""
+            INSERT INTO data_quality_audit
+                (action_type, target_table, affected_record_ids, affected_row_count,
+                 reason, backup_path, is_dry_run, executed_by)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """, (
+            "remove_orphan_broken_encoding", "gov_announcements", json.dumps(record_ids), len(record_ids),
+            "정상 원문이 없는 인코딩 손상 제목 행 제거; 재수집 전 복구 불가",
+            os.path.abspath(backup_path), is_dry_run, "clean_orphan_broken.py",
+        ))
+        conn.commit()
+    except mysql.connector.Error as e:
+        print(f"⚠ 데이터 품질 감사 로그 기록 실패: {e}")
+    finally:
+        cur.close()
 
 
 def main():
@@ -83,6 +105,7 @@ def main():
         print(f"   id={r['id']:<6} {r['title'][:50]!r}  link={r['link']}")
 
     if args.dry_run:
+        write_quality_audit(conn, [r["id"] for r in to_delete], backup_path, True)
         print("\n--dry-run 모드라 삭제하지 않았습니다.")
         cur.close()
         conn.close()
@@ -92,6 +115,7 @@ def main():
     format_strings = ",".join(["%s"] * len(ids))
     cur.execute(f"DELETE FROM gov_announcements WHERE id IN ({format_strings})", ids)
     conn.commit()
+    write_quality_audit(conn, ids, backup_path, False)
     print(f"\n✅ {cur.rowcount}행 삭제 완료.")
 
     cur.execute("SELECT COUNT(*) AS c FROM gov_announcements")

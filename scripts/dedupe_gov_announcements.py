@@ -26,6 +26,7 @@ deleted_broken_announcements_backup.csv와 같은 패턴).
 """
 import argparse
 import csv
+import json
 import os
 import re
 import sys
@@ -55,6 +56,27 @@ def get_connection():
         host=MYSQL_HOST, port=MYSQL_PORT, user=MYSQL_USER,
         password=MYSQL_PASSWORD, database=MYSQL_DATABASE,
     )
+
+
+def write_quality_audit(conn, record_ids, backup_path, is_dry_run):
+    """삭제/예정 삭제를 증거 계층의 데이터 품질 감사 로그에 남깁니다."""
+    cur = conn.cursor()
+    try:
+        cur.execute("""
+            INSERT INTO data_quality_audit
+                (action_type, target_table, affected_record_ids, affected_row_count,
+                 reason, backup_path, is_dry_run, executed_by)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """, (
+            "deduplicate", "gov_announcements", json.dumps(record_ids), len(record_ids),
+            "같은 원문 URL의 중복 또는 정상 행이 있는 인코딩 손상 행 제거",
+            os.path.abspath(backup_path), is_dry_run, "dedupe_gov_announcements.py",
+        ))
+        conn.commit()
+    except mysql.connector.Error as e:
+        print(f"⚠ 데이터 품질 감사 로그 기록 실패: {e}")
+    finally:
+        cur.close()
 
 
 def main():
@@ -120,6 +142,7 @@ def main():
         print(f"   ... 외 {len(to_delete) - 20}건 (백업 CSV에서 전체 확인 가능)")
 
     if args.dry_run:
+        write_quality_audit(conn, [r["id"] for r in to_delete], backup_path, True)
         print("\n--dry-run 모드라 실제로 삭제하지 않았습니다. "
               "결과가 맞으면 --dry-run 없이 다시 실행하세요.")
         cur.close()
@@ -130,6 +153,7 @@ def main():
     format_strings = ",".join(["%s"] * len(ids_to_delete))
     cur.execute(f"DELETE FROM gov_announcements WHERE id IN ({format_strings})", ids_to_delete)
     conn.commit()
+    write_quality_audit(conn, ids_to_delete, backup_path, False)
     print(f"\n✅ {cur.rowcount}행 삭제 완료 (issue_gov_match의 딸린 매칭 행도 CASCADE로 함께 정리됨).")
 
     cur.execute("SELECT COUNT(*) AS c FROM gov_announcements")

@@ -3,21 +3,21 @@ verify_model_consensus.py — 3개 오픈소스 LLM 다자간 교차 검증 및 
 ====================================================================================
 
 목적:
-  - 개인 연구자의 주관적 라벨링 한계를 극복하기 위해, 서로 다른 문화권/개발사의 3대 오픈소스 LLM
-    (Mistral-7B 서방 시각, Qwen2.5-7B 아시아/글로벌 시각, EXAONE 3.5 7.8B 한국 시각)이
-    독립적으로 동일 기사의 톤/프레이밍을 분석하고 다수결 합의(Ensemble Consensus)를 도출합니다.
+  - 서로 다른 개발사의 3대 오픈소스 LLM이 동일 기사의 톤/프레이밍을 어떻게 분류하는지
+    기록하고, 모델 간 일치·불일치를 사람 검수 우선순위로 사용합니다. 모델의 개발 국가나
+    합의 자체는 정치적 관점의 독립성·사실성·정답을 보장하지 않습니다.
 
 작동 원리:
   1. 동일한 ADR-001 톤 분류 프롬프트(Narrative 비난 vs 단순 부정적 사실 전달)를 3개 모델에 전송.
   2. 3개 모델의 판정을 집계:
-     - 만장일치 (3/3 일치): 신뢰도 High (합의율 100%, 자동 승인)
-     - 다수결 합의 (2/3 일치): 신뢰도 Medium (다수 의견 채택, 소수 의견 오차 분석)
-     - 불일치 (1:1:1): 신뢰도 Low (모호성 플래그 부여 및 심층 검수 대상)
+     - 만장일치 (3/3 일치): 모델 간 일치 신호 (사람 검수 면제 아님)
+     - 다수결 합의 (2/3 일치): 다수 출력과 이견을 함께 기록
+     - 불일치 (1:1:1): 모호성 플래그 및 우선 검수 대상
   3. 종합 합의율, 모델 간 상호 일치율 행렬(Pairwise Matrix), 편향 성향을 측정하여
      `reports/model_consensus_audit.md` 및 `data/consensus_audit_results.csv`로 저장.
 
 사용법:
-  # 1. 벤치마크 테스트셋(Ground Truth 포함 5개 핵심 시나리오)으로 3개 모델 검증
+  # 1. 작성자 고정 5개 회귀 시나리오로 출력 형식·프롬프트 변경을 점검
   python scripts/verify_model_consensus.py --benchmark
 
   # 2. 기존 수집된 review_log.csv에서 5건 표본 추출하여 3개 모델 교차 검증
@@ -73,7 +73,7 @@ TONE_PROMPT_TEMPLATE = """다음 뉴스 기사의 논조를 분류하시오.
 판단 기준은 딱 하나뿐이다: **이 기사의 문장이 특정 주체(정부·인물·기업·국가)의 행동·정책·
 능력을 narrative(서술) 차원에서 비난하거나 부정적으로 평가하는 표현을 쓰는가?**
 - 그렇다 → critical
-- 아니다(사건·통계·예측·발표를 그대로 전달할 뿐이다) → neutral. **이때 그 사건 자체가 전쟁,
+- 아니다(사건·통계·관측·발표를 그대로 전달할 뿐이다) → neutral. **이때 그 사건 자체가 전쟁,
   관세, 물가 상승, 사망, 경제위기처럼 나쁜 소식이어도 상관없다 — "나쁜 소식 = critical"이 아니다.**
   "전문가들이 우려한다", "가격이 올랐다", "협상이 결렬됐다" 같은 문장은 그 자체로는 누구도
   비난하지 않으므로 neutral이다.
@@ -92,7 +92,7 @@ evidence_quote는 기사 제목/본문을 그대로 복사하지 말고, 판단�
 반드시 아래 JSON 형식으로만 답하시오:
 {{"label": "positive|neutral|critical", "evidence_quote": "..."}}"""
 
-# 벤치마크 검증용 골든 스탠다드 데이터셋 (다양한 정세 사건)
+# 회귀 테스트용 고정 시나리오. 외부 독립 정답셋이나 성능 벤치마크가 아니다.
 BENCHMARK_CASES = [
     {
         "id": "BM-01",
@@ -210,9 +210,33 @@ def evaluate_consensus(predictions: list[dict]) -> dict:
     }
 
 
+def consensus_review_policy(consensus: dict) -> dict:
+    """합의를 위험 신호의 증거가 아닌 LLM 판단 일관성으로 취급한다."""
+    status = consensus.get("status", "FAILED")
+    agreement = float(consensus.get("agreement_ratio") or 0.0)
+    if status == "UNANIMOUS":
+        return {
+            "consensus_level": "만장일치",
+            "agreement_score": round(agreement * 100, 1),
+            "human_review_recommended": "표본 추출 대상 (면제 아님)",
+        }
+    if status == "MAJORITY":
+        return {
+            "consensus_level": "다수결",
+            "agreement_score": round(agreement * 100, 1),
+            "human_review_recommended": "우선 검수 대상 (이견 존재)",
+        }
+    # 분열·실패는 신뢰도를 부풀리지 않으며 확인 대상으로 남긴다.
+    return {
+        "consensus_level": "분열/실패",
+        "agreement_score": round(agreement * 100, 1),
+        "human_review_recommended": "필수 검수 대상",
+    }
+
+
 def run_benchmark_verification() -> tuple[list[dict], dict]:
     print("\n" + "=" * 75)
-    print("🏆 [3대 오픈소스 LLM 교차 검증 — 골든 스탠다드 벤치마크 테스트]")
+    print("🧪 [3대 오픈소스 LLM 교차 점검 — 고정 회귀 시나리오]")
     print("=" * 75)
     print(f"참여 모델 ({len(CONSENSUS_MODELS)}종):")
     for m in CONSENSUS_MODELS:
@@ -225,7 +249,7 @@ def run_benchmark_verification() -> tuple[list[dict], dict]:
     for idx, case in enumerate(BENCHMARK_CASES, 1):
         print(f"\n[{idx}/{len(BENCHMARK_CASES)}] {case['id']}: {case['title'][:60]}...")
         print(f"   * 유형: {case['case_type']}")
-        print(f"   * 정답(Ground Truth): [{case['ground_truth']}]")
+        print(f"   * 기대 라벨(작성자 정의 회귀 기준): [{case['ground_truth']}]")
 
         prompt = TONE_PROMPT_TEMPLATE.format(title=case["title"], summary=case["summary"])
         model_preds = []
@@ -250,6 +274,7 @@ def run_benchmark_verification() -> tuple[list[dict], dict]:
             })
 
         consensus = evaluate_consensus(model_preds)
+        review_policy = consensus_review_policy(consensus)
         is_consensus_correct = (consensus["consensus_label"] == case["ground_truth"])
         c_mark = "✓" if is_consensus_correct else "✗"
 
@@ -264,6 +289,7 @@ def run_benchmark_verification() -> tuple[list[dict], dict]:
             "consensus_correct": is_consensus_correct,
             "agreement_ratio": consensus["agreement_ratio"],
             "dissenting_models": ",".join(consensus["dissenting_models"]),
+            **review_policy,
             "preds": model_preds,
         })
 
@@ -271,31 +297,31 @@ def run_benchmark_verification() -> tuple[list[dict], dict]:
     unanimous_count = sum(1 for r in all_results if r["consensus_status"] == "UNANIMOUS")
     majority_count = sum(1 for r in all_results if r["consensus_status"] == "MAJORITY")
     split_count = sum(1 for r in all_results if r["consensus_status"] == "SPLIT")
-    consensus_accuracy = sum(1 for r in all_results if r["consensus_correct"]) / total_cases
+    fixture_agreement = sum(1 for r in all_results if r["consensus_correct"]) / total_cases
 
     summary_stats = {
         "total_cases": total_cases,
         "unanimous_count": unanimous_count,
         "majority_count": majority_count,
         "split_count": split_count,
-        "high_confidence_rate": round((unanimous_count + majority_count) / total_cases * 100, 1),
-        "consensus_accuracy": round(consensus_accuracy * 100, 1),
-        "model_individual_accuracies": {
+        "consensus_rate": round((unanimous_count + majority_count) / total_cases * 100, 1),
+        "fixture_agreement": round(fixture_agreement * 100, 1),
+        "model_fixture_agreement": {
             m_name: round(corr / total_cases * 100, 1) for m_name, corr in model_correct.items()
         },
     }
 
     print("\n" + "=" * 75)
-    print("📊 [벤치마크 최종 감사 통계]")
+    print("📊 [고정 회귀 시나리오 점검 결과]")
     print("=" * 75)
     print(f"• 총 평가 사례: {total_cases}건")
     print(f"• 3대 모델 만장일치(Unanimous 3:0): {unanimous_count}건 ({unanimous_count/total_cases*100:.1f}%)")
     print(f"• 다수결 합의(Majority 2:1):       {majority_count}건 ({majority_count/total_cases*100:.1f}%)")
     print(f"• 의견 분열(Split 1:1:1):          {split_count}건 ({split_count/total_cases*100:.1f}%)")
-    print(f"• 고신뢰 합의 달성율:              {summary_stats['high_confidence_rate']}%")
-    print(f"• 다자간 합의 최종 정확도:         {summary_stats['consensus_accuracy']}%")
-    print("\n[개별 모델 정답률 비교]:")
-    for m_name, acc in summary_stats["model_individual_accuracies"].items():
+    print(f"• 모델 간 합의율:                  {summary_stats['consensus_rate']}%")
+    print(f"• 고정 시나리오 기대 라벨 일치:    {summary_stats['fixture_agreement']}% (성능 정확도 아님)")
+    print("\n[개별 모델의 고정 시나리오 일치]:")
+    for m_name, acc in summary_stats["model_fixture_agreement"].items():
         print(f"  • {m_name:<25}: {acc}%")
     print("=" * 75)
 
@@ -348,6 +374,7 @@ def audit_review_log_csv(csv_path: str, limit: int = 5) -> tuple[list[dict], dic
             })
 
         consensus = evaluate_consensus(model_preds)
+        review_policy = consensus_review_policy(consensus)
         print(f"   => 🏛️ 3자 합의 결과: [{consensus['status']}] {consensus['consensus_label']} ({consensus['winner_count']}/{consensus['total_valid']}표)")
 
         all_results.append({
@@ -359,6 +386,7 @@ def audit_review_log_csv(csv_path: str, limit: int = 5) -> tuple[list[dict], dic
             "consensus_status": consensus["status"],
             "agreement_ratio": consensus["agreement_ratio"],
             "dissenting_models": ",".join(consensus["dissenting_models"]),
+            **review_policy,
             "model_preds": model_preds,
         })
 
@@ -372,7 +400,7 @@ def audit_review_log_csv(csv_path: str, limit: int = 5) -> tuple[list[dict], dic
         "unanimous_rate": round(unanimous / total * 100, 1) if total else 0,
         "majority_rate": round(majority / total * 100, 1) if total else 0,
         "split_rate": round(split / total * 100, 1) if total else 0,
-        "high_confidence_rate": round((unanimous + majority) / total * 100, 1) if total else 0,
+        "consensus_rate": round((unanimous + majority) / total * 100, 1) if total else 0,
     }
 
     print("\n" + "=" * 75)
@@ -381,7 +409,7 @@ def audit_review_log_csv(csv_path: str, limit: int = 5) -> tuple[list[dict], dic
     print(f"• 만장일치(3:0): {unanimous}건 ({summary_stats['unanimous_rate']}%)")
     print(f"• 다수결 합의(2:1): {majority}건 ({summary_stats['majority_rate']}%)")
     print(f"• 의견 분열(1:1:1): {split}건 ({summary_stats['split_rate']}%)")
-    print(f"• 신뢰 합의 도출률: {summary_stats['high_confidence_rate']}%")
+    print(f"• 신뢰 합의 도출률: {summary_stats['consensus_rate']}%")
     print("=" * 75)
 
     return all_results, summary_stats
@@ -405,6 +433,9 @@ def save_audit_report(results: list[dict], summary: dict, mode: str = "benchmark
             "consensus_status": r.get("consensus_status"),
             "agreement_ratio": r.get("agreement_ratio"),
             "dissenting_models": r.get("dissenting_models"),
+            "consensus_level": r.get("consensus_level"),
+            "agreement_score": r.get("agreement_score"),
+            "human_review_recommended": r.get("human_review_recommended"),
         }
         preds = r.get("preds") or r.get("model_preds") or []
         for p in preds:
@@ -436,14 +467,14 @@ def save_audit_report(results: list[dict], summary: dict, mode: str = "benchmark
 
 | 지표 항목 | 수치 | 비고 |
 | :--- | :--- | :--- |
-| **총 평가 건수** | {summary.get('total_cases') or summary.get('total_audited', 0)}건 | 100% |
-| **만장일치 합의 (3:0, Unanimous)** | {summary.get('unanimous_count', 0)}건 | 신뢰도 High (자동 승인) |
-| **다수결 합의 (2:1, Majority)** | {summary.get('majority_count', 0)}건 | 신뢰도 Medium (다수 채택) |
-| **의견 분열 (1:1:1, Split)** | {summary.get('split_count', 0)}건 | 신뢰도 Low (심층 검수 필요) |
-| **고신뢰 합의 도출률** | **{summary.get('high_confidence_rate', 0)}%** | (만장일치 + 다수결) |
+| **총 평가 건수** | {summary.get('total_cases') or summary.get('total_audited', 0)}건 | 표본 수를 함께 해석 |
+| **만장일치 (3:0, Unanimous)** | {summary.get('unanimous_count', 0)}건 | 모델 간 일치; 사람 검수 면제 아님 |
+| **다수결 (2:1, Majority)** | {summary.get('majority_count', 0)}건 | 이견을 함께 기록 |
+| **의견 분열 (1:1:1, Split)** | {summary.get('split_count', 0)}건 | 우선 검수 대상 |
+| **모델 간 합의율** | **{summary.get('consensus_rate', 0)}%** | 만장일치 + 다수결; 정답률 아님 |
 """
-    if "consensus_accuracy" in summary:
-        md += f"| **다수결 합의 최종 정확도** | **{summary['consensus_accuracy']}%** | 정답(Ground Truth) 대비 |\n"
+    if "fixture_agreement" in summary:
+        md += f"| **고정 시나리오 기대 라벨 일치** | **{summary['fixture_agreement']}%** | 작성자 정의 회귀 기준; 독립 정확도 아님 |\n"
 
     md += """
 ---
@@ -451,10 +482,10 @@ def save_audit_report(results: list[dict], summary: dict, mode: str = "benchmark
 ## 2. 🔍 개별 모델 성능 및 일치율
 
 """
-    if "model_individual_accuracies" in summary:
-        md += "| 모델명 | 개별 정답률 (Accuracy) | 평가 역할 |\n| :--- | :--- | :--- |\n"
-        for m_name, acc in summary["model_individual_accuracies"].items():
-            md += f"| `{m_name}` | **{acc}%** | 서방/아시아/한국 교차 검증 |\n"
+    if "model_fixture_agreement" in summary:
+        md += "| 모델명 | 고정 시나리오 일치 | 해석 제한 |\n| :--- | :--- | :--- |\n"
+        for m_name, acc in summary["model_fixture_agreement"].items():
+            md += f"| `{m_name}` | **{acc}%** | 작성자 정의 예시와의 일치이며 일반 성능을 의미하지 않음 |\n"
 
     md += """
 ---
@@ -477,8 +508,8 @@ def save_audit_report(results: list[dict], summary: dict, mode: str = "benchmark
 ---
 
 ## 4. 💡 엔지니어링 의의 및 포트폴리오 결론
-1. **주관적 편향 배제**: 특정 개인의 편향된 시각 대신 독립적인 3대 모델의 앙상블 합의(Consensus)를 통해 톤 라벨링의 객관성 확보.
-2. **이상치 자동 플래그**: 3개 모델이 분열하거나 이견을 낸 난해한 케이스만 선별 추출하여 검수 리소스를 80% 이상 절감(Active Learning).
+1. **일치도 기록**: 모델의 일치·불일치를 표시해 사람이 추가로 확인할 사례를 찾는다. 합의는 객관성이나 정답을 보장하지 않는다.
+2. **이상치 플래그**: 모델이 분열하거나 근거 인용이 부족한 사례를 우선 검수한다. 검수 리소스 절감 효과는 실제 표본으로 측정되기 전까지 주장하지 않는다.
 """
 
     report_md_path.write_text(md, encoding="utf-8")
@@ -487,7 +518,7 @@ def save_audit_report(results: list[dict], summary: dict, mode: str = "benchmark
 
 def main():
     parser = argparse.ArgumentParser(description="3개 오픈소스 LLM 다자간 교차 검증 엔진")
-    parser.add_argument("--benchmark", action="store_true", help="골든 스탠다드 벤치마크 5건으로 모델 합의 및 정답률 검증")
+    parser.add_argument("--benchmark", action="store_true", help="작성자 고정 5건으로 출력 형식·회귀 일치 점검 (독립 성능 검증 아님)")
     parser.add_argument("--audit-csv", type=str, default=None, help="실제 review_log.csv 파일 경로 검증")
     parser.add_argument("--limit", type=int, default=5, help="검증할 기사 개수 (기본값: 5)")
     parser.add_argument("--title", type=str, default=None, help="단일 기사 즉시 검증용 제목")

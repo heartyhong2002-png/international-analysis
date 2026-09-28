@@ -1,11 +1,11 @@
 """
-auto_benchmark_verifier.py — AllSides 공인 벤치마크 + 3대 LLM 합의 + Google Fact Check 자동 연동 검증기
+auto_benchmark_verifier.py — 출처 메타데이터 비교 + 3대 LLM 일치도 기록 + Fact Check 조회 도구
 ========================================================================================================
 
 목적 (AUTO_BENCHMARK_VERIFICATION_HANDOFF.md 참고):
   - AllSides의 공식 RSS에서 이미 [Left/Center/Right]로 공인 분류된 기사를 자동 수집.
-  - `verify_model_consensus.py`의 3대 오픈소스 LLM 앙상블(Mistral/Qwen/EXAONE)로 우리 모델의
-    톤 판정을 도출하고, AllSides 공인 편향과 자동 대조(Match Scoring)하여 벤치마크 일치율 산출.
+  - 3대 모델의 톤 출력을 기록하고 AllSides의 매체 편향 메타데이터를 함께 표시한다.
+    매체 편향과 개별 기사 논조는 다른 개념이므로 이 비교는 성능 검증이나 정확도 측정이 아니다.
   - `verify_factcheck_api.py`의 Google Fact Check 연동으로 IFCN 공인 허위정보 판정을 자동 첨부.
   - 결과를 `reports/verified_intelligence_YYYYMMDD.md` + `data/auto_benchmark_results.csv`로 발행.
 
@@ -215,7 +215,7 @@ def check_factcheck_claims(title: str) -> list[dict]:
 def run_verification(limit: int = 5, with_factcheck: bool = False,
                       xml_bytes: bytes | None = None) -> tuple[list[dict], dict]:
     print("\n" + "=" * 75)
-    print("🌐 [AllSides 공인 벤치마크 자동 검증 파이프라인]")
+    print("🌐 [AllSides 출처 메타데이터 비교 및 모델 일치도 기록]")
     print("=" * 75)
 
     articles = fetch_allsides_feed(limit=limit, xml_bytes=xml_bytes)
@@ -232,7 +232,7 @@ def run_verification(limit: int = 5, with_factcheck: bool = False,
 
         mark = {"MATCH": "✅", "MISMATCH": "❌", "UNSCORABLE": "➖"}[match]
         print(f"   => 3대 모델 합의: [{consensus['status']}] {consensus['consensus_label']} "
-              f"({consensus['winner_count']}/{consensus['total_valid']}) | 벤치마크 대조: {mark} {match}")
+              f"({consensus['winner_count']}/{consensus['total_valid']}) | 메타데이터 비교: {mark} {match}")
 
         factcheck_hits = []
         if with_factcheck:
@@ -261,7 +261,7 @@ def run_verification(limit: int = 5, with_factcheck: bool = False,
         "total": total,
         "scorable": len(scorable),
         "benchmark_match_count": len(matches),
-        "benchmark_accuracy": round(len(matches) / len(scorable) * 100, 1) if scorable else None,
+        "benchmark_match_rate": round(len(matches) / len(scorable) * 100, 1) if scorable else None,
         "unanimous_count": unanimous,
         "majority_count": majority,
         "split_count": split,
@@ -272,11 +272,11 @@ def run_verification(limit: int = 5, with_factcheck: bool = False,
     }
 
     print("\n" + "=" * 75)
-    print("📊 [종합 검증 지표]")
+    print("📊 [비교 기록 지표]")
     print(f"• 총 검증 기사 수: {total}건")
-    print(f"• 외부 공인 편향(AllSides) 일치율: "
-          f"{summary_stats['benchmark_accuracy']}% ({len(matches)}/{len(scorable)}건, 채점불가 {total - len(scorable)}건 제외)"
-          if scorable else "• 외부 공인 편향(AllSides) 일치율: 채점 가능한 기사 없음")
+    print(f"• 출처 메타데이터 패턴 일치율(정확도 아님): "
+          f"{summary_stats['benchmark_match_rate']}% ({len(matches)}/{len(scorable)}건, 채점불가 {total - len(scorable)}건 제외)"
+          if scorable else "• 출처 메타데이터 패턴 비교: 비교 가능한 기사 없음")
     print(f"• 3대 모델 상호 합의율: {summary_stats['consensus_rate']}% "
           f"(만장일치 {summary_stats['unanimous_rate']}%, 다수결 {summary_stats['majority_rate']}%)")
     print("=" * 75)
@@ -299,24 +299,24 @@ def generate_verification_report(results: list[dict], summary: dict, with_factch
     report_path = REPORTS_DIR / f"verified_intelligence_{now.strftime('%Y%m%d')}.md"
     csv_path = DATA_DIR / "auto_benchmark_results.csv"
 
-    accuracy_str = f"{summary['benchmark_accuracy']}%" if summary["benchmark_accuracy"] is not None else "N/A(채점 가능 기사 없음)"
+    match_rate_str = f"{summary['benchmark_match_rate']}%" if summary["benchmark_match_rate"] is not None else "N/A(채점 가능 기사 없음)"
 
-    md = f"""# 🌐 자동화 공인 벤치마크 검증 리포트 (Verified Intelligence Report)
+    md = f"""# 🌐 출처 메타데이터 비교 및 모델 일치도 기록
 
 - **생성 일시**: {now.strftime('%Y-%m-%d %H:%M:%S')}
 - **데이터 출처**: AllSides Official RSS (`allsides.com`)
 - **검증 엔진**: 3대 오픈소스 LLM 앙상블 (`mistral-nemo:latest`, `qwen2.5:7b`, `exaone3.5:7.8b`)
 - **팩트체크 연동**: {"Google Fact Check Tools API (IFCN 공인 네트워크)" if with_factcheck else "미실행 (--with-factcheck 옵션 필요)"}
 
-> ⚠️ **컨트롤타워 주석**: "외부 공인 편향(AllSides) 일치율"은 매체 성향과 개별 기사 논조 간의
-> 느슨한 상관관계 지표이며, 모델 정확도를 보장하는 엄밀한 정답률이 아닙니다. 세부 근거는
+> ⚠️ **해석 제한**: AllSides의 매체 편향과 개별 기사 논조는 다른 개념입니다. 아래 비교는
+> 출처 메타데이터를 함께 살펴보기 위한 보조 기록일 뿐, 모델 정확도·팩트 검증·경보 타당성의 근거가 아닙니다. 세부 근거는
 > `scripts/auto_benchmark_verifier.py` 상단 docstring 참고.
 
 ---
 
-## 1. 📊 일일 검증 종합 지표
+## 1. 📊 일일 비교 기록
 - **총 검증 기사 수**: {summary['total']}건
-- **외부 공인 편향(AllSides) 일치율**: **{accuracy_str}** ({summary['benchmark_match_count']}/{summary['scorable']}건, 채점불가 {summary['total'] - summary['scorable']}건 제외)
+- **출처 메타데이터 패턴 일치율(정확도 아님)**: **{match_rate_str}** ({summary['benchmark_match_count']}/{summary['scorable']}건, 채점불가 {summary['total'] - summary['scorable']}건 제외)
 - **3대 모델 상호 합의율 (Consensus Rate)**: **{summary['consensus_rate']}%** (만장일치 {summary['unanimous_rate']}%, 다수결 {summary['majority_rate']}%)
 """
     if with_factcheck:
@@ -324,8 +324,8 @@ def generate_verification_report(results: list[dict], summary: dict, with_factch
 
     md += "\n---\n\n## 2. 📝 상세 검증 대조 카드\n"
 
-    match_display = {"MATCH": "✅ 일치 (외부 공인 기준 검증 성공)",
-                      "MISMATCH": "❌ 불일치",
+    match_display = {"MATCH": "✅ 메타데이터 패턴 일치 (검증 성공을 의미하지 않음)",
+                      "MISMATCH": "❌ 메타데이터 패턴 불일치",
                       "UNSCORABLE": "➖ 채점 불가 (AllSides 편향 정보 없음)"}
 
     for idx, r in enumerate(results, 1):
@@ -337,7 +337,7 @@ def generate_verification_report(results: list[dict], summary: dict, with_factch
         for model_name in ("mistral-nemo:latest", "qwen2.5:7b", "exaone3.5:7.8b"):
             p = preds_by_model.get(model_name, {})
             md += f"  - `{model_name.split(':')[0]}`: {p.get('label', 'N/A')} (근거: \"{p.get('quote', '')}\")\n"
-        md += f"- **공인 기준 부합 여부**: {match_display[r['match']]}\n"
+        md += f"- **출처 메타데이터 비교**: {match_display[r['match']]}\n"
         if with_factcheck:
             if r["factcheck_hits"]:
                 hit = r["factcheck_hits"][0]
@@ -484,8 +484,8 @@ def _self_test() -> bool:
     print(f"  {'✓' if ok else '✗'} run_verification() 결과 4건 생성 (실제: {len(results)}건)")
     all_ok &= ok
 
-    ok = summary["benchmark_accuracy"] == 100.0
-    print(f"  {'✓' if ok else '✗'} 모의 데이터 전원 MATCH 기대 -> benchmark_accuracy={summary['benchmark_accuracy']}%")
+    ok = summary["benchmark_match_rate"] == 100.0
+    print(f"  {'✓' if ok else '✗'} 모의 데이터 전원 MATCH 기대 -> benchmark_match_rate={summary['benchmark_match_rate']}%")
     all_ok &= ok
 
     # 4) 리포트 생성이 예외 없이 끝나는지 (임시 디렉터리로 저장 경로를 바꿔 실제 파일 생성 검증)
@@ -499,8 +499,8 @@ def _self_test() -> bool:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="AllSides 공인 벤치마크 + 3대 LLM 합의 + Fact Check 자동 검증기")
-    parser.add_argument("--limit", type=int, default=5, help="검증할 AllSides 기사 수 (기본값: 5)")
+    parser = argparse.ArgumentParser(description="AllSides 메타데이터 비교 + 3대 LLM 일치도 기록 + Fact Check 조회")
+    parser.add_argument("--limit", type=int, default=5, help="비교할 AllSides 기사 수 (기본값: 5)")
     parser.add_argument("--with-factcheck", action="store_true", help="Google Fact Check 연동 포함")
     parser.add_argument("--self-test", action="store_true", help="모의 데이터로 파이프라인 무결성 단위 테스트")
     args = parser.parse_args()

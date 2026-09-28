@@ -309,6 +309,288 @@ def create_schema(conn):
             PRIMARY KEY (pair, year, flow, collected_date)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
         """,
+        """
+        CREATE TABLE IF NOT EXISTS scoring_runs (
+            id              BIGINT AUTO_INCREMENT PRIMARY KEY,
+            run_key         CHAR(36) NOT NULL,
+            scoring_version VARCHAR(100) NOT NULL,
+            config_hash     CHAR(64) NULL,
+            window_start    DATETIME NULL,
+            window_end      DATETIME NULL,
+            executed_at     DATETIME NOT NULL,
+            status          VARCHAR(30) NOT NULL DEFAULT 'completed',
+            notes           TEXT,
+            created_at      DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE KEY uq_scoring_runs_run_key (run_key),
+            INDEX idx_scoring_runs_executed (executed_at, status)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS risk_signal_scores (
+            id                  BIGINT AUTO_INCREMENT PRIMARY KEY,
+            scoring_run_id      BIGINT NOT NULL,
+            issue_key           VARCHAR(100) NOT NULL,
+            signal_family       VARCHAR(50) NOT NULL,
+            metric_name         VARCHAR(100) NOT NULL,
+            observed_at         DATETIME NULL,
+            raw_value           DOUBLE NULL,
+            baseline_value      DOUBLE NULL,
+            normalized_score    DECIMAL(8,4) NULL,
+            weight              DECIMAL(8,4) NULL,
+            contribution_score  DECIMAL(10,4) NULL,
+            confidence_score    DECIMAL(5,4) NULL,
+            evidence_count      INT NOT NULL DEFAULT 0,
+            freshness_hours     DECIMAL(10,2) NULL,
+            quality_status      VARCHAR(30) NOT NULL DEFAULT 'usable',
+            evidence_summary    TEXT,
+            created_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE KEY uq_risk_score_component (scoring_run_id, issue_key, signal_family, metric_name),
+            INDEX idx_risk_scores_issue_run (issue_key, scoring_run_id),
+            FOREIGN KEY (scoring_run_id) REFERENCES scoring_runs(id)
+                ON DELETE RESTRICT
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS signal_gap_snapshots (
+            id                    BIGINT AUTO_INCREMENT PRIMARY KEY,
+            scoring_run_id        BIGINT NOT NULL,
+            issue_key             VARCHAR(100) NOT NULL,
+            snapshot_at           DATETIME NOT NULL,
+            official_score        DECIMAL(10,4) NULL,
+            independent_score     DECIMAL(10,4) NULL,
+            public_score          DECIMAL(10,4) NULL,
+            market_score          DECIMAL(10,4) NULL,
+            gap_score             DECIMAL(10,4) NULL,
+            evidence_coverage_pct DECIMAL(5,2) NULL,
+            source_diversity      INT NOT NULL DEFAULT 0,
+            methodology_version   VARCHAR(100) NOT NULL,
+            narrative_summary     TEXT,
+            created_at            DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE KEY uq_signal_gap_snapshot (scoring_run_id, issue_key),
+            INDEX idx_signal_gap_issue_time (issue_key, snapshot_at),
+            FOREIGN KEY (scoring_run_id) REFERENCES scoring_runs(id)
+                ON DELETE RESTRICT
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS alert_events (
+            id                      BIGINT AUTO_INCREMENT PRIMARY KEY,
+            scoring_run_id          BIGINT NOT NULL,
+            signal_gap_snapshot_id  BIGINT NULL,
+            issue_key               VARCHAR(100) NOT NULL,
+            event_type              VARCHAR(30) NOT NULL,
+            alert_level             VARCHAR(20) NOT NULL,
+            previous_alert_level    VARCHAR(20) NULL,
+            lifecycle_status        VARCHAR(30) NOT NULL DEFAULT 'active',
+            triggered_at            DATETIME NOT NULL,
+            effective_until         DATETIME NULL,
+            requires_human_review   BOOLEAN NOT NULL DEFAULT TRUE,
+            decision_rationale      TEXT NOT NULL,
+            created_at              DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE KEY uq_alert_event (scoring_run_id, issue_key, event_type),
+            INDEX idx_alert_events_issue_status (issue_key, lifecycle_status, triggered_at),
+            INDEX idx_alert_events_triggered (triggered_at),
+            FOREIGN KEY (scoring_run_id) REFERENCES scoring_runs(id)
+                ON DELETE RESTRICT,
+            FOREIGN KEY (signal_gap_snapshot_id) REFERENCES signal_gap_snapshots(id)
+                ON DELETE SET NULL
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS alert_event_evidence (
+            id                    BIGINT AUTO_INCREMENT PRIMARY KEY,
+            alert_event_id        BIGINT NOT NULL,
+            risk_signal_score_id  BIGINT NULL,
+            source_table          VARCHAR(100) NULL,
+            source_record_key     VARCHAR(255) NULL,
+            source_url            TEXT NULL,
+            evidence_role         VARCHAR(30) NOT NULL DEFAULT 'supporting',
+            evidence_quote        TEXT NULL,
+            relevance_score       DECIMAL(5,4) NULL,
+            observed_at           DATETIME NULL,
+            content_hash          CHAR(64) NULL,
+            created_at            DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            INDEX idx_alert_evidence_event (alert_event_id),
+            INDEX idx_alert_evidence_source (source_table, source_record_key),
+            FOREIGN KEY (alert_event_id) REFERENCES alert_events(id)
+                ON DELETE CASCADE,
+            FOREIGN KEY (risk_signal_score_id) REFERENCES risk_signal_scores(id)
+                ON DELETE SET NULL
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS alert_validation_audit (
+            id                    BIGINT AUTO_INCREMENT PRIMARY KEY,
+            alert_event_id        BIGINT NULL,
+            issue_key             VARCHAR(100) NOT NULL,
+            audit_type            VARCHAR(30) NOT NULL,
+            verdict               VARCHAR(40) NOT NULL,
+            expected_alert_level  VARCHAR(20) NULL,
+            observed_outcome      VARCHAR(100) NULL,
+            validation_window_start DATETIME NULL,
+            validation_window_end DATETIME NULL,
+            reviewer              VARCHAR(100) NULL,
+            reviewed_at           DATETIME NOT NULL,
+            evidence_sufficiency  VARCHAR(30) NULL,
+            rationale             TEXT NOT NULL,
+            reference_url         TEXT NULL,
+            created_at            DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            INDEX idx_alert_validation_issue_time (issue_key, reviewed_at),
+            INDEX idx_alert_validation_verdict (verdict),
+            FOREIGN KEY (alert_event_id) REFERENCES alert_events(id)
+                ON DELETE SET NULL
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS data_quality_audit (
+            id                  BIGINT AUTO_INCREMENT PRIMARY KEY,
+            action_type         VARCHAR(50) NOT NULL,
+            target_table        VARCHAR(100) NOT NULL,
+            affected_record_ids JSON NULL,
+            affected_row_count  INT NOT NULL DEFAULT 0,
+            reason              TEXT NOT NULL,
+            backup_path         VARCHAR(500) NULL,
+            is_dry_run          BOOLEAN NOT NULL DEFAULT FALSE,
+            executed_by         VARCHAR(100) NOT NULL DEFAULT 'system',
+            executed_at         DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            INDEX idx_quality_audit_target_time (target_table, executed_at)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS analysis_reports (
+            id              INT AUTO_INCREMENT PRIMARY KEY,
+            report_type     VARCHAR(50) NOT NULL,
+            title           VARCHAR(255) NOT NULL,
+            issue_key       VARCHAR(100) NOT NULL DEFAULT 'ALL',
+            intensity       INT DEFAULT NULL,
+            file_path       VARCHAR(500) NOT NULL,
+            content         LONGTEXT NOT NULL,
+            content_hash    CHAR(64) NULL,
+            scoring_run_id  BIGINT NULL,
+            alert_event_id  BIGINT NULL,
+            collected_date  VARCHAR(20) NOT NULL,
+            created_at      DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            updated_at      DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            UNIQUE KEY uk_report_type_issue_date (report_type, issue_key, collected_date),
+            INDEX idx_reports_alert (alert_event_id),
+            FOREIGN KEY (scoring_run_id) REFERENCES scoring_runs(id)
+                ON DELETE SET NULL,
+            FOREIGN KEY (alert_event_id) REFERENCES alert_events(id)
+                ON DELETE SET NULL
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS polls_data (
+            poll_id VARCHAR(100) PRIMARY KEY,
+            source_org VARCHAR(100),
+            region VARCHAR(100),
+            title VARCHAR(300),
+            published VARCHAR(50),
+            link TEXT,
+            survey_topic VARCHAR(200),
+            target_population VARCHAR(200),
+            survey_metrics TEXT,
+            sentiment VARCHAR(50),
+            geopolitical_implication TEXT,
+            summary TEXT
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS reddit_opinion (
+            post_id VARCHAR(100) PRIMARY KEY,
+            subreddit VARCHAR(100),
+            title VARCHAR(300),
+            link TEXT,
+            published VARCHAR(50),
+            content TEXT,
+            sentiment VARCHAR(50),
+            key_controversy_keywords VARCHAR(255),
+            summary_ko TEXT,
+            collected_at VARCHAR(50)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS news_data (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            date VARCHAR(50),
+            title VARCHAR(300),
+            source VARCHAR(100),
+            url TEXT,
+            UNIQUE KEY uniq_news (title(255), date)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS rss_signal_gap (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            region VARCHAR(50),
+            source_type VARCHAR(50),
+            feed_url TEXT,
+            title VARCHAR(300),
+            summary TEXT,
+            link TEXT,
+            published_date VARCHAR(50),
+            scraped_at VARCHAR(50),
+            UNIQUE KEY uniq_link (link(768))
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS telegram_osint (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            region VARCHAR(50),
+            channel_id VARCHAR(100),
+            message_content TEXT,
+            scraped_at VARCHAR(50),
+            UNIQUE KEY uniq_msg (channel_id, scraped_at)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS financial_proxy (
+            ticker VARCHAR(50) PRIMARY KEY,
+            asset_name VARCHAR(100),
+            price_1_month_ago DOUBLE,
+            price_latest DOUBLE,
+            monthly_change_percent DOUBLE,
+            risk_signal VARCHAR(50),
+            updated_at VARCHAR(50)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS us_diplomatic_statements (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            date VARCHAR(50),
+            category VARCHAR(100),
+            title VARCHAR(300),
+            link TEXT,
+            description TEXT,
+            source VARCHAR(100),
+            UNIQUE KEY uniq_us_dip (link(768))
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS us_macro_financial_indicators (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            date VARCHAR(50),
+            value DOUBLE,
+            series_id VARCHAR(50),
+            indicator_name VARCHAR(200),
+            category VARCHAR(100),
+            UNIQUE KEY uniq_us_mac (series_id, date)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS us_presidential_actions (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            date VARCHAR(50),
+            type VARCHAR(100),
+            title VARCHAR(300),
+            executive_order_number VARCHAR(50),
+            abstract TEXT,
+            html_url TEXT,
+            pdf_url TEXT,
+            source VARCHAR(100),
+            UNIQUE KEY uniq_us_pres (html_url(768))
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        """
     ]
     for stmt in statements:
         cur.execute(stmt)
@@ -321,6 +603,16 @@ def ensure_schema_migrations(conn):
     이미 생성되어 있는 기존 테이블에 신규 컬럼이 없을 경우 ALTER TABLE로 안전하게 추가합니다.
     """
     cur = conn.cursor()
+
+    def add_column_if_missing(table, column, definition):
+        cur.execute("""
+            SELECT COUNT(*) FROM information_schema.columns
+            WHERE table_schema = %s AND table_name = %s AND column_name = %s
+        """, (MYSQL_DATABASE, table, column))
+        if cur.fetchone()[0] == 0:
+            cur.execute(f"ALTER TABLE `{table}` ADD COLUMN `{column}` {definition}")
+            conn.commit()
+            print(f"  ✓ {table}.{column} 컬럼 추가 완료")
     # 1. gov_announcements.source_type
     cur.execute("""
         SELECT COUNT(*) FROM information_schema.columns
@@ -336,6 +628,24 @@ def ensure_schema_migrations(conn):
             print("  🔒 gov_announcements에 source_type 컬럼 추가 완료")
         except mysql.connector.Error as e:
             print(f"  ⚠ gov_announcements.source_type 추가 실패: {e}")
+
+    # analysis_reports는 경보 판단 자체가 아니라 산출물입니다. 다만 어떤 점수
+    # 실행/경보에서 나왔는지는 추적할 수 있어야 증거 묶음으로 활용할 수 있습니다.
+    cur.execute("""
+        SELECT COUNT(*) FROM information_schema.tables
+        WHERE table_schema = %s AND table_name = 'analysis_reports'
+    """, (MYSQL_DATABASE,))
+    if cur.fetchone()[0]:
+        try:
+            add_column_if_missing("analysis_reports", "content_hash", "CHAR(64) NULL AFTER content")
+            add_column_if_missing("analysis_reports", "scoring_run_id", "BIGINT NULL AFTER content_hash")
+            add_column_if_missing("analysis_reports", "alert_event_id", "BIGINT NULL AFTER scoring_run_id")
+            add_column_if_missing(
+                "analysis_reports", "updated_at",
+                "DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER created_at",
+            )
+        except mysql.connector.Error as e:
+            print(f"  ⚠ analysis_reports 증거 연결 컬럼 추가 실패: {e}")
     cur.close()
 
 
@@ -752,6 +1062,144 @@ def load_expert_analysis_extractions(conn):
     print(f"  ✓ expert_analysis_extractions: {total}행 적재 ({len(expert_files)}개 파일)")
 
 
+
+def load_polls_data(conn):
+    import pandas as pd
+    cur = conn.cursor()
+    files = sorted(glob.glob(f"{_SCRIPT_DIR}/../data/polls/*.csv"))
+    total = 0
+    for path in files:
+        df = pd.read_csv(path)
+        for _, row in df.iterrows():
+            cur.execute("""
+                REPLACE INTO polls_data
+                    (poll_id, source_org, region, title, published, link, survey_topic, target_population, survey_metrics, sentiment, geopolitical_implication, summary)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, (str(row.get('poll_id')), clean(row.get('source_org')), clean(row.get('region')), clean(row.get('title'))[:300] if row.get('title') else None, clean(row.get('published')), clean(row.get('link')), clean(row.get('survey_topic')), clean(row.get('target_population')), clean(row.get('survey_metrics')), clean(row.get('sentiment')), clean(row.get('geopolitical_implication')), clean(row.get('summary'))))
+            total += 1
+    conn.commit()
+    cur.close()
+    print(f"  ✓ polls_data: {total}행 적재 ({len(files)}개 파일)")
+
+def load_reddit_opinion(conn):
+    import pandas as pd
+    cur = conn.cursor()
+    files = sorted(glob.glob(f"{_SCRIPT_DIR}/../data/reddit_signals/*.csv"))
+    total = 0
+    for path in files:
+        df = pd.read_csv(path)
+        for _, row in df.iterrows():
+            cur.execute("""
+                REPLACE INTO reddit_opinion
+                    (post_id, subreddit, title, link, published, content, sentiment, key_controversy_keywords, summary_ko, collected_at)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, (str(row.get('post_id')), clean(row.get('subreddit')), clean(row.get('title'))[:300] if row.get('title') else None, clean(row.get('link')), clean(row.get('published')), clean(row.get('content')), clean(row.get('sentiment')), clean(row.get('key_controversy_keywords')), clean(row.get('summary_ko')), clean(row.get('collected_at'))))
+            total += 1
+    conn.commit()
+    cur.close()
+    print(f"  ✓ reddit_opinion: {total}행 적재 ({len(files)}개 파일)")
+
+def load_news_data(conn):
+    import pandas as pd
+    cur = conn.cursor()
+    files = sorted(glob.glob(f"{_SCRIPT_DIR}/../data/news_data*.csv"))
+    total = 0
+    for path in files:
+        df = pd.read_csv(path)
+        for _, row in df.iterrows():
+            title = clean(row.get('Title'))
+            if not title: continue
+            cur.execute("""
+                INSERT IGNORE INTO news_data
+                    (date, title, source, url)
+                VALUES (%s, %s, %s, %s)
+            """, (clean(row.get('Date')), title[:300], clean(row.get('Source')), clean(row.get('URL'))))
+            total += 1
+    conn.commit()
+    cur.close()
+    print(f"  ✓ news_data: {total}행 적재 ({len(files)}개 파일)")
+
+def load_signal_gap(conn):
+    import pandas as pd
+    cur = conn.cursor()
+    files = sorted(glob.glob(f"{_SCRIPT_DIR}/../data/signal_gap/rss_signal_gap*.csv"))
+    total_rss = 0
+    for path in files:
+        df = pd.read_csv(path)
+        for _, row in df.iterrows():
+            cur.execute("""
+                INSERT IGNORE INTO rss_signal_gap
+                    (region, source_type, feed_url, title, summary, link, published_date, scraped_at)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            """, (clean(row.get('Region')), clean(row.get('Source_Type')), clean(row.get('Feed_URL')), clean(row.get('Title'))[:300] if row.get('Title') else None, clean(row.get('Summary')), clean(row.get('Link')), clean(row.get('Published_Date')), clean(row.get('Scraped_At'))))
+            total_rss += 1
+    files = sorted(glob.glob(f"{_SCRIPT_DIR}/../data/signal_gap/telegram_osint*.csv"))
+    total_tg = 0
+    for path in files:
+        df = pd.read_csv(path)
+        for _, row in df.iterrows():
+            cur.execute("""
+                INSERT IGNORE INTO telegram_osint
+                    (region, channel_id, message_content, scraped_at)
+                VALUES (%s, %s, %s, %s)
+            """, (clean(row.get('Region')), clean(row.get('Channel_ID')), clean(row.get('Message_Content')), clean(row.get('Scraped_At'))))
+            total_tg += 1
+    files = sorted(glob.glob(f"{_SCRIPT_DIR}/../data/signal_gap/financial_proxy*.csv"))
+    total_fin = 0
+    for path in files:
+        df = pd.read_csv(path)
+        for _, row in df.iterrows():
+            cur.execute("""
+                REPLACE INTO financial_proxy
+                    (ticker, asset_name, price_1_month_ago, price_latest, monthly_change_percent, risk_signal, updated_at)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+            """, (clean(row.get('Ticker')), clean(row.get('Asset_Name')), clean(row.get('Price_1_Month_Ago')), clean(row.get('Price_Latest')), clean(row.get('Monthly_Change_Percent')), clean(row.get('Risk_Signal')), clean(row.get('Updated_At'))))
+            total_fin += 1
+    conn.commit()
+    cur.close()
+    print(f"  ✓ signal_gap: RSS {total_rss}행, Telegram {total_tg}행, Financial {total_fin}행 적재")
+
+def load_us_signals(conn):
+    import pandas as pd
+    cur = conn.cursor()
+    files = sorted(glob.glob(f"{_SCRIPT_DIR}/../data/us_signals/us_diplomatic_statements*.csv"))
+    t1 = 0
+    for path in files:
+        df = pd.read_csv(path)
+        for _, row in df.iterrows():
+            cur.execute("""
+                INSERT IGNORE INTO us_diplomatic_statements
+                    (date, category, title, link, description, source)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """, (clean(row.get('date')), clean(row.get('category')), clean(row.get('title'))[:300] if row.get('title') else None, clean(row.get('link')), clean(row.get('description')), clean(row.get('source'))))
+            t1 += 1
+    files = sorted(glob.glob(f"{_SCRIPT_DIR}/../data/us_signals/us_macro_financial*.csv"))
+    t2 = 0
+    for path in files:
+        df = pd.read_csv(path)
+        for _, row in df.iterrows():
+            cur.execute("""
+                INSERT IGNORE INTO us_macro_financial_indicators
+                    (date, value, series_id, indicator_name, category)
+                VALUES (%s, %s, %s, %s, %s)
+            """, (clean(row.get('date')), clean(row.get('value')), clean(row.get('series_id')), clean(row.get('indicator_name')), clean(row.get('category'))))
+            t2 += 1
+    files = sorted(glob.glob(f"{_SCRIPT_DIR}/../data/us_signals/us_presidential_actions*.csv"))
+    t3 = 0
+    for path in files:
+        df = pd.read_csv(path)
+        for _, row in df.iterrows():
+            cur.execute("""
+                INSERT IGNORE INTO us_presidential_actions
+                    (date, type, title, executive_order_number, abstract, html_url, pdf_url, source)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            """, (clean(row.get('date')), clean(row.get('type')), clean(row.get('title'))[:300] if row.get('title') else None, str(clean(row.get('executive_order_number')))[:50], clean(row.get('abstract')), clean(row.get('html_url')), clean(row.get('pdf_url')), clean(row.get('source'))))
+            t3 += 1
+    conn.commit()
+    cur.close()
+    print(f"  ✓ us_signals: Dip {t1}행, Mac {t2}행, Act {t3}행 적재")
+
+
 def create_analytics_views(conn):
     """
     scripts/create_views.sql을 읽어서 포트폴리오용 고급 분석 뷰 4종을 생성/갱신합니다.
@@ -941,6 +1389,14 @@ def main():
     load_imf_trade(conn)
     load_tone_review_logs(conn)
     load_expert_analysis_extractions(conn)
+
+    print("\n[신규 데이터 자동 적재 — Polls, Reddit, News, Signal Gap, US Signals]")
+    load_polls_data(conn)
+    load_reddit_opinion(conn)
+    load_news_data(conn)
+    load_signal_gap(conn)
+    load_us_signals(conn)
+
 
     print("\n[분석 뷰(Views) 생성]")
     create_analytics_views(conn)

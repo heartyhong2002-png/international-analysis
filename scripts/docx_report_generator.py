@@ -240,7 +240,7 @@ class OfficialIntelligenceDocxGenerator:
                 f"Wikipedia Pageviews (대중적 관심도): '{meta['query_kw']}' 일일 조회수 {meta['views']}, 7일 대비 변동성 {meta['volatility']} 관측.",
                 f"Guardian 정부 공식 발표 (외교부/국무부/해당국 피드): {meta['gov_matches']} 매칭 확인.",
                 f"3개 AI 모델 합의도 (Mistral-7B, Qwen2.5-7B, EXAONE-3.5): 미디어 프레이밍 '{meta['consensus_tone']}' ({meta['consensus_rate']} 일치).",
-                "Sentinel IFCN 검증 팩트체크: 공식 발표 및 주요 언론 피드 대상 허위·왜곡 정보 0건 확인.",
+                "검증 상태: 확인 필요. 승인된 조기경보 스냅샷과 사람 검수 상태가 연결되기 전에는 Alert Level을 확정하지 않음.",
             ]
             enclosures = [
                 "1.  U Official_Announcements_Matching_Audit.csv",
@@ -299,7 +299,7 @@ class OfficialIntelligenceDocxGenerator:
                 f"An open source query of Wikipedia Pageviews revealed {meta['views']} daily queries for '{meta['query_kw']}' with 7-day DoD volatility of {meta['volatility']}.",
                 f"A Guardian query of Government Announcements revealed {meta['gov_matches']} directly matched to issue parameters.",
                 f"A 3-Model Consensus query (Mistral-7B, Qwen2.5-7B, EXAONE-3.5) revealed framing classification of '{meta['consensus_tone']}' with {meta['consensus_rate']} agreement.",
-                "A Sentinel query of IFCN Verified Fact Checks revealed zero debunked claims across official feeds.",
+                "Validation status: confirmation required. Alert Level remains unassigned until the approved early-warning snapshot and human-review status are attached.",
             ]
             enclosures = [
                 "1.  U Official_Announcements_Matching_Audit.csv",
