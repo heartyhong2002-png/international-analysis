@@ -2,6 +2,8 @@
 
 Use these prompts when opening separate AI sessions. Every session must read `PROJECT_CONTEXT.md` first and treat prediction or chatbot material in `docs/history/` and `docs/archive/` as retired or parked context, not the current plan.
 
+When Codex, ANTIGRAVITY, or another AI tool is working in parallel, the session must also read `AGENT_SYNC.md` before editing files and update its Active Work Board for any non-trivial task.
+
 ## 1. Control Tower
 
 ```text

@@ -8,6 +8,7 @@ Keep only high-level entrypoints and active coordination files in the repository
 
 - `README.md`: external overview
 - `PROJECT_CONTEXT.md`: first file for new AI sessions
+- `AGENT_SYNC.md`: shared coordination board for Codex, ANTIGRAVITY, and other AI tools
 - `project-handoff.md`: long coordination log and session history
 - `DATABASE_SETUP.md`: compatibility pointer to `docs/current/DATABASE_SETUP.md`
 - `prototype_all_in_one.py`: central prototype used by current scripts

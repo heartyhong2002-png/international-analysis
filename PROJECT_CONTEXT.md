@@ -26,16 +26,17 @@
 
 1. `README.md`
 2. `PROJECT_CONTEXT.md`
-3. `docs/current/PROJECT_PLAN.md`
-4. `docs/current/VALIDATION_PLAN.md`
-5. `docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md` when explaining the project externally
-6. `docs/current/DATA_COLLECTION_GUIDE.md`
-7. `docs/current/LLM_SYSTEM_SUMMARY.md`
-8. `docs/current/DATABASE_SETUP.md` when database context is needed
-9. `docs/SESSION_PROMPTS.md` when starting role-specific AI sessions
-10. `docs/REPOSITORY_STRUCTURE.md` when moving or classifying files
-11. `project-handoff.md` only when detailed history or coordination context is needed
-12. `docs/history/PROJECT_EVOLUTION_TIMELINE.md` when the pivot story is needed
+3. `AGENT_SYNC.md` when multiple AI tools such as Codex and ANTIGRAVITY are working in parallel
+4. `docs/current/PROJECT_PLAN.md`
+5. `docs/current/VALIDATION_PLAN.md`
+6. `docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md` when explaining the project externally
+7. `docs/current/DATA_COLLECTION_GUIDE.md`
+8. `docs/current/LLM_SYSTEM_SUMMARY.md`
+9. `docs/current/DATABASE_SETUP.md` when database context is needed
+10. `docs/SESSION_PROMPTS.md` when starting role-specific AI sessions
+11. `docs/REPOSITORY_STRUCTURE.md` when moving or classifying files
+12. `project-handoff.md` only when detailed history or coordination context is needed
+13. `docs/history/PROJECT_EVOLUTION_TIMELINE.md` when the pivot story is needed
 
 ## Current Planning Documents
 
@@ -102,3 +103,5 @@ git push origin main
 Keep the repository root small. Root-level files should be entrypoints or active project-wide coordination files only. Detailed current docs go under `docs/current/`, retired plans under `docs/history/` or `docs/archive/`, role handoffs under `docs/handoff/`, validation evidence under `docs/evidence/`, and temporary scripts or scratch outputs under `scratch/`.
 
 Do not move executable scripts from `scripts/` unless you also update every caller and verify the pipeline, because many scripts assume repository-relative paths.
+
+When Codex and ANTIGRAVITY or another AI tool work in parallel, use `AGENT_SYNC.md` as the shared task board before editing files.
