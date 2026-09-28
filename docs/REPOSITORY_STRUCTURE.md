@@ -35,6 +35,8 @@ If a document describes what the project is now, put it here.
 
 Use `docs/SESSION_PROMPTS.md` for reusable role prompts.
 
+Use `docs/NOTION_PROJECT_BOARD_TEMPLATE.md` when creating a human-facing Notion project board. Keep operational AI coordination in `AGENT_SYNC.md`.
+
 Use `docs/handoff/` for completed session handoff reports, such as DB-track, LLM/dashboard-track, or comprehensive handoff notes. Short message artifacts from other agents go under `docs/handoff/agent_messages/`.
 
 ## History and Archive
