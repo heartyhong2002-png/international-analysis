@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-27T00:22:56.106581",
+  "updated_at": "2026-09-28T00:27:19.728085",
   "macro_and_finance": {
     "Consumer_Price_Index": {
       "series_id": "CPIAUCSL",
@@ -113,7 +113,7 @@
     }
   },
   "recent_presidential_actions_count": 30,
-  "recent_diplomatic_statements_count": 47,
+  "recent_diplomatic_statements_count": 38,
   "recent_top_presidential_actions": [
     {
       "date": "2026-09-23",
@@ -168,6 +168,14 @@
   ],
   "recent_top_diplomatic_statements": [
     {
+      "date": "2026-09-27",
+      "category": "Press_Releases",
+      "title": "Turkmenistan Independence Day",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/09/turkmenistan-independence-day-2/",
+      "description": "<p>Marco Rubio, Secretary of State</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-cont",
+      "source": "US_Department_of_State"
+    },
+    {
       "date": "2026-09-25",
       "category": "Press_Releases",
       "title": "Deputy Secretary of State Christopher Landau at a Trade Over Aid Deals Showcase",
@@ -196,14 +204,6 @@
       "category": "Press_Releases",
       "title": "United States and Argentina Launch Andes-Atlantic Corridor Fact Sheet",
       "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/09/united-states-and-argentina-launch-andes-atlantic-corridor-fact-sheet/",
-      "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
-      "source": "US_Department_of_State"
-    },
-    {
-      "date": "2026-09-23",
-      "category": "Press_Releases",
-      "title": "United States Pledges Additional Life-Saving Health Assistance in Response to Ebola Outbreak",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/09/united-states-pledges-additional-life-saving-health-assistance-in-response-to-ebola-outbreak/",
       "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
       "source": "US_Department_of_State"
     }
