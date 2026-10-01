@@ -1,6 +1,6 @@
 # 국제정세 분석 (International Affairs Analysis)
 
-**성격:** 교과목/졸업 과제물
+**성격:** 취업용 개인 포트폴리오 프로젝트
 **핵심 주제:** 저사양 로컬 환경(16GB RAM, GPU 없음)에서, 오픈소스 다국어 LLM의 주관적 판단(논조 분류·주장 추출)을 어떻게 신뢰 가능하게 만들 것인가. 현재 목표는 국제정세 사건을 단정적으로 예측하는 것이 아니라, 관측 가능한 데이터 신호를 바탕으로 공급망·지정학 리스크의 조기경보를 제공하는 것이다.
 **최종 결과물:** `output/dashboard/index.html` — 인터랙티브 HTML 대시보드
 
@@ -101,7 +101,7 @@ international-analysis/
 - `docs/current/DATABASE_SETUP.md` — MySQL 스키마
 - `docs/current/PROJECT_PLAN.md` — 현재 조기경보 시스템 기준의 최신 프로젝트 계획
 - `docs/current/VALIDATION_PLAN.md` — 예측이 아닌 조기경보 기준 검증 계획
-- `docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md` — 교수·면접관 대상 발표 흐름, 핵심 메시지, 질문 대응
+- `docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md` — 채용 담당자·면접관 대상 발표 흐름, 핵심 메시지, 질문 대응
 - `docs/current/DATA_COLLECTION_GUIDE.md` — 조기경보 신호 데이터 수집 기준
 - `docs/history/PROJECT_EVOLUTION_TIMELINE.md` — 예측 → 챗봇 검토 → 조기경보 피벗의 의사결정 타임라인
 - `docs/archive/legacy_guides/DATA_COLLECTION_GUIDE_legacy.md` — 기존 수집 운영 매뉴얼
