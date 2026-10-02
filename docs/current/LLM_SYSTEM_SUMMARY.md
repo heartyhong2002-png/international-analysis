@@ -220,11 +220,11 @@ flowchart TD
 권위주의 및 통제 국가의 공식 발표(TASS, 신화통신 등)는 정권 홍보로 왜곡되어 있으므로, 다음 3각 크로스 수집 데이터를 대조하여 괴리율을 산출합니다:
 - **정부 공식 입장**: 국영 통신사(TASS, 신화통신, IRNA) 발표 논조 (Tone_gov)
 - **현지 독립/비판 시각**: 해외 망명 독립 언론(Meduza, Raseef22) 및 검열 삭제 아카이브(China Digital Times CDT) 논조 (Tone_indep)
-- **대중 기저 심리**: 검열 프리 해외 커뮤니티(Reddit r/China_irl, r/NewIran) 감성 지표 (Sentiment_public)
+- **공개 정보환경 신호**: Google Trends, 현지 공개 포럼, Bluesky, 공개 Telegram, Reddit 보조 신호의 검색·표현·확산 변화 (Public Information Signals)
 
 \text{Signal Gap Discrepancy} = |\text{Tone}_{\text{gov}} - \text{Tone}_{\text{indep}}| \times \text{Volume Weight}
 
-👉 정부는 '공급망과 경제가 안정적이다'라고 발표하지만 독립 언론과 현지 여론에서 '원자재 수출 통제 및 물류 위기' 신호가 급증할 경우, 괴리율이 급상승하여 **'공급망 이상 징후(Red Alert)'**를 기업 의사결정권자에게 조기 경보합니다.
+👉 정부는 '공급망과 경제가 안정적이다'라고 발표하지만 독립 언론·GDELT Cloud 사건·해협/항만 센서·현지 공개 여론에서 '원자재 수출 통제 및 물류 위기' 신호가 함께 증가할 경우, 신호 괴리와 근거 범위를 계산해 **Watch/Warning/Critical 후보**로 표시합니다. 단일 출처만으로 경보를 확정하지 않고, 사람 검수와 교차검증 상태를 함께 제시합니다.
 
 ### 3) 최종 산출물 체계
 1. **수출 전략 임원용 일일 브리핑**: 6대 로컬 LLM이 매일 아침 자동 발행하는 공문서 스타일 PDF (pdf_report_generator.py)

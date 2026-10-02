@@ -1,7 +1,7 @@
 # 국제정세 분석 (International Affairs Analysis)
 
 **성격:** 취업용 개인 포트폴리오 프로젝트
-**핵심 주제:** 저사양 로컬 환경(16GB RAM, GPU 없음)에서, 오픈소스 다국어 LLM의 주관적 판단(논조 분류·주장 추출)을 어떻게 신뢰 가능하게 만들 것인가. 현재 목표는 국제정세 사건을 단정적으로 예측하는 것이 아니라, 관측 가능한 데이터 신호를 바탕으로 공급망·지정학 리스크의 조기경보를 제공하는 것이다.
+**핵심 주제:** 저사양 로컬 환경(16GB RAM, GPU 없음)에서, 오픈소스 다국어 LLM의 주관적 판단(논조 분류·주장 추출)을 어떻게 신뢰 가능하게 만들 것인가. 현재 목표는 국제정세 사건을 단정적으로 예측하는 것이 아니라, 뉴스·정부 발표·GDELT Cloud 사건·해협/항만·Google Trends·현지 공개 여론·금융/무역 지표를 교차검증해 공급망·지정학 리스크의 조기경보를 제공하는 것이다.
 **최종 결과물:** `output/dashboard/index.html` — 인터랙티브 HTML 대시보드
 
 ---
@@ -24,7 +24,7 @@
 
 ## 1. 이 시스템이 하는 일
 
-RSS 뉴스, 정부 공식 발표, 현지언론·전문가분석, Reddit 여론, 각종 여론조사·경제지표를
+RSS 뉴스, 정부 공식 발표, GDELT Cloud 사건, 해협·항만 및 운임/보험료 센서, Google Trends, 현지 공개 포럼·Bluesky·공개 Telegram, 각종 여론조사·경제지표를
 수집해서, 언어별로 라우팅된 로컬 LLM(Ollama)이 논조(우호적/중립적/비판적)와 핵심 주장을
 뽑아낸다. 이 결과를 이용해 "앞으로 반드시 어떤 사건이 발생한다"고 예측하지 않고,
 이슈별 위험 신호가 평소보다 강해졌는지, 공식 발표와 독립·현지 신호 사이의 괴리가 커졌는지,
@@ -67,8 +67,8 @@ python scripts/run_pipeline.py    # 수집 → 태깅 → LLM 분석 → DB 적�
 python scripts/generate_dashboard_v2.py
 ```
 
-개별 단계(정부 발표 수집, 현지언론/전문가분석 수집 등)를 따로 돌리는 방법은
-`docs/current/DATA_COLLECTION_GUIDE.md`에 있다.
+개별 단계(정부 발표 수집, GDELT Cloud 사건 수집, 해협·항만 센서, 현지 공개 여론 수집 등)를 따로 돌리는 방법은
+`docs/current/DATA_COLLECTION_GUIDE.md`와 `docs/current/DATA_COLLECTION_ROADMAP.md`에 있다.
 
 ## 4. 프로젝트 구조 (실제 기준)
 
@@ -81,6 +81,12 @@ international-analysis/
 │   └── data/                    # gov_announcements, issues 등 일부 수집 원본
 ├── tests/                       # DB 연결·언어 모델 회귀 확인용 테스트 스크립트
 ├── data/                        # 파이프라인이 실제로 쓰는 최신 수집 데이터 (review_log.csv 포함)
+│   ├── gdelt_cloud/              # GDELT Cloud 사건·공급망 watch 프로브
+│   ├── maritime_chokepoints/     # 해협·항만·해상운임/보험료 프록시
+│   ├── event_cross_verification/ # 복수 센서 교차검증 결과
+│   ├── google_trends/            # 위험 키워드 검색 급등 신호
+│   ├── local_opinions/           # 현지 공개 포럼·Bluesky 등 온라인 표현
+│   └── reddit_localized/         # Reddit 보조 신호
 ├── output/dashboard/            # 최종 결과물
 ├── reports/                     # 증거 자료용 심층 리포트·PDF·검증 리포트
 ├── docs/current/                 # 현재 조기경보 방향의 최신 계획 문서
@@ -103,19 +109,21 @@ international-analysis/
 - `docs/current/VALIDATION_PLAN.md` — 예측이 아닌 조기경보 기준 검증 계획
 - `docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md` — 채용 담당자·면접관 대상 발표 흐름, 핵심 메시지, 질문 대응
 - `docs/current/DATA_COLLECTION_GUIDE.md` — 조기경보 신호 데이터 수집 기준
+- `docs/current/DATA_COLLECTION_ROADMAP.md` — 출처 레지스트리·센서 확장·검증 순서
+- `docs/current/DATA_COLLECTION_SESSION_PROMPT.md` — 데이터 수집 세션 전용 인수인계 프롬프트
 - `docs/history/PROJECT_EVOLUTION_TIMELINE.md` — 예측 → 챗봇 검토 → 조기경보 피벗의 의사결정 타임라인
 - `docs/archive/legacy_guides/DATA_COLLECTION_GUIDE_legacy.md` — 기존 수집 운영 매뉴얼
 - `docs/archive/` — 예전 기획서(`PLANNING.md`), 목적이 달랐던 이슈 정의 문서(`CONTINENTAL_ISSUES_ANALYSIS.md`), 역할이 끝난 인수인계 문서 5종, 예전 README의 26개 항목 전체 개발일지(`DEVELOPMENT_LOG_README_HISTORY.md`), 과거 `Claude outputs/` 산출물
 - `docs/archive/parked_chatbot_pivot/` — 2026-09-20에 검토했던 "챗봇 서비스 전환" 방향 (프로토타입 코드 포함). 결과물을 대시보드로 확정하면서 보류함. 나중에 재검토할 수 있게 삭제하지 않고 남겨둠.
 
-## 6. 알려진 한계 (2026-09-20 기준)
+## 6. 알려진 한계 (2026-10-02 기준)
 
-1. 정부 공식 발표 수집(`official_statement`)에서 이스라엘·이란·사우디는 외교부 자체 RSS가 없어 웹 크롤링이 필요한데 아직 미착수.
-2. 남미 3개 이슈, 아태 5개 이슈(대만해협 등)는 현지언론/전문가분석 전용 소스를 아직 못 찾음.
-3. **[해소됨]** 준기님의 C드라이브 정리(81GB 여유 공간 확보)로 다국어 통합 모델(qwen2.5 몰아주기)을 전면 철회하고 원래의 **6대 권역별 네이티브 전담 모델(`yandex`, `falcon3`, `elyza`, `qwen2.5`, `mistral-nemo`, `exaone3.5`)** 풀로 100% 복구 완료됨.
-4. **[데이터 수집 확장 대기]** 권위주의/통제 국가(러시아·중국·중동·이란)의 공식 발표 왜곡을 극복하기 위해, 해외 망명 독립 언론(Meduza, Raseef22), 검열 삭제 아카이브(CDT), 익명 커뮤니티(r/China_irl, r/NewIran)를 연동하는 3자 교차 수집 파이프라인은 향후 '데이터셋 다운로드' 섹션에서 별도 구축 예정.
-5. `venv/`와 `.venv/` 가상환경이 동시에 존재함(패키지 버전 불일치 이력 있음) — 하나로 정리 필요.
-6. 2차 검수(사람 표본 검수)는 아직 소규모 수동 진행 — 이슈가 21개로 늘면서 무작위 표본 추출 자동화가 필요해짐.
+1. GDELT Cloud, 해협·항만, Google Trends, 현지 공개 여론 센서는 독립 프로브로 확장 중이며, 단일 센서만으로 Alert Level을 올리지 않는다.
+2. GDELT Cloud 결과의 `complete=false`는 부분 수집이므로 전체 사건 목록으로 해석하지 않는다.
+3. Reddit은 HTTP 429 차단과 노이즈가 있어 주 센서가 아니라 보조 신호로 둔다.
+4. 공개 Telegram·현지 포럼·Bluesky는 국민 전체 여론이 아니라 공개 온라인 정보환경 신호로만 해석한다.
+5. 해협·항만·운임·보험료 데이터는 공급망 충격의 강한 프록시지만, AIS만으로 화물량이나 사건 원인을 확정하지 않는다.
+6. 2차 검수(사람 표본 검수)는 아직 소규모 수동 진행 — 이슈와 센서가 늘면서 무작위 표본 추출과 교차검증 로그 자동화가 필요하다.
 
 ---
 

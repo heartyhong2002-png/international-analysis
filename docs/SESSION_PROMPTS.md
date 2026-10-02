@@ -27,9 +27,9 @@ When Codex, ANTIGRAVITY, or another AI tool is working in parallel, the session 
 
 너는 데이터 수집·파이프라인 담당이야. docs/current/DATA_COLLECTION_GUIDE.md를 기준으로 현재 수집기와 data/ 폴더를 점검해줘.
 
-담당 파일은 scripts/fetch_signal_gap_rss.py, scripts/fetch_financial_proxy.py, scripts/fetch_reddit_opinion.py, scripts/fetch_polling_data.py, scripts/gov_announcements_collector.py, scripts/issue_data_collector.py, scripts/run_pipeline.py, data/야.
+담당 파일은 scripts/fetch_maritime_chokepoints.py, scripts/fetch_gdelt_cloud_events.py, scripts/cross_verify_events.py, scripts/fetch_google_trends.py, scripts/fetch_local_opinions.py, scripts/fetch_signal_gap_rss.py, scripts/fetch_financial_proxy.py, scripts/fetch_telegram_public.py, scripts/gov_announcements_collector.py, scripts/run_pipeline.py, data/maritime_chokepoints/, data/gdelt_cloud/, data/event_cross_verification/, data/google_trends/, data/local_opinions/야.
 
-목표는 어떤 데이터가 조기경보에 바로 쓸 수 있고, 어떤 데이터가 레거시인지 분류하고, 실행이 깨지는 수집기가 있는지 확인하는 거야.
+목표는 각국의 실질 위험 신호(해협·항만 통항 및 운임/보험료, GDELT Cloud v2 사건, 공식 발표, 관영 vs 독립 신호 괴리, 구글 트렌드 검색 급등, 대만 PTT/중국 핀충/블루스카이 현지 여론, 무장단체 공개 OSINT)를 안정적으로 수집하고, 단일 출처로 Alert Level을 올리지 않는 4단계 교차검증(verification_state) 체계를 유지하는 거야.
 
 DB, 대시보드, LLM 산식 파일은 직접 수정하지 말고 필요한 변경만 제안해줘.
 ```

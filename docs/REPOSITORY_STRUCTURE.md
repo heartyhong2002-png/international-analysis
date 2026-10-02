@@ -24,6 +24,8 @@ Use `docs/current/` for the active early-warning project direction.
 - `PROJECT_PLAN.md`
 - `VALIDATION_PLAN.md`
 - `DATA_COLLECTION_GUIDE.md`
+- `DATA_COLLECTION_ROADMAP.md`
+- `DATA_COLLECTION_SESSION_PROMPT.md`
 - `LLM_SYSTEM_SUMMARY.md`
 - `DATABASE_SETUP.md`
 - `PRESENTATION_PORTFOLIO_NARRATIVE.md`
@@ -65,6 +67,12 @@ Use `data/` for current pipeline inputs and outputs. Subfolders should reflect s
 
 - `data/signal_gap/`
 - `data/reddit_signals/`
+- `data/reddit_localized/`
+- `data/google_trends/`
+- `data/local_opinions/`
+- `data/gdelt_cloud/`
+- `data/maritime_chokepoints/`
+- `data/event_cross_verification/`
 - `data/polls/`
 - `data/us_signals/`
 

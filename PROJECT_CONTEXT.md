@@ -4,7 +4,7 @@
 
 ## Current Identity
 
-이 저장소의 현재 목표는 국제정세 사건을 단정적으로 예측하는 것이 아니다. 현재 목표는 뉴스, 정부 공식 발표, 현지 독립 언론, Reddit 여론, 여론조사, 금융·무역 지표를 종합해 공급망 및 지정학 리스크의 조기경보를 제공하는 것이다.
+이 저장소의 현재 목표는 국제정세 사건을 단정적으로 예측하는 것이 아니다. 현재 목표는 뉴스, 정부 공식 발표, 현지 독립 언론, GDELT Cloud 사건, 해협·항만 및 운임/보험료 센서, Google Trends, 현지 공개 여론, 여론조사, 금융·무역 지표를 종합해 공급망 및 지정학 리스크의 조기경보를 제공하는 것이다.
 
 핵심 산출물은 `output/dashboard/index.html` 대시보드다. Markdown, PDF, Word 보고서와 MySQL 뷰는 대시보드를 뒷받침하는 증거 자료로 본다.
 
@@ -33,17 +33,21 @@
 5. `docs/current/VALIDATION_PLAN.md`
 6. `docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md` when explaining the project externally
 7. `docs/current/DATA_COLLECTION_GUIDE.md`
-8. `docs/current/LLM_SYSTEM_SUMMARY.md`
-9. `docs/current/DATABASE_SETUP.md` when database context is needed
-10. `docs/SESSION_PROMPTS.md` when starting role-specific AI sessions
-11. `docs/REPOSITORY_STRUCTURE.md` when moving or classifying files
-12. `project-handoff.md` only when detailed history or coordination context is needed
-13. `docs/history/PROJECT_EVOLUTION_TIMELINE.md` when the pivot story is needed
+8. `docs/current/DATA_COLLECTION_ROADMAP.md` when planning sensor expansion
+9. `docs/current/DATA_COLLECTION_SESSION_PROMPT.md` when starting a data-collection session
+10. `docs/current/LLM_SYSTEM_SUMMARY.md`
+11. `docs/current/DATABASE_SETUP.md` when database context is needed
+12. `docs/SESSION_PROMPTS.md` when starting role-specific AI sessions
+13. `docs/REPOSITORY_STRUCTURE.md` when moving or classifying files
+14. `project-handoff.md` only when detailed history or coordination context is needed
+15. `docs/history/PROJECT_EVOLUTION_TIMELINE.md` when the pivot story is needed
 
 ## Current Planning Documents
 
 - `docs/current/PROJECT_PLAN.md`: current early-warning project plan
 - `docs/current/DATA_COLLECTION_GUIDE.md`: data collection strategy for warning signals
+- `docs/current/DATA_COLLECTION_ROADMAP.md`: staged data-source expansion and source-registry plan
+- `docs/current/DATA_COLLECTION_SESSION_PROMPT.md`: handoff prompt for data-collection sessions
 - `docs/current/VALIDATION_PLAN.md`: validation plan for warning quality, not prediction accuracy
 - `docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md`: presentation and portfolio narrative for external readers
 - `docs/current/LLM_SYSTEM_SUMMARY.md`: LLM routing and analysis architecture
@@ -62,10 +66,10 @@
 
 Most existing code and data should not be discarded. They are reused with a different interpretation.
 
-- News, RSS, and review logs become warning-signal inputs.
+- News, RSS, GDELT Cloud events, and review logs become warning-signal inputs.
 - Government announcements become official-position signals.
-- Independent/local media and Reddit become non-official or public-sentiment signals.
-- Financial and trade data become supply-chain proxy signals.
+- Independent/local media, public Telegram, Bluesky, local forums, Google Trends, and Reddit become non-official public information-environment signals.
+- Maritime chokepoint, port, freight/insurance, financial, and trade data become supply-chain proxy signals.
 - LLM tone classification becomes framing and risk-signal extraction.
 - Model consensus and human review become trust and validation layers.
 

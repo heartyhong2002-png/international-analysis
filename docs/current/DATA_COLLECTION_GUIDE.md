@@ -8,38 +8,52 @@
 
 | 데이터 유형 | 역할 | 대표 파일·스크립트 |
 |---|---|---|
+| 해협·항만 & 운임 센서 | 4대 길목(홍해/호르무즈/대만/말라카) 우회 지연, 전쟁보험료, 유조선(FRO)·컨테이너선(ZIM)·에너지 프록시 | `scripts/fetch_maritime_chokepoints.py`, `data/maritime_chokepoints/` |
+| 복수 계통 교차검증기 | GDELT 사건 + 해협/운임 + 로컬 여론 + 텔레그램 성명 간 4단계 `verification_state` 산출 | `scripts/cross_verify_events.py`, `data/event_cross_verification/` |
 | 뉴스 RSS | 이슈별 보도량과 논조 변화 탐지 | `prototype_all_in_one.py`, `data/review_log.csv` |
+| GDELT Cloud Events | 다국어 뉴스에서 구조화된 사건·행위자·장소·사건일시 신호를 빠르게 탐지 | `scripts/fetch_gdelt_cloud_events.py`, `data/gdelt_cloud/` |
 | 정부 공식 발표 | 공식 입장과 정책 신호 확인 | `scripts/gov_announcements_collector.py` |
 | 현지 독립 언론 | 통제 국가의 공식 발표와 다른 신호 확인 | `scripts/fetch_signal_gap_rss.py` |
-| Reddit·커뮤니티 | 보조 정성 신호와 현지 체감 반응 확인 | `scripts/fetch_reddit_opinion.py`, `scripts/parse_local_reddit.py` |
-| 여론조사 | 중기 여론 압력과 정책 지지 변화 확인 | `scripts/fetch_polling_data.py` |
-| 금융 프록시 | 시장이 반응하는 공급망·자본 이동 신호 확인 | `scripts/fetch_financial_proxy.py` |
+| 구글 트렌드 행동지표 | 위험 키워드(징집, 대피, 평화협상 등) 검색 급등 측정 | `scripts/fetch_google_trends.py`, `data/google_trends/` |
+| 현지 로컬 포럼·BBS | 대만 PTT, 중국 핀충(品葱), 블루스카이 등 차단 없는 현지 민심 탐지 | `scripts/fetch_local_opinions.py`, `data/local_opinions/` |
+| 텔레그램 OSINT | 공개 채널 기반 현장성 있는 위험 징후 및 군사 속보 확인 | `scripts/fetch_telegram_public.py`, `data/signal_gap/` |
+| 금융 프록시 | 시장이 반응하는 공급망·자본 이동 신호 확인 (ASHR, 위안화, 금) | `scripts/fetch_financial_proxy.py` |
 | 무역·관세·거시지표 | 공급망 리스크의 실물 지표 확인 | `scripts/fetch_customs_korea_china.py`, `scripts/fetch_us_macro_signals.py` |
-| 텔레그램 OSINT | 공개 채널 기반 현장성 있는 위험 징후 확인 | `scripts/fetch_telegram_public.py` |
+| 여론조사 | 중기 여론 압력과 정책 지지 변화 확인 (Pew, Ipsos) | `scripts/fetch_polling_data.py` |
+| Reddit·커뮤니티 | 보조 정성 신호 (단, HTTP 429 차단 잦아 대안 센서 우선) | `scripts/fetch_reddit_localized.py` (보조 실행용) |
 
 ## 3. 조기경보 판단에 쓰는 방식
 
 각 데이터는 다음 질문에 답하기 위해 사용한다.
 
 - 공식 발표는 안정적이라고 말하는가, 긴장을 인정하는가?
-- 독립 언론이나 현지 커뮤니티는 같은 이슈를 다르게 보고 있는가?
+- 독립 언론이나 현지 커뮤니티(PTT, 핀충, 텔레그램)는 같은 이슈를 다르게 보고 있는가?
+- 구글 트렌드에서 징집, 대피, 평화협상 등의 검색어가 최근 급등(SURGE)했는가?
 - 보도량과 비판적 논조가 최근 며칠 사이 증가했는가?
+- GDELT Cloud의 사건·행위자·장소 신호가 공식·현지 언론 및 공급망 센서와 시간상으로 겹치는가?
 - 금융·무역 지표가 텍스트 신호와 같은 방향으로 움직이는가?
 - 경보를 낼 만큼 근거 출처가 충분한가?
 
-## 4. 데이터 재사용 판단
+## 4. 데이터 재사용 및 센서 전환 판단
 
 기존 수집 데이터는 새 방향과 충돌하지 않는다. 예측 접근에서는 이 데이터가 미래 사건을 맞히기 위한 입력이었다면, 조기경보 접근에서는 위험 신호를 관측하고 설명하기 위한 근거가 된다.
 
-다만 레딧과 커뮤니티 데이터는 노이즈가 크므로 주 지표가 아니라 보조 정성 지표로 둔다. 수동 CSV는 핵심 자동 파이프라인이 아니라 MVP 검증용 기준 데이터나 예시 데이터로 사용한다.
+다만 레딧(Reddit)은 Atom 피드 호출 시 HTTP 429 Too Many Requests 차단이 빈번하고 노이즈가 많으므로 주 파이프라인에서 제외하고, **구글 트렌드(실질 행동 검색량)**와 **대만 PTT, 중국 핀충, 블루스카이 API, 텔레그램 OSINT** 같은 안정적인 대안 센서망으로 실질 여론을 수집한다.
 
 ## 5. 수집 우선순위
 
-1. 정부 발표와 뉴스 RSS
-2. 현지 독립 언론과 신호 괴리율 RSS
-3. 금융·무역 프록시
-4. 여론조사와 Reddit 보조 신호
-5. 텔레그램 OSINT와 기타 공개 데이터셋
+1. 해협·항만 AIS 프로필 및 해상 운임·에너지 프록시 (공급망 직접 충격 1차 센서)
+2. 정부 공식 발표 및 뉴스 RSS
+3. GDELT Cloud Events 및 복수 계통 시계열 교차검증 (4단계 `verification_state` 산출)
+4. 현지 독립 언론 및 권위주의 신호 괴리율 RSS
+5. 구글 트렌드 위험 행동 지표 (Google Trends)
+6. 텔레그램 OSINT 및 로컬 포럼 (대만 PTT, 중국 핀충, 블루스카이)
+7. 금융·무역 대체 프록시 (ASHR, 환율, 금, 세관 통계)
+8. 글로벌 실증 여론조사 (Pew, Ipsos) 및 레딧 보조 신호
+
+GDELT Cloud는 빠른 다국어 사건 탐지 센서이지 사건의 최종 진실 판정기가 아니다. `data/gdelt_cloud/`에는 원시 `events`와 수집 영수증을 함께 저장한다. `complete=false`인 결과는 페이지 예산이 끝났거나 추가 커서가 남은 부분 수집이므로 전체 사건 목록으로 해석하지 않는다. API 응답의 사건일시·관측일시·출처 URL·행위자·장소를 보존하고, AIS·항만·선사 발표·공식/현지 언론과 교차검증하기 전에는 Alert Level을 단독으로 올리지 않는다.
+
+GDELT Cloud 사용 시 API 키는 `GDELT_CLOUD_API_KEY` 환경변수에서만 읽고, 키·인증 헤더·응답 원문에 포함된 비밀값은 로그나 저장 파일에 기록하지 않는다. 현재 수집기는 기존 `run_pipeline.py`에 연결하지 않은 독립 프로브이며, 먼저 국가·해협·공급망 이슈별 쿼리와 검증 상태 규칙을 확정한 뒤 통합한다.
 
 ## 6. 경보용 데이터 품질 기준
 
