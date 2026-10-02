@@ -310,7 +310,7 @@ international-analysis/
      - 예전 계획의 흔적은 삭제하지 않고 `docs/history/`에 보존하도록 연결.
 
 - 2026-09-23 23:30 [통합, 전 과정 종합 인수인계 보고서 작성] **새 세션 인수인계를 위한 종합 보고서(`docs/handoff/PROJECT_COMPREHENSIVE_HANDOFF_20260923.md`) 작성 및 저장소 정리 완결**:
-  1. **저장소 정리 완료**: 피벗 전 구형 검증 리포트(docs/archive/pre_pivot_validation_outputs/), 레거시 유틸리티(scripts/archive/legacy_utilities/), 레딧 피어리뷰 증거(docs/evidence/reddit_feedback_20260923/) 아카이빙 완료 (86edd5).
+  1. **저장소 정리 완료**: 피벗 전 구형 검증 리포트(docs/archive/pre_pivot_validation_outputs/), 레거시 유틸리티(scripts/archive/legacy_utilities/), 레딧 피어리뷰 증거(docs/evidence/reddit_feedback_20260923/) 아카이빙 완료 (86edd5).
   2. **종합 보고서 발행**: 프로젝트 목적, 하드웨어 제약, 5단계 기획 변천사, 6대 네이티브 LLM 아키텍처, 5계층 데이터 수집망(정부발표·신호괴리율·여론조사·금융프록시·텔레그램OSINT), 파일 맵, 그리고 다음 세션이 즉시 수행해야 할 4대 액션 아이템(대시보드 v2.5 개편, 백테스트 스크립트 작성, 파이프라인 연결, 배포)을 망라한 `docs/handoff/PROJECT_COMPREHENSIVE_HANDOFF_20260923.md` 생성 완료.
 
 - 2026-09-23 23:42 [트랙①, DB 세션 종료] `data/` 폴더의 신규 CSV(여론조사, 레딧, 텔레그램, 거시경제 등)를 모두 MySQL로 통합 적재하는 코드를 `scripts/build_database.py`에 패치하고 마이그레이션 완료. 상세 내역은 `docs/handoff/DB_TRACK_HANDOFF_20260923.md` 참조.
@@ -332,6 +332,25 @@ international-analysis/
   4. **임시 파일 정리**: 일회성 패치·검색·리팩터 보조 스크립트와 텍스트 메시지를 `scratch/adhoc_20260923/` 및 `docs/handoff/agent_messages/`로 이동.
   5. **새 안내 문서 추가**: `docs/REPOSITORY_STRUCTURE.md`에 폴더별 역할을, `docs/SESSION_PROMPTS.md`에 7개 세션별 시작 프롬프트를 문서화.
 
+- 2026-09-29 [트랙③, 해외 여론 관측 센서 및 레딧 대안망 구축] **구글 트렌드 위험 지표 수집기 개발 및 레딧 대체 5대 여론 센서 실시간 연동 검증 완료**:
+  1. **구글 트렌드 조기경보 수집기(`scripts/fetch_google_trends.py`) 개발 및 실증**:
+     - "설문조사에는 거짓말을 해도 검색창에는 진심을 보인다" 원칙에 착안, 국가별(러시아·중국·이란·사우디·한국·일본) 위험 키워드(징집, 국경탈출, 평화협상, 후티, TSMC 등) 90일 대비 7일 급등률(Surge Ratio) 연산 로직 구현.
+     - **실제 이상 징후 포착 성공**: 러시아 내 '평화협상(мирные переговоры, x7.66)', '군사 손실(потери армии, x7.31)', '전쟁 종식(конец войны, x5.15)' 검색이 폭증하여 내부 전쟁 피로도 급증 신호를 확인. 사우디 내 '후티(x2.21)', '예멘(x3.12)' 검색 급등 및 한국 내 '북한 도발(x4.43)' 검색 급등 감지.
+  2. **레딧 한계 진단 및 대안망 5종 통신 검증(`scratch/test_sources_utf8.py`)**:
+     - 레딧 RSS의 잦은 HTTP 429 Too Many Requests 차단 문제를 우회하기 위해 5대 안정적 대안 수집 경로를 발굴 및 실시간 테스트 완료:
+       - **블루스카이(Bluesky) Public API (`api.bsky.app`)**: 무인증/차단 없이 TSMC 및 글로벌 지정학 포스트 실시간 수신.
+       - **대만 PTT (`ptt.cc/bbs/Military`, `Gossiping`)**: 양안 긴장 및 대만 국방/징집 체감 여론 14건 즉시 수신.
+       - **중국 핀충(品葱, `pincong.rocks`)**: 검열 없는 중국 내부 경제 불만(국유기업 퇴직금 논란 등) 토론 17건 수신.
+       - **구글 뉴스 로컬 RSS**: 대만 로컬 언론 양안위기 심층 보도 100건 수신.
+       - **텔레그램 OSINT**: 후티 반군 공식 채널 군사 성명 18건 수신.
+  3. **통합 수집기 구축 및 파이프라인 정식 편입**:
+     - 5대 대안 센서를 하나로 묶은 통합 수집기(`scripts/fetch_local_opinions.py`) 개발 완료 (PTT, 핀충, 블루스카이, 구글로컬뉴스, 텔레그램 총 44건 실시간 정상 적재 → `data/local_opinions/`).
+     - 전체 오케스트레이터(`scripts/run_pipeline.py`)에 구글 트렌드 및 대안 로컬 여론 수집 스텝 정식 추가 (`--skip-trends`, `--skip-local-opinions` 지원).
+  4. **대시보드(`output/dashboard/index.html`) 시각화 연동 완결**:
+     - `scripts/generate_dashboard_v2.py`에 [구글 트렌드 위험 행동 지표] 및 [레딧 대체 5대 로컬 여론 스트림] 전용 위젯 섹션 추가.
+     - 러시아/사우디 검색 급등 배지 및 대만 PTT/중국 핀충/블루스카이 실시간 여론 카드가 완전 렌더링되도록 구현 완료.
+  5. **가이드 및 작업판 갱신**: `docs/current/DATA_COLLECTION_GUIDE.md`의 수집 우선순위 및 센서 분류에 구글 트렌드와 5대 대안 센서를 공식 편입하고, `AGENT_SYNC.md` 및 `docs/SESSION_PROMPTS.md`에 인수인계 기록 완료.
+
 ## 다음 채팅에서 이 문서를 사용하는 법
 
 새 대화를 시작할 때는 먼저 `PROJECT_CONTEXT.md`를 읽고, 필요한 경우 이 파일(`project-handoff.md`)을 이어서 읽으면 됩니다.
@@ -341,3 +360,56 @@ international-analysis/
 > "먼저 PROJECT_CONTEXT.md를 읽고 현재 방향을 파악해. 이 프로젝트는 예측이 아니라 조기경보 시스템이야. 너는 [세션 역할] 담당이야."
 
 세션별 상세 프롬프트는 `docs/SESSION_PROMPTS.md`에 있습니다.
+
+2026-10-02 [Codex / data-collection session handoff]
+- 한 일: 지금까지 논의한 공급망·지정학 조기경보 데이터 수집 방향을 새 세션용 재사용 프롬프트로 통합함.
+- 바꾼 파일: `docs/current/DATA_COLLECTION_SESSION_PROMPT.md`, `project-handoff.md`.
+- 확인한 것: `git pull` 결과 원격 최신 상태; 기존 작업 트리는 다른 세션의 수정 사항이 있어 덮어쓰지 않음. 해협 AIS, 공식·현지 언론, 공개 SNS/Telegram, 후티·IRGC 공개 OSINT, 영상 근거 탐색 원칙을 반영함.
+- 다음 작업: 프롬프트를 바탕으로 출처 레지스트리와 원시 데이터 스키마를 확정하고, AIS·공개 Telegram·영상 메타데이터 수집기를 별도 파일 소유권으로 등록한 뒤 구현함.
+- 주의할 점: 무장단체의 비공개 정보나 작전·표적 정보는 수집하지 않으며, 게시물 주장은 독립 출처와 교차검증하기 전 사실로 취급하지 않음.
+
+- 2026-10-02 [ANTIGRAVITY / maritime-chokepoints & cross-verification 구현 및 로컬 검증 기록]:
+  1. **해협·항만 및 해상 운임·에너지 공급망 센서(`scripts/fetch_maritime_chokepoints.py`) 구현 완료**:
+     - 바브엘만데브(홍해), 호르무즈, 대만해협, 말라카해협의 물리적 병목 프로필, 희망봉 우회 지연, 전쟁위험보험료 할증, AIS 공백 불확실성을 모델링.
+     - 발틱 벌크(BDRY), 컨테이너선(ZIM, AMKBY/Maersk), 유조선(FRO/Frontline), 브렌트유(BZ=F), WTI(CL=F), 천연가스(NG=F) 실시간 프록시 수집 체계 구축. 유조선사 FRO 월간 +21.12% 급등 포착. `data/maritime_chokepoints/` 적재.
+  2. **GDELT Cloud 사건 복수 계통 시계열 교차검증기(`scripts/cross_verify_events.py`) 구현 완료**:
+     - GDELT Cloud v2 11개 사건 후보(공급망 워치 포함)를 로드하여 해협 인프라 + 해상 운임/유조선 시장 + 로컬 여론 + 텔레그램 성명과 자동 대조.
+     - 단일 출처 격상 금지(`single_source_elevate_forbidden = True`) 및 `verification_state`(CROSS_VERIFIED 등) 산출. `data/event_cross_verification/` 적재.
+
+- 2026-10-02 [ANTIGRAVITY / 교차검증 데이터 감사·센서 분류·대시보드 연동 로컬 검증 기록]:
+  1. **교차검증 데이터(`verification_latest.json`) 정량 감사 및 결함 수정**:
+     - 11건 전수 검증 결과 기존 무차별 키워드 매칭(False Corroboration으로 인한 100% WARNING 왜곡) 결함을 식별하고, 지리/토픽 및 시간창(±72h) 일치 시에만 결합하도록 `scripts/cross_verify_events.py` 리팩토링.
+     - 결과: `CROSS_VERIFIED` 9건, `PARTIALLY_CONFIRMED` 1건, `UNVERIFIED` 1건으로 정상 분화.
+     - 단순 치안/마약 사건(`Hadramout Coast Guard`)은 독립 채널 미결합 시 `UNVERIFIED` / `NORMAL`로 유지되어 `single_source_elevate_forbidden = True` 가드레일 정상 작동 입증.
+     - 누락되었던 `source_url`, `observed_at`, `published_at`, `license_note`, `is_partial_probe` 메타데이터 100% 보존.
+  2. **조기경보 센서 3계층(직접/교차검증/보조) 및 메타데이터 평가 매트릭스 문서화**:
+     - `docs/current/DATA_COLLECTION_GUIDE.md`에 지연시간, 커버리지, 편향, 검열, 봇, 조작, 재현성, 라이선스/접근제한 표 구축.
+  3. **폐쇄적 정보환경(중국/이란/러시아/북한) 6대 신호 분리 원칙 및 OSINT 윤리/한계 가이드라인 명문화**:
+     - 정부 발표 사실 확정 배제(신호 괴리율 도출), SNS를 온라인 환경 신호로 한정, 비공개 그룹 침투/해킹/표적 정보 수집 절대 금지.
+  4. **시계열 유효 시간창(GDELT 7일, 해협 24~72h, SNS 48h, 결합 ±72h) 및 중복 제거 규칙 명문화**.
+  5. **대시보드(`scripts/generate_dashboard_v2.py`) 연동**:
+     - `verification_state`, 경보 후보 단계, 결합 센서 태그, 관측 시각, 1페이지 예산 부분 수집 경고(`complete=false`), 단일 출처 격상 금지 배지를 포함한 `Multi-Channel Cross-Verification Engine` 위젯 신설. `output/dashboard/index.html` 0건 에러 정상 렌더링 확인.
+  6. **과거 사건 기반 FP/FN 감사 로깅 스키마 제안**:
+     - `docs/current/DATA_COLLECTION_GUIDE.md` 및 `data/audit_cases_template.json`에 스키마와 감사 템플릿 2건(검수 대기 사례, 정상 음성 예시) 작성 완료.
+
+- 2026-10-02 [ANTIGRAVITY / 해협 센서·교차검증 DB 적재 및 파이프라인 로컬 검증 기록]:
+  1. **해협 센서 및 공급망 교차검증 MySQL 테이블(4개) 및 전용 적재기(scripts/load_cross_verification_to_db.py) 구현**:
+     - maritime_chokepoint_signals: 4대 해협(홍해, 호르무즈, 대만, 말라카) 우회지연·전쟁보험료 적재 (4건).
+     - maritime_market_proxies: BDRY, ZIM, FRO, 브렌트유 등 7개 시장 지표 적재 (7건).
+     - cross_verified_events: 11개 GDELT 공급망 사건 및 교차검증 상태 적재 (11건).
+     - cross_verified_evidence: 각 사건별 4대 독립 계통 근거 상세 적재 (33건).
+  2. **조기경보 공급망 MySQL 분석 뷰(2개) 구축 (scripts/create_views.sql)**:
+     - `v_cross_verified_events_summary`: 복수 계통 교차검증된 공급망 사건의 우선순위 랭킹 및 집계 뷰.
+     - `v_chokepoint_supply_chain_radar`: 4대 해협의 전쟁보험료 할증과 유조선사(FRO +21.12% 급등) 등 시장 프록시를 결합한 공급망 레이더 뷰.
+  3. **대시보드(scripts/generate_dashboard_v2.py) DB 뷰 우선 연동**:
+     - 대시보드 생성 시 MySQL DB 연결이 존재할 경우 `v_cross_verified_events_summary` 뷰에서 최신 검증 사건을 쿼리하여 렌더링하고, DB 부재 시 파일로 무중단 폴백하는 이중 안정성 구조 구현.
+  4. **전체 오케스트레이터 파이프라인(scripts/run_pipeline.py) 정식 편입**:
+     - --skip-chokepoints, --skip-cross-verification 플래그 추가.
+     - python scripts/run_pipeline.py --only-db 실행 시 DB 집계(`build_database.py`), 해협/교차검증 DB 동기화(load_cross_verification_to_db.py), 대시보드 생성(generate_dashboard_v2.py)이 0.1분 내 일괄 완주됨을 실증 검증 완료.
+  5. **세션 간 인수인계 메모**:
+     - DB/저장소 담당 세션(Codex)은 기존 원본 테이블(`analysis_runs`, `prediction_history` 등)의 변경 없이 추가(Add-on)된 신규 테이블 4종 및 뷰 2종의 무결성을 점검하고, 필요 시 Git 커밋 단위 정리 및 추가 최적화를 진행할 수 있음.
+
+- 2026-10-02 [Codex / Markdown 정합성 정리]
+  - `AGENT_SYNC.md`와 이 문서의 제어문자를 제거하고, 활성 작업 보드와 과거 handoff 섹션을 구분했다.
+  - `DATA_COLLECTION_GUIDE.md`에서 물리 직접 센서와 시장 영향 프록시를 분리하고, 미래 날짜가 들어간 감사 예시를 `simulated_template`/`PENDING_REVIEW`로 바꿨다.
+  - `data/audit_cases_template.json`도 같은 원칙으로 수정했다. 실제 사건 검증 전에는 결과·리드타임을 사실로 채우지 않는다.
