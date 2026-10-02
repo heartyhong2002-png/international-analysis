@@ -71,15 +71,90 @@ DB, 대시보드, LLM 산식 파일은 직접 수정하지 말고 필요한 변�
 ```text
 먼저 PROJECT_CONTEXT.md를 읽고 현재 프로젝트 방향을 파악해줘.
 
-이 프로젝트의 최종 산출물은 조기경보 대시보드야. 예전의 예측 대시보드나 단순 분석 리포트가 아니라, Alert Level, 위험 신호, 근거 출처, 검증 상태를 보여줘야 해.
+이 프로젝트의 최종 산출물은 `output/dashboard/index.html` 조기경보 대시보드야. 예전의 예측 대시보드나 단순 정세 분석 리포트가 아니라, 이슈별 Alert Level, 위험 신호, 근거 출처, 신호 괴리, 검증 상태를 한 화면에서 보여주는 포트폴리오용 프로토타입으로 봐야 해.
 
-너는 대시보드·보고서 담당이야. docs/current/PROJECT_PLAN.md, docs/current/VALIDATION_PLAN.md, README.md를 읽고 최종 사용자 화면과 제출용 산출물을 정리해줘.
+너는 대시보드·보고서 담당이야. 먼저 아래 문서를 읽고 현재 방향을 파악해줘.
 
-담당 파일은 scripts/generate_dashboard_v2.py, output/dashboard/, scripts/generate_reports.py, scripts/pdf_report_generator.py, scripts/docx_report_generator.py, reports/야.
+- README.md
+- PROJECT_CONTEXT.md
+- docs/current/PROJECT_PLAN.md
+- docs/current/VALIDATION_PLAN.md
+- docs/current/DATABASE_SETUP.md
+- docs/current/PORTFOLIO_AND_REPORT_GUIDE.md
+- reports/README.md
+- reports/EARLY_WARNING_DELIVERABLES.md
 
-화면과 보고서에서는 “예측”보다 “조기경보”, “징후”, “근거”, “확인 필요”, “경보 단계” 표현을 써줘.
+담당 파일은 다음이야.
 
-LLM 산식이나 DB 스키마가 필요하면 직접 임의로 만들지 말고 해당 세션에 필요한 요구사항으로 정리해줘.
+- 대시보드: scripts/generate_dashboard_v2.py, output/dashboard/
+- 보고서 생성: scripts/generate_reports.py, scripts/pdf_report_generator.py, scripts/docx_report_generator.py
+- 보고서 저장/연결: scripts/report_db_saver.py
+- 보고서 산출물: reports/, reports/issues/
+- 보고서·대시보드 명세 문서: reports/EARLY_WARNING_DELIVERABLES.md, docs/current/PORTFOLIO_AND_REPORT_GUIDE.md
+
+작업 목표는 다음이야.
+
+1. 대시보드를 브라우저에서 바로 볼 수 있는 포트폴리오 프로토타입으로 정리한다.
+2. 첫 화면에서 “이 프로젝트가 무엇을 하는지”가 10초 안에 이해되게 만든다.
+3. Alert Level을 단순 기사량이나 톤 비율로 추정하지 않는다. 승인된 DB 스냅샷이나 분석 결과가 없으면 `확인 필요`로 표시한다.
+4. 이슈 카드에는 가능한 한 `Alert Level`, `위험 신호 요약`, `신호 괴리`, `근거 수`, `검증 상태`, `원문/출처`를 함께 보여준다.
+5. 보고서는 “미래 예측 보고서”가 아니라 “조기경보 근거 보고서” 또는 “Evidence-Based Early Warning Dossier”로 표현한다.
+6. PDF·Word·Markdown 보고서에는 현재 Alert Level, 위험 신호, 반대 신호, 근거 목록, 검증 상태, 한계와 추가 확인 필요 사항을 포함한다.
+7. 대시보드와 보고서의 문구가 README 및 docs/current 문서의 최신 방향과 충돌하지 않게 유지한다.
+
+화면과 보고서에서 피해야 할 표현:
+
+- “미래를 예측한다”
+- “발생 가능성이 확정됐다”
+- “100% 정확”
+- “환각 0%”
+- “완벽 검증”
+- “객관적 사실로 확정”
+- 단일 출처만 보고 `Critical` 또는 `Warning`을 확정하는 표현
+
+대신 사용할 표현:
+
+- “조기경보”
+- “위험 신호”
+- “관측된 징후”
+- “근거 기반 판단”
+- “확인 필요”
+- “경보 후보”
+- “검증 상태”
+- “출처 간 신호 괴리”
+- “사람 검수 필요”
+
+대시보드 실행·검증 기준:
+
+1. `python scripts/generate_dashboard_v2.py`로 HTML이 정상 생성되어야 한다.
+2. 가능하면 `python scripts/generate_dashboard_v2.py --open`으로 실제 브라우저 표시까지 확인한다.
+3. 생성 후 `output/dashboard/index.html`과 `output/dashboard/dashboard_latest.html`이 갱신되었는지 확인한다.
+4. 화면에 예전 예측 중심 표현이나 오래된 Reddit 중심 설명이 남아 있으면 최신 조기경보 표현으로 바꾼다.
+5. DB 연결이 없거나 일부 뷰가 없을 때도 화면이 완전히 깨지지 않고, “확인 필요” 또는 “데이터 없음”으로 안전하게 표시되게 한다.
+
+보고서 실행·검증 기준:
+
+1. 보고서 파일은 `reports/issues/`, `reports/issues/pdf/`, `reports/issues/docx/`를 기준으로 확인한다.
+2. 보고서 제목과 요약이 “정세 예측”이 아니라 “조기경보 근거” 또는 “정세 위험 신호 평가”로 읽히는지 점검한다.
+3. PDF·Word 보고서는 대시보드를 보완하는 증거자료이며, 최종 산출물은 여전히 대시보드라는 점을 문서와 README 기준에 맞춘다.
+4. 보고서가 DB `analysis_reports`에 저장되는 경우, 파일 경로·보고서 유형·이슈 키·본문 해시가 유지되는지 확인한다.
+
+절대 하지 말아야 할 것:
+
+- LLM 산식, Risk Signal Score 기준, Alert Level 임계값을 대시보드 세션에서 임의로 새로 만들지 않는다.
+- DB 스키마를 대시보드 편의만으로 임의 변경하지 않는다.
+- 수집기나 데이터 파이프라인의 의미를 바꾸지 않는다.
+- 오래된 예측/챗봇 자료를 현재 계획인 것처럼 복구하지 않는다.
+- Git에 올릴 때 `git add .`로 다른 세션의 데이터·보고서·코드 변경분을 한꺼번에 섞지 않는다.
+
+다른 세션에 요청해야 하는 것:
+
+- Alert Level 산식이나 점수 기준이 필요하면 LLM Analysis and Alert Formula 세션에 요청한다.
+- 대시보드가 읽을 SQL 뷰나 증거 테이블이 필요하면 Database and Evidence Store 세션에 요청한다.
+- 화면에 들어갈 새 데이터 센서가 필요하면 Data Collection and Pipeline 세션에 요청한다.
+- 검증 문구나 오탐·미탐 기준이 애매하면 Validation and QA 세션에 요청한다.
+
+우선순위는 “새 기능 추가”보다 “현재 대시보드와 보고서가 포트폴리오에서 오해 없이 보이는 것”이야. 먼저 현재 화면과 보고서의 오래된 표현, 깨진 링크, 근거 부족 표시, 첫 화면 메시지를 점검하고 개선안을 제시해줘.
 ```
 
 ## 6. Validation and QA
