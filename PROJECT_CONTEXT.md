@@ -6,6 +6,10 @@
 
 이 저장소의 현재 목표는 국제정세 사건을 단정적으로 예측하는 것이 아니다. 현재 목표는 뉴스, 정부 공식 발표, 현지 독립 언론, GDELT Cloud 사건, 해협·항만 및 운임/보험료 센서, Google Trends, 현지 공개 여론, 여론조사, 금융·무역 지표를 종합해 공급망 및 지정학 리스크의 조기경보를 제공하는 것이다.
 
+이 프로젝트는 언론사를 대체하거나 기사처럼 사실을 발행하는 서비스가 아니다. 공식 발표와 언론 보도는 기본 배경과 검증 기준으로 사용하되, 차별점은 언론이 아직 기사화하지 않았거나 단일 사건으로 정리하지 않은 공개 신호를 구조화하는 데 있다. 검색량 급등, 해협·항만 병목, 운임·보험료 변화, GDELT 사건 확산, 현지 공개 포럼·Telegram·Bluesky 표현 변화, 공식 발표와 독립 보도 간 괴리를 모아 “확정 사실”이 아니라 “추가 확인할 위험 징후”로 제시한다.
+
+따라서 현재 정체성은 뉴스 자동화가 아니라 **OSINT 기반 리스크 인텔리전스 프로토타입**이다. 비전통 신호는 항상 출처, 수집 시각, 검증 상태, 한계와 함께 표시해야 하며, 단일 출처만으로 Alert Level을 확정하지 않는다.
+
 핵심 산출물은 `output/dashboard/index.html` 대시보드다. Markdown, PDF, Word 보고서와 MySQL 뷰는 대시보드를 뒷받침하는 증거 자료로 본다.
 
 ## Important Direction Change
@@ -84,6 +88,11 @@ Use these terms in new docs and reports.
 - evidence coverage
 - human review
 - validation by backtest and review
+- OSINT-based risk intelligence
+- non-traditional public signals
+- verification state
+- information gap
+- corroborated signal
 
 Avoid these terms unless discussing retired history.
 
@@ -91,6 +100,9 @@ Avoid these terms unless discussing retired history.
 - future event prediction
 - guaranteed forecast
 - fully automated geopolitical prediction
+- AI news outlet
+- breaking-news automation
+- confirmed fact from unverified data
 
 ## Git and Documentation Notes
 
