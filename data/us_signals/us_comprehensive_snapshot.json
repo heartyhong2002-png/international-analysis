@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-01T01:10:13.445984",
+  "updated_at": "2026-10-02T01:28:49.438890",
   "macro_and_finance": {
     "Consumer_Price_Index": {
       "series_id": "CPIAUCSL",
@@ -24,30 +24,30 @@
     "Federal_Funds_Rate": {
       "series_id": "FEDFUNDS",
       "category": "Economy",
-      "value": 3.63,
+      "value": 3.75,
       "prev_value": 3.63,
-      "change": 0.0,
-      "date": "2026-08-01",
+      "change": 0.12,
+      "date": "2026-09-01",
       "description": "연방기금 유효금리 (기준금리)",
       "unit": "%"
     },
     "Yield_Curve_Spread_10Y2Y": {
       "series_id": "T10Y2Y",
       "category": "Finance",
-      "value": 0.41,
-      "prev_value": 0.37,
-      "change": 0.04,
-      "date": "2026-09-30",
+      "value": 0.46,
+      "prev_value": 0.41,
+      "change": 0.05,
+      "date": "2026-10-01",
       "description": "장단기 금리차 (10년-2년, 경기침체 선행지표)",
       "unit": "%"
     },
     "Treasury_Yield_10Y": {
       "series_id": "DGS10",
       "category": "Finance",
-      "value": 5.26,
-      "prev_value": 5.24,
-      "change": 0.02,
-      "date": "2026-09-29",
+      "value": 5.29,
+      "prev_value": 5.26,
+      "change": 0.03,
+      "date": "2026-09-30",
       "description": "미 국채 10년물 금리",
       "unit": "%"
     },
@@ -64,10 +64,10 @@
     "High_Yield_Credit_Spread": {
       "series_id": "BAMLH0A0HYM2",
       "category": "Finance",
-      "value": 3.08,
-      "prev_value": 3.02,
-      "change": 0.06,
-      "date": "2026-09-29",
+      "value": 3.12,
+      "prev_value": 3.08,
+      "change": 0.04,
+      "date": "2026-09-30",
       "description": "미국 하이일드 채권 스프레드 (기업 부도/신용 리스크)",
       "unit": "%"
     },
@@ -84,36 +84,36 @@
     "VIX_Volatility_Index": {
       "series_id": "VIXCLS",
       "category": "Finance",
-      "value": 16.04,
-      "prev_value": 16.07,
-      "change": -0.03,
-      "date": "2026-09-29",
+      "value": 16.34,
+      "prev_value": 16.04,
+      "change": 0.3,
+      "date": "2026-09-30",
       "description": "CBOE VIX 변동성지수 (시장 공포 지수)",
       "unit": "Index"
     },
     "SP500_Stock_Index": {
       "series_id": "SP500",
       "category": "Finance",
-      "value": 7651.54,
-      "prev_value": 7670.84,
-      "change": -19.3,
-      "date": "2026-09-30",
+      "value": 7666.45,
+      "prev_value": 7651.54,
+      "change": 14.91,
+      "date": "2026-10-01",
       "description": "S&P 500 주가지수",
       "unit": "Points"
     },
     "Economic_Policy_Uncertainty": {
       "series_id": "USEPUINDXD",
       "category": "Politics",
-      "value": 120.6,
-      "prev_value": 164.49,
-      "change": -43.89,
-      "date": "2026-09-29",
+      "value": 175.08,
+      "prev_value": 193.95,
+      "change": -18.87,
+      "date": "2026-09-30",
       "description": "미국 경제/정치 정책 불확실성 지수",
       "unit": "Index"
     }
   },
   "recent_presidential_actions_count": 30,
-  "recent_diplomatic_statements_count": 45,
+  "recent_diplomatic_statements_count": 43,
   "recent_top_presidential_actions": [
     {
       "date": "2026-09-30",
@@ -168,43 +168,43 @@
   ],
   "recent_top_diplomatic_statements": [
     {
-      "date": "2026-09-30",
+      "date": "2026-10-02",
       "category": "Press_Releases",
-      "title": "Tuvalu National Day",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/09/tuvalu-national-day-2/",
-      "description": "<p>Marco Rubio, Secretary of State</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-cont",
-      "source": "US_Department_of_State"
-    },
-    {
-      "date": "2026-09-30",
-      "category": "Press_Releases",
-      "title": "People’s Republic of China National Day",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/09/peoples-republic-of-china-national-day-2/",
-      "description": "<p>Marco Rubio, Secretary of State</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-cont",
-      "source": "US_Department_of_State"
-    },
-    {
-      "date": "2026-09-30",
-      "category": "Press_Releases",
-      "title": "G20 Chair’s Statement: Ebola Ministerial on Accelerating Collective Action to Defeat Ebola",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/09/g20-chairs-statement-ebola-ministerial-on-accelerating-collective-action-to-defeat-ebola/",
+      "title": "Joint Statement in Support of Bolivia’s Efforts to Fight Corruption and Narco-Trafficking",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/joint-statement-in-support-of-bolivias-efforts-to-fight-corruption-and-narco-trafficking/",
       "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
       "source": "US_Department_of_State"
     },
     {
-      "date": "2026-09-30",
+      "date": "2026-10-01",
       "category": "Press_Releases",
-      "title": "U.S. Tightens Cuba Sanctions to Counter Regime Repression",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/09/u-s-tightens-cuba-sanctions-to-counter-regime-repression/",
+      "title": "Cyprus National Day",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/cyprus-national-day-2/",
+      "description": "<p>Marco Rubio, Secretary of State</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-cont",
+      "source": "US_Department_of_State"
+    },
+    {
+      "date": "2026-10-01",
+      "category": "Press_Releases",
+      "title": "Nigeria National Day",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/nigeria-national-day-2/",
+      "description": "<p>Marco Rubio, Secretary of State</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-cont",
+      "source": "US_Department_of_State"
+    },
+    {
+      "date": "2026-10-01",
+      "category": "Press_Releases",
+      "title": "Operation Economic Outcast Targets Illicit Funding in Iran’s Rail and Automotive Sectors",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/operation-economic-outcast-targets-illicit-funding-in-irans-rail-and-automotive-sectors/",
       "description": "<p>Thomas &quot;Tommy&quot; Pigott, SpokesmanOffice of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block",
       "source": "US_Department_of_State"
     },
     {
-      "date": "2026-09-30",
+      "date": "2026-10-01",
       "category": "Press_Releases",
-      "title": "Sanctioning Money Launderers Linked to Tren de Aragua’s Multi-Million-Dollar Theft Scheme",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/09/sanctioning-money-launderers-linked-to-tren-de-araguas-multi-million-dollar-theft-scheme/",
-      "description": "<p>Thomas &quot;Tommy&quot; Pigott, SpokesmanOffice of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block",
+      "title": "Secretary Rubio’s Travel to Reykjavík, Athens, and Lisbon",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-rubios-travel-to-reykjavik-athens-and-lisbon/",
+      "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
       "source": "US_Department_of_State"
     }
   ]
