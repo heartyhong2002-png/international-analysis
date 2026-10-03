@@ -39,12 +39,19 @@
 7. `docs/current/DATA_COLLECTION_GUIDE.md`
 8. `docs/current/DATA_COLLECTION_ROADMAP.md` when planning sensor expansion
 9. `docs/current/DATA_COLLECTION_SESSION_PROMPT.md` when starting a data-collection session
-10. `docs/current/LLM_SYSTEM_SUMMARY.md`
-11. `docs/current/DATABASE_SETUP.md` when database context is needed
-12. `docs/SESSION_PROMPTS.md` when starting role-specific AI sessions
-13. `docs/REPOSITORY_STRUCTURE.md` when moving or classifying files
-14. `project-handoff.md` only when detailed history or coordination context is needed
-15. `docs/history/PROJECT_EVOLUTION_TIMELINE.md` when the pivot story is needed
+10. `docs/current/DASHBOARD_SESSION_PROMPT.md` when starting a dashboard/UI session
+11. `docs/current/LLM_SYSTEM_SUMMARY.md`
+12. `docs/current/DATABASE_SETUP.md` when database context is needed
+13. `docs/SESSION_PROMPTS.md` when starting role-specific AI sessions
+14. `docs/REPOSITORY_STRUCTURE.md` when moving or classifying files
+15. `project-handoff.md` only when detailed history or coordination context is needed
+16. `docs/history/PROJECT_EVOLUTION_TIMELINE.md` when the pivot story is needed
+
+## Notion Hub
+
+Notion hub page: https://app.notion.com/p/3eede224b44181f0bd20ea55620bf5c4?pvs=204
+
+Use Notion for human-facing project management, learning notes, weekly plans, and decision summaries. Do not treat Notion as the source of truth for code, data, or formal project direction. If Notion and GitHub differ, GitHub Markdown files in this repository take precedence.
 
 ## Current Planning Documents
 

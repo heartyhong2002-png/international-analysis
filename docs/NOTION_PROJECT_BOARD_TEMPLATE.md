@@ -4,6 +4,10 @@
 
 GitHub의 `AGENT_SYNC.md`는 AI 세션들이 읽는 작업 동기화 파일이고, Notion은 사람이 전체 진행 상황을 보기 위한 운영 화면으로 사용한다.
 
+현재 생성된 Notion 프로젝트 허브:
+
+https://app.notion.com/p/3eede224b44181f0bd20ea55620bf5c4?pvs=204
+
 ---
 
 # 국제정세 조기경보 프로젝트 운영보드
