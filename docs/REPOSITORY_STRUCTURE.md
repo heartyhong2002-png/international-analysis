@@ -82,6 +82,8 @@ Do not move data files casually because scripts may read fixed paths.
 
 Keep executable pipeline scripts under `scripts/`.
 
+Use `scripts/README.md` as the purpose-based map for active, auxiliary, prototype, and legacy scripts.
+
 Do not reorganize scripts by role until call paths are audited. Many scripts are called directly by name or expect repository-relative paths. If a script becomes obsolete, move it to `scripts/archive/` only after checking that no active pipeline imports or calls it.
 
 ## Tests
