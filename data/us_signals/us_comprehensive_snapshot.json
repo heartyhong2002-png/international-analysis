@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-03T01:01:03.496822",
+  "updated_at": "2026-10-04T00:25:34.226647",
   "macro_and_finance": {
     "Consumer_Price_Index": {
       "series_id": "CPIAUCSL",
@@ -116,6 +116,16 @@
   "recent_diplomatic_statements_count": 42,
   "recent_top_presidential_actions": [
     {
+      "date": "2026-10-05",
+      "type": "Presidential Document",
+      "title": "Presidential Determination on the Revocation of Presidential Determinations Related to Lebanon",
+      "executive_order_number": null,
+      "abstract": "",
+      "html_url": "https://www.federalregister.gov/documents/2026/10/05/2026-20439/presidential-determination-on-the-revocation-of-presidential-determinations-related-to-lebanon",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-10-05/pdf/2026-20439.pdf",
+      "source": "Federal_Register_Presidential_Documents"
+    },
+    {
       "date": "2026-10-02",
       "type": "Presidential Document",
       "title": "Continuation of the National Emergency With Respect to the Situation in and in Relation to Syria",
@@ -154,19 +164,33 @@
       "html_url": "https://www.federalregister.gov/documents/2026/10/02/2026-20319/streamlining-access-to-government-services-through-americagov",
       "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-10-02/pdf/2026-20319.pdf",
       "source": "Federal_Register_Presidential_Documents"
-    },
-    {
-      "date": "2026-10-02",
-      "type": "Presidential Document",
-      "title": "Presidential Determination on Refugee Admissions for Fiscal Year 2027",
-      "executive_order_number": null,
-      "abstract": "",
-      "html_url": "https://www.federalregister.gov/documents/2026/10/02/2026-20318/presidential-determination-on-refugee-admissions-for-fiscal-year-2027",
-      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-10-02/pdf/2026-20318.pdf",
-      "source": "Federal_Register_Presidential_Documents"
     }
   ],
   "recent_top_diplomatic_statements": [
+    {
+      "date": "2026-10-03",
+      "category": "Press_Releases",
+      "title": "U.S. Statement on Increased Tensions Between Ethiopia and Eritrea",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/u-s-statement-on-increased-tensions-between-ethiopia-and-eritrea/",
+      "description": "<p>Thomas &quot;Tommy&quot; Pigott, SpokesmanOffice of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block",
+      "source": "US_Department_of_State"
+    },
+    {
+      "date": "2026-10-03",
+      "category": "Press_Releases",
+      "title": "Germany National Day",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/germany-national-day-2/",
+      "description": "<p>Marco Rubio, Secretary of State</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-cont",
+      "source": "US_Department_of_State"
+    },
+    {
+      "date": "2026-10-03",
+      "category": "Press_Releases",
+      "title": "Iraq’s National Day",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/iraqs-national-day-2/",
+      "description": "<p>Marco Rubio, Secretary of State</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-cont",
+      "source": "US_Department_of_State"
+    },
     {
       "date": "2026-10-02",
       "category": "Press_Releases",
@@ -178,32 +202,8 @@
     {
       "date": "2026-10-02",
       "category": "Press_Releases",
-      "title": "Ad-Hoc Coalition to Defeat ISIS Meeting on Iraq and Syria",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/ad-hoc-coalition-to-defeat-isis-meeting-on-iraq-and-syria/",
-      "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
-      "source": "US_Department_of_State"
-    },
-    {
-      "date": "2026-10-02",
-      "category": "Press_Releases",
-      "title": "Joint Statement on the Anniversary of the Snapback of UN Restrictions on and Related to Iran",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/joint-statement-on-the-anniversary-of-the-snapback-of-un-restrictions-on-and-related-to-iran/",
-      "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
-      "source": "US_Department_of_State"
-    },
-    {
-      "date": "2026-10-02",
-      "category": "Press_Releases",
-      "title": "United States Cuts Off Hamas Financing Network",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/united-states-cuts-off-hamas-financing-network/",
-      "description": "<p>Thomas &quot;Tommy&quot; Pigott, SpokesmanOffice of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block",
-      "source": "US_Department_of_State"
-    },
-    {
-      "date": "2026-10-02",
-      "category": "Press_Releases",
-      "title": "Secretary Rubio’s Call with Jordanian King Abdullah II",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-rubios-call-with-jordanian-king-abdullah-ii/",
+      "title": "Deputy Secretary Landau’s Meeting with Japanese State Minister for Foreign Affairs Horii",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/deputy-secretary-landaus-meeting-with-japanese-state-minister-for-foreign-affairs-iwao-horii/",
       "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
       "source": "US_Department_of_State"
     }
