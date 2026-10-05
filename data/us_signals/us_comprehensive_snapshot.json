@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-04T00:25:34.226647",
+  "updated_at": "2026-10-05T00:37:09.740584",
   "macro_and_finance": {
     "Consumer_Price_Index": {
       "series_id": "CPIAUCSL",
@@ -168,11 +168,19 @@
   ],
   "recent_top_diplomatic_statements": [
     {
+      "date": "2026-10-04",
+      "category": "Press_Releases",
+      "title": "Lesotho National Day",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/lesotho-national-day-2/",
+      "description": "<p>Marco Rubio, Secretary of State</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-cont",
+      "source": "US_Department_of_State"
+    },
+    {
       "date": "2026-10-03",
       "category": "Press_Releases",
-      "title": "U.S. Statement on Increased Tensions Between Ethiopia and Eritrea",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/u-s-statement-on-increased-tensions-between-ethiopia-and-eritrea/",
-      "description": "<p>Thomas &quot;Tommy&quot; Pigott, SpokesmanOffice of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block",
+      "title": "Iraq’s National Day",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/iraqs-national-day-2/",
+      "description": "<p>Marco Rubio, Secretary of State</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-cont",
       "source": "US_Department_of_State"
     },
     {
@@ -186,9 +194,9 @@
     {
       "date": "2026-10-03",
       "category": "Press_Releases",
-      "title": "Iraq’s National Day",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/iraqs-national-day-2/",
-      "description": "<p>Marco Rubio, Secretary of State</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-cont",
+      "title": "U.S. Statement on Increased Tensions Between Ethiopia and Eritrea",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/u-s-statement-on-increased-tensions-between-ethiopia-and-eritrea/",
+      "description": "<p>Thomas &quot;Tommy&quot; Pigott, SpokesmanOffice of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block",
       "source": "US_Department_of_State"
     },
     {
@@ -196,14 +204,6 @@
       "category": "Press_Releases",
       "title": "United States and Japan Extend Science and Technology Agreement Indefinitely",
       "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/united-states-and-japan-extend-science-and-technology-agreement-indefinitely/",
-      "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
-      "source": "US_Department_of_State"
-    },
-    {
-      "date": "2026-10-02",
-      "category": "Press_Releases",
-      "title": "Deputy Secretary Landau’s Meeting with Japanese State Minister for Foreign Affairs Horii",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/deputy-secretary-landaus-meeting-with-japanese-state-minister-for-foreign-affairs-iwao-horii/",
       "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
       "source": "US_Department_of_State"
     }
