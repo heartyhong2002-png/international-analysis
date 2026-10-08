@@ -40,7 +40,7 @@ Notion에서는 아래 표를 데이터베이스로 만들고, 보기(View)를 `
 | Status | Priority | Owner | Area | Task | Files / Links | Due Date | Notes |
 |---|---|---|---|---|---|---|---|
 | Not started | High | Codex | Coordination | AGENT_SYNC 기준으로 작업 충돌 관리 | `AGENT_SYNC.md` |  | 새 세션 시작 전 확인 |
-| Not started | High | ANTIGRAVITY | Dashboard | 조기경보 대시보드 화면 개선 | `output/dashboard/`, `scripts/streamlit_dashboard.py` |  | 예측 표현 금지 |
+| Not started | High | ANTIGRAVITY | Dashboard | 조기경보 대시보드 화면 개선 | `output/dashboard/`, `scripts/dashboard/streamlit_dashboard.py` |  | 예측 표현 금지 |
 | Not started | High | Codex | Validation | 검증 계획과 실제 로그 파일 정합성 점검 | `docs/current/VALIDATION_PLAN.md`, `data/validation_backtest_log.csv` |  | 백테스트 템플릿 확인 |
 | Not started | Medium | ANTIGRAVITY | Pipeline | 수집기 실행 오류 확인 | `scripts/`, `data/` |  | 실행 결과는 별도 커밋 |
 | Not started | Medium | Codex | Portfolio | 발표/포트폴리오 서사 정리 | `docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md` |  | 교수/면접관 관점 |

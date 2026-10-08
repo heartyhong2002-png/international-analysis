@@ -51,7 +51,7 @@ output/dashboard/dashboard_latest.html
 브라우저로 직접 열면 된다. 재생성하려면:
 
 ```bash
-python scripts/generate_dashboard_v2.py
+python scripts/dashboard/generate_dashboard_v2.py
 ```
 
 나머지 산출물(이슈별 심층 리포트, 정통 인텔리전스 폼 PDF·Word 공식 보고서, 일일 분석, 벤치마크 검증 리포트, MySQL
@@ -66,7 +66,7 @@ pip install -r requirements.txt   # 없다면 scripts/ 상단 주석의 개별 �
 ollama serve                      # 별도 터미널에서 켜두기
 
 python scripts/run_pipeline.py    # 수집 → 태깅 → LLM 분석 → DB 적재까지 한 번에
-python scripts/generate_dashboard_v2.py
+python scripts/dashboard/generate_dashboard_v2.py
 ```
 
 개별 단계(정부 발표 수집, GDELT Cloud 사건 수집, 해협·항만 센서, 현지 공개 여론 수집 등)를 따로 돌리는 방법은
@@ -132,3 +132,4 @@ international-analysis/
 *이 문서는 대외적으로 프로젝트를 처음 보는 사람을 위한 1페이지 요약이다. 실제 개발
 과정의 상세한 판단 근거·실패 사례·트랙 간 조율 기록은 `project-handoff.md`와
 `docs/archive/`에 전부 남아있다.*
+

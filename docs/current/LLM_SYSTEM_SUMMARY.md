@@ -20,7 +20,58 @@
 
 ## 🏛️ 2. 다국어 로컬 모델 라우팅 체계 (Model Routing)
 
-로컬 Ollama 인스턴스(`http://localhost:11434`)에 총 31.8GB 용량의 6대 권역별 네이티브 모델 풀을 구성하고, 언어 및 권역별 특성에 맞춰 최적의 모델로 동적 라우팅합니다 (`prototype_all_in_one.py`). 영미권과 유럽 전역을 고성능 12B `mistral-nemo:latest`로 단일화하여 구형 `mistral:latest`(4.4GB)를 정리하고 여유 디스크를 확보했습니다.
+로컬 Ollama 인스턴스(`http://localhost:11434`)에 총 약 36.7GB 용량의 6대 권역별 네이티브 모델 풀을 구성하고, 언어 및 권역별 특성에 맞춰 최적의 모델로 동적 라우팅합니다 (`prototype_all_in_one.py`). 2026-10-04 기준 아래 6개 모델의 설치와 기본 추론을 확인했습니다. 영미권과 유럽 전역은 고성능 12B `mistral-nemo:latest`로 단일화하여 구형 `mistral:latest`(4.4GB)를 정리했고, 일본어는 `dsasai/llama3-elyza-jp-8b:latest`를 추가해 코드의 `ja` 라우팅 누락을 해소했습니다.
+
+### 2026-10-04 현재 Ollama 설치 목록
+
+| 모델 | 용량 | 기본 역할 |
+|---|---:|---|
+| `exaone3.5:7.8b` | 4.8GB | 한국어 종합·최종 보고서 |
+| `qwen2.5:7b` | 4.7GB | 중국어·중화권 및 글로벌 교차검증 |
+| `second_constantine/yandex-gpt-5-lite:8b` | 5.7GB | 러시아어·러시아 현지 담론 |
+| `falcon3:7b` | 4.6GB | 아랍어·중동 자료 |
+| `mistral-nemo:latest` | 7.1GB | 영어·유럽권 및 서방 관점 교차검증 |
+| `dsasai/llama3-elyza-jp-8b:latest` | 4.9GB | 일본어·일본 언론 뉘앙스 |
+
+모델을 모든 기사에 동시에 호출하지 않는다. 우선 언어별 모델로 1차 분석하고, Warning 후보·근거 충돌·형식 오류·사람 검수 대상만 `mistral-nemo`, `qwen2.5`, `exaone3.5` 3자 교차검증에 보낸다. 최종 한국어 종합은 `exaone3.5:7.8b`가 담당한다.
+
+### 다국어 분석과 영어 중간 표현 계층
+
+언어별 특화 모델의 결과를 한국어로 직접 통일하지 않는다. 각 모델은 원문 언어의 표현·문화적 맥락·완곡어법·관영 프레이밍을 먼저 분석하고, 모델 간 비교가 가능한 **영어 공통 분석 JSON**으로 구조화한다. 이후 `exaone3.5:7.8b`가 이 구조화 결과를 한국어 보고서와 경보 근거로 종합한다.
+
+```text
+원문(ko/zh/ru/ar/en/ja)
+  → 언어별 특화 모델의 원문 분석
+  → 영어 공통 분석 JSON
+  → EXAONE의 한국어 종합·근거 정리
+  → Risk Signal Score / Signal Gap / Alert Level 계산
+```
+
+영어 중간 표현은 단순 번역문이 아니라 다음 필드를 포함해야 한다.
+
+```json
+{
+  "source_language": "ja",
+  "source_role": "local_media",
+  "claim_en": "The article reports continued congestion at Osaka Port.",
+  "risk_signals_en": ["port congestion", "possible logistics delay"],
+  "evidence_quote_original": "원문 근거 문장",
+  "evidence_quote_en": "English translation of the evidence",
+  "cultural_context_en": "Restrained administrative wording; no emergency claim",
+  "untranslatable_terms": [],
+  "uncertainty_en": "The cause and duration are not established.",
+  "verification_state": "reported"
+}
+```
+
+원문 인용은 번역으로 대체하지 않고 항상 보존한다. 영어 표현은 비교·종합을 위한 중간 표현이며, 지역 모델의 문화적 해석을 확정 사실로 취급하지 않는다. 원문과 영어 해석이 충돌하거나 번역 불확실성이 크면 모델 간 다수결로 덮지 않고 출처별 차이와 `확인 필요` 상태를 유지한다.
+
+역할을 다음과 같이 분리한다.
+
+- 지역 모델: 원문 의미, 현지 표현, 문화적 맥락, 위험 신호와 근거 문장 추출
+- 영어 공통 스키마: 다국어 분석 결과의 비교 가능한 중간 계층
+- EXAONE: 한국어 종합, 출처 간 신호 괴리 설명, 보고서 문체 정리
+- 점수 계산기: LLM의 임의 판단이 아니라 구조화된 신호·출처 메타데이터를 이용한 Risk Signal Score와 Alert Level 산출
 
 ```mermaid
 flowchart TD
@@ -62,7 +113,7 @@ flowchart TD
 
 ## 🛡️ 3. 환각(Hallucination) 방지 프레임워크
 
-국제정세 분석에서 존재하지 않는 정부 발표나 거짓 사실을 모델이 생성하는 것은 치명적입니다. 이를 원천 차단하기 위해 **2중 제약 체계**를 구현했습니다 (`scripts/analyze_signals.py`).
+국제정세 분석에서 존재하지 않는 정부 발표나 거짓 사실을 모델이 생성하는 것은 치명적입니다. 이를 원천 차단하기 위해 **2중 제약 체계**를 구현했습니다 (`scripts/analysis/analyze_signals.py`).
 
 ### 1) 데이터 부재 명시적 주입 (Input-level Guardrail)
 `build_prompt()` 함수에서 특정 이슈에 매칭된 정부 발표 데이터가 없을 경우, 해당 섹션을 공란으로 두지 않고 명시적인 마커를 주입합니다:
@@ -91,7 +142,7 @@ flowchart TD
 
 ## ⚖️ 4. 3대 LLM 출력 비교(Consensus) 엔진
 
-서로 다른 개발사의 3대 모델 출력을 함께 기록하는 비교 도구를 구축했습니다 (`scripts/verify_model_consensus.py`, `scripts/auto_benchmark_verifier.py`). 합의는 정답·객관성·전문가 검증의 대체물이 아니며, 불일치 사례와 근거 부족 사례를 사람 검수로 보내기 위한 신호입니다.
+서로 다른 개발사의 3대 모델 출력을 함께 기록하는 비교 도구를 구축했습니다 (`scripts/validation/verify_model_consensus.py`, `scripts/validation/auto_benchmark_verifier.py`). 합의는 정답·객관성·전문가 검증의 대체물이 아니며, 불일치 사례와 근거 부족 사례를 사람 검수로 보내기 위한 신호입니다.
 
 ### 1) 참여 모델 및 관점
 1. `mistral-nemo:latest` (Mistral AI — 12B 프랑스/미국): **영미권 및 서방 시각**
@@ -158,9 +209,9 @@ flowchart TD
 | 스크립트 | 역할 | 주요 실행 명령어 |
 | :--- | :--- | :--- |
 | [`prototype_all_in_one.py`](file:///c:/Users/홍준기/Desktop/international-analysis/prototype_all_in_one.py) | 언어별 모델 라우팅 및 톤/전문가 논거 추출 프로토타입 | `python prototype_all_in_one.py` |
-| [`scripts/analyze_signals.py`](file:///c:/Users/홍준기/Desktop/international-analysis/scripts/analyze_signals.py) | 신호(위키+정부발표) 기반 정세 분석 및 환각 방지 리포트 생성 (기본 EXAONE 3.5) | `python scripts/analyze_signals.py` |
-| [`scripts/verify_model_consensus.py`](file:///c:/Users/홍준기/Desktop/international-analysis/scripts/verify_model_consensus.py) | 3대 모델 다자간 교차 검증 및 합의 감사 엔진 | `python scripts/verify_model_consensus.py --benchmark` |
-| [`scripts/auto_benchmark_verifier.py`](file:///c:/Users/홍준기/Desktop/international-analysis/scripts/auto_benchmark_verifier.py) | AllSides RSS + Google Fact Check + 3-Model Consensus 종합 파이프라인 | `python scripts/auto_benchmark_verifier.py --self-test` |
+| [`scripts/analysis/analyze_signals.py`](file:///c:/Users/홍준기/Desktop/international-analysis/scripts/analysis/analyze_signals.py) | 신호(위키+정부발표) 기반 정세 분석 및 환각 방지 리포트 생성 (기본 EXAONE 3.5) | `python scripts/analysis/analyze_signals.py` |
+| [`scripts/validation/verify_model_consensus.py`](file:///c:/Users/홍준기/Desktop/international-analysis/scripts/validation/verify_model_consensus.py) | 3대 모델 다자간 교차 검증 및 합의 감사 엔진 | `python scripts/validation/verify_model_consensus.py --benchmark` |
+| [`scripts/validation/auto_benchmark_verifier.py`](file:///c:/Users/홍준기/Desktop/international-analysis/scripts/validation/auto_benchmark_verifier.py) | AllSides RSS + Google Fact Check + 3-Model Consensus 종합 파이프라인 | `python scripts/validation/auto_benchmark_verifier.py --self-test` |
 | [`tests/test_language_models.py`](file:///c:/Users/홍준기/Desktop/international-analysis/tests/test_language_models.py) | Ollama 로컬 풀 내 9개 언어 모델 정상 작동 회귀 테스트 | `python tests/test_language_models.py` |
 
 ---
@@ -274,3 +325,4 @@ Reddit IR 전문가들의 리뷰를 바탕으로, 본 파이프라인의 편향(
   - rowser-cookie3를 활용한 로컬 크롬 세션 쿠키 하이재킹 방식.
   - Playwright 기반의 스텔스(Stealth) 가상 브라우저 구동으로 봇 탐지 무력화.
   - 향후 커뮤니티 여론 동향(Sentiment_public) 수집의 100% 자동화를 달성하기 위한 기반 아키텍처 준비 완료.
+

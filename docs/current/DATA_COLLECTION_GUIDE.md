@@ -147,3 +147,38 @@
 ```
 
 이 감사 데이터는 취업 포트폴리오 면접 시 **"우리는 단순 미래 예측 성공률을 주장하는 것이 아니라, 센서별 선행 리드타임(Lead Time)과 오탐·미탐 사유를 체계적으로 감사·추적하고 있다"**는 핵심 차별화 증거로 제시한다.
+
+## 6. 다음 수집 파이프라인 확장 타임라인
+
+2026-10-04 기준 다음 확장은 검증 세션이나 대시보드 세션과 분리하여 수집 계층에서만 진행한다.
+
+### 6.1 항공 공급망 센서
+
+- 공항별 항공편 수, 화물기·여객기 구분, 지상 대기시간, 결항·우회, ADS-B 관측 공백을 수집 후보로 둔다.
+- 인천·홍콩·상하이 푸둥·타이베이·두바이·도하·프랑크푸르트·싱가포르·멕시코시티·파나마시티를 1차 관측 공항으로 검토한다.
+- 항공편 수나 ADS-B 신호는 실제 화물 톤수와 동일하지 않으므로 `air_traffic_proxy`와 `uncertainty_note`를 보존한다.
+
+### 6.2 파나마 운하 센서
+
+- 파나마 운하는 수에즈 운하와 분리된 미주 동서 항로 병목으로 관리한다.
+- 통항 선박 수, 대기시간, 예약 슬롯, 흘수 제한, 수위·가뭄 공지, LNG·컨테이너·벌크선 통항 변화를 원시 관측값으로 저장한다.
+
+### 6.3 다국가 세관 데이터
+
+- 한국·중국에서 일본·대만·미국·베트남·싱가포르·인도·멕시코·브라질·EU로 확장한다.
+- 국가별 API, 공개 다운로드, CSV/Excel, 공식 통계 포털을 `source registry`에서 별도 관리한다.
+- 공통 필드는 `reporter`, `partner`, `hs_code`, `period`, `trade_value`, `quantity`, `source_url`, `observed_at`, `access_note`로 정규화한다.
+
+### 6.4 X 공개 정보환경 신호
+
+- 공식 X API를 우선 사용하고, 계정·키워드·언어·시간창을 제한한다.
+- `post_id`, `author_id`, `author_type`, `text`, `created_at`, `language`, `public_metrics`, `referenced_posts`, `source_url`, `observed_at`, `api_access_note`를 보존한다.
+- X 게시물은 국민 전체 여론이 아니라 `online_information_environment_signal`로 저장한다.
+
+### 6.5 API가 없는 정부 홈페이지
+
+정부 사이트는 다음 순서의 단계형 수집 어댑터를 사용한다.
+
+`official_api → official_rss → official_sitemap → official_html_notice → official_pdf_or_csv → public_json`
+
+각 단계에서 `robots.txt`, 이용약관, 요청 빈도, 공개 접근 여부를 확인하고, 비공개 영역·로그인 우회·접근 제한 회피는 하지 않는다. `source_url`, `page_url`, `document_url`, `published_at`, `observed_at`, `content_hash`, `http_status`, `parser_type`, `robots_checked`, `license_access_note`를 함께 저장한다.

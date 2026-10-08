@@ -27,7 +27,7 @@ When Codex, ANTIGRAVITY, or another AI tool is working in parallel, the session 
 
 너는 데이터 수집·파이프라인 담당이야. docs/current/DATA_COLLECTION_GUIDE.md를 기준으로 현재 수집기와 data/ 폴더를 점검해줘.
 
-담당 파일은 scripts/fetch_maritime_chokepoints.py, scripts/fetch_gdelt_cloud_events.py, scripts/cross_verify_events.py, scripts/fetch_google_trends.py, scripts/fetch_local_opinions.py, scripts/fetch_signal_gap_rss.py, scripts/fetch_financial_proxy.py, scripts/fetch_telegram_public.py, scripts/gov_announcements_collector.py, scripts/run_pipeline.py, data/maritime_chokepoints/, data/gdelt_cloud/, data/event_cross_verification/, data/google_trends/, data/local_opinions/야.
+담당 파일은 scripts/collection/fetch_maritime_chokepoints.py, scripts/collection/fetch_gdelt_cloud_events.py, scripts/analysis/cross_verify_events.py, scripts/collection/fetch_google_trends.py, scripts/collection/fetch_local_opinions.py, scripts/collection/fetch_signal_gap_rss.py, scripts/collection/fetch_financial_proxy.py, scripts/collection/fetch_telegram_public.py, scripts/collection/gov_announcements_collector.py, scripts/run_pipeline.py, data/maritime_chokepoints/, data/gdelt_cloud/, data/event_cross_verification/, data/google_trends/, data/local_opinions/야.
 
 목표는 각국의 실질 위험 신호(해협·항만 통항 및 운임/보험료, GDELT Cloud v2 사건, 공식 발표, 관영 vs 독립 신호 괴리, 구글 트렌드 검색 급등, 대만 PTT/중국 핀충/블루스카이 현지 여론, 무장단체 공개 OSINT)를 안정적으로 수집하고, 단일 출처로 Alert Level을 올리지 않는 4단계 교차검증(verification_state) 체계를 유지하는 거야.
 
@@ -43,7 +43,7 @@ DB, 대시보드, LLM 산식 파일은 직접 수정하지 말고 필요한 변�
 
 너는 LLM 분석·경보 산식 담당이야. docs/current/LLM_SYSTEM_SUMMARY.md와 docs/current/VALIDATION_PLAN.md를 읽고, Risk Signal Score, Signal Gap, Alert Level 기준을 설계하거나 기존 코드에 반영해줘.
 
-담당 파일은 prototype_all_in_one.py, scripts/analyze_signal_gap.py, scripts/analyze_signals.py, scripts/verify_model_consensus.py, scripts/sample_for_review.py, data/review_log.csv, data/pending_human_review.csv야.
+담당 파일은 prototype_all_in_one.py, scripts/analysis/analyze_signal_gap.py, scripts/analysis/analyze_signals.py, scripts/validation/verify_model_consensus.py, scripts/validation/sample_for_review.py, data/review_log.csv, data/pending_human_review.csv야.
 
 출력 문구에서는 “예측”, “발생 확정” 같은 표현을 피하고 “위험 신호”, “경보”, “근거”, “확인 필요” 표현을 사용해줘.
 
@@ -57,9 +57,9 @@ DB, 대시보드, LLM 산식 파일은 직접 수정하지 말고 필요한 변�
 
 이 프로젝트는 조기경보 시스템이고, DB는 단순 저장소가 아니라 경보 근거·검증 이력·오탐/미탐 기록을 남기는 증거 계층이야.
 
-너는 데이터베이스·검증 저장소 담당이야. docs/current/DATABASE_SETUP.md, scripts/build_database.py, scripts/create_views.sql, docs/current/VALIDATION_PLAN.md를 읽고 현재 MySQL 구조가 조기경보 시스템에 맞는지 점검해줘.
+너는 데이터베이스·검증 저장소 담당이야. docs/current/DATABASE_SETUP.md, scripts/db/build_database.py, scripts/db/create_views.sql, docs/current/VALIDATION_PLAN.md를 읽고 현재 MySQL 구조가 조기경보 시스템에 맞는지 점검해줘.
 
-담당 파일은 scripts/build_database.py, scripts/create_views.sql, scripts/report_db_saver.py, scripts/check_duplicates.py, scripts/clean_orphan_broken.py, scripts/dedupe_gov_announcements.py, docs/current/DATABASE_SETUP.md야.
+담당 파일은 scripts/db/build_database.py, scripts/db/create_views.sql, scripts/db/report_db_saver.py, scripts/db/check_duplicates.py, scripts/db/clean_orphan_broken.py, scripts/db/dedupe_gov_announcements.py, docs/current/DATABASE_SETUP.md야.
 
 목표는 risk_signal_scores, alert_events, signal_gap_snapshots, alert_validation_audit 같은 구조가 필요한지 검토하고, 대시보드가 읽기 쉬운 뷰를 설계하는 거야.
 
@@ -86,9 +86,9 @@ DB, 대시보드, LLM 산식 파일은 직접 수정하지 말고 필요한 변�
 
 담당 파일은 다음이야.
 
-- 대시보드: scripts/generate_dashboard_v2.py, output/dashboard/
-- 보고서 생성: scripts/generate_reports.py, scripts/pdf_report_generator.py, scripts/docx_report_generator.py
-- 보고서 저장/연결: scripts/report_db_saver.py
+- 대시보드: scripts/dashboard/generate_dashboard_v2.py, output/dashboard/
+- 보고서 생성: scripts/reports/generate_reports.py, scripts/reports/pdf_report_generator.py, scripts/reports/docx_report_generator.py
+- 보고서 저장/연결: scripts/db/report_db_saver.py
 - 보고서 산출물: reports/, reports/issues/
 - 보고서·대시보드 명세 문서: reports/EARLY_WARNING_DELIVERABLES.md, docs/current/PORTFOLIO_AND_REPORT_GUIDE.md
 
@@ -127,8 +127,8 @@ DB, 대시보드, LLM 산식 파일은 직접 수정하지 말고 필요한 변�
 
 대시보드 실행·검증 기준:
 
-1. `python scripts/generate_dashboard_v2.py`로 HTML이 정상 생성되어야 한다.
-2. 가능하면 `python scripts/generate_dashboard_v2.py --open`으로 실제 브라우저 표시까지 확인한다.
+1. `python scripts/dashboard/generate_dashboard_v2.py`로 HTML이 정상 생성되어야 한다.
+2. 가능하면 `python scripts/dashboard/generate_dashboard_v2.py --open`으로 실제 브라우저 표시까지 확인한다.
 3. 생성 후 `output/dashboard/index.html`과 `output/dashboard/dashboard_latest.html`이 갱신되었는지 확인한다.
 4. 화면에 예전 예측 중심 표현이나 오래된 Reddit 중심 설명이 남아 있으면 최신 조기경보 표현으로 바꾼다.
 5. DB 연결이 없거나 일부 뷰가 없을 때도 화면이 완전히 깨지지 않고, “확인 필요” 또는 “데이터 없음”으로 안전하게 표시되게 한다.
@@ -168,7 +168,7 @@ DB, 대시보드, LLM 산식 파일은 직접 수정하지 말고 필요한 변�
 
 너는 검증·품질관리 QA 담당이야. docs/current/VALIDATION_PLAN.md, docs/history/PREDICTION_APPROACH_RETIRED.md, docs/current/LLM_SYSTEM_SUMMARY.md를 읽고 검증 논리와 주장 수위를 점검해줘.
 
-담당 파일은 docs/current/VALIDATION_PLAN.md, data/review_log.csv, data/pending_human_review.csv, scripts/verify_model_consensus.py, scripts/auto_benchmark_verifier.py, reports/야.
+담당 파일은 docs/current/VALIDATION_PLAN.md, data/review_log.csv, data/pending_human_review.csv, scripts/validation/verify_model_consensus.py, scripts/validation/auto_benchmark_verifier.py, reports/야.
 
 목표는 백테스트, 사람 표본 검수, 근거 품질 검증, 오탐/미탐 기록 방식을 구체화하는 거야.
 
@@ -190,4 +190,5 @@ DB, 대시보드, LLM 산식 파일은 직접 수정하지 말고 필요한 변�
 
 코드 구현은 하지 말고, 문서 구조·발표 흐름·포트폴리오 메시지 정리에 집중해줘.
 ```
+
 

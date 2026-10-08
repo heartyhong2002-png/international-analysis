@@ -43,13 +43,13 @@ if errorlevel 1 (
 )
 
 REM 2단계: 대시보드 갱신 (프로토타입 — 실제 DB로 테스트 완료, 로컬에서 재확인 권장)
-"%PYTHON_EXE%" generate_dashboard_v2.py >> "%LOG_FILE%" 2>&1
+"%PYTHON_EXE%" dashboard\generate_dashboard_v2.py >> "%LOG_FILE%" 2>&1
 
 REM 3단계: 분석 리포트 (analyze_signals.py) — 기본은 꺼둠.
 REM Ollama가 항상 켜져있어야 하고, 예약 실행 환경에서 로컬 LLM 서버가
 REM 살아있는지 확인이 안 된 상태라 컨트롤타워 세션에서는 검증 못 했습니다.
 REM 로컬에서 직접 한 번 돌려보고 문제없으면 아래 REM만 지우고 활성화하세요.
-REM "%PYTHON_EXE%" analyze_signals.py >> "%LOG_FILE%" 2>&1
+REM "%PYTHON_EXE%" analysis\analyze_signals.py >> "%LOG_FILE%" 2>&1
 
 echo [%date% %time%] 파이프라인 완료 >> "%LOG_FILE%"
 

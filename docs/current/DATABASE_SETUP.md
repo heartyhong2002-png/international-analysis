@@ -156,11 +156,11 @@ verdict: confirmed | false_alarm | missed_signal | insufficient_evidence | pendi
 > **💡 보고서 자동 저장 위치**:
 > - 분석보고서 폴더: `C:\Users\홍준기\Desktop\international-analysis\분석보고서`
 > - 프로젝트 내: `reports/issues/` 및 `reports/`
-> - DB: `international_analysis.analysis_reports` 테이블에 마크다운 전문 및 메타데이터 자동 적재 (`scripts/report_db_saver.py`)
+> - DB: `international_analysis.analysis_reports` 테이블에 마크다운 전문 및 메타데이터 자동 적재 (`scripts/db/report_db_saver.py`)
 
 ---
 
-### 5.2 포트폴리오용 4대 고급 분석 뷰 (`scripts/create_views.sql`)
+### 5.2 포트폴리오용 4대 고급 분석 뷰 (`scripts/db/create_views.sql`)
 
 면접 및 포트폴리오에서 **고급 SQL(Window 함수, CTE, 피벗 조건부 집계)** 역량을 증명하기 위해
 구축된 분석 뷰입니다:
@@ -249,3 +249,4 @@ ORDER BY date DESC;
 - **다음 큰 작업**: 이 MySQL 데이터를 가지고 대시보드 만들기 (Tableau 대체 스킬 어필용)
 - `mysql` CLI를 PATH에 등록했으니, 앞으로는 전체 경로 안 쓰고 그냥 `mysql -u root -p`로
   접속 가능 (새 터미널에서)
+

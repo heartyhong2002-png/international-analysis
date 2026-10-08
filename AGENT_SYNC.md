@@ -40,14 +40,29 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
-| done | ANTIGRAVITY | db / pipeline / cross-verification | `scripts/run_pipeline.py`, `scripts/load_cross_verification_to_db.py`, `scripts/create_views.sql` | 해협 센서·공급망 사건 교차검증의 DB 적재와 대시보드 뷰 연동 | 2026-10-02 |
-| done | ANTIGRAVITY | data-collection / supply-chain-sensors | `scripts/fetch_maritime_chokepoints.py`, `scripts/cross_verify_events.py`, `data/maritime_chokepoints/`, `data/event_cross_verification/` | 해협·시장 센서 수집 및 복수 계통 교차검증 | 2026-10-02 |
-| done | ANTIGRAVITY | data-collection / public-opinion | `scripts/fetch_local_opinions.py`, `scripts/fetch_google_trends.py`, `data/local_opinions/`, `data/google_trends/` | 대안 로컬 여론·검색 트렌드 센서 구축 | 2026-09-29 |
-| in-progress | ANTIGRAVITY | dashboard / ui | `scripts/streamlit_dashboard.py` | Streamlit 대시보드 유지보수 및 고도화 | 2026-09-28 |
-| in-progress | ANTIGRAVITY | llm-analysis / alert-scoring | `prototype_all_in_one.py`, `scripts/analyze_signal_gap.py`, `scripts/analyze_signals.py`, `data/review_log.csv` | LLM 분석·Risk Signal Score·검수 체계 연동 | 2026-09-28 |
+| done | ANTIGRAVITY | db / pipeline / cross-verification | `scripts/run_pipeline.py`, `scripts/db/load_cross_verification_to_db.py`, `scripts/db/create_views.sql` | 해협 센서·공급망 사건 교차검증의 DB 적재와 대시보드 뷰 연동 | 2026-10-02 |
+| done | ANTIGRAVITY | data-collection / supply-chain-sensors | `scripts/collection/fetch_maritime_chokepoints.py`, `scripts/analysis/cross_verify_events.py`, `data/maritime_chokepoints/`, `data/event_cross_verification/` | 해협·시장 센서 수집 및 복수 계통 교차검증 | 2026-10-02 |
+| done | ANTIGRAVITY | data-collection / public-opinion | `scripts/collection/fetch_local_opinions.py`, `scripts/collection/fetch_google_trends.py`, `data/local_opinions/`, `data/google_trends/` | 대안 로컬 여론·검색 트렌드 센서 구축 | 2026-09-29 |
+| in-progress | ANTIGRAVITY | dashboard / ui | `scripts/dashboard/streamlit_dashboard.py` | Streamlit 대시보드 유지보수 및 고도화 | 2026-09-28 |
+| in-progress | ANTIGRAVITY | llm-analysis / alert-scoring | `prototype_all_in_one.py`, `scripts/analysis/analyze_signal_gap.py`, `scripts/analysis/analyze_signals.py`, `data/review_log.csv` | LLM 분석·Risk Signal Score·검수 체계 연동 | 2026-09-28 |
 | done | Codex | docs / session-sync | `PROJECT_CONTEXT.md`, `AGENT_SYNC.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `project-handoff.md` | 현재 방향, 센서 분류, 교차검증 규칙, 세션 상태 문서 정리 | 2026-10-02 |
+| done | Codex | dashboard / Figma handoff | `docs/current/DASHBOARD_SESSION_PROMPT.md`, `PROJECT_CONTEXT.md`, `AGENT_SYNC.md` | Figma의 5대 감시축 균형 UI와 비상 관제 화면을 대시보드 세션에 인수인계 | 2026-10-04 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-10-04 [Codex / 데이터 수집 범위 확장 결정]
+- 한 일: 대시보드·교차검증 업무와 분리하여 데이터 수집·파이프라인 세션의 다음 확장 범위를 정리함.
+- 바꾼 파일: `AGENT_SYNC.md`, `project-handoff.md`, `docs/current/DATA_COLLECTION_GUIDE.md`.
+- 결정 사항: 항공 물류·ADS-B/공항 운항 센서, 파나마 운하 병목 센서, 다국가 세관 데이터, X 공개 정보환경 신호, 정부 홈페이지의 API/RSS/Sitemap/HTML/PDF 단계형 수집을 우선 검토함.
+- 다음 작업: 신규 수집기를 만들기 전에 국가·서비스별 접근 방식과 라이선스·robots·요청 제한을 source registry로 정의하고, 원시 데이터·수집 영수증만 구현할 것.
+- 주의할 점: 파나마 운하는 남미 인접 미주 병목으로 기록하며 수에즈 운하와 혼동하지 않는다. X·정부 웹 데이터는 국민 여론이나 확정 사실로 해석하지 않는다.
+
+2026-10-04 [Codex / dashboard 세션 인수인계]
+- 한 일: Figma에서 5대 감시축 중심의 `Balanced Watchboard` 시안을 만들고, 비상상황의 긴장감을 높이는 상단 위험 배너와 경보 상태 표시를 추가함.
+- 바꾼 파일: `docs/current/DASHBOARD_SESSION_PROMPT.md`, `PROJECT_CONTEXT.md`, `AGENT_SYNC.md`.
+- 확인한 것: Figma 파일 `https://www.figma.com/design/pTJxYxSF0Fv6PuEicHVAhI`, 주요 프레임 `1:2`; `scripts/dashboard/generate_dashboard_v2.py`와 `scripts/dashboard/streamlit_dashboard.py`는 기존 대시보드 담당 세션 소유 파일이므로 직접 수정하지 않음.
+- 다음 작업: 대시보드 세션에서 Figma 시안의 5대 축 균형, 비상 배너, 검증 상태·데이터 공백 표시를 실제 HTML/Streamlit 화면에 반영할 것.
+- 주의할 점: 비상 색상은 시각적 우선순위 표현일 뿐 확정 사실을 의미하지 않는다. 단일 출처로 Alert Level을 상향하지 말고 `verification_state`와 `complete=false`를 유지한다.
 
 2026-10-02 [Codex / session-sync 및 교차검증 상태 점검]
 - 한 일: `PROJECT_CONTEXT.md`와 `AGENT_SYNC.md`를 읽고, 최신 조기경보 방향과 4대 해협 센서·GDELT 사건·복수 계통 교차검증 상태를 확인함.
@@ -232,6 +247,13 @@ ANTIGRAVITY에 새 작업을 맡길 때는 아래 문장을 먼저 붙인다.
 ```
 
 ## Historical Handoffs
+
+2026-10-04 [Codex / dashboard balanced-watchboard implementation]
+- 한 일: Figma `Balanced Watchboard` 시안의 5대 감시축 균형 카드와 비상 배너 구조를 HTML 대시보드에 반영함. Alert Level은 공식 DB 뷰 데이터만 사용하도록 유지함.
+- 바꾼 파일: `scripts/dashboard/generate_dashboard_v2.py`, 생성 산출물 `output/dashboard/index.html` 및 최신본.
+- 확인한 것: Python 컴파일 및 `python scripts/dashboard/generate_dashboard_v2.py` 실행 성공. HTML에서 `MARITIME`, `ENERGY`, `INFORMATION`, `FINANCE / TRADE`, `STATE / ACTOR` 5개 카드와 `NO SINGLE-SOURCE ESCALATION` 문구 확인.
+- 다음 작업: `scripts/dashboard/streamlit_dashboard.py`는 ANTIGRAVITY가 in-progress 소유 중이므로 별도 세션에서 동일한 5축 구조를 반영할 것.
+- 주의할 점: `UNVERIFIED`·`PARTIALLY_CONFIRMED`·`CROSS_VERIFIED`를 구분하고, `complete=false` 부분 수집과 공개 주장 데이터를 확정 사실로 표시하지 않는다.
 
 2026-09-28 [Codex / coordination · video-prototype handoff]
 - 한 일: 최신 원격 상태, 현재 조기경보 방향, 작업판과 영상 분석 프로토타입의 추적 상태를 확인했다.

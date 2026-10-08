@@ -17,7 +17,7 @@
    - AIS는 실제 화물 톤수를 직접 보여주지 않으므로 항만·무역·시장 데이터와 결합하고 불확실성을 기록한다.
 
 2. GDELT Cloud Events는 빠른 다국어 사건 탐지 센서로 사용한다.
-   - `scripts/fetch_gdelt_cloud_events.py`를 통해 인증된 GDELT Cloud v2 Events를 제한된 페이지 예산으로 수집한다.
+   - `scripts/collection/fetch_gdelt_cloud_events.py`를 통해 인증된 GDELT Cloud v2 Events를 제한된 페이지 예산으로 수집한다.
    - 원시 `events`와 수집 영수증을 `data/gdelt_cloud/`에 함께 보존한다. `complete=false`는 부분 수집이며 전체 데이터로 해석하지 않는다.
    - 사건·행위자·장소·사건일시·관측일시·출처 URL을 보존하고, 공식·현지 언론, AIS·항만·운임 신호와 시간순으로 교차검증한다.
    - GDELT Cloud 사건 하나만으로 Alert Level을 올리지 않는다. GDELT는 사건 탐지 센서이지 최종 사실 판정기가 아니다.
@@ -56,8 +56,9 @@
 
 - 프로젝트 정체성: 공급망·지정학 리스크 조기경보
 - 우선 센서: 해협·항만 AIS, 운임·보험료, 공식/현지 언론, 공개 여론 신호
-- 보조 사건 센서: GDELT Cloud Events (`scripts/fetch_gdelt_cloud_events.py`, `data/gdelt_cloud/`)
+- 보조 사건 센서: GDELT Cloud Events (`scripts/collection/fetch_gdelt_cloud_events.py`, `data/gdelt_cloud/`)
 - 공개 여론 대안: PTT, 핀충, Bluesky, Google News RSS, 공개 Telegram, Google Trends
 - 무장단체: 후티·IRGC의 공개 성명과 선전 신호만 수집하며, 실제 사건은 독립 출처와 교차검증
 - 영상: 감정 판정보다 시간코드가 있는 발언·장면·재사용 증거 탐색을 우선
 - 금지 범위: 비공개 접근, 우회·탈취, 개인 식별 확대, 작전·표적·취약점 정보 수집
+

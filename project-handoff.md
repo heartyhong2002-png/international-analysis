@@ -413,3 +413,11 @@ international-analysis/
   - `AGENT_SYNC.md`와 이 문서의 제어문자를 제거하고, 활성 작업 보드와 과거 handoff 섹션을 구분했다.
   - `DATA_COLLECTION_GUIDE.md`에서 물리 직접 센서와 시장 영향 프록시를 분리하고, 미래 날짜가 들어간 감사 예시를 `simulated_template`/`PENDING_REVIEW`로 바꿨다.
   - `data/audit_cases_template.json`도 같은 원칙으로 수정했다. 실제 사건 검증 전에는 결과·리드타임을 사실로 채우지 않는다.
+
+- 2026-10-04 [Codex / 데이터 수집 파이프라인 확장 설계]
+  - 항공 물류·공항 운항·ADS-B 프록시를 공급망 직접 센서 후보로 추가하기로 했다.
+  - 기존 해협 센서에 파나마 운하를 추가해 미주 동서 항로 병목을 관측하기로 했다. 수에즈 운하와 별도 센서로 관리한다.
+  - 한국·중국 중심 세관 수집을 일본·대만·미국·베트남·싱가포르·인도·멕시코·브라질·EU 등으로 확장할 수 있도록 국가별 source registry를 설계하기로 했다.
+  - 공개 X 게시물을 공식 API 기반의 제한 수집 대상으로 추가하고, 작성자 유형·언어·게시 시각·공개 지표·접근 메모를 보존하기로 했다.
+  - 정부 홈페이지는 API가 없을 경우 `official_api → official_rss → official_sitemap → official_html_notice → official_pdf_or_csv → public_json` 순서로 수집하는 단계형 어댑터를 설계하기로 했다.
+  - 이 단계에서는 교차검증·경보 산식·대시보드를 수정하지 않고, 원시 데이터·정규화 데이터·수집 영수증·접근 제한만 처리한다.
