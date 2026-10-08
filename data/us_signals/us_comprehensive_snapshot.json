@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-07T01:19:48.343995",
+  "updated_at": "2026-10-08T01:40:09.800316",
   "macro_and_finance": {
     "Consumer_Price_Index": {
       "series_id": "CPIAUCSL",
@@ -34,20 +34,20 @@
     "Yield_Curve_Spread_10Y2Y": {
       "series_id": "T10Y2Y",
       "category": "Finance",
-      "value": 0.48,
-      "prev_value": 0.47,
-      "change": 0.01,
-      "date": "2026-10-06",
+      "value": 0.51,
+      "prev_value": 0.48,
+      "change": 0.03,
+      "date": "2026-10-07",
       "description": "장단기 금리차 (10년-2년, 경기침체 선행지표)",
       "unit": "%"
     },
     "Treasury_Yield_10Y": {
       "series_id": "DGS10",
       "category": "Finance",
-      "value": 5.31,
-      "prev_value": 5.28,
-      "change": 0.03,
-      "date": "2026-10-05",
+      "value": 5.27,
+      "prev_value": 5.31,
+      "change": -0.04,
+      "date": "2026-10-06",
       "description": "미 국채 10년물 금리",
       "unit": "%"
     },
@@ -64,57 +64,67 @@
     "High_Yield_Credit_Spread": {
       "series_id": "BAMLH0A0HYM2",
       "category": "Finance",
-      "value": 3.12,
-      "prev_value": 3.1,
-      "change": 0.02,
-      "date": "2026-10-05",
+      "value": 3.03,
+      "prev_value": 3.12,
+      "change": -0.09,
+      "date": "2026-10-06",
       "description": "미국 하이일드 채권 스프레드 (기업 부도/신용 리스크)",
       "unit": "%"
     },
     "Financial_Stress_Index": {
       "series_id": "STLFSI4",
       "category": "Finance",
-      "value": -0.8074,
-      "prev_value": -0.7011,
-      "change": -0.1063,
-      "date": "2026-09-25",
+      "value": -0.4681,
+      "prev_value": -0.8091,
+      "change": 0.341,
+      "date": "2026-10-02",
       "description": "세인트루이스 연준 금융스트레스지수 (0 이상=스트레스 가중)",
       "unit": "Index"
     },
     "VIX_Volatility_Index": {
       "series_id": "VIXCLS",
       "category": "Finance",
-      "value": 15.52,
-      "prev_value": 15.31,
-      "change": 0.21,
-      "date": "2026-10-05",
+      "value": 15.01,
+      "prev_value": 15.52,
+      "change": -0.51,
+      "date": "2026-10-06",
       "description": "CBOE VIX 변동성지수 (시장 공포 지수)",
       "unit": "Index"
     },
     "SP500_Stock_Index": {
       "series_id": "SP500",
       "category": "Finance",
-      "value": 7818.93,
-      "prev_value": 7773.95,
-      "change": 44.98,
-      "date": "2026-10-06",
+      "value": 7801.77,
+      "prev_value": 7818.93,
+      "change": -17.16,
+      "date": "2026-10-07",
       "description": "S&P 500 주가지수",
       "unit": "Points"
     },
     "Economic_Policy_Uncertainty": {
       "series_id": "USEPUINDXD",
       "category": "Politics",
-      "value": 421.71,
-      "prev_value": 248.23,
-      "change": 173.48,
-      "date": "2026-10-05",
+      "value": 984.78,
+      "prev_value": 408.32,
+      "change": 576.46,
+      "date": "2026-10-06",
       "description": "미국 경제/정치 정책 불확실성 지수",
       "unit": "Index"
     }
   },
   "recent_presidential_actions_count": 30,
-  "recent_diplomatic_statements_count": 40,
+  "recent_diplomatic_statements_count": 39,
   "recent_top_presidential_actions": [
+    {
+      "date": "2026-10-07",
+      "type": "Presidential Document",
+      "title": "National Manufacturing Day, 2026",
+      "executive_order_number": null,
+      "abstract": "",
+      "html_url": "https://www.federalregister.gov/documents/2026/10/07/2026-20629/national-manufacturing-day-2026",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-10-07/pdf/2026-20629.pdf",
+      "source": "Federal_Register_Presidential_Documents"
+    },
     {
       "date": "2026-10-05",
       "type": "Presidential Document",
@@ -154,57 +164,47 @@
       "html_url": "https://www.federalregister.gov/documents/2026/10/02/2026-20320/eliminating-disease-carrying-pests-and-restoring-enjoyment-of-the-great-outdoors",
       "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-10-02/pdf/2026-20320.pdf",
       "source": "Federal_Register_Presidential_Documents"
-    },
-    {
-      "date": "2026-10-02",
-      "type": "Presidential Document",
-      "title": "Streamlining Access to Government Services Through America.gov",
-      "executive_order_number": null,
-      "abstract": "",
-      "html_url": "https://www.federalregister.gov/documents/2026/10/02/2026-20319/streamlining-access-to-government-services-through-americagov",
-      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-10-02/pdf/2026-20319.pdf",
-      "source": "Federal_Register_Presidential_Documents"
     }
   ],
   "recent_top_diplomatic_statements": [
     {
-      "date": "2026-10-06",
+      "date": "2026-10-07",
       "category": "Press_Releases",
-      "title": "Secretary of State Marco Rubio And Icelandic Foreign Minister Þorgerður Katrín Gunnarsdóttir At a Joint Press Availability",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-of-state-marco-rubio-and-icelandic-foreign-minister-thorgerdur-katrin-gunnarsdottir-at-a-joint-press-availability/",
-      "description": "<p>Marco Rubio, Secretary of State</p>\n<p>Reykjavik, Iceland</p>\n<p>Safnahúsið</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class",
+      "title": "Designation of Fijian Resident for Involvement in Significant Corruption on Behalf of China-Based Actors",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/designation-of-fijian-resident-for-involvement-in-significant-corruption-on-behalf-of-china-based-actors/",
+      "description": "<p>Thomas &quot;Tommy&quot; Pigott, SpokesmanOffice of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block",
       "source": "US_Department_of_State"
     },
     {
-      "date": "2026-10-06",
+      "date": "2026-10-07",
       "category": "Press_Releases",
-      "title": "Secretary Rubio’s Meeting with Icelandic Prime Minister Frostadóttir",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-rubios-meeting-with-icelandic-prime-minister-frostadottir/",
+      "title": "Joint Statement on the U.S.-Greece Strategic Dialogue",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/joint-statement-on-the-u-s-greece-strategic-dialogue/",
       "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
       "source": "US_Department_of_State"
     },
     {
-      "date": "2026-10-06",
+      "date": "2026-10-07",
       "category": "Press_Releases",
-      "title": "Secretary Rubio’s Call with Mongolian Foreign Minister Battsetseg",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-rubios-call-with-mongolian-foreign-minister-battsetseg-2/",
-      "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
+      "title": "Secretary of State Marco Rubio and Greek Foreign Minister Giorgos Gerapetritis at a Joint Press Availability",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-of-state-marco-rubio-and-greek-foreign-minister-giorgos-gerapetritis-at-a-joint-press-availability/",
+      "description": "<p>Marco Rubio, Secretary of State</p>\n<p>Giorgos Gerapetritis, Greek Foreign Minister</p>\n<p>Athens, Greece</p>\n<p>Ministry of Foreign Affairs</p>\n\n<section class=\"wp-block-default-hero-container wp-",
       "source": "US_Department_of_State"
     },
     {
-      "date": "2026-10-06",
+      "date": "2026-10-07",
       "category": "Press_Releases",
-      "title": "Secretary Rubio’s Call with Azerbaijan Foreign Minister Bayramov",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-rubios-call-with-azerbaijan-foreign-minister-bayramov-2/",
-      "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
+      "title": "Secretary of State Marco Rubio at the U.S. Embassy Chancery Dedication Ceremony",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-of-state-marco-rubio-at-the-u-s-embassy-chancery-dedication-ceremony/",
+      "description": "<p>Marco Rubio, Secretary of State</p>\n<p>Athens, Greece</p>\n<p>U.S. Embassy</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"",
       "source": "US_Department_of_State"
     },
     {
-      "date": "2026-10-05",
+      "date": "2026-10-07",
       "category": "Press_Releases",
-      "title": "Joint Statement on the U.S.-Japan Technology Prosperity Deal",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/joint-statement-on-the-u-s-japan-technology-prosperity-deal/",
-      "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
+      "title": "Secretary of State Marco Rubio at a State Partnership Program Signing Ceremony",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-of-state-marco-rubio-at-a-state-partnership-program-signing-ceremony/",
+      "description": "<p>Marco Rubio, Secretary of State</p>\n<p>Athens, Greece</p>\n<p>The Conrad Hotel </p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div cl",
       "source": "US_Department_of_State"
     }
   ]
