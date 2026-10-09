@@ -501,6 +501,7 @@
 2026-10-05,0.47,T10Y2Y,Yield_Curve_Spread_10Y2Y,Finance
 2026-10-06,0.48,T10Y2Y,Yield_Curve_Spread_10Y2Y,Finance
 2026-10-07,0.51,T10Y2Y,Yield_Curve_Spread_10Y2Y,Finance
+2026-10-08,0.47,T10Y2Y,Yield_Curve_Spread_10Y2Y,Finance
 2025-01-02,4.57,DGS10,Treasury_Yield_10Y,Finance
 2025-01-03,4.6,DGS10,Treasury_Yield_10Y,Finance
 2025-01-06,4.62,DGS10,Treasury_Yield_10Y,Finance
@@ -942,6 +943,7 @@
 2026-10-02,5.28,DGS10,Treasury_Yield_10Y,Finance
 2026-10-05,5.31,DGS10,Treasury_Yield_10Y,Finance
 2026-10-06,5.27,DGS10,Treasury_Yield_10Y,Finance
+2026-10-07,5.28,DGS10,Treasury_Yield_10Y,Finance
 2025-01-02,129.4598,DTWEXBGS,Trade_Weighted_USD_Index,Finance
 2025-01-03,129.4535,DTWEXBGS,Trade_Weighted_USD_Index,Finance
 2025-01-06,128.538,DTWEXBGS,Trade_Weighted_USD_Index,Finance
@@ -1844,6 +1846,7 @@
 2026-10-02,3.1,BAMLH0A0HYM2,High_Yield_Credit_Spread,Finance
 2026-10-05,3.12,BAMLH0A0HYM2,High_Yield_Credit_Spread,Finance
 2026-10-06,3.03,BAMLH0A0HYM2,High_Yield_Credit_Spread,Finance
+2026-10-07,3.09,BAMLH0A0HYM2,High_Yield_Credit_Spread,Finance
 2025-01-03,-0.6111,STLFSI4,Financial_Stress_Index,Finance
 2025-01-10,-0.8003,STLFSI4,Financial_Stress_Index,Finance
 2025-01-17,-0.8171,STLFSI4,Financial_Stress_Index,Finance
@@ -2391,6 +2394,7 @@
 2026-10-02,15.31,VIXCLS,VIX_Volatility_Index,Finance
 2026-10-05,15.52,VIXCLS,VIX_Volatility_Index,Finance
 2026-10-06,15.01,VIXCLS,VIX_Volatility_Index,Finance
+2026-10-07,15.08,VIXCLS,VIX_Volatility_Index,Finance
 2025-01-02,5868.55,SP500,SP500_Stock_Index,Finance
 2025-01-03,5942.47,SP500,SP500_Stock_Index,Finance
 2025-01-06,5975.38,SP500,SP500_Stock_Index,Finance
@@ -2833,6 +2837,7 @@
 2026-10-05,7773.95,SP500,SP500_Stock_Index,Finance
 2026-10-06,7818.93,SP500,SP500_Stock_Index,Finance
 2026-10-07,7801.77,SP500,SP500_Stock_Index,Finance
+2026-10-08,7765.36,SP500,SP500_Stock_Index,Finance
 2025-01-01,202.92,USEPUINDXD,Economic_Policy_Uncertainty,Politics
 2025-01-02,188.9,USEPUINDXD,Economic_Policy_Uncertainty,Politics
 2025-01-03,167.41,USEPUINDXD,Economic_Policy_Uncertainty,Politics
@@ -3458,7 +3463,7 @@
 2026-09-15,243.1,USEPUINDXD,Economic_Policy_Uncertainty,Politics
 2026-09-16,178.24,USEPUINDXD,Economic_Policy_Uncertainty,Politics
 2026-09-17,354.24,USEPUINDXD,Economic_Policy_Uncertainty,Politics
-2026-09-18,246.82,USEPUINDXD,Economic_Policy_Uncertainty,Politics
+2026-09-18,246.8,USEPUINDXD,Economic_Policy_Uncertainty,Politics
 2026-09-19,144.51,USEPUINDXD,Economic_Policy_Uncertainty,Politics
 2026-09-20,183.11,USEPUINDXD,Economic_Policy_Uncertainty,Politics
 2026-09-21,177.32,USEPUINDXD,Economic_Policy_Uncertainty,Politics
@@ -3469,11 +3474,12 @@
 2026-09-26,192.8,USEPUINDXD,Economic_Policy_Uncertainty,Politics
 2026-09-27,443.57,USEPUINDXD,Economic_Policy_Uncertainty,Politics
 2026-09-28,157.15,USEPUINDXD,Economic_Policy_Uncertainty,Politics
-2026-09-29,191.11,USEPUINDXD,Economic_Policy_Uncertainty,Politics
-2026-09-30,161.85,USEPUINDXD,Economic_Policy_Uncertainty,Politics
-2026-10-01,157.53,USEPUINDXD,Economic_Policy_Uncertainty,Politics
-2026-10-02,160.6,USEPUINDXD,Economic_Policy_Uncertainty,Politics
-2026-10-03,488.13,USEPUINDXD,Economic_Policy_Uncertainty,Politics
-2026-10-04,237.67,USEPUINDXD,Economic_Policy_Uncertainty,Politics
-2026-10-05,408.32,USEPUINDXD,Economic_Policy_Uncertainty,Politics
-2026-10-06,984.78,USEPUINDXD,Economic_Policy_Uncertainty,Politics
+2026-09-29,191.06,USEPUINDXD,Economic_Policy_Uncertainty,Politics
+2026-09-30,161.83,USEPUINDXD,Economic_Policy_Uncertainty,Politics
+2026-10-01,157.42,USEPUINDXD,Economic_Policy_Uncertainty,Politics
+2026-10-02,160.32,USEPUINDXD,Economic_Policy_Uncertainty,Politics
+2026-10-03,485.47,USEPUINDXD,Economic_Policy_Uncertainty,Politics
+2026-10-04,236.82,USEPUINDXD,Economic_Policy_Uncertainty,Politics
+2026-10-05,402.29,USEPUINDXD,Economic_Policy_Uncertainty,Politics
+2026-10-06,598.57,USEPUINDXD,Economic_Policy_Uncertainty,Politics
+2026-10-07,284.65,USEPUINDXD,Economic_Policy_Uncertainty,Politics
