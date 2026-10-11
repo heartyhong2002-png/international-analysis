@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-10T01:35:47.316374",
+  "updated_at": "2026-10-11T00:45:27.548995",
   "macro_and_finance": {
     "Consumer_Price_Index": {
       "series_id": "CPIAUCSL",
@@ -116,6 +116,26 @@
   "recent_diplomatic_statements_count": 48,
   "recent_top_presidential_actions": [
     {
+      "date": "2026-10-13",
+      "type": "Presidential Document",
+      "title": "Columbus Day, 2026",
+      "executive_order_number": null,
+      "abstract": "",
+      "html_url": "https://www.federalregister.gov/documents/2026/10/13/2026-20972/columbus-day-2026",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-10-13/pdf/2026-20972.pdf",
+      "source": "Federal_Register_Presidential_Documents"
+    },
+    {
+      "date": "2026-10-13",
+      "type": "Presidential Document",
+      "title": "National Energy Dominance Month, 2026",
+      "executive_order_number": null,
+      "abstract": "",
+      "html_url": "https://www.federalregister.gov/documents/2026/10/13/2026-20969/national-energy-dominance-month-2026",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-10-13/pdf/2026-20969.pdf",
+      "source": "Federal_Register_Presidential_Documents"
+    },
+    {
       "date": "2026-10-09",
       "type": "Presidential Document",
       "title": "Emergency Tax Relief on Diesel Fuel",
@@ -144,29 +164,17 @@
       "html_url": "https://www.federalregister.gov/documents/2026/10/05/2026-20439/presidential-determination-on-the-revocation-of-presidential-determinations-related-to-lebanon",
       "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-10-05/pdf/2026-20439.pdf",
       "source": "Federal_Register_Presidential_Documents"
-    },
-    {
-      "date": "2026-10-02",
-      "type": "Presidential Document",
-      "title": "Continuation of the National Emergency With Respect to the Situation in and in Relation to Syria",
-      "executive_order_number": null,
-      "abstract": "",
-      "html_url": "https://www.federalregister.gov/documents/2026/10/02/2026-20322/continuation-of-the-national-emergency-with-respect-to-the-situation-in-and-in-relation-to-syria",
-      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-10-02/pdf/2026-20322.pdf",
-      "source": "Federal_Register_Presidential_Documents"
-    },
-    {
-      "date": "2026-10-02",
-      "type": "Presidential Document",
-      "title": "Inaugurating the Era of Super Intelligence",
-      "executive_order_number": null,
-      "abstract": "",
-      "html_url": "https://www.federalregister.gov/documents/2026/10/02/2026-20321/inaugurating-the-era-of-super-intelligence",
-      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-10-02/pdf/2026-20321.pdf",
-      "source": "Federal_Register_Presidential_Documents"
     }
   ],
   "recent_top_diplomatic_statements": [
+    {
+      "date": "2026-10-10",
+      "category": "Press_Releases",
+      "title": "The United States Mobilizes Immediate Response to the Panama Earthquakes",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/the-united-states-mobilizes-immediate-response-to-the-panama-earthquakes/",
+      "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
+      "source": "US_Department_of_State"
+    },
     {
       "date": "2026-10-10",
       "category": "Press_Releases",
@@ -176,34 +184,26 @@
       "source": "US_Department_of_State"
     },
     {
-      "date": "2026-10-09",
+      "date": "2026-10-10",
       "category": "Press_Releases",
-      "title": "Secretary Rubio’s Meeting with Venezuela’s 2015 National Assembly President Dinorah Figuera",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-rubios-meeting-with-venezuelas-2015-national-assembly-president-dinorah-figuera/",
+      "title": "Secretary Rubio’s Call with Japanese Foreign Minister Motegi",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-rubios-call-with-japanese-foreign-minister-motegi/",
       "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
       "source": "US_Department_of_State"
     },
     {
       "date": "2026-10-09",
       "category": "Press_Releases",
-      "title": "Secretary of State Marco Rubio and 2015 Venezuelan National Assembly President Dinorah Figuera Before Their Meeting",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-of-state-marco-rubio-and-2015-venezuelan-national-assembly-president-dinorah-figuera-before-their-meeting/",
-      "description": "<p>Marco Rubio, Secretary of State</p>\n<p>Dinorah Figuera, 2015 Venezuelan National Assembly President</p>\n<p>Washington, D.C.</p>\n<p>Harry S. Truman Building</p>\n\n<section class=\"wp-block-default-her",
+      "title": "Reconciliation Talks Deliver Concrete Progress for Venezuela’s Democratic Transition",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/reconciliation-talks-deliver-concrete-progress-for-venezuelas-democratic-transition/",
+      "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
       "source": "US_Department_of_State"
     },
     {
       "date": "2026-10-09",
       "category": "Press_Releases",
-      "title": "Fiji National Day",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/fiji-national-day-2/",
-      "description": "<p>Marco Rubio, Secretary of State</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-cont",
-      "source": "US_Department_of_State"
-    },
-    {
-      "date": "2026-10-09",
-      "category": "Press_Releases",
-      "title": "Imposing Sanctions on the International Criminal Court",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/imposing-sanctions-on-the-international-criminal-court-2/",
+      "title": "Secretary Rubio’s Meeting with Venezuela’s 2015 National Assembly President Dinorah Figuera",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-rubios-meeting-with-venezuelas-2015-national-assembly-president-dinorah-figuera/",
       "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
       "source": "US_Department_of_State"
     }
