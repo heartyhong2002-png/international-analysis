@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-10T01:35:47.316374",
+  "updated_at": "2026-10-12T01:07:40.353956",
   "macro_and_finance": {
     "Consumer_Price_Index": {
       "series_id": "CPIAUCSL",
@@ -113,8 +113,28 @@
     }
   },
   "recent_presidential_actions_count": 30,
-  "recent_diplomatic_statements_count": 48,
+  "recent_diplomatic_statements_count": 10,
   "recent_top_presidential_actions": [
+    {
+      "date": "2026-10-13",
+      "type": "Presidential Document",
+      "title": "Columbus Day, 2026",
+      "executive_order_number": null,
+      "abstract": "",
+      "html_url": "https://www.federalregister.gov/documents/2026/10/13/2026-20972/columbus-day-2026",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-10-13/pdf/2026-20972.pdf",
+      "source": "Federal_Register_Presidential_Documents"
+    },
+    {
+      "date": "2026-10-13",
+      "type": "Presidential Document",
+      "title": "National Energy Dominance Month, 2026",
+      "executive_order_number": null,
+      "abstract": "",
+      "html_url": "https://www.federalregister.gov/documents/2026/10/13/2026-20969/national-energy-dominance-month-2026",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-10-13/pdf/2026-20969.pdf",
+      "source": "Federal_Register_Presidential_Documents"
+    },
     {
       "date": "2026-10-09",
       "type": "Presidential Document",
@@ -144,67 +164,47 @@
       "html_url": "https://www.federalregister.gov/documents/2026/10/05/2026-20439/presidential-determination-on-the-revocation-of-presidential-determinations-related-to-lebanon",
       "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-10-05/pdf/2026-20439.pdf",
       "source": "Federal_Register_Presidential_Documents"
-    },
-    {
-      "date": "2026-10-02",
-      "type": "Presidential Document",
-      "title": "Continuation of the National Emergency With Respect to the Situation in and in Relation to Syria",
-      "executive_order_number": null,
-      "abstract": "",
-      "html_url": "https://www.federalregister.gov/documents/2026/10/02/2026-20322/continuation-of-the-national-emergency-with-respect-to-the-situation-in-and-in-relation-to-syria",
-      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-10-02/pdf/2026-20322.pdf",
-      "source": "Federal_Register_Presidential_Documents"
-    },
-    {
-      "date": "2026-10-02",
-      "type": "Presidential Document",
-      "title": "Inaugurating the Era of Super Intelligence",
-      "executive_order_number": null,
-      "abstract": "",
-      "html_url": "https://www.federalregister.gov/documents/2026/10/02/2026-20321/inaugurating-the-era-of-super-intelligence",
-      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-10-02/pdf/2026-20321.pdf",
-      "source": "Federal_Register_Presidential_Documents"
     }
   ],
   "recent_top_diplomatic_statements": [
     {
-      "date": "2026-10-10",
-      "category": "Press_Releases",
-      "title": "Earthquake in Panama",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/earthquake-in-panama/",
-      "description": "<p>Marco Rubio, Secretary of State</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-cont",
+      "date": "2026-10-08",
+      "category": "Europe_Eurasia",
+      "title": "Secretary of State Marco Rubio and Portuguese Foreign Minister Paulo Rangel at a Joint Press Availability",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-of-state-marco-rubio-and-portuguese-foreign-minister-paulo-rangel-at-a-joint-press-availability/",
+      "description": "<p>Marco Rubio, Secretary of State</p>\n<p>Paulo Rangel, Portuguese Foreign Minister</p>\n<p>Lisbon, Portugal</p>\n<p>Palacio das Necessidades</p>\n\n<section class=\"wp-block-default-hero-container wp-bloc",
       "source": "US_Department_of_State"
     },
     {
-      "date": "2026-10-09",
-      "category": "Press_Releases",
-      "title": "Secretary Rubio’s Meeting with Venezuela’s 2015 National Assembly President Dinorah Figuera",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-rubios-meeting-with-venezuelas-2015-national-assembly-president-dinorah-figuera/",
+      "date": "2026-10-08",
+      "category": "Europe_Eurasia",
+      "title": "Secretary Rubio’s Meetings with Portuguese Prime Minister Montenegro and Foreign Minister Rangel",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-rubios-meetings-with-portuguese-prime-minister-montenegro-and-foreign-minister-rangel/",
       "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
       "source": "US_Department_of_State"
     },
     {
-      "date": "2026-10-09",
-      "category": "Press_Releases",
-      "title": "Secretary of State Marco Rubio and 2015 Venezuelan National Assembly President Dinorah Figuera Before Their Meeting",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-of-state-marco-rubio-and-2015-venezuelan-national-assembly-president-dinorah-figuera-before-their-meeting/",
-      "description": "<p>Marco Rubio, Secretary of State</p>\n<p>Dinorah Figuera, 2015 Venezuelan National Assembly President</p>\n<p>Washington, D.C.</p>\n<p>Harry S. Truman Building</p>\n\n<section class=\"wp-block-default-her",
-      "source": "US_Department_of_State"
-    },
-    {
-      "date": "2026-10-09",
-      "category": "Press_Releases",
-      "title": "Fiji National Day",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/fiji-national-day-2/",
-      "description": "<p>Marco Rubio, Secretary of State</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-cont",
-      "source": "US_Department_of_State"
-    },
-    {
-      "date": "2026-10-09",
-      "category": "Press_Releases",
-      "title": "Imposing Sanctions on the International Criminal Court",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/imposing-sanctions-on-the-international-criminal-court-2/",
+      "date": "2026-10-08",
+      "category": "Europe_Eurasia",
+      "title": "Secretary Rubio’s Meeting with Greek Prime Minister Mitsotakis",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-rubios-meeting-with-greek-prime-minister-mitsotakis/",
       "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
+      "source": "US_Department_of_State"
+    },
+    {
+      "date": "2026-10-08",
+      "category": "Europe_Eurasia",
+      "title": "Secretary of State Marco Rubio Remarks to the Press",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-of-state-marco-rubio-remarks-to-the-press-17/",
+      "description": "<p>Marco Rubio, Secretary of State</p>\n<p>Athens, Greece</p>\n<p>Athens International Airport</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \"",
+      "source": "US_Department_of_State"
+    },
+    {
+      "date": "2026-10-07",
+      "category": "Europe_Eurasia",
+      "title": "Secretary of State Marco Rubio and Greek Prime Minister Kyriakos Mitsotakis before their Expanded Meeting",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-of-state-marco-rubio-and-greek-prime-minister-kyriakos-mitsotakis-before-their-expanded-meeting/",
+      "description": "<p>Marco Rubio, Secretary of State</p>\n<p>Kyriakos Mitsotakis, Prime Minister</p>\n<p>Athens, Greece</p>\n<p>Maximos Mansion</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-co",
       "source": "US_Department_of_State"
     }
   ]
