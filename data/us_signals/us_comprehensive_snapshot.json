@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-12T01:07:40.353956",
+  "updated_at": "2026-10-13T02:57:01.413757",
   "macro_and_finance": {
     "Consumer_Price_Index": {
       "series_id": "CPIAUCSL",
@@ -84,36 +84,36 @@
     "VIX_Volatility_Index": {
       "series_id": "VIXCLS",
       "category": "Finance",
-      "value": 15.41,
-      "prev_value": 15.08,
-      "change": 0.33,
-      "date": "2026-10-08",
+      "value": 14.84,
+      "prev_value": 15.41,
+      "change": -0.57,
+      "date": "2026-10-09",
       "description": "CBOE VIX 변동성지수 (시장 공포 지수)",
       "unit": "Index"
     },
     "SP500_Stock_Index": {
       "series_id": "SP500",
       "category": "Finance",
-      "value": 7811.54,
-      "prev_value": 7765.36,
-      "change": 46.18,
-      "date": "2026-10-09",
+      "value": 7807.24,
+      "prev_value": 7811.54,
+      "change": -4.3,
+      "date": "2026-10-12",
       "description": "S&P 500 주가지수",
       "unit": "Points"
     },
     "Economic_Policy_Uncertainty": {
       "series_id": "USEPUINDXD",
       "category": "Politics",
-      "value": 353.79,
-      "prev_value": 295.63,
-      "change": 58.16,
-      "date": "2026-10-08",
+      "value": 242.69,
+      "prev_value": 146.69,
+      "change": 96.0,
+      "date": "2026-10-11",
       "description": "미국 경제/정치 정책 불확실성 지수",
       "unit": "Index"
     }
   },
   "recent_presidential_actions_count": 30,
-  "recent_diplomatic_statements_count": 10,
+  "recent_diplomatic_statements_count": 20,
   "recent_top_presidential_actions": [
     {
       "date": "2026-10-13",
@@ -168,43 +168,43 @@
   ],
   "recent_top_diplomatic_statements": [
     {
-      "date": "2026-10-08",
-      "category": "Europe_Eurasia",
-      "title": "Secretary of State Marco Rubio and Portuguese Foreign Minister Paulo Rangel at a Joint Press Availability",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-of-state-marco-rubio-and-portuguese-foreign-minister-paulo-rangel-at-a-joint-press-availability/",
-      "description": "<p>Marco Rubio, Secretary of State</p>\n<p>Paulo Rangel, Portuguese Foreign Minister</p>\n<p>Lisbon, Portugal</p>\n<p>Palacio das Necessidades</p>\n\n<section class=\"wp-block-default-hero-container wp-bloc",
-      "source": "US_Department_of_State"
-    },
-    {
-      "date": "2026-10-08",
-      "category": "Europe_Eurasia",
-      "title": "Secretary Rubio’s Meetings with Portuguese Prime Minister Montenegro and Foreign Minister Rangel",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-rubios-meetings-with-portuguese-prime-minister-montenegro-and-foreign-minister-rangel/",
+      "date": "2026-10-12",
+      "category": "Press_Briefings",
+      "title": "Second U.S.-Japan Free and Open Indo-Pacific (FOIP) Dialogue",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/second-u-s-japan-free-and-open-indo-pacific-foip-dialogue/",
       "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
       "source": "US_Department_of_State"
     },
     {
-      "date": "2026-10-08",
-      "category": "Europe_Eurasia",
-      "title": "Secretary Rubio’s Meeting with Greek Prime Minister Mitsotakis",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-rubios-meeting-with-greek-prime-minister-mitsotakis/",
+      "date": "2026-10-10",
+      "category": "Press_Releases",
+      "title": "Secretary Rubio’s Call with Japanese Foreign Minister Motegi",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-rubios-call-with-japanese-foreign-minister-motegi/",
       "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
       "source": "US_Department_of_State"
     },
     {
-      "date": "2026-10-08",
-      "category": "Europe_Eurasia",
-      "title": "Secretary of State Marco Rubio Remarks to the Press",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-of-state-marco-rubio-remarks-to-the-press-17/",
-      "description": "<p>Marco Rubio, Secretary of State</p>\n<p>Athens, Greece</p>\n<p>Athens International Airport</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \"",
+      "date": "2026-10-10",
+      "category": "Press_Releases",
+      "title": "The United States Mobilizes Immediate Response to the Panama Earthquakes",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/the-united-states-mobilizes-immediate-response-to-the-panama-earthquakes/",
+      "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
       "source": "US_Department_of_State"
     },
     {
-      "date": "2026-10-07",
-      "category": "Europe_Eurasia",
-      "title": "Secretary of State Marco Rubio and Greek Prime Minister Kyriakos Mitsotakis before their Expanded Meeting",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-of-state-marco-rubio-and-greek-prime-minister-kyriakos-mitsotakis-before-their-expanded-meeting/",
-      "description": "<p>Marco Rubio, Secretary of State</p>\n<p>Kyriakos Mitsotakis, Prime Minister</p>\n<p>Athens, Greece</p>\n<p>Maximos Mansion</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-co",
+      "date": "2026-10-10",
+      "category": "Press_Releases",
+      "title": "Earthquake in Panama",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/earthquake-in-panama/",
+      "description": "<p>Marco Rubio, Secretary of State</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-cont",
+      "source": "US_Department_of_State"
+    },
+    {
+      "date": "2026-10-09",
+      "category": "Press_Releases",
+      "title": "Reconciliation Talks Deliver Concrete Progress for Venezuela’s Democratic Transition",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/reconciliation-talks-deliver-concrete-progress-for-venezuelas-democratic-transition/",
+      "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
       "source": "US_Department_of_State"
     }
   ]
