@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-10-14T01:01:31.751802",
+  "updated_at": "2026-10-15T00:22:48.006390",
   "macro_and_finance": {
     "Consumer_Price_Index": {
       "series_id": "CPIAUCSL",
       "category": "Economy",
-      "value": 334.131,
-      "prev_value": 332.813,
-      "change": 1.318,
-      "date": "2026-08-01",
+      "value": 336.298,
+      "prev_value": 334.131,
+      "change": 2.167,
+      "date": "2026-09-01",
       "description": "미국 소비자물가지수 (CPI)",
       "unit": "Index 1982-1984=100"
     },
@@ -34,20 +34,20 @@
     "Yield_Curve_Spread_10Y2Y": {
       "series_id": "T10Y2Y",
       "category": "Finance",
-      "value": 0.42,
-      "prev_value": 0.44,
-      "change": -0.02,
-      "date": "2026-10-13",
+      "value": 0.37,
+      "prev_value": 0.42,
+      "change": -0.05,
+      "date": "2026-10-14",
       "description": "장단기 금리차 (10년-2년, 경기침체 선행지표)",
       "unit": "%"
     },
     "Treasury_Yield_10Y": {
       "series_id": "DGS10",
       "category": "Finance",
-      "value": 5.24,
-      "prev_value": 5.22,
-      "change": 0.02,
-      "date": "2026-10-09",
+      "value": 5.21,
+      "prev_value": 5.24,
+      "change": -0.03,
+      "date": "2026-10-13",
       "description": "미 국채 10년물 금리",
       "unit": "%"
     },
@@ -64,57 +64,67 @@
     "High_Yield_Credit_Spread": {
       "series_id": "BAMLH0A0HYM2",
       "category": "Finance",
-      "value": 3.11,
+      "value": 3.16,
       "prev_value": 3.11,
-      "change": 0.0,
-      "date": "2026-10-12",
+      "change": 0.05,
+      "date": "2026-10-13",
       "description": "미국 하이일드 채권 스프레드 (기업 부도/신용 리스크)",
       "unit": "%"
     },
     "Financial_Stress_Index": {
       "series_id": "STLFSI4",
       "category": "Finance",
-      "value": -0.4681,
-      "prev_value": -0.8091,
-      "change": 0.341,
-      "date": "2026-10-02",
+      "value": -0.7206,
+      "prev_value": -0.4675,
+      "change": -0.2531,
+      "date": "2026-10-09",
       "description": "세인트루이스 연준 금융스트레스지수 (0 이상=스트레스 가중)",
       "unit": "Index"
     },
     "VIX_Volatility_Index": {
       "series_id": "VIXCLS",
       "category": "Finance",
-      "value": 15.21,
-      "prev_value": 14.84,
-      "change": 0.37,
-      "date": "2026-10-12",
+      "value": 15.27,
+      "prev_value": 15.21,
+      "change": 0.06,
+      "date": "2026-10-13",
       "description": "CBOE VIX 변동성지수 (시장 공포 지수)",
       "unit": "Index"
     },
     "SP500_Stock_Index": {
       "series_id": "SP500",
       "category": "Finance",
-      "value": 7805.45,
-      "prev_value": 7807.24,
-      "change": -1.79,
-      "date": "2026-10-13",
+      "value": 7718.94,
+      "prev_value": 7805.45,
+      "change": -86.51,
+      "date": "2026-10-14",
       "description": "S&P 500 주가지수",
       "unit": "Points"
     },
     "Economic_Policy_Uncertainty": {
       "series_id": "USEPUINDXD",
       "category": "Politics",
-      "value": 155.29,
-      "prev_value": 224.1,
-      "change": -68.81,
-      "date": "2026-10-12",
+      "value": 216.72,
+      "prev_value": 248.05,
+      "change": -31.33,
+      "date": "2026-10-13",
       "description": "미국 경제/정치 정책 불확실성 지수",
       "unit": "Index"
     }
   },
   "recent_presidential_actions_count": 30,
-  "recent_diplomatic_statements_count": 42,
+  "recent_diplomatic_statements_count": 41,
   "recent_top_presidential_actions": [
+    {
+      "date": "2026-10-14",
+      "type": "Presidential Document",
+      "title": "Establishment of a Committee of Inquiry To Investigate Allegations of False Statements by Lisa DeNell Cook",
+      "executive_order_number": null,
+      "abstract": "",
+      "html_url": "https://www.federalregister.gov/documents/2026/10/14/2026-21061/establishment-of-a-committee-of-inquiry-to-investigate-allegations-of-false-statements-by-lisa",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-10-14/pdf/2026-21061.pdf",
+      "source": "Federal_Register_Presidential_Documents"
+    },
     {
       "date": "2026-10-13",
       "type": "Presidential Document",
@@ -154,16 +164,6 @@
       "html_url": "https://www.federalregister.gov/documents/2026/10/07/2026-20629/national-manufacturing-day-2026",
       "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-10-07/pdf/2026-20629.pdf",
       "source": "Federal_Register_Presidential_Documents"
-    },
-    {
-      "date": "2026-10-05",
-      "type": "Presidential Document",
-      "title": "Presidential Determination on the Revocation of Presidential Determinations Related to Lebanon",
-      "executive_order_number": null,
-      "abstract": "",
-      "html_url": "https://www.federalregister.gov/documents/2026/10/05/2026-20439/presidential-determination-on-the-revocation-of-presidential-determinations-related-to-lebanon",
-      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2026-10-05/pdf/2026-20439.pdf",
-      "source": "Federal_Register_Presidential_Documents"
     }
   ],
   "recent_top_diplomatic_statements": [
@@ -173,14 +173,6 @@
       "title": "Secretary Rubio’s Travel to Samarkand, Mumbai, and Jamnagar",
       "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/secretary-rubios-travel-to-samarkand-mumbai-and-jamnagar/",
       "description": "<p>Office of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block-default-hero module featured-content page",
-      "source": "US_Department_of_State"
-    },
-    {
-      "date": "2026-10-13",
-      "category": "Press_Releases",
-      "title": "Nicaragua’s Denial of Agrément",
-      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/nicaraguas-denial-of-agrement/",
-      "description": "<p>Thomas &quot;Tommy&quot; Pigott, SpokesmanOffice of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block",
       "source": "US_Department_of_State"
     },
     {
@@ -204,6 +196,14 @@
       "category": "Press_Releases",
       "title": "One-Year Anniversary of the Gaza Peace Summit",
       "link": "https://www.state.gov/one-year-anniversary-of-the-gaza-peace-summit/",
+      "description": "<p>Thomas &quot;Tommy&quot; Pigott, SpokesmanOffice of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block",
+      "source": "US_Department_of_State"
+    },
+    {
+      "date": "2026-10-13",
+      "category": "Press_Releases",
+      "title": "Nicaragua’s Denial of Agrément",
+      "link": "https://www.state.gov/releases/office-of-the-spokesman/2026/10/nicaraguas-denial-of-agrement/",
       "description": "<p>Thomas &quot;Tommy&quot; Pigott, SpokesmanOffice of the Spokesman</p>\n\n<section class=\"wp-block-default-hero-container wp-block-default-hero-container--no-featured-content \">\n\n\t<div class=\"wp-block",
       "source": "US_Department_of_State"
     }
