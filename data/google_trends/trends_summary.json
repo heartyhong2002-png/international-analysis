@@ -1,0 +1,137 @@
+{
+  "generated_at": "2026-09-29T15:15:44.314016",
+  "total_keywords_tracked": 20,
+  "surge_count": 6,
+  "surge_alerts": [
+    {
+      "country_code": "RU",
+      "country_name": "러시아",
+      "risk_theme": "군사동원·경제제재 충격·전쟁피로",
+      "supply_chain_relevance": "에너지·곡물 공급망 핵심",
+      "keyword": "конец войны",
+      "timeframe": "today 3-m",
+      "period_avg_score": 1.2,
+      "recent_7d_avg_score": 6.4,
+      "period_max_score": 23,
+      "surge_ratio": 5.15,
+      "signal": "SURGE",
+      "fetched_at": "2026-09-29 15:15:00"
+    },
+    {
+      "country_code": "RU",
+      "country_name": "러시아",
+      "risk_theme": "군사동원·경제제재 충격·전쟁피로",
+      "supply_chain_relevance": "에너지·곡물 공급망 핵심",
+      "keyword": "мирные переговоры",
+      "timeframe": "today 3-m",
+      "period_avg_score": 0.3,
+      "recent_7d_avg_score": 2.1,
+      "period_max_score": 3,
+      "surge_ratio": 7.66,
+      "signal": "SURGE",
+      "fetched_at": "2026-09-29 15:15:00"
+    },
+    {
+      "country_code": "RU",
+      "country_name": "러시아",
+      "risk_theme": "군사동원·경제제재 충격·전쟁피로",
+      "supply_chain_relevance": "에너지·곡물 공급망 핵심",
+      "keyword": "потери армии",
+      "timeframe": "today 3-m",
+      "period_avg_score": 0.2,
+      "recent_7d_avg_score": 1.6,
+      "period_max_score": 4,
+      "surge_ratio": 7.31,
+      "signal": "SURGE",
+      "fetched_at": "2026-09-29 15:15:00"
+    },
+    {
+      "country_code": "SA",
+      "country_name": "사우디아라비아",
+      "risk_theme": "후티 위협·에너지 수출 리스크",
+      "supply_chain_relevance": "한국 에너지 수입 핵심",
+      "keyword": "الحوثيون",
+      "timeframe": "today 3-m",
+      "period_avg_score": 1.5,
+      "recent_7d_avg_score": 3.4,
+      "period_max_score": 13,
+      "surge_ratio": 2.21,
+      "signal": "SURGE",
+      "fetched_at": "2026-09-29 15:15:33"
+    },
+    {
+      "country_code": "SA",
+      "country_name": "사우디아라비아",
+      "risk_theme": "후티 위협·에너지 수출 리스크",
+      "supply_chain_relevance": "한국 에너지 수입 핵심",
+      "keyword": "اليمن",
+      "timeframe": "today 3-m",
+      "period_avg_score": 12.3,
+      "recent_7d_avg_score": 38.3,
+      "period_max_score": 100,
+      "surge_ratio": 3.12,
+      "signal": "SURGE",
+      "fetched_at": "2026-09-29 15:15:33"
+    },
+    {
+      "country_code": "SA",
+      "country_name": "사우디아라비아",
+      "risk_theme": "후티 위협·에너지 수출 리스크",
+      "supply_chain_relevance": "한국 에너지 수입 핵심",
+      "keyword": "اقتصاد",
+      "timeframe": "today 3-m",
+      "period_avg_score": 0.5,
+      "recent_7d_avg_score": 0.9,
+      "period_max_score": 1,
+      "surge_ratio": 1.66,
+      "signal": "rising",
+      "fetched_at": "2026-09-29 15:15:33"
+    }
+  ],
+  "by_country": {
+    "RU": {
+      "country_name": "러시아",
+      "total": 10,
+      "surge": 3,
+      "top_keywords": [
+        {
+          "keyword": "конец войны",
+          "surge_ratio": 5.15,
+          "signal": "SURGE"
+        },
+        {
+          "keyword": "мирные переговоры",
+          "surge_ratio": 7.66,
+          "signal": "SURGE"
+        },
+        {
+          "keyword": "потери армии",
+          "surge_ratio": 7.31,
+          "signal": "SURGE"
+        }
+      ]
+    },
+    "SA": {
+      "country_name": "사우디아라비아",
+      "total": 10,
+      "surge": 3,
+      "top_keywords": [
+        {
+          "keyword": "الحوثيون",
+          "surge_ratio": 2.21,
+          "signal": "SURGE"
+        },
+        {
+          "keyword": "اليمن",
+          "surge_ratio": 3.12,
+          "signal": "SURGE"
+        },
+        {
+          "keyword": "اقتصاد",
+          "surge_ratio": 1.66,
+          "signal": "rising"
+        }
+      ]
+    }
+  }
+}

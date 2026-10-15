@@ -10,6 +10,8 @@
 
 따라서 현재 정체성은 뉴스 자동화가 아니라 **OSINT 기반 리스크 인텔리전스 프로토타입**이다. 비전통 신호는 항상 출처, 수집 시각, 검증 상태, 한계와 함께 표시해야 하며, 단일 출처만으로 Alert Level을 확정하지 않는다.
 
+GDELT Cloud는 현재 Academic & Research 계정(월 5,000 QU)을 사용한다. 비용·쿼터 안전을 위해 통합 파이프라인에서는 기본 호출하지 않으며, `--with-gdelt-cloud`를 명시한 경우에만 로컬 월 4,500 QU·일 100 QU 안전상한과 요청 간격 가드를 거쳐 수집한다. 로컬 미터는 `data/gdelt_cloud/quota_state.json`에 저장하고 실제 사용량은 GDELT Cloud Usage 화면을 기준으로 한다.
+
 핵심 산출물은 `output/dashboard/index.html` 대시보드다. Markdown, PDF, Word 보고서와 MySQL 뷰는 대시보드를 뒷받침하는 증거 자료로 본다.
 
 ## Important Direction Change
@@ -40,12 +42,14 @@
 8. `docs/current/DATA_COLLECTION_ROADMAP.md` when planning sensor expansion
 9. `docs/current/DATA_COLLECTION_SESSION_PROMPT.md` when starting a data-collection session
 10. `docs/current/DASHBOARD_SESSION_PROMPT.md` when starting a dashboard/UI session
-11. `docs/current/LLM_SYSTEM_SUMMARY.md`
-12. `docs/current/DATABASE_SETUP.md` when database context is needed
-13. `docs/SESSION_PROMPTS.md` when starting role-specific AI sessions
-14. `docs/REPOSITORY_STRUCTURE.md` when moving or classifying files
-15. `project-handoff.md` only when detailed history or coordination context is needed
-16. `docs/history/PROJECT_EVOLUTION_TIMELINE.md` when the pivot story is needed
+11. `docs/current/PYTHON_SCRIPT_INVENTORY.md` when organizing or adding Python scripts
+12. `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md` when changing collection lanes, source registries, or pipeline boundaries
+12. `docs/current/LLM_SYSTEM_SUMMARY.md`
+13. `docs/current/DATABASE_SETUP.md` when database context is needed
+14. `docs/SESSION_PROMPTS.md` when starting role-specific AI sessions
+15. `docs/REPOSITORY_STRUCTURE.md` when moving or classifying files
+16. `project-handoff.md` only when detailed history or coordination context is needed
+17. `docs/history/PROJECT_EVOLUTION_TIMELINE.md` when the pivot story is needed
 
 ## Notion Hub
 

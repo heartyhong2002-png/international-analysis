@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0",
+  "source": "whitehouse_official",
+  "collected_at": "2026-10-15T14:49:36.947155+00:00",
+  "query": {
+    "days": 1,
+    "limit": 3,
+    "include_sitemap": false
+  },
+  "receipt": {
+    "source_id": "whitehouse_official",
+    "rss_url": "https://www.whitehouse.gov/releases/feed/",
+    "sitemap_url": null,
+    "observed_at": "2026-10-15T14:49:36.947155+00:00",
+    "status": "SUCCESS",
+    "access_method": "official_rss",
+    "errors": [],
+    "rss_row_count": 3,
+    "sitemap_discovery_count": 0,
+    "content_downloaded": false
+  },
+  "records": [
+    {
+      "source_id": "whitehouse_releases_rss",
+      "source_type": "official_statement",
+      "publisher": "The White House",
+      "country": "US",
+      "source_url": "https://www.whitehouse.gov/releases/2026/10/icymi-largest-ever-federal-anti-transnational-crime-operation-nets-1296-tren-de-aragua-arrests-nationwide/",
+      "published_at": "2026-10-15T14:30:45+00:00",
+      "observed_at": "2026-10-15T14:49:36.947155+00:00",
+      "title": "ICYMI: “Largest-ever federal anti-transnational crime operation nets 1,296 Tren de Aragua arrests nationwide”",
+      "summary": "<p>President Donald J. Trump is systematically dismantling the bloodthirsty Tren de Aragua gang that Biden’s open borders allowed to pour into American communities. The Trump Administration has launched the largest federal campaign against transnational crime in U.S. history — identifying, arresting, and removing these vicious foreign criminals and driving violent crime down nationwide. The Washington [&#8230;]</p>\n<p>The post <a href=\"https://www.whitehouse.gov/releases/2026/10/icymi-largest-ever-federal-anti-transnational-crime-operation-nets-1296-tren-de-aragua-arrests-nationwide/\">ICYMI: “Largest-ever federal anti-transnational crime operation nets 1,296 Tren de Aragua arrests nationwide”</a> appeared first on <a href=\"https://www.whitehouse.gov\">The White House</a>.</p>",
+      "document_type": "Releases",
+      "guid": "https://www.whitehouse.gov/?p=52867",
+      "raw_ref": "rss_latest.xml",
+      "parse_status": "SUCCESS",
+      "license_access_note": "Official public White House RSS; retain source URL and respect robots.txt."
+    },
+    {
+      "source_id": "whitehouse_releases_rss",
+      "source_type": "official_statement",
+      "publisher": "The White House",
+      "country": "US",
+      "source_url": "https://www.whitehouse.gov/releases/2026/10/president-trump-visits-montana-with-a-record-of-results-for-workers-families-and-communities/",
+      "published_at": "2026-10-14T21:58:37+00:00",
+      "observed_at": "2026-10-15T14:49:36.947155+00:00",
+      "title": "President Trump Visits Montana with a Record of Results for Workers, Families, and Communities",
+      "summary": "<p>Today, President Donald J. Trump heads to Montana for a stop in Kalispell. He arrives with a proven record of America First policies that put Montana workers, families, seniors, and communities first — delivering historic tax relief, unleashing private investment and job growth, securing energy dominance, building critical minerals independence, and protecting public lands and [&#8230;]</p>\n<p>The post <a href=\"https://www.whitehouse.gov/releases/2026/10/president-trump-visits-montana-with-a-record-of-results-for-workers-families-and-communities/\">President Trump Visits Montana with a Record of Results for Workers, Families, and Communities</a> appeared first on <a href=\"https://www.whitehouse.gov\">The White House</a>.</p>",
+      "document_type": "Releases",
+      "guid": "https://www.whitehouse.gov/?p=52842",
+      "raw_ref": "rss_latest.xml",
+      "parse_status": "SUCCESS",
+      "license_access_note": "Official public White House RSS; retain source URL and respect robots.txt."
+    },
+    {
+      "source_id": "whitehouse_releases_rss",
+      "source_type": "official_statement",
+      "publisher": "The White House",
+      "country": "US",
+      "source_url": "https://www.whitehouse.gov/releases/2026/10/president-trump-returns-to-arizona-with-a-record-of-results-tax-relief-jobs-and-border-security/",
+      "published_at": "2026-10-14T18:56:18+00:00",
+      "observed_at": "2026-10-15T14:49:36.947155+00:00",
+      "title": "President Trump Returns to Arizona with a Record of Results: Tax Relief, Jobs, and Border Security",
+      "summary": "<p>Today, President Donald J. Trump returns to the Grand Canyon State for a visit to Bullhead City. He arrives with a clear record of America First results that put Arizona workers, families, seniors, and communities first — delivering tax relief, unleashing major private investment, ending the Biden-era border crisis, driving down violent crime, and securing [&#8230;]</p>\n<p>The post <a href=\"https://www.whitehouse.gov/releases/2026/10/president-trump-returns-to-arizona-with-a-record-of-results-tax-relief-jobs-and-border-security/\">President Trump Returns to Arizona with a Record of Results: Tax Relief, Jobs, and Border Security</a> appeared first on <a href=\"https://www.whitehouse.gov\">The White House</a>.</p>",
+      "document_type": "Releases",
+      "guid": "https://www.whitehouse.gov/?p=52823",
+      "raw_ref": "rss_latest.xml",
+      "parse_status": "SUCCESS",
+      "license_access_note": "Official public White House RSS; retain source URL and respect robots.txt."
+    }
+  ],
+  "raw": {
+    "rss_sha256": "6fc60f04737f6f49b64960dd80e68e3ec1ccdbc758688fe8110060d3393a630b",
+    "raw_ref": "rss_latest.xml"
+  }
+}

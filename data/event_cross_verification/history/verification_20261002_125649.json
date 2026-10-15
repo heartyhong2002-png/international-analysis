@@ -1,0 +1,710 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-10-02T03:56:49.155658+00:00",
+  "total_events_checked": 11,
+  "cross_verification_contract": {
+    "single_source_elevate_forbidden": true,
+    "allowed_verification_states": [
+      "UNVERIFIED",
+      "PARTIALLY_CONFIRMED",
+      "CROSS_VERIFIED",
+      "REFUTED"
+    ],
+    "required_channels_for_alert": [
+      "market_behavior",
+      "physical_infrastructure",
+      "official_statements",
+      "local_media"
+    ]
+  },
+  "verified_events": [
+    {
+      "event_id": "cameoplus_00c45344001ccc94",
+      "event_title": "United States deploys third carrier strike group toward Iran",
+      "event_summary": "On 2026-10-02, the United States reportedly moved to deploy a third aircraft carrier strike group and 10,000 additional troops to the Middle East, directed toward encircling Iran. The report also says President Trump rejected a proposal concerning the Strait of Hormuz, but gives no specific deployment location or more precise occurrence date.",
+      "geo_country": "Iran",
+      "event_date": "2026-10-02",
+      "category": "POLITICAL",
+      "subcategory": "Mobilize/increase Armed Forces",
+      "verification_state": "CROSS_VERIFIED",
+      "claim_status": "PARTIALLY_CONFIRMED",
+      "distinct_channel_count": 4,
+      "matched_channels": [
+        "local_public_opinion",
+        "freight_market",
+        "maritime_chokepoint",
+        "telegram_osint_public"
+      ],
+      "corroborations_count": 6,
+      "corroboration_evidence": [
+        {
+          "channel": "maritime_chokepoint",
+          "source": "HORMUZ_PROFILE",
+          "signal_type": "physical_infrastructure",
+          "note": "호르무즈 해협 위협 평가: Critical (긴장 고조 시 선박 억류 리스크), 시장신호: 브렌트유 일간 -1.22%, 원유 탱커선사 일간 4.61%"
+        },
+        {
+          "channel": "freight_market",
+          "source": "yfinance_FRO",
+          "signal_type": "market_behavior",
+          "note": "원유 유조선사(FRO) 주가 21.12% 급등 — 호르무즈 분쟁 프리미엄 시장 반영"
+        },
+        {
+          "channel": "maritime_chokepoint",
+          "source": "TAIWAN_STRAIT_PROFILE",
+          "signal_type": "physical_infrastructure",
+          "note": "대만 해협: 전 세계 컨테이너 선박 48% 통과, 반도체 파운드리 물류로, 지연 2~4일 추가 (대만 동부 태평양 우회)"
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] AI lifts Central Taiwan Science Park revenue to first-half record 19:42  Semicon..."
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] TAIWAN: Micron’s Pay Packages Show Just How Wide Taiwan’s AI Wage Gap Has Become..."
+        },
+        {
+          "channel": "telegram_osint_public",
+          "source": "Telegram_Public_Claims",
+          "signal_type": "armed_group_claim",
+          "note": "중동 교전 세력의 24시간 내 군사 작전 및 미사일 발사 공개 주장 관측됨"
+        }
+      ],
+      "contradictions": [],
+      "alert_candidate_level": "WARNING",
+      "single_source_elevate_forbidden": true,
+      "confidence_assessment": "HIGH (복수 계통 일치: local_public_opinion, freight_market, maritime_chokepoint, telegram_osint_public)",
+      "verified_at": "2026-10-02T03:56:49.154166+00:00"
+    },
+    {
+      "event_id": "cameoplus_65a1e1fdf6c944dd",
+      "event_title": "Yemeni government discusses maritime security with International Crisis Group",
+      "event_summary": "On 2026-09-26, the Yemeni government discussed the conflict’s effects on maritime security with the International Crisis Group. Yemeni official Al-Zouba said Houthi escalation in the Red Sea and Bab al-Mandab, including reported ship targeting and threats to commercial navigation, affected regional security and international trade routes.",
+      "geo_country": "Yemen",
+      "event_date": "2026-09-26",
+      "category": "POLITICAL",
+      "subcategory": "",
+      "verification_state": "CROSS_VERIFIED",
+      "claim_status": "PARTIALLY_CONFIRMED",
+      "distinct_channel_count": 4,
+      "matched_channels": [
+        "local_public_opinion",
+        "freight_market",
+        "maritime_chokepoint",
+        "telegram_osint_public"
+      ],
+      "corroborations_count": 6,
+      "corroboration_evidence": [
+        {
+          "channel": "maritime_chokepoint",
+          "source": "BAB_EL_MANDEB_PROFILE",
+          "signal_type": "physical_infrastructure",
+          "note": "바브엘만데브 해협: 희망봉 우회 10~14일 추가 (희망봉 우회), 전쟁보험료 High (선박가의 0.5%~1.0% 추가 할증)"
+        },
+        {
+          "channel": "freight_market",
+          "source": "yfinance_ZIM",
+          "signal_type": "market_behavior",
+          "note": "컨테이너 선사(ZIM) 운임 지표 일간 1.47%, 월간 6.17% 반영"
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] AI lifts Central Taiwan Science Park revenue to first-half record 19:42  Semicon..."
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] TAIWAN: Micron’s Pay Packages Show Just How Wide Taiwan’s AI Wage Gap Has Become..."
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] TSMC planeja 2ª fábrica em Cingapura após produção da 1ª unidade ser toda reserv..."
+        },
+        {
+          "channel": "telegram_osint_public",
+          "source": "Telegram_Public_Claims",
+          "signal_type": "armed_group_claim",
+          "note": "중동 교전 세력의 24시간 내 군사 작전 및 미사일 발사 공개 주장 관측됨"
+        }
+      ],
+      "contradictions": [],
+      "alert_candidate_level": "WARNING",
+      "single_source_elevate_forbidden": true,
+      "confidence_assessment": "HIGH (복수 계통 일치: local_public_opinion, freight_market, maritime_chokepoint, telegram_osint_public)",
+      "verified_at": "2026-10-02T03:56:49.154166+00:00"
+    },
+    {
+      "event_id": "cameoplus_50ffcff319b39f0b",
+      "event_title": "Yemen armed forces urge aviation bodies to protect Red Sea flights",
+      "event_summary": "On 2026-09-26, Yemen Armed Forces spokesperson Majid Abdullah Al-Nuzaili urged the International Civil Aviation Organization and International Air Transport Association to take a firm position and measures to protect civil aviation. He warned that Houthi weapons launched from Hodeidah Governorate threatened aircraft using international routes over the southern Red Sea.",
+      "geo_country": "Yemen",
+      "event_date": "2026-09-26",
+      "category": "POLITICAL",
+      "subcategory": "",
+      "verification_state": "CROSS_VERIFIED",
+      "claim_status": "PARTIALLY_CONFIRMED",
+      "distinct_channel_count": 4,
+      "matched_channels": [
+        "local_public_opinion",
+        "freight_market",
+        "maritime_chokepoint",
+        "telegram_osint_public"
+      ],
+      "corroborations_count": 6,
+      "corroboration_evidence": [
+        {
+          "channel": "maritime_chokepoint",
+          "source": "BAB_EL_MANDEB_PROFILE",
+          "signal_type": "physical_infrastructure",
+          "note": "바브엘만데브 해협: 희망봉 우회 10~14일 추가 (희망봉 우회), 전쟁보험료 High (선박가의 0.5%~1.0% 추가 할증)"
+        },
+        {
+          "channel": "freight_market",
+          "source": "yfinance_ZIM",
+          "signal_type": "market_behavior",
+          "note": "컨테이너 선사(ZIM) 운임 지표 일간 1.47%, 월간 6.17% 반영"
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] AI lifts Central Taiwan Science Park revenue to first-half record 19:42  Semicon..."
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] TAIWAN: Micron’s Pay Packages Show Just How Wide Taiwan’s AI Wage Gap Has Become..."
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] TSMC planeja 2ª fábrica em Cingapura após produção da 1ª unidade ser toda reserv..."
+        },
+        {
+          "channel": "telegram_osint_public",
+          "source": "Telegram_Public_Claims",
+          "signal_type": "armed_group_claim",
+          "note": "중동 교전 세력의 24시간 내 군사 작전 및 미사일 발사 공개 주장 관측됨"
+        }
+      ],
+      "contradictions": [],
+      "alert_candidate_level": "WARNING",
+      "single_source_elevate_forbidden": true,
+      "confidence_assessment": "HIGH (복수 계통 일치: local_public_opinion, freight_market, maritime_chokepoint, telegram_osint_public)",
+      "verified_at": "2026-10-02T03:56:49.154166+00:00"
+    },
+    {
+      "event_id": "cameoplus_297bde28ba9bc0b8",
+      "event_title": "Yemen foreign minister discusses Houthi escalation with US envoy",
+      "event_summary": "On 2026-10-01, the Yemen foreign minister discussed Houthi escalation with the US chargé d'affaires in Aden. The title says the discussion concerned threats to regional security and international navigation; it provides no further details.",
+      "geo_country": "Yemen",
+      "event_date": "2026-10-01",
+      "category": "POLITICAL",
+      "subcategory": "",
+      "verification_state": "CROSS_VERIFIED",
+      "claim_status": "PARTIALLY_CONFIRMED",
+      "distinct_channel_count": 4,
+      "matched_channels": [
+        "local_public_opinion",
+        "freight_market",
+        "maritime_chokepoint",
+        "telegram_osint_public"
+      ],
+      "corroborations_count": 6,
+      "corroboration_evidence": [
+        {
+          "channel": "maritime_chokepoint",
+          "source": "BAB_EL_MANDEB_PROFILE",
+          "signal_type": "physical_infrastructure",
+          "note": "바브엘만데브 해협: 희망봉 우회 10~14일 추가 (희망봉 우회), 전쟁보험료 High (선박가의 0.5%~1.0% 추가 할증)"
+        },
+        {
+          "channel": "freight_market",
+          "source": "yfinance_ZIM",
+          "signal_type": "market_behavior",
+          "note": "컨테이너 선사(ZIM) 운임 지표 일간 1.47%, 월간 6.17% 반영"
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] AI lifts Central Taiwan Science Park revenue to first-half record 19:42  Semicon..."
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] TAIWAN: Micron’s Pay Packages Show Just How Wide Taiwan’s AI Wage Gap Has Become..."
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] TSMC planeja 2ª fábrica em Cingapura após produção da 1ª unidade ser toda reserv..."
+        },
+        {
+          "channel": "telegram_osint_public",
+          "source": "Telegram_Public_Claims",
+          "signal_type": "armed_group_claim",
+          "note": "중동 교전 세력의 24시간 내 군사 작전 및 미사일 발사 공개 주장 관측됨"
+        }
+      ],
+      "contradictions": [],
+      "alert_candidate_level": "WARNING",
+      "single_source_elevate_forbidden": true,
+      "confidence_assessment": "HIGH (복수 계통 일치: local_public_opinion, freight_market, maritime_chokepoint, telegram_osint_public)",
+      "verified_at": "2026-10-02T03:56:49.154166+00:00"
+    },
+    {
+      "event_id": "cameoplus_ef33c6fc95e6c4fc",
+      "event_title": "Yemen foreign minister discusses Red Sea security with Chinese envoy",
+      "event_summary": "On 2026-09-29, Yemen's foreign minister discussed bilateral cooperation and Red Sea maritime security with the Chinese chargé d'affaires. The title does not provide a venue or further details about the discussion.",
+      "geo_country": "Yemen",
+      "event_date": "2026-09-29",
+      "category": "POLITICAL",
+      "subcategory": "",
+      "verification_state": "CROSS_VERIFIED",
+      "claim_status": "PARTIALLY_CONFIRMED",
+      "distinct_channel_count": 4,
+      "matched_channels": [
+        "local_public_opinion",
+        "freight_market",
+        "maritime_chokepoint",
+        "telegram_osint_public"
+      ],
+      "corroborations_count": 6,
+      "corroboration_evidence": [
+        {
+          "channel": "maritime_chokepoint",
+          "source": "BAB_EL_MANDEB_PROFILE",
+          "signal_type": "physical_infrastructure",
+          "note": "바브엘만데브 해협: 희망봉 우회 10~14일 추가 (희망봉 우회), 전쟁보험료 High (선박가의 0.5%~1.0% 추가 할증)"
+        },
+        {
+          "channel": "freight_market",
+          "source": "yfinance_ZIM",
+          "signal_type": "market_behavior",
+          "note": "컨테이너 선사(ZIM) 운임 지표 일간 1.47%, 월간 6.17% 반영"
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] AI lifts Central Taiwan Science Park revenue to first-half record 19:42  Semicon..."
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] TAIWAN: Micron’s Pay Packages Show Just How Wide Taiwan’s AI Wage Gap Has Become..."
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] TSMC planeja 2ª fábrica em Cingapura após produção da 1ª unidade ser toda reserv..."
+        },
+        {
+          "channel": "telegram_osint_public",
+          "source": "Telegram_Public_Claims",
+          "signal_type": "armed_group_claim",
+          "note": "중동 교전 세력의 24시간 내 군사 작전 및 미사일 발사 공개 주장 관측됨"
+        }
+      ],
+      "contradictions": [],
+      "alert_candidate_level": "WARNING",
+      "single_source_elevate_forbidden": true,
+      "confidence_assessment": "HIGH (복수 계통 일치: local_public_opinion, freight_market, maritime_chokepoint, telegram_osint_public)",
+      "verified_at": "2026-10-02T03:56:49.154166+00:00"
+    },
+    {
+      "event_id": "cameoplus_3be1aa59d0f54481",
+      "event_title": "European Union seeks ships to bolster Aspides naval mission",
+      "event_summary": "On 2026-09-30, the European Union was reported to be seeking ships and capacity for its Aspides maritime mission, based in Brussels. The appeal is intended to address shortages as commercial vessels request more protection and escorts amid renewed Houthi threats in the Red Sea.",
+      "geo_country": "Belgium",
+      "event_date": "2026-09-30",
+      "category": "POLITICAL",
+      "subcategory": "",
+      "verification_state": "CROSS_VERIFIED",
+      "claim_status": "PARTIALLY_CONFIRMED",
+      "distinct_channel_count": 4,
+      "matched_channels": [
+        "local_public_opinion",
+        "freight_market",
+        "maritime_chokepoint",
+        "telegram_osint_public"
+      ],
+      "corroborations_count": 6,
+      "corroboration_evidence": [
+        {
+          "channel": "maritime_chokepoint",
+          "source": "BAB_EL_MANDEB_PROFILE",
+          "signal_type": "physical_infrastructure",
+          "note": "바브엘만데브 해협: 희망봉 우회 10~14일 추가 (희망봉 우회), 전쟁보험료 High (선박가의 0.5%~1.0% 추가 할증)"
+        },
+        {
+          "channel": "freight_market",
+          "source": "yfinance_ZIM",
+          "signal_type": "market_behavior",
+          "note": "컨테이너 선사(ZIM) 운임 지표 일간 1.47%, 월간 6.17% 반영"
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] AI lifts Central Taiwan Science Park revenue to first-half record 19:42  Semicon..."
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] TAIWAN: Micron’s Pay Packages Show Just How Wide Taiwan’s AI Wage Gap Has Become..."
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] TSMC planeja 2ª fábrica em Cingapura após produção da 1ª unidade ser toda reserv..."
+        },
+        {
+          "channel": "telegram_osint_public",
+          "source": "Telegram_Public_Claims",
+          "signal_type": "armed_group_claim",
+          "note": "중동 교전 세력의 24시간 내 군사 작전 및 미사일 발사 공개 주장 관측됨"
+        }
+      ],
+      "contradictions": [],
+      "alert_candidate_level": "WARNING",
+      "single_source_elevate_forbidden": true,
+      "confidence_assessment": "HIGH (복수 계통 일치: local_public_opinion, freight_market, maritime_chokepoint, telegram_osint_public)",
+      "verified_at": "2026-10-02T03:56:49.154166+00:00"
+    },
+    {
+      "event_id": "cameoplus_2bfcb82e7656f36e",
+      "event_title": "Saudi Arabia resumes oil loading at Yanbu after pipeline repairs",
+      "event_summary": "On 2026-09-30, Saudi Arabia resumed oil loading from Yanbu after repairs to damage on the East-West pipeline. The title attributes the damage to a Houthi-Iraqi attack, but provides no details on the incident's timing, duration, or volume affected.",
+      "geo_country": "Saudi Arabia",
+      "event_date": "2026-09-30",
+      "category": "INFRASTRUCTURE",
+      "subcategory": "",
+      "verification_state": "CROSS_VERIFIED",
+      "claim_status": "PARTIALLY_CONFIRMED",
+      "distinct_channel_count": 4,
+      "matched_channels": [
+        "local_public_opinion",
+        "freight_market",
+        "maritime_chokepoint",
+        "telegram_osint_public"
+      ],
+      "corroborations_count": 6,
+      "corroboration_evidence": [
+        {
+          "channel": "maritime_chokepoint",
+          "source": "BAB_EL_MANDEB_PROFILE",
+          "signal_type": "physical_infrastructure",
+          "note": "바브엘만데브 해협: 희망봉 우회 10~14일 추가 (희망봉 우회), 전쟁보험료 High (선박가의 0.5%~1.0% 추가 할증)"
+        },
+        {
+          "channel": "freight_market",
+          "source": "yfinance_ZIM",
+          "signal_type": "market_behavior",
+          "note": "컨테이너 선사(ZIM) 운임 지표 일간 1.47%, 월간 6.17% 반영"
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] AI lifts Central Taiwan Science Park revenue to first-half record 19:42  Semicon..."
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] TAIWAN: Micron’s Pay Packages Show Just How Wide Taiwan’s AI Wage Gap Has Become..."
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] TSMC planeja 2ª fábrica em Cingapura após produção da 1ª unidade ser toda reserv..."
+        },
+        {
+          "channel": "telegram_osint_public",
+          "source": "Telegram_Public_Claims",
+          "signal_type": "armed_group_claim",
+          "note": "중동 교전 세력의 24시간 내 군사 작전 및 미사일 발사 공개 주장 관측됨"
+        }
+      ],
+      "contradictions": [],
+      "alert_candidate_level": "WARNING",
+      "single_source_elevate_forbidden": true,
+      "confidence_assessment": "HIGH (복수 계통 일치: local_public_opinion, freight_market, maritime_chokepoint, telegram_osint_public)",
+      "verified_at": "2026-10-02T03:56:49.154166+00:00"
+    },
+    {
+      "event_id": "conflict_190738a2f41b0fd2",
+      "event_title": "Houthi movement targets Taiba electricity station in Medina",
+      "event_summary": "On 2026-10-01, the Houthi movement reportedly targeted the Taiba electricity distribution station in Medina with a drone. The article attributes the report to the spokesperson for the coalition supporting Yemen’s government; it gives no casualty or damage figures.",
+      "geo_country": "Saudi Arabia",
+      "event_date": "2026-10-01",
+      "category": "Explosions/Remote violence",
+      "subcategory": "",
+      "verification_state": "CROSS_VERIFIED",
+      "claim_status": "PARTIALLY_CONFIRMED",
+      "distinct_channel_count": 4,
+      "matched_channels": [
+        "local_public_opinion",
+        "freight_market",
+        "maritime_chokepoint",
+        "telegram_osint_public"
+      ],
+      "corroborations_count": 6,
+      "corroboration_evidence": [
+        {
+          "channel": "maritime_chokepoint",
+          "source": "BAB_EL_MANDEB_PROFILE",
+          "signal_type": "physical_infrastructure",
+          "note": "바브엘만데브 해협: 희망봉 우회 10~14일 추가 (희망봉 우회), 전쟁보험료 High (선박가의 0.5%~1.0% 추가 할증)"
+        },
+        {
+          "channel": "freight_market",
+          "source": "yfinance_ZIM",
+          "signal_type": "market_behavior",
+          "note": "컨테이너 선사(ZIM) 운임 지표 일간 1.47%, 월간 6.17% 반영"
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] AI lifts Central Taiwan Science Park revenue to first-half record 19:42  Semicon..."
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] TAIWAN: Micron’s Pay Packages Show Just How Wide Taiwan’s AI Wage Gap Has Become..."
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] TSMC planeja 2ª fábrica em Cingapura após produção da 1ª unidade ser toda reserv..."
+        },
+        {
+          "channel": "telegram_osint_public",
+          "source": "Telegram_Public_Claims",
+          "signal_type": "armed_group_claim",
+          "note": "중동 교전 세력의 24시간 내 군사 작전 및 미사일 발사 공개 주장 관측됨"
+        }
+      ],
+      "contradictions": [],
+      "alert_candidate_level": "WARNING",
+      "single_source_elevate_forbidden": true,
+      "confidence_assessment": "HIGH (복수 계통 일치: local_public_opinion, freight_market, maritime_chokepoint, telegram_osint_public)",
+      "verified_at": "2026-10-02T03:56:49.154166+00:00"
+    },
+    {
+      "event_id": "cameoplus_efcbc381d1a17029",
+      "event_title": "Red Sea Global secures operating licenses for Amaala and Shura marinas",
+      "event_summary": "On 2026-10-01, Red Sea Global received operating licenses for the Amaala and Shura marinas in Saudi Arabia. The title provides no details on capacity, traffic, or whether operations have started.",
+      "geo_country": "Saudi Arabia",
+      "event_date": "2026-10-01",
+      "category": "INFRASTRUCTURE",
+      "subcategory": "",
+      "verification_state": "CROSS_VERIFIED",
+      "claim_status": "PARTIALLY_CONFIRMED",
+      "distinct_channel_count": 4,
+      "matched_channels": [
+        "local_public_opinion",
+        "freight_market",
+        "maritime_chokepoint",
+        "telegram_osint_public"
+      ],
+      "corroborations_count": 6,
+      "corroboration_evidence": [
+        {
+          "channel": "maritime_chokepoint",
+          "source": "BAB_EL_MANDEB_PROFILE",
+          "signal_type": "physical_infrastructure",
+          "note": "바브엘만데브 해협: 희망봉 우회 10~14일 추가 (희망봉 우회), 전쟁보험료 High (선박가의 0.5%~1.0% 추가 할증)"
+        },
+        {
+          "channel": "freight_market",
+          "source": "yfinance_ZIM",
+          "signal_type": "market_behavior",
+          "note": "컨테이너 선사(ZIM) 운임 지표 일간 1.47%, 월간 6.17% 반영"
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] AI lifts Central Taiwan Science Park revenue to first-half record 19:42  Semicon..."
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] TAIWAN: Micron’s Pay Packages Show Just How Wide Taiwan’s AI Wage Gap Has Become..."
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] TSMC planeja 2ª fábrica em Cingapura após produção da 1ª unidade ser toda reserv..."
+        },
+        {
+          "channel": "telegram_osint_public",
+          "source": "Telegram_Public_Claims",
+          "signal_type": "armed_group_claim",
+          "note": "중동 교전 세력의 24시간 내 군사 작전 및 미사일 발사 공개 주장 관측됨"
+        }
+      ],
+      "contradictions": [],
+      "alert_candidate_level": "WARNING",
+      "single_source_elevate_forbidden": true,
+      "confidence_assessment": "HIGH (복수 계통 일치: local_public_opinion, freight_market, maritime_chokepoint, telegram_osint_public)",
+      "verified_at": "2026-10-02T03:56:49.154166+00:00"
+    },
+    {
+      "event_id": "cameoplus_c96dafdd13549ed5",
+      "event_title": "Hadramout Coast Guard foils two hashish-smuggling attempts",
+      "event_summary": "On 2026-09-28, the Hadramout Coast Guard reportedly foiled two attempts to smuggle hashish at the Asad al-Fay checkpoint in Hadramout, Yemen. The title gives no further details about the suspected smugglers or any seizure.",
+      "geo_country": "Yemen",
+      "event_date": "2026-09-28",
+      "category": "CRIME",
+      "subcategory": "",
+      "verification_state": "CROSS_VERIFIED",
+      "claim_status": "PARTIALLY_CONFIRMED",
+      "distinct_channel_count": 4,
+      "matched_channels": [
+        "local_public_opinion",
+        "freight_market",
+        "maritime_chokepoint",
+        "telegram_osint_public"
+      ],
+      "corroborations_count": 6,
+      "corroboration_evidence": [
+        {
+          "channel": "maritime_chokepoint",
+          "source": "BAB_EL_MANDEB_PROFILE",
+          "signal_type": "physical_infrastructure",
+          "note": "바브엘만데브 해협: 희망봉 우회 10~14일 추가 (희망봉 우회), 전쟁보험료 High (선박가의 0.5%~1.0% 추가 할증)"
+        },
+        {
+          "channel": "freight_market",
+          "source": "yfinance_ZIM",
+          "signal_type": "market_behavior",
+          "note": "컨테이너 선사(ZIM) 운임 지표 일간 1.47%, 월간 6.17% 반영"
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] AI lifts Central Taiwan Science Park revenue to first-half record 19:42  Semicon..."
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] TAIWAN: Micron’s Pay Packages Show Just How Wide Taiwan’s AI Wage Gap Has Become..."
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] TSMC planeja 2ª fábrica em Cingapura após produção da 1ª unidade ser toda reserv..."
+        },
+        {
+          "channel": "telegram_osint_public",
+          "source": "Telegram_Public_Claims",
+          "signal_type": "armed_group_claim",
+          "note": "중동 교전 세력의 24시간 내 군사 작전 및 미사일 발사 공개 주장 관측됨"
+        }
+      ],
+      "contradictions": [],
+      "alert_candidate_level": "WARNING",
+      "single_source_elevate_forbidden": true,
+      "confidence_assessment": "HIGH (복수 계통 일치: local_public_opinion, freight_market, maritime_chokepoint, telegram_osint_public)",
+      "verified_at": "2026-10-02T03:56:49.154166+00:00"
+    },
+    {
+      "event_id": "cameoplus_b5411b0bd683201b",
+      "event_title": "Saudi foreign minister discusses maritime security with US counterpart",
+      "event_summary": "On 2026-09-28, Saudi Arabia’s foreign minister discussed maritime security in the Strait of Hormuz and Bab el-Mandeb with the US foreign minister, alongside developments in Yemen. The title does not specify the meeting format or venue; Riyadh is used as the location fallback for the Saudi source actor.",
+      "geo_country": "Saudi Arabia",
+      "event_date": "2026-09-28",
+      "category": "POLITICAL",
+      "subcategory": "",
+      "verification_state": "CROSS_VERIFIED",
+      "claim_status": "PARTIALLY_CONFIRMED",
+      "distinct_channel_count": 4,
+      "matched_channels": [
+        "local_public_opinion",
+        "freight_market",
+        "maritime_chokepoint",
+        "telegram_osint_public"
+      ],
+      "corroborations_count": 7,
+      "corroboration_evidence": [
+        {
+          "channel": "maritime_chokepoint",
+          "source": "HORMUZ_PROFILE",
+          "signal_type": "physical_infrastructure",
+          "note": "호르무즈 해협 위협 평가: Critical (긴장 고조 시 선박 억류 리스크), 시장신호: 브렌트유 일간 -1.22%, 원유 탱커선사 일간 4.61%"
+        },
+        {
+          "channel": "freight_market",
+          "source": "yfinance_FRO",
+          "signal_type": "market_behavior",
+          "note": "원유 유조선사(FRO) 주가 21.12% 급등 — 호르무즈 분쟁 프리미엄 시장 반영"
+        },
+        {
+          "channel": "maritime_chokepoint",
+          "source": "BAB_EL_MANDEB_PROFILE",
+          "signal_type": "physical_infrastructure",
+          "note": "바브엘만데브 해협: 희망봉 우회 10~14일 추가 (희망봉 우회), 전쟁보험료 High (선박가의 0.5%~1.0% 추가 할증)"
+        },
+        {
+          "channel": "freight_market",
+          "source": "yfinance_ZIM",
+          "signal_type": "market_behavior",
+          "note": "컨테이너 선사(ZIM) 운임 지표 일간 1.47%, 월간 6.17% 반영"
+        },
+        {
+          "channel": "maritime_chokepoint",
+          "source": "TAIWAN_STRAIT_PROFILE",
+          "signal_type": "physical_infrastructure",
+          "note": "대만 해협: 전 세계 컨테이너 선박 48% 통과, 반도체 파운드리 물류로, 지연 2~4일 추가 (대만 동부 태평양 우회)"
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] AI lifts Central Taiwan Science Park revenue to first-half record 19:42  Semicon..."
+        },
+        {
+          "channel": "telegram_osint_public",
+          "source": "Telegram_Public_Claims",
+          "signal_type": "armed_group_claim",
+          "note": "중동 교전 세력의 24시간 내 군사 작전 및 미사일 발사 공개 주장 관측됨"
+        }
+      ],
+      "contradictions": [],
+      "alert_candidate_level": "WARNING",
+      "single_source_elevate_forbidden": true,
+      "confidence_assessment": "HIGH (복수 계통 일치: local_public_opinion, freight_market, maritime_chokepoint, telegram_osint_public)",
+      "verified_at": "2026-10-02T03:56:49.154166+00:00"
+    }
+  ]
+}

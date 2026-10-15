@@ -1,0 +1,20 @@
+{
+  "receipt": {
+    "collector": "gdelt_v2_public",
+    "endpoint": "https://api.gdeltproject.org/api/v2/doc/doc",
+    "query": "\"Red Sea\" shipping",
+    "params": {
+      "query": "\"Red Sea\" shipping",
+      "mode": "artlist",
+      "format": "json",
+      "maxrecords": 3,
+      "sort": "datedesc"
+    },
+    "observed_at": "2026-10-09T15:34:01.010244+00:00",
+    "complete": false,
+    "status": 429,
+    "rows": 0,
+    "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://api.gdeltproject.org/api/v2/doc/doc?query=%22Red+Sea%22+shipping&mode=artlist&format=json&maxrecords=3&sort=datedesc"
+  },
+  "articles": []
+}

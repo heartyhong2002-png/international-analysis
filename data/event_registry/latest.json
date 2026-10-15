@@ -1,0 +1,101 @@
+{
+  "receipt": {
+    "collector": "event_registry",
+    "observed_at": "2026-10-09T16:04:55.863226+00:00",
+    "query": "Red Sea shipping",
+    "complete": true,
+    "rows": 3,
+    "status": 200
+  },
+  "articles": [
+    {
+      "uri": "9499468623",
+      "lang": "eng",
+      "isDuplicate": false,
+      "date": "2026-10-09",
+      "time": "15:11:08",
+      "dateTime": "2026-10-09T15:11:08Z",
+      "dateTimePub": "2026-10-09T15:07:42Z",
+      "dataType": "news",
+      "sim": 0,
+      "url": "https://www.thehindubusinessline.com/economy/global-refining-shock-lifts-indias-diesel-exports-to-a-12-month-high-in-september/article71564866.ece",
+      "title": "Global refining shock lifts India's diesel exports to a 12-month high in September",
+      "body": "Indian refiners, mostly private sector, exported roughly 2.50 million tonnes (mt) of diesel, the highest in a year, in September as refinery attacks and geopolitical tensions impacted roughly 10 per cent of the global refining capacity with transportation bottlenecks further exacerbating the situation.\n\nAnalysts, traders and refiners indicated that West Asia refinery outages and drone attacks on Russian refineries impacted roughly 8 million barrels per day (mb/d) of global refining capacity. What has further tightened the market for diesel is curtailed Chinese refining and shipping constraints.\n\n\"Acute diesel shortage, particularly in Europe, offered a window of opportunity to domestic refiners. Mostly private refiners such as Reliance Industries (RIL) got a good market opportunity. Shortage is expected to continue and will keep crack prices on the higher side,\" said one of the sources.\n\nStrong supply\n\nKpler said that Indian refiners have been able to maintain strong domestic supplies while capitalising on shortages in international markets.\n\n\"Diesel exports have been particularly strong, with shipments reaching around 620,000 barrels per day (b/d) in September, the highest in a year. Indian products are reaching Europe, Africa, Asia and even distant markets such as the US West Coast, while some diesel cargoes have also moved to Russia in recent months,\" it added.\n\nThis reflects India's growing role as a reliable supplier to global product markets, particularly when traditional exporting regions are struggling with refinery outages and logistical disruptions, noted Sumit Ritolia, Kpler's Lead Research Analyst for Refining & Modeling, said.\n\n\"One important distinction worth preserving is that India's export-oriented refiners have benefited significantly from high diesel cracks, but that does not mean all Indian refiners or fuel marketers are enjoying similarly strong net margins, especially where domestic selling prices remain constrained,\" he told businessline.\n\nRIL is main gainer\n\nTrade sources said that RIL is a main gainer here considering it is a major swing supplier of ultra low sulphur diesel.\n\nRIL's dual-refinery set up addressing domestic and international markets offers the refiner logistical and operational edge to manage output yields, adjust crude processing and act as a fast swing supplier. It has also been a major supplier of winter grade diesel to Europe.\n\nThe combination of relatively competitive crude procurement, high refinery utilisation, processing flexibility and strong international product prices has translated into exceptionally healthy refining economics, particularly for export-oriented refiners, Ritolia said.\n\nDiesel cracks have been especially attractive, with Singapore diesel cracks against Dubai exceeding $60 per barrel during September. However, the benefits are not uniform across the sector, as refiners with greater export flexibility are better positioned to capture international margins than those primarily serving the domestic market, he added.\n\nThe Federal Bank of Dallas (Dallas Fed) in a Thursday commentary said that global refinery capacity declined by as much as 10 per cent due to closure of the Strait of Hormuz, attacks from Houthi rebels in Yemen on Red Sea shipping, damaged Middle East refineries, Ukrainian drone attacks on Russian refineries, and export restrictions in China and Russia.\n\nAdditionally, a decade of minimal refinery investment has intensified fuel market pressures. Between 2019 and 2025, global liquid fuel consumption grew 4 mb/d, while refining capacity increased 2.3 mb/d, it added.\n\nOil price shock\n\nTaken together, refining capacity curtailment and depleted inventories are driving a blowout in fuel prices. Global economy is wrestling with a refining shock in addition to an oil price shock, particularly for diesel. The diesel situation is even worse in Europe, where reduction of Russian and West Asia fuel exports has been more impactful, it emphasised.\n\n\"Looking ahead, I expect diesel cracks to remain structurally supported, although some correction from the exceptionally elevated levels is possible. Middle Eastern refinery runs remain well below pre-war levels, Russian downstream supply continues to face disruptions, and global product inventories remain tight,\" Ritolia anticipated.\n\nEven if crude flows normalise relatively quickly, restoring refinery operations and refined product exports will take considerably longer. Strategic stock releases could provide some short-term relief, but they do not resolve the underlying supply constraints, he added.\n\nPublished on October 9, 2026",
+      "source": {
+        "uri": "thehindubusinessline.com",
+        "dataType": "news",
+        "title": "@businessline"
+      },
+      "authors": [
+        {
+          "uri": "rishi_ranjan_kala@thehindubusinessline.com",
+          "name": "Rishi Ranjan Kala",
+          "type": "author",
+          "isAgency": false
+        }
+      ],
+      "image": "https://bl-i.thgim.com/public/incoming/zi6dbn/article71565088.ece/alternates/LANDSCAPE_1200/CCI_UDHindu_KSL_U957ON4BN_R1599998059_8_14e680a4-0975-43e9-a253-8bc200dd305e.jpg",
+      "eventUri": null,
+      "sentiment": 0.04313725490196085,
+      "wgt": 529254668,
+      "relevance": 1
+    },
+    {
+      "uri": "9499379275",
+      "lang": "eng",
+      "isDuplicate": false,
+      "date": "2026-10-09",
+      "time": "14:02:29",
+      "dateTime": "2026-10-09T14:02:29Z",
+      "dateTimePub": "2026-10-09T14:02:13Z",
+      "dataType": "news",
+      "sim": 0,
+      "url": "https://www.miragenews.com/security-council-focuses-on-yemen-as-houthi-1757852/",
+      "title": "Security Council Focuses on Yemen as Houthi Attacks Escalate",
+      "body": "The Security Council meets top of the hour to discuss Yemen, where a Houthi offensive launched in September has sharply escalated the 12-year-long war for control of the country and spillover from the US-Iran war has provoked a new displacement crisis.\n\nKey points\n\n* Cross-border missile and drone strikes on Saudi airports and energy infrastructure have continued this week, while Government forces say they have recaptured the port city of Mocha\n\n* Fighting between Iran-backed Houthis and Saudi-backed Government forces is intensifying around Taiz, and more than 200,000 people have been displaced\n\n* Aid agencies warn of surging cholera cases, rising child casualties and deepening hunger\n\n* Diplomatic efforts to prevent a wider regional conflict, including threats to Red Sea shipping, are also expected to feature\n\n/UN News Release. This material from the originating organization/author(s) might be of the point-in-time nature, and edited for clarity, style and length. Mirage.News does not take institutional positions or sides, and all views, positions, and conclusions expressed herein are solely those of the author(s).View in full here.",
+      "source": {
+        "uri": "miragenews.com",
+        "dataType": "news",
+        "title": "Mirage News"
+      },
+      "authors": [],
+      "image": "https://global.unitednations.entermediadb.net/assets/mediadb/services/module/asset/downloads/preset/Collections/Embargoed/2026/09/15-09-2026_IOM_Yemen.jpg/image770x420cropped.jpg",
+      "eventUri": null,
+      "sentiment": -0.3411764705882353,
+      "wgt": 529250549,
+      "relevance": 1
+    },
+    {
+      "uri": "9499371157",
+      "lang": "eng",
+      "isDuplicate": false,
+      "date": "2026-10-09",
+      "time": "13:58:18",
+      "dateTime": "2026-10-09T13:58:18Z",
+      "dateTimePub": "2026-10-09T13:56:34Z",
+      "dataType": "news",
+      "sim": 0,
+      "url": "https://www.premiumtimesng.com/news/top-news/915653-how-houthi-military-aggression-in-red-sea-threatens-africa.html",
+      "title": "How Houthi military aggression in Red Sea threatens Africa",
+      "body": "Growing ties between the Houthis and al-Shabaab could turn Red Sea instability into a more dangerous security threat for Africa.\n\nThe United States-Israel February attack on Iran led to the Iran-backed Houthi militia of Yemen seizing territory at the entrance to the Red Sea, with grave potential consequences for Africa and the world.\n\nIntensifying Houthi attacks on ships over the last few years had already hurt regional economies and beyond. But a permanent Houthi grip on shipping through the Red Sea would be catastrophic. And it would be aggravated by the growing alliance between the Houthis and al-Shabaab in Somalia.\n\nLast month, the Houthis' capture of territory in the Red Sea gave it some veto over shipping through the strategic Bab al-Mandab strait. This strait carries about 30 per cent of global container traffic, 15 per cent of global oil and shipping transits, and 12 per cent of global annual trade. The other key chokepoint in the Arabian Peninsula, the Strait of Hormuz in the Persian Gulf, is already partly subject to Iranian and American control.\n\nThis week, Yemen's government, backed by a Saudi-led military coalition, recaptured some control over Bab al-Mandab. The Houthis then stepped up missile attacks on Saudi airports.\n\nRed Sea and Bab al-Mandab Strait\n\nHouthi control of Bab al-Mandab might seem implausible, given foreign powers' many navies based in nearby Djibouti. But if it recurred, \"Houthi interdiction of the Bab el-Mandab [could] involve anti-ship missiles, [unmanned aerial vehicles], and maritime drones [unmanned surface vehicles], which are hard to defend against,\" says Sahan research group Strategic Analyst and Founding Partner Matt Bryden.\n\nAnd the Houthis \"would only have to target a handful of ships to effectively close the passage to commercial shipping\" by alarming international carriers and increasing insurance prices.\n\n\"Houthi engagement with Somalia's al-Shabaab means ... the group could also potentially threaten freedom of navigation in the Gulf of Aden. International naval forces based in Djibouti are likely to be cautious about engaging in any kinetic action against the Houthis since this would invite reprisals against their facilities in Djibouti itself - something Iran has demonstrated can be achieved with considerable impact.\"\n\nFor Saudi Arabia, a Houthi stranglehold on the Red Sea is especially unacceptable. It recently completed a pipeline from its eastern oil fields to its Red Sea port of Yanbu to circumvent Iran's control of Hormuz.\n\nHouthi attacks on ships harmed the economies of Egypt, Sudan, Eritrea, Djibouti and Somaliland even before the Houthis seized Bab al-Mandab, through reduced vessel traffic and higher freight costs and insurance premiums. Egypt is probably the biggest loser. Even in 2024, with fewer Houthi attacks on commercial shipping, Cairo lost roughly $3.76 billion in Suez Canal revenue.\n\nAfrica is also bearing indirect economic costs from restricted Red Sea access, as it imports 98 per cent of its refined oil products. Rising Red Sea shipping prices make African imports and exports costlier and less competitive.\n\nHouthi military aggression also has security implications. Resumed attacks have led to increased piracy in the Gulf of Aden, says the Africa Center for Strategic Studies. It notes growing Houthi-al-Shabaab ties since early 2025, largely involving arms shipments and Houthi training of militants. \"Al-Shabaab, in turn, supports the Houthis with ... funding and less traceable routes for arms trafficking.\"\n\nThe centre says the Houthis could transfer more lethal military-grade drones and missiles to al-Shabaab, increasing its power to destabilise Somalia's government. And they could install communications and surveillance equipment on Somali territory, extending Houthi missile and drone range.\n\nA spokesperson for the United States military's Africa Command described the link between the two groups as \"highly concerning\" and a \"threat to regional stability.\" For Alan Boswell, International Crisis Group Horn of Africa Project Director, Houthi military gains and their emerging alliance with al-Shabaab reveal a larger geopolitical transformation.\n\n\"For much of the past century, policymakers have treated the Horn of Africa and the Arabian Peninsula as separate strategic regions divided by the Red Sea. That distinction is now evaporating. Wars on one side of the sea increasingly alter the military calculations on the other.\"\n\nAnother sign of this change is Sudan's civil war, which has pitted Gulf rivals Saudi Arabia and the United Arab Emirates (UAE) against each other. Riyadh backs the Sudanese Armed Forces (SAF) and Abu Dhabi supports the Rapid Support Forces (RSF).\n\nThis war has also drawn in other states, threatening regional stability. Ethiopia backs the RSF while Somalia, Eritrea and the Tigray People's Liberation Front support the SAF. Beyond the Horn, Egypt supports the SAF - as do Türkiye, Iran and Russia, David Shinn, Professorial Lecturer at George Washington University and former US ambassador to Ethiopia and Burkina Faso, told ISS Today.\n\nSome members of these opposing alliances are now warring in northern Ethiopia. \"Middle Eastern countries' expanding involvement in the Horn increases the risk that internal conflicts in Ethiopia and Sudan will merge into a larger regional war zone,\" Mr Boswell warns.\n\nAfrican maritime expert Tim Walker believes the Houthis are seeking not so much financial gains from targeting Red Sea shipping as domestic and international legitimacy and recognition to shape the region. He is unsure whether the Houthis are supplying al-Shabaab with sophisticated missiles, or whether al-Shabaab intends to adopt a maritime strategy beyond merely benefiting from smuggling.\n\n\"Al-Shabaab, I think, rather wants to deny the air domain to the African Union Support and Stabilisation Mission in Somalia (AUSSOM) and allies. [Al-Shabaab] wants what the Houthis have and use already, and Houthi technology and training in assembling and operating drones or modifying and weaponising commercially available drones.\"\n\nBut if al-Shabaab does acquire even smaller missiles, he says, \"those might be used to shoot down AUSSOM drones or helicopters, and that would ... change the air dimension of the situation in Somalia.\"\n\nThe immediate priority for African coastal states, and the African Union and Intergovernmental Authority on Development, says Mr Walker, is \"to disrupt the weapons smuggling and maritime transport networks sailing between Yemen and Somalia. The UN renewed the legal basis for maritime interdiction until November 2026 for weapons destined for al-Shabaab - and it's becoming increasingly urgent.\"\n\nWhat is clear is that if national interests in the wider region are increasingly blurring the Middle East-Africa border, the resulting growing instability cannot be addressed by Africa alone.\n\nPeter Fabricius, Consultant, ISS Pretoria\n\n(This article was first published by ISS Today, a Premium Times syndication partner. We have their permission to republish).",
+      "source": {
+        "uri": "premiumtimesng.com",
+        "dataType": "news",
+        "title": "Premium Times Nigeria"
+      },
+      "authors": [
+        {
+          "uri": "peter_fabricius@premiumtimesng.com",
+          "name": "Peter Fabricius",
+          "type": "author",
+          "isAgency": false
+        }
+      ],
+      "image": "https://media.premiumtimesng.com/wp-content/files/2026/10/Red-Sea-map-October-2026.png",
+      "eventUri": null,
+      "sentiment": -0.3333333333333334,
+      "wgt": 529250298,
+      "relevance": 21
+    }
+  ]
+}

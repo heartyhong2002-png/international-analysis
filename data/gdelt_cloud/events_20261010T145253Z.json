@@ -1,0 +1,570 @@
+{
+  "schema_version": "1.0",
+  "source": "gdelt_cloud",
+  "endpoint": "https://gdeltcloud.com/api/v2/events",
+  "query": {
+    "days": 1,
+    "limit": 3
+  },
+  "collected_at": "2026-10-10T14:52:53.107762+00:00",
+  "started_at": "2026-10-10T14:52:48.579054+00:00",
+  "finished_at": "2026-10-10T14:52:53.107762+00:00",
+  "page_count": 1,
+  "row_count": 3,
+  "complete": false,
+  "pages": [
+    {
+      "page": 1,
+      "row_count": 3,
+      "limit": 3,
+      "cursor": null,
+      "next_cursor_present": true
+    }
+  ],
+  "events": [
+    {
+      "id": "conflict_a132b3b6e1990e0e",
+      "url": "https://gdeltcloud.com/events/rsf-drone-strike-kills-30-women-and-children-in-blue-nile--conflict_a132b3b6e1990e0e",
+      "primary_story_url": "https://gdeltcloud.com/stories/rsf-drone-strike-in-sudans-blue-nile-state-kills-26-women-an-f2af39de",
+      "family": "conflict",
+      "title": "RSF drone strike kills 30 women and children in Blue Nile",
+      "title_source": "coder_title",
+      "summary": "On 2026-10-10, the Rapid Support Forces reportedly carried out a drone strike in Sudan’s Blue Nile state. The strike killed 26 women and four children, according to the report; no injuries or more precise location are given.",
+      "event_date": "2026-10-10",
+      "observed_at": "2026-10-10T06:30:00.000Z",
+      "event_date_basis": "publication_day_inference",
+      "event_date_evidence": "The article reports the drone strike as current news but gives no occurrence date; the source publication window’s latest date is 2026-10-10.",
+      "coded_at": "2026-10-10T12:56:12Z",
+      "updated_at": "2026-10-10T13:21:46Z",
+      "processed_at": "2026-10-10T12:56:12Z",
+      "category": "Explosions/Remote violence",
+      "subcategory": "Air/drone strike",
+      "subcategory_label": "Air/drone strike",
+      "event_description": null,
+      "taxonomy_status": "coded",
+      "domain": "CONFLICT",
+      "event_code": null,
+      "geo": {
+        "country": "Sudan",
+        "region": "Northern Africa",
+        "continent": "Africa",
+        "admin1": "Blue Nile",
+        "location": null,
+        "latitude": 11.8,
+        "longitude": 34.3,
+        "geo_precision": 3,
+        "geo_precision_label": "country_or_region"
+      },
+      "geo_context": {
+        "location_country": "Sudan",
+        "actor_origin_countries": [
+          "Sudan"
+        ]
+      },
+      "actors": [
+        {
+          "name": "Rapid Support Forces (RSF)",
+          "country": "Sudan",
+          "role": "actor1",
+          "primary": true
+        }
+      ],
+      "metrics": {
+        "significance": 0.6896,
+        "severity_tier": "critical",
+        "goldstein_scale": -9.5,
+        "magnitude": null,
+        "systemic_importance": null,
+        "propagation_potential": null,
+        "market_sensitivity": null,
+        "confidence": 0.62,
+        "article_count": 2,
+        "evidence_source_count": 2,
+        "supporting_story_count": 1
+      },
+      "has_fatalities": true,
+      "fatalities": 30,
+      "fatalities_basis": null,
+      "fatalities_corroboration": null,
+      "fatalities_evidence": null,
+      "fatalities_supporting_source_count": 2,
+      "injured": null,
+      "civilians_killed": 30,
+      "civilians_injured": null,
+      "civilian_targeting": false,
+      "civilian_targeting_label": null,
+      "story_refs": [
+        {
+          "id": "f2af39de97a7",
+          "url": "https://gdeltcloud.com/stories/rsf-drone-strike-in-sudans-blue-nile-state-kills-26-women-an-f2af39de",
+          "title": "RSF drone strike in Sudan's Blue Nile state kills 26 women and four children",
+          "story_date": "2026-10-10",
+          "article_count": 2
+        }
+      ],
+      "entity_refs": [
+        {
+          "id": "llm:19b2b8b8b556fed79a1a",
+          "id_space": "llm",
+          "name": "Rapid Support Forces",
+          "type": "organization",
+          "entity_id": "llm:19b2b8b8b556fed79a1a",
+          "spine_id": null,
+          "wikipedia_url": null,
+          "image_url": null,
+          "avatar_url": null,
+          "public_official": {
+            "checked": false,
+            "is_public_official": null,
+            "status": null,
+            "total": null,
+            "offices": [],
+            "truncated": false
+          }
+        },
+        {
+          "id": "llm:99d9968f2ad62063fef5",
+          "id_space": "llm",
+          "name": "Rapid Support Forces",
+          "type": "organization",
+          "entity_id": "llm:99d9968f2ad62063fef5",
+          "spine_id": null,
+          "wikipedia_url": null,
+          "image_url": null,
+          "avatar_url": null,
+          "public_official": {
+            "checked": false,
+            "is_public_official": null,
+            "status": null,
+            "total": null,
+            "offices": [],
+            "truncated": false
+          }
+        },
+        {
+          "id": "llm:93d46692e15bb72ee99e",
+          "id_space": "llm",
+          "name": "Rapid Support Forces",
+          "type": "organization",
+          "entity_id": "llm:93d46692e15bb72ee99e",
+          "spine_id": null,
+          "wikipedia_url": null,
+          "image_url": null,
+          "avatar_url": null,
+          "public_official": {
+            "checked": false,
+            "is_public_official": null,
+            "status": null,
+            "total": null,
+            "offices": [],
+            "truncated": false
+          }
+        },
+        {
+          "id": "llm:6a653b7a9a045c113ae5",
+          "id_space": "llm",
+          "name": "Emergency Lawyers",
+          "type": "organization",
+          "entity_id": "llm:6a653b7a9a045c113ae5",
+          "spine_id": null,
+          "wikipedia_url": null,
+          "image_url": null,
+          "avatar_url": null,
+          "public_official": {
+            "checked": false,
+            "is_public_official": null,
+            "status": null,
+            "total": null,
+            "offices": [],
+            "truncated": false
+          }
+        }
+      ],
+      "top_articles": [
+        {
+          "url": "https://www.teraz.sk/zahranicie/dronovy-utok-v-sudane-si-vyziadal-z/998645-clanok.html",
+          "title": "Dronový útok v Sudáne si vyžiadal životy 26 žien a štyroch detí",
+          "domain": "teraz.sk",
+          "domain_avatar_url": "https://www.google.com/s2/favicons?domain=teraz.sk&sz=64",
+          "rank": 1
+        },
+        {
+          "url": "http://arabic.news.cn/20261010/e6ec68f749d14973985e98c70b798694/c.html",
+          "title": "(وسائط متعددة) مقتل 30 مدنيا وإصابة 26 امرأة في هجوم بمسيّرة على مركز لإيواء النازحين بالسودان",
+          "domain": "arabic.news.cn",
+          "domain_avatar_url": "https://www.google.com/s2/favicons?domain=arabic.news.cn&sz=64",
+          "rank": 2
+        }
+      ],
+      "language_breakdown": [],
+      "top_language": null,
+      "search_score": null,
+      "incident": {
+        "uid": "conflict_a132b3b6e1990e0e",
+        "resolution": "self",
+        "confidence": null
+      }
+    },
+    {
+      "id": "cameoplus_ac3579ade1bdef1d",
+      "url": "https://gdeltcloud.com/events/nato-launches-steadfast-noon-nuclear-exercise-in-italy--cameoplus_ac3579ade1bdef1d",
+      "primary_story_url": "https://gdeltcloud.com/stories/nato-launches-steadfast-noon-nuclear-exercise-at-italian-air-e53f73c9",
+      "family": "cameoplus",
+      "title": "NATO launches Steadfast Noon nuclear exercise in Italy",
+      "title_source": "coder_title",
+      "summary": "On 2026-10-10, NATO launched its Steadfast Noon nuclear-deterrence exercise, centered on Aviano and Ghedi air bases in Italy. The exercise involves 17 countries and trains procedures using aircraft prepared for conventional and nuclear missions; no real nuclear weapons will be used. The article says the exercise is similar in scale to previous editions and is expected to last about a week to ten days.",
+      "event_date": "2026-10-10",
+      "observed_at": "2026-10-10T07:00:00.000Z",
+      "event_date_basis": "publication_day_inference",
+      "event_date_evidence": "The article reports that NATO has initiated the Steadfast Noon exercise, but gives no specific occurrence date; the current-news launch is inferred to have occurred on the latest publication day in the source window.",
+      "coded_at": "2026-10-10T14:15:30Z",
+      "updated_at": "2026-10-10T14:15:30Z",
+      "processed_at": "2026-10-10T14:15:30Z",
+      "category": "POLITICAL",
+      "subcategory": "15",
+      "subcategory_label": "Exhibit Force Posture",
+      "event_description": "Demonstrate military or police power",
+      "taxonomy_status": "coded",
+      "domain": "POLITICAL",
+      "event_code": "15",
+      "geo": {
+        "country": "Italy",
+        "region": "Europe",
+        "continent": "Europe",
+        "admin1": "Friuli-Venezia Giulia",
+        "location": "Aviano Air Base",
+        "latitude": 46.0319,
+        "longitude": 12.5965,
+        "geo_precision": 1,
+        "geo_precision_label": "exact_place"
+      },
+      "geo_context": {
+        "location_country": "Italy",
+        "actor_origin_countries": []
+      },
+      "actors": [
+        {
+          "name": "NATO",
+          "country": null,
+          "role": "source",
+          "primary": true
+        }
+      ],
+      "metrics": {
+        "significance": 0.5761,
+        "severity_tier": "medium",
+        "goldstein_scale": -7.2,
+        "magnitude": 7,
+        "systemic_importance": 0.7,
+        "propagation_potential": 0.42,
+        "market_sensitivity": 0.05,
+        "confidence": 0.78,
+        "article_count": 1,
+        "evidence_source_count": 1,
+        "supporting_story_count": 1,
+        "metric_inputs": {
+          "magnitude": {
+            "path": "verbal",
+            "value": 7,
+            "why": "NATO launched a nuclear-deterrence exercise involving military aircraft and procedures; no live nuclear weapons were used."
+          },
+          "systemic": {
+            "node": "NATO nuclear deterrence and alliance readiness",
+            "size": {
+              "value": 0.75,
+              "why": "The exercise trains procedures supporting the alliance's nuclear deterrence capability."
+            },
+            "interconnectedness": {
+              "value": 0.7,
+              "why": "The exercise involves 17 countries and concerns a shared alliance capability."
+            },
+            "irreplaceability": {
+              "value": 0.65,
+              "why": "The report identifies this as an exercise supporting NATO's nuclear deterrence procedures, with no alternative mechanism described."
+            }
+          },
+          "propagation": {
+            "channel": {
+              "value": 0.55,
+              "why": "NATO alliance coordination and shared deterrence procedures connect the exercise to member states."
+            },
+            "coupling": {
+              "value": 0.35,
+              "why": "The report describes a scheduled exercise lasting about a week to ten days, with no urgent deadline or loss of slack stated."
+            },
+            "breach": {
+              "value": 0.1,
+              "why": "The exercise is described as similar in scale to previous years, not as an unprecedented change."
+            },
+            "primed": {
+              "value": 0.35,
+              "why": "The headline references Russian threats, but the article provides little detail on the current level of escalation."
+            },
+            "containment": {
+              "value": 0.25,
+              "why": "The exercise is bounded in duration, and the report says actual nuclear weapons will not be used."
+            }
+          },
+          "market": {
+            "claim_exposure": {
+              "value": 0.1,
+              "why": "The article describes a military exercise and names no traded claim or market-wide supply change."
+            },
+            "economic_bite": {
+              "value": 0,
+              "why": "The exercise does not impose an obligation or change the cash flows, output, assets, contracts, or financing of an exposed claim."
+            }
+          }
+        },
+        "metric_version": "v2-2026-07-24"
+      },
+      "has_fatalities": null,
+      "fatalities": null,
+      "fatalities_basis": null,
+      "fatalities_corroboration": null,
+      "fatalities_evidence": null,
+      "fatalities_supporting_source_count": null,
+      "injured": null,
+      "civilians_killed": null,
+      "civilians_injured": null,
+      "civilian_targeting": null,
+      "civilian_targeting_label": null,
+      "story_refs": [
+        {
+          "id": "e53f73c982a5",
+          "url": "https://gdeltcloud.com/stories/nato-launches-steadfast-noon-nuclear-exercise-at-italian-air-e53f73c9",
+          "title": "NATO launches Steadfast Noon nuclear exercise at Italian air bases",
+          "story_date": "2026-10-10",
+          "article_count": 1
+        }
+      ],
+      "entity_refs": [],
+      "top_articles": [
+        {
+          "url": "https://www.infodefensa.com/texto-diario/mostrar/6046140/otan-ignora-amenazas-rusia-e-inicia-italia-ejercicio-nuclear-steadfast-noon-participacion-17-paises",
+          "title": "La OTAN ignora las amenazas de Rusia e inicia en Italia su ejercicio nuclear Steadfast Noon con la participación de 17 países",
+          "domain": "infodefensa.com",
+          "domain_avatar_url": "https://www.google.com/s2/favicons?domain=infodefensa.com&sz=64",
+          "rank": 1
+        }
+      ],
+      "language_breakdown": [
+        {
+          "language": "es",
+          "count": 1
+        }
+      ],
+      "top_language": "es",
+      "search_score": null,
+      "incident": {
+        "uid": "cameoplus_ac3579ade1bdef1d",
+        "resolution": "unadjudicated",
+        "confidence": null
+      }
+    },
+    {
+      "id": "cameoplus_cfc0c02db38dd845",
+      "url": "https://gdeltcloud.com/events/taliban-commission-declares-22-balkh-townships-state-owned--cameoplus_cfc0c02db38dd845",
+      "primary_story_url": "https://gdeltcloud.com/stories/afghanistan-declares-22-residential-townships-in-balkh-state-c70e4e1d",
+      "family": "cameoplus",
+      "title": "Taliban commission declares 22 Balkh townships state-owned",
+      "title_source": "coder_title",
+      "summary": "On 2026-10-10, the Taliban commission responsible for preventing the seizure of state-owned land declared 22 residential townships in Balkh Province state property. The announcement covers approximately 85,000 jeribs of land. The article provides no more specific date for the declaration.",
+      "event_date": "2026-10-10",
+      "observed_at": "2026-10-10T10:15:00.000Z",
+      "event_date_basis": "publication_day_inference",
+      "event_date_evidence": "The article reports that the Taliban commission has declared 22 residential townships in Balkh state property; no separate occurrence date is stated, so the current-news report is dated to the publication window's latest day.",
+      "coded_at": "2026-10-10T11:45:39Z",
+      "updated_at": "2026-10-10T11:45:39Z",
+      "processed_at": "2026-10-10T11:45:39Z",
+      "category": "POLITICAL",
+      "subcategory": "1711",
+      "subcategory_label": "Confiscate Property",
+      "event_description": "Confiscate property",
+      "taxonomy_status": "coded",
+      "domain": "POLITICAL",
+      "event_code": "1711",
+      "geo": {
+        "country": "Afghanistan",
+        "region": "South Asia",
+        "continent": "Asia",
+        "admin1": "Balkh Province",
+        "location": "Balkh Province",
+        "latitude": 36.7,
+        "longitude": 67.1,
+        "geo_precision": 3,
+        "geo_precision_label": "country_or_region"
+      },
+      "geo_context": {
+        "location_country": "Afghanistan",
+        "actor_origin_countries": [
+          "Afghanistan"
+        ]
+      },
+      "actors": [
+        {
+          "name": "Taliban commission responsible for preventing the seizure of state-owned land in Balkh",
+          "country": "Afghanistan",
+          "role": "source",
+          "primary": true
+        },
+        {
+          "name": "Owners or claimants of land in 22 residential townships",
+          "country": "Afghanistan",
+          "role": "target",
+          "primary": true
+        }
+      ],
+      "metrics": {
+        "significance": 0.5683,
+        "severity_tier": "medium",
+        "goldstein_scale": -9.2,
+        "magnitude": 9,
+        "systemic_importance": 0.12,
+        "propagation_potential": 0.33,
+        "market_sensitivity": 0.05,
+        "confidence": 0.76,
+        "article_count": 1,
+        "evidence_source_count": 1,
+        "supporting_story_count": 1,
+        "metric_inputs": {
+          "magnitude": {
+            "path": "verbal",
+            "value": 9,
+            "why": "The reported action is the actual transfer or classification of property as state-owned, which falls on the property-confiscation coercion rung."
+          },
+          "systemic": {
+            "node": "Taliban administration's state-land ownership and control process in Balkh",
+            "size": {
+              "value": 0.15,
+              "why": "The action concerns 22 residential townships in one province, not a national institutional arrangement."
+            },
+            "interconnectedness": {
+              "value": 0.1,
+              "why": "The article identifies no third-party commitments or wider systems dependent on this land process."
+            },
+            "irreplaceability": {
+              "value": 0.1,
+              "why": "The article gives no evidence that this provincial process is a unique or irreplaceable channel."
+            }
+          },
+          "propagation": {
+            "channel": {
+              "value": 0.15,
+              "why": "The ownership decision affects multiple townships, but no broader operational or financial transmission channel is identified."
+            },
+            "coupling": {
+              "value": 0.2,
+              "why": "The declarations concern land ownership, with no evidence about the speed or absence of alternatives or buffers."
+            },
+            "breach": {
+              "value": 0.1,
+              "why": "The article describes this as part of a series of prior state-property classifications, not a newly breached restraint."
+            },
+            "primed": {
+              "value": 0.2,
+              "why": "Prior classifications and a September restriction on sales and construction are mentioned, indicating an ongoing property review context."
+            },
+            "containment": {
+              "value": 0,
+              "why": "No mediator, review safeguard, or other active dampener is reported for this declaration."
+            }
+          },
+          "market": {
+            "claim_exposure": {
+              "value": 0.1,
+              "why": "The article identifies no traded issuer, instrument, or sector-wide market supply change; only the jurisdiction's own claims can be named."
+            },
+            "economic_bite": {
+              "value": 0,
+              "why": "The reported property action does not act on the only exposed claim identified here, Afghanistan's sovereign debt, currency, or index."
+            }
+          }
+        },
+        "metric_version": "v2-2026-07-24"
+      },
+      "has_fatalities": null,
+      "fatalities": null,
+      "fatalities_basis": null,
+      "fatalities_corroboration": null,
+      "fatalities_evidence": null,
+      "fatalities_supporting_source_count": null,
+      "injured": null,
+      "civilians_killed": null,
+      "civilians_injured": null,
+      "civilian_targeting": null,
+      "civilian_targeting_label": null,
+      "story_refs": [
+        {
+          "id": "c70e4e1d1438",
+          "url": "https://gdeltcloud.com/stories/afghanistan-declares-22-residential-townships-in-balkh-state-c70e4e1d",
+          "title": "Afghanistan declares 22 residential townships in Balkh state-owned",
+          "story_date": "2026-10-10",
+          "article_count": 1
+        }
+      ],
+      "entity_refs": [
+        {
+          "id": "llm:25eacf381de2f841162e",
+          "id_space": "llm",
+          "name": "Taliban",
+          "type": "organization",
+          "entity_id": "llm:25eacf381de2f841162e",
+          "spine_id": null,
+          "wikipedia_url": null,
+          "image_url": null,
+          "avatar_url": null,
+          "public_official": {
+            "checked": false,
+            "is_public_official": null,
+            "status": null,
+            "total": null,
+            "offices": [],
+            "truncated": false
+          }
+        },
+        {
+          "id": "llm:19c9fe6f8d1597015450",
+          "id_space": "llm",
+          "name": "Ministry of Justice",
+          "type": "organization",
+          "entity_id": "llm:19c9fe6f8d1597015450",
+          "spine_id": null,
+          "wikipedia_url": null,
+          "image_url": null,
+          "avatar_url": null,
+          "public_official": {
+            "checked": false,
+            "is_public_official": null,
+            "status": null,
+            "total": null,
+            "offices": [],
+            "truncated": false
+          }
+        }
+      ],
+      "top_articles": [
+        {
+          "url": "https://www.khaama.com/22-residential-townships-in-balkh-declared-state-owned-covering-85000-jeribs-of-land/",
+          "title": "22 Residential Townships in Balkh Declared State-Owned, Covering 85,000 Jeribs of Land",
+          "domain": "khaama.com",
+          "domain_avatar_url": "https://www.google.com/s2/favicons?domain=khaama.com&sz=64",
+          "rank": 1
+        }
+      ],
+      "language_breakdown": [
+        {
+          "language": "en",
+          "count": 1
+        }
+      ],
+      "top_language": "en",
+      "search_score": null,
+      "incident": {
+        "uid": "cameoplus_cfc0c02db38dd845",
+        "resolution": "unadjudicated",
+        "confidence": null
+      }
+    }
+  ]
+}

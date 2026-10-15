@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-10-02T03:56:00.453365+00:00",
+  "total_events_checked": 1,
+  "cross_verification_contract": {
+    "single_source_elevate_forbidden": true,
+    "allowed_verification_states": [
+      "UNVERIFIED",
+      "PARTIALLY_CONFIRMED",
+      "CROSS_VERIFIED",
+      "REFUTED"
+    ],
+    "required_channels_for_alert": [
+      "market_behavior",
+      "physical_infrastructure",
+      "official_statements",
+      "local_media"
+    ]
+  },
+  "verified_events": [
+    {
+      "event_id": "cameoplus_00c45344001ccc94",
+      "event_title": "United States deploys third carrier strike group toward Iran",
+      "event_summary": "On 2026-10-02, the United States reportedly moved to deploy a third aircraft carrier strike group and 10,000 additional troops to the Middle East, directed toward encircling Iran. The report also says President Trump rejected a proposal concerning the Strait of Hormuz, but gives no specific deployment location or more precise occurrence date.",
+      "geo_country": "Iran",
+      "event_date": "2026-10-02",
+      "category": "POLITICAL",
+      "subcategory": "Mobilize/increase Armed Forces",
+      "verification_state": "CROSS_VERIFIED",
+      "claim_status": "PARTIALLY_CONFIRMED",
+      "distinct_channel_count": 4,
+      "matched_channels": [
+        "maritime_chokepoint",
+        "freight_market",
+        "local_public_opinion",
+        "telegram_osint_public"
+      ],
+      "corroborations_count": 6,
+      "corroboration_evidence": [
+        {
+          "channel": "maritime_chokepoint",
+          "source": "HORMUZ_PROFILE",
+          "signal_type": "physical_infrastructure",
+          "note": "호르무즈 해협 위협 평가: Critical (긴장 고조 시 선박 억류 리스크), 시장신호: 브렌트유 일간 -1.22%, 원유 탱커선사 일간 4.61%"
+        },
+        {
+          "channel": "freight_market",
+          "source": "yfinance_FRO",
+          "signal_type": "market_behavior",
+          "note": "원유 유조선사(FRO) 주가 21.12% 급등 — 호르무즈 분쟁 프리미엄 시장 반영"
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] AI lifts Central Taiwan Science Park revenue to first-half record 19:42  Semicon..."
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] TAIWAN: Micron’s Pay Packages Show Just How Wide Taiwan’s AI Wage Gap Has Become..."
+        },
+        {
+          "channel": "local_public_opinion",
+          "source": "Bluesky_Social",
+          "signal_type": "online_expression",
+          "note": "[GLOBAL] TSMC planeja 2ª fábrica em Cingapura após produção da 1ª unidade ser toda reserv..."
+        },
+        {
+          "channel": "telegram_osint_public",
+          "source": "Telegram_Public_Claims",
+          "signal_type": "armed_group_claim",
+          "note": "중동 교전 세력의 24시간 내 군사 작전 및 미사일 발사 공개 주장 관측됨"
+        }
+      ],
+      "contradictions": [],
+      "alert_candidate_level": "WARNING",
+      "single_source_elevate_forbidden": true,
+      "confidence_assessment": "HIGH (복수 계통 일치: maritime_chokepoint, freight_market, local_public_opinion, telegram_osint_public)",
+      "verified_at": "2026-10-02T03:56:00.452364+00:00"
+    }
+  ]
+}

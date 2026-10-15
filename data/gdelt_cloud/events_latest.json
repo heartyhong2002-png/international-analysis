@@ -1,0 +1,454 @@
+{
+  "schema_version": "1.0",
+  "source": "gdelt_cloud",
+  "endpoint": "https://gdeltcloud.com/api/v2/events",
+  "query": {
+    "days": 7,
+    "limit": 3,
+    "country": "Yemen"
+  },
+  "collected_at": "2026-10-10T14:53:47.673289+00:00",
+  "started_at": "2026-10-10T14:53:44.776802+00:00",
+  "finished_at": "2026-10-10T14:53:47.673289+00:00",
+  "page_count": 1,
+  "row_count": 3,
+  "complete": false,
+  "pages": [
+    {
+      "page": 1,
+      "row_count": 3,
+      "limit": 3,
+      "cursor": null,
+      "next_cursor_present": true
+    }
+  ],
+  "events": [
+    {
+      "id": "conflict_d72f83e21403c1b2",
+      "url": "https://gdeltcloud.com/events/yemeni-army-says-it-killed-1400-houthi-fighters-in-operation--conflict_d72f83e21403c1b2",
+      "primary_story_url": "https://gdeltcloud.com/stories/saudi-led-coalition-says-it-destroyed-136-houthi-military-ta-68ec7e7b",
+      "family": "conflict",
+      "title": "Yemeni army says it killed 1,400 Houthi fighters in operations",
+      "title_source": "coder_title",
+      "summary": "On 2026-10-09, the Yemeni army said its operations against Houthi rebels killed more than 1,400 fighters and destroyed over 250 vehicles and other combat equipment. The army said it retook some positions, but its spokesperson did not name the locations. The casualty figure is an army claim and is not independently confirmed in the article.",
+      "event_date": "2026-10-09",
+      "observed_at": "2026-10-10T02:30:00.000Z",
+      "event_date_basis": "relative_date",
+      "event_date_evidence": "The article says the Yemeni army announced a broad operation on Friday and reports the operations’ toll over the “last 24 hours”; the article was published on October 10, 2026.",
+      "coded_at": "2026-10-10T13:40:38Z",
+      "updated_at": "2026-10-10T14:12:18Z",
+      "processed_at": "2026-10-10T13:40:38Z",
+      "category": "Battles",
+      "subcategory": "Government regains territory",
+      "subcategory_label": "Government regains territory",
+      "event_description": null,
+      "taxonomy_status": "coded",
+      "domain": "CONFLICT",
+      "event_code": null,
+      "geo": {
+        "country": "Yemen",
+        "region": "Middle East",
+        "continent": "Asia",
+        "admin1": null,
+        "location": null,
+        "latitude": 15.5527,
+        "longitude": 48.5164,
+        "geo_precision": 3,
+        "geo_precision_label": "country_or_region"
+      },
+      "geo_context": {
+        "location_country": "Yemen",
+        "actor_origin_countries": [
+          "Yemen"
+        ]
+      },
+      "actors": [
+        {
+          "name": "Yemeni army",
+          "country": "Yemen",
+          "role": "actor1",
+          "primary": true
+        },
+        {
+          "name": "Houthi rebels",
+          "country": "Yemen",
+          "role": "actor2",
+          "primary": true
+        }
+      ],
+      "metrics": {
+        "significance": 0.8483,
+        "severity_tier": "critical",
+        "goldstein_scale": -9.5,
+        "magnitude": null,
+        "systemic_importance": null,
+        "propagation_potential": null,
+        "market_sensitivity": null,
+        "confidence": 0.48,
+        "article_count": 29,
+        "evidence_source_count": 1,
+        "supporting_story_count": 1
+      },
+      "has_fatalities": true,
+      "fatalities": 1400,
+      "fatalities_basis": null,
+      "fatalities_corroboration": null,
+      "fatalities_evidence": null,
+      "fatalities_supporting_source_count": 1,
+      "injured": null,
+      "civilians_killed": null,
+      "civilians_injured": null,
+      "civilian_targeting": false,
+      "civilian_targeting_label": null,
+      "story_refs": [
+        {
+          "id": "68ec7e7b6457",
+          "url": "https://gdeltcloud.com/stories/saudi-led-coalition-says-it-destroyed-136-houthi-military-ta-68ec7e7b",
+          "title": "Saudi-led coalition says it destroyed 136 Houthi military targets in Yemen",
+          "story_date": "2026-10-10",
+          "article_count": 29
+        }
+      ],
+      "entity_refs": [
+        {
+          "id": "e_07658891d7f2885a",
+          "id_space": "spine",
+          "name": "Houthis",
+          "type": "organization",
+          "entity_id": "e_07658891d7f2885a",
+          "spine_id": "e_07658891d7f2885a",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Houthis",
+          "image_url": null,
+          "avatar_url": null,
+          "public_official": {
+            "checked": true,
+            "is_public_official": false,
+            "total": 0,
+            "status": null,
+            "offices": [],
+            "truncated": false
+          }
+        }
+      ],
+      "top_articles": [
+        {
+          "url": "https://www.lalibre.be/dernieres-depeches/2026/10/10/conflit-au-yemen-larmee-yemenite-affirme-avoir-tue-1400-rebelles-houthis-au-cours-des-dernieres-24-heures-WDGJ4IOAYNBVXCMSPBM2DNYS6I/",
+          "title": "Conflit au Yémen - L'armée yéménite affirme avoir tué 1.400 rebelles houthis au cours des dernières 24 heures",
+          "domain": "lalibre.be",
+          "domain_avatar_url": "https://www.google.com/s2/favicons?domain=lalibre.be&sz=64",
+          "rank": 1
+        }
+      ],
+      "language_breakdown": [
+        {
+          "language": "ar",
+          "count": 9
+        },
+        {
+          "language": "el",
+          "count": 4
+        },
+        {
+          "language": "bg",
+          "count": 3
+        },
+        {
+          "language": "en",
+          "count": 3
+        },
+        {
+          "language": "es",
+          "count": 2
+        },
+        {
+          "language": "pt",
+          "count": 2
+        },
+        {
+          "language": "bs",
+          "count": 1
+        },
+        {
+          "language": "fr",
+          "count": 1
+        },
+        {
+          "language": "lt",
+          "count": 1
+        },
+        {
+          "language": "tr",
+          "count": 1
+        },
+        {
+          "language": "zh",
+          "count": 1
+        }
+      ],
+      "top_language": "ar",
+      "search_score": null,
+      "incident": {
+        "uid": "conflict_d72f83e21403c1b2",
+        "resolution": "self",
+        "confidence": null
+      }
+    },
+    {
+      "id": "conflict_aad6349af2aaa732",
+      "url": "https://gdeltcloud.com/events/saudi-aircraft-strike-family-home-in-yemens-hajjah--conflict_aad6349af2aaa732",
+      "primary_story_url": "https://gdeltcloud.com/stories/saudi-airstrike-kills-six-members-of-one-family-in-yemens-ha-328745bc",
+      "family": "conflict",
+      "title": "Saudi aircraft strike family home in Yemen’s Hajjah",
+      "title_source": "coder_title",
+      "summary": "On 2026-10-06, Saudi fighter aircraft reportedly struck a residential building in Umm al-Dahi village, Harad district, Hajjah province. Local sources cited by al-Masirah said six family members, including four children, were killed and a six-year-old girl was seriously injured.",
+      "event_date": "2026-10-06",
+      "observed_at": "2026-10-06T13:30:00.000Z",
+      "event_date_basis": "publication_day_inference",
+      "event_date_evidence": "The report says six bodies were recovered on Tuesday from rubble of the building destroyed in the attack; the article was published Tuesday, 2026-10-06, and gives no earlier strike date.",
+      "coded_at": "2026-10-06T14:46:08Z",
+      "updated_at": "2026-10-06T15:12:49Z",
+      "processed_at": "2026-10-06T14:46:08Z",
+      "category": "Explosions/Remote violence",
+      "subcategory": "Air/drone strike",
+      "subcategory_label": "Air/drone strike",
+      "event_description": null,
+      "taxonomy_status": "coded",
+      "domain": "CONFLICT",
+      "event_code": null,
+      "geo": {
+        "country": "Yemen",
+        "region": "Middle East",
+        "continent": "Asia",
+        "admin1": "Hajjah",
+        "location": "Umm al-Dahi",
+        "latitude": 16.94,
+        "longitude": 43.25,
+        "geo_precision": 1,
+        "geo_precision_label": "exact_place"
+      },
+      "geo_context": {
+        "location_country": "Yemen",
+        "actor_origin_countries": [
+          "Saudi Arabia"
+        ]
+      },
+      "actors": [
+        {
+          "name": "Saudi armed forces",
+          "country": "Saudi Arabia",
+          "role": "actor1",
+          "primary": true
+        },
+        {
+          "name": "Civilians",
+          "country": null,
+          "role": "actor2",
+          "primary": true
+        }
+      ],
+      "metrics": {
+        "significance": 0.6164,
+        "severity_tier": "critical",
+        "goldstein_scale": -9.5,
+        "magnitude": null,
+        "systemic_importance": null,
+        "propagation_potential": null,
+        "market_sensitivity": null,
+        "confidence": 0.79,
+        "article_count": 1,
+        "evidence_source_count": 1,
+        "supporting_story_count": 1
+      },
+      "has_fatalities": true,
+      "fatalities": 6,
+      "fatalities_basis": null,
+      "fatalities_corroboration": null,
+      "fatalities_evidence": null,
+      "fatalities_supporting_source_count": 1,
+      "injured": 1,
+      "civilians_killed": 6,
+      "civilians_injured": 1,
+      "civilian_targeting": true,
+      "civilian_targeting_label": "Civilians targeted",
+      "story_refs": [
+        {
+          "id": "328745bc1689",
+          "url": "https://gdeltcloud.com/stories/saudi-airstrike-kills-six-members-of-one-family-in-yemens-ha-328745bc",
+          "title": "Saudi airstrike kills six members of one family in Yemen's Hajjah",
+          "story_date": "2026-10-06",
+          "article_count": 1
+        }
+      ],
+      "entity_refs": [
+        {
+          "id": "llm:ac31fa15a37a6443a11f",
+          "id_space": "llm",
+          "name": "Yemeni Ministry of Public Health and Population",
+          "type": "organization",
+          "entity_id": "llm:ac31fa15a37a6443a11f",
+          "spine_id": null,
+          "wikipedia_url": null,
+          "image_url": null,
+          "avatar_url": null,
+          "public_official": {
+            "checked": false,
+            "is_public_official": null,
+            "status": null,
+            "total": null,
+            "offices": [],
+            "truncated": false
+          }
+        },
+        {
+          "id": "wiki:5f2ef49a00051d8a7a7a",
+          "id_space": "wikipedia",
+          "name": "Al-Masirah",
+          "type": "organization",
+          "entity_id": "wiki:5f2ef49a00051d8a7a7a",
+          "spine_id": null,
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Al-Masirah",
+          "image_url": null,
+          "avatar_url": null,
+          "public_official": {
+            "checked": false,
+            "is_public_official": null,
+            "status": null,
+            "total": null,
+            "offices": [],
+            "truncated": false
+          }
+        }
+      ],
+      "top_articles": [
+        {
+          "url": "https://www.presstv.co.uk/Detail/2026/10/06/777730/Six-members-of-same-family-killed-in-Saudi-airstrike-on-house-in-Yemen%E2%80%99s-Hajjah",
+          "title": "Six members of same family killed in Saudi airstrike on house in Yemen's Hajjah",
+          "domain": "presstv.co.uk",
+          "domain_avatar_url": "https://www.google.com/s2/favicons?domain=presstv.co.uk&sz=64",
+          "rank": 1
+        }
+      ],
+      "language_breakdown": [
+        {
+          "language": "en",
+          "count": 1
+        }
+      ],
+      "top_language": "en",
+      "search_score": null,
+      "incident": {
+        "uid": "conflict_aad6349af2aaa732",
+        "resolution": "self",
+        "confidence": null
+      }
+    },
+    {
+      "id": "conflict_b3d7fc673ffa531f",
+      "url": "https://gdeltcloud.com/events/al-sabiha-defenders-fight-for-13-hours-leaving-12-dead--conflict_b3d7fc673ffa531f",
+      "primary_story_url": "https://gdeltcloud.com/stories/thirteen-hour-battle-in-yemens-al-sabiha-leaves-12-dead-doze-43315134",
+      "family": "conflict",
+      "title": "Al-Sabiha defenders fight for 13 hours, leaving 12 dead",
+      "title_source": "coder_title",
+      "summary": "On 2026-10-04, a 13-hour battle reportedly took place in Al-Sabiha, Yemen. The headline attributes 12 deaths and dozens of wounded to the fighting, but does not identify the opposing forces or specify an occurrence date.",
+      "event_date": "2026-10-04",
+      "observed_at": "2026-10-04T09:16:00.000Z",
+      "event_date_basis": "publication_day_inference",
+      "event_date_evidence": "The title reports a 13-hour battle but gives no occurrence date; inferred from the current publication window.",
+      "coded_at": "2026-10-04T10:17:33Z",
+      "updated_at": "2026-10-04T11:11:33Z",
+      "processed_at": "2026-10-04T10:17:33Z",
+      "category": "Battles",
+      "subcategory": "Armed clash",
+      "subcategory_label": "Armed clash",
+      "event_description": null,
+      "taxonomy_status": "coded",
+      "domain": "CONFLICT",
+      "event_code": null,
+      "geo": {
+        "country": "Yemen",
+        "region": "Middle East",
+        "continent": "Asia",
+        "admin1": "Lahij",
+        "location": "Al-Sabiha",
+        "latitude": 13,
+        "longitude": 44,
+        "geo_precision": 2,
+        "geo_precision_label": "nearby_area"
+      },
+      "geo_context": {
+        "location_country": "Yemen",
+        "actor_origin_countries": []
+      },
+      "actors": [
+        {
+          "name": "Unidentified Armed Group (Yemen)",
+          "country": null,
+          "role": "actor1",
+          "primary": true
+        },
+        {
+          "name": "Unidentified Armed Group (Yemen)",
+          "country": null,
+          "role": "actor2",
+          "primary": true
+        }
+      ],
+      "metrics": {
+        "significance": 0.5767,
+        "severity_tier": "critical",
+        "goldstein_scale": -10,
+        "magnitude": null,
+        "systemic_importance": null,
+        "propagation_potential": null,
+        "market_sensitivity": null,
+        "confidence": 0.27,
+        "article_count": 1,
+        "evidence_source_count": 1,
+        "supporting_story_count": 1
+      },
+      "has_fatalities": true,
+      "fatalities": 12,
+      "fatalities_basis": null,
+      "fatalities_corroboration": null,
+      "fatalities_evidence": null,
+      "fatalities_supporting_source_count": 1,
+      "injured": null,
+      "civilians_killed": null,
+      "civilians_injured": null,
+      "civilian_targeting": false,
+      "civilian_targeting_label": null,
+      "story_refs": [
+        {
+          "id": "43315134ed1c",
+          "url": "https://gdeltcloud.com/stories/thirteen-hour-battle-in-yemens-al-sabiha-leaves-12-dead-doze-43315134",
+          "title": "Thirteen-hour battle in Yemen’s Al-Sabiha leaves 12 dead, dozens wounded",
+          "story_date": "2026-10-04",
+          "article_count": 1
+        }
+      ],
+      "entity_refs": [],
+      "top_articles": [
+        {
+          "url": "https://adngad.net/news/885891",
+          "title": "محاولة الصبيحة.. قصة صمود أسطوري: 13 ساعة حرب، و12 شهيدًا، وعشرات الجرحى",
+          "domain": "adngad.net",
+          "domain_avatar_url": "https://www.google.com/s2/favicons?domain=adngad.net&sz=64",
+          "rank": 1
+        }
+      ],
+      "language_breakdown": [
+        {
+          "language": "ar",
+          "count": 1
+        }
+      ],
+      "top_language": "ar",
+      "search_score": null,
+      "incident": {
+        "uid": "conflict_b3d7fc673ffa531f",
+        "resolution": "self",
+        "confidence": null
+      }
+    }
+  ]
+}

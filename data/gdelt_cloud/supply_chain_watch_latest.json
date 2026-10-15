@@ -1,0 +1,2478 @@
+{
+  "schema_version": "1.0",
+  "prototype": "red_sea_houthi_shipping",
+  "generated_at": "2026-10-02T03:41:50.673434+00:00",
+  "query": "Houthi Red Sea shipping vessel port maritime security",
+  "coverage": {
+    "complete": false,
+    "page_count": 1,
+    "row_count": 10,
+    "note": "Candidate signals only; no alert level until independent sensors are joined."
+  },
+  "candidates": [
+    {
+      "watch_id": "red_sea_houthi_shipping",
+      "event_id": "cameoplus_65a1e1fdf6c944dd",
+      "title": "Yemeni government discusses maritime security with International Crisis Group",
+      "summary": "On 2026-09-26, the Yemeni government discussed the conflict’s effects on maritime security with the International Crisis Group. Yemeni official Al-Zouba said Houthi escalation in the Red Sea and Bab al-Mandab, including reported ship targeting and threats to commercial navigation, affected regional security and international trade routes.",
+      "category": "POLITICAL",
+      "event_code": "046",
+      "event_date": "2026-09-26",
+      "observed_at": "2026-09-26T23:45:00.000Z",
+      "collected_at": "2026-10-02T03:41:50.673434+00:00",
+      "geo": {
+        "country": "Yemen",
+        "region": "Middle East",
+        "continent": "Asia",
+        "admin1": null,
+        "location": "Sana'a",
+        "latitude": 15.3694,
+        "longitude": 44.191,
+        "geo_precision": 3,
+        "geo_precision_label": "country_or_region"
+      },
+      "actors": [
+        {
+          "name": "Yemeni government",
+          "country": "Yemen",
+          "role": "source",
+          "primary": true
+        },
+        {
+          "name": "International Crisis Group",
+          "country": null,
+          "role": "target",
+          "primary": true
+        }
+      ],
+      "source_url": "https://gdeltcloud.com/events/yemeni-government-discusses-maritime-security-with-internati--cameoplus_65a1e1fdf6c944dd",
+      "cross_source_links": [],
+      "source_type": "gdelt_cloud_structured_event",
+      "verification_state": "unverified_candidate",
+      "risk_relevance": "maritime_supply_chain_review",
+      "claim_status": "not_applicable_event_cluster_requires_external_check"
+    },
+    {
+      "watch_id": "red_sea_houthi_shipping",
+      "event_id": "cameoplus_50ffcff319b39f0b",
+      "title": "Yemen armed forces urge aviation bodies to protect Red Sea flights",
+      "summary": "On 2026-09-26, Yemen Armed Forces spokesperson Majid Abdullah Al-Nuzaili urged the International Civil Aviation Organization and International Air Transport Association to take a firm position and measures to protect civil aviation. He warned that Houthi weapons launched from Hodeidah Governorate threatened aircraft using international routes over the southern Red Sea.",
+      "category": "POLITICAL",
+      "event_code": "02",
+      "event_date": "2026-09-26",
+      "observed_at": "2026-09-27T00:00:00.000Z",
+      "collected_at": "2026-10-02T03:41:50.673434+00:00",
+      "geo": {
+        "country": "Yemen",
+        "region": "Middle East",
+        "continent": "Asia",
+        "admin1": null,
+        "location": "Sana'a",
+        "latitude": 15.3694,
+        "longitude": 44.191,
+        "geo_precision": 2,
+        "geo_precision_label": "nearby_area"
+      },
+      "actors": [
+        {
+          "name": "Yemen Armed Forces spokesperson Majid Abdullah Al-Nuzaili",
+          "country": "Yemen",
+          "role": "source",
+          "primary": true
+        },
+        {
+          "name": "International Civil Aviation Organization",
+          "country": null,
+          "role": "target",
+          "primary": true
+        },
+        {
+          "name": "International Air Transport Association",
+          "country": null,
+          "role": "target",
+          "primary": false
+        }
+      ],
+      "source_url": "https://gdeltcloud.com/events/yemen-armed-forces-urge-aviation-bodies-to-protect-red-sea-f--cameoplus_50ffcff319b39f0b",
+      "cross_source_links": [],
+      "source_type": "gdelt_cloud_structured_event",
+      "verification_state": "unverified_candidate",
+      "risk_relevance": "maritime_supply_chain_review",
+      "claim_status": "not_applicable_event_cluster_requires_external_check"
+    },
+    {
+      "watch_id": "red_sea_houthi_shipping",
+      "event_id": "cameoplus_297bde28ba9bc0b8",
+      "title": "Yemen foreign minister discusses Houthi escalation with US envoy",
+      "summary": "On 2026-10-01, the Yemen foreign minister discussed Houthi escalation with the US chargé d'affaires in Aden. The title says the discussion concerned threats to regional security and international navigation; it provides no further details.",
+      "category": "POLITICAL",
+      "event_code": "046",
+      "event_date": "2026-10-01",
+      "observed_at": "2026-10-01T17:10:07.000Z",
+      "collected_at": "2026-10-02T03:41:50.673434+00:00",
+      "geo": {
+        "country": "Yemen",
+        "region": "Middle East",
+        "continent": "Asia",
+        "admin1": null,
+        "location": "Aden",
+        "latitude": 12.7855,
+        "longitude": 45.0187,
+        "geo_precision": 2,
+        "geo_precision_label": "nearby_area"
+      },
+      "actors": [
+        {
+          "name": "Yemen foreign minister",
+          "country": "Yemen",
+          "role": "source",
+          "primary": true
+        },
+        {
+          "name": "US chargé d'affaires",
+          "country": "United States",
+          "role": "target",
+          "primary": true
+        }
+      ],
+      "source_url": "https://gdeltcloud.com/events/yemen-foreign-minister-discusses-houthi-escalation-with-us-e--cameoplus_297bde28ba9bc0b8",
+      "cross_source_links": [],
+      "source_type": "gdelt_cloud_structured_event",
+      "verification_state": "unverified_candidate",
+      "risk_relevance": "maritime_supply_chain_review",
+      "claim_status": "not_applicable_event_cluster_requires_external_check"
+    },
+    {
+      "watch_id": "red_sea_houthi_shipping",
+      "event_id": "cameoplus_ef33c6fc95e6c4fc",
+      "title": "Yemen foreign minister discusses Red Sea security with Chinese envoy",
+      "summary": "On 2026-09-29, Yemen's foreign minister discussed bilateral cooperation and Red Sea maritime security with the Chinese chargé d'affaires. The title does not provide a venue or further details about the discussion.",
+      "category": "POLITICAL",
+      "event_code": "046",
+      "event_date": "2026-09-29",
+      "observed_at": "2026-09-29T22:45:00.000Z",
+      "collected_at": "2026-10-02T03:41:50.673434+00:00",
+      "geo": {
+        "country": "Yemen",
+        "region": "Middle East",
+        "continent": "Asia",
+        "admin1": null,
+        "location": null,
+        "latitude": 15.5527,
+        "longitude": 48.5164,
+        "geo_precision": 3,
+        "geo_precision_label": "country_or_region"
+      },
+      "actors": [
+        {
+          "name": "Yemen's foreign minister",
+          "country": "Yemen",
+          "role": "source",
+          "primary": true
+        },
+        {
+          "name": "Chinese chargé d'affaires",
+          "country": "China",
+          "role": "target",
+          "primary": true
+        }
+      ],
+      "source_url": "https://gdeltcloud.com/events/yemen-foreign-minister-discusses-red-sea-security-with-chine--cameoplus_ef33c6fc95e6c4fc",
+      "cross_source_links": [],
+      "source_type": "gdelt_cloud_structured_event",
+      "verification_state": "unverified_candidate",
+      "risk_relevance": "maritime_supply_chain_review",
+      "claim_status": "not_applicable_event_cluster_requires_external_check"
+    },
+    {
+      "watch_id": "red_sea_houthi_shipping",
+      "event_id": "cameoplus_3be1aa59d0f54481",
+      "title": "European Union seeks ships to bolster Aspides naval mission",
+      "summary": "On 2026-09-30, the European Union was reported to be seeking ships and capacity for its Aspides maritime mission, based in Brussels. The appeal is intended to address shortages as commercial vessels request more protection and escorts amid renewed Houthi threats in the Red Sea.",
+      "category": "POLITICAL",
+      "event_code": "0212",
+      "event_date": "2026-09-30",
+      "observed_at": "2026-09-30T11:45:00.000Z",
+      "collected_at": "2026-10-02T03:41:50.673434+00:00",
+      "geo": {
+        "country": "Belgium",
+        "region": "Europe",
+        "continent": "Europe",
+        "admin1": null,
+        "location": "Brussels",
+        "latitude": 50.8503,
+        "longitude": 4.3517,
+        "geo_precision": 2,
+        "geo_precision_label": "nearby_area"
+      },
+      "actors": [
+        {
+          "name": "European Union",
+          "country": null,
+          "role": "source",
+          "primary": true
+        },
+        {
+          "name": "EU member states",
+          "country": null,
+          "role": "target",
+          "primary": true
+        }
+      ],
+      "source_url": "https://gdeltcloud.com/events/european-union-seeks-ships-to-bolster-aspides-naval-mission--cameoplus_3be1aa59d0f54481",
+      "cross_source_links": [],
+      "source_type": "gdelt_cloud_structured_event",
+      "verification_state": "unverified_candidate",
+      "risk_relevance": "maritime_supply_chain_review",
+      "claim_status": "not_applicable_event_cluster_requires_external_check"
+    },
+    {
+      "watch_id": "red_sea_houthi_shipping",
+      "event_id": "cameoplus_2bfcb82e7656f36e",
+      "title": "Saudi Arabia resumes oil loading at Yanbu after pipeline repairs",
+      "summary": "On 2026-09-30, Saudi Arabia resumed oil loading from Yanbu after repairs to damage on the East-West pipeline. The title attributes the damage to a Houthi-Iraqi attack, but provides no details on the incident's timing, duration, or volume affected.",
+      "category": "INFRASTRUCTURE",
+      "event_code": "IN01",
+      "event_date": "2026-09-30",
+      "observed_at": "2026-09-30T04:24:59.000Z",
+      "collected_at": "2026-10-02T03:41:50.673434+00:00",
+      "geo": {
+        "country": "Saudi Arabia",
+        "region": "Middle East",
+        "continent": "Asia",
+        "admin1": "Al Madinah Region",
+        "location": "Yanbu",
+        "latitude": 24.09,
+        "longitude": 38.06,
+        "geo_precision": 2,
+        "geo_precision_label": "nearby_area"
+      },
+      "actors": [
+        {
+          "name": "Saudi Arabia",
+          "country": "Saudi Arabia",
+          "role": "source",
+          "primary": true
+        },
+        {
+          "name": "Oil loading operations at Yanbu",
+          "country": "Saudi Arabia",
+          "role": "target",
+          "primary": true
+        }
+      ],
+      "source_url": "https://gdeltcloud.com/events/saudi-arabia-resumes-oil-loading-at-yanbu-after-pipeline-rep--cameoplus_2bfcb82e7656f36e",
+      "cross_source_links": [],
+      "source_type": "gdelt_cloud_structured_event",
+      "verification_state": "unverified_candidate",
+      "risk_relevance": "maritime_supply_chain_review",
+      "claim_status": "not_applicable_event_cluster_requires_external_check"
+    },
+    {
+      "watch_id": "red_sea_houthi_shipping",
+      "event_id": "conflict_190738a2f41b0fd2",
+      "title": "Houthi movement targets Taiba electricity station in Medina",
+      "summary": "On 2026-10-01, the Houthi movement reportedly targeted the Taiba electricity distribution station in Medina with a drone. The article attributes the report to the spokesperson for the coalition supporting Yemen’s government; it gives no casualty or damage figures.",
+      "category": "Explosions/Remote violence",
+      "event_code": null,
+      "event_date": "2026-10-01",
+      "observed_at": "2026-10-01T20:30:00.000Z",
+      "collected_at": "2026-10-02T03:41:50.673434+00:00",
+      "geo": {
+        "country": "Saudi Arabia",
+        "region": "Middle East",
+        "continent": "Asia",
+        "admin1": "Al Madinah Region",
+        "location": "Medina",
+        "latitude": 24.4672,
+        "longitude": 39.6111,
+        "geo_precision": 1,
+        "geo_precision_label": "exact_place"
+      },
+      "actors": [
+        {
+          "name": "Houthi movement",
+          "country": "Yemen",
+          "role": "actor1",
+          "primary": true
+        }
+      ],
+      "source_url": "https://gdeltcloud.com/events/houthi-movement-targets-taiba-electricity-station-in-medina--conflict_190738a2f41b0fd2",
+      "cross_source_links": [],
+      "source_type": "gdelt_cloud_structured_event",
+      "verification_state": "unverified_candidate",
+      "risk_relevance": "maritime_supply_chain_review",
+      "claim_status": "not_applicable_event_cluster_requires_external_check"
+    },
+    {
+      "watch_id": "red_sea_houthi_shipping",
+      "event_id": "cameoplus_efcbc381d1a17029",
+      "title": "Red Sea Global secures operating licenses for Amaala and Shura marinas",
+      "summary": "On 2026-10-01, Red Sea Global received operating licenses for the Amaala and Shura marinas in Saudi Arabia. The title provides no details on capacity, traffic, or whether operations have started.",
+      "category": "INFRASTRUCTURE",
+      "event_code": "IN02",
+      "event_date": "2026-10-01",
+      "observed_at": "2026-10-01T08:15:00.000Z",
+      "collected_at": "2026-10-02T03:41:50.673434+00:00",
+      "geo": {
+        "country": "Saudi Arabia",
+        "region": "Middle East",
+        "continent": "Asia",
+        "admin1": "Tabuk Province",
+        "location": "Amaala and Shura Island",
+        "latitude": 26.5,
+        "longitude": 36.2,
+        "geo_precision": 2,
+        "geo_precision_label": "nearby_area"
+      },
+      "actors": [
+        {
+          "name": "Red Sea Global",
+          "country": "Saudi Arabia",
+          "role": "source",
+          "primary": true
+        },
+        {
+          "name": "Amaala and Shura marinas",
+          "country": "Saudi Arabia",
+          "role": "target",
+          "primary": true
+        }
+      ],
+      "source_url": "https://gdeltcloud.com/events/red-sea-global-secures-operating-licenses-for-amaala-and-shu--cameoplus_efcbc381d1a17029",
+      "cross_source_links": [],
+      "source_type": "gdelt_cloud_structured_event",
+      "verification_state": "unverified_candidate",
+      "risk_relevance": "maritime_supply_chain_review",
+      "claim_status": "not_applicable_event_cluster_requires_external_check"
+    },
+    {
+      "watch_id": "red_sea_houthi_shipping",
+      "event_id": "cameoplus_c96dafdd13549ed5",
+      "title": "Hadramout Coast Guard foils two hashish-smuggling attempts",
+      "summary": "On 2026-09-28, the Hadramout Coast Guard reportedly foiled two attempts to smuggle hashish at the Asad al-Fay checkpoint in Hadramout, Yemen. The title gives no further details about the suspected smugglers or any seizure.",
+      "category": "CRIME",
+      "event_code": "CR06",
+      "event_date": "2026-09-28",
+      "observed_at": "2026-09-28T22:05:00.000Z",
+      "collected_at": "2026-10-02T03:41:50.673434+00:00",
+      "geo": {
+        "country": "Yemen",
+        "region": "Middle East",
+        "continent": "Asia",
+        "admin1": "Hadramout",
+        "location": "Asad al-Fay checkpoint",
+        "latitude": 14.5,
+        "longitude": 49.1,
+        "geo_precision": 2,
+        "geo_precision_label": "nearby_area"
+      },
+      "actors": [
+        {
+          "name": "Hadramout Coast Guard",
+          "country": "Yemen",
+          "role": "source",
+          "primary": true
+        },
+        {
+          "name": "Unidentified smugglers",
+          "country": null,
+          "role": "target",
+          "primary": true
+        }
+      ],
+      "source_url": "https://gdeltcloud.com/events/hadramout-coast-guard-foils-two-hashish-smuggling-attempts--cameoplus_c96dafdd13549ed5",
+      "cross_source_links": [],
+      "source_type": "gdelt_cloud_structured_event",
+      "verification_state": "unverified_candidate",
+      "risk_relevance": "maritime_supply_chain_review",
+      "claim_status": "not_applicable_event_cluster_requires_external_check"
+    },
+    {
+      "watch_id": "red_sea_houthi_shipping",
+      "event_id": "cameoplus_b5411b0bd683201b",
+      "title": "Saudi foreign minister discusses maritime security with US counterpart",
+      "summary": "On 2026-09-28, Saudi Arabia’s foreign minister discussed maritime security in the Strait of Hormuz and Bab el-Mandeb with the US foreign minister, alongside developments in Yemen. The title does not specify the meeting format or venue; Riyadh is used as the location fallback for the Saudi source actor.",
+      "category": "POLITICAL",
+      "event_code": "04",
+      "event_date": "2026-09-28",
+      "observed_at": "2026-09-28T19:53:42.000Z",
+      "collected_at": "2026-10-02T03:41:50.673434+00:00",
+      "geo": {
+        "country": "Saudi Arabia",
+        "region": "Middle East",
+        "continent": "Asia",
+        "admin1": null,
+        "location": "Riyadh",
+        "latitude": 24.7136,
+        "longitude": 46.6753,
+        "geo_precision": 2,
+        "geo_precision_label": "nearby_area"
+      },
+      "actors": [
+        {
+          "name": "Saudi foreign minister",
+          "country": "Saudi Arabia",
+          "role": "source",
+          "primary": true
+        },
+        {
+          "name": "US foreign minister",
+          "country": "United States",
+          "role": "target",
+          "primary": true
+        }
+      ],
+      "source_url": "https://gdeltcloud.com/events/saudi-foreign-minister-discusses-maritime-security-with-us-c--cameoplus_b5411b0bd683201b",
+      "cross_source_links": [],
+      "source_type": "gdelt_cloud_structured_event",
+      "verification_state": "unverified_candidate",
+      "risk_relevance": "maritime_supply_chain_review",
+      "claim_status": "not_applicable_event_cluster_requires_external_check"
+    }
+  ],
+  "raw_receipt": {
+    "schema_version": "1.0",
+    "source": "gdelt_cloud",
+    "endpoint": "https://gdeltcloud.com/api/v2/events",
+    "query": {
+      "days": 7,
+      "limit": 10,
+      "search": "Houthi Red Sea shipping vessel port maritime security"
+    },
+    "collected_at": "2026-10-02T03:41:50.673434+00:00",
+    "started_at": "2026-10-02T03:41:45.398637+00:00",
+    "finished_at": "2026-10-02T03:41:50.673434+00:00",
+    "page_count": 1,
+    "row_count": 10,
+    "complete": false,
+    "pages": [
+      {
+        "page": 1,
+        "row_count": 10,
+        "limit": 10,
+        "cursor": null,
+        "next_cursor_present": true
+      }
+    ],
+    "events": [
+      {
+        "id": "cameoplus_65a1e1fdf6c944dd",
+        "url": "https://gdeltcloud.com/events/yemeni-government-discusses-maritime-security-with-internati--cameoplus_65a1e1fdf6c944dd",
+        "primary_story_url": "https://gdeltcloud.com/stories/yemen-and-international-crisis-group-discuss-conflicts-impac-86cfe917",
+        "family": "cameoplus",
+        "title": "Yemeni government discusses maritime security with International Crisis Group",
+        "title_source": "coder_title",
+        "summary": "On 2026-09-26, the Yemeni government discussed the conflict’s effects on maritime security with the International Crisis Group. Yemeni official Al-Zouba said Houthi escalation in the Red Sea and Bab al-Mandab, including reported ship targeting and threats to commercial navigation, affected regional security and international trade routes.",
+        "event_date": "2026-09-26",
+        "observed_at": "2026-09-26T23:45:00.000Z",
+        "event_date_basis": "publication_day_inference",
+        "event_date_evidence": "The article reports that Yemen discussed the maritime-security implications with the International Crisis Group; no separate occurrence date is stated, so the publication-day inference is used.",
+        "coded_at": "2026-09-27T00:20:24Z",
+        "updated_at": "2026-09-27T00:20:24Z",
+        "processed_at": "2026-09-27T00:20:24Z",
+        "category": "POLITICAL",
+        "subcategory": "046",
+        "subcategory_label": "Engage in Negotiation",
+        "event_description": "Engage in negotiation",
+        "taxonomy_status": "coded",
+        "domain": "POLITICAL",
+        "event_code": "046",
+        "geo": {
+          "country": "Yemen",
+          "region": "Middle East",
+          "continent": "Asia",
+          "admin1": null,
+          "location": "Sana'a",
+          "latitude": 15.3694,
+          "longitude": 44.191,
+          "geo_precision": 3,
+          "geo_precision_label": "country_or_region"
+        },
+        "geo_context": {
+          "location_country": "Yemen",
+          "actor_origin_countries": [
+            "Yemen"
+          ]
+        },
+        "actors": [
+          {
+            "name": "Yemeni government",
+            "country": "Yemen",
+            "role": "source",
+            "primary": true
+          },
+          {
+            "name": "International Crisis Group",
+            "country": null,
+            "role": "target",
+            "primary": true
+          }
+        ],
+        "metrics": {
+          "significance": 0.3378,
+          "severity_tier": "low",
+          "goldstein_scale": 7,
+          "magnitude": 2,
+          "systemic_importance": 0.1,
+          "propagation_potential": 0.28,
+          "market_sensitivity": 0.05,
+          "confidence": 0.67,
+          "article_count": 1,
+          "evidence_source_count": 1,
+          "supporting_story_count": 1,
+          "metric_inputs": {
+            "magnitude": {
+              "path": "verbal",
+              "value": 2,
+              "why": "The article describes discussion, a cooperative consultation/negotiation-level action."
+            },
+            "systemic": {
+              "node": "Yemeni government–International Crisis Group dialogue",
+              "size": {
+                "value": 0.1,
+                "why": "The article gives no indication this dialogue is a binding or central international institution."
+              },
+              "interconnectedness": {
+                "value": 0.1,
+                "why": "No third-party commitments dependent on the discussion are reported."
+              },
+              "irreplaceability": {
+                "value": 0.1,
+                "why": "The article does not indicate this is a unique diplomatic channel."
+              }
+            },
+            "propagation": {
+              "channel": {
+                "value": 0.2,
+                "why": "The discussion concerns maritime security and trade routes, but no operational spillover is reported."
+              },
+              "coupling": {
+                "value": 0.1,
+                "why": "No deadline or lack of alternatives is mentioned."
+              },
+              "breach": {
+                "value": 0,
+                "why": "No breach of a prior restraint or norm is reported."
+              },
+              "primed": {
+                "value": 0.2,
+                "why": "The article describes ongoing regional conflict, but no imminent triggering event."
+              },
+              "containment": {
+                "value": 0.1,
+                "why": "Consultations are mentioned, but no specific containment measure is described."
+              }
+            },
+            "market": {
+              "claim_exposure": {
+                "value": 0.1,
+                "why": "The discussion names no specific traded claim or stated change to a priced aggregate."
+              },
+              "economic_bite": {
+                "value": 0,
+                "why": "Discussion alone does not change any claim, output, asset, contract, or financing condition."
+              }
+            }
+          },
+          "metric_version": "v2-2026-07-24"
+        },
+        "has_fatalities": null,
+        "fatalities": null,
+        "fatalities_basis": null,
+        "fatalities_corroboration": null,
+        "fatalities_evidence": null,
+        "fatalities_supporting_source_count": null,
+        "injured": null,
+        "civilians_killed": null,
+        "civilians_injured": null,
+        "civilian_targeting": null,
+        "civilian_targeting_label": null,
+        "story_refs": [
+          {
+            "id": "86cfe9170b02",
+            "url": "https://gdeltcloud.com/stories/yemen-and-international-crisis-group-discuss-conflicts-impac-86cfe917",
+            "title": "Yemen and International Crisis Group discuss conflict's impact on maritime security",
+            "story_date": "2026-09-26",
+            "article_count": 1
+          }
+        ],
+        "entity_refs": [
+          {
+            "id": "llm:bdeb7ca6ba6c5c958942",
+            "id_space": "llm",
+            "name": "International Crisis Group",
+            "type": "organization",
+            "entity_id": "llm:bdeb7ca6ba6c5c958942",
+            "spine_id": null,
+            "wikipedia_url": null,
+            "image_url": null,
+            "avatar_url": null,
+            "public_official": {
+              "checked": false,
+              "is_public_official": null,
+              "status": null,
+              "total": null,
+              "offices": [],
+              "truncated": false
+            }
+          },
+          {
+            "id": "llm:f6ccd97c011bfd5d1766",
+            "id_space": "llm",
+            "name": "Houthi movement",
+            "type": "organization",
+            "entity_id": "llm:f6ccd97c011bfd5d1766",
+            "spine_id": null,
+            "wikipedia_url": null,
+            "image_url": null,
+            "avatar_url": null,
+            "public_official": {
+              "checked": false,
+              "is_public_official": null,
+              "status": null,
+              "total": null,
+              "offices": [],
+              "truncated": false
+            }
+          }
+        ],
+        "top_articles": [
+          {
+            "url": "https://sana.sy/international/2590646/",
+            "title": "اليمن يبحث مع مجموعة الأزمات الدولية انعكاسات الأوضاع الميدانية على أمن الملاحة",
+            "domain": "sana.sy",
+            "domain_avatar_url": "https://www.google.com/s2/favicons?domain=sana.sy&sz=64",
+            "rank": 1
+          }
+        ],
+        "language_breakdown": [
+          {
+            "language": "ar",
+            "count": 1
+          }
+        ],
+        "top_language": "ar",
+        "search_score": 0.6683849096298218,
+        "match_type": "semantic",
+        "incident": {
+          "uid": "cameoplus_65a1e1fdf6c944dd",
+          "resolution": "unadjudicated",
+          "confidence": null
+        }
+      },
+      {
+        "id": "cameoplus_50ffcff319b39f0b",
+        "url": "https://gdeltcloud.com/events/yemen-armed-forces-urge-aviation-bodies-to-protect-red-sea-f--cameoplus_50ffcff319b39f0b",
+        "primary_story_url": "https://gdeltcloud.com/stories/yemen-warns-international-airlines-of-houthi-threat-urges-ac-03049557",
+        "family": "cameoplus",
+        "title": "Yemen armed forces urge aviation bodies to protect Red Sea flights",
+        "title_source": "coder_title",
+        "summary": "On 2026-09-26, Yemen Armed Forces spokesperson Majid Abdullah Al-Nuzaili urged the International Civil Aviation Organization and International Air Transport Association to take a firm position and measures to protect civil aviation. He warned that Houthi weapons launched from Hodeidah Governorate threatened aircraft using international routes over the southern Red Sea.",
+        "event_date": "2026-09-26",
+        "observed_at": "2026-09-27T00:00:00.000Z",
+        "event_date_basis": "relative_date",
+        "event_date_evidence": "The Yemen armed forces spokesperson made the statement “on Saturday”; the publication window places Saturday on 2026-09-26.",
+        "coded_at": "2026-09-27T08:55:24Z",
+        "updated_at": "2026-09-27T10:12:15Z",
+        "processed_at": "2026-09-27T08:55:24Z",
+        "category": "POLITICAL",
+        "subcategory": "02",
+        "subcategory_label": "Appeal",
+        "event_description": "Appeal",
+        "taxonomy_status": "coded",
+        "domain": "POLITICAL",
+        "event_code": "02",
+        "geo": {
+          "country": "Yemen",
+          "region": "Middle East",
+          "continent": "Asia",
+          "admin1": null,
+          "location": "Sana'a",
+          "latitude": 15.3694,
+          "longitude": 44.191,
+          "geo_precision": 2,
+          "geo_precision_label": "nearby_area"
+        },
+        "geo_context": {
+          "location_country": "Yemen",
+          "actor_origin_countries": [
+            "Yemen"
+          ]
+        },
+        "actors": [
+          {
+            "name": "Yemen Armed Forces spokesperson Majid Abdullah Al-Nuzaili",
+            "country": "Yemen",
+            "role": "source",
+            "primary": true
+          },
+          {
+            "name": "International Civil Aviation Organization",
+            "country": null,
+            "role": "target",
+            "primary": true
+          },
+          {
+            "name": "International Air Transport Association",
+            "country": null,
+            "role": "target",
+            "primary": false
+          }
+        ],
+        "metrics": {
+          "significance": 0.2766,
+          "severity_tier": "low",
+          "goldstein_scale": 3,
+          "magnitude": 2,
+          "systemic_importance": 0.17,
+          "propagation_potential": 0.36,
+          "market_sensitivity": 0.05,
+          "confidence": 0.83,
+          "article_count": 10,
+          "evidence_source_count": 6,
+          "supporting_story_count": 1,
+          "metric_inputs": {
+            "magnitude": {
+              "path": "verbal",
+              "value": 2,
+              "why": "Al-Nuzaili urged aviation authorities to take action; this is an appeal, not a demand or threat."
+            },
+            "systemic": {
+              "node": "International civil aviation safety coordination",
+              "size": {
+                "value": 0.2,
+                "why": "The appeal concerns international flight safety, but no binding institutional decision or change is reported."
+              },
+              "interconnectedness": {
+                "value": 0.2,
+                "why": "The warning concerns international air routes, though no specific commitments by other states are described."
+              },
+              "irreplaceability": {
+                "value": 0.1,
+                "why": "No unique or indispensable coordination channel is established in the report."
+              }
+            },
+            "propagation": {
+              "channel": {
+                "value": 0.3,
+                "why": "The warning identifies international air routes and addresses ICAO and IATA, indicating an existing aviation-safety information channel."
+              },
+              "coupling": {
+                "value": 0.2,
+                "why": "No deadline or immediate operational constraint is reported."
+              },
+              "breach": {
+                "value": 0.2,
+                "why": "The spokesperson describes a dangerous threat, but the article does not establish a first-time breach of a restraint."
+              },
+              "primed": {
+                "value": 0.2,
+                "why": "The article describes an existing security concern, without a specific deadline or imminent institutional decision."
+              },
+              "containment": {
+                "value": 0.1,
+                "why": "No mediator, safeguard, or active response is reported."
+              }
+            },
+            "market": {
+              "claim_exposure": {
+                "value": 0.1,
+                "why": "The report identifies Yemen and international air routes, but no particular traded claim or aggregate-level change in aviation supply or access."
+              },
+              "economic_bite": {
+                "value": 0,
+                "why": "This is a warning and appeal; no action has changed a claim's operations, obligations, or cash flows."
+              }
+            }
+          },
+          "metric_version": "v2-2026-07-24"
+        },
+        "has_fatalities": null,
+        "fatalities": null,
+        "fatalities_basis": null,
+        "fatalities_corroboration": null,
+        "fatalities_evidence": null,
+        "fatalities_supporting_source_count": null,
+        "injured": null,
+        "civilians_killed": null,
+        "civilians_injured": null,
+        "civilian_targeting": null,
+        "civilian_targeting_label": null,
+        "story_refs": [
+          {
+            "id": "0304955727de",
+            "url": "https://gdeltcloud.com/stories/yemen-warns-international-airlines-of-houthi-threat-urges-ac-03049557",
+            "title": "Yemen warns international airlines of Houthi threat, urges action to avert disaster",
+            "story_date": "2026-09-27",
+            "article_count": 10
+          }
+        ],
+        "entity_refs": [
+          {
+            "id": "e_07658891d7f2885a",
+            "id_space": "spine",
+            "name": "Houthis",
+            "type": "organization",
+            "entity_id": "e_07658891d7f2885a",
+            "spine_id": "e_07658891d7f2885a",
+            "wikipedia_url": "https://en.wikipedia.org/wiki/Houthis",
+            "image_url": null,
+            "avatar_url": null,
+            "public_official": {
+              "checked": true,
+              "is_public_official": false,
+              "total": 0,
+              "status": null,
+              "offices": [],
+              "truncated": false
+            }
+          },
+          {
+            "id": "https://en.wikipedia.org/wiki/Government_of_Yemen",
+            "id_space": "wikipedia",
+            "name": "Yemeni government",
+            "type": "organization",
+            "entity_id": "https://en.wikipedia.org/wiki/Government_of_Yemen",
+            "spine_id": null,
+            "wikipedia_url": "https://en.wikipedia.org/wiki/Government_of_Yemen",
+            "image_url": null,
+            "avatar_url": null,
+            "public_official": {
+              "checked": false,
+              "is_public_official": null,
+              "status": null,
+              "total": null,
+              "offices": [],
+              "truncated": false
+            }
+          },
+          {
+            "id": "e_628fcb35c71c573a",
+            "id_space": "spine",
+            "name": "Yemeni Armed Forces",
+            "type": "organization",
+            "entity_id": "e_628fcb35c71c573a",
+            "spine_id": "e_628fcb35c71c573a",
+            "wikipedia_url": "https://en.wikipedia.org/wiki/Yemeni_Armed_Forces",
+            "image_url": null,
+            "avatar_url": null,
+            "public_official": {
+              "checked": true,
+              "is_public_official": false,
+              "total": 0,
+              "status": null,
+              "offices": [],
+              "truncated": false
+            }
+          }
+        ],
+        "top_articles": [
+          {
+            "url": "https://ajel.sa/international/4y9rdhp1k",
+            "title": "القوات المسلحة اليمنية: ميليشيا الحوثي تستخدم أسلحة دفاع جوي إيرانية جوالة بتقنيات مبتكرة",
+            "domain": "ajel.sa",
+            "domain_avatar_url": "https://www.google.com/s2/favicons?domain=ajel.sa&sz=64",
+            "rank": 1
+          },
+          {
+            "url": "https://almashhad.news/news/496750",
+            "title": "الحكومة اليمنية توجه تحذيرًا لـ شركات الطيران الدولية من تطور خطير سببه الحوثيون وتدعو إلى التحرك قبل وقوع الكارثة... ماذا يجري؟",
+            "domain": "almashhad.news",
+            "domain_avatar_url": "https://www.google.com/s2/favicons?domain=almashhad.news&sz=64",
+            "rank": 2
+          },
+          {
+            "url": "https://dunyanews.tv/en/World/974875-houthis-using-iranian-air-defence-weapons-to-threaten-red-sea-flights",
+            "title": "Houthis using Iranian air defence weapons to threaten Red Sea flights",
+            "domain": "dunyanews.tv",
+            "domain_avatar_url": "https://www.google.com/s2/favicons?domain=dunyanews.tv&sz=64",
+            "rank": 3
+          }
+        ],
+        "language_breakdown": [
+          {
+            "language": "ar",
+            "count": 5
+          },
+          {
+            "language": "en",
+            "count": 2
+          },
+          {
+            "language": "es",
+            "count": 1
+          },
+          {
+            "language": "ms",
+            "count": 1
+          },
+          {
+            "language": "tr",
+            "count": 1
+          }
+        ],
+        "top_language": "ar",
+        "search_score": 0.5694396495819092,
+        "match_type": "semantic",
+        "incident": {
+          "uid": "cameoplus_50ffcff319b39f0b",
+          "resolution": "unadjudicated",
+          "confidence": null
+        }
+      },
+      {
+        "id": "cameoplus_297bde28ba9bc0b8",
+        "url": "https://gdeltcloud.com/events/yemen-foreign-minister-discusses-houthi-escalation-with-us-e--cameoplus_297bde28ba9bc0b8",
+        "primary_story_url": "https://gdeltcloud.com/stories/yemen-foreign-minister-discusses-houthi-escalation-with-us-c-595ef04d",
+        "family": "cameoplus",
+        "title": "Yemen foreign minister discusses Houthi escalation with US envoy",
+        "title_source": "coder_title",
+        "summary": "On 2026-10-01, the Yemen foreign minister discussed Houthi escalation with the US chargé d'affaires in Aden. The title says the discussion concerned threats to regional security and international navigation; it provides no further details.",
+        "event_date": "2026-10-01",
+        "observed_at": "2026-10-01T17:10:07.000Z",
+        "event_date_basis": "publication_day_inference",
+        "event_date_evidence": "The current-news title reports that the Yemen foreign minister discussed the issue with the US chargé d'affaires; no separate occurrence date is given.",
+        "coded_at": "2026-10-01T18:21:53Z",
+        "updated_at": "2026-10-01T18:21:53Z",
+        "processed_at": "2026-10-01T18:21:53Z",
+        "category": "POLITICAL",
+        "subcategory": "046",
+        "subcategory_label": "Engage in Negotiation",
+        "event_description": "Engage in negotiation",
+        "taxonomy_status": "coded",
+        "domain": "POLITICAL",
+        "event_code": "046",
+        "geo": {
+          "country": "Yemen",
+          "region": "Middle East",
+          "continent": "Asia",
+          "admin1": null,
+          "location": "Aden",
+          "latitude": 12.7855,
+          "longitude": 45.0187,
+          "geo_precision": 2,
+          "geo_precision_label": "nearby_area"
+        },
+        "geo_context": {
+          "location_country": "Yemen",
+          "actor_origin_countries": [
+            "Yemen",
+            "United States"
+          ]
+        },
+        "actors": [
+          {
+            "name": "Yemen foreign minister",
+            "country": "Yemen",
+            "role": "source",
+            "primary": true
+          },
+          {
+            "name": "US chargé d'affaires",
+            "country": "United States",
+            "role": "target",
+            "primary": true
+          }
+        ],
+        "metrics": {
+          "significance": 0.3384,
+          "severity_tier": "low",
+          "goldstein_scale": 7,
+          "magnitude": 2,
+          "systemic_importance": 0.12,
+          "propagation_potential": 0.3,
+          "market_sensitivity": 0.05,
+          "confidence": 0.43,
+          "article_count": 3,
+          "evidence_source_count": 1,
+          "supporting_story_count": 1,
+          "metric_inputs": {
+            "magnitude": {
+              "path": "verbal",
+              "value": 2,
+              "why": "The reported discussion is a cooperative consultation, on the appeal/consultation rung."
+            },
+            "systemic": {
+              "node": "Yemen-US diplomatic relationship",
+              "size": {
+                "value": 0.15,
+                "why": "The article describes a bilateral discussion, not action through a wider binding institution."
+              },
+              "interconnectedness": {
+                "value": 0.1,
+                "why": "No third-party commitments or wider diplomatic dependencies are reported."
+              },
+              "irreplaceability": {
+                "value": 0.1,
+                "why": "No indication that this is the only available diplomatic channel."
+              }
+            },
+            "propagation": {
+              "channel": {
+                "value": 0.2,
+                "why": "The discussion provides a bilateral diplomatic channel; no wider transmission channel is described."
+              },
+              "coupling": {
+                "value": 0.1,
+                "why": "No deadline or lack of alternatives is reported."
+              },
+              "breach": {
+                "value": 0.1,
+                "why": "The title reports discussion of Houthi escalation but no breached diplomatic restraint."
+              },
+              "primed": {
+                "value": 0.3,
+                "why": "Houthi escalation and threats to regional security and international navigation are described as the discussion's context."
+              },
+              "containment": {
+                "value": 0.2,
+                "why": "Diplomatic discussion is occurring, but no specific mediation or de-escalation measure is reported."
+              }
+            },
+            "market": {
+              "claim_exposure": {
+                "value": 0.1,
+                "why": "The title identifies no particular traded claim or change to a priced aggregate."
+              },
+              "economic_bite": {
+                "value": 0,
+                "why": "The reported action is discussion; nothing is reported as having changed any claim."
+              }
+            }
+          },
+          "metric_version": "v2-2026-07-24"
+        },
+        "has_fatalities": null,
+        "fatalities": null,
+        "fatalities_basis": null,
+        "fatalities_corroboration": null,
+        "fatalities_evidence": null,
+        "fatalities_supporting_source_count": null,
+        "injured": null,
+        "civilians_killed": null,
+        "civilians_injured": null,
+        "civilian_targeting": null,
+        "civilian_targeting_label": null,
+        "story_refs": [
+          {
+            "id": "595ef04de438",
+            "url": "https://gdeltcloud.com/stories/yemen-foreign-minister-discusses-houthi-escalation-with-us-c-595ef04d",
+            "title": "Yemen foreign minister discusses Houthi escalation with US chargé d'affaires",
+            "story_date": "2026-10-01",
+            "article_count": 3
+          }
+        ],
+        "entity_refs": [
+          {
+            "id": "e_07658891d7f2885a",
+            "id_space": "spine",
+            "name": "Houthis",
+            "type": "organization",
+            "entity_id": "e_07658891d7f2885a",
+            "spine_id": "e_07658891d7f2885a",
+            "wikipedia_url": "https://en.wikipedia.org/wiki/Houthis",
+            "image_url": null,
+            "avatar_url": null,
+            "public_official": {
+              "checked": true,
+              "is_public_official": false,
+              "total": 0,
+              "status": null,
+              "offices": [],
+              "truncated": false
+            }
+          }
+        ],
+        "top_articles": [
+          {
+            "url": "http://sabanew.net/viewstory/153344",
+            "title": "وزيرة الخارجية تبحث مع القائم بالأعمال الأمريكي التصعيد الحوثي وتهديداته لأمن المنطقة والملاحة الدولية",
+            "domain": "sabanew.net",
+            "domain_avatar_url": "https://www.google.com/s2/favicons?domain=sabanew.net&sz=64",
+            "rank": 1
+          }
+        ],
+        "language_breakdown": [
+          {
+            "language": "ar",
+            "count": 3
+          }
+        ],
+        "top_language": "ar",
+        "search_score": 0.5452930927276611,
+        "match_type": "semantic",
+        "incident": {
+          "uid": "cameoplus_297bde28ba9bc0b8",
+          "resolution": "unadjudicated",
+          "confidence": null
+        }
+      },
+      {
+        "id": "cameoplus_ef33c6fc95e6c4fc",
+        "url": "https://gdeltcloud.com/events/yemen-foreign-minister-discusses-red-sea-security-with-chine--cameoplus_ef33c6fc95e6c4fc",
+        "primary_story_url": "https://gdeltcloud.com/stories/yemen-and-china-discuss-bilateral-ties-and-red-sea-maritime-e233c160",
+        "family": "cameoplus",
+        "title": "Yemen foreign minister discusses Red Sea security with Chinese envoy",
+        "title_source": "coder_title",
+        "summary": "On 2026-09-29, Yemen's foreign minister discussed bilateral cooperation and Red Sea maritime security with the Chinese chargé d'affaires. The title does not provide a venue or further details about the discussion.",
+        "event_date": "2026-09-29",
+        "observed_at": "2026-09-29T22:45:00.000Z",
+        "event_date_basis": "publication_day_inference",
+        "event_date_evidence": "The title reports the foreign minister discussing bilateral cooperation and Red Sea maritime security; no separate occurrence date is provided, so the publication day is inferred.",
+        "coded_at": "2026-09-29T23:39:30Z",
+        "updated_at": "2026-09-29T23:39:30Z",
+        "processed_at": "2026-09-29T23:39:30Z",
+        "category": "POLITICAL",
+        "subcategory": "046",
+        "subcategory_label": "Engage in Negotiation",
+        "event_description": "Engage in negotiation",
+        "taxonomy_status": "coded",
+        "domain": "POLITICAL",
+        "event_code": "046",
+        "geo": {
+          "country": "Yemen",
+          "region": "Middle East",
+          "continent": "Asia",
+          "admin1": null,
+          "location": null,
+          "latitude": 15.5527,
+          "longitude": 48.5164,
+          "geo_precision": 3,
+          "geo_precision_label": "country_or_region"
+        },
+        "geo_context": {
+          "location_country": "Yemen",
+          "actor_origin_countries": [
+            "Yemen",
+            "China"
+          ]
+        },
+        "actors": [
+          {
+            "name": "Yemen's foreign minister",
+            "country": "Yemen",
+            "role": "source",
+            "primary": true
+          },
+          {
+            "name": "Chinese chargé d'affaires",
+            "country": "China",
+            "role": "target",
+            "primary": true
+          }
+        ],
+        "metrics": {
+          "significance": 0.3227,
+          "severity_tier": "low",
+          "goldstein_scale": 7,
+          "magnitude": 2,
+          "systemic_importance": 0.1,
+          "propagation_potential": 0.26,
+          "market_sensitivity": 0.05,
+          "confidence": 0.35,
+          "article_count": 2,
+          "evidence_source_count": 1,
+          "supporting_story_count": 1,
+          "metric_inputs": {
+            "magnitude": {
+              "path": "verbal",
+              "value": 2,
+              "why": "The reported action is a cooperative diplomatic discussion, corresponding to the consultation/meeting rung."
+            },
+            "systemic": {
+              "node": "Yemen-China bilateral relationship",
+              "size": {
+                "value": 0.1,
+                "why": "The title identifies a bilateral discussion but no binding institution or agreement."
+              },
+              "interconnectedness": {
+                "value": 0.1,
+                "why": "No third-party commitments depending on this relationship are mentioned."
+              },
+              "irreplaceability": {
+                "value": 0.1,
+                "why": "No exclusive diplomatic channel is identified."
+              }
+            },
+            "propagation": {
+              "channel": {
+                "value": 0.1,
+                "why": "The topic includes Red Sea maritime security, but the title establishes no operational transmission channel."
+              },
+              "coupling": {
+                "value": 0.1,
+                "why": "No deadline, lack of alternatives, or other tight connection is reported."
+              },
+              "breach": {
+                "value": 0,
+                "why": "No breach of a prior restraint or norm is stated."
+              },
+              "primed": {
+                "value": 0.1,
+                "why": "Regional maritime security is named, but no immediate crisis or deadline is established."
+              },
+              "containment": {
+                "value": 0,
+                "why": "No mediator, backstop, or other active dampening measure is mentioned."
+              }
+            },
+            "market": {
+              "claim_exposure": {
+                "value": 0.1,
+                "why": "The title names the countries and maritime-security topic but no particular traded claim or stated aggregate market change."
+              },
+              "economic_bite": {
+                "value": 0,
+                "why": "The reported discussion is diplomatic speech; no claim is changed or instrument imposed."
+              }
+            }
+          },
+          "metric_version": "v2-2026-07-24"
+        },
+        "has_fatalities": null,
+        "fatalities": null,
+        "fatalities_basis": null,
+        "fatalities_corroboration": null,
+        "fatalities_evidence": null,
+        "fatalities_supporting_source_count": null,
+        "injured": null,
+        "civilians_killed": null,
+        "civilians_injured": null,
+        "civilian_targeting": null,
+        "civilian_targeting_label": null,
+        "story_refs": [
+          {
+            "id": "e233c16091fe",
+            "url": "https://gdeltcloud.com/stories/yemen-and-china-discuss-bilateral-ties-and-red-sea-maritime-e233c160",
+            "title": "Yemen and China discuss bilateral ties and Red Sea maritime security",
+            "story_date": "2026-09-29",
+            "article_count": 2
+          }
+        ],
+        "entity_refs": [],
+        "top_articles": [
+          {
+            "url": "https://adngad.net/news/884843",
+            "title": "وزيرة الخارجية تبحث مع القائم بالأعمال الصيني تعزيز التعاون الثنائي وأمن الملاحة في البحر الأحمر",
+            "domain": "adngad.net",
+            "domain_avatar_url": "https://www.google.com/s2/favicons?domain=adngad.net&sz=64",
+            "rank": 1
+          }
+        ],
+        "language_breakdown": [
+          {
+            "language": "ar",
+            "count": 2
+          }
+        ],
+        "top_language": "ar",
+        "search_score": 0.5418434739112854,
+        "match_type": "semantic",
+        "incident": {
+          "uid": "cameoplus_ef33c6fc95e6c4fc",
+          "resolution": "unadjudicated",
+          "confidence": null
+        }
+      },
+      {
+        "id": "cameoplus_3be1aa59d0f54481",
+        "url": "https://gdeltcloud.com/events/european-union-seeks-ships-to-bolster-aspides-naval-mission--cameoplus_3be1aa59d0f54481",
+        "primary_story_url": "https://gdeltcloud.com/stories/eu-seeks-ships-for-aspides-mission-as-houthi-threats-rise-in-625795eb",
+        "family": "cameoplus",
+        "title": "European Union seeks ships to bolster Aspides naval mission",
+        "title_source": "coder_title",
+        "summary": "On 2026-09-30, the European Union was reported to be seeking ships and capacity for its Aspides maritime mission, based in Brussels. The appeal is intended to address shortages as commercial vessels request more protection and escorts amid renewed Houthi threats in the Red Sea.",
+        "event_date": "2026-09-30",
+        "observed_at": "2026-09-30T11:45:00.000Z",
+        "event_date_basis": "publication_day_inference",
+        "event_date_evidence": "The article reports that the European Union is seeking ships to address capacity gaps in the Aspides mission; no separate occurrence date is stated, so the publication-window date is inferred.",
+        "coded_at": "2026-09-30T12:35:25Z",
+        "updated_at": "2026-09-30T12:35:25Z",
+        "processed_at": "2026-09-30T12:35:25Z",
+        "category": "POLITICAL",
+        "subcategory": "0212",
+        "subcategory_label": "Military",
+        "event_description": "Appeal for military cooperation",
+        "taxonomy_status": "coded",
+        "domain": "POLITICAL",
+        "event_code": "0212",
+        "geo": {
+          "country": "Belgium",
+          "region": "Europe",
+          "continent": "Europe",
+          "admin1": null,
+          "location": "Brussels",
+          "latitude": 50.8503,
+          "longitude": 4.3517,
+          "geo_precision": 2,
+          "geo_precision_label": "nearby_area"
+        },
+        "geo_context": {
+          "location_country": "Belgium",
+          "actor_origin_countries": []
+        },
+        "actors": [
+          {
+            "name": "European Union",
+            "country": null,
+            "role": "source",
+            "primary": true
+          },
+          {
+            "name": "EU member states",
+            "country": null,
+            "role": "target",
+            "primary": true
+          }
+        ],
+        "metrics": {
+          "significance": 0.266,
+          "severity_tier": "low",
+          "goldstein_scale": 3,
+          "magnitude": 2,
+          "systemic_importance": 0.25,
+          "propagation_potential": 0.39,
+          "market_sensitivity": 0.05,
+          "confidence": 0.62,
+          "article_count": 2,
+          "evidence_source_count": 1,
+          "supporting_story_count": 1,
+          "metric_inputs": {
+            "magnitude": {
+              "path": "verbal",
+              "value": 2,
+              "why": "The EU is seeking ships for a naval mission, an appeal for military cooperation."
+            },
+            "systemic": {
+              "node": "EU Aspides maritime protection mission",
+              "size": {
+                "value": 0.25,
+                "why": "The mission protects shipping in the Red Sea, but the article describes capacity shortfalls rather than a change to a wider institutional order."
+              },
+              "interconnectedness": {
+                "value": 0.3,
+                "why": "Commercial shipping companies request protection and the mission addresses a shared maritime route; specific dependent states are not identified."
+              },
+              "irreplaceability": {
+                "value": 0.2,
+                "why": "The article does not establish that Aspides is the only available protection channel."
+              }
+            },
+            "propagation": {
+              "channel": {
+                "value": 0.35,
+                "why": "The article identifies commercial shipping and maritime protection needs as live channels, including increased escort requests."
+              },
+              "coupling": {
+                "value": 0.25,
+                "why": "It reports too few naval assets and capacity, but gives no deadline or evidence that alternatives are unavailable."
+              },
+              "breach": {
+                "value": 0.1,
+                "why": "No new breach of a prior restraint or unprecedented action is reported."
+              },
+              "primed": {
+                "value": 0.45,
+                "why": "The article describes renewed Houthi threats and increased commercial requests for protection."
+              },
+              "containment": {
+                "value": 0.2,
+                "why": "Aspides is operating as a protective mission, although the article reports shortages and no specific mitigating measure."
+              }
+            },
+            "market": {
+              "claim_exposure": {
+                "value": 0.1,
+                "why": "The article describes shipping rerouting and higher transport and insurance costs in general, but names no particular traded claim or states a new aggregate-level change caused by this appeal."
+              },
+              "economic_bite": {
+                "value": 0,
+                "why": "Seeking ships is an appeal; the article reports no binding instrument or operational change resulting from it."
+              }
+            }
+          },
+          "metric_version": "v2-2026-07-24"
+        },
+        "has_fatalities": null,
+        "fatalities": null,
+        "fatalities_basis": null,
+        "fatalities_corroboration": null,
+        "fatalities_evidence": null,
+        "fatalities_supporting_source_count": null,
+        "injured": null,
+        "civilians_killed": null,
+        "civilians_injured": null,
+        "civilian_targeting": null,
+        "civilian_targeting_label": null,
+        "story_refs": [
+          {
+            "id": "625795ebd817",
+            "url": "https://gdeltcloud.com/stories/eu-seeks-ships-for-aspides-mission-as-houthi-threats-rise-in-625795eb",
+            "title": "EU seeks ships for Aspides mission as Houthi threats rise in Red Sea",
+            "story_date": "2026-09-30",
+            "article_count": 2
+          }
+        ],
+        "entity_refs": [
+          {
+            "id": "e_07658891d7f2885a",
+            "id_space": "spine",
+            "name": "Houthis",
+            "type": "organization",
+            "entity_id": "e_07658891d7f2885a",
+            "spine_id": "e_07658891d7f2885a",
+            "wikipedia_url": "https://en.wikipedia.org/wiki/Houthis",
+            "image_url": null,
+            "avatar_url": null,
+            "public_official": {
+              "checked": true,
+              "is_public_official": false,
+              "total": 0,
+              "status": null,
+              "offices": [],
+              "truncated": false
+            }
+          }
+        ],
+        "top_articles": [
+          {
+            "url": "https://sana.sy/tr/international/2325940/",
+            "title": "Husi Tehditleri Aspides'i Sınıyor, Avrupa Deniz Taşımacılığını Korumak için Gemi Arıyor",
+            "domain": "sana.sy",
+            "domain_avatar_url": "https://www.google.com/s2/favicons?domain=sana.sy&sz=64",
+            "rank": 1
+          }
+        ],
+        "language_breakdown": [
+          {
+            "language": "fr",
+            "count": 1
+          },
+          {
+            "language": "tr",
+            "count": 1
+          }
+        ],
+        "top_language": "fr",
+        "search_score": 0.5416755676269531,
+        "match_type": "semantic",
+        "incident": {
+          "uid": "cameoplus_3be1aa59d0f54481",
+          "resolution": "unadjudicated",
+          "confidence": null
+        }
+      },
+      {
+        "id": "cameoplus_2bfcb82e7656f36e",
+        "url": "https://gdeltcloud.com/events/saudi-arabia-resumes-oil-loading-at-yanbu-after-pipeline-rep--cameoplus_2bfcb82e7656f36e",
+        "primary_story_url": "https://gdeltcloud.com/stories/iran-disavows-attack-on-saudi-oil-pipeline-sources-tell-alhu-2d367e45",
+        "family": "cameoplus",
+        "title": "Saudi Arabia resumes oil loading at Yanbu after pipeline repairs",
+        "title_source": "coder_title",
+        "summary": "On 2026-09-30, Saudi Arabia resumed oil loading from Yanbu after repairs to damage on the East-West pipeline. The title attributes the damage to a Houthi-Iraqi attack, but provides no details on the incident's timing, duration, or volume affected.",
+        "event_date": "2026-09-30",
+        "observed_at": "2026-09-30T04:24:59.000Z",
+        "event_date_basis": "publication_day_inference",
+        "event_date_evidence": "The title reports that Saudi Arabia resumed oil loading from Yanbu after repairs to the East-West pipeline; no occurrence date is stated, so the source-window publication day is inferred.",
+        "coded_at": "2026-09-30T05:13:00Z",
+        "updated_at": "2026-09-30T08:30:42Z",
+        "processed_at": "2026-09-30T05:13:00Z",
+        "category": "INFRASTRUCTURE",
+        "subcategory": "IN01",
+        "subcategory_label": "Energy Infrastructure Event",
+        "event_description": "Energy infrastructure supply disruption update",
+        "taxonomy_status": "coded",
+        "domain": "INFRASTRUCTURE",
+        "event_code": "IN01",
+        "geo": {
+          "country": "Saudi Arabia",
+          "region": "Middle East",
+          "continent": "Asia",
+          "admin1": "Al Madinah Region",
+          "location": "Yanbu",
+          "latitude": 24.09,
+          "longitude": 38.06,
+          "geo_precision": 2,
+          "geo_precision_label": "nearby_area"
+        },
+        "geo_context": {
+          "location_country": "Saudi Arabia",
+          "actor_origin_countries": [
+            "Saudi Arabia"
+          ]
+        },
+        "actors": [
+          {
+            "name": "Saudi Arabia",
+            "country": "Saudi Arabia",
+            "role": "source",
+            "primary": true
+          },
+          {
+            "name": "Oil loading operations at Yanbu",
+            "country": "Saudi Arabia",
+            "role": "target",
+            "primary": true
+          }
+        ],
+        "metrics": {
+          "significance": 0.45,
+          "severity_tier": "low",
+          "goldstein_scale": null,
+          "magnitude": 3,
+          "systemic_importance": 0.6,
+          "propagation_potential": 0.36,
+          "market_sensitivity": 0.6,
+          "confidence": 0.48,
+          "article_count": 7,
+          "evidence_source_count": 2,
+          "supporting_story_count": 1,
+          "metric_inputs": {
+            "magnitude": {
+              "path": "economic",
+              "value": 3,
+              "why": "Oil loading resumed after pipeline repairs, indicating a bounded energy-flow disruption that has ended; the title gives no volume or duration."
+            },
+            "systemic": {
+              "node": "Saudi East-West pipeline and Yanbu oil-loading facilities",
+              "size": {
+                "value": 0.7,
+                "why": "The named pipeline and export-loading site are strategic energy infrastructure, but the title provides no throughput figure."
+              },
+              "interconnectedness": {
+                "value": 0.6,
+                "why": "The pipeline connects inland oil flows to export loading at Yanbu; downstream dependencies are not specified."
+              },
+              "irreplaceability": {
+                "value": 0.5,
+                "why": "The title identifies this route and loading site but gives no information about available alternatives."
+              }
+            },
+            "propagation": {
+              "channel": {
+                "value": 0.5,
+                "why": "An oil pipeline-to-export-loading connection is evident, though the title does not describe affected users or markets."
+              },
+              "coupling": {
+                "value": 0.4,
+                "why": "Loading resumed after repairs, but evidence about buffers, spare capacity, or duration is absent."
+              },
+              "breach": {
+                "value": 0.4,
+                "why": "The title reports damage to the pipeline following an attack, but does not establish whether a prior protective barrier was breached."
+              },
+              "primed": {
+                "value": 0.2,
+                "why": "No broader market or system stress is reported in the title."
+              },
+              "containment": {
+                "value": 0.7,
+                "why": "Repairs were completed and oil loading resumed, a concrete restoration measure."
+              }
+            },
+            "market": {
+              "claim_exposure": {
+                "value": 0.8,
+                "why": "Oil loading at Yanbu is the subject of the reported interruption and resumption, directly affecting the named traded commodity, oil; no quantity is given."
+              },
+              "economic_bite": {
+                "value": 0.4,
+                "why": "The disruption was bounded and loading has resumed after repairs, so the reported effect has ended."
+              }
+            }
+          },
+          "metric_version": "v2-2026-07-24"
+        },
+        "has_fatalities": null,
+        "fatalities": null,
+        "fatalities_basis": null,
+        "fatalities_corroboration": null,
+        "fatalities_evidence": null,
+        "fatalities_supporting_source_count": null,
+        "injured": null,
+        "civilians_killed": null,
+        "civilians_injured": null,
+        "civilian_targeting": null,
+        "civilian_targeting_label": null,
+        "story_refs": [
+          {
+            "id": "2d367e45c7e6",
+            "url": "https://gdeltcloud.com/stories/iran-disavows-attack-on-saudi-oil-pipeline-sources-tell-alhu-2d367e45",
+            "title": "Iran disavows attack on Saudi oil pipeline, sources tell Alhurra",
+            "story_date": "2026-09-30",
+            "article_count": 7
+          }
+        ],
+        "entity_refs": [
+          {
+            "id": "e_b1b37e9a71adb454",
+            "id_space": "spine",
+            "name": "Saudi Aramco",
+            "type": "organization",
+            "entity_id": "e_b1b37e9a71adb454",
+            "spine_id": "e_b1b37e9a71adb454",
+            "wikipedia_url": "https://en.wikipedia.org/wiki/Saudi_Aramco",
+            "image_url": null,
+            "avatar_url": null,
+            "public_official": {
+              "checked": true,
+              "is_public_official": false,
+              "total": 0,
+              "status": null,
+              "offices": [],
+              "truncated": false
+            }
+          },
+          {
+            "id": "e_07658891d7f2885a",
+            "id_space": "spine",
+            "name": "Houthis",
+            "type": "organization",
+            "entity_id": "e_07658891d7f2885a",
+            "spine_id": "e_07658891d7f2885a",
+            "wikipedia_url": "https://en.wikipedia.org/wiki/Houthis",
+            "image_url": null,
+            "avatar_url": null,
+            "public_official": {
+              "checked": true,
+              "is_public_official": false,
+              "total": 0,
+              "status": null,
+              "offices": [],
+              "truncated": false
+            }
+          }
+        ],
+        "top_articles": [
+          {
+            "url": "https://almashhad.news/news/497295",
+            "title": "السعودية تستأنف تحميل النفط من ينبع بعد اصلاح اضرار خط \"شرق-غرب\" إثر هجوم حوثي - عراقي",
+            "domain": "almashhad.news",
+            "domain_avatar_url": "https://www.google.com/s2/favicons?domain=almashhad.news&sz=64",
+            "rank": 1
+          },
+          {
+            "url": "https://www.omanobserver.om/article/1197017/world/region/tankers-are-loading-oil-again-from-a-vital-saudi-pipeline",
+            "title": "Tankers are loading oil again From a vital Saudi pipeline",
+            "domain": "omanobserver.om",
+            "domain_avatar_url": "https://www.google.com/s2/favicons?domain=omanobserver.om&sz=64",
+            "rank": 2
+          }
+        ],
+        "language_breakdown": [
+          {
+            "language": "en",
+            "count": 4
+          },
+          {
+            "language": "ar",
+            "count": 2
+          },
+          {
+            "language": "it",
+            "count": 1
+          }
+        ],
+        "top_language": "en",
+        "search_score": 0.5252260565757751,
+        "match_type": "semantic",
+        "incident": {
+          "uid": "cameoplus_2bfcb82e7656f36e",
+          "resolution": "self",
+          "confidence": null
+        }
+      },
+      {
+        "id": "conflict_190738a2f41b0fd2",
+        "url": "https://gdeltcloud.com/events/houthi-movement-targets-taiba-electricity-station-in-medina--conflict_190738a2f41b0fd2",
+        "primary_story_url": "https://gdeltcloud.com/stories/houthi-attack-targets-civilian-infrastructure-near-prophets-b7ab0a10",
+        "family": "conflict",
+        "title": "Houthi movement targets Taiba electricity station in Medina",
+        "title_source": "coder_title",
+        "summary": "On 2026-10-01, the Houthi movement reportedly targeted the Taiba electricity distribution station in Medina with a drone. The article attributes the report to the spokesperson for the coalition supporting Yemen’s government; it gives no casualty or damage figures.",
+        "event_date": "2026-10-01",
+        "observed_at": "2026-10-01T20:30:00.000Z",
+        "event_date_basis": "publication_day_inference",
+        "event_date_evidence": "The article reports a Houthi attack at 05:11 dawn but gives no separate occurrence date; the publication window is 2026-09-30/2026-10-01.",
+        "coded_at": "2026-10-01T21:22:58Z",
+        "updated_at": "2026-10-02T02:11:12Z",
+        "processed_at": "2026-10-01T21:22:58Z",
+        "category": "Explosions/Remote violence",
+        "subcategory": "Air/drone strike",
+        "subcategory_label": "Air/drone strike",
+        "event_description": null,
+        "taxonomy_status": "coded",
+        "domain": "CONFLICT",
+        "event_code": null,
+        "geo": {
+          "country": "Saudi Arabia",
+          "region": "Middle East",
+          "continent": "Asia",
+          "admin1": "Al Madinah Region",
+          "location": "Medina",
+          "latitude": 24.4672,
+          "longitude": 39.6111,
+          "geo_precision": 1,
+          "geo_precision_label": "exact_place"
+        },
+        "geo_context": {
+          "location_country": "Saudi Arabia",
+          "actor_origin_countries": [
+            "Yemen"
+          ]
+        },
+        "actors": [
+          {
+            "name": "Houthi movement",
+            "country": "Yemen",
+            "role": "actor1",
+            "primary": true
+          }
+        ],
+        "metrics": {
+          "significance": 0.2819,
+          "severity_tier": "low",
+          "goldstein_scale": -9.5,
+          "magnitude": null,
+          "systemic_importance": null,
+          "propagation_potential": null,
+          "market_sensitivity": null,
+          "confidence": 0.65,
+          "article_count": 2,
+          "evidence_source_count": 3,
+          "supporting_story_count": 1
+        },
+        "has_fatalities": false,
+        "fatalities": 0,
+        "fatalities_basis": "none_reported",
+        "fatalities_corroboration": "none_reported",
+        "fatalities_evidence": null,
+        "fatalities_supporting_source_count": 2,
+        "injured": null,
+        "civilians_killed": null,
+        "civilians_injured": null,
+        "civilian_targeting": false,
+        "civilian_targeting_label": null,
+        "story_refs": [
+          {
+            "id": "b7ab0a1035bb",
+            "url": "https://gdeltcloud.com/stories/houthi-attack-targets-civilian-infrastructure-near-prophets-b7ab0a10",
+            "title": "Houthi attack targets civilian infrastructure near Prophet’s Mosque in Medina",
+            "story_date": "2026-10-01",
+            "article_count": 2
+          }
+        ],
+        "entity_refs": [
+          {
+            "id": "e_07658891d7f2885a",
+            "id_space": "spine",
+            "name": "Houthis",
+            "type": "organization",
+            "entity_id": "e_07658891d7f2885a",
+            "spine_id": "e_07658891d7f2885a",
+            "wikipedia_url": "https://en.wikipedia.org/wiki/Houthis",
+            "image_url": null,
+            "avatar_url": null,
+            "public_official": {
+              "checked": true,
+              "is_public_official": false,
+              "total": 0,
+              "status": null,
+              "offices": [],
+              "truncated": false
+            }
+          }
+        ],
+        "top_articles": [
+          {
+            "url": "https://www.alwatan.com.sa/article/1186507",
+            "title": "بقايا مسيّرة إيرانية تفضح الحوثي: اعتداء محطة \"طيبة\" عدوان مباشر على خدمات الحرم المدني الشريف",
+            "domain": "alwatan.com.sa",
+            "domain_avatar_url": "https://www.google.com/s2/favicons?domain=alwatan.com.sa&sz=64",
+            "rank": 1
+          },
+          {
+            "url": "https://aa.com.tr/en/turkiye/turkiye-condemns-houthi-attack-on-civilian-infrastructure-serving-prophet-s-mosque-in-saudi-arabia/4075594",
+            "title": "Türkiye condemns Houthi attack on civilian infrastructure serving Prophet's Mosque in Saudi Arabia",
+            "domain": "aa.com.tr",
+            "domain_avatar_url": "https://www.google.com/s2/favicons?domain=aa.com.tr&sz=64",
+            "rank": 2
+          },
+          {
+            "url": "https://aa.com.tr/en/middle-east/oic-arab-states-condemn-drone-attack-on-saudi-arabias-medina-power-station/4075565",
+            "title": "OIC, Arab states condemn drone attack on Saudi Arabia's Medina power station",
+            "domain": "aa.com.tr",
+            "domain_avatar_url": "https://www.google.com/s2/favicons?domain=aa.com.tr&sz=64",
+            "rank": 3
+          }
+        ],
+        "language_breakdown": [],
+        "top_language": null,
+        "search_score": 0.5230364203453064,
+        "match_type": "semantic",
+        "incident": {
+          "uid": "conflict_190738a2f41b0fd2",
+          "resolution": "llm",
+          "confidence": 0.94
+        }
+      },
+      {
+        "id": "cameoplus_efcbc381d1a17029",
+        "url": "https://gdeltcloud.com/events/red-sea-global-secures-operating-licenses-for-amaala-and-shu--cameoplus_efcbc381d1a17029",
+        "primary_story_url": "https://gdeltcloud.com/stories/red-sea-global-secures-operating-licenses-for-amaala-and-shu-141d00e2",
+        "family": "cameoplus",
+        "title": "Red Sea Global secures operating licenses for Amaala and Shura marinas",
+        "title_source": "coder_title",
+        "summary": "On 2026-10-01, Red Sea Global received operating licenses for the Amaala and Shura marinas in Saudi Arabia. The title provides no details on capacity, traffic, or whether operations have started.",
+        "event_date": "2026-10-01",
+        "observed_at": "2026-10-01T08:15:00.000Z",
+        "event_date_basis": "publication_day_inference",
+        "event_date_evidence": "The title reports Red Sea Global receiving the operating licenses; no separate occurrence date is provided, so the current-news action is inferred to have occurred on the publication day.",
+        "coded_at": "2026-10-01T09:16:35Z",
+        "updated_at": "2026-10-01T09:16:35Z",
+        "processed_at": "2026-10-01T09:16:35Z",
+        "category": "INFRASTRUCTURE",
+        "subcategory": "IN02",
+        "subcategory_label": "Transport Disruption",
+        "event_description": "Strategic transport infrastructure operating-license milestone",
+        "taxonomy_status": "coded",
+        "domain": "INFRASTRUCTURE",
+        "event_code": "IN02",
+        "geo": {
+          "country": "Saudi Arabia",
+          "region": "Middle East",
+          "continent": "Asia",
+          "admin1": "Tabuk Province",
+          "location": "Amaala and Shura Island",
+          "latitude": 26.5,
+          "longitude": 36.2,
+          "geo_precision": 2,
+          "geo_precision_label": "nearby_area"
+        },
+        "geo_context": {
+          "location_country": "Saudi Arabia",
+          "actor_origin_countries": [
+            "Saudi Arabia"
+          ]
+        },
+        "actors": [
+          {
+            "name": "Red Sea Global",
+            "country": "Saudi Arabia",
+            "role": "source",
+            "primary": true
+          },
+          {
+            "name": "Amaala and Shura marinas",
+            "country": "Saudi Arabia",
+            "role": "target",
+            "primary": true
+          }
+        ],
+        "metrics": {
+          "significance": 0.2108,
+          "severity_tier": "low",
+          "goldstein_scale": null,
+          "magnitude": 2,
+          "systemic_importance": 0.13,
+          "propagation_potential": 0.29,
+          "market_sensitivity": 0.15,
+          "confidence": 0.52,
+          "article_count": 1,
+          "evidence_source_count": 1,
+          "supporting_story_count": 1,
+          "metric_inputs": {
+            "magnitude": {
+              "path": "economic",
+              "value": 2,
+              "why": "The title establishes operating licenses for two marinas, but gives no throughput, capacity, or evidence that operations have begun; this is a limited infrastructure milestone."
+            },
+            "systemic": {
+              "node": "Amaala and Shura marinas",
+              "size": {
+                "value": 0.15,
+                "why": "Two named marinas are identified, but no capacity or traffic figures are provided."
+              },
+              "interconnectedness": {
+                "value": 0.15,
+                "why": "The title establishes marina operations but reports no dependencies or connections to wider transport systems."
+              },
+              "irreplaceability": {
+                "value": 0.1,
+                "why": "No evidence indicates the marinas are unique or lack alternatives."
+              }
+            },
+            "propagation": {
+              "channel": {
+                "value": 0.15,
+                "why": "The marinas are transport infrastructure, but no live operational dependencies or disruption channels are reported."
+              },
+              "coupling": {
+                "value": 0.1,
+                "why": "No evidence about capacity constraints, slack, or lack of substitutes is available."
+              },
+              "breach": {
+                "value": 0.1,
+                "why": "The title reports licenses but does not describe a breached barrier or unprecedented change."
+              },
+              "primed": {
+                "value": 0.1,
+                "why": "No evidence that the receiving system is stressed or near a threshold."
+              },
+              "containment": {
+                "value": 0,
+                "why": "No active dampers or containment measures are reported."
+              }
+            },
+            "market": {
+              "claim_exposure": {
+                "value": 0.1,
+                "why": "The title names Red Sea Global and the marinas, but identifies no traded claim, listed parent, financing, or market-wide change."
+              },
+              "economic_bite": {
+                "value": 0.2,
+                "why": "Operating licenses have been received, a procedural step; the title does not establish that marina operations or cash flows have changed."
+              }
+            }
+          },
+          "metric_version": "v2-2026-07-24"
+        },
+        "has_fatalities": null,
+        "fatalities": null,
+        "fatalities_basis": null,
+        "fatalities_corroboration": null,
+        "fatalities_evidence": null,
+        "fatalities_supporting_source_count": null,
+        "injured": null,
+        "civilians_killed": null,
+        "civilians_injured": null,
+        "civilian_targeting": null,
+        "civilian_targeting_label": null,
+        "story_refs": [
+          {
+            "id": "141d00e23b81",
+            "url": "https://gdeltcloud.com/stories/red-sea-global-secures-operating-licenses-for-amaala-and-shu-141d00e2",
+            "title": "Red Sea Global secures operating licenses for Amaala and Shura marinas",
+            "story_date": "2026-10-01",
+            "article_count": 1
+          }
+        ],
+        "entity_refs": [
+          {
+            "id": "e_a53ee252856d8ade",
+            "id_space": "spine",
+            "name": "Red Sea Global",
+            "type": "organization",
+            "entity_id": "e_a53ee252856d8ade",
+            "spine_id": "e_a53ee252856d8ade",
+            "wikipedia_url": "https://en.wikipedia.org/wiki/Red_Sea_Global",
+            "image_url": null,
+            "avatar_url": null,
+            "public_official": {
+              "checked": true,
+              "is_public_official": false,
+              "total": 0,
+              "status": null,
+              "offices": [],
+              "truncated": false
+            }
+          }
+        ],
+        "top_articles": [
+          {
+            "url": "https://aleqt.com/%D8%B3%D9%8A%D8%A7%D8%AD%D8%A9-%D9%88%D8%AA%D8%B1%D9%81%D9%8A%D9%87/%D8%A7%D9%84%D8%A8%D8%AD%D8%B1-%D8%A7%D9%84%D8%A3%D8%AD%D9%85%D8%B1-%D8%AA%D8%AA%D8%B3%D9%84%D9%85-%D8%B1%D8%AE%D8%B5%D8%AA%D9%8A-%D8%AA%D8%B4%D8%BA%D9%8A%D9%84-%D9%85%D8%B1%D8%B3%D9%8A%D9%8A-%D8%A3%D9%85%D8%A7%D9%84%D8%A7-%D9%88%D8%B4%D9%88%D8%B1%D9%89-14851",
+            "title": "\"البحر الأحمر\" تتسلم رخصتي تشغيل مرسيي \"أمالا\" و\"شورى\"",
+            "domain": "aleqt.com",
+            "domain_avatar_url": "https://www.google.com/s2/favicons?domain=aleqt.com&sz=64",
+            "rank": 1
+          }
+        ],
+        "language_breakdown": [
+          {
+            "language": "ar",
+            "count": 1
+          }
+        ],
+        "top_language": "ar",
+        "search_score": 0.5219995975494385,
+        "match_type": "semantic",
+        "incident": {
+          "uid": "cameoplus_efcbc381d1a17029",
+          "resolution": "unadjudicated",
+          "confidence": null
+        }
+      },
+      {
+        "id": "cameoplus_c96dafdd13549ed5",
+        "url": "https://gdeltcloud.com/events/hadramout-coast-guard-foils-two-hashish-smuggling-attempts--cameoplus_c96dafdd13549ed5",
+        "primary_story_url": "https://gdeltcloud.com/stories/yemen-coast-guard-foils-two-hashish-smuggling-attempts-in-ha-86c34939",
+        "family": "cameoplus",
+        "title": "Hadramout Coast Guard foils two hashish-smuggling attempts",
+        "title_source": "coder_title",
+        "summary": "On 2026-09-28, the Hadramout Coast Guard reportedly foiled two attempts to smuggle hashish at the Asad al-Fay checkpoint in Hadramout, Yemen. The title gives no further details about the suspected smugglers or any seizure.",
+        "event_date": "2026-09-28",
+        "observed_at": "2026-09-28T22:05:00.000Z",
+        "event_date_basis": "publication_day_inference",
+        "event_date_evidence": "The title reports that the Hadramout coast guard foiled two hashish-smuggling attempts; no occurrence date is stated, so the publication day is inferred.",
+        "coded_at": "2026-09-28T23:06:39Z",
+        "updated_at": "2026-09-28T23:06:39Z",
+        "processed_at": "2026-09-28T23:06:39Z",
+        "category": "CRIME",
+        "subcategory": "CR06",
+        "subcategory_label": "Narcotics Trafficking or Smuggling",
+        "event_description": "Narcotics smuggling interdiction",
+        "taxonomy_status": "coded",
+        "domain": "CRIME",
+        "event_code": "CR06",
+        "geo": {
+          "country": "Yemen",
+          "region": "Middle East",
+          "continent": "Asia",
+          "admin1": "Hadramout",
+          "location": "Asad al-Fay checkpoint",
+          "latitude": 14.5,
+          "longitude": 49.1,
+          "geo_precision": 2,
+          "geo_precision_label": "nearby_area"
+        },
+        "geo_context": {
+          "location_country": "Yemen",
+          "actor_origin_countries": [
+            "Yemen"
+          ]
+        },
+        "actors": [
+          {
+            "name": "Hadramout Coast Guard",
+            "country": "Yemen",
+            "role": "source",
+            "primary": true
+          },
+          {
+            "name": "Unidentified smugglers",
+            "country": null,
+            "role": "target",
+            "primary": true
+          }
+        ],
+        "metrics": {
+          "significance": 0.1516,
+          "severity_tier": "low",
+          "goldstein_scale": null,
+          "magnitude": 2,
+          "systemic_importance": 0.1,
+          "propagation_potential": 0.1,
+          "market_sensitivity": 0.05,
+          "confidence": 0.42,
+          "article_count": 1,
+          "evidence_source_count": 1,
+          "supporting_story_count": 1,
+          "metric_inputs": {
+            "magnitude": {
+              "path": "economic",
+              "value": 2,
+              "why": "The title reports two hashish-smuggling attempts foiled, but gives no quantity or other indication of scale; this is a limited interdiction."
+            },
+            "systemic": {
+              "node": "Hadramout Coast Guard checkpoint operations",
+              "size": {
+                "value": 0.1,
+                "why": "The report identifies a local coast guard sector, not a nationally central institution or flow node."
+              },
+              "interconnectedness": {
+                "value": 0.1,
+                "why": "No dependent actors or wider operational links are described."
+              },
+              "irreplaceability": {
+                "value": 0.1,
+                "why": "The title identifies one checkpoint but gives no evidence it is a chokepoint."
+              }
+            },
+            "propagation": {
+              "channel": {
+                "value": 0.1,
+                "why": "Only two thwarted smuggling attempts are mentioned; no broader transmission channel is reported."
+              },
+              "coupling": {
+                "value": 0.1,
+                "why": "No evidence of tight system coupling or lack of alternatives is provided."
+              },
+              "breach": {
+                "value": 0,
+                "why": "The title does not describe a first, unprecedented, or breached restraint."
+              },
+              "primed": {
+                "value": 0.1,
+                "why": "No existing crisis or heightened system stress is mentioned."
+              },
+              "containment": {
+                "value": 0.8,
+                "why": "The coast guard reportedly foiled both attempts, indicating the immediate activity was stopped."
+              }
+            },
+            "market": {
+              "claim_exposure": {
+                "value": 0.1,
+                "why": "The title names no traded claim or aggregate-scale change; the event is a local smuggling interdiction."
+              },
+              "economic_bite": {
+                "value": 0,
+                "why": "No action on a named economic claim is reported."
+              }
+            }
+          },
+          "metric_version": "v2-2026-07-24"
+        },
+        "has_fatalities": null,
+        "fatalities": null,
+        "fatalities_basis": null,
+        "fatalities_corroboration": null,
+        "fatalities_evidence": null,
+        "fatalities_supporting_source_count": null,
+        "injured": null,
+        "civilians_killed": null,
+        "civilians_injured": null,
+        "civilian_targeting": null,
+        "civilian_targeting_label": null,
+        "story_refs": [
+          {
+            "id": "86c349392185",
+            "url": "https://gdeltcloud.com/stories/yemen-coast-guard-foils-two-hashish-smuggling-attempts-in-ha-86c34939",
+            "title": "Yemen coast guard foils two hashish smuggling attempts in Hadramout",
+            "story_date": "2026-09-28",
+            "article_count": 1
+          }
+        ],
+        "entity_refs": [],
+        "top_articles": [
+          {
+            "url": "https://adngad.net/news/884536",
+            "title": "يقظة أمنية تُحبط عمليتي تهريب لحشيش المخدر عبر نقطة عسد الفاي بالقطاع الشرقي خفر السواحل بحضرموت",
+            "domain": "adngad.net",
+            "domain_avatar_url": "https://www.google.com/s2/favicons?domain=adngad.net&sz=64",
+            "rank": 1
+          }
+        ],
+        "language_breakdown": [
+          {
+            "language": "ar",
+            "count": 1
+          }
+        ],
+        "top_language": "ar",
+        "search_score": 0.5185202360153198,
+        "match_type": "semantic",
+        "incident": {
+          "uid": "cameoplus_c96dafdd13549ed5",
+          "resolution": "unadjudicated",
+          "confidence": null
+        }
+      },
+      {
+        "id": "cameoplus_b5411b0bd683201b",
+        "url": "https://gdeltcloud.com/events/saudi-foreign-minister-discusses-maritime-security-with-us-c--cameoplus_b5411b0bd683201b",
+        "primary_story_url": "https://gdeltcloud.com/stories/marco-rubio-and-the-us-discuss-yemen-crisis-and-maritime-rou-794a87f4",
+        "family": "cameoplus",
+        "title": "Saudi foreign minister discusses maritime security with US counterpart",
+        "title_source": "coder_title",
+        "summary": "On 2026-09-28, Saudi Arabia’s foreign minister discussed maritime security in the Strait of Hormuz and Bab el-Mandeb with the US foreign minister, alongside developments in Yemen. The title does not specify the meeting format or venue; Riyadh is used as the location fallback for the Saudi source actor.",
+        "event_date": "2026-09-28",
+        "observed_at": "2026-09-28T19:53:42.000Z",
+        "event_date_basis": "publication_day_inference",
+        "event_date_evidence": "The title reports that Saudi Arabia’s foreign minister discusses the topics with his US counterpart; no separate occurrence date is provided, so the publication-day inference is used.",
+        "coded_at": "2026-09-28T20:39:04Z",
+        "updated_at": "2026-09-29T02:25:58Z",
+        "processed_at": "2026-09-28T20:39:04Z",
+        "category": "POLITICAL",
+        "subcategory": "04",
+        "subcategory_label": "Consult",
+        "event_description": "Consult",
+        "taxonomy_status": "coded",
+        "domain": "POLITICAL",
+        "event_code": "04",
+        "geo": {
+          "country": "Saudi Arabia",
+          "region": "Middle East",
+          "continent": "Asia",
+          "admin1": null,
+          "location": "Riyadh",
+          "latitude": 24.7136,
+          "longitude": 46.6753,
+          "geo_precision": 2,
+          "geo_precision_label": "nearby_area"
+        },
+        "geo_context": {
+          "location_country": "Saudi Arabia",
+          "actor_origin_countries": [
+            "Saudi Arabia",
+            "United States"
+          ]
+        },
+        "actors": [
+          {
+            "name": "Saudi foreign minister",
+            "country": "Saudi Arabia",
+            "role": "source",
+            "primary": true
+          },
+          {
+            "name": "US foreign minister",
+            "country": "United States",
+            "role": "target",
+            "primary": true
+          }
+        ],
+        "metrics": {
+          "significance": 0.1753,
+          "severity_tier": "low",
+          "goldstein_scale": 1,
+          "magnitude": 2,
+          "systemic_importance": 0.1,
+          "propagation_potential": 0.3,
+          "market_sensitivity": 0.05,
+          "confidence": 0.3,
+          "article_count": 12,
+          "evidence_source_count": 4,
+          "supporting_story_count": 1,
+          "metric_inputs": {
+            "magnitude": {
+              "path": "verbal",
+              "value": 2,
+              "why": "The title describes a diplomatic discussion, a cooperative consultation."
+            },
+            "systemic": {
+              "node": "Saudi-US bilateral relationship",
+              "size": {
+                "value": 0.1,
+                "why": "The title reports a discussion but no change to a treaty, alliance, or other system-level institution."
+              },
+              "interconnectedness": {
+                "value": 0.1,
+                "why": "No third-party commitments or dependencies are identified."
+              },
+              "irreplaceability": {
+                "value": 0.1,
+                "why": "The title gives no indication this discussion is a unique diplomatic channel."
+              }
+            },
+            "propagation": {
+              "channel": {
+                "value": 0.2,
+                "why": "The bilateral diplomatic channel exists, but the title gives no evidence of wider live transmission channels."
+              },
+              "coupling": {
+                "value": 0.1,
+                "why": "No deadline or lack of alternatives is stated."
+              },
+              "breach": {
+                "value": 0,
+                "why": "No unprecedented action or breach of a restraint is indicated."
+              },
+              "primed": {
+                "value": 0.2,
+                "why": "Yemen and maritime security are discussed, but the title does not establish a specific active escalation."
+              },
+              "containment": {
+                "value": 0,
+                "why": "No mediator, backstop, or other active dampening measure is mentioned."
+              }
+            },
+            "market": {
+              "claim_exposure": {
+                "value": 0.1,
+                "why": "The title identifies no specific traded claim or stated change to an industry-wide market aggregate."
+              },
+              "economic_bite": {
+                "value": 0,
+                "why": "This is a discussion; no instrument or binding change to a claim is reported."
+              }
+            }
+          },
+          "metric_version": "v2-2026-07-24"
+        },
+        "has_fatalities": null,
+        "fatalities": null,
+        "fatalities_basis": null,
+        "fatalities_corroboration": null,
+        "fatalities_evidence": null,
+        "fatalities_supporting_source_count": null,
+        "injured": null,
+        "civilians_killed": null,
+        "civilians_injured": null,
+        "civilian_targeting": null,
+        "civilian_targeting_label": null,
+        "story_refs": [
+          {
+            "id": "794a87f42cc3",
+            "url": "https://gdeltcloud.com/stories/marco-rubio-and-the-us-discuss-yemen-crisis-and-maritime-rou-794a87f4",
+            "title": "Marco Rubio and the US discuss Yemen crisis and maritime route security",
+            "story_date": "2026-09-29",
+            "article_count": 12
+          }
+        ],
+        "entity_refs": [
+          {
+            "id": "e_b77183f2f3718378",
+            "id_space": "spine",
+            "name": "Faisal bin Farhan",
+            "type": "person",
+            "entity_id": "e_b77183f2f3718378",
+            "spine_id": "e_b77183f2f3718378",
+            "wikipedia_url": "https://en.wikipedia.org/wiki/Faisal_bin_Farhan_Al_Saud",
+            "image_url": null,
+            "avatar_url": null,
+            "public_official": {
+              "checked": true,
+              "is_public_official": false,
+              "total": 0,
+              "status": null,
+              "offices": [],
+              "truncated": false
+            }
+          },
+          {
+            "id": "e_9e12f1d1dad5d90d",
+            "id_space": "spine",
+            "name": "Marco Rubio",
+            "type": "person",
+            "entity_id": "e_9e12f1d1dad5d90d",
+            "spine_id": "e_9e12f1d1dad5d90d",
+            "wikipedia_url": "https://en.wikipedia.org/wiki/Marco_Rubio",
+            "image_url": null,
+            "avatar_url": null,
+            "public_official": {
+              "checked": true,
+              "is_public_official": true,
+              "total": 2,
+              "status": "current",
+              "offices": [
+                {
+                  "office_id": "p_76e0cf93bb4dd67c",
+                  "name": "SECRETARY OF STATE, DEPARTMENT OF STATE",
+                  "country_iso3": "USA",
+                  "status": "current",
+                  "start_date": "2025-01-20",
+                  "end_date": null,
+                  "evidence_date": "2026-09-06",
+                  "sources": [
+                    {
+                      "source_key": "os_us_plum_book",
+                      "url": "https://www.opm.gov/about-us/open-government/plum-reporting/plum-data/"
+                    }
+                  ]
+                },
+                {
+                  "office_id": "Q4416090",
+                  "name": "United States senator",
+                  "country_iso3": "USA",
+                  "status": "ended",
+                  "start_date": "2025-01-01",
+                  "end_date": "2025-01-01",
+                  "evidence_date": "2026-09-06",
+                  "sources": [
+                    {
+                      "source_key": "os_us_congress",
+                      "url": "https://api.congress.gov/"
+                    }
+                  ]
+                },
+                {
+                  "office_id": "Q4416090",
+                  "name": "United States senator",
+                  "country_iso3": "USA",
+                  "status": "ended",
+                  "start_date": "2023-01-01",
+                  "end_date": "2025-01-01",
+                  "evidence_date": "2026-09-06",
+                  "sources": [
+                    {
+                      "source_key": "os_us_congress",
+                      "url": "https://api.congress.gov/"
+                    }
+                  ]
+                },
+                {
+                  "office_id": "Q4416090",
+                  "name": "United States senator",
+                  "country_iso3": "USA",
+                  "status": "ended",
+                  "start_date": "2021-01-01",
+                  "end_date": "2023-01-01",
+                  "evidence_date": "2026-09-06",
+                  "sources": [
+                    {
+                      "source_key": "os_us_congress",
+                      "url": "https://api.congress.gov/"
+                    }
+                  ]
+                },
+                {
+                  "office_id": "Q4416090",
+                  "name": "United States senator",
+                  "country_iso3": "USA",
+                  "status": "ended",
+                  "start_date": "2019-01-01",
+                  "end_date": "2021-01-01",
+                  "evidence_date": "2026-09-06",
+                  "sources": [
+                    {
+                      "source_key": "os_us_congress",
+                      "url": "https://api.congress.gov/"
+                    }
+                  ]
+                }
+              ],
+              "truncated": true
+            }
+          }
+        ],
+        "top_articles": [
+          {
+            "url": "https://ajel.sa/local/ss4ebw6jh",
+            "title": "وزير الخارجية يبحث مع نظيره الأمريكي أمن الملاحة في هرمز وباب المندب وتطورات اليمن",
+            "domain": "ajel.sa",
+            "domain_avatar_url": "https://www.google.com/s2/favicons?domain=ajel.sa&sz=64",
+            "rank": 1
+          },
+          {
+            "url": "https://okaz.com.sa/local/na/2268335",
+            "title": "فيصل بن فرحان وروبيو يبحثان أمن الملاحة وتطورات المنطقة",
+            "domain": "okaz.com.sa",
+            "domain_avatar_url": "https://www.google.com/s2/favicons?domain=okaz.com.sa&sz=64",
+            "rank": 2
+          },
+          {
+            "url": "https://www.dostor.org/5719973",
+            "title": "مباحثات سعودية أمريكية لضمان حرية الملاحة بمضيق هرمز وباب المندب",
+            "domain": "dostor.org",
+            "domain_avatar_url": "https://www.google.com/s2/favicons?domain=dostor.org&sz=64",
+            "rank": 3
+          }
+        ],
+        "language_breakdown": [
+          {
+            "language": "en",
+            "count": 5
+          },
+          {
+            "language": "ar",
+            "count": 4
+          },
+          {
+            "language": "es",
+            "count": 3
+          }
+        ],
+        "top_language": "en",
+        "search_score": 0.5184306502342224,
+        "match_type": "semantic",
+        "incident": {
+          "uid": "cameoplus_b5411b0bd683201b",
+          "resolution": "unadjudicated",
+          "confidence": null
+        }
+      }
+    ]
+  }
+}

@@ -24,6 +24,8 @@ from typing import Any
 import requests
 from dotenv import load_dotenv
 
+from gdelt_cloud_budget import GDELTCloudBudget, GDELTCloudBudgetExceeded
+
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 OUTPUT_DIR = PROJECT_ROOT / "data" / "gdelt_cloud"
@@ -31,6 +33,7 @@ API_URL = "https://gdeltcloud.com/api/v2/events"
 MAX_LIMIT = 50
 MAX_PAGES = 10
 MAX_RETRIES = 2
+QUOTA_STATE_PATH = OUTPUT_DIR / "quota_state.json"
 
 
 def _utc_now() -> datetime:
@@ -49,6 +52,7 @@ def request_page(
     session: requests.Session,
     params: dict[str, Any],
     api_key: str,
+    budget: GDELTCloudBudget,
 ) -> dict[str, Any]:
     """Request one page and fail loudly on auth, plan, quota, or schema errors."""
     headers = {
@@ -58,6 +62,8 @@ def request_page(
     }
 
     for attempt in range(1, MAX_RETRIES + 1):
+        budget.wait_for_interval()
+        budget.reserve(reason=f"events page attempt {attempt}")
         response = session.get(API_URL, params=params, headers=headers, timeout=30)
         if response.status_code == 429 and attempt < MAX_RETRIES:
             time.sleep(_retry_after(response))
@@ -115,11 +121,12 @@ def collect(
     started_at = _utc_now()
 
     with requests.Session() as session:
+        budget = GDELTCloudBudget(QUOTA_STATE_PATH)
         for page_number in range(1, max_pages + 1):
             page_params = dict(params)
             if cursor:
                 page_params["cursor"] = cursor
-            payload = request_page(session, page_params, api_key)
+            payload = request_page(session, page_params, api_key, budget)
             rows = payload["data"]
             all_rows.extend(rows)
 
@@ -159,6 +166,7 @@ def collect(
         "complete": complete,
         "pages": page_receipts,
         "events": all_rows,
+        "quota_guard": budget.snapshot(),
     }
 
 
@@ -199,7 +207,7 @@ def main() -> int:
             date=args.date,
         )
         archive_path, latest_path = save_receipt(bundle)
-    except (OSError, requests.RequestException, RuntimeError) as exc:
+    except (OSError, requests.RequestException, RuntimeError, GDELTCloudBudgetExceeded) as exc:
         print(f"[ERROR] {exc}")
         return 1
 

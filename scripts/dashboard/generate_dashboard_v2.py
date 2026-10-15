@@ -210,15 +210,15 @@ def fetch_warning_snapshot(cur):
             ORDER BY assessed_at DESC, issue_key ASC
         """)
         rows = cur.fetchall()
-        return rows, bool(rows)
+        return rows, bool(rows), "official_view_with_rows" if rows else "official_view_empty"
     except mysql.connector.Error:
-        return [], False
+        return [], False, "official_view_unavailable"
 
 
 def fetch_all_dashboard_data(conn):
     """MySQL DB의 정규화 테이블 및 분석 뷰에서 데이터를 통합 집계합니다."""
     cur = conn.cursor(dictionary=True)
-    warning_snapshot, warning_snapshot_available = fetch_warning_snapshot(cur)
+    warning_snapshot, warning_snapshot_available, warning_snapshot_status = fetch_warning_snapshot(cur)
 
     # 1. 지정학적 리스크 매트릭스 뷰
     cur.execute("""
@@ -314,6 +314,7 @@ def fetch_all_dashboard_data(conn):
         "recent_feed": recent_feed,
         "warning_snapshot": warning_snapshot,
         "warning_snapshot_available": warning_snapshot_available,
+        "warning_snapshot_status": warning_snapshot_status,
         "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
     }
 
@@ -326,6 +327,7 @@ def generate_dashboard_html(data):
     feed = data["recent_feed"]
     warning_snapshot = data["warning_snapshot"]
     warning_snapshot_available = data["warning_snapshot_available"]
+    warning_snapshot_status = data.get("warning_snapshot_status", "official_view_unavailable")
 
     # KPI 계산
     total_issues = len(matrix)
@@ -666,10 +668,18 @@ def generate_dashboard_html(data):
               </article>""")
     else:
         alert_counts["확인 필요"] = total_issues
-        warning_rows.append("""
+        if warning_snapshot_status == "official_view_empty":
+            warning_rows.append("""
           <article class="warning-item warning-pending">
-            <div class="warning-head"><strong>경보 산출 스냅샷 미연결</strong><span class="badge badge-amber">확인 필요</span></div>
-            <p>수집·논조 데이터는 표시되지만, 승인된 Alert Level과 검증 상태가 없어 경보를 확정해 표시하지 않습니다.</p>
+            <div class="warning-head"><strong>공식 경보 뷰 연결됨 · 최신 산출 스냅샷 없음</strong><span class="badge badge-amber">확인 필요</span></div>
+            <p>MySQL 공식 뷰 <code>v_dashboard_current_alerts</code>는 연결됐지만, 완료된 점수 실행과 경보 이벤트가 아직 없어 Alert Level을 표시하지 않습니다.</p>
+            <p class="text-muted">DB/분석 담당이 공식 scoring run과 사람 검토 상태를 적재한 뒤 다시 생성해야 합니다.</p>
+          </article>""")
+        else:
+            warning_rows.append("""
+          <article class="warning-item warning-pending">
+            <div class="warning-head"><strong>공식 경보 뷰 미연결</strong><span class="badge badge-amber">확인 필요</span></div>
+            <p>수집·논조 데이터는 표시되지만, 공식 Alert Level 뷰를 읽지 못해 경보를 확정해 표시하지 않습니다.</p>
           </article>""")
     warning_cards_html = "\n".join(warning_rows)
 

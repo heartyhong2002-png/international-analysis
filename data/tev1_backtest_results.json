@@ -1,0 +1,94 @@
+{
+  "generated_at": "2026-10-10T16:25:00.670678+00:00",
+  "model": "tev1",
+  "endpoint": "http://localhost:11434/v1/systemone",
+  "purpose": "advisory comparison; not the official alert source",
+  "case_count": 4,
+  "successful_calls": 4,
+  "results": [
+    {
+      "case_id": "BT-2022-UKR",
+      "issue_id": "ukraine_security",
+      "risk_signal_score": 92,
+      "evidence_coverage": 0.9,
+      "source_diversity": 4,
+      "verification_state": "CROSS_VERIFIED",
+      "signal_gap_score": 0.92,
+      "expected_review": "accept",
+      "tev1_choice": "CRITICAL",
+      "probabilities": {
+        "NORMAL": 0.00037617177538303877,
+        "WATCH": 0.006011279706441659,
+        "WARNING": 0.17659450307408628,
+        "CRITICAL": 0.8169260622164408,
+        "INSUFFICIENT_EVIDENCE": 9.19832276483223e-05
+      },
+      "confidence": 0.6856365032444545,
+      "latency_ms": 519.4,
+      "status": "ok"
+    },
+    {
+      "case_id": "BT-2024-TWN",
+      "issue_id": "taiwan_strait",
+      "risk_signal_score": 75,
+      "evidence_coverage": 0.75,
+      "source_diversity": 3,
+      "verification_state": "PARTIALLY_CONFIRMED",
+      "signal_gap_score": 0.75,
+      "expected_review": "accept",
+      "tev1_choice": "WARNING",
+      "probabilities": {
+        "NORMAL": 0.0001851304218308722,
+        "WATCH": 0.11380321207291272,
+        "WARNING": 0.8581445817935922,
+        "CRITICAL": 0.01047048883297595,
+        "INSUFFICIENT_EVIDENCE": 0.01739658687868826
+      },
+      "confidence": 0.6903154492474799,
+      "latency_ms": 396.3,
+      "status": "ok"
+    },
+    {
+      "case_id": "BT-2024-REDSEA",
+      "issue_id": "red_sea_shipping",
+      "risk_signal_score": 45,
+      "evidence_coverage": 0.3,
+      "source_diversity": 1,
+      "verification_state": "UNVERIFIED",
+      "signal_gap_score": 0.45,
+      "expected_review": "revise",
+      "tev1_choice": "WATCH",
+      "probabilities": {
+        "NORMAL": 0.0008570305461159388,
+        "WATCH": 0.46323269406181283,
+        "WARNING": 0.15581833561322272,
+        "CRITICAL": 0.0012501536950924052,
+        "INSUFFICIENT_EVIDENCE": 0.378841786083756
+      },
+      "confidence": 0.3610983393709639,
+      "latency_ms": 496.4,
+      "status": "ok"
+    },
+    {
+      "case_id": "BT-2018-USCN",
+      "issue_id": "us_china_trade",
+      "risk_signal_score": 82,
+      "evidence_coverage": 0.88,
+      "source_diversity": 3,
+      "verification_state": "CROSS_VERIFIED",
+      "signal_gap_score": 0.82,
+      "expected_review": "accept",
+      "tev1_choice": "CRITICAL",
+      "probabilities": {
+        "NORMAL": 0.00037378724558584836,
+        "WATCH": 0.011402836012939142,
+        "WARNING": 0.3898108620366099,
+        "CRITICAL": 0.5983261930852211,
+        "INSUFFICIENT_EVIDENCE": 8.63216196441039e-05
+      },
+      "confidence": 0.5468462462291062,
+      "latency_ms": 848.3,
+      "status": "ok"
+    }
+  ]
+}

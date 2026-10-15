@@ -326,3 +326,15 @@ Reddit IR 전문가들의 리뷰를 바탕으로, 본 파이프라인의 편향(
   - Playwright 기반의 스텔스(Stealth) 가상 브라우저 구동으로 봇 탐지 무력화.
   - 향후 커뮤니티 여론 동향(Sentiment_public) 수집의 100% 자동화를 달성하기 위한 기반 아키텍처 준비 완료.
 
+## 12. tev1 보조 판정기 시운전 결과 (2026-10-11)
+
+`tev1:latest`를 Ollama의 `/v1/systemone` 엔드포인트로 호출하는 1차 백테스트를 실행했다. 대상은 기존 조기경보 사례의 구조화된 특징값 4건이며, 공식 Alert Level을 변경하지 않고 보조 판정 결과만 별도 저장했다.
+
+| 사례 | tev1 판정 | 주요 결과 |
+|---|---|---:|
+| 우크라이나 안보 | `CRITICAL` | 81.7% |
+| 대만해협 | `WARNING` | 85.8% |
+| 홍해 해운 | `WATCH` | 46.3% (`INSUFFICIENT_EVIDENCE` 37.9%) |
+| 미중 무역 | `CRITICAL` | 59.8% |
+
+실행 스크립트는 `scripts/validation/backtest_tev1.py`, 원시 결과는 `data/tev1_backtest_results.json`에 보관한다. 이번 실험은 실제 시간 동결 원문과 사람 검수 라벨을 연결한 성능 검증이 아니므로 정확도나 공식 경보 성능으로 해석하지 않는다. `confidence`도 정답 확률이 아니다. 다음 단계는 동결된 원문·근거 URL·사람 검수 결과를 포함한 10건 이상 백테스트와 기존 Risk Signal Score와의 불일치 분석이다.

@@ -47,6 +47,10 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | in-progress | ANTIGRAVITY | llm-analysis / alert-scoring | `prototype_all_in_one.py`, `scripts/analysis/analyze_signal_gap.py`, `scripts/analysis/analyze_signals.py`, `data/review_log.csv` | LLM 분석·Risk Signal Score·검수 체계 연동 | 2026-09-28 |
 | done | Codex | docs / session-sync | `PROJECT_CONTEXT.md`, `AGENT_SYNC.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `project-handoff.md` | 현재 방향, 센서 분류, 교차검증 규칙, 세션 상태 문서 정리 | 2026-10-02 |
 | done | Codex | dashboard / Figma handoff | `docs/current/DASHBOARD_SESSION_PROMPT.md`, `PROJECT_CONTEXT.md`, `AGENT_SYNC.md` | Figma의 5대 감시축 균형 UI와 비상 관제 화면을 대시보드 세션에 인수인계 | 2026-10-04 |
+| done | ANTIGRAVITY | dashboard / report / docs-sync | docs/, scripts/dashboard/generate_dashboard_v2.py | 최신 MD(수집 레인 아키텍처, 스크립트 인벤토리, 지도교수 면담자료) 확인 및 대시보드 뷰/표현 정합성 검증 | 2026-10-11 |
+| done | Codex | data-collection / GDELT quota safety | `scripts/collection/gdelt_cloud_budget.py`, `scripts/collection/fetch_gdelt_cloud_events.py`, `scripts/run_pipeline.py`, `docs/current/DATA_COLLECTION_GUIDE.md`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md` | Academic & Research 월 5,000 QU에 맞춘 기본 비활성·로컬 월/일 안전상한·요청 간격·사용량 영수증 적용 | 2026-10-13 |
+| done | Codex | data-collection / White House official | `scripts/collection/fetch_whitehouse_official.py`, `scripts/run_pipeline.py`, `docs/current/DATA_COLLECTION_GUIDE.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md` | 백악관 공식 RSS 우선 수집기 초안과 제한적 사이트맵 보완을 선택 플래그로 연결 | 2026-10-15 |
+| done | Codex | handoff / White House collector | `docs/current/ANTIGRAVITY_WHITEHOUSE_HANDOFF_PROMPT.md`, `docs/current/DATA_COLLECTION_SESSION_PROMPT.md` | 백악관 수집기 범위·검증 경계·드라이런 절차를 ANTIGRAVITY 인수인계 프롬프트로 정리 | 2026-10-15 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
 
@@ -56,6 +60,27 @@ Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하�
 - 결정 사항: 항공 물류·ADS-B/공항 운항 센서, 파나마 운하 병목 센서, 다국가 세관 데이터, X 공개 정보환경 신호, 정부 홈페이지의 API/RSS/Sitemap/HTML/PDF 단계형 수집을 우선 검토함.
 - 다음 작업: 신규 수집기를 만들기 전에 국가·서비스별 접근 방식과 라이선스·robots·요청 제한을 source registry로 정의하고, 원시 데이터·수집 영수증만 구현할 것.
 - 주의할 점: 파나마 운하는 남미 인접 미주 병목으로 기록하며 수에즈 운하와 혼동하지 않는다. X·정부 웹 데이터는 국민 여론이나 확정 사실로 해석하지 않는다.
+
+2026-10-10 [Codex / GDELT 대체·보조 수집기 프로토타입]
+- 한 일: 원본 GDELT 2.0 DOC, Media Cloud, ACLED, Event Registry용 제한 수집기를 추가함.
+- 바꾼 파일: 당시 루트에 추가한 GDELT/MediaCloud/ACLED/Event Registry 수집기 4개(현재 `scripts/collection/`으로 이동), `docs/current/DATA_COLLECTION_GUIDE.md`, `AGENT_SYNC.md`.
+- 확인한 것: Python 컴파일을 통과시켰고, 인증·429·요금 제한 시 파이프라인을 중단하지 않는 `receipt` 구조를 적용함. 현재 환경의 GDELT DOC 직접 호출은 429로 제한됨.
+- 다음 작업: GDELT 호출 간격·캐시 정책을 조정하고, Media Cloud·ACLED 계정 승인 후 실제 응답 스키마를 고정해 `run_pipeline.py`에 선택 플래그로 연결할 것.
+- 주의할 점: Event Registry는 보조 수단으로만 사용하며 학술 접근 승인 전에는 `AUTH_REQUIRED` 상태를 유지한다. 새 서비스 결과는 검증 세션에서 교차검증하기 전 사실이나 경보로 해석하지 않는다.
+
+2026-10-10 [Codex / 외부 수집기 인증 재시험]
+- 한 일: `.env` 인증정보를 사용해 ACLED와 Event Registry 소량 수집을 재시험함.
+- 확인한 것: ACLED 예멘 3건 `HTTP 200`, Event Registry Red Sea shipping 3건 `HTTP 200`, 두 결과 모두 `complete=true`로 저장됨. Media Cloud는 기본 호스트 DNS 오류, GDELT 2.0 DOC는 `HTTP 429`로 남아 있음.
+- 바꾼 파일: `docs/current/DATA_COLLECTION_GUIDE.md`, `AGENT_SYNC.md`; ACLED `.env` 덮어읽기와 Media Cloud 오류 키 마스킹을 보완함.
+- 다음 작업: Media Cloud 공식 최신 API 호스트를 확인하고, GDELT 호출 간격·캐시 정책을 조정한 뒤 선택적 파이프라인 단계로 연결한다.
+- 주의할 점: ACLED·Event Registry 결과는 원시 수집 데이터이며 검증 세션에서 교차검증하기 전 경보나 확정 사실로 사용하지 않는다.
+
+2026-10-10 [Codex / Python 스크립트 인벤토리]
+- 한 일: `scripts/` 하위 Python 57개를 역할별로 분류하고 `run_pipeline.py` 호출 경로를 확인함.
+- 바꾼 파일: `docs/current/PYTHON_SCRIPT_INVENTORY.md`, `PROJECT_CONTEXT.md`, `AGENT_SYNC.md`.
+- 확인한 것: 전체 57개 Python 파일 컴파일 통과. 활성 수집기는 `scripts/collection/`, 분석·검증·DB·대시보드는 이미 하위 폴더에 분리되어 있고 신규 외부 API 4개만 루트에 남아 있음.
+- 다음 작업: 파일 이동 전에 신규 외부 API 수집기와 manual/prototype 파일의 상태를 확정하고, 영역별로 작은 이동 단위를 만든다.
+- 주의할 점: `run_pipeline.py`의 경로를 먼저 갱신하지 않고 파일을 이동하지 않는다. 대시보드·교차검증 담당 세션 파일은 임의로 이동하거나 수정하지 않는다.
 
 2026-10-04 [Codex / dashboard 세션 인수인계]
 - 한 일: Figma에서 5대 감시축 중심의 `Balanced Watchboard` 시안을 만들고, 비상상황의 긴장감을 높이는 상단 위험 배너와 경보 상태 표시를 추가함.
@@ -255,6 +280,12 @@ ANTIGRAVITY에 새 작업을 맡길 때는 아래 문장을 먼저 붙인다.
 - 다음 작업: `scripts/dashboard/streamlit_dashboard.py`는 ANTIGRAVITY가 in-progress 소유 중이므로 별도 세션에서 동일한 5축 구조를 반영할 것.
 - 주의할 점: `UNVERIFIED`·`PARTIALLY_CONFIRMED`·`CROSS_VERIFIED`를 구분하고, `complete=false` 부분 수집과 공개 주장 데이터를 확정 사실로 표시하지 않는다.
 
+2026-10-10 [Codex / official dashboard alert-view connection check]
+- 한 일: `scripts/dashboard/generate_dashboard_v2.py`가 공식 뷰 `v_dashboard_current_alerts`의 연결 실패와 빈 스냅샷을 구분하도록 보완함.
+- 확인한 것: MySQL 연결 성공, 공식 뷰 존재 확인. 현재 `scoring_runs`, `risk_signal_scores`, `signal_gap_snapshots`, `alert_events`가 모두 0건이라 공식 경보 행은 아직 없음. 대시보드는 임의 경보를 만들지 않고 `공식 경보 뷰 연결됨 · 최신 산출 스냅샷 없음`으로 표시함.
+- 다음 작업: DB/LLM 담당 세션에서 완료된 scoring run과 alert event를 공식 뷰에 적재한 뒤 대시보드를 재생성하고, `v_alert_evidence_trace` 근거 연결을 검증할 것.
+- 주의할 점: 현재 화면의 `확인 필요`는 데이터 부족 상태이며 Alert Level이 아니다. `scripts/dashboard/streamlit_dashboard.py`는 ANTIGRAVITY 소유 파일이므로 별도 조율 없이 수정하지 않음.
+
 2026-09-28 [Codex / coordination · video-prototype handoff]
 - 한 일: 최신 원격 상태, 현재 조기경보 방향, 작업판과 영상 분석 프로토타입의 추적 상태를 확인했다.
 - 바꾼 파일: `AGENT_SYNC.md`.
@@ -283,6 +314,20 @@ ANTIGRAVITY에 새 작업을 맡길 때는 아래 문장을 먼저 붙인다.
 - 확인한 것: `git pull` 결과 최신(`Already up to date`), `git status --short` 상 `AGENT_SYNC.md`만 수정 상태임. 다른 세션(Codex)이 `AGENT_SYNC.md`에 작업 로그를 기록 중이었으며, 현재 코드나 스크립트 파일 충돌은 없음.
 - 다음 작업: 사용자로부터 구체적인 구현/개선 작업(UI/대시보드 개선, 수집기/파이프라인 실행 점검 등) 지시 대기.
 - 주의할 점: 이전 예측·챗봇 문서는 단순 이력(docs/history, docs/archive)으로 취급함. Codex가 담당하는 영역(저장소 구조 정리, DB/스크립트 리팩토링 등)과 파일 소유권이 겹치지 않도록 주의.
+
+2026-10-13 [Codex / GDELT Cloud QU 안전장치]
+- 한 일: 학술 계정 월 5,000 QU를 기준으로 GDELT Cloud 호출을 기본 비활성화하고, 명시적 선택 실행에만 로컬 월·일 안전상한과 요청 간격을 적용했다.
+- 바꾼 파일: `scripts/collection/gdelt_cloud_budget.py`, `scripts/collection/fetch_gdelt_cloud_events.py`, `scripts/run_pipeline.py`, `.gitignore`, `PROJECT_CONTEXT.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`, `docs/current/DATA_COLLECTION_SESSION_PROMPT.md`.
+- 확인한 것: Python 컴파일, 파이프라인·수집기 도움말, 1 QU 초과 시 로컬 차단 동작, `git diff --check` 통과. 실제 API 호출은 비용 안전을 위해 실행하지 않았다.
+- 다음 작업: GDELT Cloud Usage 화면과 `quota_state.json`을 주기적으로 대조하고, 필요 시 월·일 안전상한을 더 낮춘다.
+- 주의할 점: 로컬 미터는 청구 시스템이 아니며 실제 사용량은 GDELT Cloud Usage 화면이 기준이다. API 키·Authorization 헤더는 로그·커밋에 남기지 않는다.
+
+2026-10-15 [Codex / White House official RSS collector]
+- 한 일: 백악관 공식 Releases RSS를 기본 경로로 수집하고, 선택적으로 사이트맵에서 누락 URL을 제한 발견하는 초안 수집기를 추가했다.
+- 바꾼 파일: `scripts/collection/fetch_whitehouse_official.py`, `scripts/run_pipeline.py`, `docs/current/DATA_COLLECTION_GUIDE.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md`, `docs/current/DATA_COLLECTION_SESSION_PROMPT.md`, `docs/current/ANTIGRAVITY_WHITEHOUSE_HANDOFF_PROMPT.md`.
+- 확인한 것: 최근 1일·최대 3건 RSS 실행 성공, `data/whitehouse_official/whitehouse_latest.json`과 `rss_latest.xml` 저장, Python 컴파일 및 `--with-whitehouse` 도움말 확인.
+- 다음 작업: 문서 유형별 RSS/HTML 본문 필드와 중복 제거 규칙을 검토한 뒤 공식 발표 공통 스키마에 연결한다.
+- 주의할 점: 백악관 발표는 공식 입장 신호이지 사실 확정이 아니다. `--with-whitehouse`는 선택 실행이며 robots.txt와 요청 제한을 준수한다.
 
 
 2026-09-28 [ANTIGRAVITY / llm-analysis · early-warning-alert sync]
@@ -313,3 +358,23 @@ un_pipeline.py에 --skip-chokepoints, --skip-cross-verification 등 플래그 �
   - 기존 로직이나 사용자 커스텀 코드가 훼손된 정황은 발견되지 않음.
 - 다음 작업: 설계한 Git 커밋 가이드라인을 사용자(또는 다른 세션)에게 전달하여 안전하게 버전을 기록(Commit)할 수 있도록 권고.
 - 주의할 점: 현재 미추적(untracked)된 디렉토리와 파일들이 매우 많으므로, 한 번에 git add .를 수행하지 말고 제안한 4개의 논리적 그룹에 맞추어 커밋을 분할하는 것이 이력을 깔끔하게 관리하는 방법임.
+
+2026-10-10 [Codex / Python 파이프라인 정리]
+- 한 일: 신규 외부 API 수집기 4개를 `scripts/collection/`으로 이동하고 문서 경로를 갱신했다. 57개 Python 파일 인벤토리에서 실제 `run_pipeline.py` 호출 여부를 분류했다.
+- 바꾼 파일: `scripts/collection/fetch_{acled,event_registry,gdelt_v2_public,mediacloud}.py`, `scripts/run_pipeline.py`, `docs/current/PYTHON_SCRIPT_INVENTORY.md`, `docs/current/DATA_COLLECTION_GUIDE.md`.
+- 확인한 것: `--collect-only`, `--skip-db`, `--skip-dashboard` 실행 그룹 플래그를 추가했다. 대시보드·교차검증 구현 파일은 수정하지 않았다.
+- 다음 작업: ACLED/Event Registry 선택 연결 여부 결정 후 항공·파나마·다국가 세관·X·정부 웹 수집기를 `scripts/collection/`에 개별 구현한다.
+- 주의할 점: `prototype_local_expert_sources.py`는 이름과 달리 현재 기본 파이프라인에서 호출된다. `prototype_*` 파일을 이동·삭제할 때는 호출 관계와 다른 세션 소유권을 먼저 재확인한다.
+
+2026-10-10 [Codex / 수집 레인 아키텍처 문서화]
+- 한 일: GDELT Cloud·AIS·정부 발표를 FAST, 싱크탱크·현지 언론을 CONTEXT, 공개 여론을 OPINION, 세관·무역·금융·여론조사를 BASELINE으로 분리하는 수집 아키텍처를 문서화했다.
+- 바꾼 파일: `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md`, `PROJECT_CONTEXT.md`, `AGENT_SYNC.md`.
+- 확인한 것: 싱크탱크는 registry 기반 단일 수집기로 확장하고, 수집 세션은 원시 데이터·영수증만 전달하며 `verification_state`·Alert Level·LLM 결과는 생성하지 않는 경계를 확정했다.
+- 다음 작업: `config/source_registry/` 스키마 작성, 전문가 피드 registry 이관, `fetch_expert_sources.py` 구현, 이후 `run_pipeline.py --group` 지원 추가.
+- 주의할 점: LLM 분석·경보 산식 세션은 `claim_type`, orientation, issue_tags를 해석하되 수집 원문과 접근 메모를 덮어쓰지 않는다.
+- 2026-10-11 [Codex / tev1 보조 판정 백테스트]
+- 한 일: `tev1`을 `/v1/systemone`으로 호출하는 소규모 4건 백테스트를 실행했다.
+- 바꾼 파일: `scripts/validation/backtest_tev1.py`, `data/tev1_backtest_results.json`.
+- 확인한 것: 4건 모두 호출 성공. 우크라이나·미중 무역은 `CRITICAL`, 대만해협은 `WARNING`, 홍해는 `WATCH`로 판정됐다. 홍해 사례는 `WATCH` 46.3%와 `INSUFFICIENT_EVIDENCE` 37.9%로 불확실성이 높았다.
+- 다음 작업: 실제 동결 입력과 사람 검수 라벨을 추가해 10건 이상으로 확대하고, 기존 Risk Signal Score와 불일치 사례를 검수한다.
+- 주의할 점: 이번 결과는 시뮬레이션된 구조화 특징에 대한 보조 비교이며 공식 Alert Level이나 정확도 증명이 아니다. `confidence`는 정답 확률이 아니다.

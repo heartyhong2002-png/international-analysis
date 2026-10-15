@@ -1,0 +1,243 @@
+{
+  "schema_version": "1.0",
+  "source": "gdelt_cloud",
+  "endpoint": "https://gdeltcloud.com/api/v2/events",
+  "query": {
+    "days": 1,
+    "limit": 1
+  },
+  "collected_at": "2026-10-02T03:31:40.517317+00:00",
+  "started_at": "2026-10-02T03:31:38.619542+00:00",
+  "finished_at": "2026-10-02T03:31:40.517317+00:00",
+  "page_count": 1,
+  "row_count": 1,
+  "complete": false,
+  "pages": [
+    {
+      "page": 1,
+      "row_count": 1,
+      "limit": 1,
+      "cursor": null,
+      "next_cursor_present": true
+    }
+  ],
+  "events": [
+    {
+      "id": "cameoplus_00c45344001ccc94",
+      "url": "https://gdeltcloud.com/events/united-states-deploys-third-carrier-strike-group-toward-iran--cameoplus_00c45344001ccc94",
+      "primary_story_url": "https://gdeltcloud.com/stories/us-deploys-third-strike-group-to-encircle-iran-amid-ceasefir-f17d39e6",
+      "family": "cameoplus",
+      "title": "United States deploys third carrier strike group toward Iran",
+      "title_source": "coder_title",
+      "summary": "On 2026-10-02, the United States reportedly moved to deploy a third aircraft carrier strike group and 10,000 additional troops to the Middle East, directed toward encircling Iran. The report also says President Trump rejected a proposal concerning the Strait of Hormuz, but gives no specific deployment location or more precise occurrence date.",
+      "event_date": "2026-10-02",
+      "observed_at": "2026-10-02T00:30:00.000Z",
+      "event_date_basis": "publication_day_inference",
+      "event_date_evidence": "The article presents the U.S. deployment of a third aircraft carrier strike group and 10,000 additional troops as current news, without giving a more specific date.",
+      "coded_at": "2026-10-02T01:22:40Z",
+      "updated_at": "2026-10-02T02:13:09Z",
+      "processed_at": "2026-10-02T01:22:40Z",
+      "category": "POLITICAL",
+      "subcategory": "154",
+      "subcategory_label": "Mobilize/increase Armed Forces",
+      "event_description": "Mobilize/increase armed forces",
+      "taxonomy_status": "coded",
+      "domain": "POLITICAL",
+      "event_code": "154",
+      "geo": {
+        "country": "Iran",
+        "region": "Middle East",
+        "continent": "Asia",
+        "admin1": null,
+        "location": null,
+        "latitude": 32.4279,
+        "longitude": 53.688,
+        "geo_precision": 3,
+        "geo_precision_label": "country_or_region"
+      },
+      "geo_context": {
+        "location_country": "Iran",
+        "actor_origin_countries": [
+          "United States",
+          "Iran"
+        ]
+      },
+      "actors": [
+        {
+          "name": "United States",
+          "country": "United States",
+          "role": "source",
+          "primary": true
+        },
+        {
+          "name": "Iran",
+          "country": "Iran",
+          "role": "target",
+          "primary": true
+        }
+      ],
+      "metrics": {
+        "significance": 0.5261,
+        "severity_tier": "medium",
+        "goldstein_scale": -7.2,
+        "magnitude": 8,
+        "systemic_importance": 0.3,
+        "propagation_potential": 0.47,
+        "market_sensitivity": 0.05,
+        "confidence": 0.58,
+        "article_count": 1,
+        "evidence_source_count": 1,
+        "supporting_story_count": 1,
+        "metric_inputs": {
+          "magnitude": {
+            "path": "verbal",
+            "value": 8,
+            "why": "The report describes a third carrier strike group and 10,000 additional troops being deployed, a broad increase in armed forces."
+          },
+          "systemic": {
+            "node": "U.S.-Iran regional security relationship",
+            "size": {
+              "value": 0.35,
+              "why": "The deployment affects a consequential bilateral security relationship, but the article identifies no treaty or binding alliance node."
+            },
+            "interconnectedness": {
+              "value": 0.35,
+              "why": "The reported military buildup concerns the wider Middle East, though no specific third-party commitments are described."
+            },
+            "irreplaceability": {
+              "value": 0.2,
+              "why": "The article does not indicate that this relationship or channel has no alternatives."
+            }
+          },
+          "propagation": {
+            "channel": {
+              "value": 0.5,
+              "why": "The troop and carrier deployment creates a physical regional channel and may affect other actors' expectations, but no operational linkage is specified."
+            },
+            "coupling": {
+              "value": 0.25,
+              "why": "No deadline, lack of slack, or immediate operational dependency is reported."
+            },
+            "breach": {
+              "value": 0.3,
+              "why": "The article calls this a third strike group, but provides no evidence that the deployment crosses a stated threshold or breaks a prior restraint."
+            },
+            "primed": {
+              "value": 0.5,
+              "why": "The article refers to ceasefire hopes and a proposed Hormuz arrangement, indicating an active regional crisis context."
+            },
+            "containment": {
+              "value": 0.2,
+              "why": "Ceasefire hopes are mentioned, but no active mediator or other concrete containment measure is reported."
+            }
+          },
+          "market": {
+            "claim_exposure": {
+              "value": 0.1,
+              "why": "The report identifies no specific traded claim or stated aggregate-level change to supply, output, price, or market access."
+            },
+            "economic_bite": {
+              "value": 0,
+              "why": "The reported military deployment does not directly change the identified jurisdiction-level claim's cash flows, assets, or legal status."
+            }
+          }
+        },
+        "metric_version": "v2-2026-07-24"
+      },
+      "has_fatalities": null,
+      "fatalities": null,
+      "fatalities_basis": null,
+      "fatalities_corroboration": null,
+      "fatalities_evidence": null,
+      "fatalities_supporting_source_count": null,
+      "injured": null,
+      "civilians_killed": null,
+      "civilians_injured": null,
+      "civilian_targeting": null,
+      "civilian_targeting_label": null,
+      "story_refs": [
+        {
+          "id": "f17d39e6d6af",
+          "url": "https://gdeltcloud.com/stories/us-deploys-third-strike-group-to-encircle-iran-amid-ceasefir-f17d39e6",
+          "title": "US deploys third strike group to encircle Iran amid ceasefire hopes",
+          "story_date": "2026-10-02",
+          "article_count": 1
+        }
+      ],
+      "entity_refs": [
+        {
+          "id": "e_4fcc5068ffe683f5",
+          "id_space": "spine",
+          "name": "Donald Trump",
+          "type": "person",
+          "entity_id": "e_4fcc5068ffe683f5",
+          "spine_id": "e_4fcc5068ffe683f5",
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Donald_Trump",
+          "image_url": null,
+          "avatar_url": null,
+          "public_official": {
+            "checked": true,
+            "is_public_official": true,
+            "total": 2,
+            "status": "current",
+            "offices": [
+              {
+                "office_id": "p_f546534b4f57e26c",
+                "name": "Head of government of United States",
+                "country_iso3": "USA",
+                "status": "current",
+                "start_date": "2025-01-20",
+                "end_date": null,
+                "evidence_date": "2026-09-29",
+                "sources": [
+                  {
+                    "source_key": "os_wd_leaders",
+                    "url": "https://www.wikidata.org/wiki/Property:P35"
+                  }
+                ]
+              },
+              {
+                "office_id": "p_fdbb65792db7f33b",
+                "name": "Head of state of United States",
+                "country_iso3": "USA",
+                "status": "unknown",
+                "start_date": "2025-01-20",
+                "end_date": null,
+                "evidence_date": "2026-09-29",
+                "sources": [
+                  {
+                    "source_key": "os_wd_leaders",
+                    "url": "https://www.wikidata.org/wiki/Property:P35"
+                  }
+                ]
+              }
+            ],
+            "truncated": false
+          }
+        }
+      ],
+      "top_articles": [
+        {
+          "url": "https://www.turkiyegazetesi.com.tr/dunya/herkes-ateskes-beklerken-abd-harekete-gecti-3uncu-taarruz-grubuyla-irani-kusatiyor-1819997",
+          "title": "Herkes ateşkes beklerken, ABD harekete geçti: 3'üncü taarruz grubuyla İran'ı kuşatıyor",
+          "domain": "turkiyegazetesi.com.tr",
+          "domain_avatar_url": "https://www.google.com/s2/favicons?domain=turkiyegazetesi.com.tr&sz=64",
+          "rank": 1
+        }
+      ],
+      "language_breakdown": [
+        {
+          "language": "tr",
+          "count": 1
+        }
+      ],
+      "top_language": "tr",
+      "search_score": null,
+      "incident": {
+        "uid": "cameoplus_00c45344001ccc94",
+        "resolution": "self",
+        "confidence": null
+      }
+    }
+  ]
+}

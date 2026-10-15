@@ -18,36 +18,45 @@
 
 2. GDELT Cloud Events는 빠른 다국어 사건 탐지 센서로 사용한다.
    - `scripts/collection/fetch_gdelt_cloud_events.py`를 통해 인증된 GDELT Cloud v2 Events를 제한된 페이지 예산으로 수집한다.
+   - Academic & Research 월 5,000 QU 계정의 안전을 위해 기본 파이프라인에서는 호출하지 않는다. 필요할 때만 `python scripts/run_pipeline.py --collect-only --with-gdelt-cloud`로 선택 실행한다.
+   - 선택 실행에는 로컬 월 4,500 QU·일 100 QU 안전상한, 요청 간격 2초, 재시도 포함 요청 카운터가 적용된다. 상태는 `data/gdelt_cloud/quota_state.json`에 남긴다.
    - 원시 `events`와 수집 영수증을 `data/gdelt_cloud/`에 함께 보존한다. `complete=false`는 부분 수집이며 전체 데이터로 해석하지 않는다.
    - 사건·행위자·장소·사건일시·관측일시·출처 URL을 보존하고, 공식·현지 언론, AIS·항만·운임 신호와 시간순으로 교차검증한다.
    - GDELT Cloud 사건 하나만으로 Alert Level을 올리지 않는다. GDELT는 사건 탐지 센서이지 최종 사실 판정기가 아니다.
    - API 키는 `GDELT_CLOUD_API_KEY`에서만 읽는다. 키 값과 Authorization 헤더를 로그·프롬프트·커밋에 노출하지 않는다.
 
-3. 정보환경은 출처별로 분리한다.
+3. 백악관 공식 발표는 RSS 우선 공식 신호로 수집한다.
+   - `scripts/collection/fetch_whitehouse_official.py`의 `https://www.whitehouse.gov/releases/feed/` RSS를 기본 경로로 사용한다.
+   - 기본 실행은 최근 7일·최대 50건 메타데이터와 RSS 원문·SHA-256 해시·수집 영수증을 저장한다. 원문 HTML 대량 다운로드는 하지 않는다.
+   - 사이트맵 보완은 `--include-sitemap`을 명시한 제한 실행에서만 수행한다. 통합 파이프라인에서도 `--with-whitehouse`를 명시한 경우에만 호출한다.
+   - `source_type=official_statement`로 저장하되, 백악관 발표는 공식 입장 신호이지 사실 확정이나 Alert Level이 아니다. 교차검증 세션에서 GDELT·국무부·현지 언론·AIS·시장 신호와 결합한다.
+   - `source_url`, `published_at`, `observed_at`, `document_type`, `content_hash/raw_ref`, `parse_status`, `license_access_note`를 보존하고 `robots.txt`와 요청 제한을 준수한다.
+
+4. 정보환경은 출처별로 분리한다.
    - 정부·군·국제기구 공식 발표
    - 국제·현지·독립 언론
    - X, Bluesky, 공개 Telegram, 현지 공개 포럼, Google Trends
    - 각 출처의 편향, 검열 가능성, 봇 가능성, 계정 유형, 표본 한계를 함께 저장한다.
    - SNS 게시물은 국민 여론으로 단정하지 말고 온라인 정보환경 신호로 표시한다.
 
-4. 무장단체 데이터는 공개 OSINT 범위로만 수집한다.
+5. 무장단체 데이터는 공개 OSINT 범위로만 수집한다.
    - 후티, 이란 혁명수비대(IRGC) 등 공개 채널의 성명·작전 주장·위협·훈련·보복 발표·영상·선전 메시지를 추적한다.
    - 비공개 그룹, 초대 링크, 개인 대화, 계정 탈취, 접근제한 우회, 작전 수행에 도움이 되는 위치·표적·취약점 정보는 수집하지 않는다.
    - 공개 주장과 실제 사건은 분리한다. claim_status를 미확인·부분확인·외부확인·반박으로 관리한다.
    - 게시물은 source_type, identity_confidence, claim_type, published_at, edited_at, language, media_url, verification_status, cross_source_links, risk_relevance를 기록한다.
    - IRGC·후티의 메시지는 사실의 원천이 아니라 공급망 위험을 예고할 수 있는 정보환경 센서로 취급한다.
 
-5. 검증은 복수 신호의 결합으로 한다.
+6. 검증은 복수 신호의 결합으로 한다.
    - 무장단체 주장 + AIS 변화 + 항만·선사 발표 + 정부·군 발표 + 현지 언론 + 위성·영상 + 운임·보험료를 시간순으로 비교한다.
    - 단일 출처로 Alert Level을 올리지 않는다.
    - 예시: 해협 선박 감소, 대기시간 증가, 보험료 상승, 현지 보도 증가가 함께 나타날 때 공급망 경보 후보로 만든다.
 
-6. 영상은 감정·거짓말 판정기가 아니라 근거 탐색 도구로 만든다.
+7. 영상은 감정·거짓말 판정기가 아니라 근거 탐색 도구로 만든다.
    - URL, 채널, 업로드 시각, 자막·음성인식 텍스트, 발언자, 타임코드, 장면·선박·장소, 최초 등장 시점, 재업로드 관계를 저장한다.
    - 허가된 영상·공식 공개 영상·직접 보유 영상만 실제 다운로드·음성·영상 분석 대상으로 삼고, 그 외에는 메타데이터·임베드·링크·자막 등 허용 범위를 확인한다.
    - 분석 결과는 ‘거짓말’이나 ‘의도’가 아니라 발언 강도, 표현 변화, 반복 키워드, 증거 구간, 맥락 불일치 가능성으로 표현한다.
 
-7. 구현 우선순위는 AIS·항만·운임 → GDELT Cloud·공식/현지 언론 비교 → X·공개 Telegram·현지 공개 커뮤니티 → 영상 자막·타임코드 분석 → 위성·ADS-B·전력·인터넷 데이터 확장 순서다.
+8. 구현 우선순위는 AIS·항만·운임 → GDELT Cloud·공식/현지 언론 비교 → X·공개 Telegram·현지 공개 커뮤니티 → 영상 자막·타임코드 분석 → 위성·ADS-B·전력·인터넷 데이터 확장 순서다.
 
 새 코드를 작성할 때는 원시 데이터와 파생 신호를 분리하고, source_url·observed_at·published_at·verification_state·license/access_note를 보존해 재현성과 감사 가능성을 유지해줘.
 ```
@@ -56,6 +65,7 @@
 
 - 프로젝트 정체성: 공급망·지정학 리스크 조기경보
 - 우선 센서: 해협·항만 AIS, 운임·보험료, 공식/현지 언론, 공개 여론 신호
+- 공식 발표 수집: 백악관 Releases RSS (`scripts/collection/fetch_whitehouse_official.py`)는 선택 실행 센서이며 기본 파이프라인에서는 호출하지 않는다.
 - 보조 사건 센서: GDELT Cloud Events (`scripts/collection/fetch_gdelt_cloud_events.py`, `data/gdelt_cloud/`)
 - 공개 여론 대안: PTT, 핀충, Bluesky, Google News RSS, 공개 Telegram, Google Trends
 - 무장단체: 후티·IRGC의 공개 성명과 선전 신호만 수집하며, 실제 사건은 독립 출처와 교차검증

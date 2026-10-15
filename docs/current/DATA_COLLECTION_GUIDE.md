@@ -31,7 +31,7 @@
 | **해상 운임·유조선 (ZIM, FRO, BDRY)** | 영향 프록시 | 실시간 ~ 15분 지연 | 글로벌 상장 선사 | 시장 심리·유동성 반영 | 없음 (공개 시장) | 극히 낮음 | 낮음 (금융 규제) | 높음 (공개 시세) | yfinance / Yahoo Finance 공공 API |
 | **에너지 가격 (Brent, WTI, NG)** | 영향 프록시 | 실시간 ~ 15분 지연 | 글로벌 벤치마크 유종 | 시장 심리 반영 | 없음 (공개 시장) | 극히 낮음 | 낮음 (선물 거래소) | 완벽 (공개 시세) | yfinance / 거래소 공공 지표 |
 | **전쟁보험료 (War Risk Premium)** | 영향 프록시 | 24~48시간 | 로이즈 합동전쟁위원회(JWC) 지정 구역 | 보수적 위험 평가 | 없음 | 없음 | 극히 낮음 | 높음 (보험사 공시) | 보험 시장 공시 자료 수집 |
-| **GDELT Cloud Events (v2)** | 교차검증 | 15분 ~ 1시간 | 글로벌 100+ 언어 다국어 뉴스 | 미디어 보도 편향 | 국가별 언론 통제 반영 | 낮음 (기사 기반) | 보통 (허위 보도 인용 가능) | 높음 (사건 고유 ID 보존) | `GDELT_CLOUD_API_KEY` 필수 / 1페이지 예산 제한 (`complete=false`) |
+| **GDELT Cloud Events (v2)** | 교차검증 | 15분 ~ 1시간 | 글로벌 100+ 언어 다국어 뉴스 | 미디어 보도 편향 | 국가별 언론 통제 반영 | 낮음 (기사 기반) | 보통 (허위 보도 인용 가능) | 높음 (사건 고유 ID 보존) | `GDELT_CLOUD_API_KEY` 필수 / 기본 파이프라인 미호출 / 로컬 월 4,500 QU·일 100 QU 안전상한 / 1페이지 예산 제한 (`complete=false`) |
 | **정부·군 공식 발표** | 교차검증 | 수 분 ~ 24시간 | 정부 공식 채널 | 자국 중심 선전/외교적 수사 | 자체 검열 100% | 해당 없음 (공식 계정) | 높음 (기만 전술 가능) | 완벽 (공식 웹 아카이브) | 공개 웹 공시 / 접근 제한 없음 |
 | **현지 독립·해외 언론** | 교차검증 | 1~12시간 | 주요 외신 및 망명/독립 매체 | 편집권 편향 | 주재국 추방/차단 압박 | 낮음 | 보통 | 높음 (URL/기사 로그) | RSS / 공공 웹 피드 |
 | **공개 텔레그램 (OSINT)** | 교차검증 | 즉시 ~ 30분 | 군사 교전 세력, 현장 채널 | 선전·심리전 극심 | 플랫폼 차단 또는 계정 삭제 | 높음 (채널 봇) | 높음 (가짜 영상/과장) | 보통 (게시물 삭제 시 아카이브 필요) | 공개 채널 웹 프리뷰 (비공개 잠입 절대 금지) |
@@ -182,3 +182,60 @@
 `official_api → official_rss → official_sitemap → official_html_notice → official_pdf_or_csv → public_json`
 
 각 단계에서 `robots.txt`, 이용약관, 요청 빈도, 공개 접근 여부를 확인하고, 비공개 영역·로그인 우회·접근 제한 회피는 하지 않는다. `source_url`, `page_url`, `document_url`, `published_at`, `observed_at`, `content_hash`, `http_status`, `parser_type`, `robots_checked`, `license_access_note`를 함께 저장한다.
+
+백악관은 `scripts/collection/fetch_whitehouse_official.py`에서 공식 RSS(`https://www.whitehouse.gov/releases/feed/`)를 1순위로 사용한다. 사이트맵 보완은 `--include-sitemap`을 명시한 제한 실행에서만 수행하며, 기본적으로 원문 페이지를 대량 다운로드하지 않고 RSS 메타데이터·해시·수집 영수증을 저장한다. 통합 파이프라인에서도 `--with-whitehouse`를 명시한 경우에만 호출한다.
+
+## 7. GDELT 대체·보조 수집기(2026-10-10)
+
+GDELT Cloud 구독 만료에 대비해 원본 GDELT 2.0과 보조 사건·뉴스 서비스를 별도 수집기로 분리한다.
+
+| 수집기 | 역할 | 인증·제한 | 저장 위치 |
+|---|---|---|---|
+| `scripts/collection/fetch_gdelt_v2_public.py` | GDELT 2.0 DOC 공개 뉴스 후보 | 공개 API, 429 bounded retry | `data/gdelt_v2_public/latest.json` |
+| `scripts/collection/fetch_mediacloud.py` | 매체·국가별 뉴스 확산 보조 신호 | `MEDIACLOUD_API_KEY` 필요 가능 | `data/mediacloud/latest.json` |
+| `scripts/collection/fetch_acled.py` | 분쟁·시위·정치폭력 사건 | ACLED OAuth 계정 필요 | `data/acled/latest.json` |
+| `scripts/collection/fetch_event_registry.py` | 선택적 뉴스 이벤트 클러스터 | `EVENT_REGISTRY_API_KEY`, 학술 승인 우선 | `data/event_registry/latest.json` |
+
+모든 수집기는 인증이 없거나 요금·접근 제한에 걸려도 전체 파이프라인을 중단하지 않고 `AUTH_REQUIRED`, `429`, `complete=false`, `error`를 영수증에 남긴다. 이 데이터는 수집 결과이며 `verification_state`나 Alert Level을 산출하지 않는다.
+
+### GDELT Cloud QU 안전장치
+
+현재 계정은 Academic & Research 플랜(월 5,000 QU)이므로 GDELT Cloud 호출은 쿼터 소진과 계정 오작동 방지를 우선한다.
+
+- `run_pipeline.py`는 기본적으로 GDELT Cloud를 호출하지 않는다. 명시적으로 `--with-gdelt-cloud`를 준 경우에만 제한 수집한다.
+- `scripts/collection/gdelt_cloud_budget.py`가 HTTP 요청 시도(재시도 포함)를 로컬 `data/gdelt_cloud/quota_state.json`에 기록한다.
+- 기본 로컬 상한은 월 4,500 QU, 일 100 QU이며 `GDELT_CLOUD_MONTHLY_SAFETY_CAP`, `GDELT_CLOUD_DAILY_SAFETY_CAP`으로 더 낮출 수 있다.
+- 요청 간 기본 간격은 2초(`GDELT_CLOUD_MIN_INTERVAL_SEC`)다. 로컬 사용량은 안전용 미터이며 실제 사용량은 GDELT Cloud Usage 화면을 기준으로 한다.
+- 월·일 상한 또는 상태 파일 오류가 발생하면 요청 전에 중단한다. API 키와 Authorization 헤더는 로그·영수증에 저장하지 않는다.
+
+권장 실행:
+
+```powershell
+# 기본 파이프라인: GDELT Cloud 호출 없음
+python scripts/run_pipeline.py --collect-only
+
+# 필요할 때만 제한 수집
+python scripts/run_pipeline.py --collect-only --with-gdelt-cloud
+```
+
+## 8. Python 수집 파이프라인 실행 그룹(2026-10-10)
+
+Python 스크립트의 역할과 실제 호출 여부는 [`PYTHON_SCRIPT_INVENTORY.md`](PYTHON_SCRIPT_INVENTORY.md)에 기록한다. 수집 세션에서는 다음처럼 후처리와 분리해 실행할 수 있다.
+
+| 목적 | 실행 방법 | 범위 |
+|---|---|---|
+| 수집·전처리만 | `python scripts/run_pipeline.py --collect-only` | 수집기와 수집 전처리, DB·대시보드 제외 |
+| 수집 후 DB 생략 | `python scripts/run_pipeline.py --skip-db` | 수집·검증 단계 실행, DB 적재 제외 |
+| 수집 후 대시보드 생략 | `python scripts/run_pipeline.py --skip-dashboard` | 수집·DB 단계 실행, 대시보드 제외 |
+| 기존 DB 전용 | `python scripts/run_pipeline.py --only-db` | 수집 생략, DB·대시보드 실행 |
+
+ACLED·Event Registry·Media Cloud·GDELT 2.0 공개 수집기는 인증·요금·엔드포인트 상태가 안정화될 때까지 기본 파이프라인에 연결하지 않는 후보 수집기로 관리한다. 대시보드와 교차검증 로직은 이 세션의 수집 문서 변경 대상이 아니다.
+
+수집 레인과 싱크탱크 registry를 포함한 전체 설계는 [`COLLECTION_PIPELINE_ARCHITECTURE.md`](COLLECTION_PIPELINE_ARCHITECTURE.md)를 참조한다.
+
+2026-10-10 연결 상태:
+
+- **ACLED**: OAuth 인증 성공, 예멘 필터 3건 수집 완료(`HTTP 200`, `complete=true`).
+- **Event Registry**: API 키 인증 성공, `Red Sea shipping` 3건 수집 완료(`HTTP 200`, `complete=true`). 보조 센서로 유지한다.
+- **Media Cloud**: 계정 키는 입력되었으나 현재 프로토타입의 기본 API 호스트가 DNS 해석되지 않아 `complete=false`; 공식 최신 Search API 엔드포인트 확인 후 재연결한다.
+- **GDELT 2.0 DOC**: 공개 API 호출 시 `HTTP 429`가 확인되어 호출 간격·캐시·재시도 정책을 조정한다.

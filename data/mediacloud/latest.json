@@ -1,0 +1,12 @@
+{
+  "receipt": {
+    "collector": "mediacloud",
+    "endpoint": "https://api.mediacloud.org/api/v2/stories_public/list",
+    "query": "Red Sea shipping",
+    "observed_at": "2026-10-09T16:04:54.406394+00:00",
+    "complete": false,
+    "rows": 0,
+    "error": "ConnectionError: HTTPSConnectionPool(host='api.mediacloud.org', port=443): Max retries exceeded with url: /api/v2/stories_public/list?q=Red+Sea+shipping&limit=3&key=b123c3a6064af6a3074e4b7976c51a454be7bb6e (Caused by NameResolutionError(\"HTTPSConnection(host='api.mediacloud.org', port=443): Failed to resolve 'api.mediacloud.org' ([Errno 11001] getaddrinfo failed)\"))"
+  },
+  "stories": []
+}

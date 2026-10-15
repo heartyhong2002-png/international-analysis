@@ -75,6 +75,8 @@ data/issues/
 data/semiconductor_trade/
 data/uncomtrade/
 scripts/data/
+data/gdelt_cloud/quota_state.json
+docs/advisor_meeting/rendered*/
 
 # 백업 및 임시 CSV
 *backup*.csv

@@ -13,6 +13,8 @@ build_database.py를 손으로 하나씩 실행하는 게 귀찮아서 만든 �
     python scripts/run_pipeline.py --skip-polls     # 글로벌 여론조사(Pew/ECFR/Ipsos) 재수집 생략
     python scripts/run_pipeline.py --with-reddit    # Reddit 공개 RSS 커뮤니티 여론 수집 포함
     python scripts/run_pipeline.py --only-db        # 수집은 건너뛰고 build_database.py만 실행
+    python scripts/run_pipeline.py --collect-only  # 수집·전처리 단계만 실행
+    python scripts/run_pipeline.py --skip-db --skip-dashboard  # 후처리 단계를 선택적으로 생략
 
 왜 3개를 import해서 함수 호출로 합치지 않고 subprocess로 따로 실행하냐면:
   - 각 스크립트가 자기 파일 위치 기준으로 DATA_DIR을 잡기 때문에 문제는 없지만,
@@ -88,6 +90,12 @@ def main():
                          help="gov_announcements_collector.py 재실행 생략 (기존에 수집된 정부 발표 데이터를 그대로 씀)")
     parser.add_argument("--only-db", action="store_true",
                          help="수집 단계(1, 2번)는 건너뛰고 build_database.py만 실행")
+    parser.add_argument("--collect-only", action="store_true",
+                         help="수집·전처리 단계만 실행하고 DB·대시보드는 건너뜀")
+    parser.add_argument("--skip-db", action="store_true",
+                         help="DB 적재 단계(build_database/load_cross_verification)를 생략")
+    parser.add_argument("--skip-dashboard", action="store_true",
+                         help="대시보드 생성 단계를 생략")
     parser.add_argument("--with-kaggle", action="store_true",
                          help="Kaggle 공개 데이터셋(Kayhan 아카이브 등) 자동 다운로드/동기화 실행")
     parser.add_argument("--skip-us", action="store_true",
@@ -106,7 +114,13 @@ def main():
                          help="해협·항만 및 해상 운임·에너지 센서(fetch_maritime_chokepoints.py) 수집 생략")
     parser.add_argument("--skip-cross-verification", action="store_true",
                          help="GDELT 사건 및 복수 계통 교차검증(cross_verify_events.py) 생략")
+    parser.add_argument("--with-gdelt-cloud", action="store_true",
+                         help="GDELT Cloud Events를 로컬 QU 안전장치와 함께 1회 수집 (기본값: 실행하지 않음)")
+    parser.add_argument("--with-whitehouse", action="store_true",
+                         help="백악관 공식 RSS 수집 (기본값: 실행하지 않음)")
     args = parser.parse_args()
+    if args.only_db and args.collect_only:
+        parser.error("--only-db와 --collect-only는 함께 사용할 수 없습니다.")
 
     # 실행할 작업들을 순서대로 저장할 리스트입니다.
     # 각 항목은 (화면에 표시할 이름, 실행할 파일, 추가 옵션) 형태입니다.
@@ -141,13 +155,20 @@ def main():
             steps.append(("대안 로컬 여론 5대 센서 통합 수집", "collection/fetch_local_opinions.py", []))
         if not args.skip_chokepoints:
             steps.append(("해협·항만 및 해상 운임·에너지 센서 수집", "collection/fetch_maritime_chokepoints.py", []))
+        if args.with_gdelt_cloud:
+            steps.append(("GDELT Cloud Events 제한 수집 (QU 안전장치 적용)", "collection/fetch_gdelt_cloud_events.py", []))
+        if args.with_whitehouse:
+            steps.append(("백악관 공식 RSS 수집", "collection/fetch_whitehouse_official.py", []))
         if not args.skip_cross_verification:
             steps.append(("GDELT 사건 및 복수 계통 시계열 교차검증", "analysis/cross_verify_events.py", []))
-    # 수집을 건너뛰는 --only-db를 사용하더라도,
-    # 수집된 데이터를 DB에 넣고 결과물을 만드는 단계는 항상 실행합니다.
-    steps.append(("MySQL DB로 통합", "db/build_database.py", []))
-    steps.append(("해협 센서 및 교차검증 MySQL DB 동기화", "db/load_cross_verification_to_db.py", []))
-    steps.append(("인터랙티브 HTML 대시보드 생성", "dashboard/generate_dashboard_v2.py", []))
+    # 수집 전용 실행에서는 DB·대시보드 후처리를 붙이지 않습니다.
+    # 기존 --only-db 동작은 유지하되, 새 skip 플래그로 각 후처리 그룹을 선택할 수 있습니다.
+    if not args.collect_only:
+        if not args.skip_db:
+            steps.append(("MySQL DB로 통합", "db/build_database.py", []))
+            steps.append(("해협 센서 및 교차검증 MySQL DB 동기화", "db/load_cross_verification_to_db.py", []))
+        if not args.skip_dashboard:
+            steps.append(("인터랙티브 HTML 대시보드 생성", "dashboard/generate_dashboard_v2.py", []))
 
     # 실제 실행 전에 전체 작업 목록을 사용자에게 보여줍니다.
     print("\n" + "=" * 60)

@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-09-29T15:15:44.898437",
+  "total_posts": 6,
+  "high_risk_count": 0,
+  "high_risk_posts": [],
+  "by_country": {
+    "GLOBAL": {
+      "country_name": "글로벌 (전문가·중립)",
+      "total": 4,
+      "high_risk": 0,
+      "top_titles": []
+    },
+    "CN": {
+      "country_name": "중국",
+      "total": 2,
+      "high_risk": 0,
+      "top_titles": []
+    }
+  }
+}

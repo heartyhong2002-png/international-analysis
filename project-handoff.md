@@ -421,3 +421,28 @@ international-analysis/
   - 공개 X 게시물을 공식 API 기반의 제한 수집 대상으로 추가하고, 작성자 유형·언어·게시 시각·공개 지표·접근 메모를 보존하기로 했다.
   - 정부 홈페이지는 API가 없을 경우 `official_api → official_rss → official_sitemap → official_html_notice → official_pdf_or_csv → public_json` 순서로 수집하는 단계형 어댑터를 설계하기로 했다.
   - 이 단계에서는 교차검증·경보 산식·대시보드를 수정하지 않고, 원시 데이터·정규화 데이터·수집 영수증·접근 제한만 처리한다.
+
+- 2026-10-10 [Codex / GDELT 대체·보조 수집기 구현]
+  - 당시 루트에 추가한 `fetch_gdelt_v2_public.py`, `fetch_mediacloud.py`, `fetch_acled.py`, `fetch_event_registry.py`는 현재 `scripts/collection/`으로 이동했다.
+  - GDELT 2.0 DOC는 공개 API에 bounded retry를 적용했으며, 현재 테스트 환경에서는 HTTP 429 제한을 확인했다.
+  - Media Cloud·ACLED·Event Registry는 키·계정이 없을 때 `AUTH_REQUIRED` 영수증을 저장하도록 했다.
+  - 실제 계정 승인 전까지 수집기는 선택적 프로토타입으로 유지하고, 전체 파이프라인의 필수 단계로 연결하지 않는다.
+
+- 2026-10-10 [Codex / ACLED·Event Registry 인증 성공]
+  - ACLED OAuth 인증을 수정한 뒤 예멘 필터 3건을 `HTTP 200`, `complete=true`로 수집했다.
+  - Event Registry API 키로 `Red Sea shipping` 3건을 `HTTP 200`, `complete=true`로 수집했다. Event Registry는 계속 보조 수집원으로 취급한다.
+  - Media Cloud는 현재 기본 호스트 DNS 오류로 보류했고, GDELT 2.0 DOC는 `HTTP 429` 재시도·캐시 정책 조정이 필요하다.
+  - 결과 파일: `data/acled/latest.json`, `data/event_registry/latest.json`.
+
+- 2026-10-10 [Codex / Python 스크립트 정리 및 실행 그룹]
+  - 외부 API 수집기 4개를 `scripts/collection/`으로 이동하고 관련 문서 경로를 정리했다.
+  - `docs/current/PYTHON_SCRIPT_INVENTORY.md`에 57개 파일의 역할·실제 호출 여부와 향후 항공/파나마/다국가 세관/X/정부 웹 수집기 배치 위치를 기록했다.
+  - `scripts/run_pipeline.py`에 `--collect-only`, `--skip-db`, `--skip-dashboard`를 추가해 수집·DB·대시보드 실행 그룹을 분리했다. 기존 `--only-db` 동작은 유지한다.
+  - 대시보드·교차검증 로직은 변경하지 않았다. 다음 세션은 전체 컴파일과 플래그별 드라이런을 확인한 뒤 신규 센서 구현을 진행한다.
+
+- 2026-10-10 [Codex / 수집 파이프라인 레인 설계]
+  - 싱크탱크 수가 증가해도 실행 단계가 폭증하지 않도록 FAST·CONTEXT·OPINION·BASELINE 수집 레인으로 분리하는 설계를 확정했다.
+  - 싱크탱크·현지 언론은 `config/source_registry/` 기반 단일 수집기로 이관하며, 한 소스의 실패가 전체 수집을 중단하지 않도록 한다.
+  - 수집 세션은 원시 데이터·수집 영수증·접근 메모까지만 생성한다. LLM 해석, 교차검증 상태, Alert Level은 다른 세션의 책임이다.
+  - 상세 설계: `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`.
+  - 다음 담당: source registry 스키마와 `fetch_expert_sources.py` 구현 후 GDELT Cloud FAST 레인 선택 연결.

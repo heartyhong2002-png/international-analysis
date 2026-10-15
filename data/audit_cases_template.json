@@ -1,0 +1,74 @@
+[
+  {
+    "case_status": "simulated_template",
+    "audit_case_id": "AUDIT-2026-REDSEA-001",
+    "event_identifier": {
+      "event_id": "cameoplus_00c45344001ccc94",
+      "event_title": "United States deploys third carrier strike group toward Iran",
+      "geo_region": "Middle East / Hormuz",
+        "event_date": "YYYY-MM-DD"
+    },
+    "observed_signals_at_time": {
+        "first_observed_at": "YYYY-MM-DDTHH:MM:SSZ",
+      "maritime_chokepoint": "HORMUZ (Critical)",
+      "freight_market": "FRO +21.12% Critical Spike",
+      "local_opinion": "Middle East Tension Signals detected",
+      "telegram_osint": "Naval missile claims observed",
+      "distinct_channel_count": 4
+    },
+    "early_warning_issued": {
+        "first_alert_at": "YYYY-MM-DDTHH:MM:SSZ",
+      "issued_alert_level": "WARNING",
+      "issued_verification_state": "CROSS_VERIFIED"
+    },
+    "ground_truth_outcome": {
+        "verified_at": null,
+        "actual_disruption_occurred": null,
+        "actual_impact_summary": "실제 검증 자료로 교체하기 전까지 비워 둔다.",
+        "lead_time_hours": null
+    },
+    "performance_evaluation": {
+        "audit_label": "PENDING_REVIEW",
+      "evaluation_options": ["TIMELY_WARNING", "FALSE_POSITIVE", "FALSE_NEGATIVE", "DELAYED_WARNING"],
+      "helpful_sensors": ["freight_market (FRO 주가 선행)", "maritime_chokepoint (보험료 반영)"],
+      "failed_or_noisy_sensors": ["local_public_opinion (노이즈 다수)"],
+      "lessons_learned": "유조선사 주가가 실제 해군 전개 보도보다 약 12시간 선행하여 리스크를 포착함."
+    }
+  },
+  {
+    "case_status": "illustrative_negative_control",
+    "audit_case_id": "AUDIT-2026-YEMEN-002",
+    "event_identifier": {
+      "event_id": "cameoplus_c96dafdd13549ed5",
+      "event_title": "Hadramout Coast Guard foils two hashish-smuggling attempts",
+      "geo_region": "Yemen",
+      "event_date": "2026-09-28"
+    },
+    "observed_signals_at_time": {
+      "first_observed_at": "2026-09-28T00:00:00Z",
+      "maritime_chokepoint": null,
+      "freight_market": null,
+      "local_opinion": null,
+      "telegram_osint": null,
+      "distinct_channel_count": 0
+    },
+    "early_warning_issued": {
+      "first_alert_at": "2026-10-02T03:56:49Z",
+      "issued_alert_level": "NORMAL",
+      "issued_verification_state": "UNVERIFIED"
+    },
+    "ground_truth_outcome": {
+      "verified_at": "2026-10-01T00:00:00Z",
+      "actual_disruption_occurred": false,
+      "actual_impact_summary": "단순 국내 치안 마약 압수 사건으로 해상 공급망 영향 전무",
+      "lead_time_hours": 0.0
+    },
+    "performance_evaluation": {
+      "audit_label": "CORRECT_NEGATIVE",
+      "evaluation_options": ["TIMELY_WARNING", "FALSE_POSITIVE", "FALSE_NEGATIVE", "DELAYED_WARNING", "CORRECT_NEGATIVE"],
+      "helpful_sensors": ["single_source_elevate_forbidden (단일 출처 경보 상승 차단 정상 작동)"],
+      "failed_or_noisy_sensors": [],
+      "lessons_learned": "비군사 단순 치안 사건에 대해 오탐(FP) 경보가 발생하지 않고 NORMAL 등급을 올바르게 유지함."
+    }
+  }
+]

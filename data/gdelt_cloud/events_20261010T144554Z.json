@@ -1,0 +1,442 @@
+{
+  "schema_version": "1.0",
+  "source": "gdelt_cloud",
+  "endpoint": "https://gdeltcloud.com/api/v2/events",
+  "query": {
+    "days": 1,
+    "limit": 3,
+    "search": "Red Sea shipping"
+  },
+  "collected_at": "2026-10-10T14:45:54.278026+00:00",
+  "started_at": "2026-10-10T14:45:48.081965+00:00",
+  "finished_at": "2026-10-10T14:45:54.278026+00:00",
+  "page_count": 1,
+  "row_count": 2,
+  "complete": true,
+  "pages": [
+    {
+      "page": 1,
+      "row_count": 2,
+      "limit": 3,
+      "cursor": null,
+      "next_cursor_present": false
+    }
+  ],
+  "events": [
+    {
+      "id": "cameoplus_373469a105ad81d9",
+      "url": "https://gdeltcloud.com/events/taicang-port-opens-direct-fast-shipping-route-to-jeddah--cameoplus_373469a105ad81d9",
+      "primary_story_url": "https://gdeltcloud.com/stories/new-direct-fast-shipping-route-links-taicang-port-with-jedda-550d32f7",
+      "family": "cameoplus",
+      "title": "Taicang Port opens direct fast-shipping route to Jeddah",
+      "title_source": "coder_title",
+      "summary": "On 2026-10-10, Taicang Port opened a direct fast-shipping route to Jeddah Port, according to the title. The report provides no further details on operators, capacity, or expected shipping volumes.",
+      "event_date": "2026-10-10",
+      "observed_at": "2026-10-10T09:18:20.000Z",
+      "event_date_basis": "publication_day_inference",
+      "event_date_evidence": "The title reports that a direct fast-shipping route linking Taicang Port and Jeddah Port opened; no occurrence date is stated, so the publication day is inferred.",
+      "coded_at": "2026-10-10T10:28:44Z",
+      "updated_at": "2026-10-10T10:28:44Z",
+      "processed_at": "2026-10-10T10:28:44Z",
+      "category": "INFRASTRUCTURE",
+      "subcategory": "IN02",
+      "subcategory_label": "Transport Disruption",
+      "event_description": "Strategic transport route opening",
+      "taxonomy_status": "coded",
+      "domain": "INFRASTRUCTURE",
+      "event_code": "IN02",
+      "geo": {
+        "country": "China",
+        "region": "East Asia",
+        "continent": "Asia",
+        "admin1": "Jiangsu",
+        "location": "Taicang Port",
+        "latitude": 31.653,
+        "longitude": 120.855,
+        "geo_precision": 1,
+        "geo_precision_label": "exact_place"
+      },
+      "geo_context": {
+        "location_country": "China",
+        "actor_origin_countries": [
+          "China",
+          "Saudi Arabia"
+        ]
+      },
+      "actors": [
+        {
+          "name": "Taicang Port",
+          "country": "China",
+          "role": "source",
+          "primary": true,
+          "entity_id": "llm:c131fff234562ae39a4f"
+        },
+        {
+          "name": "Jeddah Port",
+          "country": "Saudi Arabia",
+          "role": "target",
+          "primary": true,
+          "entity_id": "llm:736ff06a35d20cdc343c"
+        }
+      ],
+      "metrics": {
+        "significance": 0.2977,
+        "severity_tier": "low",
+        "goldstein_scale": null,
+        "magnitude": 3,
+        "systemic_importance": 0.25,
+        "propagation_potential": 0.37,
+        "market_sensitivity": 0.28,
+        "confidence": 0.47,
+        "article_count": 1,
+        "evidence_source_count": 1,
+        "supporting_story_count": 1,
+        "metric_inputs": {
+          "magnitude": {
+            "path": "economic",
+            "value": 3,
+            "why": "The title identifies a new direct fast-shipping route between two named ports, but gives no throughput or capacity figures; this supports a low-tier transport milestone."
+          },
+          "systemic": {
+            "node": "Taicang–Jeddah shipping route",
+            "size": {
+              "value": 0.25,
+              "why": "The route links two ports, but the title gives no scale or throughput."
+            },
+            "interconnectedness": {
+              "value": 0.3,
+              "why": "It connects Chinese and Saudi port systems, though no dependent networks or services are described."
+            },
+            "irreplaceability": {
+              "value": 0.2,
+              "why": "No evidence indicates this route is unique or lacks alternatives."
+            }
+          },
+          "propagation": {
+            "channel": {
+              "value": 0.35,
+              "why": "The route creates a direct shipping connection between the two named ports; no broader operational dependencies are reported."
+            },
+            "coupling": {
+              "value": 0.2,
+              "why": "No information is provided about capacity constraints, buffers, or alternatives."
+            },
+            "breach": {
+              "value": 0.2,
+              "why": "The route opening is a new service, but no previously holding barrier or threshold breach is described."
+            },
+            "primed": {
+              "value": 0.1,
+              "why": "The title gives no evidence that the receiving system is already stressed."
+            },
+            "containment": {
+              "value": 0,
+              "why": "No active dampers or restoration measures are reported."
+            }
+          },
+          "market": {
+            "claim_exposure": {
+              "value": 0.35,
+              "why": "The shipping route connects two ports and represents a transport service, but the title names no specific traded operator or freight instrument."
+            },
+            "economic_bite": {
+              "value": 0.2,
+              "why": "The route has opened, but the title provides no evidence of operating volumes or realized changes in trade capacity."
+            }
+          }
+        },
+        "metric_version": "v2-2026-07-24"
+      },
+      "has_fatalities": null,
+      "fatalities": null,
+      "fatalities_basis": null,
+      "fatalities_corroboration": null,
+      "fatalities_evidence": null,
+      "fatalities_supporting_source_count": null,
+      "injured": null,
+      "civilians_killed": null,
+      "civilians_injured": null,
+      "civilian_targeting": null,
+      "civilian_targeting_label": null,
+      "story_refs": [
+        {
+          "id": "550d32f73e54",
+          "url": "https://gdeltcloud.com/stories/new-direct-fast-shipping-route-links-taicang-port-with-jedda-550d32f7",
+          "title": "New direct fast-shipping route links Taicang Port with Jeddah",
+          "story_date": "2026-10-10",
+          "article_count": 1
+        }
+      ],
+      "entity_refs": [
+        {
+          "id": "llm:c131fff234562ae39a4f",
+          "id_space": "news",
+          "name": "Taicang Port",
+          "type": "entity",
+          "entity_id": "llm:c131fff234562ae39a4f",
+          "spine_id": null,
+          "wikipedia_url": null,
+          "image_url": null,
+          "avatar_url": null,
+          "public_official": {
+            "checked": false,
+            "is_public_official": null,
+            "status": null,
+            "total": null,
+            "offices": [],
+            "truncated": false
+          }
+        },
+        {
+          "id": "llm:736ff06a35d20cdc343c",
+          "id_space": "news",
+          "name": "Jeddah Port",
+          "type": "entity",
+          "entity_id": "llm:736ff06a35d20cdc343c",
+          "spine_id": null,
+          "wikipedia_url": null,
+          "image_url": null,
+          "avatar_url": null,
+          "public_official": {
+            "checked": false,
+            "is_public_official": null,
+            "status": null,
+            "total": null,
+            "offices": [],
+            "truncated": false
+          }
+        }
+      ],
+      "top_articles": [
+        {
+          "url": "https://chinanews.com.cn/gn/2026/10-10/10710506.shtml",
+          "title": "江苏太仓港直航吉达港快航开通",
+          "domain": "chinanews.com.cn",
+          "domain_avatar_url": "https://www.google.com/s2/favicons?domain=chinanews.com.cn&sz=64",
+          "rank": 1
+        }
+      ],
+      "language_breakdown": [
+        {
+          "language": "zh",
+          "count": 1
+        }
+      ],
+      "top_language": "zh",
+      "search_score": 0.4486429691314697,
+      "match_type": "semantic",
+      "incident": {
+        "uid": "cameoplus_373469a105ad81d9",
+        "resolution": "unadjudicated",
+        "confidence": null
+      }
+    },
+    {
+      "id": "cameoplus_cd91cdf1d22ef1c1",
+      "url": "https://gdeltcloud.com/events/egyptian-foreign-ministry-backs-saudi-security-measures--cameoplus_cd91cdf1d22ef1c1",
+      "primary_story_url": "https://gdeltcloud.com/stories/egypt-backs-saudi-arabias-measures-to-protect-national-secur-afc6aa93",
+      "family": "cameoplus",
+      "title": "Egyptian Foreign Ministry backs Saudi security measures",
+      "title_source": "coder_title",
+      "summary": "On 2026-10-10, Egypt's Ministry of Foreign Affairs publicly supported Saudi Arabia's measures to protect its national security. The title does not specify the measures or provide further context.",
+      "event_date": "2026-10-10",
+      "observed_at": "2026-10-10T05:42:14.000Z",
+      "event_date_basis": "publication_day_inference",
+      "event_date_evidence": "The title reports a current Egyptian Foreign Ministry statement supporting Saudi Arabia; no separate occurrence date is available, so the latest publication day is inferred.",
+      "coded_at": "2026-10-10T06:58:04Z",
+      "updated_at": "2026-10-10T06:58:04Z",
+      "processed_at": "2026-10-10T06:58:04Z",
+      "category": "POLITICAL",
+      "subcategory": "051",
+      "subcategory_label": "Praise or Endorse",
+      "event_description": "Praise or endorse",
+      "taxonomy_status": "coded",
+      "domain": "POLITICAL",
+      "event_code": "051",
+      "geo": {
+        "country": "Egypt",
+        "region": "Northern Africa",
+        "continent": "Africa",
+        "admin1": null,
+        "location": "Cairo",
+        "latitude": 30.0444,
+        "longitude": 31.2357,
+        "geo_precision": 2,
+        "geo_precision_label": "nearby_area"
+      },
+      "geo_context": {
+        "location_country": "Egypt",
+        "actor_origin_countries": [
+          "Egypt",
+          "Saudi Arabia"
+        ]
+      },
+      "actors": [
+        {
+          "name": "Egyptian Ministry of Foreign Affairs",
+          "country": "Egypt",
+          "role": "source",
+          "primary": true
+        },
+        {
+          "name": "Saudi Arabia",
+          "country": "Saudi Arabia",
+          "role": "target",
+          "primary": true,
+          "entity_id": "wiki:46698a2f22448c12fb50"
+        }
+      ],
+      "metrics": {
+        "significance": 0.2183,
+        "severity_tier": "low",
+        "goldstein_scale": 3.4,
+        "magnitude": 2,
+        "systemic_importance": 0.1,
+        "propagation_potential": 0.26,
+        "market_sensitivity": 0.05,
+        "confidence": 0.36,
+        "article_count": 1,
+        "evidence_source_count": 1,
+        "supporting_story_count": 1,
+        "metric_inputs": {
+          "magnitude": {
+            "path": "verbal",
+            "value": 2,
+            "why": "The title describes Egypt expressing support for Saudi Arabia's measures, a verbal endorsement."
+          },
+          "systemic": {
+            "node": "Egypt-Saudi bilateral relationship",
+            "size": {
+              "value": 0.1,
+              "why": "The title indicates a bilateral statement, not action on a major treaty or institution."
+            },
+            "interconnectedness": {
+              "value": 0.1,
+              "why": "No third-party commitments or wider institutional dependencies are mentioned."
+            },
+            "irreplaceability": {
+              "value": 0.1,
+              "why": "No unique diplomatic channel is identified."
+            }
+          },
+          "propagation": {
+            "channel": {
+              "value": 0.1,
+              "why": "The title establishes a public statement but no live transmission channel beyond the bilateral relationship."
+            },
+            "coupling": {
+              "value": 0.1,
+              "why": "No deadline, lack of alternatives, or other tight coupling is stated."
+            },
+            "breach": {
+              "value": 0,
+              "why": "No breach of a prior restraint or unprecedented step is identified."
+            },
+            "primed": {
+              "value": 0.1,
+              "why": "No ongoing escalation or imminent diplomatic milestone is described."
+            },
+            "containment": {
+              "value": 0,
+              "why": "No mediator, carve-out, or other active dampener is mentioned."
+            }
+          },
+          "market": {
+            "claim_exposure": {
+              "value": 0.1,
+              "why": "The statement concerns the countries generally and names no traded claim or market-wide change."
+            },
+            "economic_bite": {
+              "value": 0,
+              "why": "This is a verbal endorsement; no instrument or economic effect is reported."
+            }
+          }
+        },
+        "metric_version": "v2-2026-07-24"
+      },
+      "has_fatalities": null,
+      "fatalities": null,
+      "fatalities_basis": null,
+      "fatalities_corroboration": null,
+      "fatalities_evidence": null,
+      "fatalities_supporting_source_count": null,
+      "injured": null,
+      "civilians_killed": null,
+      "civilians_injured": null,
+      "civilian_targeting": null,
+      "civilian_targeting_label": null,
+      "story_refs": [
+        {
+          "id": "afc6aa9316b8",
+          "url": "https://gdeltcloud.com/stories/egypt-backs-saudi-arabias-measures-to-protect-national-secur-afc6aa93",
+          "title": "Egypt backs Saudi Arabia’s measures to protect national security",
+          "story_date": "2026-10-10",
+          "article_count": 1
+        }
+      ],
+      "entity_refs": [
+        {
+          "id": "llm:617c79dc5de8af3ae74c",
+          "id_space": "llm",
+          "name": "Ministry of Foreign Affairs of Egypt",
+          "type": "organization",
+          "entity_id": "llm:617c79dc5de8af3ae74c",
+          "spine_id": null,
+          "wikipedia_url": null,
+          "image_url": null,
+          "avatar_url": null,
+          "public_official": {
+            "checked": false,
+            "is_public_official": null,
+            "status": null,
+            "total": null,
+            "offices": [],
+            "truncated": false
+          }
+        },
+        {
+          "id": "wiki:46698a2f22448c12fb50",
+          "id_space": "news",
+          "name": "Saudi Arabia",
+          "type": "place",
+          "entity_id": "wiki:46698a2f22448c12fb50",
+          "spine_id": null,
+          "wikipedia_url": "https://en.wikipedia.org/wiki/Saudi_Arabia",
+          "image_url": null,
+          "avatar_url": null,
+          "public_official": {
+            "checked": false,
+            "is_public_official": null,
+            "status": null,
+            "total": null,
+            "offices": [],
+            "truncated": false
+          }
+        }
+      ],
+      "top_articles": [
+        {
+          "url": "https://ajel.sa/local/ghkkpz34l",
+          "title": "الخارجية المصرية: ندعم السعودية في كل إجراءاتها لحفظ أمنها",
+          "domain": "ajel.sa",
+          "domain_avatar_url": "https://www.google.com/s2/favicons?domain=ajel.sa&sz=64",
+          "rank": 1
+        }
+      ],
+      "language_breakdown": [
+        {
+          "language": "ar",
+          "count": 1
+        }
+      ],
+      "top_language": "ar",
+      "search_score": 0.3308809995651245,
+      "match_type": "semantic",
+      "incident": {
+        "uid": "cameoplus_cd91cdf1d22ef1c1",
+        "resolution": "unadjudicated",
+        "confidence": null
+      }
+    }
+  ]
+}
