@@ -446,3 +446,10 @@ international-analysis/
   - 수집 세션은 원시 데이터·수집 영수증·접근 메모까지만 생성한다. LLM 해석, 교차검증 상태, Alert Level은 다른 세션의 책임이다.
   - 상세 설계: `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`.
   - 다음 담당: source registry 스키마와 `fetch_expert_sources.py` 구현 후 GDELT Cloud FAST 레인 선택 연결.
+
+- 2026-10-12 [Codex / 교수님 연구실 참여 검토]
+  - 지도교수님 면담 후 학부연구생·연구실 참여 가능성을 제안받았다. 후속 미팅은 석사생들의 프로젝트 설정과 교수님 컨펌 과정을 관찰하는 판단용 자리였다.
+  - 데이터 플랫폼, 비정형 데이터 처리, 분석 인프라, 시스템·아키텍처 및 데이터 파이프라인 설계 역량이 중요하게 언급되었다.
+  - 참여 여부는 아직 확정하지 않았으며, 개인 국제정세 조기경보 프로젝트와 연구실 프로젝트를 별개로 유지한다.
+  - 결정 전 확인할 항목은 역할, 주당 시간, 활동 기간, 지도 방식, 성과 인정, 데이터·코드·AI 사용 규정이다.
+  - 상세 기록: `docs/history/PROFESSOR_LAB_MEETING_20261012.md`.
