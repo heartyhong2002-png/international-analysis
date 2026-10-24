@@ -436,9 +436,11 @@ def create_schema(conn):
             evidence_sufficiency  VARCHAR(30) NULL,
             rationale             TEXT NOT NULL,
             reference_url         TEXT NULL,
+            source_key            VARCHAR(191) NULL,
             created_at            DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
             INDEX idx_alert_validation_issue_time (issue_key, reviewed_at),
             INDEX idx_alert_validation_verdict (verdict),
+            INDEX idx_alert_validation_source_key (source_key),
             FOREIGN KEY (alert_event_id) REFERENCES alert_events(id)
                 ON DELETE SET NULL
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
