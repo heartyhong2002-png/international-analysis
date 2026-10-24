@@ -300,12 +300,15 @@ LEFT JOIN gov_aggregate g ON s.issue = g.issue;
 -- 조기경보 증거 계층 뷰 1: 대시보드의 현재 경보 목록
 -- 점수 자체로 Alert Level을 새로 판단하지 않는다. 경보 판단은 alert_events에
 -- 기록된 불변 이벤트를 사용하고, 뷰는 최신 근거와 상태를 읽기 좋게 결합한다.
+-- TEST-FIXTURE / TEST_* 합성 행은 운영·공식 지표에서 제외한다.
 -- ----------------------------------------------------------------------------
 CREATE OR REPLACE VIEW v_dashboard_current_alerts AS
 WITH latest_run AS (
     SELECT id, run_key, scoring_version, executed_at, window_start, window_end
     FROM scoring_runs
     WHERE status = 'completed'
+      AND run_key NOT LIKE 'TEST-%'
+      AND scoring_version <> 'test-fixture-v1'
     ORDER BY executed_at DESC, id DESC
     LIMIT 1
 ),
@@ -321,6 +324,7 @@ score_rollup AS (
         SUM(CASE WHEN r.quality_status <> 'usable' THEN 1 ELSE 0 END) AS quality_flag_count
     FROM risk_signal_scores r
     JOIN latest_run lr ON lr.id = r.scoring_run_id
+    WHERE r.issue_key NOT LIKE 'TEST\_%' ESCAPE '\\'
     GROUP BY r.scoring_run_id, r.issue_key
 ),
 latest_gap AS (
@@ -328,11 +332,16 @@ latest_gap AS (
            ROW_NUMBER() OVER (PARTITION BY g.issue_key ORDER BY g.snapshot_at DESC, g.id DESC) AS rn
     FROM signal_gap_snapshots g
     JOIN latest_run lr ON lr.id = g.scoring_run_id
+    WHERE g.issue_key NOT LIKE 'TEST\_%' ESCAPE '\\'
 ),
 latest_alert AS (
     SELECT a.*,
            ROW_NUMBER() OVER (PARTITION BY a.issue_key ORDER BY a.triggered_at DESC, a.id DESC) AS rn
     FROM alert_events a
+    JOIN scoring_runs sr_alert ON sr_alert.id = a.scoring_run_id
+    WHERE a.issue_key NOT LIKE 'TEST\_%' ESCAPE '\\'
+      AND sr_alert.run_key NOT LIKE 'TEST-%'
+      AND sr_alert.scoring_version <> 'test-fixture-v1'
 )
 SELECT
     sr.issue_key,
@@ -363,7 +372,7 @@ LEFT JOIN latest_alert la ON la.issue_key = sr.issue_key AND la.rn = 1;
 -- ----------------------------------------------------------------------------
 -- 조기경보 증거 계층 뷰 2: 경보별 근거 추적
 -- 한 행이 하나의 근거이므로, 화면은 이 뷰를 alert_event_id로 필터링해 인용문과
--- 원천 링크를 그대로 보여줄 수 있다.
+-- 원천 링크를 그대로 보여줄 수 있다. TEST fixture는 제외.
 -- ----------------------------------------------------------------------------
 CREATE OR REPLACE VIEW v_alert_evidence_trace AS
 SELECT
@@ -394,12 +403,16 @@ SELECT
 FROM alert_events a
 JOIN scoring_runs sr ON sr.id = a.scoring_run_id
 LEFT JOIN alert_event_evidence e ON e.alert_event_id = a.id
-LEFT JOIN risk_signal_scores rs ON rs.id = e.risk_signal_score_id;
+LEFT JOIN risk_signal_scores rs ON rs.id = e.risk_signal_score_id
+WHERE a.issue_key NOT LIKE 'TEST\_%' ESCAPE '\\'
+  AND sr.run_key NOT LIKE 'TEST-%'
+  AND sr.scoring_version <> 'test-fixture-v1';
 
 
 -- ----------------------------------------------------------------------------
 -- 조기경보 증거 계층 뷰 3: 신호 괴리 시계열
 -- 공식/독립/대중/시장 신호와 근거 충분도를 같은 시점의 스냅샷으로 제공한다.
+-- TEST fixture는 제외.
 -- ----------------------------------------------------------------------------
 CREATE OR REPLACE VIEW v_signal_gap_trend AS
 SELECT
@@ -417,12 +430,16 @@ SELECT
     sr.run_key,
     sr.scoring_version
 FROM signal_gap_snapshots g
-JOIN scoring_runs sr ON sr.id = g.scoring_run_id;
+JOIN scoring_runs sr ON sr.id = g.scoring_run_id
+WHERE g.issue_key NOT LIKE 'TEST\_%' ESCAPE '\\'
+  AND sr.run_key NOT LIKE 'TEST-%'
+  AND sr.scoring_version <> 'test-fixture-v1';
 
 
 -- ----------------------------------------------------------------------------
 -- 조기경보 증거 계층 뷰 4: 검증 결과 요약
 -- 톤 분류 정확도와 분리해, 실제 경보의 오탐/미탐/근거 부족을 집계한다.
+-- TEST fixture 감사 행은 운영 성과 지표에서 제외.
 -- ----------------------------------------------------------------------------
 CREATE OR REPLACE VIEW v_alert_validation_summary AS
 SELECT
@@ -440,7 +457,58 @@ SELECT
     MAX(v.reviewed_at) AS last_reviewed_at
 FROM alert_validation_audit v
 LEFT JOIN alert_events a ON a.id = v.alert_event_id
+LEFT JOIN scoring_runs sr ON sr.id = a.scoring_run_id
+WHERE v.issue_key NOT LIKE 'TEST\_%' ESCAPE '\\'
+  AND (a.id IS NULL OR a.issue_key NOT LIKE 'TEST\_%' ESCAPE '\\')
+  AND (
+        sr.id IS NULL
+        OR (
+            sr.run_key NOT LIKE 'TEST-%'
+            AND sr.scoring_version <> 'test-fixture-v1'
+        )
+      )
 GROUP BY v.issue_key, COALESCE(a.alert_level, 'NO_ALERT');
+
+
+-- ----------------------------------------------------------------------------
+-- 회귀 전용: TEST-FIXTURE 합성 행만 노출 (운영 대시보드에서 사용 금지)
+-- ----------------------------------------------------------------------------
+CREATE OR REPLACE VIEW v_regression_test_fixture_alerts AS
+SELECT
+    a.id AS alert_event_id,
+    a.issue_key,
+    a.alert_level,
+    a.lifecycle_status AS alert_status,
+    a.triggered_at,
+    a.decision_rationale,
+    sr.run_key,
+    sr.scoring_version,
+    sr.executed_at AS scored_at
+FROM alert_events a
+JOIN scoring_runs sr ON sr.id = a.scoring_run_id
+WHERE sr.run_key LIKE 'TEST-%'
+   OR sr.scoring_version = 'test-fixture-v1'
+   OR a.issue_key LIKE 'TEST\_%' ESCAPE '\\';
+
+
+CREATE OR REPLACE VIEW v_regression_test_fixture_evidence AS
+SELECT
+    a.id AS alert_event_id,
+    a.issue_key,
+    a.alert_level,
+    sr.run_key,
+    e.id AS evidence_id,
+    e.evidence_role,
+    e.source_table,
+    e.source_record_key,
+    e.source_url,
+    e.evidence_quote
+FROM alert_events a
+JOIN scoring_runs sr ON sr.id = a.scoring_run_id
+LEFT JOIN alert_event_evidence e ON e.alert_event_id = a.id
+WHERE sr.run_key LIKE 'TEST-%'
+   OR sr.scoring_version = 'test-fixture-v1'
+   OR a.issue_key LIKE 'TEST\_%' ESCAPE '\\';
 
 
 -- ----------------------------------------------------------------------------

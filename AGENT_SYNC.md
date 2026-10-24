@@ -51,8 +51,16 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | Codex | data-collection / GDELT quota safety | `scripts/collection/gdelt_cloud_budget.py`, `scripts/collection/fetch_gdelt_cloud_events.py`, `scripts/run_pipeline.py`, `docs/current/DATA_COLLECTION_GUIDE.md`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md` | Academic & Research 월 5,000 QU에 맞춘 기본 비활성·로컬 월/일 안전상한·요청 간격·사용량 영수증 적용 | 2026-10-13 |
 | done | Codex | data-collection / White House official | `scripts/collection/fetch_whitehouse_official.py`, `scripts/run_pipeline.py`, `docs/current/DATA_COLLECTION_GUIDE.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md` | 백악관 공식 RSS 우선 수집기 초안과 제한적 사이트맵 보완을 선택 플래그로 연결 | 2026-10-15 |
 | done | Codex | handoff / White House collector | `docs/current/ANTIGRAVITY_WHITEHOUSE_HANDOFF_PROMPT.md`, `docs/current/DATA_COLLECTION_SESSION_PROMPT.md` | 백악관 수집기 범위·검증 경계·드라이런 절차를 ANTIGRAVITY 인수인계 프롬프트로 정리 | 2026-10-15 |
+| done | Cursor-DB | db / evidence writer / fixtures | `scripts/db/evidence_writer.py`, `scripts/db/manage_test_fixtures.py`, `scripts/db/load_validation_history.py`, `scripts/db/db_connection.py`, `scripts/db/create_views.sql`, `docs/current/DATABASE_SETUP.md` | 원자적 DB writer · 백테스트/검수 이력 연결 · TEST fixture 제외 자동화 | 2026-10-24 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-10-24 [Cursor-DB / 증거 계층 writer]
+- 한 일: 점수·경보·근거·검증 판정 원자적 writer, TEST fixture 생성/정리/운영 뷰 제외, 동결 백테스트·검수 이력 적재기 구현.
+- 바꾼 파일: `scripts/db/evidence_writer.py`, `scripts/db/manage_test_fixtures.py`, `scripts/db/load_validation_history.py`, `scripts/db/db_connection.py`, `scripts/db/create_views.sql`, `scripts/db/build_database.py`, `docs/current/DATABASE_SETUP.md`, `AGENT_SYNC.md`.
+- 확인한 것: 공식 뷰는 TEST-* / TEST_* 를 제외하고, 회귀 뷰만 fixture를 노출한다. Alert Level을 기사 수에서 만들지 않는다.
+- 다음 작업: LLM 점수 산식 세션이 writer API로 실운영 scoring run을 적재; QA가 공식 뷰·회귀 뷰를 분리 검증.
+- 주의할 점: `alert_events`/`alert_validation_audit` append-only. TEST cleanup은 TEST run만. LLM/수집기/대시보드 UI 파일은 수정하지 않음.
 
 2026-10-04 [Codex / 데이터 수집 범위 확장 결정]
 - 한 일: 대시보드·교차검증 업무와 분리하여 데이터 수집·파이프라인 세션의 다음 확장 범위를 정리함.

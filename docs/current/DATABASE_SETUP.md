@@ -120,6 +120,23 @@ verdict: confirmed | false_alarm | missed_signal | insufficient_evidence | pendi
 고정하지 않습니다. `REPLACE INTO`는 기존 행을 삭제 후 재삽입하므로 이 증거 계층에는
 사용하지 않습니다.
 
+**원자적 writer (구현):** `scripts/db/evidence_writer.py`의 `write_scoring_bundle()`이
+위 1–4단계를 한 트랜잭션으로 기록합니다. 기사 수로부터 Alert Level을 추론하지 않으며,
+호출자가 명시한 `alert_events`만 저장합니다. `alert_events`와 `alert_validation_audit`는
+append-only입니다.
+
+**TEST fixture:** `run_key`가 `TEST-`로 시작하거나 `issue_key`가 `TEST_`로 시작하는 행은
+합성 회귀용입니다. 공식 뷰(`v_dashboard_current_alerts` 등)는 이를 제외합니다.
+생성·정리·제외 확인은 `scripts/db/manage_test_fixtures.py`를 사용합니다.
+회귀 조회는 `v_regression_test_fixture_alerts` / `v_regression_test_fixture_evidence`만
+사용하고 운영 지표에 합산하지 않습니다.
+
+**동결 백테스트·검수 이력:** `scripts/db/load_validation_history.py`가
+`data/tev1_backtest_results.json`, `backtest_early_warning.BACKTEST_CASES`,
+(있으면) `validation_backtest_log.csv` / `false_alarm_missed_signal_log.csv` /
+사람 검수 CSV를 `alert_validation_audit`에 append-only로 적재합니다.
+`source_key`로 멱등 재실행이 가능합니다. 이 이력은 공식 Alert Level 사건이 아닙니다.
+
 ### 5.0.2 대시보드 읽기 계약
 
 | 뷰 | 화면 용도 |
