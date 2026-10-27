@@ -5,6 +5,12 @@
 괴리, 증거 범위, 자료량, 모델 합의도를 분리해 ``risk_signal_score``와
 ``alert_level``을 계산한다. 자료가 부족하면 점수가 높아도 경보를 올리지
 않고 ``확인 필요``로 반환한다.
+
+DB 적재(3-model consensus → ``write_scoring_bundle``)는
+``scripts/analysis/run_risk_scoring.py``가 담당한다. 표시용 한국어
+경보 라벨 → DB ``WATCH|WARNING|CRITICAL`` 매핑은
+``scripts/analysis/alert_level_map.py``를 쓴다. 기사 수만으로
+Alert Level을 만들지 않는다.
 """
 
 import os
@@ -105,6 +111,8 @@ def calculate_alert_assessment(
         "source_diversity": source_groups,
         "source_item_count": total_items,
         "consensus_agreement": agreement_score if consensus_agreement is not None else None,
+        # Display label (Korean). Map via alert_level_map.to_db_alert_level
+        # before writing alert_events — never invent from article counts alone.
         "alert_level": alert_level,
         "alert_reason": alert_reason,
         "human_review_required": human_review_required,
