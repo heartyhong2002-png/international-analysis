@@ -1,7 +1,7 @@
 {
-  "run_key": "RS-20261027143228-3f787bb6",
+  "run_key": "RS-20261027153057-0f2f2459",
   "scoring_version": "risk-signal-consensus-v1",
-  "executed_at": "2026-10-27T14:32:28.735392Z",
+  "executed_at": "2026-10-27T15:30:57.750762Z",
   "regions": [
     "Russia"
   ],
@@ -16,24 +16,53 @@
       "region": "Russia",
       "assessment": {
         "scoring_version": "early-warning-v1",
-        "risk_signal_score": 83.7,
-        "signal_gap_score": 85.0,
-        "evidence_coverage": 73.3,
+        "risk_signal_score": 76.0,
+        "signal_gap_score": 75.0,
+        "evidence_coverage": 80.0,
         "source_diversity": 2,
         "source_item_count": 20,
-        "consensus_agreement": 66.7,
+        "consensus_agreement": 33.3,
         "alert_level": "고경보",
         "alert_reason": "복수 근거의 위험 신호가 강하게 관측되어 우선 확인이 필요함",
         "human_review_required": true
       },
       "db_alert_level": "CRITICAL",
-      "consensus_status": "MAJORITY",
+      "consensus_status": "SPLIT",
       "verification_state": "PARTIALLY_CONFIRMED",
-      "discrepancy_score": 85.0,
+      "discrepancy_score": 75.0,
       "tev1_aux": {
-        "ok": false,
-        "error": "HTTP Error 400: Bad Request",
-        "advisory_only": true
+        "ok": true,
+        "tev1_choice": "WARNING",
+        "confidence": 0.8074868090383577,
+        "probabilities": {
+          "NORMAL": 0.00032091781494062295,
+          "WATCH": 0.1450395802165845,
+          "WARNING": 0.8459894472306861,
+          "CRITICAL": 0.007337413813308665,
+          "INSUFFICIENT_EVIDENCE": 0.0013126409244799417
+        },
+        "raw_keys": [
+          "answers",
+          "model",
+          "usage"
+        ],
+        "advisory_only": true,
+        "request": {
+          "endpoint": "http://localhost:11434/v1/systemone",
+          "model": "tev1:latest",
+          "payload_keys": [
+            "model",
+            "questions",
+            "state"
+          ],
+          "state_keys": [
+            "evidence_coverage",
+            "risk_signal_score",
+            "signal_gap_score",
+            "source_diversity",
+            "verification_state"
+          ]
+        }
       },
       "will_raise_alert": true
     }

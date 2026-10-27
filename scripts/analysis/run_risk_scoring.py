@@ -31,6 +31,7 @@ import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 import pandas as pd
@@ -72,6 +73,7 @@ if sys.platform == "win32":
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434").rstrip("/")
 OLLAMA_GENERATE = f"{OLLAMA_URL}/api/generate"
 TEV1_ENDPOINT = f"{OLLAMA_URL}/v1/systemone"
+TEV1_MODEL = os.getenv("TEV1_MODEL", "tev1:latest")
 
 CONSENSUS_MODELS = [
     "mistral-nemo:latest",
@@ -183,17 +185,22 @@ def call_ollama_json(model: str, prompt: str, timeout: int = 180) -> dict[str, A
 
 
 def call_tev1_aux(assessment: dict[str, Any], verification_state: str) -> dict[str, Any]:
-    """Optional advisory tev1 call — never used as official Alert Level."""
+    """Optional advisory tev1 call — never used as official Alert Level.
+
+    Uses Ollama decision API ``POST /v1/systemone`` (tev1 has capability
+    ``decision`` and does not support ``/api/generate``). Payload shape:
+    ``{model, state, questions.<id>.{type, instructions, criteria}}``.
+    """
     coverage = float(assessment.get("evidence_coverage") or 0.0) / 100.0
     state = {
-        "risk_signal_score": assessment.get("risk_signal_score"),
+        "risk_signal_score": float(assessment.get("risk_signal_score") or 0.0),
         "evidence_coverage": round(coverage, 4),
-        "source_diversity": assessment.get("source_diversity"),
+        "source_diversity": int(assessment.get("source_diversity") or 0),
         "verification_state": verification_state,
         "signal_gap_score": float(assessment.get("signal_gap_score") or 0.0) / 100.0,
     }
     payload = {
-        "model": "tev1",
+        "model": TEV1_MODEL,
         "state": state,
         "questions": {
             "alert_status": {
@@ -212,6 +219,12 @@ def call_tev1_aux(assessment: dict[str, Any], verification_state: str) -> dict[s
             }
         },
     }
+    request_meta = {
+        "endpoint": TEV1_ENDPOINT,
+        "model": TEV1_MODEL,
+        "payload_keys": sorted(payload.keys()),
+        "state_keys": sorted(state.keys()),
+    }
     try:
         req = Request(
             TEV1_ENDPOINT,
@@ -221,19 +234,54 @@ def call_tev1_aux(assessment: dict[str, Any], verification_state: str) -> dict[s
         )
         with urlopen(req, timeout=120) as resp:
             body = json.loads(resp.read().decode("utf-8"))
-        choice = (
-            body.get("answers", {})
-            .get("alert_status", {})
-            .get("choice")
-        )
+        answer = (body.get("answers") or {}).get("alert_status") or {}
+        choice = answer.get("choice")
         return {
             "ok": True,
             "tev1_choice": choice,
+            "confidence": answer.get("confidence"),
+            "probabilities": answer.get("probabilities"),
             "raw_keys": sorted(body.keys()),
             "advisory_only": True,
+            "request": request_meta,
         }
+    except HTTPError as exc:
+        err_text = ""
+        try:
+            err_text = exc.read().decode("utf-8", errors="replace")[:800]
+        except Exception:
+            err_text = ""
+        hint = None
+        err_msg = err_text
+        try:
+            parsed = json.loads(err_text) if err_text else {}
+            if isinstance(parsed, dict) and parsed.get("error"):
+                err_msg = str(parsed["error"])
+                low = err_msg.lower()
+                if "no longer supported" in low or "re-download" in low:
+                    hint = (
+                        "tev1 GGUF blob is outdated for this Ollama build; "
+                        "re-pull via POST http://localhost:11434/api/pull "
+                        '{"name":"tev1:latest"} (or `ollama pull tev1:latest`).'
+                    )
+        except json.JSONDecodeError:
+            pass
+        out: dict[str, Any] = {
+            "ok": False,
+            "error": f"HTTP {exc.code}: {err_msg or exc.reason}",
+            "advisory_only": True,
+            "request": request_meta,
+        }
+        if hint:
+            out["hint"] = hint
+        return out
     except Exception as exc:
-        return {"ok": False, "error": str(exc), "advisory_only": True}
+        return {
+            "ok": False,
+            "error": str(exc),
+            "advisory_only": True,
+            "request": request_meta,
+        }
 
 
 def _sanitize_text(text: str | None) -> str:
