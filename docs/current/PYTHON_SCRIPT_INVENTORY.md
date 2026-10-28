@@ -43,7 +43,7 @@
 | 파일 | 역할 | 현재 상태 |
 |---|---|---|
 | `collection/fetch_gdelt_v2_public.py` | 원본 GDELT 2.0 DOC | candidate; 429 확인 |
-| `collection/fetch_mediacloud.py` | Media Cloud 뉴스 검색 | candidate; 엔드포인트 재확인 필요 |
+| `collection/fetch_mediacloud.py` | Media Cloud Search API (`search.mediacloud.org`) | candidate; 코드는 아직 구 호스트. `cs`/`ss` 확인 전 기본 파이프라인 미연결 |
 | `collection/fetch_acled.py` | ACLED 분쟁·시위 사건 | candidate; 예멘 3건 테스트 성공 |
 | `collection/fetch_event_registry.py` | Event Registry 이벤트 | candidate; 3건 테스트 성공, 보조 수단 |
 
