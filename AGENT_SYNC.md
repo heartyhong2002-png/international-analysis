@@ -51,8 +51,28 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | Codex | data-collection / GDELT quota safety | `scripts/collection/gdelt_cloud_budget.py`, `scripts/collection/fetch_gdelt_cloud_events.py`, `scripts/run_pipeline.py`, `docs/current/DATA_COLLECTION_GUIDE.md`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md` | Academic & Research 월 5,000 QU에 맞춘 기본 비활성·로컬 월/일 안전상한·요청 간격·사용량 영수증 적용 | 2026-10-13 |
 | done | Codex | data-collection / White House official | `scripts/collection/fetch_whitehouse_official.py`, `scripts/run_pipeline.py`, `docs/current/DATA_COLLECTION_GUIDE.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md` | 백악관 공식 RSS 우선 수집기 초안과 제한적 사이트맵 보완을 선택 플래그로 연결 | 2026-10-15 |
 | done | Codex | handoff / White House collector | `docs/current/ANTIGRAVITY_WHITEHOUSE_HANDOFF_PROMPT.md`, `docs/current/DATA_COLLECTION_SESSION_PROMPT.md` | 백악관 수집기 범위·검증 경계·드라이런 절차를 ANTIGRAVITY 인수인계 프롬프트로 정리 | 2026-10-15 |
+| done | Cursor / DB-evidence | db / validation-store | `scripts/db/evidence_writer.py`, `scripts/db/load_validation_audit.py`, `scripts/db/manage_test_fixtures.py`, `scripts/db/create_views.sql`, `docs/current/DATABASE_SETUP.md` | 증거 계층 트랜잭션 writer·검증 감사 적재·TEST fixture 관리 | 2026-10-28 |
+| done | Cursor Agent | data-collection / Media Cloud Search API | `scripts/collection/fetch_mediacloud.py`, `docs/current/DATA_COLLECTION_GUIDE.md`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md` | 구호스트 DNS 실패 확인 후 공식 `search.mediacloud.org` + Token 인증으로 후보 수집기 갱신(기본 파이프라인 미연결) | 2026-10-28 |
+| done | Cursor Agent | data-collection / source-registry | `config/source_registry/*`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md` | source_registry 초안(source_role/required/fallback/license_access_note) + 백악관·정부 RSS 공통 스키마·dedupe 규칙 | 2026-10-28 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-10-28 [Cursor / DB-evidence 세션 시작]
+- 한 일: `PROJECT_CONTEXT.md`, `AGENT_SYNC.md`, `DATABASE_SETUP.md`, `VALIDATION_PLAN.md` 정독. `docs/current/DATABASE_VALIDATION_SESSION_PROMPT.md`는 저장소에 없음(`SESSION_PROMPTS.md` §4 + 세션 지시문으로 대체).
+- 확인한 것: fixture `TEST-FIXTURE-20261010-00000001` 존재. 운영 행도 있음(`RS-20261027143228-3f787bb6` / `RSS_RUSSIA` CRITICAL held_for_review). 코드 충돌 없음(ANTIGRAVITY 소유 LLM/Streamlit 파일은 비접촉).
+- 다음 작업: 트랜잭션 evidence writer, validation audit 적재, fixture 관리, 공식 뷰 4개 검증.
+- 주의할 점: `REPLACE INTO` 금지, append-only 유지, TEST fixture를 운영 성과로 보고하지 않음, `.env` 비밀값 비출력.
+
+2026-10-28 [Cursor / DB-evidence handoff]
+- 한 일:
+  1. `scripts/db/evidence_writer.py` — 점수/갭/경보/근거/검증을 한 트랜잭션으로 저장. `run_key` 중복 거부, 실패 롤백, 입력 어휘 검증, 완료 후 공식 뷰 조회.
+  2. `scripts/db/load_validation_audit.py` — `validation_backtest_log.csv`·`review_log.csv`·오류 로그를 `alert_validation_audit`에 append. 원본 CSV 비수정.
+  3. `scripts/db/manage_test_fixtures.py` — fixture ensure/verify/cleanup(views). cleanup은 dry-run 기본, `--execute` + `data_quality_audit` 후 삭제.
+  4. 공식 뷰 4개에서 `TEST_*` / `test-fixture-v1` / `TEST-FIXTURE%` / `fixture_review` 운영 집계 제외.
+- 바꾼 파일: `scripts/db/evidence_writer.py`, `scripts/db/load_validation_audit.py`, `scripts/db/manage_test_fixtures.py`, `scripts/db/create_views.sql`, `docs/current/DATABASE_SETUP.md`, `AGENT_SYNC.md`.
+- 확인한 것: writer 스모크(삽입·중복거부·뷰 제외·정리) 통과. `manage_test_fixtures.py verify` OK. 공식 뷰 counts — current_alerts=1, evidence_trace=6, gap_trend=1, validation_summary=5. 대시보드 운영 행=`RSS_RUSSIA` CRITICAL. fixture는 베이스 테이블에만 잔존, 성과 뷰 0건. review 1건 audit 적재. `.env` 비밀값 비출력/비커밋.
+- 다음 작업: LLM/scoring 세션이 `evidence_writer.save_scoring_run`을 호출하도록 연결. `validation_backtest_log.csv` 사례 행 채운 뒤 `--sources backtest` 재적재. 품질 정리 스크립트는 dry-run·`data_quality_audit` 뒤에만 실삭제.
+- 주의할 점: `prototype_all_in_one.py`·대시보드·`review_log.csv` 덮어쓰기·수집기·`REPLACE INTO` 금지. TEST fixture를 운영 precision으로 보고하지 말 것. mediacloud 등 타 세션 변경 파일은 이번 커밋에 섞지 말 것.
 
 2026-10-04 [Codex / 데이터 수집 범위 확장 결정]
 - 한 일: 대시보드·교차검증 업무와 분리하여 데이터 수집·파이프라인 세션의 다음 확장 범위를 정리함.
@@ -118,6 +138,27 @@ Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하�
 - 주의할 점: 현재 결과는 GDELT 사건 후보일 뿐 실제 공격·운항 중단·피해를 확인한 결과가 아니다. 기존 `scripts/run_pipeline.py`에는 연결하지 않음.
 
 ## Recent Handoff
+
+2026-10-28 [Cursor / DB-evidence · 재검증]
+- 한 일: 세션 프롬프트 문서 정독 후 기존 writer·fixture·공식 뷰를 재검증. 신규 코드 변경 없음.
+- 읽은 파일: `PROJECT_CONTEXT.md`, `AGENT_SYNC.md`, `docs/current/DATABASE_SETUP.md`, `docs/current/VALIDATION_PLAN.md`. `docs/current/DATABASE_VALIDATION_SESSION_PROMPT.md`는 없음(`SESSION_PROMPTS.md` §4 + 지시문 대체).
+- 확인한 것: fixture `TEST-FIXTURE-20261010-00000001` verify OK·성과 뷰 0건. 운영 run=`RS-20261027143228-3f787bb6` / 대시보드=`RSS_RUSSIA` CRITICAL held_for_review. 뷰 counts current=1 evidence=6 gap=1 validation=5. `load_validation_audit --dry-run`은 중복 1건 skip. 품질 정리 스크립트는 dry-run·`data_quality_audit` 경로 유지.
+- 다음 작업: LLM/scoring이 `evidence_writer.save_scoring_run` 호출. 미커밋 DB 파일(`evidence_writer.py` 등)은 mediacloud·source_registry와 분리 커밋.
+- 주의할 점: ANTIGRAVITY 소유 Streamlit/LLM 파일·수집기·`review_log.csv`·`REPLACE INTO`·`SESSION_PROMPTS.md` 비접촉. TEST fixture를 precision으로 보고하지 말 것.
+
+2026-10-28 [Cursor Agent / data-collection · source-registry]
+- 한 일: `config/source_registry/` 초안 작성(SCHEMA + government/expert/local_media/opinion/customs YAML). 백악관 RSS vs `gov_announcements_collector` 공통 원시 필드·URL dedupe 규칙을 아키텍처 문서에 명시. Media Cloud는 기존 갱신 상태를 유지·문서 교차참조만.
+- 바꾼 파일: `config/source_registry/*`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md`, `AGENT_SYNC.md`.
+- 확인한 것: YAML/스키마 초안 존재; 유료·쿼터·PENDING 센서는 `pipeline_default:false` 또는 `enabled:false`; DB/Streamlit/LLM 파일 비접촉; `docs/SESSION_PROMPTS.md` 미수정.
+- 다음 작업: (1) expert/gov 수집기가 registry YAML을 읽도록 이관, (2) `MEDIACLOUD_API_KEY` 소량 프로브(선택), (3) 항공/파나마/세관/X는 라이선스 확인 후 개별 구현.
+- 주의할 점: 기본 `--collect-only`에서 GDELT Cloud·Media Cloud·ACLED·Event Registry·White House를 자동 호출하지 않음. DB-evidence 미커밋 파일과 커밋을 섞지 말 것.
+
+2026-10-28 [Cursor Agent / data-collection · Media Cloud]
+- 한 일: Media Cloud 공식 Search API 호스트·인증을 재확인하고 `fetch_mediacloud.py`를 `https://search.mediacloud.org/api/` + `Authorization: Token` + `cs`/`ss` 필수로 갱신함. 기본 파이프라인에는 연결하지 않음.
+- 바꾼 파일: `scripts/collection/fetch_mediacloud.py`, `docs/current/DATA_COLLECTION_GUIDE.md`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md`, `AGENT_SYNC.md`.
+- 확인한 것: `py_compile` 통과; 키 부재 시 `AUTH_REQUIRED` 영수증; `GET /api/version` HTTP 200; `api.mediacloud.org` DNS 실패; `git diff --check` 통과; 영수증에 키/헤더 값 없음. 원격 브랜치 `cursor/mediacloud-api-notes-8f9f`의 문서 메모와 일치.
+- 다음 작업: (1) `MEDIACLOUD_API_KEY` 설정 후 `--limit 3` 소량 프로브, (2) `config/source_registry/` 초안(`source_role`/`required`/`fallback`/`license_access_note`), (3) 백악관 RSS vs `gov_announcements_collector` 공통 원시 스키마·URL 중복 제거 규칙 문서화. 항공/파나마/세관/X는 접근·라이선스 확인 전 미구현.
+- 주의할 점: Media Cloud·ACLED·Event Registry·GDELT Cloud는 기본 `--collect-only`에서 호출하지 않는다. 단일 출처로 Alert Level을 올리지 않는다. `docs/SESSION_PROMPTS.md`는 덮어쓰지 않음. Streamlit·LLM·DB 스키마 파일은 타 세션 소유.
 
 2026-10-02 [Codex / Markdown 정합성 정리]
 - 한 일: 제어문자 제거, Active Work Board 중복 행 정리, 센서 분류·감사 템플릿 정합성 보정.
