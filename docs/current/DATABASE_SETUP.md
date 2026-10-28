@@ -120,6 +120,22 @@ verdict: confirmed | false_alarm | missed_signal | insufficient_evidence | pendi
 고정하지 않습니다. `REPLACE INTO`는 기존 행을 삭제 후 재삽입하므로 이 증거 계층에는
 사용하지 않습니다.
 
+**구현 (2026-10-28)**: 트랜잭션 writer는 `scripts/db/evidence_writer.py`다.
+같은 `run_key`가 있으면 실패하고 전체를 롤백한다. 검증 CSV 적재는
+`scripts/db/load_validation_audit.py`(원본 CSV 비수정). TEST fixture 생성·검증·정리는
+`scripts/db/manage_test_fixtures.py`이며, 삭제는 `--execute`와 `data_quality_audit` 기록
+뒤에만 수행한다.
+
+```bash
+python scripts/db/evidence_writer.py --payload path/to/run.json --dry-run
+python scripts/db/load_validation_audit.py --sources backtest,review,error --dry-run
+python scripts/db/manage_test_fixtures.py status
+python scripts/db/manage_test_fixtures.py verify
+```
+
+공식 뷰 4개는 `TEST_*` 이슈·`test-fixture-v1`·`TEST-FIXTURE%` run·`fixture_review`를
+운영 성과 집계에서 제외한다. fixture 회귀는 베이스 테이블로 확인한다.
+
 ### 5.0.2 대시보드 읽기 계약
 
 | 뷰 | 화면 용도 |

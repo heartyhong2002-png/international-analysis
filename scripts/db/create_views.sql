@@ -303,9 +303,12 @@ LEFT JOIN gov_aggregate g ON s.issue = g.issue;
 -- ----------------------------------------------------------------------------
 CREATE OR REPLACE VIEW v_dashboard_current_alerts AS
 WITH latest_run AS (
+    -- 운영 대시보드용: TEST fixture run / test-fixture-v1 제외
     SELECT id, run_key, scoring_version, executed_at, window_start, window_end
     FROM scoring_runs
     WHERE status = 'completed'
+      AND scoring_version <> 'test-fixture-v1'
+      AND run_key NOT LIKE 'TEST-FIXTURE%'
     ORDER BY executed_at DESC, id DESC
     LIMIT 1
 ),
@@ -321,6 +324,7 @@ score_rollup AS (
         SUM(CASE WHEN r.quality_status <> 'usable' THEN 1 ELSE 0 END) AS quality_flag_count
     FROM risk_signal_scores r
     JOIN latest_run lr ON lr.id = r.scoring_run_id
+    WHERE r.issue_key NOT LIKE 'TEST\\_%' ESCAPE '\\'
     GROUP BY r.scoring_run_id, r.issue_key
 ),
 latest_gap AS (
@@ -328,11 +332,13 @@ latest_gap AS (
            ROW_NUMBER() OVER (PARTITION BY g.issue_key ORDER BY g.snapshot_at DESC, g.id DESC) AS rn
     FROM signal_gap_snapshots g
     JOIN latest_run lr ON lr.id = g.scoring_run_id
+    WHERE g.issue_key NOT LIKE 'TEST\\_%' ESCAPE '\\'
 ),
 latest_alert AS (
     SELECT a.*,
            ROW_NUMBER() OVER (PARTITION BY a.issue_key ORDER BY a.triggered_at DESC, a.id DESC) AS rn
     FROM alert_events a
+    WHERE a.issue_key NOT LIKE 'TEST\\_%' ESCAPE '\\'
 )
 SELECT
     sr.issue_key,
@@ -394,7 +400,10 @@ SELECT
 FROM alert_events a
 JOIN scoring_runs sr ON sr.id = a.scoring_run_id
 LEFT JOIN alert_event_evidence e ON e.alert_event_id = a.id
-LEFT JOIN risk_signal_scores rs ON rs.id = e.risk_signal_score_id;
+LEFT JOIN risk_signal_scores rs ON rs.id = e.risk_signal_score_id
+WHERE a.issue_key NOT LIKE 'TEST\\_%' ESCAPE '\\'
+  AND sr.scoring_version <> 'test-fixture-v1'
+  AND sr.run_key NOT LIKE 'TEST-FIXTURE%';
 
 
 -- ----------------------------------------------------------------------------
@@ -417,7 +426,10 @@ SELECT
     sr.run_key,
     sr.scoring_version
 FROM signal_gap_snapshots g
-JOIN scoring_runs sr ON sr.id = g.scoring_run_id;
+JOIN scoring_runs sr ON sr.id = g.scoring_run_id
+WHERE g.issue_key NOT LIKE 'TEST\\_%' ESCAPE '\\'
+  AND sr.scoring_version <> 'test-fixture-v1'
+  AND sr.run_key NOT LIKE 'TEST-FIXTURE%';
 
 
 -- ----------------------------------------------------------------------------
@@ -440,6 +452,8 @@ SELECT
     MAX(v.reviewed_at) AS last_reviewed_at
 FROM alert_validation_audit v
 LEFT JOIN alert_events a ON a.id = v.alert_event_id
+WHERE v.issue_key NOT LIKE 'TEST\\_%' ESCAPE '\\'
+  AND v.audit_type <> 'fixture_review'
 GROUP BY v.issue_key, COALESCE(a.alert_level, 'NO_ALERT');
 
 
