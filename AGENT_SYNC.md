@@ -40,6 +40,7 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
+| done | Cursor / data-collection | data-collection / Media Cloud | `docs/current/DATA_COLLECTION_GUIDE.md`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md` | Media Cloud Search API 호스트·인증 확인 결과를 문서에만 반영. 수집기 코드는 아직 구 호스트 | 2026-10-28 |
 | done | ANTIGRAVITY | db / pipeline / cross-verification | `scripts/run_pipeline.py`, `scripts/db/load_cross_verification_to_db.py`, `scripts/db/create_views.sql` | 해협 센서·공급망 사건 교차검증의 DB 적재와 대시보드 뷰 연동 | 2026-10-02 |
 | done | ANTIGRAVITY | data-collection / supply-chain-sensors | `scripts/collection/fetch_maritime_chokepoints.py`, `scripts/analysis/cross_verify_events.py`, `data/maritime_chokepoints/`, `data/event_cross_verification/` | 해협·시장 센서 수집 및 복수 계통 교차검증 | 2026-10-02 |
 | done | ANTIGRAVITY | data-collection / public-opinion | `scripts/collection/fetch_local_opinions.py`, `scripts/collection/fetch_google_trends.py`, `data/local_opinions/`, `data/google_trends/` | 대안 로컬 여론·검색 트렌드 센서 구축 | 2026-09-29 |
@@ -53,6 +54,13 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | Codex | handoff / White House collector | `docs/current/ANTIGRAVITY_WHITEHOUSE_HANDOFF_PROMPT.md`, `docs/current/DATA_COLLECTION_SESSION_PROMPT.md` | 백악관 수집기 범위·검증 경계·드라이런 절차를 ANTIGRAVITY 인수인계 프롬프트로 정리 | 2026-10-15 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-10-28 [Cursor / data-collection]
+- 한 일: 2026-10-23 Media Cloud 호스트·인증 확인 결과를 수집 문서에만 반영했다. 수집기 코드는 수정하지 않았다.
+- 바꾼 파일: `docs/current/DATA_COLLECTION_GUIDE.md`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md`, `AGENT_SYNC.md`.
+- 확인한 것: 공식 호스트는 `https://search.mediacloud.org/api/`다. `/version`은 키 없이 HTTP 200, `story-list`는 키 없이 HTTP 401, 토큰만 있으면 HTTP 422(`cs` 또는 `ss` 필요), 연속 호출은 HTTP 429. `api.mediacloud.org`는 DNS 실패. 기본 파이프라인에는 연결하지 않는다.
+- 다음 작업: 수집기를 새 호스트와 `Authorization: Token`으로 바꾸고, `--collection-id` 또는 `--source-id`가 있을 때만 1페이지를 요청한다. 그 전에 Media Cloud 키를 재발급한다.
+- 주의할 점: `data/mediacloud/latest.json`의 기존 영수증에는 쿼리 키가 들어 있고 커밋 `46180a2` 이력에 남아 있다. 키 값과 Authorization 헤더는 로그·영수증·커밋에 넣지 않는다. 결과는 뉴스 메타데이터이며 경보 근거가 아니다.
 
 2026-10-04 [Codex / 데이터 수집 범위 확장 결정]
 - 한 일: 대시보드·교차검증 업무와 분리하여 데이터 수집·파이프라인 세션의 다음 확장 범위를 정리함.

@@ -192,7 +192,7 @@ GDELT Cloud 구독 만료에 대비해 원본 GDELT 2.0과 보조 사건·뉴스
 | 수집기 | 역할 | 인증·제한 | 저장 위치 |
 |---|---|---|---|
 | `scripts/collection/fetch_gdelt_v2_public.py` | GDELT 2.0 DOC 공개 뉴스 후보 | 공개 API, 429 bounded retry | `data/gdelt_v2_public/latest.json` |
-| `scripts/collection/fetch_mediacloud.py` | 매체·국가별 뉴스 확산 보조 신호 | `MEDIACLOUD_API_KEY` 필요 가능 | `data/mediacloud/latest.json` |
+| `scripts/collection/fetch_mediacloud.py` | 매체·국가별 뉴스 확산 보조 신호 | `Authorization: Token`. `cs` 또는 `ss` 필요. 기본 파이프라인 미호출. 1페이지·본문 미요청 | `data/mediacloud/latest.json` |
 | `scripts/collection/fetch_acled.py` | 분쟁·시위·정치폭력 사건 | ACLED OAuth 계정 필요 | `data/acled/latest.json` |
 | `scripts/collection/fetch_event_registry.py` | 선택적 뉴스 이벤트 클러스터 | `EVENT_REGISTRY_API_KEY`, 학술 승인 우선 | `data/event_registry/latest.json` |
 
@@ -237,5 +237,5 @@ ACLED·Event Registry·Media Cloud·GDELT 2.0 공개 수집기는 인증·요금
 
 - **ACLED**: OAuth 인증 성공, 예멘 필터 3건 수집 완료(`HTTP 200`, `complete=true`).
 - **Event Registry**: API 키 인증 성공, `Red Sea shipping` 3건 수집 완료(`HTTP 200`, `complete=true`). 보조 센서로 유지한다.
-- **Media Cloud**: 계정 키는 입력되었으나 현재 프로토타입의 기본 API 호스트가 DNS 해석되지 않아 `complete=false`; 공식 최신 Search API 엔드포인트 확인 후 재연결한다.
+- **Media Cloud** (2026-10-23 재확인): 공식 Python 클라이언트(`mediacloud/api-client`)의 기본 호스트는 `https://search.mediacloud.org/api/`다. `GET /version`은 키 없이 HTTP 200이다. `GET search/story-list`는 키 없이 HTTP 401이고, 인증은 `Authorization: Token`이다. 토큰만 있고 `cs`(컬렉션) 또는 `ss`(소스)가 없으면 HTTP 422다. 연속 호출은 HTTP 429로 제한된다. 예전 `api.mediacloud.org`는 DNS가 되지 않아 호출하지 않는다. 현재 저장소의 수집기 코드는 아직 구 호스트를 가리키므로, 코드 수정 전에는 실행하지 않는다. `run_pipeline.py`에는 연결하지 않는다. 응답은 지정 컬렉션의 뉴스 메타데이터이며 경보 근거가 아니다. `data/mediacloud/latest.json`의 기존 영수증에는 쿼리 문자열이 들어 있었고 커밋 `46180a2` 이력에 남아 있다. 키를 재발급하고, 키 값과 Authorization 헤더는 로그·영수증·커밋에 남기지 않는다.
 - **GDELT 2.0 DOC**: 공개 API 호출 시 `HTTP 429`가 확인되어 호출 간격·캐시·재시도 정책을 조정한다.

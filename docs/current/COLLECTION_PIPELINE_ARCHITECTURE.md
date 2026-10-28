@@ -34,6 +34,8 @@ GDELT Cloud·AIS·정부 발표는 빠른 감지 센서이고, 싱크탱크는 �
 
 GDELT Cloud는 학술 계정의 월 5,000 QU 한도를 고려해 FAST 레인에서도 기본 비활성으로 둔다. `--with-gdelt-cloud`를 명시한 실행만 로컬 예산 가드(기본 월 4,500 QU·일 100 QU·요청 간격 2초)를 통과한 뒤 호출하며, 가드 상태는 `data/gdelt_cloud/quota_state.json`에 남긴다. 이는 공급자 사용량 화면을 대체하지 않는 보수적 차단 장치다.
 
+Media Cloud Search API(`https://search.mediacloud.org/api/search/story-list`)도 기본 레인에 넣지 않는다. 인증은 `Authorization: Token`이며, `cs` 또는 `ss`가 있을 때만 수동 1페이지 호출을 한다. 구 호스트 `api.mediacloud.org`는 사용하지 않는다. 2026-10-23 확인 결과는 [`DATA_COLLECTION_GUIDE.md`](DATA_COLLECTION_GUIDE.md)에 있다. 수집기 코드 반영은 다음 단계다.
+
 ## 소스 레지스트리
 
 싱크탱크와 현지 언론 목록은 코드에 하드코딩하지 않고 향후 `config/source_registry/` 아래에서 관리한다.
