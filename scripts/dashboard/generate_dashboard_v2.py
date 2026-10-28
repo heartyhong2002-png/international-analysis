@@ -460,7 +460,7 @@ def generate_dashboard_html(data):
         """
 
     if not lo_rows_html:
-        lo_rows_html = '<div style="font-size:12px; color:var(--text-muted); padding:10px;">로컬 여론 데이터 준비 중입니다.</div>'
+        lo_rows_html = '<div style="font-size:12px; color:var(--text-muted); padding:10px;">온라인 정보환경 신호 데이터 준비 중입니다.</div>'
 
     # NEW: Cross-Verification Events (GDELT Cloud + Maritime + Freight + Local Opinion + Telegram)
     cv_data = data.get("cross_verification_data", {})
@@ -494,8 +494,8 @@ def generate_dashboard_html(data):
         channel_names = {
             "maritime_chokepoint": "⚓ 해협·항만",
             "freight_market": "🚢 운임·에너지",
-            "local_public_opinion": "🌐 로컬 여론",
-            "telegram_osint_public": "📡 텔레그램 성명"
+            "local_public_opinion": "🌐 온라인 정보환경",
+            "telegram_osint_public": "📡 공개 Telegram 주장"
         }
         for ch in mchannels:
             lbl = channel_names.get(ch, ch)
@@ -546,8 +546,8 @@ def generate_dashboard_html(data):
     fro_change = fro_item.get("Monthly_Change_Percent")
     axis_cards = [
         ("AIS", "MARITIME", "해협·항만·선박 우회", f"{cv_total}건 후보", cross_state, "해협 + AIS 프록시"),
-        ("MKT", "ENERGY", "유가·LNG·전쟁보험료", f"FRO {fro_change}%" if fro_change not in (None, "") else "시장 지표 확인 필요", "WATCH 후보", "에너지·보험료·탱커"),
-        ("OSINT", "INFORMATION", "GDELT·언론·공개 여론", f"{len(feed)}건 원문 피드", "부분 커버리지", "GDELT + 공개 채널"),
+        ("MKT", "ENERGY", "유가·LNG·전쟁보험료", f"FRO {fro_change}%" if fro_change not in (None, "") else "시장 지표 확인 필요", "확인 필요", "에너지·보험료·탱커"),
+        ("OSINT", "INFORMATION", "GDELT·언론·온라인 정보환경", f"{len(feed)}건 원문 피드", "부분 커버리지", "GDELT + 공개 채널"),
         ("FLOW", "FINANCE / TRADE", "운임·금융·무역 프록시", f"{len(fp_data)}개 시장 지표", "확인 필요", "운임·선사·원자재"),
         ("SIG", "STATE / ACTOR", "정부·군·행위자 공식 입장", f"{len(gov_sources)}개 공식 출처", "주장·입장 분리", "공식 발표 + 공개 주장"),
     ]
@@ -579,13 +579,13 @@ def generate_dashboard_html(data):
     <div class="chart-card">
       <div class="chart-header">
         <div>
-          <div class="chart-title">📡 텔레그램 OSINT 조기경보 (근거 추적 박스)</div>
-          <div class="chart-subtitle">실시간 블랙스완 징후 탐지 및 다중 LLM 릴레이 분석 결과</div>
+          <div class="chart-title">📡 공개 Telegram · 온라인 정보환경 신호</div>
+          <div class="chart-subtitle">국민 여론이 아닌 공개 채널 주장·표현입니다. Alert Level을 단독으로 확정하지 않습니다.</div>
         </div>
       </div>
       <div style="overflow-y: auto; max-height: 350px; font-size: 13px; line-height: 1.6;">
-        <div style="background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); padding: 15px; border-radius: 8px;">
-          <div style="display:inline-block; background:#ef4444; color:white; padding:2px 8px; border-radius:4px; font-weight:bold; font-size:11px; margin-bottom:10px;">Critical</div>
+        <div style="background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.25); padding: 15px; border-radius: 8px;">
+          <div style="display:inline-block; background:rgba(56,189,248,0.2); color:#bae6fd; padding:2px 8px; border-radius:4px; font-weight:bold; font-size:11px; margin-bottom:10px;">검토 후보 · 확인 필요</div>
           {tg_osint_html}
         </div>
       </div>
@@ -608,8 +608,8 @@ def generate_dashboard_html(data):
     <div class="chart-card">
       <div class="chart-header">
         <div>
-          <div class="chart-title">🔍 구글 트렌드 위험 행동 지표 (Google Trends Surge Radar)</div>
-          <div class="chart-subtitle">설문조사 대신 실제 검색 급등률(x배)을 통한 국민 체감 불안도 측정</div>
+          <div class="chart-title">🔍 구글 트렌드 검색량 급등 신호 (Google Trends Surge Radar)</div>
+          <div class="chart-subtitle">국민 여론이 아닌 온라인 검색 행동 신호입니다. 검색량만으로 Alert Level을 확정하지 않습니다.</div>
         </div>
       </div>
       <div style="overflow-y: auto; max-height: 380px;">
@@ -620,8 +620,8 @@ def generate_dashboard_html(data):
     <div class="chart-card">
       <div class="chart-header">
         <div>
-          <div class="chart-title">🌐 레딧 대체 5대 로컬 여론 스트림 (Local Forums & SNS)</div>
-          <div class="chart-subtitle">대만 PTT, 중국 핀충(品葱), 블루스카이, 구글 로컬 뉴스, 텔레그램 실시간 수집</div>
+          <div class="chart-title">🌐 공개 포럼·SNS 정보환경 신호 (Local Forums & SNS)</div>
+          <div class="chart-subtitle">대만 PTT, 중국 핀충(品葱), Bluesky, 구글 로컬 뉴스, 공개 Telegram — 국민 전체 여론이 아닌 온라인 표현 신호</div>
         </div>
       </div>
       <div style="overflow-y: auto; max-height: 380px;">
@@ -636,7 +636,7 @@ def generate_dashboard_html(data):
       <div class="chart-header" style="flex-wrap: wrap; gap: 8px;">
         <div>
           <div class="chart-title">⚖️ 다중 계통 교차검증 레이더 (Multi-Channel Cross-Verification Engine)</div>
-          <div class="chart-subtitle">GDELT 사건 + 해협/항만 인프라 + 해상운임/에너지 시장 + 로컬 여론 + 텔레그램 성명 간 시계열 교차검증 ({state_counts_text})</div>
+          <div class="chart-subtitle">GDELT 사건 + 해협/항만 인프라 + 해상운임/에너지 시장 + 온라인 정보환경 + 공개 Telegram 주장 간 시계열 교차검증 ({state_counts_text})</div>
         </div>
         <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
           <span class="kpi-tag tag-amber" style="font-size:11px;">⚠️ 부분 수집 1페이지 예산 프로브 ({'complete=false' if is_partial_cov else 'complete=true'})</span>
