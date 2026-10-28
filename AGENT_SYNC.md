@@ -44,6 +44,7 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | data-collection / supply-chain-sensors | `scripts/collection/fetch_maritime_chokepoints.py`, `scripts/analysis/cross_verify_events.py`, `data/maritime_chokepoints/`, `data/event_cross_verification/` | 해협·시장 센서 수집 및 복수 계통 교차검증 | 2026-10-02 |
 | done | ANTIGRAVITY | data-collection / public-opinion | `scripts/collection/fetch_local_opinions.py`, `scripts/collection/fetch_google_trends.py`, `data/local_opinions/`, `data/google_trends/` | 대안 로컬 여론·검색 트렌드 센서 구축 | 2026-09-29 |
 | in-progress | ANTIGRAVITY | dashboard / ui | `scripts/dashboard/streamlit_dashboard.py` | Streamlit 대시보드 유지보수 및 고도화 | 2026-09-28 |
+| done | Cursor / dashboard-report | dashboard / html-ui | `scripts/dashboard/generate_dashboard_v2.py`, `output/dashboard/` | Information 축 과장 표현 교정(국민 여론·하드코딩 Critical·WATCH 후보 제거) 후 HTML 재생성 | 2026-10-28 |
 | in-progress | ANTIGRAVITY | llm-analysis / alert-scoring | `prototype_all_in_one.py`, `scripts/analysis/analyze_signal_gap.py`, `scripts/analysis/analyze_signals.py`, `data/review_log.csv` | LLM 분석·Risk Signal Score·검수 체계 연동 | 2026-09-28 |
 | done | Codex | docs / session-sync | `PROJECT_CONTEXT.md`, `AGENT_SYNC.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `project-handoff.md` | 현재 방향, 센서 분류, 교차검증 규칙, 세션 상태 문서 정리 | 2026-10-02 |
 | done | Codex | dashboard / Figma handoff | `docs/current/DASHBOARD_SESSION_PROMPT.md`, `PROJECT_CONTEXT.md`, `AGENT_SYNC.md` | Figma의 5대 감시축 균형 UI와 비상 관제 화면을 대시보드 세션에 인수인계 | 2026-10-04 |
@@ -54,6 +55,7 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | Cursor / DB-evidence | db / validation-store | `scripts/db/evidence_writer.py`, `scripts/db/load_validation_audit.py`, `scripts/db/manage_test_fixtures.py`, `scripts/db/create_views.sql`, `docs/current/DATABASE_SETUP.md` | 증거 계층 트랜잭션 writer·검증 감사 적재·TEST fixture 관리 | 2026-10-28 |
 | done | Cursor Agent | data-collection / Media Cloud Search API | `scripts/collection/fetch_mediacloud.py`, `docs/current/DATA_COLLECTION_GUIDE.md`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md` | 구호스트 DNS 실패 확인 후 공식 `search.mediacloud.org` + Token 인증으로 후보 수집기 갱신(기본 파이프라인 미연결) | 2026-10-28 |
 | done | Cursor Agent | data-collection / source-registry | `config/source_registry/*`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md` | source_registry 초안(source_role/required/fallback/license_access_note) + 백악관·정부 RSS 공통 스키마·dedupe 규칙 | 2026-10-28 |
+| done | ANTIGRAVITY | integration / notion | `scripts/notion/*`, `.env`, `docs/current/NOTION_INTEGRATION_GUIDE.md` | Notion 연동 모듈 구축(작업 보드 동기화, 리포트 퍼블리싱, MCP 설정) 완료 | 2026-10-28 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
 
@@ -138,6 +140,24 @@ Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하�
 - 주의할 점: 현재 결과는 GDELT 사건 후보일 뿐 실제 공격·운항 중단·피해를 확인한 결과가 아니다. 기존 `scripts/run_pipeline.py`에는 연결하지 않음.
 
 ## Recent Handoff
+
+2026-10-28 [ANTIGRAVITY / notion-integration]
+- 한 일: Notion 3대 연동 체계 구축 및 시운전 완료. 1) .env 및 NotionClient 기반 표준 API 래퍼, 2) AGENT_SYNC.md 작업 보드 동기화 모듈(DB 자동 생성 기능 포함), 3) 최신 조기경보 리포트 퍼블리싱 모듈, 4) Antigravity 전용 Notion MCP 설정 파일(~/.gemini/config/mcp_config.json) 생성, 5) notion_manager.py CLI 점검 도구 작성.
+- 바꾼 파일: `scripts/notion/notion_client_base.py`, `scripts/notion/sync_notion_board.py`, `scripts/notion/publish_notion_report.py`, `scripts/notion/notion_manager.py`, `docs/current/NOTION_INTEGRATION_GUIDE.md`, `~/.gemini/config/mcp_config.json`, `AGENT_SYNC.md`, `PROJECT_CONTEXT.md`, `README.md`.
+- 확인한 것: `notion_manager.py --check` 봇 인증(international analysis) 성공. `notion_manager.py --sync-board`로 허브 하위에 작업 보드 DB(407de224-b441-818c-b033-cb6cf4ad5352) 자동 생성 및 16건 등록 완료. `notion_manager.py --publish-report`로 최신 리스크 브리프 블록 변환 발행 완료.
+- 다음 작업: 파이프라인 정기 실행 체인에 `--with-notion` 결합 검토.
+- 주의할 점: 토큰 및 비밀번호는 .env에 유지하며 .gitignore로 GitHub 커밋에서 엄격히 차단됨.
+
+2026-10-28 [Cursor / dashboard-report]
+- 한 일: 지정 문서 8종 정독. HTML 대시보드 Information 축 과장 표현을 교정하고 `generate_dashboard_v2.py`로 재생성.
+- 바꾼 파일: `scripts/dashboard/generate_dashboard_v2.py`, `output/dashboard/index.html`, `output/dashboard/dashboard_latest.html`, `AGENT_SYNC.md`.
+- 확인한 것:
+  1. Streamlit(`scripts/dashboard/streamlit_dashboard.py`)은 Active Work Board상 ANTIGRAVITY `in-progress` → 이번 세션 비접촉.
+  2. 공식 뷰에 운영 행 1건 표시: `RSS_RUSSIA` Critical / `human_review_required` / `PARTIALLY_CONFIRMED` (임의 경보 생성 아님).
+  3. Telegram 하드코딩 Critical 뱃지·“국민 체감 불안도”·ENERGY `WATCH 후보` 제거. SNS/Trends는 온라인 정보환경 신호로 표기.
+  4. `python scripts/dashboard/generate_dashboard_v2.py` 성공. index/latest 갱신(2026-10-28 17:07).
+- 다음 작업: `v_alert_evidence_trace`를 `alert_event_id`로 경보 카드에 연결. 보고서 제목/요약을 “조기경보 근거”로 유지 점검. Streamlit 5축은 ANTIGRAVITY 소유권 해제 후.
+- 주의할 점: Alert Level 임계값·DB 스키마·수집기·`SESSION_PROMPTS.md`·Streamlit 비접촉. `git add .` 금지(mediacloud·source_registry·DB-evidence 변경과 분리).
 
 2026-10-28 [Cursor / DB-evidence · 재검증]
 - 한 일: 세션 프롬프트 문서 정독 후 기존 writer·fixture·공식 뷰를 재검증. 신규 코드 변경 없음.

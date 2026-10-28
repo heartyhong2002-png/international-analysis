@@ -28,15 +28,21 @@ GDELT Cloud는 현재 Academic & Research 계정(월 5,000 QU)을 사용한다. 
 
 이 프로젝트는 졸업작품이 아니라 개인 포트폴리오 프로젝트다. 졸업작품 또는 팀 프로젝트와 혼동하지 말고, 채용 담당자·면접관에게 보여줄 개인 프로젝트 기준으로 설명한다.
 
-## External Research Lab Opportunity
+## Professor Kang Song-hee Research Project (한국공학대학교 경영학부 강송희 교수님 프로젝트)
 
-2026년 10월 12일 지도교수님 면담에서 학부연구생·연구실 참여 가능성을 제안받았다. 후속 미팅은 연구실 석사생들이 프로젝트를 정하고 교수님에게 피드백받는 과정을 관찰하며 연구실의 작업 방식과 참여 적합성을 판단하는 자리였다.
+2026년 10월 지도교수님(한국공학대학교 경영학부 강송희 교수님)과의 면담을 거쳐, 공식적으로 교수님과 함께하는 연구 및 프로젝트 협업을 진행한다.
+주요 업무는 **진행현황 보고서 작성**, **발표용 PPT 작성**, **관련 학술 논문 작성**, 그리고 **강송희 교수님과의 정기/수시 피드백 및 Action Items 정리**다.
 
-현재 참여 여부는 확정되지 않았다. 연구실 프로젝트는 개인 국제정세 조기경보 프로젝트와 별개의 활동으로 취급하며, 참여를 결정하더라도 두 프로젝트의 주제·코드·데이터·성과물 소유권을 임의로 통합하지 않는다. 주당 시간, 역할, 지도 방식, 활동 기간, 성과 인정, 데이터 접근·공개 조건을 확인한 뒤 결정한다.
+전용 작업 공간은 prof_kang_project/ 디렉토리에 구축되어 있으며, 다음과 같이 구성된다:
+- prof_kang_project/README.md: 프로젝트 대시보드 및 Action Items 통합 관리
+- prof_kang_project/SESSION_GUIDELINES.md: 세션 운영 및 문서 작성 가이드라인
+- prof_kang_project/feedbacks/: 교수님 미팅 피드백 및 회의록
+- prof_kang_project/reports/: 진행현황 보고서 (주간/격주/마일스톤)
+- prof_kang_project/presentations/: 발표 슬라이드 구성안, 대본, Q&A 방어 자료
+- prof_kang_project/paper/: 연구 문제, 선행연구 검토, 연구방법론, 학술 논문 초안
+- prof_kang_project/templates/: 서식 템플릿 모음
 
-상세 면담 기록은 `docs/history/PROFESSOR_LAB_MEETING_20261012.md`에 보관한다.
-
-예전 문서에 "예측", "챗봇 전환", "자동 게시" 같은 표현이 남아 있어도 현재 방향으로 해석하면 안 된다. 그런 문서는 이력 또는 보류 문서다.
+상세 초기 면담 기록은 docs/history/PROFESSOR_LAB_MEETING_20261012.md에 보관한다.
 
 ## Recommended Reading Order
 
@@ -61,7 +67,10 @@ GDELT Cloud는 현재 Academic & Research 계정(월 5,000 QU)을 사용한다. 
 
 ## Notion Hub
 
-Notion hub page: https://app.notion.com/p/3eede224b44181f0bd20ea55620bf5c4?pvs=204
+- Notion Hub Page: https://app.notion.com/p/3eede224b44181f0bd20ea55620bf5c4?pvs=204
+- Active Work Board Database: `407de224-b441-818c-b033-cb6cf4ad5352`
+- Notion Integration Guide: `docs/current/NOTION_INTEGRATION_GUIDE.md`
+- Sync CLI: `python scripts/notion/notion_manager.py --all`
 
 Use Notion for human-facing project management, learning notes, weekly plans, and decision summaries. Do not treat Notion as the source of truth for code, data, or formal project direction. If Notion and GitHub differ, GitHub Markdown files in this repository take precedence.
 

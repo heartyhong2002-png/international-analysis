@@ -113,6 +113,7 @@ international-analysis/
 - `docs/current/DATA_COLLECTION_GUIDE.md` — 조기경보 신호 데이터 수집 기준
 - `docs/current/DATA_COLLECTION_ROADMAP.md` — 출처 레지스트리·센서 확장·검증 순서
 - `docs/current/DATA_COLLECTION_SESSION_PROMPT.md` — 데이터 수집 세션 전용 인수인계 프롬프트
+- `docs/current/NOTION_INTEGRATION_GUIDE.md` — Notion 프로젝트 보드 및 리포트 자동화 연동 가이드
 - `docs/history/PROJECT_EVOLUTION_TIMELINE.md` — 예측 → 챗봇 검토 → 조기경보 피벗의 의사결정 타임라인
 - `docs/archive/legacy_guides/DATA_COLLECTION_GUIDE_legacy.md` — 기존 수집 운영 매뉴얼
 - `docs/archive/` — 예전 기획서(`PLANNING.md`), 목적이 달랐던 이슈 정의 문서(`CONTINENTAL_ISSUES_ANALYSIS.md`), 역할이 끝난 인수인계 문서 5종, 예전 README의 26개 항목 전체 개발일지(`DEVELOPMENT_LOG_README_HISTORY.md`), 과거 `Claude outputs/` 산출물
