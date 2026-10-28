@@ -43,7 +43,7 @@
 | 파일 | 역할 | 현재 상태 |
 |---|---|---|
 | `collection/fetch_gdelt_v2_public.py` | 원본 GDELT 2.0 DOC | candidate; 429 확인 |
-| `collection/fetch_mediacloud.py` | Media Cloud 뉴스 검색 | candidate; 엔드포인트 재확인 필요 |
+| `collection/fetch_mediacloud.py` | Media Cloud Search API (`search.mediacloud.org`) | candidate; Token auth + cs/ss; 기본 파이프라인 미연결 |
 | `collection/fetch_acled.py` | ACLED 분쟁·시위 사건 | candidate; 예멘 3건 테스트 성공 |
 | `collection/fetch_event_registry.py` | Event Registry 이벤트 | candidate; 3건 테스트 성공, 보조 수단 |
 
@@ -138,4 +138,4 @@ run_pipeline.py
 - ACLED·Event Registry를 후보 수집 그룹에 선택 연결할지 결정
 - 항공·파나마 운하·다국가 세관·X·정부 웹 수집기 구현 및 개별 영수증 테스트
 
-수집 레인·source registry·싱크탱크 수집 경계는 [`COLLECTION_PIPELINE_ARCHITECTURE.md`](COLLECTION_PIPELINE_ARCHITECTURE.md)에 정리했다.
+수집 레인·source registry·싱크탱크 수집 경계는 [`COLLECTION_PIPELINE_ARCHITECTURE.md`](COLLECTION_PIPELINE_ARCHITECTURE.md)에 정리했다. registry 초안 경로는 `config/source_registry/`이다.

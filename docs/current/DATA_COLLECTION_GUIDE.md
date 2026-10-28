@@ -192,7 +192,7 @@ GDELT Cloud 구독 만료에 대비해 원본 GDELT 2.0과 보조 사건·뉴스
 | 수집기 | 역할 | 인증·제한 | 저장 위치 |
 |---|---|---|---|
 | `scripts/collection/fetch_gdelt_v2_public.py` | GDELT 2.0 DOC 공개 뉴스 후보 | 공개 API, 429 bounded retry | `data/gdelt_v2_public/latest.json` |
-| `scripts/collection/fetch_mediacloud.py` | 매체·국가별 뉴스 확산 보조 신호 | `MEDIACLOUD_API_KEY` 필요 가능 | `data/mediacloud/latest.json` |
+| `scripts/collection/fetch_mediacloud.py` | 매체·국가별 뉴스 확산 보조 신호 | `Authorization: Token` + `cs`/`ss` 필수. 기본 파이프라인 미호출. 1페이지·본문 미요청 | `data/mediacloud/latest.json` |
 | `scripts/collection/fetch_acled.py` | 분쟁·시위·정치폭력 사건 | ACLED OAuth 계정 필요 | `data/acled/latest.json` |
 | `scripts/collection/fetch_event_registry.py` | 선택적 뉴스 이벤트 클러스터 | `EVENT_REGISTRY_API_KEY`, 학술 승인 우선 | `data/event_registry/latest.json` |
 
@@ -231,11 +231,11 @@ Python 스크립트의 역할과 실제 호출 여부는 [`PYTHON_SCRIPT_INVENTO
 
 ACLED·Event Registry·Media Cloud·GDELT 2.0 공개 수집기는 인증·요금·엔드포인트 상태가 안정화될 때까지 기본 파이프라인에 연결하지 않는 후보 수집기로 관리한다. 대시보드와 교차검증 로직은 이 세션의 수집 문서 변경 대상이 아니다.
 
-수집 레인과 싱크탱크 registry를 포함한 전체 설계는 [`COLLECTION_PIPELINE_ARCHITECTURE.md`](COLLECTION_PIPELINE_ARCHITECTURE.md)를 참조한다.
+수집 레인과 싱크탱크 registry를 포함한 전체 설계는 [`COLLECTION_PIPELINE_ARCHITECTURE.md`](COLLECTION_PIPELINE_ARCHITECTURE.md)를 참조한다. 출처 목록 초안은 `config/source_registry/`(`SCHEMA.md` + lane별 YAML)에 있으며, `source_role` / `required` / `fallback` / `license_access_note` / `pipeline_default`를 포함한다. 유료·쿼터 API와 PENDING 센서(항공·파나마·다국가 세관·X)는 `pipeline_default: false` 또는 `enabled: false`로 둔다.
 
 2026-10-10 연결 상태:
 
 - **ACLED**: OAuth 인증 성공, 예멘 필터 3건 수집 완료(`HTTP 200`, `complete=true`).
 - **Event Registry**: API 키 인증 성공, `Red Sea shipping` 3건 수집 완료(`HTTP 200`, `complete=true`). 보조 센서로 유지한다.
-- **Media Cloud**: 계정 키는 입력되었으나 현재 프로토타입의 기본 API 호스트가 DNS 해석되지 않아 `complete=false`; 공식 최신 Search API 엔드포인트 확인 후 재연결한다.
+- **Media Cloud** (2026-10-28 재확인): 공식 호스트는 `https://search.mediacloud.org/api/`다. 인증은 `Authorization: Token <MEDIACLOUD_API_KEY>`이며 URL 쿼리 `key=`는 쓰지 않는다. `search/story-list`는 `cs`(컬렉션) 또는 `ss`(소스)가 없으면 HTTP 422다. 구호스트 `api.mediacloud.org`는 DNS 실패라 호출하지 않는다. `fetch_mediacloud.py`는 Search API로 갱신됐으나 기본 파이프라인에는 연결하지 않는다. 응답은 지정 컬렉션의 뉴스 메타데이터일 뿐 경보 근거가 아니다. 키·Authorization 헤더는 로그·영수증·커밋에 남기지 않는다.
 - **GDELT 2.0 DOC**: 공개 API 호출 시 `HTTP 429`가 확인되어 호출 간격·캐시·재시도 정책을 조정한다.

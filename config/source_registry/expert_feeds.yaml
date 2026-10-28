@@ -1,0 +1,96 @@
+# CONTEXT lane — think tanks and specialist analysis.
+# Migrated from scripts/analysis/prototype_local_expert_sources.py (2026-09-14 verified).
+
+schema_version: 1
+updated_at: "2026-10-28"
+
+sources:
+  - source_id: moscow_times_en
+    source_type: local_media
+    source_role: secondary
+    required: false
+    fallback: []
+    license_access_note: "Public RSS; independent-in-exile outlet; retain URL; no login."
+    url: https://www.themoscowtimes.com/rss/news
+    country: RU
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/analysis/prototype_local_expert_sources.py
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    orientation: independent-in-exile
+
+  - source_id: al_monitor
+    source_type: expert_analysis
+    source_role: secondary
+    required: false
+    fallback: []
+    license_access_note: "Public RSS; specialist journalism; retain source URL."
+    url: https://www.al-monitor.com/rss
+    country: US
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/analysis/prototype_local_expert_sources.py
+    cadence: daily
+    priority: medium
+    lane: CONTEXT
+    orientation: middle_east_specialist_journalism
+
+  - source_id: chatham_house_expert_comment
+    source_type: expert_analysis
+    source_role: secondary
+    required: false
+    fallback: []
+    license_access_note: "Public Chatham House feed; expert commentary, not official fact."
+    url: https://www.chathamhouse.org/path/83/feed.xml
+    country: GB
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/analysis/prototype_local_expert_sources.py
+    cadence: daily
+    priority: medium
+    lane: CONTEXT
+    orientation: UK_nonpartisan_thinktank
+
+  - source_id: crisis_group_global
+    source_type: expert_analysis
+    source_role: secondary
+    required: false
+    fallback: []
+    license_access_note: "Public Crisis Group RSS; conflict-prevention assessments only."
+    url: https://www.crisisgroup.org/rss
+    country: BE
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/analysis/prototype_local_expert_sources.py
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    orientation: conflict_prevention_thinktank
+
+  - source_id: thirty_eight_north
+    source_type: expert_analysis
+    source_role: secondary
+    required: false
+    fallback: []
+    license_access_note: "Public 38 North feed (Stimson); DPRK specialist analysis."
+    url: https://www.38north.org/feed/
+    country: US
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/analysis/prototype_local_expert_sources.py
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    orientation: dprk_specialist_platform

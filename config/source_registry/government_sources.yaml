@@ -1,0 +1,146 @@
+# Official / state channels for FAST + CONTEXT lanes.
+# White House uses a dedicated optional collector; do not duplicate its RSS
+# inside gov_announcements_collector without the shared dedupe rules in
+# COLLECTION_PIPELINE_ARCHITECTURE.md.
+
+schema_version: 1
+updated_at: "2026-10-28"
+
+sources:
+  - source_id: whitehouse_releases_rss
+    source_type: official_statement
+    source_role: primary
+    required: false
+    fallback: []
+    license_access_note: "Public White House Releases RSS; store URL+hash+receipt; respect robots.txt; no bulk HTML scrape by default."
+    url: https://www.whitehouse.gov/releases/feed/
+    country: US
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: false
+    collector: scripts/collection/fetch_whitehouse_official.py
+    cadence: daily
+    priority: high
+    lane: FAST
+    notes: "Optional via --with-whitehouse. Official narrative signal, not ground truth."
+
+  - source_id: us_state_press_releases
+    source_type: official_statement
+    source_role: primary
+    required: true
+    fallback: [us_state_press_briefings]
+    license_access_note: "Public State Department RSS; retain source URL; no login."
+    url: https://www.state.gov/rss-feed/press-releases/feed/
+    country: US
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/gov_announcements_collector.py
+    cadence: daily
+    priority: high
+    lane: FAST
+
+  - source_id: us_state_press_briefings
+    source_type: official_statement
+    source_role: secondary
+    required: false
+    fallback: []
+    license_access_note: "Public State Department RSS."
+    url: https://www.state.gov/rss-feed/department-press-briefings/feed/
+    country: US
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/gov_announcements_collector.py
+    cadence: daily
+    priority: medium
+    lane: FAST
+
+  - source_id: kr_mofa_press
+    source_type: official_statement
+    source_role: primary
+    required: true
+    fallback: []
+    license_access_note: "Public MOFAs RSS; encoding may be euc-kr or utf-8 — trust XML prolog."
+    url: http://www.mofa.go.kr/www/brd/rss.do?brdId=235
+    country: KR
+    language: ko
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/gov_announcements_collector.py
+    cadence: daily
+    priority: high
+    lane: FAST
+
+  - source_id: uk_fcdo_news
+    source_type: official_statement
+    source_role: primary
+    required: false
+    fallback: []
+    license_access_note: "UK GOV.UK Atom feed for FCDO; public Open Government Licence context."
+    url: https://www.gov.uk/search/news-and-communications.atom?organisations%5B%5D=foreign-commonwealth-development-office
+    country: GB
+    language: en
+    access_method: atom
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/gov_announcements_collector.py
+    cadence: daily
+    priority: medium
+    lane: FAST
+
+  - source_id: de_aa_presse
+    source_type: official_statement
+    source_role: primary
+    required: false
+    fallback: []
+    license_access_note: "German MFA public RSS."
+    url: https://www.auswaertiges-amt.de/static/includes/rss/Presse-RSS-Feed.xml
+    country: DE
+    language: de
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/gov_announcements_collector.py
+    cadence: daily
+    priority: medium
+    lane: FAST
+
+  - source_id: irna_en
+    source_type: state_media_news
+    source_role: secondary
+    required: false
+    fallback: []
+    license_access_note: "State media RSS; treat as official narrative / news layer, not ground truth."
+    url: https://en.irna.ir/rss
+    country: IR
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/gov_announcements_collector.py
+    cadence: daily
+    priority: medium
+    lane: CONTEXT
+    notes: "Do not merge with official_statement for independence counts."
+
+  - source_id: al_jazeera_all
+    source_type: state_media_news
+    source_role: secondary
+    required: false
+    fallback: []
+    license_access_note: "Public Al Jazeera RSS; state-affiliated media, not MFA release."
+    url: https://www.aljazeera.com/xml/rss/all.xml
+    country: QA
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/gov_announcements_collector.py
+    cadence: daily
+    priority: medium
+    lane: CONTEXT

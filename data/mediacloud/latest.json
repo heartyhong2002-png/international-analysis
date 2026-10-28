@@ -1,12 +1,22 @@
 {
   "receipt": {
     "collector": "mediacloud",
-    "endpoint": "https://api.mediacloud.org/api/v2/stories_public/list",
-    "query": "Red Sea shipping",
-    "observed_at": "2026-10-09T16:04:54.406394+00:00",
+    "api_version": "search_v4",
+    "endpoint": "https://search.mediacloud.org/api/search/story-list",
+    "query": "\"Red Sea\" OR shipping OR Houthi",
+    "start": "2026-10-21",
+    "end": "2026-10-28",
+    "collection_ids": [
+      "34412234"
+    ],
+    "source_ids": [],
+    "page_size": 3,
+    "observed_at": "2026-10-28T07:31:27.397792+00:00",
     "complete": false,
     "rows": 0,
-    "error": "ConnectionError: HTTPSConnectionPool(host='api.mediacloud.org', port=443): Max retries exceeded with url: /api/v2/stories_public/list?q=Red+Sea+shipping&limit=3&key=b123c3a6064af6a3074e4b7976c51a454be7bb6e (Caused by NameResolutionError(\"HTTPSConnection(host='api.mediacloud.org', port=443): Failed to resolve 'api.mediacloud.org' ([Errno 11001] getaddrinfo failed)\"))"
+    "license_access_note": "Media Cloud Search API; academic/research account with weekly quota. Use Authorization Token header only. Keep off default pipeline.",
+    "status": "AUTH_REQUIRED",
+    "access_note": "Set MEDIACLOUD_API_KEY (profile token). Do not put the key in the URL."
   },
   "stories": []
 }

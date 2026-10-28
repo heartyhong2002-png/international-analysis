@@ -1,0 +1,126 @@
+# OPINION lane — online information-environment signals, not national opinion.
+# Never treat posts as population-representative polls.
+
+schema_version: 1
+updated_at: "2026-10-28"
+
+sources:
+  - source_id: taiwan_ptt_public
+    source_type: online_expression
+    source_role: secondary
+    required: false
+    fallback: [google_news_local_rss]
+    license_access_note: "Public PTT board pages only; no login; no private boards."
+    url: https://www.ptt.cc/
+    country: TW
+    language: zh
+    access_method: html
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_local_opinions.py
+    cadence: daily
+    priority: medium
+    lane: OPINION
+
+  - source_id: pincong_public
+    source_type: online_expression
+    source_role: secondary
+    required: false
+    fallback: []
+    license_access_note: "Public pincong.rocks pages; overseas Chinese-language forum; no auth bypass."
+    url: https://pincong.rocks/
+    country: MULTI
+    language: zh
+    access_method: html
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_local_opinions.py
+    cadence: daily
+    priority: medium
+    lane: OPINION
+
+  - source_id: bluesky_public_search
+    source_type: online_expression
+    source_role: discovery_only
+    required: false
+    fallback: []
+    license_access_note: "Public Bluesky API/search; store post URLs; no private accounts."
+    url: https://bsky.app/
+    country: MULTI
+    language: multi
+    access_method: api
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_local_opinions.py
+    cadence: daily
+    priority: medium
+    lane: OPINION
+
+  - source_id: google_news_local_rss
+    source_type: local_media
+    source_role: secondary
+    required: false
+    fallback: []
+    license_access_note: "Google News public RSS; headlines/links only; not a poll."
+    url: https://news.google.com/
+    country: MULTI
+    language: multi
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_local_opinions.py
+    cadence: daily
+    priority: medium
+    lane: OPINION
+
+  - source_id: telegram_osint_public
+    source_type: online_expression
+    source_role: discovery_only
+    required: false
+    fallback: []
+    license_access_note: "Public Telegram web preview channels only; no invite links / private groups / account takeover."
+    url: https://t.me/
+    country: MULTI
+    language: multi
+    access_method: html
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_local_opinions.py
+    cadence: daily
+    priority: medium
+    lane: OPINION
+
+  - source_id: google_trends_risk_keywords
+    source_type: online_expression
+    source_role: discovery_only
+    required: false
+    fallback: []
+    license_access_note: "Unofficial Trends access via PyTrends; rate limits; relative interest only."
+    url: https://trends.google.com/
+    country: MULTI
+    language: multi
+    access_method: api
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_google_trends.py
+    cadence: daily
+    priority: low
+    lane: OPINION
+
+  - source_id: x_public_api
+    source_type: online_expression
+    source_role: discovery_only
+    required: false
+    fallback: []
+    license_access_note: "PENDING: confirm official X API product, paid tier, and ToS before implementing fetch_x_public.py. Public posts only."
+    url: https://developer.x.com/
+    country: MULTI
+    language: multi
+    access_method: api
+    enabled: false
+    pipeline_default: false
+    collector: scripts/collection/fetch_x_public.py
+    cadence: manual
+    priority: low
+    lane: OPINION
+    notes: "Do not implement until license/access confirmed."

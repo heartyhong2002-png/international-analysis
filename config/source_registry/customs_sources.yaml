@@ -1,0 +1,76 @@
+# BASELINE lane — trade / customs statistics.
+# Expand country adapters only after portal ToS and key quotas are recorded.
+
+schema_version: 1
+updated_at: "2026-10-28"
+
+sources:
+  - source_id: kr_customs_nitemtrade_cn
+    source_type: trade_statistics
+    source_role: primary
+    required: false
+    fallback: [un_comtrade_semiconductors]
+    license_access_note: "Korea data.go.kr Open API; CUSTOMS_API_KEY required; store raw response + receipt; do not commit key."
+    url: https://apis.data.go.kr/1220000/nitemtrade/getNitemtradeList
+    country: KR
+    language: ko
+    access_method: api
+    enabled: true
+    pipeline_default: false
+    collector: scripts/collection/fetch_customs_korea_china.py
+    cadence: manual
+    priority: high
+    lane: BASELINE
+    notes: "Partner filter CN; HS 8541/8542 semiconductor probe."
+
+  - source_id: un_comtrade_semiconductors
+    source_type: trade_statistics
+    source_role: secondary
+    required: false
+    fallback: []
+    license_access_note: "UN Comtrade public/API terms; rate limits; cite UN as source."
+    url: https://comtradeplus.un.org/
+    country: MULTI
+    language: en
+    access_method: api
+    enabled: true
+    pipeline_default: false
+    collector: scripts/collection/fetch_uncomtrade_semiconductors.py
+    cadence: manual
+    priority: medium
+    lane: BASELINE
+
+  - source_id: panama_canal_ops
+    source_type: trade_statistics
+    source_role: secondary
+    required: false
+    fallback: []
+    license_access_note: "PENDING: confirm ACP / Panama Canal Authority public data license, robots, and rate limits before fetch_panama_canal.py."
+    url: https://pancanal.com/
+    country: PA
+    language: en
+    access_method: html
+    enabled: false
+    pipeline_default: false
+    collector: scripts/collection/fetch_panama_canal.py
+    cadence: manual
+    priority: medium
+    lane: BASELINE
+    notes: "Americas chokepoint; do not confuse with Suez."
+
+  - source_id: multi_country_customs_stub
+    source_type: trade_statistics
+    source_role: discovery_only
+    required: false
+    fallback: []
+    license_access_note: "PENDING: per-country portal API/download terms for JP/TW/US/VN/SG/IN/MX/BR/EU before fetch_customs_multi_country.py."
+    url: ""
+    country: MULTI
+    language: multi
+    access_method: file
+    enabled: false
+    pipeline_default: false
+    collector: scripts/collection/fetch_customs_multi_country.py
+    cadence: manual
+    priority: low
+    lane: BASELINE

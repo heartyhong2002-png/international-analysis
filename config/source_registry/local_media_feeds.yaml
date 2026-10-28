@@ -1,0 +1,59 @@
+# CONTEXT lane — local / independent media not already listed under expert_feeds.
+# Candidate APIs stay pipeline_default:false until auth and quotas are stable.
+
+schema_version: 1
+updated_at: "2026-10-28"
+
+sources:
+  - source_id: mediacloud_search_us_national
+    source_type: news_api
+    source_role: discovery_only
+    required: false
+    fallback: []
+    license_access_note: "Media Cloud Search API; requires MEDIACLOUD_API_KEY as Authorization Token; academic/research ToS; do not log key; metadata only (no story body by default)."
+    url: https://search.mediacloud.org/api/
+    endpoint: search/story-list
+    country: US
+    language: multi
+    access_method: api
+    enabled: true
+    pipeline_default: false
+    collector: scripts/collection/fetch_mediacloud.py
+    cadence: manual
+    priority: low
+    lane: CONTEXT
+    notes: "Host api.mediacloud.org is dead DNS. Default probe collection cs=34412234. Not an alert basis."
+
+  - source_id: event_registry_news
+    source_type: news_api
+    source_role: discovery_only
+    required: false
+    fallback: []
+    license_access_note: "Event Registry API key required; prefer academic approval; bounded probes only."
+    url: https://eventregistry.org/
+    country: MULTI
+    language: multi
+    access_method: api
+    enabled: true
+    pipeline_default: false
+    collector: scripts/collection/fetch_event_registry.py
+    cadence: manual
+    priority: low
+    lane: CONTEXT
+
+  - source_id: acled_events
+    source_type: event_api
+    source_role: secondary
+    required: false
+    fallback: []
+    license_access_note: "ACLED OAuth account required; academic/research redistribution limits; store event ids + receipt only."
+    url: https://acleddata.com/
+    country: MULTI
+    language: en
+    access_method: api
+    enabled: true
+    pipeline_default: false
+    collector: scripts/collection/fetch_acled.py
+    cadence: manual
+    priority: medium
+    lane: CONTEXT
