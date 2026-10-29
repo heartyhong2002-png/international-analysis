@@ -453,3 +453,38 @@ international-analysis/
   - 참여 여부는 아직 확정하지 않았으며, 개인 국제정세 조기경보 프로젝트와 연구실 프로젝트를 별개로 유지한다.
   - 결정 전 확인할 항목은 역할, 주당 시간, 활동 기간, 지도 방식, 성과 인정, 데이터·코드·AI 사용 규정이다.
   - 상세 기록: `docs/history/PROFESSOR_LAB_MEETING_20261012.md`.
+
+
+- 2026-10-13 [Codex / GDELT Cloud Quota Safety 및 사용량 제어]
+  - Academic & Research 월 5,000 QU 상한에 맞추어 scripts/collection/gdelt_cloud_budget.py를 신설하고 기본 파이프라인에서 자동 비활성화(선택적 실행) 처리함.
+  - 일일 안전 상한선(Safety Quota Cap) 및 요청 간격(Bounded Throttling), 실행별 사용량 영수증 기록 체계를 구축하여 예상치 못한 비용 발생 및 할당량 고갈을 방지함.
+
+- 2026-10-15 [Codex / 백악관 공식 브리핑·성명 수집기 구축]
+  - 미 행정부 공식 입장과 대외 정책 신호를 정밀 수집하기 위해 scripts/collection/fetch_whitehouse_official.py 구축.
+  - 공식 RSS 피드를 우선 수집하고, 필요 시 제한적 사이트맵 파싱으로 보완하는 2단계 아키텍처 및 선택 플래그 연계 완료.
+
+- 2026-10-28 [Cursor / DB 증거 계층(Evidence Storage Layer) 트랜잭션 구축]
+  - 리스크 점수, 신호 괴리율, 경보 레벨, 원문 근거, 검증 감사 로그를 단일 트랜잭션으로 원자적(Atomic) 적재하는 scripts/db/evidence_writer.py 구현.
+  - run_key 중복 거부 및 롤백 가드레일, 검증 감사 로그 적재(load_validation_audit.py), 테스트 픽스처 격리 관리(manage_test_fixtures.py) 구축.
+
+- 2026-10-28 [Cursor Agent / Media Cloud Search API 최신화 및 Source Registry 설계]
+  - Media Cloud의 레거시 호스트 DNS 해석 실패를 공식 최신 Search API(search.mediacloud.org) 및 Bearer Token 인증 방식으로 개편 (fetch_mediacloud.py).
+  - 싱크탱크, 현지 언론, 정부 발표, 여론 등 수집 소스를 하드코딩하지 않고 선언적으로 관리하는 config/source_registry/ 스키마(YAML) 초안 구축.
+
+- 2026-10-28 [Cursor / 대시보드 5대 감시축 표현 교정]
+  - scripts/dashboard/generate_dashboard_v2.py 내 Information 축의 국민 여론 등 단정적·과장된 표현을 완화하고, 하드코딩된 Critical 및 임의 격상된 Alert Level 배지를 공식 DB 뷰 기준으로 일관성 있게 교정.
+
+- 2026-10-28 [ANTIGRAVITY / 강송희 교수님 연구 프로젝트 전용 작업 공간 구축]
+  - 지도교수님(한국공학대학교 경영학부 강송희 교수님)과의 연구 협업을 위해 prof_kang_project/ 전용 작업 공간 신설.
+  - 주간 보고서, 발표 슬라이드, 논문 초안 작성을 위한 표준 템플릿과 세션 가이드라인 수립 완료.
+
+- 2026-10-28 [ANTIGRAVITY / Notion 연동 모듈 구축 및 작업보드·종합현황 실시간 동기화]
+  - 외부 라이브러리 의존성 없는 경량 Notion API 클라이언트(scripts/notion/notion_client_base.py) 구축.
+  - AGENT_SYNC.md의 Active Work Board 16개 작업을 Notion 칸반 데이터베이스(📋 AI 세션 작업 동기화 보드)로 양방향 동기화하는 모듈(sync_notion_board.py) 연동.
+  - 마크다운 조기경보 리포트 및 프로젝트 전체 진행 현황을 노션 블록으로 변환하여 노션 허브 하위에 자동 퍼블리싱하는 모듈(publish_notion_report.py, notion_manager.py) 완성 및 실시간 동기화 검증.
+
+
+- 2026-10-29 [ANTIGRAVITY / 신호 괴리(Signal Gap) 정규화 및 tev1 10건 산식 불일치 감사 완료]
+  - `scripts/analysis/analyze_signal_gap.py`에 `_normalize_evidence_phrases()` 및 `_build_news_digest()`를 도입해 복합 인용문 단일 문자열 반환 오류와 비정치·문화 기사 오탐을 차단했다.
+  - `scripts/validation/backtest_tev1.py`를 5대 핵심 감시축 10건 시간 동결(time-frozen) 사례로 확장하고, 결정론적 `Risk Signal Score` 산식과 `tev1` 판정 간의 불일치(Discrepancy) 감사를 수행해 `data/tev1_backtest_results.json`에 저장했다.
+  - 10건 중 5건 일치·5건 불일치를 통해 단일 출처 미검증(`UNVERIFIED`)에 대한 산식 가드레일 작동 및 `tev1`의 `CROSS_VERIFIED` 키워드 과민 반응(`BT-2026-ALLY-02`) 방어를 실증하고 `docs/current/LLM_SYSTEM_SUMMARY.md`, `docs/current/VALIDATION_PLAN.md`에 문서화했다.

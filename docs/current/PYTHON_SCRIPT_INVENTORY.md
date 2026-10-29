@@ -71,9 +71,11 @@
 
 - `db/build_database.py`: 원본·정규화 데이터 DB 적재
 - `db/load_cross_verification_to_db.py`: 교차검증 결과 DB 적재
+- `db/evidence_writer.py`, `db/load_validation_audit.py`, `db/manage_test_fixtures.py`: 증거 계층 원자적 적재, 검증 감사 적재, 테스트 픽스처 관리
 - `db/check_duplicates.py`, `db/dedupe_gov_announcements.py`, `db/clean_orphan_broken.py`: DB 유지보수
 - `dashboard/generate_dashboard_v2.py`, `dashboard/streamlit_dashboard.py`: 대시보드 담당 세션 소유
 - `reports/*.py`: PDF·Word·분석보고서 생성
+- `notion/*.py` (`notion_manager.py`, `notion_client_base.py`, `sync_notion_board.py`, `sync_notion_docs.py`, `publish_notion_report.py`): Notion 허브·작업 보드·문서 인벤토리·작업 이력·조기경보 보고서 동기화
 
 이 세션은 대시보드·검증 로직을 직접 수정하지 않는다.
 

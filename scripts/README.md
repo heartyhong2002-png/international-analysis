@@ -28,6 +28,7 @@ scripts/
 ├── dashboard/     # HTML/Streamlit 대시보드 생성
 ├── reports/       # Markdown/PDF/DOCX 보고서 생성
 ├── validation/    # 모델 검증·팩트체크·백테스트·사람 검수
+├── notion/        # Notion 허브·작업 보드·문서 보관소·보고서 자동화 연동
 └── archive/       # 현재 핵심 흐름에서 벗어난 보조/레거시 스크립트
 ```
 
@@ -81,6 +82,9 @@ scripts/
 | `build_database.py` | CSV/JSON 결과를 MySQL 테이블로 적재 |
 | `create_views.sql` | 대시보드·포트폴리오용 SQL 뷰 생성 |
 | `load_cross_verification_to_db.py` | 교차검증 결과를 MySQL에 동기화 |
+| `evidence_writer.py` | 점수·신호괴리·경보·근거·검증 감사 트랜잭션 적재 |
+| `load_validation_audit.py` | 백테스트 및 사람 검수 로그를 검증 감사 테이블에 적재 |
+| `manage_test_fixtures.py` | TEST-FIXTURE 검증 및 운영 뷰 분리 점검 |
 | `report_db_saver.py` | 보고서를 파일과 DB `analysis_reports`에 저장 |
 | `check_duplicates.py` | 중복 데이터 점검 |
 | `clean_orphan_broken.py` | 깨진 고아 데이터 정리 |
@@ -120,6 +124,18 @@ scripts/
 | `auto_benchmark_verifier.py` | 자동 벤치마크 검증 리포트 생성 |
 | `backtest_early_warning.py` | 조기경보 백테스트 보고서 생성 |
 | `sample_for_review.py` | 사람 검수 표본 추출 및 검수 결과 병합 |
+
+## notion
+
+Notion 프로젝트 허브와 로컬 마크다운·보고서를 동기화하는 영역이다.
+
+| 파일 | 역할 |
+|---|---|
+| `notion_manager.py` | Notion 연결 점검·보드 동기화·문서/작업이력 동기화·보고서 발행 통합 CLI (`--check`, `--sync-board`, `--sync-docs`, `--publish-report`, `--all`) |
+| `notion_client_base.py` | `.env` 로드 및 Notion REST API(`2022-06-28`) 표준 클라이언트 래퍼 |
+| `sync_notion_board.py` | `AGENT_SYNC.md`의 Active Work Board를 Notion 데이터베이스로 양방향 동기화 |
+| `sync_notion_docs.py` | Notion `MD 문서 보관소` 업데이트 및 `전체 프로젝트 작업 이력` 종합 페이지 자동 생성·갱신 |
+| `publish_notion_report.py` | 최신 조기경보 브리프 마크다운을 Notion 블록으로 변환해 발행 |
 
 ## archive
 

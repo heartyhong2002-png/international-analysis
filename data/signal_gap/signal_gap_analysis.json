@@ -2,13 +2,75 @@
   "Russia": {
     "model_used": "second_constantine/yandex-gpt-5-lite:8b",
     "discrepancy_score": 85,
-    "narrative_differences": "The official state media focuses on international politics and events, such as incidents related to the Ukrainian conflict and diplomatic issues. In contrast, the independent/exiled media covers domestic political events like election results and mobilization in Russia. The reporting styles and emphasized topics are vastly different, with the official media highlighting geopolitical tensions and the independent media focusing on internal political developments and social activism.",
-    "analyzed_at": "2026-09-21 15:44:50"
+    "narrative_differences": "Official State Media focuses on diplomatic statements and domestic events such as the launch of the digital ruble, while Independent/Exiled Media emphasizes geopolitical tensions, international relations, and sanctions. Official State Media does not mention sanctions or geopolitical tensions explicitly, whereas Independent/Exiled Media highlights the lifting of sanctions from some Russian individuals and geopolitical incidents like the alleged violation of Polish airspace.",
+    "evidence_phrases": [
+      "Russia views any military cargo for Kiev as legitimate target — diplomat",
+      "Poland stated that a Russian helicopter Mi-8 violated the country's airspace"
+    ],
+    "scoring_version": "early-warning-v1",
+    "risk_signal_score": 69.7,
+    "signal_gap_score": 85.0,
+    "evidence_coverage": 53.3,
+    "source_diversity": 2,
+    "source_item_count": 20,
+    "consensus_agreement": null,
+    "alert_level": "경보",
+    "alert_reason": "신호 괴리와 자료량이 함께 높아 담당자 확인이 필요함",
+    "human_review_required": true,
+    "analyzed_at": "2026-10-29 15:35:52"
+  },
+  "China": {
+    "model_used": null,
+    "discrepancy_score": null,
+    "narrative_differences": "공식 또는 독립 신호가 부족해 비교 확인이 필요함",
+    "evidence_phrases": [],
+    "scoring_version": "early-warning-v1",
+    "risk_signal_score": 20.7,
+    "signal_gap_score": 0.0,
+    "evidence_coverage": 20.0,
+    "source_diversity": 1,
+    "source_item_count": 10,
+    "consensus_agreement": null,
+    "alert_level": "확인 필요",
+    "alert_reason": "공식·독립 신호의 비교 근거 또는 근거 문장이 부족해 경보 단계 판단을 보류함",
+    "human_review_required": true,
+    "analyzed_at": "2026-10-29 15:35:52"
   },
   "Middle_East": {
     "model_used": "falcon3:7b",
-    "discrepancy_score": 85,
-    "narrative_differences": "The official state media focuses on Iran's economic and diplomatic activities, including trade relations, a visit by a delegation, and a contract signing for oil production. In contrast, the independent/exiled media covers a range of topics, including U.S. diplomatic efforts, the strategic importance of a small Spanish city, personal relationships, cultural preferences, and the issue of Sahrawi citizenship, showing a significant difference in focus and content.",
-    "analyzed_at": "2026-09-21 15:45:48"
+    "discrepancy_score": 78,
+    "narrative_differences": "Official State Media emphasizes economic resilience against U.S. sanctions, free-zone trade expansion, and the Rasht–Astara North–South corridor infrastructure, whereas Independent Media highlights regional military corridors in Syria and escalating Houthi–naval coalition tensions around Marib and Bab el-Mandeb.",
+    "evidence_phrases": [
+      "U.S. Sanctions Take Off, China Says No",
+      "إذا سقطت مأرب… الحوثيون بين التدخل الباكستاني والتحالف البحري"
+    ],
+    "scoring_version": "early-warning-v1",
+    "risk_signal_score": 66.9,
+    "signal_gap_score": 78.0,
+    "evidence_coverage": 53.3,
+    "source_diversity": 2,
+    "source_item_count": 20,
+    "consensus_agreement": null,
+    "alert_level": "경보",
+    "alert_reason": "신호 괴리와 자료량이 함께 높아 담당자 확인이 필요함",
+    "human_review_required": true,
+    "analyzed_at": "2026-10-29 15:37:20"
+  },
+  "Global_South": {
+    "model_used": null,
+    "discrepancy_score": null,
+    "narrative_differences": "공식 또는 독립 신호가 부족해 비교 확인이 필요함",
+    "evidence_phrases": [],
+    "scoring_version": "early-warning-v1",
+    "risk_signal_score": 20.7,
+    "signal_gap_score": 0.0,
+    "evidence_coverage": 20.0,
+    "source_diversity": 1,
+    "source_item_count": 10,
+    "consensus_agreement": null,
+    "alert_level": "확인 필요",
+    "alert_reason": "공식·독립 신호의 비교 근거 또는 근거 문장이 부족해 경보 단계 판단을 보류함",
+    "human_review_required": true,
+    "analyzed_at": "2026-10-29 15:35:52"
   }
 }

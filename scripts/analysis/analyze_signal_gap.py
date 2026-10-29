@@ -19,10 +19,10 @@ sys.stdout.reconfigure(encoding='utf-8')
 
 # 모델 라우팅 매핑 (project-handoff.md 기준)
 REGION_MODELS = {
-    "Russia": "second_constantine/yandex-gpt-5-lite:8b", # 설치된 정확한 모델명으로 수정
-    "China": "qwen2.5:7b",                   
-    "Middle_East": "falcon3:7b",             # 아직 ollama에 pull 안 된 상태일 수 있음
-    "Global_South": "exaone3.5:7.8b"         
+    "Russia": "second_constantine/yandex-gpt-5-lite:8b",
+    "China": "qwen2.5:7b",
+    "Middle_East": "falcon3:7b",
+    "Global_South": "exaone3.5:7.8b"
 }
 
 OLLAMA_URL = "http://localhost:11434/api/generate"
@@ -110,8 +110,9 @@ def calculate_alert_assessment(
         "human_review_required": human_review_required,
     }
 
-PROMPT_TEMPLATE = """You are a geopolitical risk-signal analyst.
-Below are recent news summaries from an Official State Media and an Independent/Exiled Media concerning the same region.
+
+PROMPT_TEMPLATE = """You are a geopolitical and supply-chain risk-signal analyst.
+Below are recent news items (headline + summary) from an Official State Media and an Independent/Exiled Media concerning the same region.
 
 [Official State Media]
 {official_text}
@@ -120,17 +121,70 @@ Below are recent news summaries from an Official State Media and an Independent/
 {independent_text}
 
 Task:
-1. Compare only the supplied narratives. Calculate a 'Signal Gap Discrepancy Score' from 0 to 100. (0 = identical narrative, 100 = completely opposing narratives or extreme censorship).
-2. Write a brief summary (2-3 sentences) explaining the observed differences and cite up to two short evidence phrases from the supplied text.
-3. Do not state or imply that a future event is certain. If the supplied material is insufficient, say that confirmation is needed.
+1. Focus ONLY on geopolitical, security, military, sanctions, trade, energy, maritime, or governance topics. Ignore sports, entertainment, lifestyle, folklore, or purely religious reflections.
+2. Compare the supplied geopolitical/economic narratives and calculate a 'Signal Gap Discrepancy Score' from 0 to 100 (0 = identical framing, 100 = opposing framing or state omission of critical crisis/sanction/security events). If either side has no geopolitical/economic items, set discrepancy_score to 0.
+3. Write a brief summary (2-3 sentences) explaining the observed narrative gap on geopolitical/economic risk signals, and cite at least two short verbatim evidence phrases (one from Official State Media, one from Independent/Exiled Media).
+4. Do not state or imply that a future event is certain. Use observable risk-signal and verification language only.
 
 You MUST respond strictly in the following JSON format without any markdown blocks or extra text:
 {{
   "discrepancy_score": 85,
-  "narrative_differences": "Explanation here...",
-  "evidence_phrases": ["phrase from supplied text"]
+  "narrative_differences": "Explanation of geopolitical/economic framing differences here...",
+  "evidence_phrases": [
+    "verbatim quote from Official State Media",
+    "verbatim quote from Independent/Exiled Media"
+  ]
 }}
 """
+
+
+def _normalize_evidence_phrases(raw_phrases) -> list[str]:
+    """LLM이 단일 문자열 안에 여러 인용문을 묶어 반환하더라도 개별 근거 문장 리스트로 정규화한다."""
+    if isinstance(raw_phrases, str):
+        raw_phrases = [raw_phrases]
+    if not isinstance(raw_phrases, list):
+        return []
+    normalized = []
+    for item in raw_phrases:
+        if not isinstance(item, str):
+            continue
+        text = item.strip()
+        if not text:
+            continue
+        if (text.startswith("'") and text.endswith("'") and "', '" in text) or (
+            text.startswith('"') and text.endswith('"') and '", "' in text
+        ):
+            sep = "', '" if "', '" in text else '", "'
+            parts = [p.strip(" '\"") for p in text.split(sep) if p.strip(" '\"")]
+            normalized.extend(parts)
+        elif "\n" in text:
+            parts = [p.strip(" -•'\"") for p in text.splitlines() if p.strip(" -•'\"")]
+            normalized.extend(parts)
+        else:
+            normalized.append(text.strip("'\" "))
+    return [p for p in normalized if p]
+
+
+def _build_news_digest(news_df: pd.DataFrame, max_items: int = 6) -> str:
+    """Title과 Summary를 결합하여 요약 누락 기사를 보존하고 문맥 정확도를 높인다."""
+    lines = []
+    for _, row in news_df.head(max_items).iterrows():
+        title = str(row.get("Title", "") or "").strip()
+        summary = str(row.get("Summary", "") or "").strip()
+        if title.lower() == "nan":
+            title = ""
+        if summary.lower() == "nan":
+            summary = ""
+        if len(summary) > 220:
+            summary = summary[:217] + "..."
+        if title and summary:
+            lines.append(f"- {title}: {summary}")
+        elif title:
+            lines.append(f"- {title}")
+        elif summary:
+            lines.append(f"- {summary}")
+    return "\n".join(lines)
+
 
 def call_ollama(model_name, prompt):
     print(f"    🤖 LLM 호출 중 ({model_name})...")
@@ -138,10 +192,11 @@ def call_ollama(model_name, prompt):
         "model": model_name,
         "prompt": prompt,
         "stream": False,
-        "format": "json" # Ollama JSON 모드 강제
+        "format": "json",
+        "keep_alive": "1m"
     }
     try:
-        response = requests.post(OLLAMA_URL, json=payload, timeout=120)
+        response = requests.post(OLLAMA_URL, json=payload, timeout=240)
         if response.status_code == 200:
             result = response.json().get("response", "")
             return json.loads(result)
@@ -156,31 +211,30 @@ def call_ollama(model_name, prompt):
             print(f"    ⚠️ Ollama 에러: {response.status_code} - {response.text}")
     except Exception as e:
         print(f"    ⚠️ LLM 통신 실패 (Ollama가 실행 중인지 확인하세요): {e}")
-    
-    # Fallback response
+
     return {"discrepancy_score": None, "narrative_differences": "LLM Analysis Failed"}
+
 
 def analyze_signal_gap():
     print("🧠 6대 네이티브 LLM 기반 신호 괴리율(Signal Gap) 분석 시작...")
-    
+
     if not INPUT_CSV.exists():
         print("❌ 수집된 RSS 데이터가 없습니다. 먼저 fetch_signal_gap_rss.py를 실행하세요.")
         return
-        
+
     df = pd.read_csv(INPUT_CSV)
     results = {}
-    
+
     for region in df['Region'].unique():
         print(f"\n[{region}] 권역 분석 준비 중...")
-        
+
         region_df = df[df['Region'] == region]
         official_news = region_df[region_df['Source_Type'] == 'Official']
         independent_news = region_df[region_df['Source_Type'] == 'Independent']
-        
-        # 텍스트 병합 (상위 5개 기사만 요약용으로 추출하여 토큰 제한 방지)
-        off_text = "\n".join(official_news['Summary'].dropna().head(5).tolist())
-        ind_text = "\n".join(independent_news['Summary'].dropna().head(5).tolist())
-        
+
+        off_text = _build_news_digest(official_news, max_items=6)
+        ind_text = _build_news_digest(independent_news, max_items=6)
+
         if not off_text or not ind_text:
             assessment = calculate_alert_assessment(
                 discrepancy_score=0,
@@ -198,15 +252,13 @@ def analyze_signal_gap():
                 "analyzed_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             }
             continue
-            
+
         model = REGION_MODELS.get(region, "mistral-nemo")
         prompt = PROMPT_TEMPLATE.format(official_text=off_text, independent_text=ind_text)
-        
+
         analysis = call_ollama(model, prompt)
-        
-        evidence_phrases = analysis.get("evidence_phrases") or []
-        if not isinstance(evidence_phrases, list):
-            evidence_phrases = []
+
+        evidence_phrases = _normalize_evidence_phrases(analysis.get("evidence_phrases"))
         assessment = calculate_alert_assessment(
             discrepancy_score=analysis.get("discrepancy_score"),
             official_count=len(official_news),
@@ -215,7 +267,7 @@ def analyze_signal_gap():
         )
         print(f"    ✅ 분석 완료! 신호 괴리: {assessment['signal_gap_score']}/100 · 경보: {assessment['alert_level']}")
         print(f"    📝 요약: {analysis.get('narrative_differences')}")
-        
+
         results[region] = {
             "model_used": model,
             "discrepancy_score": analysis.get('discrepancy_score'),
@@ -230,6 +282,6 @@ def analyze_signal_gap():
             json.dump(results, f, ensure_ascii=False, indent=2)
         print(f"\n✅ 분석 결과가 저장되었습니다: {OUTPUT_JSON}")
 
+
 if __name__ == "__main__":
     analyze_signal_gap()
-

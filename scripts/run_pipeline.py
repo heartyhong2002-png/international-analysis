@@ -118,6 +118,8 @@ def main():
                          help="GDELT Cloud Events를 로컬 QU 안전장치와 함께 1회 수집 (기본값: 실행하지 않음)")
     parser.add_argument("--with-whitehouse", action="store_true",
                          help="백악관 공식 RSS 수집 (기본값: 실행하지 않음)")
+    parser.add_argument("--sync-notion", action="store_true",
+                         help="파이프라인 실행 완료 후 Notion 프로젝트 허브(작업 보드 및 보고서) 자동 동기화")
     args = parser.parse_args()
     if args.only_db and args.collect_only:
         parser.error("--only-db와 --collect-only는 함께 사용할 수 없습니다.")
@@ -169,6 +171,8 @@ def main():
             steps.append(("해협 센서 및 교차검증 MySQL DB 동기화", "db/load_cross_verification_to_db.py", []))
         if not args.skip_dashboard:
             steps.append(("인터랙티브 HTML 대시보드 생성", "dashboard/generate_dashboard_v2.py", []))
+        if args.sync_notion:
+            steps.append(("Notion 작업 보드 및 조기경보 보고서 동기화", "notion/notion_manager.py", ["--all"]))
 
     # 실제 실행 전에 전체 작업 목록을 사용자에게 보여줍니다.
     print("\n" + "=" * 60)

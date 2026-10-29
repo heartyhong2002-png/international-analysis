@@ -177,3 +177,26 @@
 | 미중 무역 | `CRITICAL` | 높은 점수·다중 출처·교차검증 상태와 대체로 일치 |
 
 이 결과는 실제 시간 동결 원문과 사람 검수 라벨을 이용한 정확도 평가가 아니다. 따라서 공식 경보 성능이나 일반화 성능으로 해석하지 않으며, `confidence`를 정답 확률로 취급하지 않는다. 후속 백테스트에서는 최소 10건 이상의 동결 입력, 근거 URL, 사람 검수 결과, 기존 Risk Signal Score와의 불일치를 함께 기록한다.
+
+
+## 12. 5대 감시축 10건 동결 사례 백테스트 및 산식-tev1 불일치(Discrepancy) 감사 (2026-10-29)
+
+1차 4건 시운전 이후, 5대 핵심 감시축(`russia_ukraine_europe`, `east_asia_military_tech`, `middle_east_energy_shipping`, `us_china_strategic_trade`, `us_allies_relations`)별로 각 2건씩 총 10건의 시간 동결(time-frozen) 원문 발췌(`frozen_excerpt`), 근거 URL(`evidence_url`), 사람 검수 라벨(`human_review_label`: `accept`/`revise`)을 `scripts/validation/backtest_tev1.py`에 반영했다.
+
+- **이중 대조 구조**: 각 사례에 대해 결정론적 산식(`calculate_alert_assessment`)이 산출한 경보 등급(`관찰`/`주의`/`경보`/`고경보`/`확인 필요` ➔ `NORMAL`/`WATCH`/`WARNING`/`CRITICAL`/`INSUFFICIENT_EVIDENCE`)과 `tev1`의 선택지 판정(`tev1_choice`)을 대조한다.
+- **불일치 시 사람 검수 강제 트리거**: 산식 결과와 `tev1` 판정이 불일치(`formula_vs_tev1_discrepancy = true`)할 경우, 점수와 무관하게 `human_review_required = true`로 설정하여 사람 검수 대기열로 이관한다.
+- **신호 괴리(Signal Gap) 오탐 방지 검증**: `scripts/analysis/analyze_signal_gap.py`에서 비정치·문화·스포츠 기사를 제외하고 `Title + Summary` 결합 및 복합 인용문 분리 정규화(`_normalize_evidence_phrases`)를 적용해 러시아·중동 권역의 근거 문장 누락 및 비정치 기사 오탐을 교정했다.
+
+
+| Case ID | 감시축 (`issue_axis`) | 산식 판정 | tev1 판정 | 일치 여부 | 불일치 원인 및 검수 조치 |
+|---|---|---|---|---|---|
+| `BT-2022-UKR-01` | `russia_ukraine_europe` | 고경보 (`CRITICAL`) | `CRITICAL` | 일치 | 다중 출처 교차검증 및 높은 신호 괴리 일치 |
+| `BT-2026-UKR-02` | `russia_ukraine_europe` | 고경보 (`CRITICAL`) | `WARNING` | **불일치** | `PARTIALLY_CONFIRMED` 상태를 반영해 `tev1`이 보수적으로 판정 ➔ 사람 검수 |
+| `BT-2024-TWN-01` | `east_asia_military_tech` | 고경보 (`CRITICAL`) | `WARNING` | **불일치** | `PARTIALLY_CONFIRMED` 상태에서 `tev1`이 `WARNING` 선택 ➔ 사람 검수 |
+| `BT-2026-TWN-02` | `east_asia_military_tech` | 경보 (`WARNING`) | `WARNING` | 일치 | 중간 수준 괴리·부분 확인 상태 일치 |
+| `BT-2024-REDSEA-01` | `middle_east_energy_shipping` | 확인 필요 (`INSUFFICIENT_EVIDENCE`) | `WATCH` | **불일치** | 단일 출처 `UNVERIFIED`에 대해 산식 가드레일이 경보 보류 강제 ➔ 사람 검수 |
+| `BT-2026-HORMUZ-02` | `middle_east_energy_shipping` | 고경보 (`CRITICAL`) | `CRITICAL` | 일치 | 해운 프록시·공식/독립 신호 결합 일치 |
+| `BT-2018-USCN-01` | `us_china_strategic_trade` | 고경보 (`CRITICAL`) | `CRITICAL` | 일치 | 공식 관세 발표 및 무역 지표 교차검증 일치 |
+| `BT-2026-USCN-02` | `us_china_strategic_trade` | 확인 필요 (`INSUFFICIENT_EVIDENCE`) | `WATCH` | **불일치** | 독립 출처 비교 근거 부재 시 산식 가드레일이 `확인 필요` 강제 ➔ 사람 검수 |
+| `BT-2026-ALLY-01` | `us_allies_relations` | 경보 (`WARNING`) | `WARNING` | 일치 | 동맹 관세·방위비 협상 신호 괴리 일치 |
+| `BT-2026-ALLY-02` | `us_allies_relations` | 관찰 (`NORMAL`) | `WARNING` | **불일치** | 낮은 위험 점수(26.7)임에도 `tev1`이 `CROSS_VERIFIED`에 과민 반응 ➔ 산식으로 오탐 방어 |

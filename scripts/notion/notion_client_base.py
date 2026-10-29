@@ -121,6 +121,10 @@ class NotionClient:
         clean_id = self._clean_id(page_id)
         return self.request("PATCH", f"pages/{clean_id}", {"properties": properties})
 
+    def get_block_children(self, block_id):
+        clean_id = self._clean_id(block_id)
+        return self.request("GET", f"blocks/{clean_id}/children")
+
     def append_children(self, block_id, children):
         clean_id = self._clean_id(block_id)
         return self.request("PATCH", f"blocks/{clean_id}/children", {"children": children})

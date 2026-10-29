@@ -338,3 +338,33 @@ Reddit IR 전문가들의 리뷰를 바탕으로, 본 파이프라인의 편향(
 | 미중 무역 | `CRITICAL` | 59.8% |
 
 실행 스크립트는 `scripts/validation/backtest_tev1.py`, 원시 결과는 `data/tev1_backtest_results.json`에 보관한다. 이번 실험은 실제 시간 동결 원문과 사람 검수 라벨을 연결한 성능 검증이 아니므로 정확도나 공식 경보 성능으로 해석하지 않는다. `confidence`도 정답 확률이 아니다. 다음 단계는 동결된 원문·근거 URL·사람 검수 결과를 포함한 10건 이상 백테스트와 기존 Risk Signal Score와의 불일치 분석이다.
+
+
+## 13. 신호 괴리(Signal Gap) 정규화 및 tev1 10건 산식 불일치 감사 고도화 (2026-10-29)
+
+1. **근거 문장 리스트 정규화 (`_normalize_evidence_phrases`)**:
+   - 러시아(`yandex-gpt-5-lite:8b`) 등 일부 로컬 LLM이 2개의 인용문을 단일 문자열(`"'인용1', '인용2'"`)로 묶어 반환할 때 `len(evidence_phrases) == 1`로 계산되어, 공식·독립 양측 근거가 충분함에도 `'확인 필요'`로 강등되던 문제를 해결했다.
+2. **비정치·문화 기사 오탐(False Positive) 차단 및 다이제스트 결합 (`_build_news_digest`)**:
+   - 중동(`falcon3:7b`) 등 독립 언론 RSS에 섞인 종교·문학·스포츠 기사와 관영 매체의 인프라 뉴스를 단순 주제 차이로 비교해 높은 괴리 점수를 부여하던 오탐을 막기 위해, **지정학·안보·군사·제재·무역·에너지·해운 주제만 비교**하도록 프롬프트를 강화했다.
+   - `Summary`가 비어 있는 속보성 헤드라인이 누락되지 않도록 `Title + Summary`(최대 220자 축약)를 결합하고, CPU 환경의 모델 스위칭 지연을 고려해 `keep_alive: "1m"`, `timeout=240`을 적용했다.
+3. **`tev1` 10건 동결 사례 백테스트 확장 및 산식 불일치(Discrepancy) 자동 감사 (`scripts/validation/backtest_tev1.py`)**:
+   - 5대 핵심 감시축(`russia_ukraine_europe`, `east_asia_military_tech`, `middle_east_energy_shipping`, `us_china_strategic_trade`, `us_allies_relations`)별로 각 2건씩 총 10건의 시간 동결(time-frozen) 원문 발췌·근거 URL·사람 검수 라벨(`accept`/`revise`)을 구성했다.
+   - 결정론적 `calculate_alert_assessment()` 산식 등급과 `tev1` 보조 판정 간의 불일치(`formula_vs_tev1_discrepancy`)를 자동 계산하고, 불일치 시 `human_review_required=True`로 사람 검수를 강제 트리거하도록 구현했다.
+
+
+### 10건 동결 사례 산식 vs tev1 대조 결과 요약
+
+| Case ID | 감시축 (`issue_axis`) | 산식 판정 | tev1 판정 | 일치 여부 | 불일치 원인 및 검수 해석 |
+|---|---|---|---|---|---|
+| `BT-2022-UKR-01` | `russia_ukraine_europe` | 고경보 (`CRITICAL`) | `CRITICAL` | 일치 | 다중 출처 교차검증 및 높은 신호 괴리 일치 |
+| `BT-2026-UKR-02` | `russia_ukraine_europe` | 고경보 (`CRITICAL`) | `WARNING` | **불일치** | `PARTIALLY_CONFIRMED` 상태를 반영해 `tev1`이 한 단계 보수적으로 판정 |
+| `BT-2024-TWN-01` | `east_asia_military_tech` | 고경보 (`CRITICAL`) | `WARNING` | **불일치** | `PARTIALLY_CONFIRMED` 상태에서 `tev1`이 `WARNING` 선택 |
+| `BT-2026-TWN-02` | `east_asia_military_tech` | 경보 (`WARNING`) | `WARNING` | 일치 | 중간 수준 괴리·부분 확인 상태 일치 |
+| `BT-2024-REDSEA-01` | `middle_east_energy_shipping` | 확인 필요 (`INSUFFICIENT_EVIDENCE`) | `WATCH` | **불일치** | 단일 출처 `UNVERIFIED`에 대해 산식 가드레일이 경보 보류 강제 |
+| `BT-2026-HORMUZ-02` | `middle_east_energy_shipping` | 고경보 (`CRITICAL`) | `CRITICAL` | 일치 | 해운 프록시·공식/독립 신호 결합 일치 |
+| `BT-2018-USCN-01` | `us_china_strategic_trade` | 고경보 (`CRITICAL`) | `CRITICAL` | 일치 | 공식 관세 발표 및 무역 지표 교차검증 일치 |
+| `BT-2026-USCN-02` | `us_china_strategic_trade` | 확인 필요 (`INSUFFICIENT_EVIDENCE`) | `WATCH` | **불일치** | 독립 출처 비교 근거 부재 시 산식 가드레일이 `확인 필요` 강제 |
+| `BT-2026-ALLY-01` | `us_allies_relations` | 경보 (`WARNING`) | `WARNING` | 일치 | 동맹 관세·방위비 협상 신호 괴리 일치 |
+| `BT-2026-ALLY-02` | `us_allies_relations` | 관찰 (`NORMAL`) | `WARNING` | **불일치** | 낮은 위험 점수(26.7)임에도 `tev1`이 `CROSS_VERIFIED` 문자열에 과민 반응 |
+
+> **핵심 실증 결론**: `BT-2026-ALLY-02`(일상적 동맹 군수 발표, 위험 점수 26.7점)에서 `tev1`이 `CROSS_VERIFIED` 상태값 하나만으로 `WARNING` 오탐을 낸 반면, 결정론적 산식은 `관찰(NORMAL)`로 방어했다. 반대로 단일 출처 미검증 사례(`BT-2024-REDSEA-01`, `BT-2026-USCN-02`)에서는 산식이 `확인 필요` 가드레일을 작동시켰다. 이는 신경망/LLM 단독 판정에 의존하지 않고 결정론적 산식과 상호 대조(Discrepancy Audit)해야 하는 명확한 근거가 된다.

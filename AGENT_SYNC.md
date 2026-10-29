@@ -55,7 +55,9 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | Cursor / DB-evidence | db / validation-store | `scripts/db/evidence_writer.py`, `scripts/db/load_validation_audit.py`, `scripts/db/manage_test_fixtures.py`, `scripts/db/create_views.sql`, `docs/current/DATABASE_SETUP.md` | 증거 계층 트랜잭션 writer·검증 감사 적재·TEST fixture 관리 | 2026-10-28 |
 | done | Cursor Agent | data-collection / Media Cloud Search API | `scripts/collection/fetch_mediacloud.py`, `docs/current/DATA_COLLECTION_GUIDE.md`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md` | 구호스트 DNS 실패 확인 후 공식 `search.mediacloud.org` + Token 인증으로 후보 수집기 갱신(기본 파이프라인 미연결) | 2026-10-28 |
 | done | Cursor Agent | data-collection / source-registry | `config/source_registry/*`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md` | source_registry 초안(source_role/required/fallback/license_access_note) + 백악관·정부 RSS 공통 스키마·dedupe 규칙 | 2026-10-28 |
-| done | ANTIGRAVITY | integration / notion | `scripts/notion/*`, `.env`, `docs/current/NOTION_INTEGRATION_GUIDE.md` | Notion 연동 모듈 구축(작업 보드 동기화, 리포트 퍼블리싱, MCP 설정) 완료 | 2026-10-28 |
+| done | ANTIGRAVITY | integration / notion & docs-sync | `scripts/notion/*`, `project-handoff.md`, `docs/current/NOTION_INTEGRATION_GUIDE.md`, `docs/REPOSITORY_STRUCTURE.md`, `scripts/README.md` | 로컬 MD 전체 작업 이력 반영 및 Notion 4대 연동(작업 보드·문서 보관소·작업 이력·리포트) 동기화 완결 | 2026-10-28 |
+| done | ANTIGRAVITY | docs / notion-sync | AGENT_SYNC.md, project-handoff.md, scripts/notion/* | 전체 작업 내역 MD 문서 최신화 및 노션 허브·종합 현황 실시간 동기화 | 2026-10-28 |
+| in-progress | ANTIGRAVITY | automation / anomaly-scanner | scripts/automation/*, docs/current/DATA_COLLECTION_ROADMAP.md, docs/current/PYTHON_SCRIPT_INVENTORY.md | 글로벌 이상 징후 무인 스캐너 & 지능형 전처리 파이프라인 구축 및 노션 퍼블리싱 연동 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
 
@@ -145,7 +147,7 @@ Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하�
 - 한 일: Notion 3대 연동 체계 구축 및 시운전 완료. 1) .env 및 NotionClient 기반 표준 API 래퍼, 2) AGENT_SYNC.md 작업 보드 동기화 모듈(DB 자동 생성 기능 포함), 3) 최신 조기경보 리포트 퍼블리싱 모듈, 4) Antigravity 전용 Notion MCP 설정 파일(~/.gemini/config/mcp_config.json) 생성, 5) notion_manager.py CLI 점검 도구 작성.
 - 바꾼 파일: `scripts/notion/notion_client_base.py`, `scripts/notion/sync_notion_board.py`, `scripts/notion/publish_notion_report.py`, `scripts/notion/notion_manager.py`, `docs/current/NOTION_INTEGRATION_GUIDE.md`, `~/.gemini/config/mcp_config.json`, `AGENT_SYNC.md`, `PROJECT_CONTEXT.md`, `README.md`.
 - 확인한 것: `notion_manager.py --check` 봇 인증(international analysis) 성공. `notion_manager.py --sync-board`로 허브 하위에 작업 보드 DB(407de224-b441-818c-b033-cb6cf4ad5352) 자동 생성 및 16건 등록 완료. `notion_manager.py --publish-report`로 최신 리스크 브리프 블록 변환 발행 완료.
-- 다음 작업: 파이프라인 정기 실행 체인에 `--with-notion` 결합 검토.
+- 다음 작업: scripts/run_pipeline.py에 --sync-notion 플래그 정식 편입 완료. 파이프라인(--only-db --sync-notion) 실행 시 DB 적재·대시보드 생성 후 Notion 보드(16건) 및 최신 브리프 자동 퍼블리싱 검증 완료. 지도교수 면담자료(PROJECT_ADVISOR_MEETING_BRIEF.md)도 Notion 하위 페이지로 발행 완결.
 - 주의할 점: 토큰 및 비밀번호는 .env에 유지하며 .gitignore로 GitHub 커밋에서 엄격히 차단됨.
 
 2026-10-28 [Cursor / dashboard-report]
@@ -448,3 +450,31 @@ un_pipeline.py에 --skip-chokepoints, --skip-cross-verification 등 플래그 �
 - 다음 작업: 주당 시간, 역할, 활동 기간, 지도 방식, 성과 인정, 데이터·코드·AI 사용 규정을 확인한 뒤 참여 여부를 결정한다.
 - 상세 기록: `docs/history/PROFESSOR_LAB_MEETING_20261012.md`.
 - 주의할 점: 연구실 제안을 개인 프로젝트의 주제 변경이나 참여 확정으로 표현하지 않는다.
+
+
+## 2026-10-28 [ANTIGRAVITY / notion 연동 및 동기화 실행]
+
+- 한 일: Notion API 토큰 인증 및 허브 페이지 권한 점검 완료, `AGENT_SYNC.md` Active Work Board 16개 항목 노션 칸반 데이터베이스 동기화 완료, 최신 조기경보 마크다운 리포트 노션 페이지 자동 퍼블리싱 완료.
+- 바꾼 파일: `AGENT_SYNC.md`, `project-handoff.md`, `docs/current/NOTION_INTEGRATION_GUIDE.md`, `docs/REPOSITORY_STRUCTURE.md`, `scripts/README.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md`, `scripts/notion/sync_notion_docs.py`, `scripts/notion/publish_notion_report.py`, `scripts/notion/notion_manager.py`
+- 확인한 것:
+  - 로컬 마크다운 문서(`project-handoff.md` 등)에 2026-10-13 ~ 2026-10-28 전체 작업 내역 최신화 반영
+  - Notion API 봇 토큰 정상 인증 (`international analysis`, ID: `407de224-b441-81fb-9d81-0027f38ff54c`)
+  - 허브 페이지(`international-analysis 프로젝트`) 접근 정상
+  - 작업 보드(`📋 AI 세션 작업 동기화 보드`) 16개 태스크 동기화 완료 (done, in-progress 등 상태 매핑)
+  - 조기경보 리포트 노션 페이지 퍼블리싱 완료
+- 다음 작업: 향후 파이프라인 완료 시 노션 리포트 자동 전송 연계 또는 필요 시 `python scripts/notion/notion_manager.py --all` 활용.
+- 주의할 점: 노션은 인간 대상의 협업 및 결과 열람 허브이며, 공식 코드·데이터 정체성의 Source of Truth는 계속 GitHub 저장소 마크다운 문서임.
+
+
+## 2026-10-29 [ANTIGRAVITY / llm-analysis · alert-scoring & tev1 10건 불일치 감사]
+
+- 한 일:
+  1. `scripts/analysis/analyze_signal_gap.py`의 근거 문장 리스트 정규화(`_normalize_evidence_phrases`) 및 비정치·문화·스포츠 기사 오탐 차단 프롬프트(`_build_news_digest`) 고도화
+  2. `scripts/validation/backtest_tev1.py`를 5대 핵심 감시축 10건 동결 사례로 확장하고, 결정론적 `calculate_alert_assessment()` 산식과 `tev1` 판정 간의 불일치(Discrepancy) 자동 감사 실행 (`data/tev1_backtest_results.json`)
+  3. `docs/current/LLM_SYSTEM_SUMMARY.md` (§13) 및 `docs/current/VALIDATION_PLAN.md` (§12)에 10건 대조 결과표 및 3대 불일치 패턴 실증 기록 반영
+- 바꾼 파일: `scripts/analysis/analyze_signal_gap.py`, `data/signal_gap/signal_gap_analysis.json`, `scripts/validation/backtest_tev1.py`, `data/tev1_backtest_results.json`, `docs/current/LLM_SYSTEM_SUMMARY.md`, `docs/current/VALIDATION_PLAN.md`, `AGENT_SYNC.md`, `project-handoff.md`
+- 확인한 것:
+  - 러시아(`yandex-gpt-5-lite:8b`) 인용문 병합 오류 해결로 정상 `'경보'`(괴리도 85.0, 위험 점수 69.7) 산출 확인
+  - 10건 백테스트 전체 호출 성공(일치 5건, 불일치 5건): 단일 출처 미검증(`UNVERIFIED`) 사례 2건은 산식이 `'확인 필요'`로 방어하고, 일상적 동맹 군수 발표(`BT-2026-ALLY-02`)에서 `tev1`이 `CROSS_VERIFIED` 문자열에 과민 반응해 `WARNING` 오탐을 낸 것을 산식이 `'관찰(NORMAL)'`로 방어함을 실증함
+- 다음 작업: 불일치 발생 사례(`formula_vs_tev1_discrepancy = true`)를 `pending_human_review.csv` 우선 검수 대기열과 자동 연동.
+- 주의할 점: `tev1`은 공식 Alert Level 공급원이 아닌 보조 비교 판정기이며, 산식과 불일치 시 반드시 사람 검수(`human_review_required = true`)를 거침.

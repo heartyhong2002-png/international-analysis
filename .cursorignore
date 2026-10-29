@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+vendor/
+.venv/
+__pycache__/
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.output/
+
+# Logs & caches
+*.log
+.cache/
+.parcel-cache/
+coverage/
+
+# Lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+composer.lock
+
+# Minified & maps
+*.min.js
+*.min.css
+*.map
+
+# Misc
+.git/
+*.zip
+*.tar.gz
