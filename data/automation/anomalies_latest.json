@@ -1,9 +1,9 @@
 {
-  "scanned_at": "2026-10-29T07:53:01.528618+00:00",
+  "scanned_at": "2026-10-29T08:22:20.062181+00:00",
   "dry_run": true,
   "threshold": 2.5,
-  "scanned_raw_count": 16,
-  "hotspot_count": 5,
+  "scanned_raw_count": 18,
+  "hotspot_count": 6,
   "hotspots": [
     {
       "cluster_id": "CLUST-0001",
@@ -151,6 +151,38 @@
       "published_at": "2026-10-29T06:30:00Z",
       "z_score": 4.17,
       "anomaly_score": 50.2
+    },
+    {
+      "cluster_id": "CLUST-0009",
+      "representative_title": "Sequía en el Canal de Panamá obliga a buques graneleros y gaseros a buscar rutas alternativas por el Cabo de Hornos",
+      "url": "https://elpais.com/economia/canal-panama-sequia-14",
+      "cluster_size": 2,
+      "unique_sources_count": 2,
+      "sources": [
+        "Reuters",
+        "El País"
+      ],
+      "relevance_score": 0.2,
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_PANAMA",
+          "name": "파나마 운하 (Panama Canal)",
+          "region": "Americas / Latin America",
+          "primary_supply": [
+            "NATURAL_GAS_LNG",
+            "GRAIN_FOOD",
+            "CONTAINER_CARGO"
+          ]
+        }
+      ],
+      "supply_chain_tags": [],
+      "event_types": [],
+      "hotspot_regions": [
+        "LATIN_AMERICA"
+      ],
+      "published_at": "2026-10-29T05:10:00Z",
+      "z_score": 4.67,
+      "anomaly_score": 15.0
     }
   ],
   "chokepoints": {
@@ -189,6 +221,15 @@
       "detour_delay": "지중해-대서양 우회 또는 육상 환적",
       "baseline_mean": 20.0,
       "baseline_std": 6.5
+    },
+    "CHOKEPOINT_PANAMA": {
+      "name_ko": "파나마 운하",
+      "region": "Americas / Latin America",
+      "primary_supply": "미국 걸프만 LNG, 대두/곡물, 컨테이너 화물",
+      "threat_level": "Moderate",
+      "detour_delay": "상황 모니터링 중",
+      "baseline_mean": 22.0,
+      "baseline_std": 7.0
     }
   },
   "trends_anomalies_count": 0

@@ -144,3 +144,20 @@ sources:
     cadence: daily
     priority: medium
     lane: CONTEXT
+
+  - source_id: br_agencia_brasil
+    source_type: state_media_news
+    source_role: secondary
+    required: false
+    fallback: []
+    license_access_note: "Public Agência Brasil (EBC) RSS; Brazilian federal state news agency; official executive actions and economic/energy policies."
+    url: https://agenciabrasil.ebc.com.br/rss/ultimasnoticias/feed.xml
+    country: BR
+    language: pt
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/gov_announcements_collector.py
+    cadence: daily
+    priority: medium
+    lane: FAST

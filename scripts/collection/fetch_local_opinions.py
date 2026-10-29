@@ -191,7 +191,7 @@ def fetch_bluesky(queries: list[str] = ["Taiwan semiconductor", "Houthi Red Sea"
 # ======================================================================
 def fetch_google_news_local(limit_per_feed: int = 8) -> list[dict]:
     items = []
-    print("  [Google News Local] 대만·러시아 로컬 언론 RSS 수집 중...")
+    print("  [Google News Local] 대만·러시아·브라질 로컬 언론 RSS 수집 중...")
     feeds = [
         {
             "name": "Taiwan_CrossStrait",
@@ -206,6 +206,13 @@ def fetch_google_news_local(limit_per_feed: int = 8) -> list[dict]:
             "theme": "러시아 물가·제재·공급난",
             "impact": "에너지·곡물·희유금속 공급망 교란",
             "url": "https://news.google.com/rss/search?q=%D0%B4%D0%B5%D1%84%D0%B8%D1%86%D0%B8%D1%82+%D1%86%D0%B5%D0%BD%D1%8B+%D1%81%D0%B0%D0%BD%D0%BA%D1%86%D0%B8%D0%B8&hl=ru&gl=RU&ceid=RU:ru"
+        },
+        {
+            "name": "Brazil_Lula_Petrobras",
+            "country": "BR",
+            "theme": "브라질 대선·룰라 정부·페트로브라스 공급망",
+            "impact": "중남미 원유·원자재·곡물(대두/옥수수) 수출선 및 무역 정책",
+            "url": "https://news.google.com/rss/search?q=Lula+Petrobras+greve+elei%C3%A7%C3%A3o&hl=pt-BR&gl=BR&ceid=BR:pt-419"
         }
     ]
 

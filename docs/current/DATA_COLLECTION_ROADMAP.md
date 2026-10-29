@@ -178,3 +178,22 @@ python scripts/automation/auto_anomaly_scanner.py --publish-notion
    - **로컬 최적화**: 16GB RAM 환경에 최적화된 경량 파이썬 데이터 구조 유지.
 3. **Notion 자동 보고서 퍼블리싱 연동**:
    - 이상 징후 탐지 완료 시 Notion 프로젝트 허브에 `🚨 [무인자동탐지] YYYY-MM-DD 신규 리스크 징후 브리프` 페이지로 자동 퍼블리싱 지원(`--publish-notion`).
+
+
+## 9. 중남미(Latin America) 감시 레인 및 5대 핵심 병목 센서 확장 (브라질 대선 및 파나마 운하)
+
+최근 브라질 대선(룰라 정부 출범 및 정치 양극화)과 중남미 자원 민족주의, 그리고 미주 핵심 해상 운송로인 파나마 운하 가뭄 사태에 대응하여 중남미 대륙 감시 체계를 전격 확장했다.
+
+1. **5대 핵심 해상 병목(Chokepoints)으로 확장**:
+   - 기존 4대 해협(호르무즈·바브엘만데브·말라카·보스포루스)에 **파나마 운하(`PANAMA_CANAL`)**를 정식 편입.
+   - 가뭄 수위 저하에 따른 홀수 제한, 통항 예약 슬롯 적체, 미국 걸프만 LNG/곡물 및 중남미 광물의 아시아 운송 지연(케이프혼/마젤란 해협 우회 +14~21일) 신호를 감시.
+2. **로컬 여론 및 현지 언론 센서 (OPINION / CONTEXT)**:
+   - `r/brasil` (브라질 현지 포르투갈어 서브레딧): 대선·룰라정부·파업(화물트럭/정유)·인플레이션·페트로브라스 여론 수집.
+   - Google News Local RSS: `Brazil_Lula_Petrobras` 포르투갈어 실시간 뉴스 모니터링 연동.
+   - `config/source_registry/local_media_feeds.yaml`: 브라질 유력지 Folha de S.Paulo (`folha_sp_poder_rss`) 등록.
+3. **정부 공식 발표 채널 (FAST)**:
+   - `Agência Brasil (EBC)` 브라질 국영 통신사 RSS 피드 연결 (`scripts/collection/gov_announcements_collector.py`).
+   - `config/source_registry/government_sources.yaml`에 `br_agencia_brasil` 명세 등록.
+4. **다국어 전처리 및 엔티티 정규화 (`preprocess_signals.py`)**:
+   - 중남미 핵심 품목: 대두/옥수수(`soja`, `milho`), 리튬/철광석(`litio`, `minério de ferro`), 국영에너지(`petrobras`) 포르투갈어/스페인어 토큰 정규화.
+   - 핫스팟 지역: `LATIN_AMERICA` (브라질, 아르헨티나, 칠레, 베네수엘라, 파나마, 룰라 등) 태깅 강화.

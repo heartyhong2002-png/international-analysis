@@ -5,7 +5,7 @@ auto_anomaly_scanner.py
 
 특징:
 1. 사람이 키워드를 하드코딩하지 않고도 전 세계에서 발생하는 돌발 위기 신호를 스스로 탐지.
-2. GDELT 2.0 DOC 공개 뉴스, Google Trends 위험 급상승 신호, 4대 해협(호르무즈·말라카·바브엘만데브·보스포루스) 병목 데이터를 무인 스캔.
+2. GDELT 2.0 DOC 공개 뉴스, Google Trends 위험 급상승 신호, 5대 해협·병목(호르무즈·말라카·바브엘만데브·보스포루스·파나마운하) 병목 데이터를 무인 스캔.
 3. 지능형 다국어(불어·포어·독어·서어·영문 등) 4단계 전처리(노이즈 배제, 시맨틱 중복 제거, 4대 해협 엔티티 정규화, 한국 핵심 공급망 태깅) 수행.
 4. 평소 대비 급증률(Z-Score > 2.5)을 산출하여 Anomaly Score(0~100) 정량화.
 5. Notion 프로젝트 허브 자동 보고서 퍼블리싱 연동 지원.
@@ -54,7 +54,7 @@ COMMON_HEADERS = {
     "Accept": "application/json,text/html,*/*"
 }
 
-# 4대 해협 기본 모니터링 프로필 (보스포루스 해협 포함)
+# 5대 핵심 병목(해협·운하) 기본 모니터링 프로필
 FOUR_CHOKEPOINTS = {
     "CHOKEPOINT_HORMUZ": {
         "name_ko": "호르무즈 해협 (페르시아만)",
@@ -83,6 +83,13 @@ FOUR_CHOKEPOINTS = {
         "primary_supply": "글로벌 밀/곡물, 비료, 흑해 원유",
         "baseline_articles_day": 20.0,
         "baseline_std": 6.5
+    },
+    "CHOKEPOINT_PANAMA": {
+        "name_ko": "파나마 운하",
+        "region": "Americas / Latin America",
+        "primary_supply": "미국 걸프만 LNG, 대두/곡물, 컨테이너 화물",
+        "baseline_articles_day": 22.0,
+        "baseline_std": 7.0
     }
 }
 
@@ -168,6 +175,10 @@ def _get_dry_run_gdelt_sample() -> List[Dict[str, Any]]:
         {"title": "China expands export controls on critical gallium and rare earths targeting defense supply chains", "url": "https://scmp.com/economy/china-rare-earths-9", "source": "SCMP", "published_at": "2026-10-29T04:20:00Z", "language": "en"},
         {"title": "Global semiconductor supply chains face new friction as export restrictions tighten", "url": "https://ft.com/content/semiconductors-trade-10", "source": "Financial Times", "published_at": "2026-10-29T05:00:00Z", "language": "en"},
         
+        # 영문/스페인어: 파나마 운하 및 중남미 공급망
+        {"title": "Panama Canal drought restricts daily vessel transit slots, causing LNG and grain bulk carrier backlog", "url": "https://reuters.com/business/panama-canal-drought-restrictions-13", "source": "Reuters", "published_at": "2026-10-29T05:10:00Z", "language": "en"},
+        {"title": "Sequía en el Canal de Panamá obliga a buques graneleros y gaseros a buscar rutas alternativas por el Cabo de Hornos", "url": "https://elpais.com/economia/canal-panama-sequia-14", "source": "El País", "published_at": "2026-10-29T05:40:00Z", "language": "es"},
+
         # 노이즈 기사 (필터링 검증용)
         {"title": "Taylor Swift announces new surprise album during world tour", "url": "https://tmz.com/music-swift-11", "source": "TMZ", "published_at": "2026-10-29T03:00:00Z", "language": "en"},
         {"title": "Champions League football highlights: Real Madrid secures late victory", "url": "https://espn.com/soccer-madrid-12", "source": "ESPN", "published_at": "2026-10-29T02:00:00Z", "language": "en"}
@@ -220,7 +231,7 @@ def scan_google_trends_anomalies() -> List[Dict[str, Any]]:
 # ======================================================================
 
 def scan_chokepoints_anomalies() -> Dict[str, Any]:
-    """ 4대 해협(호르무즈·말라카·바브엘만데브·보스포루스) 병목 지표를 스캔합니다. """
+    """ 5대 해협·병목(호르무즈·말라카·바브엘만데브·보스포루스·파나마운하) 병목 지표를 스캔합니다. """
     maritime_file = ROOT / "data" / "maritime_chokepoints" / "maritime_summary.json"
     results = {}
 
@@ -252,7 +263,7 @@ def scan_chokepoints_anomalies() -> Dict[str, Any]:
             "baseline_std": meta["baseline_std"]
         }
 
-    print(f"  ✓ 4대 해협 병목 및 통항 지표 4개 축 스캔 완료.")
+    print(f"  ✓ 5대 해협·운하 병목 및 통항 지표 4개 축 스캔 완료.")
     return results
 
 
@@ -311,7 +322,7 @@ def generate_markdown_brief(hotspots: List[Dict[str, Any]], chokepoint_info: Dic
     md.append(f"- **탐지 엔진**: Autonomous Global Anomaly Scanner v1.1 (다국어 NLTK NLP 지원)")
     md.append(f"- **지원 언어**: 영어(EN), 프랑스어(FR), 포르투갈어(PT), 독일어(DE), 스페인어(ES), 러시아어(RU), 아랍어(AR)")
     md.append(f"- **검증 상태**: `UNVERIFIED` (무인 스캐너 탐지 후보로, 2차 교차검증 대기)\n")
-    md.append("> ⚠️ **조기경보 주의사항**: 본 브리프는 인위적 키워드 지정 없이 다국어 공개 뉴스 및 해협·트렌드 급증 지표(Z-Score > 2.5)를 통해 자동 감지된 이상 징후입니다. 단일 출처만으로 경보를 확정하지 않으며, 4대 해협 및 한국 핵심 공급망 영향을 기준으로 랭킹되었습니다.\n")
+    md.append("> ⚠️ **조기경보 주의사항**: 본 브리프는 인위적 키워드 지정 없이 다국어 공개 뉴스 및 해협·트렌드 급증 지표(Z-Score > 2.5)를 통해 자동 감지된 이상 징후입니다. 단일 출처만으로 경보를 확정하지 않으며, 5대 해협·병목 및 한국 핵심 공급망 영향을 기준으로 랭킹되었습니다.\n")
     md.append("---\n")
 
     md.append("## 1. 🌐 긴급 탐지 글로벌 핫스팟 TOP 후보\n")
@@ -344,7 +355,7 @@ def generate_markdown_brief(hotspots: List[Dict[str, Any]], chokepoint_info: Dic
             md.append("")
 
     md.append("---\n")
-    md.append("## 2. 🚢 4대 핵심 해협 병목 및 지연 상태 현황\n")
+    md.append("## 2. 🚢 5대 핵심 병목(해협·운하) 통항 및 지연 상태 현황\n")
     md.append("| 해협 구분 | 주요 수송 품목 | 현재 위협 수준 | 우회 시 지연 일수 |")
     md.append("|---|---|---|---|")
     for code, info in chokepoint_info.items():

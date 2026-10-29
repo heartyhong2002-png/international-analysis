@@ -78,6 +78,7 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | automation / anomaly-scanner | scripts/automation/*, docs/current/DATA_COLLECTION_ROADMAP.md, docs/current/PYTHON_SCRIPT_INVENTORY.md | 글로벌 이상 징후 무인 스캐너 & 지능형 전처리 파이프라인 구축 및 노션 퍼블리싱 연동 완결 | 2026-10-29 |
 | done | Cursor Agent | automation / anomaly-scanner-review | `scripts/automation/auto_anomaly_scanner.py`, `scripts/automation/preprocess_signals.py`, `scripts/notion/publish_notion_report.py`, `docs/current/DATA_COLLECTION_ROADMAP.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md` | ANTIGRAVITY 초안 검증·문서 깨짐 수정·Alert Level 오인 표현 제거·`--dry-run` 확인 | 2026-10-29 |
 | done | ANTIGRAVITY | sync / trio-platform-sync | `AGENT_SYNC.md`, `PROJECT_CONTEXT.md`, GitHub, Notion | MD 문서, GitHub(커밋/푸시), Notion(작업보드/문서/이력/보고서) 3대 플랫폼 전체 동기화 | 2026-10-29 |
+| done | ANTIGRAVITY | data-collection / latin-america-expansion | `scripts/collection/*`, `scripts/automation/*`, `config/source_registry/*`, `docs/current/*` | 중남미 대륙 감시 강화: 브라질 대선·룰라정부·원자재(원유/대두/리튬) 및 파나마 운하 병목 센서 구축 | 2026-10-29 |
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
@@ -529,3 +530,17 @@ un_pipeline.py에 --skip-chokepoints, --skip-cross-verification 등 플래그 �
   - 3. GitHub: `cursor/local-sync-20261028` 브랜치에 최신 작업물 전부 커밋 및 푸시 완료.
 - 다음 작업: 이후 사용자가 '동기화'를 요청할 때마다 본 3단계 트리오 프로토콜(MD + GitHub + Notion)에 따라 자동 일괄 처리.
 - 주의할 점: 비밀 키나 토큰(`.env`)은 저장소에 절대 커밋하지 않으며 Notion 발행물은 작업 결과물 공유/모니터링 용도로 안전하게 사용함.
+
+
+## 2026-10-29 [ANTIGRAVITY / 중남미 대륙 감시 체계 및 파나마 운하 병목 센서 구축]
+
+- 한 일:
+  1. 해상 병목 센서(`fetch_maritime_chokepoints.py`)를 기존 4대 해협에서 **5대 핵심 병목(파나마 운하 포함)**으로 공식 확장 (수위 저하/홀수 제한, 케이프혼 우회 +14~21일 리스크 모델링).
+  2. 로컬 여론/현지 언론 센서(`fetch_reddit_localized.py`, `fetch_local_opinions.py`)에 `r/brasil`(포르투갈어 민심) 및 Google News Local `Brazil_Lula_Petrobras` 피드 추가.
+  3. 정부 공식 채널(`gov_announcements_collector.py`)에 브라질 국영 통신사 `Agência Brasil (EBC)` RSS 추가 및 `config/source_registry/`에 브라질 정부/유력지(Folha de S.Paulo) 소스 명세 등록.
+  4. 다국어 전처리 파이프라인(`preprocess_signals.py`) 및 무인 이상징후 스캐너(`auto_anomaly_scanner.py`)에 파나마 운하, 중남미 공급망 품목(soja, milho, petrobras, litio, ferro), 핫스팟 매핑 적용 및 `--dry-run` 검증 완료 (브라질 대선 4위, 파나마 운하 6위 핫스팟 탐지 확인).
+  5. `docs/current/DATA_COLLECTION_ROADMAP.md` 제9절에 중남미 감시 체계 및 5대 병목 확장 내역 반영.
+- 바꾼 파일: `scripts/collection/fetch_maritime_chokepoints.py`, `scripts/collection/fetch_reddit_localized.py`, `scripts/collection/fetch_local_opinions.py`, `scripts/collection/gov_announcements_collector.py`, `config/source_registry/government_sources.yaml`, `config/source_registry/local_media_feeds.yaml`, `scripts/automation/preprocess_signals.py`, `scripts/automation/auto_anomaly_scanner.py`, `docs/current/DATA_COLLECTION_ROADMAP.md`, `AGENT_SYNC.md`.
+- 확인한 것: `--dry-run` 테스트에서 파나마 운하 통항 제한 기사가 `CHOKEPOINT_PANAMA`로 정규화되고, 브라질 대선/페트로브라스 기사가 `ELECTION_GOVERNMENT` 및 `CRUDE_OIL`로 정확히 분류·군집화됨을 실증.
+- 다음 작업: 트리오 동기화 프로토콜(MD + GitHub + Notion)에 따라 노션 일괄 퍼블리싱 및 깃 푸시 완료.
+- 주의할 점: 파나마 운하는 미주/중남미 병목으로 분류하며 수에즈 운하와 혼동하지 않는다. 브라질 국영 보도(Agência Brasil)는 정부 공식 입장 레이어로 분류한다.

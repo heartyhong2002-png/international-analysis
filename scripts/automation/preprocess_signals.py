@@ -209,12 +209,21 @@ CHOKEPOINT_MAPPINGS = {
         ],
         "primary_supply": ["SEMICONDUCTOR", "ELECTRONICS", "EAST_ASIA_SHIPPING"],
         "region": "East Asia"
+    },
+    "CHOKEPOINT_PANAMA": {
+        "standard_name": "파나마 운하 (Panama Canal)",
+        "patterns": [
+            r"panama canal", r"canal de panam[aá]", r"canal do panam[aá]",
+            r"panamakanal", r"파나마\s*운하"
+        ],
+        "primary_supply": ["NATURAL_GAS_LNG", "GRAIN_FOOD", "CONTAINER_CARGO"],
+        "region": "Americas / Latin America"
     }
 }
 
 SUPPLY_CHAIN_ITEMS = {
     "CRUDE_OIL": [
-        "oil", "crude", "petroleum", "tanker", "tankers", "vlcc", "brent", "wti",
+        "oil", "crude", "petroleum", "tanker", "tankers", "vlcc", "brent", "wti", "petrobras",
         "pétrole", "pétrolier", "brut", "petróleo", "petroleiro",
         "erdöl", "rohöl", "petróleo crudo", "petrolero", "원유", "유조선", "석유"
     ],
@@ -232,11 +241,11 @@ SUPPLY_CHAIN_ITEMS = {
         "terres rares", "terras raras", "seltene erden", "tierras raras", "희토류", "갈륨", "게르마늄"
     ],
     "BATTERY_MINERALS": [
-        "lithium", "nickel", "cobalt", "cathode", "battery",
+        "lithium", "nickel", "cobalt", "cathode", "battery", "litio", "lítio", "minério de ferro", "hierro", "cobre",
         "batterie", "bateria", "batería", "리튬", "니켈", "배터리", "이차전지"
     ],
     "GRAIN_FOOD": [
-        "grain", "wheat", "corn", "fertilizer", "food supply",
+        "grain", "wheat", "corn", "fertilizer", "food supply", "soja", "soya", "soybean", "milho", "maíz",
         "céréales", "blé", "engrais", "grãos", "trigo", "fertilizante",
         "getreide", "weizen", "düngemittel", "granos", "trigo", "곡물", "밀", "옥수수", "비료"
     ]
@@ -264,7 +273,7 @@ GEOPOLITICAL_HOTSPOTS = {
     "EAST_ASIA": ["taiwan", "china", "south china sea", "north korea", "dprk", "senkaku", "yellow sea", "chine", "asie de l'est", "ostasien"],
     "EASTERN_EUROPE": ["ukraine", "russia", "crimea", "black sea", "belarus", "baltic", "moldova", "danube", "russie", "russland", "rusia"],
     "WESTERN_EUROPE": ["france", "germany", "paris", "berlin", "deutschland", "frança", "francia"],
-    "LATIN_AMERICA": ["brazil", "brasil", "venezuela", "guyana", "essequibo", "argentina", "amérique latine", "américa latina"],
+    "LATIN_AMERICA": ["brazil", "brasil", "venezuela", "guyana", "essequibo", "argentina", "chile", "panama", "colombia", "amérique latine", "américa latina", "latam", "mercosur", "lula", "petrobras", "bolsonaro"],
     "CENTRAL_AFRICA": ["sudan", "red sea coast", "somalia", "congo", "sahel"]
 }
 

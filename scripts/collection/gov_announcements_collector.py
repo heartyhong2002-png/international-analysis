@@ -209,6 +209,13 @@ GOV_FEEDS = {
         "lang": "de",
         "source_type": "official_statement",
     },
+    "Agência Brasil (브라질 국영 통신사)": {
+        "url": "https://agenciabrasil.ebc.com.br/rss/ultimasnoticias/feed.xml",
+        "encoding": "utf-8",
+        "country": "BR",
+        "lang": "pt",
+        "source_type": "state_media_news",
+    },
 }
 
 # 이슈 매칭용 키워드. issue_data_collector.py의 ISSUE_KEYWORDS와 같은 이슈
@@ -228,7 +235,7 @@ ISSUE_MATCH_KEYWORDS = {
                              "멕시코", "불법 이민", "국경"],
     "Trump_Economy": ["tariff", "trade war", "economic policy", "관세", "무역전쟁", "트럼프 행정부"],
     "Venezuela_Crisis": ["venezuela", "maduro", "베네수엘라", "마두로"],
-    "Brazil_Politics": ["brazil", "lula", "브라질", "룰라"],
+    "Brazil_Politics": ["brazil", "brasil", "lula", "bolsonaro", "eleição", "eleições", "petrobras", "브라질", "룰라", "브라질 대선"],
     "Argentina_Economy": ["argentina", "milei", "아르헨티나", "밀레이"],
     "Ukraine_War": ["ukraine", "russian invasion", "우크라이나"],
     "EU_Russia": ["russia", "sanctions", "european union", "러시아 제재", "유럽연합", "대러 제재"],

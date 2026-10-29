@@ -57,3 +57,20 @@ sources:
     cadence: manual
     priority: medium
     lane: CONTEXT
+
+  - source_id: folha_sp_poder_rss
+    source_type: local_media
+    source_role: secondary
+    required: false
+    fallback: []
+    license_access_note: "Folha de S.Paulo public RSS; major Brazilian national newspaper covering presidential politics, Petrobras, and commodities."
+    url: https://feeds.folha.uol.com.br/poder/rss091.xml
+    country: BR
+    language: pt
+    access_method: rss
+    enabled: true
+    pipeline_default: false
+    collector: scripts/collection/fetch_local_opinions.py
+    cadence: daily
+    priority: medium
+    lane: CONTEXT

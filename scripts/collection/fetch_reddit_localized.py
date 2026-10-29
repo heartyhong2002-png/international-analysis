@@ -130,6 +130,19 @@ SUBREDDIT_PROFILES: dict[str, dict] = {
         "risk_theme": "한국 공급망·안보 체감 (대조군)",
         "supply_chain_relevance": "직접적 한국 공급망 영향 측정",
     },
+    "brasil": {
+        "country_code": "BR",
+        "country_name": "브라질 (중남미)",
+        "lang": "pt/en",
+        "description": "브라질 현지 포르투갈어 민심. 대선 후폭풍, 룰라 정부 경제/에너지 정책, 파업 및 원자재 수출 신호.",
+        "risk_keywords": [
+            "eleição", "lula", "bolsonaro", "greve", "inflação", "petrobras",
+            "combustível", "caminhoneiros", "protesto", "dólar", "crise",
+            "election", "strike", "inflation", "protest", "oil",
+        ],
+        "risk_theme": "브라질 정치 불안·정부 교체·파업·인플레이션",
+        "supply_chain_relevance": "원유(페트로브라스)·농산물(대두/옥수수)·철광석 공급망",
+    },
     "geopolitics": {
         "country_code": "GLOBAL",
         "country_name": "글로벌 (전문가·중립)",

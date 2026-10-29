@@ -54,7 +54,7 @@ if sys.platform == "win32":
         pass
 
 
-# 4대 핵심 해협 리스크 모델 정의
+# 5대 핵심 병목(해협·운하) 리스크 모델 정의
 CHOKEPOINTS = {
     "BAB_EL_MANDEB": {
         "name_ko": "바브엘만데브 해협 (홍해 남단)",
@@ -99,6 +99,17 @@ CHOKEPOINTS = {
         "detour_cape_delay_days": "3~5일 추가 (순다·롬복 해협 우회)",
         "insurance_war_risk": "Low-Moderate (정치적 통제 가능성)",
         "ais_observability": "High (싱가포르 항만 관제 레이더)",
+    },
+    "PANAMA_CANAL": {
+        "name_ko": "파나마 운하",
+        "region": "Americas / Latin America",
+        "threat_actor": "가뭄에 따른 수위 저하(홀수 제한), 통항 예약 적체, 파업/정치적 통제",
+        "supply_chain_role": "대서양-태평양 최단 운하, 미국 걸프만 LNG/곡물 및 중남미 자원 아시아 수송 핵심 통로",
+        "impact_sectors": "LNG, 대두/곡물, 컨테이너 화물, 한국 가스/곡물 수입선",
+        "normal_transit_days": 0,
+        "detour_cape_delay_days": "14~21일 추가 (마젤란 해협 / 케이프혼 우회)",
+        "insurance_war_risk": "Low (단, 통항 경매비 및 체선 할증료 급등 리스크)",
+        "ais_observability": "High (파나마 운하청 관제 및 대기 선박 통계)",
     },
 }
 
