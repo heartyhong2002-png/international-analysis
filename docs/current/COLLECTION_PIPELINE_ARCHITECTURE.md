@@ -38,14 +38,16 @@ GDELT Cloud는 학술 계정의 월 5,000 QU 한도를 고려해 FAST 레인에�
 
 싱크탱크와 현지 언론 목록은 코드에 하드코딩하지 않고 `config/source_registry/` 아래에서 관리한다.
 
-현재 초안(2026-10-28):
+현재 초안(2026-10-29):
 
-- `config/source_registry/SCHEMA.md`
+- `config/source_registry/SCHEMA.md` — `relationship_role`, `issue_tags`, `packet`, `shared_schema` 포함
 - `expert_feeds.yaml`
 - `local_media_feeds.yaml`
-- `government_sources.yaml`
+- `government_sources.yaml` — 패킷 A(미국 국내 정책, `pipeline_default: false`) + 패킷 B(동맹 `relationship_role: ally`)
 - `opinion_sources.yaml`
 - `customs_sources.yaml`
+
+패킷 C(`competitor_adversary_axis`, OFAC/BIS)는 A/B 스키마 안정 후 registry만 추가한다.
 
 각 항목은 최소한 다음을 가진다.
 

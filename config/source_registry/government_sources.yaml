@@ -1,18 +1,27 @@
 # Official / state channels for FAST + CONTEXT lanes.
-# White House uses a dedicated optional collector; do not duplicate its RSS
-# inside gov_announcements_collector without the shared dedupe rules in
-# COLLECTION_PIPELINE_ARCHITECTURE.md.
+# Packet A = US domestic policy signals (no election outcome prediction).
+# Packet B = ally official channels (relationship_role: ally).
+# Packet C (OFAC/BIS/competitor_adversary_axis) waits until A/B schema stabilizes.
+# White House: dedicated optional collector; shared_schema official_raw_v1 + dedupe
+# rules in COLLECTION_PIPELINE_ARCHITECTURE.md. Do not duplicate White House RSS
+# into gov_announcements_collector.
 
-schema_version: 1
-updated_at: "2026-10-28"
+schema_version: 2
+updated_at: "2026-10-29"
+shared_schema_ref: official_raw_v1
 
 sources:
+  # ---------------------------------------------------------------------------
+  # Packet A — US domestic policy (selection-only; pipeline_default: false)
+  # ---------------------------------------------------------------------------
   - source_id: whitehouse_releases_rss
     source_type: official_statement
     source_role: primary
+    relationship_role: domestic_us
     required: false
     fallback: []
     license_access_note: "Public White House Releases RSS; store URL+hash+receipt; respect robots.txt; no bulk HTML scrape by default."
+    robots_note: "pending — check whitehouse.gov/robots.txt before sitemap fallback"
     url: https://www.whitehouse.gov/releases/feed/
     country: US
     language: en
@@ -20,17 +29,163 @@ sources:
     enabled: true
     pipeline_default: false
     collector: scripts/collection/fetch_whitehouse_official.py
+    shared_schema: official_raw_v1
+    issue_tags: [US_Election_Policy_Signal, US_Trade_Tariff, US_Export_Control, US_Industrial_Policy_CHIPS]
     cadence: daily
     priority: high
     lane: FAST
-    notes: "Optional via --with-whitehouse. Official narrative signal, not ground truth."
+    packet: A
+    notes: "Optional via --with-whitehouse. Official narrative signal, not ground truth or Alert Level."
 
+  - source_id: us_federal_register_documents_api
+    source_type: regulation_notice
+    source_role: primary
+    relationship_role: domestic_us
+    required: false
+    fallback: [us_federal_register_documents_rss]
+    license_access_note: "Public Federal Register REST API; no API key. US government work; retain source URL + document number. Bounded pages only."
+    robots_note: "n/a-api — documented public REST; throttle requests"
+    url: https://www.federalregister.gov/api/v1/documents.json
+    endpoint: https://www.federalregister.gov/api/v1/documents.json
+    country: US
+    language: en
+    access_method: api
+    enabled: true
+    pipeline_default: false
+    collector: PENDING
+    shared_schema: official_raw_v1
+    issue_tags: [US_Trade_Tariff, US_Export_Control, US_Sanctions_OFAC, US_Industrial_Policy_CHIPS, US_Immigration_Border]
+    cadence: daily
+    priority: high
+    lane: FAST
+    packet: A
+    notes: "Probe 2026-10-29 HTTP 200. Selection-only collector next; not election prediction."
+
+  - source_id: us_federal_register_documents_rss
+    source_type: regulation_notice
+    source_role: secondary
+    relationship_role: domestic_us
+    required: false
+    fallback: []
+    license_access_note: "Public Federal Register documents.rss; same corpus as JSON API; prefer API when implementing collector."
+    robots_note: "n/a-api"
+    url: https://www.federalregister.gov/api/v1/documents.rss
+    country: US
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: false
+    collector: PENDING
+    shared_schema: official_raw_v1
+    issue_tags: [US_Trade_Tariff, US_Export_Control, US_Sanctions_OFAC]
+    cadence: daily
+    priority: medium
+    lane: FAST
+    packet: A
+    notes: "Probe 2026-10-29 HTTP 200. Fallback for API."
+
+  - source_id: us_congress_gov_api
+    source_type: official_statement
+    source_role: primary
+    relationship_role: domestic_us
+    required: false
+    fallback: []
+    license_access_note: "Congress.gov API v3; free API key required (api.congress.gov sign-up). Do not store key in registry/receipts. Quotas apply — selection-only."
+    robots_note: "n/a-api — respect published rate limits"
+    url: https://api.congress.gov/v3/
+    endpoint: https://api.congress.gov/v3/bill
+    country: US
+    language: en
+    access_method: api
+    enabled: true
+    pipeline_default: false
+    collector: PENDING
+    shared_schema: official_raw_v1
+    issue_tags: [US_Debt_Ceiling, US_Trade_Tariff, US_Defense_Budget, US_Industrial_Policy_CHIPS, US_Election_Policy_Signal]
+    cadence: daily
+    priority: high
+    lane: FAST
+    packet: A
+    notes: "AUTH_REQUIRED until CONGRESS_GOV_API_KEY set. Policy/bill signals only — no seat/outcome prediction."
+
+  - source_id: us_ustr_press_rss
+    source_type: official_statement
+    source_role: primary
+    relationship_role: domestic_us
+    required: false
+    fallback: [us_federal_register_documents_api]
+    license_access_note: "Public USTR RSS (ustr.gov/rss.xml probed 200). Official trade policy narrative; retain URL+hash."
+    robots_note: "pending — check ustr.gov/robots.txt before HTML crawl"
+    url: https://ustr.gov/rss.xml
+    country: US
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: false
+    collector: PENDING
+    shared_schema: official_raw_v1
+    issue_tags: [US_Trade_Tariff, US_Export_Control, US_Industrial_Policy_CHIPS]
+    cadence: daily
+    priority: high
+    lane: FAST
+    packet: A
+
+  - source_id: us_commerce_press_html
+    source_type: official_statement
+    source_role: secondary
+    relationship_role: domestic_us
+    required: false
+    fallback: [us_federal_register_documents_api, us_ustr_press_rss]
+    license_access_note: "Commerce press is primarily HTML; no stable public RSS confirmed 2026-10-29. Prefer Federal Register for rules; HTML adapter only after robots/ToS check."
+    robots_note: "pending — commerce.gov robots.txt before any HTML notice adapter"
+    url: https://www.commerce.gov/news
+    country: US
+    language: en
+    access_method: html
+    enabled: true
+    pipeline_default: false
+    collector: PENDING
+    shared_schema: official_raw_v1
+    issue_tags: [US_Export_Control, US_Trade_Tariff, US_Industrial_Policy_CHIPS]
+    cadence: daily
+    priority: medium
+    lane: FAST
+    packet: A
+    notes: "Landing path may redirect; collector must record final source_url."
+
+  - source_id: us_treasury_press_html
+    source_type: official_statement
+    source_role: secondary
+    relationship_role: domestic_us
+    required: false
+    fallback: [us_federal_register_documents_api]
+    license_access_note: "Treasury press releases are public HTML; legacy RSS path failed probe 2026-10-29. No login; bounded notice fetch only after robots check. OFAC recent-actions is Packet C."
+    robots_note: "pending — home.treasury.gov robots.txt"
+    url: https://home.treasury.gov/news/press-releases
+    country: US
+    language: en
+    access_method: html
+    enabled: true
+    pipeline_default: false
+    collector: PENDING
+    shared_schema: official_raw_v1
+    issue_tags: [US_Sanctions_OFAC, US_Debt_Ceiling, US_Trade_Tariff]
+    cadence: daily
+    priority: medium
+    lane: FAST
+    packet: A
+
+  # ---------------------------------------------------------------------------
+  # Packet B — Allies (relationship_role: ally)
+  # ---------------------------------------------------------------------------
   - source_id: us_state_press_releases
     source_type: official_statement
     source_role: primary
+    relationship_role: ally
     required: true
     fallback: [us_state_press_briefings]
     license_access_note: "Public State Department RSS; retain source URL; no login."
+    robots_note: "checked-via-existing-collector — RSS only"
     url: https://www.state.gov/rss-feed/press-releases/feed/
     country: US
     language: en
@@ -38,16 +193,20 @@ sources:
     enabled: true
     pipeline_default: true
     collector: scripts/collection/gov_announcements_collector.py
+    shared_schema: official_raw_v1
     cadence: daily
     priority: high
     lane: FAST
+    packet: B
 
   - source_id: us_state_press_briefings
     source_type: official_statement
     source_role: secondary
+    relationship_role: ally
     required: false
     fallback: []
     license_access_note: "Public State Department RSS."
+    robots_note: "checked-via-existing-collector — RSS only"
     url: https://www.state.gov/rss-feed/department-press-briefings/feed/
     country: US
     language: en
@@ -55,16 +214,20 @@ sources:
     enabled: true
     pipeline_default: true
     collector: scripts/collection/gov_announcements_collector.py
+    shared_schema: official_raw_v1
     cadence: daily
     priority: medium
     lane: FAST
+    packet: B
 
   - source_id: kr_mofa_press
     source_type: official_statement
     source_role: primary
+    relationship_role: ally
     required: true
     fallback: []
     license_access_note: "Public MOFAs RSS; encoding may be euc-kr or utf-8 — trust XML prolog."
+    robots_note: "checked-via-existing-collector — RSS only"
     url: http://www.mofa.go.kr/www/brd/rss.do?brdId=235
     country: KR
     language: ko
@@ -72,16 +235,83 @@ sources:
     enabled: true
     pipeline_default: true
     collector: scripts/collection/gov_announcements_collector.py
+    shared_schema: official_raw_v1
     cadence: daily
     priority: high
     lane: FAST
+    packet: B
+
+  - source_id: jp_mofa_press_html
+    source_type: official_statement
+    source_role: primary
+    relationship_role: ally
+    required: false
+    fallback: []
+    license_access_note: "Japan MOFA English press index is public HTML; legacy /rss/press.xml returned HTTP error on 2026-10-29 probe. No login; RSS/API preferred when restored; HTML only after robots check."
+    robots_note: "pending — mofa.go.jp robots.txt before HTML adapter"
+    url: https://www.mofa.go.jp/press/release/index.html
+    country: JP
+    language: en
+    access_method: html
+    enabled: true
+    pipeline_default: false
+    collector: PENDING
+    shared_schema: official_raw_v1
+    cadence: daily
+    priority: high
+    lane: FAST
+    packet: B
+
+  - source_id: au_dfat_news_html
+    source_type: official_statement
+    source_role: primary
+    relationship_role: ally
+    required: false
+    fallback: []
+    license_access_note: "Australia DFAT news is public; /news/rss.xml timed out on 2026-10-29 probe. Prefer official RSS when available; otherwise bounded HTML. Australian Government copyright — retain URL, no bulk republish."
+    robots_note: "pending — dfat.gov.au robots.txt"
+    url: https://www.dfat.gov.au/news/news
+    country: AU
+    language: en
+    access_method: html
+    enabled: true
+    pipeline_default: false
+    collector: PENDING
+    shared_schema: official_raw_v1
+    cadence: daily
+    priority: high
+    lane: FAST
+    packet: B
+
+  - source_id: ca_gac_news_html
+    source_type: official_statement
+    source_role: primary
+    relationship_role: ally
+    required: false
+    fallback: []
+    license_access_note: "Canada Global Affairs / Canada.ca news is public Crown copyright context; legacy GAC RSS path failed probe. Use official news page or Canada.ca feeds after robots check; no login."
+    robots_note: "pending — canada.ca / international.gc.ca robots.txt"
+    url: https://www.canada.ca/en/global-affairs/news.html
+    country: CA
+    language: en
+    access_method: html
+    enabled: true
+    pipeline_default: false
+    collector: PENDING
+    shared_schema: official_raw_v1
+    cadence: daily
+    priority: medium
+    lane: FAST
+    packet: B
 
   - source_id: uk_fcdo_news
     source_type: official_statement
     source_role: primary
+    relationship_role: ally
     required: false
     fallback: []
     license_access_note: "UK GOV.UK Atom feed for FCDO; public Open Government Licence context."
+    robots_note: "checked-via-existing-collector — Atom only"
     url: https://www.gov.uk/search/news-and-communications.atom?organisations%5B%5D=foreign-commonwealth-development-office
     country: GB
     language: en
@@ -89,16 +319,20 @@ sources:
     enabled: true
     pipeline_default: true
     collector: scripts/collection/gov_announcements_collector.py
+    shared_schema: official_raw_v1
     cadence: daily
     priority: medium
     lane: FAST
+    packet: B
 
   - source_id: de_aa_presse
     source_type: official_statement
     source_role: primary
+    relationship_role: ally
     required: false
     fallback: []
     license_access_note: "German MFA public RSS."
+    robots_note: "checked-via-existing-collector — RSS only"
     url: https://www.auswaertiges-amt.de/static/includes/rss/Presse-RSS-Feed.xml
     country: DE
     language: de
@@ -106,16 +340,67 @@ sources:
     enabled: true
     pipeline_default: true
     collector: scripts/collection/gov_announcements_collector.py
+    shared_schema: official_raw_v1
     cadence: daily
     priority: medium
     lane: FAST
+    packet: B
 
+  - source_id: nato_news_html
+    source_type: official_statement
+    source_role: primary
+    relationship_role: ally
+    required: false
+    fallback: []
+    license_access_note: "NATO public news pages; dedicated rss-feeds/news.xml failed probe 2026-10-29. Official narrative only; retain URL; no bulk scrape; check robots before HTML adapter."
+    robots_note: "pending — nato.int robots.txt"
+    url: https://www.nato.int/cps/en/natohq/news.htm
+    country: NATO
+    language: en
+    access_method: html
+    enabled: true
+    pipeline_default: false
+    collector: PENDING
+    shared_schema: official_raw_v1
+    cadence: daily
+    priority: medium
+    lane: FAST
+    packet: B
+    notes: "relationship_role=ally (alliance organ). Not a national MFA."
+
+  - source_id: eu_eeas_press_html
+    source_type: official_statement
+    source_role: primary
+    relationship_role: ally
+    required: false
+    fallback: []
+    license_access_note: "EEAS press material page is public (HTTP 200 on 2026-10-29). Prefer any official RSS/Atom if published; HTML notice adapter only after robots/ToS. EU reuse policy — retain source URL."
+    robots_note: "pending — eeas.europa.eu robots.txt"
+    url: https://www.eeas.europa.eu/eeas/press-material_en
+    country: EU
+    language: en
+    access_method: html
+    enabled: true
+    pipeline_default: false
+    collector: PENDING
+    shared_schema: official_raw_v1
+    cadence: daily
+    priority: medium
+    lane: FAST
+    packet: B
+    notes: "relationship_role=ally (partner multilateral). Packet C must not re-label as competitor_adversary_axis."
+
+  # ---------------------------------------------------------------------------
+  # Legacy / other (not Packet B ally list; Packet C may re-tag later)
+  # ---------------------------------------------------------------------------
   - source_id: irna_en
     source_type: state_media_news
     source_role: secondary
+    relationship_role: other
     required: false
     fallback: []
     license_access_note: "State media RSS; treat as official narrative / news layer, not ground truth."
+    robots_note: "checked-via-existing-collector — RSS only"
     url: https://en.irna.ir/rss
     country: IR
     language: en
@@ -123,17 +408,21 @@ sources:
     enabled: true
     pipeline_default: true
     collector: scripts/collection/gov_announcements_collector.py
+    shared_schema: official_raw_v1
     cadence: daily
     priority: medium
     lane: CONTEXT
-    notes: "Do not merge with official_statement for independence counts."
+    packet: legacy
+    notes: "Packet C may later set relationship_role=competitor_adversary_axis. Not official_statement independence."
 
   - source_id: al_jazeera_all
     source_type: state_media_news
     source_role: secondary
+    relationship_role: other
     required: false
     fallback: []
     license_access_note: "Public Al Jazeera RSS; state-affiliated media, not MFA release."
+    robots_note: "checked-via-existing-collector — RSS only"
     url: https://www.aljazeera.com/xml/rss/all.xml
     country: QA
     language: en
@@ -141,16 +430,21 @@ sources:
     enabled: true
     pipeline_default: true
     collector: scripts/collection/gov_announcements_collector.py
+    shared_schema: official_raw_v1
     cadence: daily
     priority: medium
     lane: CONTEXT
+    packet: legacy
+    notes: "Do not merge with official_statement for independence counts."
 
   - source_id: br_agencia_brasil
     source_type: state_media_news
     source_role: secondary
+    relationship_role: other
     required: false
     fallback: []
     license_access_note: "Public Agência Brasil (EBC) RSS; Brazilian federal state news agency; official executive actions and economic/energy policies."
+    robots_note: "checked-via-existing-collector — RSS only"
     url: https://agenciabrasil.ebc.com.br/rss/ultimasnoticias/feed.xml
     country: BR
     language: pt
@@ -158,6 +452,8 @@ sources:
     enabled: true
     pipeline_default: true
     collector: scripts/collection/gov_announcements_collector.py
+    shared_schema: official_raw_v1
     cadence: daily
     priority: medium
     lane: FAST
+    packet: legacy
