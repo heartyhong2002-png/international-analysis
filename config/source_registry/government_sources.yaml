@@ -136,13 +136,13 @@ sources:
     relationship_role: domestic_us
     required: false
     fallback: [us_federal_register_documents_api, us_ustr_press_rss]
-    license_access_note: "Commerce press is primarily HTML; no stable public RSS confirmed 2026-10-29. Prefer Federal Register for rules; HTML adapter only after robots/ToS check."
-    robots_note: "pending — commerce.gov robots.txt before any HTML notice adapter"
+    license_access_note: "Commerce press is primarily HTML; commerce.gov returned HTTP 403 on 2026-10-29 probe. Prefer Federal Register + USTR for trade/export signals; no login bypass."
+    robots_note: "pending — commerce.gov robots.txt; probe 403 — keep enabled=false until access confirmed"
     url: https://www.commerce.gov/news
     country: US
     language: en
     access_method: html
-    enabled: true
+    enabled: false
     pipeline_default: false
     collector: PENDING
     shared_schema: official_raw_v1
@@ -151,7 +151,7 @@ sources:
     priority: medium
     lane: FAST
     packet: A
-    notes: "Landing path may redirect; collector must record final source_url."
+    notes: "Fallback to us_federal_register_documents_api / us_ustr_press_rss."
 
   - source_id: us_treasury_press_html
     source_type: official_statement
@@ -247,13 +247,13 @@ sources:
     relationship_role: ally
     required: false
     fallback: []
-    license_access_note: "Japan MOFA English press index is public HTML; legacy /rss/press.xml returned HTTP error on 2026-10-29 probe. No login; RSS/API preferred when restored; HTML only after robots check."
-    robots_note: "pending — mofa.go.jp robots.txt before HTML adapter"
+    license_access_note: "Japan MOFA English press is public in principle; /rss/press.xml and press index returned HTTP error/403 on 2026-10-29 probe from this environment. Do not bypass blocks; wait for stable RSS/API or alternate public mirror. No login."
+    robots_note: "pending — mofa.go.jp robots.txt; probe saw 403 — collector DISABLED until access confirmed"
     url: https://www.mofa.go.jp/press/release/index.html
     country: JP
     language: en
     access_method: html
-    enabled: true
+    enabled: false
     pipeline_default: false
     collector: PENDING
     shared_schema: official_raw_v1

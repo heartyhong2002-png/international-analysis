@@ -59,7 +59,7 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
 | in-progress | Cursor / Control Tower | control-tower / scope | `docs/current/PROJECT_PLAN.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `AGENT_SYNC.md` | 미국 국내·동맹·경쟁/대립축 6대 감시축 확정(예측 금지). 패킷 A+B 동시 착수 지시 | 2026-10-29 |
-| in-progress | Cursor Agent / collection | data-collection / US-domestic + allies | `config/source_registry/*`, `scripts/collection/*` (선택 수집기만) | 패킷 A+B: registry·공통 스키마 먼저 → 선택 실행 수집기. Alert/예측/DB/대시보드/LLM 금지 | 2026-10-29 |
+| in-progress | Cursor Agent / collection | data-collection / US-domestic + allies | `config/source_registry/government_sources.yaml`, `config/source_registry/SCHEMA.md`, `scripts/collection/*` (선택 수집기만) | 패킷 A+B registry 보강 완료 → 다음: Federal Register 선택 수집기. Alert/예측/DB/대시보드/LLM 금지 | 2026-10-29 |
 | open | (세션 2 수집) | data-collection / competitor-axis roles | `config/source_registry/*`, signal_gap 소스 | 패킷 C: relationship_role 태깅·OFAC/BIS registry (A/B 스키마 정렬 후) | 2026-10-29 |
 | done | ANTIGRAVITY | db / pipeline / cross-verification | `scripts/run_pipeline.py`, `scripts/db/load_cross_verification_to_db.py`, `scripts/db/create_views.sql` | 해협 센서·공급망 사건 교차검증의 DB 적재와 대시보드 뷰 연동 | 2026-10-02 |
 | done | ANTIGRAVITY | data-collection / supply-chain-sensors | `scripts/collection/fetch_maritime_chokepoints.py`, `scripts/analysis/cross_verify_events.py`, `data/maritime_chokepoints/`, `data/event_cross_verification/` | 해협·시장 센서 수집 및 복수 계통 교차검증 | 2026-10-02 |
@@ -181,6 +181,13 @@ Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하�
 - 주의할 점: 현재 결과는 GDELT 사건 후보일 뿐 실제 공격·운항 중단·피해를 확인한 결과가 아니다. 기존 `scripts/run_pipeline.py`에는 연결하지 않음.
 
 ## Recent Handoff
+
+2026-10-29 [Cursor Agent / collection · packets A+B registry]
+- 한 일: 패킷 A/B **registry 보강** (수집기 코드는 아직 PENDING). `SCHEMA.md`에 `relationship_role`·`issue_tags`·`packet`·`shared_schema` 추가. `government_sources.yaml` v2: A=Federal Register API/RSS·Congress API·USTR RSS·Commerce/Treasury HTML(선택), B=KR/US/JP/AU/CA/UK/DE+NATO/EEAS에 `relationship_role: ally`·license/robots/fallback/required. 공통 스키마 `official_raw_v1`·White House dedupe 계약 유지.
+- 바꾼 파일: `config/source_registry/SCHEMA.md`, `config/source_registry/government_sources.yaml`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`, `AGENT_SYNC.md`.
+- 확인한 것: YAML 로드 20건(A7/B10/legacy3). 프로브 HTTP 200 — Federal Register JSON/RSS, USTR rss.xml, Treasury press HTML, NATO news, EEAS press page, Congress API landing. 403/실패 — JP MOFA·Commerce(→`enabled: false`), DFAT/CA RSS 타임아웃·실패(HTML PENDING·`pipeline_default: false`).
+- 다음 작업: `fetch_federal_register.py`(선택 `--with-federal-register`) + White House 공통 스키마/dedupe 정렬. 패킷 C·Alert/예측·DB/대시보드/LLM 금지.
+- 주의할 점: Control Tower 소유 `DATA_COLLECTION_GUIDE`/`PROJECT_PLAN` 본문 미수정. API 키를 registry·영수증에 넣지 않음.
 
 2026-10-29 [Cursor Agent / automation-anomaly-scanner-review]
 - 한 일: ANTIGRAVITY가 이미 `done`으로 표시한 `scripts/automation/` 초안을 검증·보강함. 문서 경로 깨짐(`\x07uto_...`) 수정, 보스포루스 threat 강제 High 제거, CRITICAL SPIKE 등 Alert Level 오인 배지를 `ANOMALY_*`로 교체, Notion 제목을 `🚨 [무인자동탐지] YYYY-MM-DD 신규 리스크 징후 브리프`로 고정(`title_override`), 영수증에 `alert_level_set=false` 명시.
