@@ -79,7 +79,16 @@
 
 이 세션은 대시보드·검증 로직을 직접 수정하지 않는다.
 
-## 4. 보관·레거시
+## 4. 무인 자동화 및 이상 징후 스캐너 (`scripts/automation/`)
+
+| 파일 | 역할 | 상태 |
+|---|---|---|
+| `automation/auto_anomaly_scanner.py` | 글로벌 이상 징후 무인 스캐너 (GDELT 2.0 DOC·트렌드·4대 해협 Z-Score·Anomaly Score, `--dry-run`/`--publish-notion`) | active / standalone; 기본 `run_pipeline.py` 미연결 |
+| `automation/preprocess_signals.py` | 지능형 4단계 전처리 (노이즈 배제·시맨틱 중복 제거·해협 정규화·한국 핵심 공급망 태깅) | active / library |
+
+권장 검증: `python scripts/automation/auto_anomaly_scanner.py --dry-run`
+
+## 5. 보관·레거시
 
 `scripts/archive/` 아래 파일은 현재 파이프라인에서 직접 호출하지 않는 보관 대상이다.
 
@@ -92,7 +101,7 @@
 
 삭제하지 말고, 재현성·역사 추적을 위해 유지한다.
 
-## 5. 파이프라인 호출 관계
+## 6. 파이프라인 호출 관계
 
 `run_pipeline.py`는 현재 다음 경로를 사용한다.
 
@@ -115,7 +124,7 @@ run_pipeline.py
 - 대시보드 제외: `--skip-dashboard`
 - 기존 DB 전용 동작: `--only-db`
 
-## 6. 정리 원칙
+## 7. 정리 원칙
 
 1. 문서 인벤토리와 호출 관계를 먼저 갱신한다.
 2. `active`, `candidate`, `manual`, `review-needed`, `legacy` 상태를 확정한다.
@@ -124,7 +133,7 @@ run_pipeline.py
 5. 전체 57개 파일 컴파일과 선택 파이프라인 테스트를 실행한다.
 6. 삭제 대신 `scripts/archive/`로 이동하고, 이동 기록을 남긴다.
 
-## 7. 향후 수집기 위치 결정
+## 8. 향후 수집기 위치 결정
 
 | 센서 | 권장 경로 | 배치 원칙 |
 |---|---|---|

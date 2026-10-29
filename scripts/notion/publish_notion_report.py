@@ -102,7 +102,11 @@ def markdown_to_notion_blocks(md_text):
 def find_latest_brief():
     """ reports/ 디렉터리에서 가장 최신의 조기경보 브리프 마크다운 파일을 탐색 """
     reports_dir = REPO_ROOT / "reports"
-    candidates = list(reports_dir.glob("*brief*.md")) + list(reports_dir.glob("*조기경보*.md"))
+    candidates = (
+        list(reports_dir.glob("*brief*.md"))
+        + list(reports_dir.glob("*조기경보*.md"))
+        + list((reports_dir / "anomaly_detection").glob("anomaly_brief_*.md"))
+    )
     if candidates:
         candidates.sort(key=lambda p: p.stat().st_mtime, reverse=True)
         return candidates[0]
@@ -113,7 +117,7 @@ def find_latest_brief():
     return None
 
 
-def publish_report(custom_md_path=None):
+def publish_report(custom_md_path=None, title_override=None):
     env = load_env()
     client = NotionClient()
 
@@ -138,7 +142,7 @@ def publish_report(custom_md_path=None):
 
     blocks = markdown_to_notion_blocks(md_content)
     today_str = datetime.date.today().strftime("%Y-%m-%d")
-    title = f"🛡️ [조기경보 인텔리전스] {today_str} 리스크 브리프 ({report_file.stem})"
+    title = title_override or f"🛡️ [조기경보 인텔리전스] {today_str} 리스크 브리프 ({report_file.stem})"
 
     clean_parent = client._clean_id(parent_id)
     existing_page_id = None

@@ -57,7 +57,8 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | Cursor Agent | data-collection / source-registry | `config/source_registry/*`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md` | source_registry 초안(source_role/required/fallback/license_access_note) + 백악관·정부 RSS 공통 스키마·dedupe 규칙 | 2026-10-28 |
 | done | ANTIGRAVITY | integration / notion & docs-sync | `scripts/notion/*`, `project-handoff.md`, `docs/current/NOTION_INTEGRATION_GUIDE.md`, `docs/REPOSITORY_STRUCTURE.md`, `scripts/README.md` | 로컬 MD 전체 작업 이력 반영 및 Notion 4대 연동(작업 보드·문서 보관소·작업 이력·리포트) 동기화 완결 | 2026-10-28 |
 | done | ANTIGRAVITY | docs / notion-sync | AGENT_SYNC.md, project-handoff.md, scripts/notion/* | 전체 작업 내역 MD 문서 최신화 및 노션 허브·종합 현황 실시간 동기화 | 2026-10-28 |
-| in-progress | ANTIGRAVITY | automation / anomaly-scanner | scripts/automation/*, docs/current/DATA_COLLECTION_ROADMAP.md, docs/current/PYTHON_SCRIPT_INVENTORY.md | 글로벌 이상 징후 무인 스캐너 & 지능형 전처리 파이프라인 구축 및 노션 퍼블리싱 연동 | 2026-10-29 |
+| done | ANTIGRAVITY | automation / anomaly-scanner | scripts/automation/*, docs/current/DATA_COLLECTION_ROADMAP.md, docs/current/PYTHON_SCRIPT_INVENTORY.md | 글로벌 이상 징후 무인 스캐너 & 지능형 전처리 파이프라인 구축 및 노션 퍼블리싱 연동 완결 | 2026-10-29 |
+| done | Cursor Agent | automation / anomaly-scanner-review | `scripts/automation/auto_anomaly_scanner.py`, `scripts/automation/preprocess_signals.py`, `scripts/notion/publish_notion_report.py`, `docs/current/DATA_COLLECTION_ROADMAP.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md` | ANTIGRAVITY 초안 검증·문서 깨짐 수정·Alert Level 오인 표현 제거·`--dry-run` 확인 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
 
@@ -142,6 +143,24 @@ Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하�
 - 주의할 점: 현재 결과는 GDELT 사건 후보일 뿐 실제 공격·운항 중단·피해를 확인한 결과가 아니다. 기존 `scripts/run_pipeline.py`에는 연결하지 않음.
 
 ## Recent Handoff
+
+2026-10-29 [Cursor Agent / automation-anomaly-scanner-review]
+- 한 일: ANTIGRAVITY가 이미 `done`으로 표시한 `scripts/automation/` 초안을 검증·보강함. 문서 경로 깨짐(`\x07uto_...`) 수정, 보스포루스 threat 강제 High 제거, CRITICAL SPIKE 등 Alert Level 오인 배지를 `ANOMALY_*`로 교체, Notion 제목을 `🚨 [무인자동탐지] YYYY-MM-DD 신규 리스크 징후 브리프`로 고정(`title_override`), 영수증에 `alert_level_set=false` 명시.
+- 바꾼 파일: `scripts/automation/auto_anomaly_scanner.py`, `scripts/automation/preprocess_signals.py`, `scripts/notion/publish_notion_report.py`, `docs/current/DATA_COLLECTION_ROADMAP.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md`, `AGENT_SYNC.md`.
+- 확인한 것: `py_compile` 통과. `python scripts/automation/auto_anomaly_scanner.py --dry-run` — 노이즈 2건 배제, 10→6 클러스터, 핫스팟 3건, `data/automation/anomalies_latest.json`·`reports/anomaly_detection/anomaly_brief_*.md` 생성. 기본 `run_pipeline.py` 미연결·GDELT Cloud 미호출. `git pull`은 현재 브랜치(`cursor/local-sync-20261028`)에 upstream 없어 `git fetch origin main`만 수행.
+- 다음 작업: (선택) `--with-anomaly-scan` 플래그로 파이프라인 연결, 실제 GDELT DOC 429 대비 캐시 정책, Notion `--publish-notion` 실발행은 토큰 있을 때만.
+- 주의할 점: Anomaly Score ≠ Alert Level. Streamlit·LLM 경보 산식·DB 스키마는 미수정. 단일 출처로 경보 격상 금지.
+
+2026-10-29 [ANTIGRAVITY / automation-anomaly-scanner]
+- 한 일: 무인 글로벌 이상 징후 스캐너 및 지능형 4단계 전처리 파이프라인 초안 구축.
+  1. `scripts/automation/auto_anomaly_scanner.py`: GDELT 2.0 DOC·Google Trends·4대 해협 스캔, Z-Score/Anomaly Score.
+  2. `scripts/automation/preprocess_signals.py`: 노이즈 필터·시맨틱 중복 제거·해협/공급망 엔티티 정규화.
+  3. Notion `--publish-notion` 연동 및 문서화.
+- 바꾼 파일: `scripts/automation/*`, `docs/current/PYTHON_SCRIPT_INVENTORY.md`, `docs/current/DATA_COLLECTION_ROADMAP.md`, `AGENT_SYNC.md`.
+- 확인한 것: dry-run 및 Notion 퍼블리싱 시도.
+- 다음 작업: 정기 스케줄러 또는 `run_pipeline.py` 선택 플래그 연동.
+- 주의할 점: 무인 탐지 결과는 `UNVERIFIED` 유지, 단일 출처만으로 경보 격상 금지.
+
 
 2026-10-28 [ANTIGRAVITY / notion-integration]
 - 한 일: Notion 3대 연동 체계 구축 및 시운전 완료. 1) .env 및 NotionClient 기반 표준 API 래퍼, 2) AGENT_SYNC.md 작업 보드 동기화 모듈(DB 자동 생성 기능 포함), 3) 최신 조기경보 리포트 퍼블리싱 모듈, 4) Antigravity 전용 Notion MCP 설정 파일(~/.gemini/config/mcp_config.json) 생성, 5) notion_manager.py CLI 점검 도구 작성.

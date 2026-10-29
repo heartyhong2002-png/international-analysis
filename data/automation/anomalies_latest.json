@@ -1,0 +1,195 @@
+{
+  "scanned_at": "2026-10-29T07:53:01.528618+00:00",
+  "dry_run": true,
+  "threshold": 2.5,
+  "scanned_raw_count": 16,
+  "hotspot_count": 5,
+  "hotspots": [
+    {
+      "cluster_id": "CLUST-0001",
+      "representative_title": "Red Sea Shipping Update: Another vessel attacked near Bab al-Mandab strait causing Cape of Good Hope detours",
+      "url": "https://apnews.com/article/red-sea-vessel-2",
+      "cluster_size": 3,
+      "unique_sources_count": 3,
+      "sources": [
+        "Reuters",
+        "AP News",
+        "BBC News"
+      ],
+      "relevance_score": 1.0,
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_BAB_EL_MANDEB",
+          "name": "바브엘만데브 해협 및 홍해 (Bab-el-Mandeb & Red Sea)",
+          "region": "Middle East / Red Sea",
+          "primary_supply": [
+            "CONTAINER_CARGO",
+            "CRUDE_OIL",
+            "EUROPE_EXPORT"
+          ]
+        }
+      ],
+      "supply_chain_tags": [],
+      "event_types": [],
+      "hotspot_regions": [
+        "MIDDLE_EAST"
+      ],
+      "published_at": "2026-10-29T08:15:00Z",
+      "z_score": 7.17,
+      "anomaly_score": 75.2
+    },
+    {
+      "cluster_id": "CLUST-0002",
+      "representative_title": "Oil tankers navigate cautiously as tensions spike in Strait of Hormuz after IRGC seizure warning",
+      "url": "https://bloomberg.com/news/articles/oil-hormuz-tankers-5",
+      "cluster_size": 2,
+      "unique_sources_count": 2,
+      "sources": [
+        "Al Jazeera",
+        "Bloomberg"
+      ],
+      "relevance_score": 1.0,
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_HORMUZ",
+          "name": "호르무즈 해협 (Strait of Hormuz)",
+          "region": "Middle East / Persian Gulf",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG",
+            "NAPHTHA"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [],
+      "hotspot_regions": [],
+      "published_at": "2026-10-29T07:45:00Z",
+      "z_score": 5.67,
+      "anomaly_score": 67.6
+    },
+    {
+      "cluster_id": "CLUST-0005",
+      "representative_title": "Russian drone strikes disrupt grain export terminal infrastructure near Bosphorus and Danube corridor",
+      "url": "https://kyivindependent.com/russia-grain-danube-6",
+      "cluster_size": 2,
+      "unique_sources_count": 2,
+      "sources": [
+        "Kyiv Independent",
+        "Daily Sabah"
+      ],
+      "relevance_score": 1.0,
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_BOSPHORUS",
+          "name": "보스포루스 및 흑해 해협 (Bosphorus & Turkish Straits)",
+          "region": "Eurasia / Black Sea",
+          "primary_supply": [
+            "GRAIN_WHEAT",
+            "CRUDE_OIL",
+            "FERTILIZER"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "GRAIN_FOOD"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EASTERN_EUROPE"
+      ],
+      "published_at": "2026-10-29T06:10:00Z",
+      "z_score": 5.67,
+      "anomaly_score": 67.6
+    },
+    {
+      "cluster_id": "CLUST-0004",
+      "representative_title": "Brasil: Vitória de Lula nas eleições presidenciais repercute no mercado de petróleo e Petrobras",
+      "url": "https://folha.uol.com.br/poder/lula-eleicoes-petroleo-1",
+      "cluster_size": 2,
+      "unique_sources_count": 2,
+      "sources": [
+        "Folha de S.Paulo",
+        "G1 Globo"
+      ],
+      "relevance_score": 1.0,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [
+        "ELECTION_GOVERNMENT"
+      ],
+      "hotspot_regions": [
+        "LATIN_AMERICA"
+      ],
+      "published_at": "2026-10-29T04:15:00Z",
+      "z_score": 5.17,
+      "anomaly_score": 62.8
+    },
+    {
+      "cluster_id": "CLUST-0003",
+      "representative_title": "Tensions en France: Nouvelles manifestations massives et grève dans les transports et terminaux pétroliers",
+      "url": "https://lefigaro.fr/actualites/manifestations-france-2",
+      "cluster_size": 2,
+      "unique_sources_count": 2,
+      "sources": [
+        "Le Monde",
+        "Le Figaro"
+      ],
+      "relevance_score": 1.0,
+      "chokepoints": [],
+      "supply_chain_tags": [],
+      "event_types": [
+        "PROTEST_STRIKE"
+      ],
+      "hotspot_regions": [
+        "WESTERN_EUROPE"
+      ],
+      "published_at": "2026-10-29T06:30:00Z",
+      "z_score": 4.17,
+      "anomaly_score": 50.2
+    }
+  ],
+  "chokepoints": {
+    "CHOKEPOINT_HORMUZ": {
+      "name_ko": "호르무즈 해협 (페르시아만)",
+      "region": "Middle East",
+      "primary_supply": "원유(Crude Oil) 20%, LNG 수송 대동맥",
+      "threat_level": "Moderate",
+      "detour_delay": "상황 모니터링 중",
+      "baseline_mean": 45.0,
+      "baseline_std": 12.0
+    },
+    "CHOKEPOINT_BAB_EL_MANDEB": {
+      "name_ko": "바브엘만데브 해협 및 홍해",
+      "region": "Middle East / Red Sea",
+      "primary_supply": "유럽-아시아 컨테이너선, 자동차 운반선",
+      "threat_level": "Moderate",
+      "detour_delay": "상황 모니터링 중",
+      "baseline_mean": 38.0,
+      "baseline_std": 10.0
+    },
+    "CHOKEPOINT_MALACCA": {
+      "name_ko": "말라카 해협",
+      "region": "Southeast Asia",
+      "primary_supply": "중동-동아시아 원유 및 일반 컨테이너",
+      "threat_level": "Moderate",
+      "detour_delay": "상황 모니터링 중",
+      "baseline_mean": 25.0,
+      "baseline_std": 8.0
+    },
+    "CHOKEPOINT_BOSPHORUS": {
+      "name_ko": "보스포루스 및 흑해 해협 (터키 해협)",
+      "region": "Eurasia / Black Sea",
+      "primary_supply": "글로벌 밀/곡물, 비료, 흑해 원유",
+      "threat_level": "High (흑해 곡물·유류 항로 군사 경보)",
+      "detour_delay": "지중해-대서양 우회 또는 육상 환적",
+      "baseline_mean": 20.0,
+      "baseline_std": 6.5
+    }
+  },
+  "trends_anomalies_count": 0
+}

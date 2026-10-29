@@ -1,0 +1,61 @@
+{
+  "scanned_at": "2026-10-29T07:53:01.528618+00:00",
+  "hotspots_top5": [
+    {
+      "title": "Red Sea Shipping Update: Another vessel attacked near Bab al-Mandab strait causing Cape of Good Hope detours",
+      "score": 75.2,
+      "z_score": 7.17,
+      "chokepoints": [
+        "바브엘만데브 해협 및 홍해 (Bab-el-Mandeb & Red Sea)"
+      ],
+      "supplies": [],
+      "events": []
+    },
+    {
+      "title": "Oil tankers navigate cautiously as tensions spike in Strait of Hormuz after IRGC seizure warning",
+      "score": 67.6,
+      "z_score": 5.67,
+      "chokepoints": [
+        "호르무즈 해협 (Strait of Hormuz)"
+      ],
+      "supplies": [
+        "CRUDE_OIL"
+      ],
+      "events": []
+    },
+    {
+      "title": "Russian drone strikes disrupt grain export terminal infrastructure near Bosphorus and Danube corridor",
+      "score": 67.6,
+      "z_score": 5.67,
+      "chokepoints": [
+        "보스포루스 및 흑해 해협 (Bosphorus & Turkish Straits)"
+      ],
+      "supplies": [
+        "GRAIN_FOOD"
+      ],
+      "events": []
+    },
+    {
+      "title": "Brasil: Vitória de Lula nas eleições presidenciais repercute no mercado de petróleo e Petrobras",
+      "score": 62.8,
+      "z_score": 5.17,
+      "chokepoints": [],
+      "supplies": [
+        "CRUDE_OIL"
+      ],
+      "events": [
+        "ELECTION_GOVERNMENT"
+      ]
+    },
+    {
+      "title": "Tensions en France: Nouvelles manifestations massives et grève dans les transports et terminaux pétroliers",
+      "score": 50.2,
+      "z_score": 4.17,
+      "chokepoints": [],
+      "supplies": [],
+      "events": [
+        "PROTEST_STRIKE"
+      ]
+    }
+  ]
+}

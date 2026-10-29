@@ -155,3 +155,26 @@ license_or_access_note
 6. 사람 검수 화면과 출처별 신뢰·결측 대시보드 추가
 
 이 순서를 지키면 SNS의 노이즈나 특정 언론의 편향이 전체 경보를 지배하는 것을 막을 수 있다.
+
+## 8. 무인 글로벌 이상 징후 자동 스캔 (Autonomous Anomaly Scanning)
+
+21개 고정 이슈 외에 사람이 키워드를 사전 지정하지 않아도 전 세계에서 발생하는 돌발 위기 신호를 스스로 탐지하는 무인 스캐너 모듈(`scripts/automation/`)을 도입한다. Anomaly Score는 관측 급증 지표이며 Alert Level·`verification_state` 최종 판정이 아니다.
+
+실행 예:
+
+```powershell
+python scripts/automation/auto_anomaly_scanner.py --dry-run
+python scripts/automation/auto_anomaly_scanner.py --publish-notion
+```
+
+1. **글로벌 다채널 무인 스캔 (`auto_anomaly_scanner.py`)**:
+   - GDELT 2.0 DOC 공개 뉴스, Google Trends 이상 급증 신호, 4대 해협(호르무즈·말라카·바브엘만데브·보스포루스) 병목 데이터를 24시간 단위로 자율 스캔.
+   - 평소 보도량 대비 급증률(Z-Score > 2.5)을 산출하여 Anomaly Score(0~100)를 정량화.
+   - GDELT Cloud 유료 QU는 호출하지 않는다. 공개 DOC API·로컬 캐시·`--dry-run` 샘플만 사용한다.
+2. **지능형 4단계 전처리 파이프라인 (`preprocess_signals.py`)**:
+   - **노이즈 필터링**: 연예, 스포츠, 패션, 상업 광고 등 비지정학 도메인/키워드 1차 배제.
+   - **시맨틱 중복 제거**: 다수 언론사의 동일 사건 중복 보도를 대표 헤드라인 1건(출처 수 포함)으로 클러스터링 및 압축.
+   - **엔티티 정규화**: 다국어 지명/해협(Hormuz, Malacca, Bab-el-Mandeb, Bosphorus) 표준화 및 한국 핵심 공급망 품목(원유, LNG, 반도체, 희토류, 배터리 광물, 곡물) 태깅.
+   - **로컬 최적화**: 16GB RAM 환경에 최적화된 경량 파이썬 데이터 구조 유지.
+3. **Notion 자동 보고서 퍼블리싱 연동**:
+   - 이상 징후 탐지 완료 시 Notion 프로젝트 허브에 `🚨 [무인자동탐지] YYYY-MM-DD 신규 리스크 징후 브리프` 페이지로 자동 퍼블리싱 지원(`--publish-notion`).
