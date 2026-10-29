@@ -86,6 +86,13 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
 
+2026-10-29 [Cursor / Control Tower · Python 3.13]
+- 한 일: 프로젝트 표준 런타임을 Python 3.13.15로 전환. `.venv` 생성 후 `requirements.txt` 설치(reportlab 5.1, pandas 3.1, yfinance 1.7 등). `.python-version`, README·PROJECT_CONTEXT 실행 안내 갱신.
+- 바꾼 파일: `.venv/`(gitignore), `.python-version`, `requirements.txt`, `README.md`, `PROJECT_CONTEXT.md`, `AGENT_SYNC.md`.
+- 확인한 것: `.\.venv\Scripts\python.exe` → 3.13.15, 핵심 import OK, reportlab 5.1.0.
+- 다음 작업: 새 세션/터미널은 `.\.venv\Scripts\python.exe` 또는 venv 활성화 후 실행. PATH의 3.9 사용 금지.
+- 주의할 점: Desktop 경로와 `C:\dev\international-analysis` junction이 있을 수 있음. `.venv`는 커밋하지 않음.
+
 2026-10-29 [Cursor / LLM 분석·경보 산식 · trio-sync]
 - 한 일: tev1 10건 보조 백테스트·fixture verify·표본 self-test 실행. 노션 보고서 페이지에 1차 결과 게시. 기준 없는 성능 해석·t-test/ANOVA 조기 도입은 보류하기로 함.
 - 바꾼 파일: `data/tev1_backtest_results.json`, `AGENT_SYNC.md`. 노션: `[검증] 2026-10-29 LLM·tev1 1차 테스트 결과`.

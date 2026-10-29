@@ -2,6 +2,13 @@
 
 이 파일은 새 AI 세션이나 다른 도구가 이 저장소를 읽을 때 가장 먼저 봐야 하는 진입점이다. 자세한 개발 로그보다 현재 방향을 우선한다.
 
+## Runtime
+
+- Standard interpreter: **Python 3.13.15** via project-local `.venv` (created from `C:\Users\홍준기\AppData\Local\Programs\Python\Python313\python.exe`).
+- Do not use the PATH default Python 3.9 (`C:\2024316047\python_3.9`) for this repo.
+- Pin file: `.python-version` → `3.13.15`. Dependencies: `requirements.txt`.
+- Example: `.\.venv\Scripts\python.exe scripts/run_pipeline.py`
+
 ## Current Identity
 
 이 저장소의 현재 목표는 국제정세 사건을 단정적으로 예측하는 것이 아니다. 현재 목표는 뉴스, 정부 공식 발표, 현지 독립 언론, GDELT Cloud 사건, 해협·항만 및 운임/보험료 센서, Google Trends, 현지 공개 여론, 여론조사, 금융·무역 지표를 종합해 공급망 및 지정학 리스크의 조기경보를 제공하는 것이다.

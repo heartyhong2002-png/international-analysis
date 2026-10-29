@@ -61,12 +61,17 @@ python scripts/dashboard/generate_dashboard_v2.py
 
 ## 3. 실행
 
+이 프로젝트의 표준 런타임은 **Python 3.13.15** (로컬 `.venv`)이다. PATH의 Python 3.9를 쓰지 않는다.
+
 ```bash
-pip install -r requirements.txt   # 없다면 scripts/ 상단 주석의 개별 패키지 참고
+# 최초 1회: Python 3.13으로 venv 생성 후 의존성 설치
+#   py -3.13 -m venv .venv
+#   .\.venv\Scripts\python.exe -m pip install -r requirements.txt
+
 ollama serve                      # 별도 터미널에서 켜두기
 
-python scripts/run_pipeline.py    # 수집 → 태깅 → LLM 분석 → DB 적재까지 한 번에
-python scripts/dashboard/generate_dashboard_v2.py
+.\.venv\Scripts\python.exe scripts/run_pipeline.py
+.\.venv\Scripts\python.exe scripts/dashboard/generate_dashboard_v2.py
 ```
 
 개별 단계(정부 발표 수집, GDELT Cloud 사건 수집, 해협·항만 센서, 현지 공개 여론 수집 등)를 따로 돌리는 방법은
