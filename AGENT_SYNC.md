@@ -34,6 +34,24 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 
 두 도구가 같은 파일을 동시에 고치지 않는 것이 원칙이다.
 
+## Synchronization Protocol (3대 플랫폼 트리오 동기화 원칙)
+
+사용자가 **"동기화"**, **"동기화해줘"**, **"싱크 맞춰줘"** 등을 요청할 경우, 항상 아래 **3대 플랫폼(MD 문서 + GitHub + Notion)**을 순차적으로 일괄 동기화(Trio-Sync)한다:
+
+1. **마크다운(MD) 문서 최신화**:
+   - `AGENT_SYNC.md`: 작업 보드(Active Work Board) 상태(`done` 등) 갱신, 세션 Handoff 및 동기화 이력 기록.
+   - `PROJECT_CONTEXT.md` 및 `docs/current/*`: 신규 파이프라인, 모듈 명세 최신화.
+2. **Notion 실시간 전체 동기화 (`scripts/notion/notion_manager.py --all`)**:
+   - 📋 **작업 보드(Active Work Board)** 동기화 (`--sync-board`)
+   - 📚 **MD 문서 보관소 & 전체 프로젝트 작업 이력** 동기화 (`--sync-docs`)
+   - 🚨 **최신 조기경보 및 이상 징후 브리프 리포트** 자동 발행/갱신 (`--publish-report`)
+3. **GitHub 원격 저장소 동기화**:
+   - 변경/신규 파일 스테이징 (`git add`)
+   - 유의미한 커밋 메시지 작성 (`git commit -m "..."`)
+   - 원격 브랜치 반영 (`git push origin <branch>`)
+
+---
+
 ## Active Work Board
 
 작업을 시작하기 전에 아래 표에 한 줄을 추가하거나 기존 줄을 갱신한다.
@@ -59,6 +77,7 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | docs / notion-sync | AGENT_SYNC.md, project-handoff.md, scripts/notion/* | 전체 작업 내역 MD 문서 최신화 및 노션 허브·종합 현황 실시간 동기화 | 2026-10-28 |
 | done | ANTIGRAVITY | automation / anomaly-scanner | scripts/automation/*, docs/current/DATA_COLLECTION_ROADMAP.md, docs/current/PYTHON_SCRIPT_INVENTORY.md | 글로벌 이상 징후 무인 스캐너 & 지능형 전처리 파이프라인 구축 및 노션 퍼블리싱 연동 완결 | 2026-10-29 |
 | done | Cursor Agent | automation / anomaly-scanner-review | `scripts/automation/auto_anomaly_scanner.py`, `scripts/automation/preprocess_signals.py`, `scripts/notion/publish_notion_report.py`, `docs/current/DATA_COLLECTION_ROADMAP.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md` | ANTIGRAVITY 초안 검증·문서 깨짐 수정·Alert Level 오인 표현 제거·`--dry-run` 확인 | 2026-10-29 |
+| done | ANTIGRAVITY | sync / trio-platform-sync | `AGENT_SYNC.md`, `PROJECT_CONTEXT.md`, GitHub, Notion | MD 문서, GitHub(커밋/푸시), Notion(작업보드/문서/이력/보고서) 3대 플랫폼 전체 동기화 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
 
@@ -497,3 +516,15 @@ un_pipeline.py에 --skip-chokepoints, --skip-cross-verification 등 플래그 �
   - 10건 백테스트 전체 호출 성공(일치 5건, 불일치 5건): 단일 출처 미검증(`UNVERIFIED`) 사례 2건은 산식이 `'확인 필요'`로 방어하고, 일상적 동맹 군수 발표(`BT-2026-ALLY-02`)에서 `tev1`이 `CROSS_VERIFIED` 문자열에 과민 반응해 `WARNING` 오탐을 낸 것을 산식이 `'관찰(NORMAL)'`로 방어함을 실증함
 - 다음 작업: 불일치 발생 사례(`formula_vs_tev1_discrepancy = true`)를 `pending_human_review.csv` 우선 검수 대기열과 자동 연동.
 - 주의할 점: `tev1`은 공식 Alert Level 공급원이 아닌 보조 비교 판정기이며, 산식과 불일치 시 반드시 사람 검수(`human_review_required = true`)를 거침.
+
+
+## 2026-10-29 [ANTIGRAVITY / 트리오 플랫폼 전체 동기화 프로토콜 확립 및 완결]
+
+- 한 일: 사용자의 '동기화' 요청 시 마크다운(MD) 문서, 깃허브(GitHub), 노션(Notion)을 일괄 동기화하는 트리오 동기화 프로토콜 확립 및 지금까지의 전체 작업 결과물 일체 동기화 실행.
+- 바꾼 파일: `AGENT_SYNC.md`, `PROJECT_CONTEXT.md`, GitHub 원격 저장소, Notion 프로젝트 허브.
+- 확인한 것:
+  - 1. MD 문서: 동기화 프로토콜 명시 및 Active Work Board 20개 작업 항목 동기화.
+  - 2. Notion: 작업 보드(20개 항목), 문서 보관소, 작업 이력, 최신 이상 징후 브리프 4대 영역 전체 갱신 완료 (`scripts/notion/notion_manager.py --all`).
+  - 3. GitHub: `cursor/local-sync-20261028` 브랜치에 최신 작업물 전부 커밋 및 푸시 완료.
+- 다음 작업: 이후 사용자가 '동기화'를 요청할 때마다 본 3단계 트리오 프로토콜(MD + GitHub + Notion)에 따라 자동 일괄 처리.
+- 주의할 점: 비밀 키나 토큰(`.env`)은 저장소에 절대 커밋하지 않으며 Notion 발행물은 작업 결과물 공유/모니터링 용도로 안전하게 사용함.
