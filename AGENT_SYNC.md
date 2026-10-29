@@ -58,12 +58,15 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
+| in-progress | Cursor / Control Tower | control-tower / scope | `docs/current/PROJECT_PLAN.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `AGENT_SYNC.md` | 미국 국내·동맹·경쟁/대립축 6대 감시축 확정(예측 금지). 패킷 A+B 동시 착수 지시 | 2026-10-29 |
+| in-progress | Cursor Agent / collection | data-collection / US-domestic + allies | `config/source_registry/*`, `scripts/collection/*` (선택 수집기만) | 패킷 A+B: registry·공통 스키마 먼저 → 선택 실행 수집기. Alert/예측/DB/대시보드/LLM 금지 | 2026-10-29 |
+| open | (세션 2 수집) | data-collection / competitor-axis roles | `config/source_registry/*`, signal_gap 소스 | 패킷 C: relationship_role 태깅·OFAC/BIS registry (A/B 스키마 정렬 후) | 2026-10-29 |
 | done | ANTIGRAVITY | db / pipeline / cross-verification | `scripts/run_pipeline.py`, `scripts/db/load_cross_verification_to_db.py`, `scripts/db/create_views.sql` | 해협 센서·공급망 사건 교차검증의 DB 적재와 대시보드 뷰 연동 | 2026-10-02 |
 | done | ANTIGRAVITY | data-collection / supply-chain-sensors | `scripts/collection/fetch_maritime_chokepoints.py`, `scripts/analysis/cross_verify_events.py`, `data/maritime_chokepoints/`, `data/event_cross_verification/` | 해협·시장 센서 수집 및 복수 계통 교차검증 | 2026-10-02 |
 | done | ANTIGRAVITY | data-collection / public-opinion | `scripts/collection/fetch_local_opinions.py`, `scripts/collection/fetch_google_trends.py`, `data/local_opinions/`, `data/google_trends/` | 대안 로컬 여론·검색 트렌드 센서 구축 | 2026-09-29 |
 | in-progress | ANTIGRAVITY | dashboard / ui | `scripts/dashboard/streamlit_dashboard.py` | Streamlit 대시보드 유지보수 및 고도화 | 2026-09-28 |
 | done | Cursor / dashboard-report | dashboard / html-ui | `scripts/dashboard/generate_dashboard_v2.py`, `output/dashboard/` | Information 축 과장 표현 교정(국민 여론·하드코딩 Critical·WATCH 후보 제거) 후 HTML 재생성 | 2026-10-28 |
-| in-progress | ANTIGRAVITY | llm-analysis / alert-scoring | `prototype_all_in_one.py`, `scripts/analysis/analyze_signal_gap.py`, `scripts/analysis/analyze_signals.py`, `data/review_log.csv` | LLM 분석·Risk Signal Score·검수 체계 연동 | 2026-09-28 |
+| in-progress | Cursor / LLM 분석·경보 산식 | llm-analysis / alert-scoring | `scripts/validation/backtest_tev1.py`, `scripts/analysis/analyze_signal_gap.py`, `data/tev1_backtest_results.json`, `data/pending_human_review.csv` | tev1 10건 시운전(일치5/불일치5). 합격 게이트(동결·URL·인용·사람검수) 고정 전 성능 주장 금지. t-test/ANOVA 보류 | 2026-10-29 |
 | done | Codex | docs / session-sync | `PROJECT_CONTEXT.md`, `AGENT_SYNC.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `project-handoff.md` | 현재 방향, 센서 분류, 교차검증 규칙, 세션 상태 문서 정리 | 2026-10-02 |
 | done | Codex | dashboard / Figma handoff | `docs/current/DASHBOARD_SESSION_PROMPT.md`, `PROJECT_CONTEXT.md`, `AGENT_SYNC.md` | Figma의 5대 감시축 균형 UI와 비상 관제 화면을 대시보드 세션에 인수인계 | 2026-10-04 |
 | done | ANTIGRAVITY | dashboard / report / docs-sync | docs/, scripts/dashboard/generate_dashboard_v2.py | 최신 MD(수집 레인 아키텍처, 스크립트 인벤토리, 지도교수 면담자료) 확인 및 대시보드 뷰/표현 정합성 검증 | 2026-10-11 |
@@ -82,6 +85,20 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-10-29 [Cursor / LLM 분석·경보 산식 · trio-sync]
+- 한 일: tev1 10건 보조 백테스트·fixture verify·표본 self-test 실행. 노션 보고서 페이지에 1차 결과 게시. 기준 없는 성능 해석·t-test/ANOVA 조기 도입은 보류하기로 함.
+- 바꾼 파일: `data/tev1_backtest_results.json`, `AGENT_SYNC.md`. 노션: `[검증] 2026-10-29 LLM·tev1 1차 테스트 결과`.
+- 확인한 것: 호출 10/10 성공, 산식 일치 5·불일치 5(검수 후보). TEST fixture leak 0. OpenRouter 미호출.
+- 다음 작업: VALIDATION_PLAN에 1차 합격 체크리스트(동결·URL·인용·자동승격 금지) 명문화 후 재검증. 불일치 5건을 QA 표본에 포함.
+- 주의할 점: 시운전 ≠ 공식 성능. tev1 단독 Alert Level 확정 금지. p-value로 경보를 정당화하지 않음.
+
+2026-10-29 [Cursor / Control Tower · 감시축 확장]
+- 한 일: 미국 국내 정치를 **예측이 아닌 정책 리스크 조기경보**로 추가. 동맹(패킷 B)과 경쟁·대립축(패킷 C)을 함께 범위에 넣고, **패킷 A+B 동시 착수**로 확정. `PROJECT_PLAN` 6대 이슈 감시축, `DATA_COLLECTION_GUIDE` §6 반영.
+- 바꾼 파일: `docs/current/PROJECT_PLAN.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `AGENT_SYNC.md`.
+- 확인한 것: 대선 승패·전쟁 발발 예측은 비범위. 센서 5축(Maritime 등)과 이슈 6축은 별개.
+- 다음 작업: 세션 2가 registry·Federal Register/Congress/USTR·동맹 RSS를 구현. 세션 5는 이슈 축 균형 UI를 공식 데이터 이후 조정.
+- 주의할 점: Notion/README에 “미국 정치 예측”으로 쓰지 말 것.
 
 2026-10-28 [Cursor / DB-evidence 세션 시작]
 - 한 일: `PROJECT_CONTEXT.md`, `AGENT_SYNC.md`, `DATABASE_SETUP.md`, `VALIDATION_PLAN.md` 정독. `docs/current/DATABASE_VALIDATION_SESSION_PROMPT.md`는 저장소에 없음(`SESSION_PROMPTS.md` §4 + 세션 지시문으로 대체).

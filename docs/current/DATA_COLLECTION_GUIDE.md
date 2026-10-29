@@ -148,34 +148,85 @@
 
 이 감사 데이터는 취업 포트폴리오 면접 시 **"우리는 단순 미래 예측 성공률을 주장하는 것이 아니라, 센서별 선행 리드타임(Lead Time)과 오탐·미탐 사유를 체계적으로 감사·추적하고 있다"**는 핵심 차별화 증거로 제시한다.
 
-## 6. 다음 수집 파이프라인 확장 타임라인
+## 6. 미국 국내·동맹·경쟁/대립축 수집 확장 (2026-10-29)
+
+컨트롤타워 결정: **패킷 A(미국 국내 공식)와 패킷 B(동맹 registry)를 동시에** 수집 세션 우선순위로 둔다. Alert Level·당선 예측·전쟁 예측은 수집 세션 범위 밖이다.
+
+### 6.0 표현·역할 규칙
+
+- 미국 국내: **정책·제도 리스크 조기경보** (선거 결과 예측 금지).
+- 관계 라벨: 대외 문서는 `ally` / `competitor_adversary_axis`(경쟁·대립축). “적대국”은 내부 role tag로만 사용 가능.
+- 모든 신규 레코드: `source_url`, `published_at`, `observed_at`, `source_type`, `parse_status`, `license_access_note` 또는 `access_note`, `raw_ref`/`content_hash`.
+- 단일 출처로 경보 단계를 올리지 않는다.
+
+### 6.0-A 패킷 A — 미국 국내 정치·정책 (공식 우선)
+
+| 우선 | 소스 | 레인 | 비고 |
+|---|---|---|---|
+| 1 | White House Releases RSS | FAST | 기존 `fetch_whitehouse_official.py` |
+| 1 | Federal Register API/JSON | FAST | 규칙·관세·제재 고시 |
+| 1 | Congress.gov API (법안·표결) | FAST | API 키·쿼터 확인 후 선택 실행 |
+| 1 | USTR / Commerce / Treasury 보도·RSS | FAST | 통상·수출통제·제재 |
+| 2 | DHS / CBP / DoD 보도자료 | FAST | 이민·국경·군사 공개 신호 |
+| 2 | 미 싱크탱크 registry 확장 | CONTEXT | Brookings, CFR, CSIS 등 |
+| 3 | Pew / Gallup / AP-NORC 공개물 | BASELINE | RCP Cloudflare 회피 |
+| 3 | FRED, 국채·달러·VIX | BASELINE | 정책 불확실성 프록시 |
+| 3 | Google Trends(US), Bluesky, 공식 X API만 | OPINION | 국민여론 단정 금지 |
+
+이슈 태그(안): `US_Debt_Ceiling`, `US_Trade_Tariff`, `US_Export_Control`, `US_Immigration_Border`, `US_Industrial_Policy_CHIPS`, `US_Sanctions_OFAC`, `US_Defense_Budget`, `US_Election_Policy_Signal`(공약·법안·행정조치만).
+
+### 6.0-B 패킷 B — 동맹국 공식 registry
+
+`config/source_registry/government_sources.yaml`(및 관련 yaml)에 `relationship_role: ally`, `country`, `fallback`, `license_access_note`를 보강한다.
+
+| 우선 | 행위자 | 소스 유형 |
+|---|---|---|
+| 1 | 한국 | 외교부·국방부 RSS (기존 유지·스키마 정렬) |
+| 1 | 미국 | State / DoD / White House (기존+보강) |
+| 1 | 일본·호주·캐나다 | MOFA / DFAT / GAC 공식 RSS·보도 |
+| 1 | 영국·독일 | FCDO / Auswärtiges Amt (기존 확인) |
+| 2 | NATO · EU EEAS | 공식 뉴스/RSS |
+| 2 | 동맹 싱크탱크 | ASPI, IISS, ECFR 등 CONTEXT registry |
+
+### 6.0-C 패킷 C — 경쟁·대립축 (A/B 병행 후 또는 registry에 role만 먼저)
+
+| 우선 | 내용 |
+|---|---|
+| 1 | 기존 signal_gap 소스(관영↔독립)에 `relationship_role: competitor_adversary_axis` 부여 |
+| 1 | OFAC / BIS / OpenSanctions를 FAST 제재 신호로 registry 정리 |
+| 2 | 중국·러시아·이란 외교부 공개 RSS/사이트 (사실 확정 금지, 공식 서사만) |
+| 2 | GDELT·해협·운임·공개 TG는 기존 센서 재사용, 신규 대량 호출 금지 |
+
+구현 순서(세션 2): **A와 B를 같은 스프린트에서 registry·스키마부터** → 수집기/플래그는 소스별 선택 실행 → C는 role 태깅과 기존 센서 연결을 우선.
+
+## 7. 다음 수집 파이프라인 확장 타임라인
 
 2026-10-04 기준 다음 확장은 검증 세션이나 대시보드 세션과 분리하여 수집 계층에서만 진행한다.
 
-### 6.1 항공 공급망 센서
+### 7.1 항공 공급망 센서
 
 - 공항별 항공편 수, 화물기·여객기 구분, 지상 대기시간, 결항·우회, ADS-B 관측 공백을 수집 후보로 둔다.
 - 인천·홍콩·상하이 푸둥·타이베이·두바이·도하·프랑크푸르트·싱가포르·멕시코시티·파나마시티를 1차 관측 공항으로 검토한다.
 - 항공편 수나 ADS-B 신호는 실제 화물 톤수와 동일하지 않으므로 `air_traffic_proxy`와 `uncertainty_note`를 보존한다.
 
-### 6.2 파나마 운하 센서
+### 7.2 파나마 운하 센서
 
 - 파나마 운하는 수에즈 운하와 분리된 미주 동서 항로 병목으로 관리한다.
 - 통항 선박 수, 대기시간, 예약 슬롯, 흘수 제한, 수위·가뭄 공지, LNG·컨테이너·벌크선 통항 변화를 원시 관측값으로 저장한다.
 
-### 6.3 다국가 세관 데이터
+### 7.3 다국가 세관 데이터
 
 - 한국·중국에서 일본·대만·미국·베트남·싱가포르·인도·멕시코·브라질·EU로 확장한다.
 - 국가별 API, 공개 다운로드, CSV/Excel, 공식 통계 포털을 `source registry`에서 별도 관리한다.
 - 공통 필드는 `reporter`, `partner`, `hs_code`, `period`, `trade_value`, `quantity`, `source_url`, `observed_at`, `access_note`로 정규화한다.
 
-### 6.4 X 공개 정보환경 신호
+### 7.4 X 공개 정보환경 신호
 
 - 공식 X API를 우선 사용하고, 계정·키워드·언어·시간창을 제한한다.
 - `post_id`, `author_id`, `author_type`, `text`, `created_at`, `language`, `public_metrics`, `referenced_posts`, `source_url`, `observed_at`, `api_access_note`를 보존한다.
 - X 게시물은 국민 전체 여론이 아니라 `online_information_environment_signal`로 저장한다.
 
-### 6.5 API가 없는 정부 홈페이지
+### 7.5 API가 없는 정부 홈페이지
 
 정부 사이트는 다음 순서의 단계형 수집 어댑터를 사용한다.
 
@@ -185,7 +236,7 @@
 
 백악관은 `scripts/collection/fetch_whitehouse_official.py`에서 공식 RSS(`https://www.whitehouse.gov/releases/feed/`)를 1순위로 사용한다. 사이트맵 보완은 `--include-sitemap`을 명시한 제한 실행에서만 수행하며, 기본적으로 원문 페이지를 대량 다운로드하지 않고 RSS 메타데이터·해시·수집 영수증을 저장한다. 통합 파이프라인에서도 `--with-whitehouse`를 명시한 경우에만 호출한다.
 
-## 7. GDELT 대체·보조 수집기(2026-10-10)
+## 8. GDELT 대체·보조 수집기(2026-10-10)
 
 GDELT Cloud 구독 만료에 대비해 원본 GDELT 2.0과 보조 사건·뉴스 서비스를 별도 수집기로 분리한다.
 
@@ -218,7 +269,7 @@ python scripts/run_pipeline.py --collect-only
 python scripts/run_pipeline.py --collect-only --with-gdelt-cloud
 ```
 
-## 8. Python 수집 파이프라인 실행 그룹(2026-10-10)
+## 9. Python 수집 파이프라인 실행 그룹(2026-10-10)
 
 Python 스크립트의 역할과 실제 호출 여부는 [`PYTHON_SCRIPT_INVENTORY.md`](PYTHON_SCRIPT_INVENTORY.md)에 기록한다. 수집 세션에서는 다음처럼 후처리와 분리해 실행할 수 있다.
 

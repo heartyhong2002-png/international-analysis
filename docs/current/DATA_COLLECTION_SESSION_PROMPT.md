@@ -72,3 +72,25 @@
 - 영상: 감정 판정보다 시간코드가 있는 발언·장면·재사용 증거 탐색을 우선
 - 금지 범위: 비공개 접근, 우회·탈취, 개인 식별 확대, 작전·표적·취약점 정보 수집
 
+## 2026-10-29 착수 패킷 A+B (컨트롤타워 확정)
+
+아래를 세션 첫 메시지에 이어서 붙여도 된다.
+
+```text
+컨트롤타워가 2026-10-29에 범위를 확정했다. docs/current/PROJECT_PLAN.md의 6대 이슈 감시축과 docs/current/DATA_COLLECTION_GUIDE.md 섹션 6을 읽고, 패킷 A와 B를 같은 스프린트에서 진행해라.
+
+패킷 A (미국 국내 정책 리스크 — 당선 예측 금지):
+1. Federal Register, Congress.gov, USTR/Commerce/Treasury를 source_registry와 선택 실행 수집기로 연결
+2. 기존 White House 수집기와 공통 스키마·dedupe 정렬
+3. 이슈 태그는 US_Debt_Ceiling, US_Trade_Tariff, US_Export_Control 등 정책 신호만
+
+패킷 B (동맹 공식):
+1. government_sources.yaml에 KR/US/JP/AU/CA/UK/DE + NATO/EEAS를 relationship_role=ally로 보강
+2. 라이선스·robots·fallback·required 필드 채우기
+3. 새 대량 크롤 전에 registry와 영수증 스키마부터
+
+패킷 C는 A/B 스키마가 안정된 뒤 relationship_role=competitor_adversary_axis와 OFAC/BIS registry만 먼저 한다.
+
+금지: Alert Level, 선거 승패 예측, 전쟁 발발 예측, DB 스키마, 대시보드, SESSION_PROMPTS/AGENT_SYNC 본문 덮어쓰기(짧은 handoff만).
+```
+
