@@ -61,12 +61,22 @@ python scripts/dashboard/generate_dashboard_v2.py
 
 ## 3. 실행
 
-```bash
-pip install -r requirements.txt   # 없다면 scripts/ 상단 주석의 개별 패키지 참고
-ollama serve                      # 별도 터미널에서 켜두기
+표준 런타임은 **Python 3.13** (프로젝트 `.venv`)이다. PATH의 구형 Python을 쓰지 않는다.
 
-python scripts/run_pipeline.py    # 수집 → 태깅 → LLM 분석 → DB 적재까지 한 번에
-python scripts/dashboard/generate_dashboard_v2.py
+```bash
+# 최초 1회
+#   Windows: py -3.13 -m venv .venv && .\.venv\Scripts\python.exe -m pip install -r requirements.txt
+#   Linux:   uv venv .venv --python 3.13 && uv pip install --python .venv/bin/python -r requirements.txt
+
+ollama serve   # 별도 터미널
+
+# Windows
+.\.venv\Scripts\python.exe scripts/run_pipeline.py
+.\.venv\Scripts\python.exe scripts/dashboard/generate_dashboard_v2.py
+
+# Linux / cloud
+.venv/bin/python scripts/run_pipeline.py
+.venv/bin/python scripts/dashboard/generate_dashboard_v2.py
 ```
 
 개별 단계(정부 발표 수집, GDELT Cloud 사건 수집, 해협·항만 센서, 현지 공개 여론 수집 등)를 따로 돌리는 방법은

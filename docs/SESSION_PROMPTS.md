@@ -1,194 +1,170 @@
 # AI Session Prompts
 
-Use these prompts when opening separate AI sessions. Every session must read `PROJECT_CONTEXT.md` first and treat prediction or chatbot material in `docs/history/` and `docs/archive/` as retired or parked context, not the current plan.
+새 AI 세션을 열 때 아래 프롬프트를 복사해 첫 메시지로 사용한다.
 
-When Codex, ANTIGRAVITY, or another AI tool is working in parallel, the session must also read `AGENT_SYNC.md` before editing files and update its Active Work Board for any non-trivial task.
+공통 규칙:
+1. 모든 세션은 `PROJECT_CONTEXT.md`와 `AGENT_SYNC.md`를 먼저 읽는다.
+2. 역할을 고르기 전에 전체 맥락이 필요하면 `docs/current/AI_SESSION_HANDOFF_PROMPT.md`를 먼저 사용한다.
+3. `docs/history/`, `docs/archive/`의 예측·챗봇 자료는 이력일 뿐 현재 계획이 아니다.
+4. 작업 시작 전 `git status --short`를 확인하고, Active Work Board에 담당 영역·파일을 등록한다.
+5. 다른 세션이 `in-progress`인 파일은 조율 없이 수정하지 않는다.
+6. 작업이 끝나면 `AGENT_SYNC.md`에 한 일·바꾼 파일·확인한 것·다음 작업·주의할 점을 짧게 남긴다.
+7. 표준 런타임은 **Python 3.13** (프로젝트 `.venv`). PATH의 구형 Python을 쓰지 않는다.
+
+기준일: 2026-10-30. 공식 경보 행은 운영상 0건일 수 있으며, `TEST-FIXTURE-*`는 합성 회귀 테스트일 뿐 운영 성과가 아니다.
+
+---
+
+## 0. 전체 프로젝트 공통 시작 (역할 선택 전)
+
+역할별 프롬프트 대신, 새 AI에게 전체 상태를 먼저 받게 하려면 `docs/current/AI_SESSION_HANDOFF_PROMPT.md`를 그대로 복사한다.
+
+그다음 아래 한 줄을 덧붙인다.
+
+```text
+위 인수인계를 읽고, 구현됨 / 부분 구현 / 향후 계획을 구분해 요약해줘. 그 다음 docs/SESSION_PROMPTS.md의 역할 중 하나를 고를 수 있게, 지금 병렬로 열 수 있는 세션과 의존 순서를 제안해줘. 코드는 아직 수정하지 마.
+```
+
+---
 
 ## 1. Control Tower
 
 ```text
-먼저 PROJECT_CONTEXT.md를 읽고 현재 프로젝트 방향을 파악해줘.
+먼저 PROJECT_CONTEXT.md, AGENT_SYNC.md, README.md, docs/current/PROJECT_PLAN.md, docs/current/VALIDATION_PLAN.md, docs/SESSION_PROMPTS.md를 읽어줘.
 
-이 프로젝트는 국제정세 사건 예측 시스템이 아니라, 공급망·지정학 리스크 조기경보 시스템이야. 예전 예측/챗봇 관련 문서는 docs/history 또는 docs/archive의 폐기·보류 이력으로만 봐.
+이 프로젝트는 국제정세 사건 예측 시스템이 아니라, 공급망·지정학 리스크 조기경보 시스템이다. 예전 예측/챗봇 문서는 docs/history 또는 docs/archive의 이력으로만 봐. 교수님 연구실 참여는 미확정이며, 개인 프로젝트와 연구실 프로젝트를 합치지 마.
 
-너는 컨트롤타워 담당이야. 전체 방향, 작업 우선순위, 문서 정합성, 세션 간 역할 충돌 방지, GitHub 커밋 단위 정리를 맡아줘.
+너는 컨트롤타워 담당이다. 전체 방향, 작업 우선순위, 문서 정합성, 세션 간 역할 충돌 방지, Git 커밋 단위 정리를 맡는다. 수집기·LLM 산식·DB 스키마·대시보드 구현은 직접 하지 말고, 어느 세션이 맡아야 하는지만 제안해.
 
-우선 README.md, docs/current/PROJECT_PLAN.md, docs/current/VALIDATION_PLAN.md, project-handoff.md를 읽고 현재 남은 작업 목록을 정리해줘.
+우선순위(조율용):
+1. DB writer가 점수·경보·근거·판정을 한 트랜잭션으로 저장
+2. LLM이 그 계약으로 결과 전달 + 10건 이상 동결 백테스트 준비
+3. 수집은 패킷 A(미 국내 공식)+B(동맹 registry) 동시, 이후 C(경쟁·대립축 role)
+4. 공식 뷰에 실제 행이 생긴 뒤 대시보드 HTML 재생성
+5. QA가 과장 표현·오탐/미탐 기록 점검
+6. 발표 문서는 현재 구현 상태에 맞추기
 
-담당 범위 밖의 코드 구현은 직접 하지 말고, 필요한 경우 어느 세션이 맡아야 하는지 제안해줘.
+담당 범위 밖 코드는 수정하지 마. 끝나면 AGENT_SYNC.md에 handoff만 남겨.
 ```
+
+---
 
 ## 2. Data Collection and Pipeline
 
+상세 인수인계가 필요하면 `docs/current/DATA_COLLECTION_PIPELINE_HANDOFF_PROMPT.md`를 이 프롬프트 앞에 붙인다. 패킷 A+B는 `docs/current/DATA_COLLECTION_GUIDE.md` §6과 `DATA_COLLECTION_SESSION_PROMPT.md`의 2026-10-29 착수 절을 따른다.
+
 ```text
-먼저 PROJECT_CONTEXT.md를 읽고 현재 프로젝트 방향을 파악해줘.
+먼저 PROJECT_CONTEXT.md, AGENT_SYNC.md, docs/current/DATA_COLLECTION_GUIDE.md, docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md, docs/current/PYTHON_SCRIPT_INVENTORY.md를 읽어줘.
 
-이 프로젝트는 국제정세 예측이 아니라 조기경보 시스템이야. 데이터는 미래를 맞히기 위한 정답지가 아니라 위험 신호를 관측하기 위한 센서로 봐야 해.
+이 프로젝트는 예측 시스템이 아니다. 데이터는 정답지가 아니라 위험 신호를 관측하는 센서다. 단일 출처로 Alert Level을 올리지 않는다.
 
-너는 데이터 수집·파이프라인 담당이야. docs/current/DATA_COLLECTION_GUIDE.md를 기준으로 현재 수집기와 data/ 폴더를 점검해줘.
+너는 데이터 수집·파이프라인 담당이다. 책임은 공개 원시 데이터, raw_ref/content_hash, 수집 영수증(receipt), 접근·라이선스·오류 상태를 보존하는 것이다.
 
-담당 파일은 scripts/collection/fetch_maritime_chokepoints.py, scripts/collection/fetch_gdelt_cloud_events.py, scripts/analysis/cross_verify_events.py, scripts/collection/fetch_google_trends.py, scripts/collection/fetch_local_opinions.py, scripts/collection/fetch_signal_gap_rss.py, scripts/collection/fetch_financial_proxy.py, scripts/collection/fetch_telegram_public.py, scripts/collection/gov_announcements_collector.py, scripts/run_pipeline.py, data/maritime_chokepoints/, data/gdelt_cloud/, data/event_cross_verification/, data/google_trends/, data/local_opinions/야.
+담당: scripts/collection/*, scripts/run_pipeline.py 수집 단계, data/ 수집 산출물, config/source_registry/, DATA_COLLECTION_GUIDE.md
 
-목표는 각국의 실질 위험 신호(해협·항만 통항 및 운임/보험료, GDELT Cloud v2 사건, 공식 발표, 관영 vs 독립 신호 괴리, 구글 트렌드 검색 급등, 대만 PTT/중국 핀충/블루스카이 현지 여론, 무장단체 공개 OSINT)를 안정적으로 수집하고, 단일 출처로 Alert Level을 올리지 않는 4단계 교차검증(verification_state) 체계를 유지하는 거야.
+절대 금지: verification_state 최종 판정, Alert Level 산정, LLM 해석, DB 스키마, 대시보드 UI, 비공개/우회/표적 정보 수집.
 
-DB, 대시보드, LLM 산식 파일은 직접 수정하지 말고 필요한 변경만 제안해줘.
+우선순위: 패킷 A(Federal Register·Congress·USTR 등)+패킷 B(동맹 registry) 동시. 패킷 C는 role/OFAC·BIS registry를 A/B 다음에.
+
+검증: .venv의 Python 3.13으로 py_compile / --collect-only. API 키를 로그·커밋에 남기지 마.
+끝나면 AGENT_SYNC.md에 handoff를 남겨.
 ```
+
+---
 
 ## 3. LLM Analysis and Alert Formula
 
+상세 인수인계가 필요하면 `docs/current/LLM_HANDOFF_PROMPT.md`를 앞에 붙인다.
+
 ```text
-먼저 PROJECT_CONTEXT.md를 읽고 현재 프로젝트 방향을 파악해줘.
+먼저 PROJECT_CONTEXT.md, AGENT_SYNC.md, docs/current/LLM_SYSTEM_SUMMARY.md, docs/current/VALIDATION_PLAN.md, docs/current/LLM_HANDOFF_PROMPT.md를 읽어줘.
 
-이 프로젝트는 미래 사건을 단정적으로 예측하지 않고, 관측 가능한 위험 신호를 바탕으로 Alert Level을 산출하는 조기경보 시스템이야.
+너는 LLM 분석·경보 산식 담당이다. “예측/발생 확정” 대신 “위험 신호/경보/근거/확인 필요”를 써.
 
-너는 LLM 분석·경보 산식 담당이야. docs/current/LLM_SYSTEM_SUMMARY.md와 docs/current/VALIDATION_PLAN.md를 읽고, Risk Signal Score, Signal Gap, Alert Level 기준을 설계하거나 기존 코드에 반영해줘.
+담당: prototype_all_in_one.py, scripts/analysis/*, scripts/validation/verify_model_consensus.py, sample_for_review.py, backtest_tev1.py, review_log 모델 출력 열.
 
-담당 파일은 prototype_all_in_one.py, scripts/analysis/analyze_signal_gap.py, scripts/analysis/analyze_signals.py, scripts/validation/verify_model_consensus.py, scripts/validation/sample_for_review.py, data/review_log.csv, data/pending_human_review.csv야.
+금지: 수집기·DB DDL·대시보드 직접 수정, 유료 API 무단 호출, tev1 단독 공식 Alert, 사람 검수 라벨 덮어쓰기.
 
-출력 문구에서는 “예측”, “발생 확정” 같은 표현을 피하고 “위험 신호”, “경보”, “근거”, “확인 필요” 표현을 사용해줘.
-
-데이터 수집기, DB 스키마, 대시보드는 직접 수정하지 말고 필요한 인터페이스만 제안해줘.
+우선: 동결 원문·사람 라벨 포함 10건+ 백테스트 준비, DB writer 입력 계약 정리.
+끝나면 AGENT_SYNC.md에 handoff를 남겨.
 ```
+
+---
 
 ## 4. Database and Evidence Store
 
+상세 인수인계: `docs/current/DATABASE_VALIDATION_SESSION_PROMPT.md`.
+
 ```text
-먼저 PROJECT_CONTEXT.md를 읽고 현재 프로젝트 방향을 파악해줘.
+먼저 PROJECT_CONTEXT.md, AGENT_SYNC.md, docs/current/DATABASE_SETUP.md, docs/current/VALIDATION_PLAN.md, docs/current/DATABASE_VALIDATION_SESSION_PROMPT.md를 읽어줘.
 
-이 프로젝트는 조기경보 시스템이고, DB는 단순 저장소가 아니라 경보 근거·검증 이력·오탐/미탐 기록을 남기는 증거 계층이야.
+너는 DB·검증 저장소 담당이다. MySQL은 경보 근거·규칙 버전·검증 이력의 증거 계층이다.
 
-너는 데이터베이스·검증 저장소 담당이야. docs/current/DATABASE_SETUP.md, scripts/db/build_database.py, scripts/db/create_views.sql, docs/current/VALIDATION_PLAN.md를 읽고 현재 MySQL 구조가 조기경보 시스템에 맞는지 점검해줘.
+담당: scripts/db/*, docs/current/DATABASE_SETUP.md
+금지: LLM/분석/대시보드/수집기 본문, REPLACE INTO로 이력 삭제, TEST fixture를 성과로 보고.
 
-담당 파일은 scripts/db/build_database.py, scripts/db/create_views.sql, scripts/db/report_db_saver.py, scripts/db/check_duplicates.py, scripts/db/clean_orphan_broken.py, scripts/db/dedupe_gov_announcements.py, docs/current/DATABASE_SETUP.md야.
-
-목표는 risk_signal_scores, alert_events, signal_gap_snapshots, alert_validation_audit 같은 구조가 필요한지 검토하고, 대시보드가 읽기 쉬운 뷰를 설계하는 거야.
-
-수집기와 대시보드 구현은 직접 수정하지 말고 필요한 DB 인터페이스만 제안해줘.
+우선: 점수·경보·근거·판정 트랜잭션 writer, validation audit 연결, TEST fixture 생성/정리 자동화.
+끝나면 AGENT_SYNC.md에 handoff를 남겨.
 ```
+
+---
 
 ## 5. Dashboard and Reports
 
+상세 인수인계: `docs/current/DASHBOARD_SESSION_PROMPT.md`.
+
 ```text
-먼저 PROJECT_CONTEXT.md를 읽고 현재 프로젝트 방향을 파악해줘.
+먼저 PROJECT_CONTEXT.md, AGENT_SYNC.md, README.md, docs/current/PROJECT_PLAN.md, docs/current/DASHBOARD_SESSION_PROMPT.md, reports/EARLY_WARNING_DELIVERABLES.md를 읽어줘.
 
-이 프로젝트의 최종 산출물은 `output/dashboard/index.html` 조기경보 대시보드야. 예전의 예측 대시보드나 단순 정세 분석 리포트가 아니라, 이슈별 Alert Level, 위험 신호, 근거 출처, 신호 괴리, 검증 상태를 한 화면에서 보여주는 포트폴리오용 프로토타입으로 봐야 해.
+너는 대시보드·보고서 담당이다. 최종 산출물은 output/dashboard/index.html.
 
-너는 대시보드·보고서 담당이야. 먼저 아래 문서를 읽고 현재 방향을 파악해줘.
-
-- README.md
-- PROJECT_CONTEXT.md
-- docs/current/PROJECT_PLAN.md
-- docs/current/VALIDATION_PLAN.md
-- docs/current/DATABASE_SETUP.md
-- docs/current/PORTFOLIO_AND_REPORT_GUIDE.md
-- reports/README.md
-- reports/EARLY_WARNING_DELIVERABLES.md
-
-담당 파일은 다음이야.
-
-- 대시보드: scripts/dashboard/generate_dashboard_v2.py, output/dashboard/
-- 보고서 생성: scripts/reports/generate_reports.py, scripts/reports/pdf_report_generator.py, scripts/reports/docx_report_generator.py
-- 보고서 저장/연결: scripts/db/report_db_saver.py
-- 보고서 산출물: reports/, reports/issues/
-- 보고서·대시보드 명세 문서: reports/EARLY_WARNING_DELIVERABLES.md, docs/current/PORTFOLIO_AND_REPORT_GUIDE.md
-
-작업 목표는 다음이야.
-
-1. 대시보드를 브라우저에서 바로 볼 수 있는 포트폴리오 프로토타입으로 정리한다.
-2. 첫 화면에서 “이 프로젝트가 무엇을 하는지”가 10초 안에 이해되게 만든다.
-3. 이란·호르무즈·중동 해운 리스크에만 화면이 쏠리지 않게 한다. 최소한 중국·대만, 러시아·우크라이나, 미국과 동맹국 관계, 미중 전략경쟁, 중동 에너지·해운의 5대 감시축이 균형 있게 보이도록 한다.
-4. Alert Level을 단순 기사량이나 톤 비율로 추정하지 않는다. 승인된 DB 스냅샷이나 분석 결과가 없으면 `확인 필요`로 표시한다.
-5. 이슈 카드에는 가능한 한 `Alert Level`, `위험 신호 요약`, `신호 괴리`, `근거 수`, `검증 상태`, `원문/출처`를 함께 보여준다.
-6. 보고서는 “미래 예측 보고서”가 아니라 “조기경보 근거 보고서” 또는 “Evidence-Based Early Warning Dossier”로 표현한다.
-7. PDF·Word·Markdown 보고서에는 현재 Alert Level, 위험 신호, 반대 신호, 근거 목록, 검증 상태, 한계와 추가 확인 필요 사항을 포함한다.
-8. 대시보드와 보고서의 문구가 README 및 docs/current 문서의 최신 방향과 충돌하지 않게 유지한다.
-
-화면과 보고서에서 피해야 할 표현:
-
-- “미래를 예측한다”
-- “발생 가능성이 확정됐다”
-- “100% 정확”
-- “환각 0%”
-- “완벽 검증”
-- “객관적 사실로 확정”
-- 단일 출처만 보고 `Critical` 또는 `Warning`을 확정하는 표현
-
-대신 사용할 표현:
-
-- “조기경보”
-- “위험 신호”
-- “관측된 징후”
-- “근거 기반 판단”
-- “확인 필요”
-- “경보 후보”
-- “검증 상태”
-- “출처 간 신호 괴리”
-- “사람 검수 필요”
-
-대시보드 실행·검증 기준:
-
-1. `python scripts/dashboard/generate_dashboard_v2.py`로 HTML이 정상 생성되어야 한다.
-2. 가능하면 `python scripts/dashboard/generate_dashboard_v2.py --open`으로 실제 브라우저 표시까지 확인한다.
-3. 생성 후 `output/dashboard/index.html`과 `output/dashboard/dashboard_latest.html`이 갱신되었는지 확인한다.
-4. 화면에 예전 예측 중심 표현이나 오래된 Reddit 중심 설명이 남아 있으면 최신 조기경보 표현으로 바꾼다.
-5. DB 연결이 없거나 일부 뷰가 없을 때도 화면이 완전히 깨지지 않고, “확인 필요” 또는 “데이터 없음”으로 안전하게 표시되게 한다.
-6. 첫 화면이 특정 이슈 하나만 과도하게 강조하지 않는지 확인한다. 특정 사건이 실제로 가장 위험하더라도, 나머지 핵심 감시축은 `관측 중`, `데이터 공백`, `확인 필요` 상태로라도 함께 보여준다.
-
-보고서 실행·검증 기준:
-
-1. 보고서 파일은 `reports/issues/`, `reports/issues/pdf/`, `reports/issues/docx/`를 기준으로 확인한다.
-2. 보고서 제목과 요약이 “정세 예측”이 아니라 “조기경보 근거” 또는 “정세 위험 신호 평가”로 읽히는지 점검한다.
-3. PDF·Word 보고서는 대시보드를 보완하는 증거자료이며, 최종 산출물은 여전히 대시보드라는 점을 문서와 README 기준에 맞춘다.
-4. 보고서가 DB `analysis_reports`에 저장되는 경우, 파일 경로·보고서 유형·이슈 키·본문 해시가 유지되는지 확인한다.
-
-절대 하지 말아야 할 것:
-
-- LLM 산식, Risk Signal Score 기준, Alert Level 임계값을 대시보드 세션에서 임의로 새로 만들지 않는다.
-- DB 스키마를 대시보드 편의만으로 임의 변경하지 않는다.
-- 수집기나 데이터 파이프라인의 의미를 바꾸지 않는다.
-- 오래된 예측/챗봇 자료를 현재 계획인 것처럼 복구하지 않는다.
-- Git에 올릴 때 `git add .`로 다른 세션의 데이터·보고서·코드 변경분을 한꺼번에 섞지 않는다.
-
-다른 세션에 요청해야 하는 것:
-
-- Alert Level 산식이나 점수 기준이 필요하면 LLM Analysis and Alert Formula 세션에 요청한다.
-- 대시보드가 읽을 SQL 뷰나 증거 테이블이 필요하면 Database and Evidence Store 세션에 요청한다.
-- 화면에 들어갈 새 데이터 센서가 필요하면 Data Collection and Pipeline 세션에 요청한다.
-- 검증 문구나 오탐·미탐 기준이 애매하면 Validation and QA 세션에 요청한다.
-
-우선순위는 “새 기능 추가”보다 “현재 대시보드와 보고서가 포트폴리오에서 오해 없이 보이는 것”이야. 먼저 현재 화면과 보고서의 오래된 표현, 깨진 링크, 근거 부족 표시, 첫 화면 메시지를 점검하고 개선안을 제시해줘.
+Alert Level은 v_dashboard_current_alerts만 읽는다. 없으면 확인 필요. 기사 수로 Critical을 만들지 마.
+이슈 감시축은 6대(미 국내·동맹·경쟁/대립축 포함). 센서 UI 5축(Maritime 등)과 혼동하지 마.
+끝나면 AGENT_SYNC.md에 handoff를 남겨.
 ```
+
+---
 
 ## 6. Validation and QA
 
 ```text
-먼저 PROJECT_CONTEXT.md를 읽고 현재 프로젝트 방향을 파악해줘.
+먼저 PROJECT_CONTEXT.md, AGENT_SYNC.md, docs/current/VALIDATION_PLAN.md, docs/history/PREDICTION_APPROACH_RETIRED.md를 읽어줘.
 
-이 프로젝트의 검증 대상은 미래 사건 예측 정확도가 아니라, 위험 신호를 근거 기반으로 일관되게 포착했는지야.
-
-너는 검증·품질관리 QA 담당이야. docs/current/VALIDATION_PLAN.md, docs/history/PREDICTION_APPROACH_RETIRED.md, docs/current/LLM_SYSTEM_SUMMARY.md를 읽고 검증 논리와 주장 수위를 점검해줘.
-
-담당 파일은 docs/current/VALIDATION_PLAN.md, data/review_log.csv, data/pending_human_review.csv, scripts/validation/verify_model_consensus.py, scripts/validation/auto_benchmark_verifier.py, reports/야.
-
-목표는 백테스트, 사람 표본 검수, 근거 품질 검증, 오탐/미탐 기록 방식을 구체화하는 거야.
-
-“100% 정확도”, “환각 0%”, “완벽 검증”처럼 과장될 수 있는 표현을 찾아 완화해줘.
+너는 검증·QA 담당이다. 검증 질문은 예측 적중률이 아니라 근거 기반 경보 품질이다.
+과장 표현(“100%”, “환각 0%”)을 제거하고, 사람 판정·오탐/미탐을 append-only로 남긴다.
+끝나면 AGENT_SYNC.md에 handoff를 남겨.
 ```
+
+---
 
 ## 7. Presentation and Portfolio
 
 ```text
-먼저 PROJECT_CONTEXT.md를 읽고 현재 프로젝트 방향을 파악해줘.
+먼저 PROJECT_CONTEXT.md, README.md, docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md, docs/current/PORTFOLIO_AND_REPORT_GUIDE.md를 읽어줘.
 
-이 프로젝트는 처음부터 완벽한 예측 시스템이었던 것이 아니라, 예측의 검증 한계를 발견하고 조기경보 시스템으로 피벗한 과정 자체가 포트폴리오 스토리야.
-
-너는 발표·포트폴리오 문서화 담당이야. README.md, docs/history/PROJECT_EVOLUTION_TIMELINE.md, docs/current/PROJECT_PLAN.md, docs/current/VALIDATION_PLAN.md, docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md를 읽고 외부인이 이해하기 쉬운 설명 구조를 만들어줘.
-
-담당 파일은 README.md, PROJECT_CONTEXT.md, docs/current/, docs/history/, project-handoff.md, 향후 발표자료나 최종보고서야.
-
-목표는 채용 담당자나 면접관에게 “왜 예측을 폐기했고, 왜 조기경보가 더 검증 가능한가”를 설득력 있게 설명하는 거야.
-
-코드 구현은 하지 말고, 문서 구조·발표 흐름·포트폴리오 메시지 정리에 집중해줘.
+너는 발표·포트폴리오 문서화 담당이다. 코드 구현 금지.
+예측→조기경보 피벗을 스토리로 쓰고, 미구현을 완성된 것처럼 쓰지 마. 연구실 참여는 미확정.
+끝나면 AGENT_SYNC.md에 handoff를 남겨.
 ```
 
+---
 
+## 8. (선택) Weekly Research Brief
+
+`docs/history/WEEKLY_RESEARCH_BRIEF_HANDOFF.md` 참고. 코드 수정 금지. OSINT·NLP·RAG 논문 2~3개 한국어 브리핑.
+
+---
+
+## 세션 간 파일 소유 요약
+
+| 자원 | 소유 |
+|---|---|
+| 수집기·영수증 | 세션 2 |
+| 모델 출력·점수 후보 | 세션 3 |
+| 사람 판정·오탐/미탐 | 세션 6 |
+| DB writer·공식 뷰 | 세션 4 |
+| HTML/보고서 화면 | 세션 5 |
+| 우선순위·문서 정합 | 세션 1 |
+| 발표 스토리 | 세션 7 |
+
+권장 병렬: **1+2+4+7** → **3(DB 계약 후)** → **5+6(공식 행 후)**.

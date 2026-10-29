@@ -86,6 +86,13 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
 
+2026-10-30 [Cursor / Control Tower · cloud migrate reconcile]
+- 한 일: 로컬 Git 미이전으로 `origin/main`에서 재개. 원격 `cursor/local-sync-20261028`는 main과 동일 커밋임을 확인. 대화에서만 있던 Python 3.13 표준화·세션 프롬프트 최적화를 브랜치 `cursor/python313-session-prompts-01e9`에 복원.
+- 바꾼 파일: `.python-version`, `requirements.txt`, `docs/SESSION_PROMPTS.md`, `PROJECT_CONTEXT.md`, `README.md`, `AGENT_SYNC.md` (+ 로컬 `.venv`는 gitignore).
+- 확인한 것: uv로 CPython 3.13.18 venv, requirements 설치, reportlab 5.1 import OK. 6대 이슈 감시축·패킷 A/B 문서는 이미 main에 있음.
+- 다음 작업: 세션 2 패킷 A 수집기, DB/LLM 계약, 문서 커밋·PR.
+- 주의할 점: `.venv` 커밋 금지. Windows는 3.13.15, cloud는 3.13.18 — 둘 다 3.13 계열.
+
 2026-10-29 [Cursor / LLM 분석·경보 산식 · trio-sync]
 - 한 일: tev1 10건 보조 백테스트·fixture verify·표본 self-test 실행. 노션 보고서 페이지에 1차 결과 게시. 기준 없는 성능 해석·t-test/ANOVA 조기 도입은 보류하기로 함.
 - 바꾼 파일: `data/tev1_backtest_results.json`, `AGENT_SYNC.md`. 노션: `[검증] 2026-10-29 LLM·tev1 1차 테스트 결과`.
