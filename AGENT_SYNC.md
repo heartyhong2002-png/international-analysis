@@ -198,6 +198,14 @@ Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하�
 
 ## Recent Handoff
 
+2026-10-31 [Cursor / dashboard-report · 현황 종합 보고서 + Notion]
+- 한 일: 10/28~10/30 세션 상태를 종합한 현황 보고서 작성 후 Notion `보고서` 허브에 발행.
+- 바꾼 파일: `reports/PROJECT_STATUS_BRIEF_20261031.md`, `AGENT_SYNC.md`.
+- Notion: https://app.notion.com/p/409de224b44181558398d735b78c2cb6 — `📋 [현황 종합] 2026-10-31 조기경보 시스템 상태 보고서`
+- 확인한 것: 6대 이슈 축·5대 센서 UI 구분, 대시보드 표현 교정·DB 운영 행·패킷 A/B·Python 3.13·열린 다음 작업을 한 문서로 정리. 예측/발생 확정 표현 없음.
+- 다음 작업: evidence_trace 경보 카드 연결, Federal Register 수집기, Streamlit은 소유권 확인 후.
+- 주의할 점: 본 보고서는 Alert 신규 발령이 아님. `git add .` 금지.
+
 2026-10-29 [Cursor Agent / collection · packets A+B registry]
 - 한 일: 패킷 A/B **registry 보강** (수집기 코드는 아직 PENDING). `SCHEMA.md`에 `relationship_role`·`issue_tags`·`packet`·`shared_schema` 추가. `government_sources.yaml` v2: A=Federal Register API/RSS·Congress API·USTR RSS·Commerce/Treasury HTML(선택), B=KR/US/JP/AU/CA/UK/DE+NATO/EEAS에 `relationship_role: ally`·license/robots/fallback/required. 공통 스키마 `official_raw_v1`·White House dedupe 계약 유지.
 - 바꾼 파일: `config/source_registry/SCHEMA.md`, `config/source_registry/government_sources.yaml`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`, `AGENT_SYNC.md`.
