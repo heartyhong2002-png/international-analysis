@@ -58,7 +58,9 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
-| in-progress | Cursor / Control Tower | control-tower / scope | `docs/current/PROJECT_PLAN.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `AGENT_SYNC.md` | 미국 국내·동맹·경쟁/대립축 6대 감시축 확정(예측 금지). 패킷 A+B 동시 착수 지시 | 2026-10-29 |
+| done | Cursor / Control Tower | control-tower / scope | `docs/current/PROJECT_PLAN.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `AGENT_SYNC.md` | 미국 국내·동맹·경쟁/대립축 6대 감시축 확정(예측 금지). 패킷 A+B 동시 착수 지시 | 2026-10-30 |
+| done | Cursor / Control Tower | runtime / python-3.13 | `.venv`, `.python-version`, `requirements.txt`, `README.md`, `PROJECT_CONTEXT.md`, `docs/SESSION_PROMPTS.md` | 표준 런타임 Python 3.13(.venv) 전환 및 세션 프롬프트 정리 — PR #5 | 2026-10-30 |
+| done | Cursor / Control Tower | sync / trio-platform | `AGENT_SYNC.md`, Notion hub/history/board, GitHub PR #5 | 트리오 동기화(MD→Notion→GitHub/PR) 완료 | 2026-10-30 |
 | in-progress | Cursor Agent / collection | data-collection / US-domestic + allies | `config/source_registry/government_sources.yaml`, `config/source_registry/SCHEMA.md`, `scripts/collection/*` (선택 수집기만) | 패킷 A+B registry 보강 완료 → 다음: Federal Register 선택 수집기. Alert/예측/DB/대시보드/LLM 금지 | 2026-10-29 |
 | open | (세션 2 수집) | data-collection / competitor-axis roles | `config/source_registry/*`, signal_gap 소스 | 패킷 C: relationship_role 태깅·OFAC/BIS registry (A/B 스키마 정렬 후) | 2026-10-29 |
 | done | ANTIGRAVITY | db / pipeline / cross-verification | `scripts/run_pipeline.py`, `scripts/db/load_cross_verification_to_db.py`, `scripts/db/create_views.sql` | 해협 센서·공급망 사건 교차검증의 DB 적재와 대시보드 뷰 연동 | 2026-10-02 |
@@ -85,6 +87,13 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-10-30 [Cursor / Control Tower · 트리오 동기화]
+- 한 일: Active Work Board에 6축·Python 3.13·trio-sync를 `done`으로 마감. Notion 허브(6대 이슈 감시축)·이력 Phase 5·보드 `trio-sync-20261030` 반영 후 로컬 `notion_manager.py --all` 실행. GitHub는 PR #5 브랜치에 푸시.
+- 바꾼 파일: `AGENT_SYNC.md`. Notion: hub / history / Active Work Board.
+- 확인한 것: 허브 표·우선순위·콜아웃이 MD SoT와 정합. `.venv` Python 3.13.15.
+- 다음 작업: PR #5 머지. 세션 2는 패킷 A+B Federal Register 선택 수집기.
+- 주의할 점: Notion은 미러. “미국 정치 예측” 표현 금지. 센서 5축 ≠ 이슈 6축.
 
 2026-10-30 [Cursor / Control Tower · cloud migrate reconcile]
 - 한 일: 로컬 Git 미이전으로 `origin/main`에서 재개. 원격 `cursor/local-sync-20261028`는 main과 동일 커밋임을 확인. 대화에서만 있던 Python 3.13 표준화·세션 프롬프트 최적화를 브랜치 `cursor/python313-session-prompts-01e9`에 복원.
