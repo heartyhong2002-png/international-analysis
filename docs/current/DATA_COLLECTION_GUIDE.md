@@ -269,6 +269,20 @@ python scripts/run_pipeline.py --collect-only
 python scripts/run_pipeline.py --collect-only --with-gdelt-cloud
 ```
 
+## 8.5 Cloud light collection lane (GitHub Actions, 2026-10-31)
+
+PC가 꺼져 있어도 **가벼운 공개 RSS/HTTP 수집만** 돌리려면 GitHub Actions 워크플로 [`.github/workflows/daily_pipeline.yml`](../../.github/workflows/daily_pipeline.yml)를 사용한다.
+
+| 구분 | 내용 |
+|---|---|
+| 스케줄 | 매일 07:00 KST (`cron: 0 22 * * *` UTC) + `workflow_dispatch` |
+| 포함 | 정부 RSS, 백악관 RSS, signal-gap RSS, financial proxy |
+| 제외 | Ollama/LLM, MySQL, GDELT Cloud, 대시보드, Trends/로컬여론/해협, `issue_data_collector` |
+| 산출물 | `scripts/data/gov_announcements/`, `data/whitehouse_official/`, `data/signal_gap/` (변경 시 `[skip ci]` 커밋) |
+| Kaggle | Secrets(`KAGGLE_USERNAME`/`KAGGLE_KEY`)가 있을 때만 수동 dispatch에서 선택 |
+
+SoT와 무거운 수집·LLM·DB는 계속 로컬 `python scripts/run_pipeline.py --collect-only`(및 선택 플래그)다. Actions 결과는 수집 스냅샷일 뿐 Alert Level이나 `verification_state`를 만들지 않는다.
+
 ## 9. Python 수집 파이프라인 실행 그룹(2026-10-10)
 
 Python 스크립트의 역할과 실제 호출 여부는 [`PYTHON_SCRIPT_INVENTORY.md`](PYTHON_SCRIPT_INVENTORY.md)에 기록한다. 수집 세션에서는 다음처럼 후처리와 분리해 실행할 수 있다.

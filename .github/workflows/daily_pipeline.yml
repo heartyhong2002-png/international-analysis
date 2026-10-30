@@ -1,19 +1,17 @@
-name: Daily Geopolitics Data Collection
+name: Daily Light Collection
+
+# Cloud light lane: RSS / public HTTP collectors only.
+# No Ollama, MySQL, GDELT Cloud, or dashboard.
+# Heavy collectors stay on the local PC pipeline.
 
 on:
   schedule:
-    # 매일 한국 시간 07:00 AM (UTC 22:00)에 자동 실행
+    # Daily 07:00 KST (UTC 22:00)
     - cron: '0 22 * * *'
   workflow_dispatch:
-    # GitHub 웹 콘솔에서 'Run workflow' 버튼으로 수동 실행 지원
     inputs:
       with_kaggle:
-        description: 'Kaggle 데이터셋(Kayhan 아카이브 등) 동기화 포함'
-        required: true
-        type: boolean
-        default: true
-      skip_gov:
-        description: '정부 발표(RSS) 수집 건너뛰기'
+        description: 'Also sync Kaggle datasets (needs KAGGLE_USERNAME / KAGGLE_KEY secrets)'
         required: false
         type: boolean
         default: false
@@ -22,54 +20,69 @@ permissions:
   contents: write
 
 jobs:
-  collect-and-sync:
+  light-collect:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
 
     steps:
-      - name: 1. 저장소 체크아웃
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: 2. Python 환경 설정 (3.11)
+      - name: Set up Python 3.13
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.13'
           cache: 'pip'
 
-      - name: 3. 의존성 패키지 설치
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: 4. Kaggle 데이터셋 동기화
-        if: ${{ github.event_name == 'schedule' || inputs.with_kaggle }}
+      - name: Government announcements (RSS)
+        continue-on-error: true
+        run: python scripts/collection/gov_announcements_collector.py
+
+      - name: White House official RSS
+        continue-on-error: true
+        run: python scripts/collection/fetch_whitehouse_official.py
+
+      - name: Signal-gap triangulated RSS
+        continue-on-error: true
+        run: python scripts/collection/fetch_signal_gap_rss.py
+
+      - name: Financial proxy indicators
+        continue-on-error: true
+        run: python scripts/collection/fetch_financial_proxy.py
+
+      - name: Optional Kaggle sync
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.with_kaggle }}
+        continue-on-error: true
         env:
           KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
           KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
         run: |
-          python scripts/fetch_kaggle_datasets.py
+          if [ -z "$KAGGLE_USERNAME" ] || [ -z "$KAGGLE_KEY" ]; then
+            echo "Kaggle secrets missing; skipping."
+            exit 0
+          fi
+          python scripts/collection/fetch_kaggle_datasets.py
 
-      - name: 5. 미국 종합 시그널 수집 (정치·경제·금융·외교)
+      - name: Commit collected artifacts
         run: |
-          python scripts/fetch_us_macro_signals.py
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: 6. 이슈 데이터 증분 수집 (Wikipedia, FRED, 제재 등)
-        run: |
-          python scripts/issue_data_collector.py --resume
+          git add \
+            scripts/data/gov_announcements \
+            data/whitehouse_official \
+            data/signal_gap \
+            data/sources/kayhan \
+            || true
 
-      - name: 7. 정부 공식 발표 수집 (RSS)
-        if: ${{ github.event_name == 'schedule' || !inputs.skip_gov }}
-        run: |
-          python scripts/gov_announcements_collector.py
-
-      - name: 7. 변경된 데이터 자동 커밋 & 푸시
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/
           if git diff --staged --quiet; then
-            echo "ℹ️ 새로 수집되거나 변경된 데이터가 없습니다."
+            echo "No new or changed collection artifacts."
           else
-            echo "✓ 신규 데이터 발견, 리포지토리에 자동 푸시합니다."
-            git commit -m "auto: daily data collection sync [skip ci]"
+            git commit -m "auto: daily light collection sync [skip ci]"
             git push
           fi

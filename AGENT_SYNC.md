@@ -61,6 +61,7 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | Cursor / Control Tower | control-tower / scope | `docs/current/PROJECT_PLAN.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `AGENT_SYNC.md` | 미국 국내·동맹·경쟁/대립축 6대 감시축 확정(예측 금지). 패킷 A+B 동시 착수 지시 | 2026-10-30 |
 | done | Cursor / Control Tower | runtime / python-3.13 | `.venv`, `.python-version`, `requirements.txt`, `README.md`, `PROJECT_CONTEXT.md`, `docs/SESSION_PROMPTS.md` | 표준 런타임 Python 3.13(.venv) 전환 및 세션 프롬프트 정리 — PR #5 | 2026-10-30 |
 | done | Cursor / Control Tower | sync / trio-platform | `AGENT_SYNC.md`, Notion hub/history/board, GitHub PR #5 | 트리오 동기화(MD→Notion→GitHub/PR) 완료 | 2026-10-30 |
+| done | Cursor / Control Tower | automation / cloud-light-collection | `.github/workflows/daily_pipeline.yml`, `docs/current/DATA_COLLECTION_GUIDE.md`, `AGENT_SYNC.md` | GitHub Actions 일일 수집 경로 복구 → light RSS lane (gov/WH/signal-gap/financial). LLM·DB·GDELT 제외 | 2026-10-31 |
 | in-progress | Cursor Agent / collection | data-collection / US-domestic + allies | `config/source_registry/government_sources.yaml`, `config/source_registry/SCHEMA.md`, `scripts/collection/*` (선택 수집기만) | 패킷 A+B registry 보강 완료 → 다음: Federal Register 선택 수집기. Alert/예측/DB/대시보드/LLM 금지 | 2026-10-29 |
 | open | (세션 2 수집) | data-collection / competitor-axis roles | `config/source_registry/*`, signal_gap 소스 | 패킷 C: relationship_role 태깅·OFAC/BIS registry (A/B 스키마 정렬 후) | 2026-10-29 |
 | done | ANTIGRAVITY | db / pipeline / cross-verification | `scripts/run_pipeline.py`, `scripts/db/load_cross_verification_to_db.py`, `scripts/db/create_views.sql` | 해협 센서·공급망 사건 교차검증의 DB 적재와 대시보드 뷰 연동 | 2026-10-02 |
@@ -87,6 +88,13 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-10-31 [Cursor / Control Tower · cloud light collection]
+- 한 일: 매일 실패하던 Actions 워크플로를 `scripts/collection/*` 경로·Python 3.13 가벼운 RSS 레인으로 재작성. DATA_COLLECTION_GUIDE §8.5 문서화.
+- 바꾼 파일: `.github/workflows/daily_pipeline.yml`, `docs/current/DATA_COLLECTION_GUIDE.md`, `AGENT_SYNC.md`.
+- 확인한 것: 이전 실패 원인 = `scripts/fetch_kaggle_datasets.py` 등 옛 경로. 스케줄은 gov/WH/signal-gap/financial만; Kaggle은 dispatch+secrets.
+- 다음 작업: `workflow_dispatch` 1회 검증. 무거운 수집·LLM은 로컬 유지.
+- 주의할 점: Actions 산출물은 스냅샷일 뿐 Alert/`verification_state` 아님. GDELT Cloud 기본 호출 금지.
 
 2026-10-30 [Cursor / Control Tower · 트리오 동기화]
 - 한 일: Active Work Board에 6축·Python 3.13·trio-sync를 `done`으로 마감. Notion 허브(6대 이슈 감시축)·이력 Phase 5·보드 `trio-sync-20261030` 반영 후 로컬 `notion_manager.py --all` 실행. GitHub는 PR #5 브랜치에 푸시.
