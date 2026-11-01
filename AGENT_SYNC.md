@@ -84,7 +84,7 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | docs / notion-sync | AGENT_SYNC.md, project-handoff.md, scripts/notion/* | 전체 작업 내역 MD 문서 최신화 및 노션 허브·종합 현황 실시간 동기화 | 2026-10-28 |
 | done | ANTIGRAVITY | automation / anomaly-scanner | scripts/automation/*, docs/current/DATA_COLLECTION_ROADMAP.md, docs/current/PYTHON_SCRIPT_INVENTORY.md | 글로벌 이상 징후 무인 스캐너 & 지능형 전처리 파이프라인 구축 및 노션 퍼블리싱 연동 완결 | 2026-10-29 |
 | done | Cursor Agent | automation / anomaly-scanner-review | `scripts/automation/auto_anomaly_scanner.py`, `scripts/automation/preprocess_signals.py`, `scripts/notion/publish_notion_report.py`, `docs/current/DATA_COLLECTION_ROADMAP.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md` | ANTIGRAVITY 초안 검증·문서 깨짐 수정·Alert Level 오인 표현 제거·`--dry-run` 확인 | 2026-10-29 |
-| done | ANTIGRAVITY | sync / trio-platform-sync | `AGENT_SYNC.md`, `PROJECT_CONTEXT.md`, GitHub, Notion | MD 문서, GitHub(커밋/푸시), Notion(작업보드/문서/이력/보고서) 3대 플랫폼 전체 동기화 | 2026-10-29 |
+| done | ANTIGRAVITY | sync / trio-platform-sync | `AGENT_SYNC.md`, `assets/`, GitHub, Notion | 전체 파이프라인 아키텍처 다이어그램 및 3대 플랫폼(MD·GitHub·Notion) 일괄 동기화 | 2026-11-02 |
 | done | ANTIGRAVITY | data-collection / latin-america-expansion | `scripts/collection/*`, `scripts/automation/*`, `config/source_registry/*`, `docs/current/*` | 중남미 대륙 감시 강화: 브라질 대선·룰라정부·원자재(원유/대두/리튬) 및 파나마 운하 병목 센서 구축 | 2026-10-29 |
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
@@ -600,3 +600,17 @@ un_pipeline.py에 --skip-chokepoints, --skip-cross-verification 등 플래그 �
 - 확인한 것: `--dry-run` 테스트에서 파나마 운하 통항 제한 기사가 `CHOKEPOINT_PANAMA`로 정규화되고, 브라질 대선/페트로브라스 기사가 `ELECTION_GOVERNMENT` 및 `CRUDE_OIL`로 정확히 분류·군집화됨을 실증.
 - 다음 작업: 트리오 동기화 프로토콜(MD + GitHub + Notion)에 따라 노션 일괄 퍼블리싱 및 깃 푸시 완료.
 - 주의할 점: 파나마 운하는 미주/중남미 병목으로 분류하며 수에즈 운하와 혼동하지 않는다. 브라질 국영 보도(Agência Brasil)는 정부 공식 입장 레이어로 분류한다.
+
+
+## 2026-11-02 [ANTIGRAVITY / 전체 파이프라인 아키텍처 시각화 및 트리오 동기화]
+
+- 한 일:
+  1. 전체 6단계 파이프라인(STAGE 1 수집 레인 ~ STAGE 6 관제 대시보드/3대 플랫폼 동기화)에 대한 고해상도(2400x1920) 아키텍처 인포그래픽 이미지(`assets/pipeline_architecture_diagram.png`) 제작 및 Mermaid 플로우차트 연계.
+  2. 트리오 동기화 프로토콜(MD 문서 + Notion + GitHub)에 따라 노션 프로젝트 허브 및 깃허브 원격 저장소 일괄 최신화.
+- 바꾼 파일: `AGENT_SYNC.md`, `assets/pipeline_architecture_diagram.png`.
+- 확인한 것:
+  - 1. MD 문서: `AGENT_SYNC.md` Active Work Board 22개 항목 및 Handoff 최신화.
+  - 2. Notion: 작업 보드, 문서 보관소, 작업 이력 동기화 완료 (`scripts/notion/notion_manager.py --all`).
+  - 3. GitHub: 현재 브랜치(`cursor/actions-light-collection`)에 신규 아키텍처 다이어그램 및 동기화 내역 커밋 & 푸시 완료.
+- 다음 작업: 이어서 진행할 관제 대시보드 고도화 또는 패킷 C 소스 레지스트리 작업 대기.
+- 주의할 점: 단일 출처 경보 상승 금지 가드레일과 `.env` 비밀값 비커밋 원칙 준수.
