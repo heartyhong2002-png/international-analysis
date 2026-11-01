@@ -85,10 +85,22 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | automation / anomaly-scanner | scripts/automation/*, docs/current/DATA_COLLECTION_ROADMAP.md, docs/current/PYTHON_SCRIPT_INVENTORY.md | 글로벌 이상 징후 무인 스캐너 & 지능형 전처리 파이프라인 구축 및 노션 퍼블리싱 연동 완결 | 2026-10-29 |
 | done | Cursor Agent | automation / anomaly-scanner-review | `scripts/automation/auto_anomaly_scanner.py`, `scripts/automation/preprocess_signals.py`, `scripts/notion/publish_notion_report.py`, `docs/current/DATA_COLLECTION_ROADMAP.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md` | ANTIGRAVITY 초안 검증·문서 깨짐 수정·Alert Level 오인 표현 제거·`--dry-run` 확인 | 2026-10-29 |
 | done | ANTIGRAVITY | sync / trio-platform-sync | `AGENT_SYNC.md`, `assets/`, GitHub, Notion | 전체 파이프라인 아키텍처 다이어그램 및 3대 플랫폼(MD·GitHub·Notion) 일괄 동기화 | 2026-11-02 |
+| done | ANTIGRAVITY | validation / tev1-role-clarification | `scripts/validation/backtest_tev1.py`, `scripts/automation/preprocess_signals.py`, `docs/current/VALIDATION_PLAN.md` | 번역·분석 모델(Qwen/EXAONE/Llama)과 독립 검증 모델(tev1)의 엄격한 역할 분리 및 다국어 5단계 전처리 필수화 확립 | 2026-11-02 |
 | done | ANTIGRAVITY | data-collection / latin-america-expansion | `scripts/collection/*`, `scripts/automation/*`, `config/source_registry/*`, `docs/current/*` | 중남미 대륙 감시 강화: 브라질 대선·룰라정부·원자재(원유/대두/리튬) 및 파나마 운하 병목 센서 구축 | 2026-10-29 |
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-02 [ANTIGRAVITY / LLM 역할 분리(번역·분석 vs tev1 검증) 및 전처리 필수화 확립]
+- 한 일:
+  1. 모델 역할 경계 명확화: 번역·분석 모델(`qwen2.5` 다국어 팩트 추출 ➔ `exaone3.5` 한국어 브리핑 & `llama3.1` 글로벌 영문 브리핑)과 독립 검증 모델(**`tev1:latest`**)의 역할을 엄격히 분리하여 자기 평가 편향(Self-Evaluation Bias)을 배제함.
+  2. 검증 아키텍처 재확인: 검증은 오직 `tev1`과 결정론적 `Risk Signal Score` 산식 간의 불일치(Discrepancy Audit) 및 사람 검수(Human-in-the-Loop) 강제 트리거로만 수행함을 명문화.
+  3. 전처리(`preprocess_signals.py`) 필수 관문 확립: 연예·스포츠 노이즈 필터링, 중복 기사 압축, 5대 해협(호르무즈·홍해·말라카·흑해·파나마) 및 핵심 공급망 엔티티 정규화가 LLM 환각 방지와 `tev1` 검증 신뢰도의 필수 전제 조건임을 확립.
+  4. 트리오 동기화 프로토콜(MD 문서 + Notion + GitHub)에 따라 노션 프로젝트 허브 및 깃 저장소 일괄 동기화 실행.
+- 바꾼 파일: `AGENT_SYNC.md`, Notion 프로젝트 허브(작업 보드, 문서 보관소, 조기경보 리포트), GitHub 원격 저장소.
+- 확인한 것: Notion 허브 및 보드 DB 정상 갱신 완료, `cursor/actions-light-collection` 브랜치 정상 푸시 확인.
+- 다음 작업: 5대 감시축 tev1 10건 백테스트 정량 리포트(`docs/evidence/`) 공식 문서 갱신 및 사람 검수 대기열 연동.
+- 주의할 점: 16GB 메모리 보호를 위해 tev1 호출 시에도 순차 호출 원칙을 엄수할 것.
 
 2026-11-02 [ANTIGRAVITY / LLM 3-Tier Canonical Pivot 파이프라인 전환]
 - 한 일: 갤럭시 북5 프로(16GB RAM) 환경에 맞춰 불필요·대형 모델 4종(`mistral-nemo`, `yandex-gpt-5-lite:8b`, `falcon3:7b`, `llama3-elyza-jp-8b`)을 삭제(22.3GB 확보)하고 `llama3.1:8b`를 신규 설치하여 3단계 순차 아키텍처(Stage 1 `qwen2.5:7b` 다국어 분석 및 표준 영문 JSON 추출 → Stage 2-A `exaone3.5:7.8b` 한국어 공급망·외교 브리핑 생성 & Stage 2-B `llama3.1:8b` 글로벌 영문 브리핑 정제)로 개편.
