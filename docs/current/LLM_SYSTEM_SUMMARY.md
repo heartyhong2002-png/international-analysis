@@ -368,3 +368,20 @@ Reddit IR 전문가들의 리뷰를 바탕으로, 본 파이프라인의 편향(
 | `BT-2026-ALLY-02` | `us_allies_relations` | 관찰 (`NORMAL`) | `WARNING` | **불일치** | 낮은 위험 점수(26.7)임에도 `tev1`이 `CROSS_VERIFIED` 문자열에 과민 반응 |
 
 > **핵심 실증 결론**: `BT-2026-ALLY-02`(일상적 동맹 군수 발표, 위험 점수 26.7점)에서 `tev1`이 `CROSS_VERIFIED` 상태값 하나만으로 `WARNING` 오탐을 낸 반면, 결정론적 산식은 `관찰(NORMAL)`로 방어했다. 반대로 단일 출처 미검증 사례(`BT-2024-REDSEA-01`, `BT-2026-USCN-02`)에서는 산식이 `확인 필요` 가드레일을 작동시켰다. 이는 신경망/LLM 단독 판정에 의존하지 않고 결정론적 산식과 상호 대조(Discrepancy Audit)해야 하는 명확한 근거가 된다.
+
+
+## 14. 16GB RAM 환경 최적화 및 3단계 순차 Canonical Pivot 파이프라인 전환 (2026-11-02)
+
+1. **배경 및 하드웨어 제약 해결 (갤럭시 북5 프로 16GB RAM / Core Ultra 5)**:
+   - 기존의 권역별 개별 모델 풀(`mistral-nemo:12b`, `yandex-gpt-5-lite:8b`, `falcon3:7b`, `llama3-elyza-jp:8b` 등 36.7GB)은 Windows 11 상주 프로세스와 Cursor IDE 환경에서 심각한 메모리 압박 및 디스크 스왑 위험을 유발했다.
+   - 중복·과대 모델 4종을 삭제하여 **약 22.3GB의 SSD 여유 공간을 확보**하고, 다국어 처리 효율이 검증된 3대 핵심 모델(`qwen2.5:7b`, `exaone3.5:7.8b`, `llama3.1:8b`)로 파이프라인을 슬림화했다.
+
+2. **3단계 순차 파이프라인 (3-Tier Canonical Pivot Architecture)**:
+   - **Stage 1 (다국어 분석 & 팩트 추출 · `qwen2.5:7b`)**: 러시아어, 아랍어, 중국어, 일본어, 로망스/게르만어, 영미권 원문 기사를 읽고, 지정학·공급망 관련 신호 괴리 점수(0~100)와 원문 인용구(Evidence Quotes)를 포함한 **표준 영문 JSON (Canonical English Pivot)**으로 정제.
+   - **Stage 2-A (한국어 전략 브리핑 · `exaone3.5:7.8b`)**: 표준 영문 JSON을 기반으로 한국 공급망·외교 관점의 1줄 헤드라인(`korean_headline`) 및 한국 기업·정부용 전략 브리핑(`korean_briefing`) 생성 (단정적 예측 배제, 조기경보 용어 엄수).
+   - **Stage 2-B (글로벌 영문 브리핑 · `llama3.1:8b`)**: 표준 영문 JSON을 기반으로 글로벌 싱크탱크(CSIS/브루킹스 스타일) 1줄 헤드라인(`english_headline`) 및 정책 요약(`english_executive_summary`) 정제.
+
+3. **메모리 보호 및 실증 결과 (`data/signal_gap/signal_gap_analysis.json`)**:
+   - 권역별 모델 교체를 없애고 **Stage 단위 일괄 처리 후 즉시 언로드(`keep_alive="2s"`, `num_ctx=4096`)**하여, 실행 중 상시 램 사용량을 5.0GB 이하로 엄격히 제한.
+   - 실제 RSS 신호 괴리 분석 구동 결과: Russia(`경보`, 69.7점) 및 Middle_East(`경보`, 69.7점) 권역에서 키릴 문자·아랍어 인용구 추출 및 한국어·영어 양국어 대시보드 데이터 동시 산출 성공 확인.
+

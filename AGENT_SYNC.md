@@ -69,6 +69,7 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | data-collection / public-opinion | `scripts/collection/fetch_local_opinions.py`, `scripts/collection/fetch_google_trends.py`, `data/local_opinions/`, `data/google_trends/` | 대안 로컬 여론·검색 트렌드 센서 구축 | 2026-09-29 |
 | in-progress | ANTIGRAVITY | dashboard / ui | `scripts/dashboard/streamlit_dashboard.py` | Streamlit 대시보드 유지보수 및 고도화 | 2026-09-28 |
 | done | Cursor / dashboard-report | dashboard / html-ui | `scripts/dashboard/generate_dashboard_v2.py`, `output/dashboard/` | Information 축 과장 표현 교정(국민 여론·하드코딩 Critical·WATCH 후보 제거) 후 HTML 재생성 | 2026-10-28 |
+| done | ANTIGRAVITY | llm-pipeline / 3-tier-canonical-pivot | `scripts/analysis/analyze_signal_gap.py`, `scripts/analysis/analyze_middle_east_osint.py`, `scripts/analysis/analyze_ib_insights.py`, `scripts/validation/verify_model_consensus.py`, `data/signal_gap/signal_gap_analysis.json` | 16GB 갤북5 프로 최적화 3단계 순차 파이프라인(Qwen2.5:7b 다국어 추출 → EXAONE 3.5 한국어 브리핑 & Llama3.1:8b 영어 브리핑) 구축 및 실증 완료 | 2026-11-02 |
 | in-progress | Cursor / LLM 분석·경보 산식 | llm-analysis / alert-scoring | `scripts/validation/backtest_tev1.py`, `scripts/analysis/analyze_signal_gap.py`, `data/tev1_backtest_results.json`, `data/pending_human_review.csv` | tev1 10건 시운전(일치5/불일치5). 합격 게이트(동결·URL·인용·사람검수) 고정 전 성능 주장 금지. t-test/ANOVA 보류 | 2026-10-29 |
 | done | Codex | docs / session-sync | `PROJECT_CONTEXT.md`, `AGENT_SYNC.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `project-handoff.md` | 현재 방향, 센서 분류, 교차검증 규칙, 세션 상태 문서 정리 | 2026-10-02 |
 | done | Codex | dashboard / Figma handoff | `docs/current/DASHBOARD_SESSION_PROMPT.md`, `PROJECT_CONTEXT.md`, `AGENT_SYNC.md` | Figma의 5대 감시축 균형 UI와 비상 관제 화면을 대시보드 세션에 인수인계 | 2026-10-04 |
@@ -88,6 +89,13 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-02 [ANTIGRAVITY / LLM 3-Tier Canonical Pivot 파이프라인 전환]
+- 한 일: 갤럭시 북5 프로(16GB RAM) 환경에 맞춰 불필요·대형 모델 4종(`mistral-nemo`, `yandex-gpt-5-lite:8b`, `falcon3:7b`, `llama3-elyza-jp-8b`)을 삭제(22.3GB 확보)하고 `llama3.1:8b`를 신규 설치하여 3단계 순차 아키텍처(Stage 1 `qwen2.5:7b` 다국어 분석 및 표준 영문 JSON 추출 → Stage 2-A `exaone3.5:7.8b` 한국어 공급망·외교 브리핑 생성 & Stage 2-B `llama3.1:8b` 글로벌 영문 브리핑 정제)로 개편.
+- 바꾼 파일: `scripts/analysis/analyze_signal_gap.py`, `scripts/analysis/analyze_middle_east_osint.py`, `scripts/analysis/analyze_ib_insights.py`, `scripts/validation/verify_model_consensus.py`, `data/signal_gap/signal_gap_analysis.json`, `AGENT_SYNC.md`.
+- 확인한 것: 단계별 일괄 호출 및 `keep_alive="2s"` 즉시 언로드로 16GB RAM에서 단일 모델(약 4.8GB)만 상주하며 스왑 없이 구동 확인. Russia(경보, 69.7점) 및 Middle_East(경보, 69.7점)에서 키릴 문자·아랍어 인용구 추출 및 한/영 양국어 대시보드·보고서 브리핑 정상 생성.
+- 다음 작업: 대시보드(`generate_dashboard_v2.py` / `streamlit_dashboard.py`) 및 노션 리포트 발행기에서 신규 생성된 `korean_headline`/`korean_briefing`, `english_headline`/`english_executive_summary` 필드를 직접 활용하도록 연동 확장.
+- 주의할 점: 16GB 통합 메모리 보호를 위해 3개 모델을 동시에 메모리에 상주시키지 않고 반드시 Stage 단위로 순차 호출(`num_ctx: 4096`)할 것. `tev1:latest`는 백테스트 감사용으로 보존.
 
 2026-10-31 [Cursor / Control Tower · cloud light collection]
 - 한 일: 매일 실패하던 Actions 워크플로를 `scripts/collection/*` 경로·Python 3.13 가벼운 RSS 레인으로 재작성. DATA_COLLECTION_GUIDE §8.5 문서화.
