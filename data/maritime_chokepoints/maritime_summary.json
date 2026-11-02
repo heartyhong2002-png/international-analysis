@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "source": "yfinance_maritime_proxies_and_chokepoint_models",
-  "collected_at": "2026-11-02T06:57:01.450716+00:00",
+  "collected_at": "2026-11-02T14:01:16.432811+00:00",
   "total_market_proxies": 7,
   "total_chokepoints": 5,
   "data_contract_notice": "AIS 선박 척수 및 시장 지표는 화물 톤수를 단독 증명하지 못하므로 복수 신호 교차 검증 전용으로 사용함",
@@ -16,7 +16,7 @@
       "monthly_change_pct": -16.22,
       "risk_signal": "ELEVATED",
       "uncertainty_note": "금융 프록시 지표는 시장 심리와 위험 프리미엄을 반영하며 단독으로 실물 톤수를 의미하지 않음",
-      "observed_at": "2026-11-02T06:56:59.000699+00:00"
+      "observed_at": "2026-11-02T14:01:10.543425+00:00"
     },
     {
       "ticker": "ZIM",
@@ -28,7 +28,7 @@
       "monthly_change_pct": -3.21,
       "risk_signal": "ELEVATED",
       "uncertainty_note": "금융 프록시 지표는 시장 심리와 위험 프리미엄을 반영하며 단독으로 실물 톤수를 의미하지 않음",
-      "observed_at": "2026-11-02T06:56:59.000699+00:00"
+      "observed_at": "2026-11-02T14:01:10.543425+00:00"
     },
     {
       "ticker": "AMKBY",
@@ -40,7 +40,7 @@
       "monthly_change_pct": -4.29,
       "risk_signal": "NORMAL",
       "uncertainty_note": "금융 프록시 지표는 시장 심리와 위험 프리미엄을 반영하며 단독으로 실물 톤수를 의미하지 않음",
-      "observed_at": "2026-11-02T06:56:59.000699+00:00"
+      "observed_at": "2026-11-02T14:01:10.543425+00:00"
     },
     {
       "ticker": "FRO",
@@ -52,43 +52,43 @@
       "monthly_change_pct": 15.49,
       "risk_signal": "ELEVATED",
       "uncertainty_note": "금융 프록시 지표는 시장 심리와 위험 프리미엄을 반영하며 단독으로 실물 톤수를 의미하지 않음",
-      "observed_at": "2026-11-02T06:56:59.000699+00:00"
+      "observed_at": "2026-11-02T14:01:10.543425+00:00"
     },
     {
       "ticker": "BZ=F",
       "asset_name": "브렌트유 선물 (Brent Crude)",
       "category": "Energy_Crude",
       "unit": "USD/bbl",
-      "latest_price": 110.2,
-      "daily_change_pct": -6.32,
-      "monthly_change_pct": 7.78,
+      "latest_price": 106.75,
+      "daily_change_pct": -9.26,
+      "monthly_change_pct": 4.4,
       "risk_signal": "SHARP_DROP",
       "uncertainty_note": "금융 프록시 지표는 시장 심리와 위험 프리미엄을 반영하며 단독으로 실물 톤수를 의미하지 않음",
-      "observed_at": "2026-11-02T06:56:59.000699+00:00"
+      "observed_at": "2026-11-02T14:01:10.543425+00:00"
     },
     {
       "ticker": "CL=F",
       "asset_name": "WTI 원유 선물",
       "category": "Energy_Crude",
       "unit": "USD/bbl",
-      "latest_price": 100.7,
-      "daily_change_pct": -3.28,
-      "monthly_change_pct": 10.53,
-      "risk_signal": "ELEVATED",
+      "latest_price": 97.87,
+      "daily_change_pct": -6.0,
+      "monthly_change_pct": 7.42,
+      "risk_signal": "SHARP_DROP",
       "uncertainty_note": "금융 프록시 지표는 시장 심리와 위험 프리미엄을 반영하며 단독으로 실물 톤수를 의미하지 않음",
-      "observed_at": "2026-11-02T06:56:59.000699+00:00"
+      "observed_at": "2026-11-02T14:01:10.543425+00:00"
     },
     {
       "ticker": "NG=F",
       "asset_name": "천연가스 선물 (Henry Hub LNG)",
       "category": "Energy_Gas",
       "unit": "USD/MMBtu",
-      "latest_price": 2.93,
-      "daily_change_pct": 1.0,
-      "monthly_change_pct": -3.56,
+      "latest_price": 2.96,
+      "daily_change_pct": 2.0,
+      "monthly_change_pct": -2.6,
       "risk_signal": "NORMAL",
       "uncertainty_note": "금융 프록시 지표는 시장 심리와 위험 프리미엄을 반영하며 단독으로 실물 톤수를 의미하지 않음",
-      "observed_at": "2026-11-02T06:56:59.000699+00:00"
+      "observed_at": "2026-11-02T14:01:10.543425+00:00"
     }
   ],
   "chokepoints_status": [
@@ -105,7 +105,7 @@
       "market_proxy_signal": "컨테이너 선사 주가 변동률 -2.94% (홍해 희망봉 우회 영향)",
       "preliminary_chokepoint_alert": "WARNING",
       "uncertainty_note": "실제 선박 AIS 결측 및 GPS 재밍 구간 존재하므로 무장단체 성명/공식 보도와 교차확인 필요",
-      "observed_at": "2026-11-02T06:57:01.431497+00:00"
+      "observed_at": "2026-11-02T14:01:16.419818+00:00"
     },
     {
       "chokepoint_code": "HORMUZ",
@@ -117,10 +117,10 @@
       "detour_delay": "우회 불가 (폐쇄 시 내륙 파이프라인 극히 제한적)",
       "insurance_war_risk": "Critical (긴장 고조 시 선박 억류 리스크)",
       "ais_observability": "Medium (나포 및 전파 방해 징후 추적)",
-      "market_proxy_signal": "브렌트유 일간 -6.32%, 원유 탱커선사 일간 0.62%",
+      "market_proxy_signal": "브렌트유 일간 -9.26%, 원유 탱커선사 일간 0.62%",
       "preliminary_chokepoint_alert": "WARNING",
       "uncertainty_note": "실제 선박 AIS 결측 및 GPS 재밍 구간 존재하므로 무장단체 성명/공식 보도와 교차확인 필요",
-      "observed_at": "2026-11-02T06:57:01.431497+00:00"
+      "observed_at": "2026-11-02T14:01:16.419818+00:00"
     },
     {
       "chokepoint_code": "TAIWAN_STRAIT",
@@ -135,7 +135,7 @@
       "market_proxy_signal": "벌크선 운임 ETF 일간 -2.25% (대만해협 통항 밀집)",
       "preliminary_chokepoint_alert": "WATCH",
       "uncertainty_note": "실제 선박 AIS 결측 및 GPS 재밍 구간 존재하므로 무장단체 성명/공식 보도와 교차확인 필요",
-      "observed_at": "2026-11-02T06:57:01.431497+00:00"
+      "observed_at": "2026-11-02T14:01:16.419818+00:00"
     },
     {
       "chokepoint_code": "MALACCA",
@@ -150,7 +150,7 @@
       "market_proxy_signal": "동남아 항만 정상 통항 흐름",
       "preliminary_chokepoint_alert": "NORMAL",
       "uncertainty_note": "실제 선박 AIS 결측 및 GPS 재밍 구간 존재하므로 무장단체 성명/공식 보도와 교차확인 필요",
-      "observed_at": "2026-11-02T06:57:01.431497+00:00"
+      "observed_at": "2026-11-02T14:01:16.419818+00:00"
     },
     {
       "chokepoint_code": "PANAMA_CANAL",
@@ -165,7 +165,7 @@
       "market_proxy_signal": "동남아 항만 정상 통항 흐름",
       "preliminary_chokepoint_alert": "NORMAL",
       "uncertainty_note": "실제 선박 AIS 결측 및 GPS 재밍 구간 존재하므로 무장단체 성명/공식 보도와 교차확인 필요",
-      "observed_at": "2026-11-02T06:57:01.431497+00:00"
+      "observed_at": "2026-11-02T14:01:16.419818+00:00"
     }
   ]
 }

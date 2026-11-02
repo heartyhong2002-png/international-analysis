@@ -58,7 +58,8 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
-| in-progress | ANTIGRAVITY | preprocessing / signal-filtering | `scripts/automation/preprocess_signals.py`, `docs/current/PREPROCESSING_SESSION_PROMPT.md` | 4단계 지능형 전처리 고도화(다국어 노이즈·외교수사 배제, 7개어 정규화, 중복군집화, 5대해협/한국6대공급망 태깅) 착수 | 2026-11-02 |
+| done | ANTIGRAVITY | preprocessing / session-prompt | `docs/current/PREPROCESSING_SESSION_PROMPT.md`, `docs/SESSION_PROMPTS.md` | 비정형 데이터 전처리 및 신호 필터링 전담 세션 분리 프롬프트 작성 및 등록 완료 | 2026-11-02 |
+| done | ANTIGRAVITY | collection / edge-node-support | `scripts/collection/fetch_maritime_chokepoints.py`, `dags/` | 갤럭시 S20 울트라 엣지 수집 노드 지원: requests 기반 해운/에너지 프록시 경량화(C 컴파일 의존성 제거) | 2026-11-02 |
 | done | Cursor / Control Tower | control-tower / scope | `docs/current/PROJECT_PLAN.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `AGENT_SYNC.md` | 미국 국내·동맹·경쟁/대립축 6대 감시축 확정(예측 금지). 패킷 A+B 동시 착수 지시 | 2026-10-30 |
 | done | Cursor / Control Tower | runtime / python-3.13 | `.venv`, `.python-version`, `requirements.txt`, `README.md`, `PROJECT_CONTEXT.md`, `docs/SESSION_PROMPTS.md` | 표준 런타임 Python 3.13(.venv) 전환 및 세션 프롬프트 정리 — PR #5 | 2026-10-30 |
 | done | Cursor / Control Tower | sync / trio-platform | `AGENT_SYNC.md`, Notion hub/history/board, GitHub PR #5 | 트리오 동기화(MD→Notion→GitHub/PR) 완료 | 2026-10-30 |
@@ -95,6 +96,19 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-02 [ANTIGRAVITY / 전처리 세션 분리 & 엣지 수집 노드(S20 울트라) 경량화]
+- 한 일:
+  1. 비정형 데이터 전처리 및 신호 필터링 전담 세션 분리: `docs/current/PREPROCESSING_SESSION_PROMPT.md` 생성 및 `docs/SESSION_PROMPTS.md` 제2-1절 공식 등록 완료.
+  2. 엣지 디바이스(갤럭시 S20 울트라 / Termux) 기반 24시간 무중단 수집 노드 구축 환경 지원.
+  3. `scripts/collection/fetch_maritime_chokepoints.py` 전면 경량화:
+     - 안드로이드 ARM64 빌드 병목을 유발하는 무거운 C 컴파일 라이브러리(`yfinance`, `pandas`, `lxml`) 의존성 제거.
+     - 순수 `requests` 기반 Yahoo Finance v8 차트 API 직통 모드 도입 (실패 시 yfinance fallback).
+     - 7개 금융/에너지 프록시 지표(BDRY, ZIM, AMKBY, FRO, 브렌트유, WTI, 천연가스) 및 5대 해협 리스크 수집 시운전 통과 (2초 컷).
+- 바꾼 파일: `docs/current/PREPROCESSING_SESSION_PROMPT.md`, `docs/SESSION_PROMPTS.md`, `scripts/collection/fetch_maritime_chokepoints.py`, `AGENT_SYNC.md`.
+- 확인한 것: 로컬 환경에서 7개 금융/에너지 프록시 및 5대 해협 리스크 데이터 수집 및 영수증 저장 정상 완료.
+- 다음 작업: S20 울트라 엣지 노드 시운전 확인 및 패킷 A Federal Register 선택 수집기 연동.
+- 주의할 점: 엣지 수집 노드는 순수 requests 기반 초경량화 유지, Alert Level 임의 판정 금지.
 
 2026-11-02 [ANTIGRAVITY / preprocessing · 4단계 지능형 전처리 파이프라인 설계 및 세션 착수]
 - 한 일: `PROJECT_CONTEXT.md`, `AGENT_SYNC.md`, `COLLECTION_PIPELINE_ARCHITECTURE.md`, `PREPROCESSING_SESSION_PROMPT.md` 분석 완료. 4단계 지능형 전처리(1. 다국어 노이즈 및 의례적 외교 수사 배제, 2. 7개 국어 정규화 및 Zero-Crash Fallback, 3. 시맨틱 군집화 및 다중 출처 추적성 강화, 4. 5대 해협 및 한국 6대 핵심 공급망 정밀 사전 매핑) 아키텍처 수립 및 개선 계획 보고 완료.
