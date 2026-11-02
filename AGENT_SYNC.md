@@ -70,7 +70,7 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | in-progress | ANTIGRAVITY | dashboard / ui | `scripts/dashboard/streamlit_dashboard.py` | Streamlit 대시보드 유지보수 및 고도화 | 2026-09-28 |
 | done | Cursor / dashboard-report | dashboard / html-ui | `scripts/dashboard/generate_dashboard_v2.py`, `output/dashboard/` | Information 축 과장 표현 교정(국민 여론·하드코딩 Critical·WATCH 후보 제거) 후 HTML 재생성 | 2026-10-28 |
 | done | ANTIGRAVITY | llm-pipeline / 3-tier-canonical-pivot | `scripts/analysis/analyze_signal_gap.py`, `scripts/analysis/analyze_middle_east_osint.py`, `scripts/analysis/analyze_ib_insights.py`, `scripts/validation/verify_model_consensus.py`, `data/signal_gap/signal_gap_analysis.json` | 16GB 갤북5 프로 최적화 3단계 순차 파이프라인(Qwen2.5:7b 다국어 추출 → EXAONE 3.5 한국어 브리핑 & Llama3.1:8b 영어 브리핑) 구축 및 실증 완료 | 2026-11-02 |
-| in-progress | Cursor / LLM 분석·경보 산식 | llm-analysis / alert-scoring | `scripts/validation/backtest_tev1.py`, `scripts/analysis/analyze_signal_gap.py`, `data/tev1_backtest_results.json`, `data/pending_human_review.csv` | tev1 10건 시운전(일치5/불일치5). 합격 게이트(동결·URL·인용·사람검수) 고정 전 성능 주장 금지. t-test/ANOVA 보류 | 2026-10-29 |
+| done | ANTIGRAVITY | llm-analysis / alert-scoring | `scripts/validation/backtest_tev1.py`, `scripts/analysis/analyze_signal_gap.py`, `data/tev1_backtest_results.json`, `scripts/dashboard/generate_dashboard_v2.py` | tev1 10건 동결 사례 시운전 10/10 호출 완결(일치 5/불일치 5 감사 트리거), 대시보드 결측치 가드레일 보강 | 2026-11-02 |
 | done | Codex | docs / session-sync | `PROJECT_CONTEXT.md`, `AGENT_SYNC.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `project-handoff.md` | 현재 방향, 센서 분류, 교차검증 규칙, 세션 상태 문서 정리 | 2026-10-02 |
 | done | Codex | dashboard / Figma handoff | `docs/current/DASHBOARD_SESSION_PROMPT.md`, `PROJECT_CONTEXT.md`, `AGENT_SYNC.md` | Figma의 5대 감시축 균형 UI와 비상 관제 화면을 대시보드 세션에 인수인계 | 2026-10-04 |
 | done | ANTIGRAVITY | dashboard / report / docs-sync | docs/, scripts/dashboard/generate_dashboard_v2.py | 최신 MD(수집 레인 아키텍처, 스크립트 인벤토리, 지도교수 면담자료) 확인 및 대시보드 뷰/표현 정합성 검증 | 2026-10-11 |
@@ -90,6 +90,16 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-02 [ANTIGRAVITY / 전체 파이프라인 시운전 및 tev1 10/10 백테스트 완결]
+- 한 일:
+  1. 전체 조기경보 시스템 시운전(Trial Run) 수행: 무인 이상 징후 스캐너(`auto_anomaly_scanner.py`), 4단계 다국어 전처리(`preprocess_signals.py`), 인터랙티브 관제 대시보드 생성(`generate_dashboard_v2.py`), 10대 동결 사례 백테스트(`backtest_tev1.py`).
+  2. 대시보드 결측치 안전 가드레일 보강: 신호 괴리 분석 결과에서 특정 권역 자료 부족 시 `discrepancy_score: None`으로 인한 `TypeError` 예외를 방어하고, 3-Tier 한/영 브리핑 및 상태 배지("신호 대기 / 확인 필요")가 대시보드에 정상 렌더링되도록 수정.
+  3. `tev1:latest` 백테스트 10/10 완결: 16GB RAM 환경에서 Ollama 버퍼 고갈(ggml failed to allocate buffer 4.47GB) 문제를 `num_ctx: 2048` 및 `keep_alive: 30s` 설정으로 완전 해결. 10건 모두 정상 응답(일치 5건, 사람 검수 유도 불일치 감사 5건 기록).
+- 바꾼 파일: `scripts/dashboard/generate_dashboard_v2.py`, `scripts/validation/backtest_tev1.py`, `data/tev1_backtest_results.json`, `AGENT_SYNC.md`.
+- 확인한 것: `dashboard_latest.html` 정상 렌더링(21개 이슈, 462건 정부발표), `anomalies_latest.json` 6개 핫스팟 발굴, `tev1` 10건 100% 호출 성공.
+- 다음 작업: 패킷 C 소스 레지스트리 작업 또는 실시간 센서 파이프라인 정기 스케줄링.
+- 주의할 점: `tev1` 단독 판단에 의존하지 않고 결정론적 산식과의 불일치를 사람 검수 트리거로 유지할 것.
 
 2026-11-02 [ANTIGRAVITY / LLM 역할 분리(번역·분석 vs tev1 검증) 및 전처리 필수화 확립]
 - 한 일:

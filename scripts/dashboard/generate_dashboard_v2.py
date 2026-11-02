@@ -357,11 +357,12 @@ def generate_dashboard_html(data):
     # Create Signal Gap and Financial Proxy Cards
     sg_html = ""
     for region, details in sg_data.items():
-        score = details.get("discrepancy_score", 0)
+        raw_score = details.get("discrepancy_score")
+        score = float(raw_score) if raw_score is not None else 0.0
         color_cls = "tag-danger" if score >= 80 else ("tag-amber" if score >= 50 else "tag-info")
         sg_html += f"""
         <div style="background: rgba(0,0,0,0.25); padding: 14px; border-radius: 8px; margin-bottom: 10px; border-left: 3px solid {'#ef4444' if score>=80 else '#f59e0b'};">
-            <div style="font-size: 14px; font-weight: 700;">{html.escape(region)} 신호 괴리율 <span class="kpi-tag {color_cls}">{score}점</span></div>
+            <div style="font-size: 14px; font-weight: 700;">{html.escape(region)} 신호 괴리율 <span class="kpi-tag {color_cls}">{f"{int(score)}점" if raw_score is not None else "신호 대기"}</span></div>
             <div style="font-size: 12px; color: var(--text-muted); margin-top: 5px;">{html.escape(details.get("narrative_differences", ""))}</div>
         </div>
         """
