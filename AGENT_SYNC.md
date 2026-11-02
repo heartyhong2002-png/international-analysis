@@ -63,7 +63,7 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | Cursor / Control Tower | sync / trio-platform | `AGENT_SYNC.md`, Notion hub/history/board, GitHub PR #5 | 트리오 동기화(MD→Notion→GitHub/PR) 완료 | 2026-10-30 |
 | done | Cursor / Control Tower | automation / cloud-light-collection | `.github/workflows/daily_pipeline.yml`, `docs/current/DATA_COLLECTION_GUIDE.md`, `AGENT_SYNC.md` | GitHub Actions 일일 수집 경로 복구 → light RSS lane (gov/WH/signal-gap/financial). LLM·DB·GDELT 제외 | 2026-10-31 |
 | in-progress | Cursor Agent / collection | data-collection / US-domestic + allies | `config/source_registry/government_sources.yaml`, `config/source_registry/SCHEMA.md`, `scripts/collection/*` (선택 수집기만) | 패킷 A+B registry 보강 완료 → 다음: Federal Register 선택 수집기. Alert/예측/DB/대시보드/LLM 금지 | 2026-10-29 |
-| open | (세션 2 수집) | data-collection / competitor-axis roles | `config/source_registry/*`, signal_gap 소스 | 패킷 C: relationship_role 태깅·OFAC/BIS registry (A/B 스키마 정렬 후) | 2026-10-29 |
+| done | ANTIGRAVITY | data-collection / competitor-axis roles | `config/source_registry/*`, signal_gap 소스 | 패킷 C: relationship_role 태깅·OFAC/BIS registry (A/B 스키마 정렬 후) | 2026-11-02 |
 | done | ANTIGRAVITY | db / pipeline / cross-verification | `scripts/run_pipeline.py`, `scripts/db/load_cross_verification_to_db.py`, `scripts/db/create_views.sql` | 해협 센서·공급망 사건 교차검증의 DB 적재와 대시보드 뷰 연동 | 2026-10-02 |
 | done | ANTIGRAVITY | data-collection / supply-chain-sensors | `scripts/collection/fetch_maritime_chokepoints.py`, `scripts/analysis/cross_verify_events.py`, `data/maritime_chokepoints/`, `data/event_cross_verification/` | 해협·시장 센서 수집 및 복수 계통 교차검증 | 2026-10-02 |
 | done | ANTIGRAVITY | data-collection / public-opinion | `scripts/collection/fetch_local_opinions.py`, `scripts/collection/fetch_google_trends.py`, `data/local_opinions/`, `data/google_trends/` | 대안 로컬 여론·검색 트렌드 센서 구축 | 2026-09-29 |
@@ -90,6 +90,20 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-02 [ANTIGRAVITY / 패킷 C 소스 레지스트리 확장 및 검증 완결]
+- 한 일:
+  1. 패킷 C 레지스트리 스키마(`SCHEMA.md` v2) 확립: 제재/수출통제(`regulation_notice`, `sanctions_dataset`) 및 경쟁·대립축(`relationship_role: competitor_adversary_axis`) 규격 정의.
+  2. `config/source_registry/` YAML 5종 전체 정합성 정렬 (총 54개 고유 소스 식별자):
+     - `government_sources.yaml`: OFAC 제재 API/HTML, BIS 수출통제 API/HTML, OpenSanctions, 중국 외교부/상무부/인민일보, 러시아 외무부/TASS, 이란 IRNA/Tehran Times 등록. (네트워크 차단/리셋 소스 `enabled: false` 격리)
+     - `local_media_feeds.yaml`: 신호 괴리 분석용 독립·망명 언론(Meduza, Raseef22, China Digital Times) 등록.
+     - `expert_feeds.yaml`, `opinion_sources.yaml`, `customs_sources.yaml`: 패킷 B/C/legacy 및 `relationship_role` 태깅 전수 동기화.
+  3. `scripts/collection/fetch_signal_gap_rss.py` 패킷 C 계약 연동: RSS 수집 메타데이터에 `source_id`, `relationship_role`, `packet`, `content_hash` 보존 및 수집 영수증(`data/signal_gap/receipt_latest.json`) 자동 발행 연동.
+  4. 실제 수집 및 스키마 검증: YAML 5종 스키마 100% 통과, 4대 권역 60건 기사 정상 수집 및 영수증 발행 확인.
+- 바꾼 파일: `config/source_registry/SCHEMA.md`, `config/source_registry/government_sources.yaml`, `config/source_registry/local_media_feeds.yaml`, `config/source_registry/expert_feeds.yaml`, `config/source_registry/opinion_sources.yaml`, `config/source_registry/customs_sources.yaml`, `scripts/collection/fetch_signal_gap_rss.py`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`, `AGENT_SYNC.md`.
+- 확인한 것: 총 54개 출처 무결성 검증 통과(Packet C 19개, A 8개, B 14개, legacy 13개). 실시간 RSS 60건 및 영수증(`receipt_latest.json`) 생성 확인.
+- 다음 작업: 사용자 확인 후 Trio-Sync(MD + Notion + GitHub) 커밋·동기화 또는 다음 우선순위 진행.
+- 주의할 점: 단일 관영 채널을 절대 Ground Truth로 확정하지 않고, 독립·망명 언론과의 신호 괴리(Signal Gap) 관측 센서로 유지할 것.
 
 2026-11-02 [ANTIGRAVITY / 전체 파이프라인 시운전 및 tev1 10/10 백테스트 완결]
 - 한 일:

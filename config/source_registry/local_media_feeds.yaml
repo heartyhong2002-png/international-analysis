@@ -1,16 +1,19 @@
-# CONTEXT lane — local / independent media not already listed under expert_feeds.
+# CONTEXT lane — local / independent / exiled media not already listed under expert_feeds.
 # Candidate APIs stay pipeline_default:false until auth and quotas are stable.
+# Packet C adds signal_gap independent/exiled feeds with relationship_role: competitor_adversary_axis.
 
-schema_version: 1
-updated_at: "2026-10-28"
+schema_version: 2
+updated_at: "2026-11-02"
 
 sources:
   - source_id: mediacloud_search_us_national
     source_type: news_api
     source_role: discovery_only
+    relationship_role: domestic_us
     required: false
     fallback: []
     license_access_note: "Media Cloud Search API; requires MEDIACLOUD_API_KEY as Authorization Token; academic/research ToS; do not log key; metadata only (no story body by default)."
+    robots_note: "n/a-api — Token auth + bounded single-page query"
     url: https://search.mediacloud.org/api/
     endpoint: search/story-list
     country: US
@@ -19,17 +22,24 @@ sources:
     enabled: true
     pipeline_default: false
     collector: scripts/collection/fetch_mediacloud.py
+    issue_tags:
+      - US_Trade_Tariff
+      - US_Export_Control
+      - US_Election_Policy_Signal
     cadence: manual
     priority: low
     lane: CONTEXT
+    packet: A
     notes: "Host api.mediacloud.org is dead DNS. Default probe collection cs=34412234. Not an alert basis."
 
   - source_id: event_registry_news
     source_type: news_api
     source_role: discovery_only
+    relationship_role: other
     required: false
     fallback: []
     license_access_note: "Event Registry API key required; prefer academic approval; bounded probes only."
+    robots_note: "n/a-api — API key required"
     url: https://eventregistry.org/
     country: MULTI
     language: multi
@@ -40,13 +50,16 @@ sources:
     cadence: manual
     priority: low
     lane: CONTEXT
+    packet: legacy
 
   - source_id: acled_events
     source_type: event_api
     source_role: secondary
+    relationship_role: multilateral
     required: false
     fallback: []
     license_access_note: "ACLED OAuth account required; academic/research redistribution limits; store event ids + receipt only."
+    robots_note: "n/a-api — OAuth API"
     url: https://acleddata.com/
     country: MULTI
     language: en
@@ -54,16 +67,24 @@ sources:
     enabled: true
     pipeline_default: false
     collector: scripts/collection/fetch_acled.py
+    issue_tags:
+      - Ukraine_War
+      - Israel_Palestine
+      - Sudan_Conflict
+      - Myanmar_Crisis
     cadence: manual
     priority: medium
     lane: CONTEXT
+    packet: legacy
 
   - source_id: folha_sp_poder_rss
     source_type: local_media
     source_role: secondary
+    relationship_role: other
     required: false
-    fallback: []
+    fallback: [br_agencia_brasil]
     license_access_note: "Folha de S.Paulo public RSS; major Brazilian national newspaper covering presidential politics, Petrobras, and commodities."
+    robots_note: "checked-via-existing-collector — RSS only"
     url: https://feeds.folha.uol.com.br/poder/rss091.xml
     country: BR
     language: pt
@@ -71,6 +92,91 @@ sources:
     enabled: true
     pipeline_default: false
     collector: scripts/collection/fetch_local_opinions.py
+    issue_tags:
+      - Brazil_Politics
+      - Venezuela_Crisis
+      - Argentina_Economy
     cadence: daily
     priority: medium
     lane: CONTEXT
+    packet: legacy
+
+  # ---------------------------------------------------------------------------
+  # Packet C — Signal Gap Independent / Exiled Media (competitor_adversary_axis)
+  # Counterpart sensors to state_media_news (ru_tass_en_rss, cn_people_daily_world_rss, ir_tehran_times_rss)
+  # ---------------------------------------------------------------------------
+  - source_id: ru_meduza_rss
+    source_type: local_media
+    source_role: secondary
+    relationship_role: competitor_adversary_axis
+    required: false
+    fallback: [moscow_times_en]
+    license_access_note: "Meduza public RSS (HTTP 200 verified 2026-11-02); independent Russian-language exiled media in Riga; retain URL; used as independent counterpart to TASS in Signal Gap analysis."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://meduza.io/rss/all
+    country: RU
+    language: ru
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Ukraine_War
+      - EU_Russia
+      - Baltic_Security
+    orientation: independent-in-exile
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: C
+
+  - source_id: cn_china_digital_times_rss
+    source_type: local_media
+    source_role: secondary
+    relationship_role: competitor_adversary_axis
+    required: false
+    fallback: [pincong_public, taiwan_ptt_public]
+    license_access_note: "China Digital Times Chinese feed; independent censorship-archive & counter-narrative aggregator; retain source URL. Returned HTTP 403/timeout on 2026-11-02 probe — do not bypass blocks; collector records BLOCKED/TIMEOUT in receipt and falls back to pincong_public/taiwan_ptt_public."
+    robots_note: "pending — chinadigitaltimes.net returned HTTP 403 on 2026-11-02 probe; keep enabled=false until public RSS access confirmed"
+    url: https://chinadigitaltimes.net/chinese/feed/
+    country: CN
+    language: zh
+    access_method: rss
+    enabled: false
+    pipeline_default: false
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Taiwan_Strait
+      - South_China_Sea
+      - US_Export_Control
+      - US_Trade_Tariff
+    orientation: overseas_independent_archive
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: C
+
+  - source_id: me_raseef22_rss
+    source_type: local_media
+    source_role: secondary
+    relationship_role: competitor_adversary_axis
+    required: false
+    fallback: [al_monitor]
+    license_access_note: "Raseef22 Arabic public RSS (HTTP 200 verified 2026-11-02); independent pan-Arab media network; used as independent Middle East counterpart to Tehran Times/IRNA in Signal Gap analysis."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://raseef22.net/feed/
+    country: MULTI
+    language: ar
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Iran_Nuclear
+      - Israel_Palestine
+      - Middle_East_Energy
+    orientation: independent_pan-arab_media
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: C

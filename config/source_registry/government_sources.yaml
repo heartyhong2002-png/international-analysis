@@ -1,13 +1,13 @@
 # Official / state channels for FAST + CONTEXT lanes.
 # Packet A = US domestic policy signals (no election outcome prediction).
 # Packet B = ally official channels (relationship_role: ally).
-# Packet C (OFAC/BIS/competitor_adversary_axis) waits until A/B schema stabilizes.
+# Packet C = sanctions/export-control enforcement (OFAC/BIS/OpenSanctions) + competitor/adversary official & state channels (relationship_role: competitor_adversary_axis; official narrative only, never ground truth).
 # White House: dedicated optional collector; shared_schema official_raw_v1 + dedupe
 # rules in COLLECTION_PIPELINE_ARCHITECTURE.md. Do not duplicate White House RSS
 # into gov_announcements_collector.
 
 schema_version: 2
-updated_at: "2026-10-29"
+updated_at: "2026-11-02"
 shared_schema_ref: official_raw_v1
 
 sources:
@@ -391,15 +391,247 @@ sources:
     notes: "relationship_role=ally (partner multilateral). Packet C must not re-label as competitor_adversary_axis."
 
   # ---------------------------------------------------------------------------
-  # Legacy / other (not Packet B ally list; Packet C may re-tag later)
+  # Packet C — Sanctions & Export Control Enforcement (OFAC / BIS / OpenSanctions)
   # ---------------------------------------------------------------------------
+  - source_id: us_ofac_federal_register_api
+    source_type: regulation_notice
+    source_role: primary
+    relationship_role: domestic_us
+    required: false
+    fallback: [us_federal_register_documents_api, us_treasury_press_html]
+    license_access_note: "US Federal Register public JSON API filtered to Foreign Assets Control Office (OFAC); public domain; HTTP 200 verified 2026-11-02."
+    robots_note: "n/a-api — public Federal Register API; bounded per_page"
+    url: https://www.federalregister.gov/api/v1/documents.json?conditions%5Bagencies%5D%5B%5D=foreign-assets-control-office&per_page=20
+    endpoint: documents.json
+    country: US
+    language: en
+    access_method: api
+    enabled: true
+    pipeline_default: false
+    collector: PENDING
+    shared_schema: official_raw_v1
+    issue_tags: [US_Sanctions_OFAC, EU_Russia, Iran_Nuclear, Venezuela_Crisis]
+    cadence: daily
+    priority: high
+    lane: FAST
+    packet: C
+    notes: "Primary structured OFAC sanctions notice feed via Federal Register."
+
+  - source_id: us_ofac_recent_actions_html
+    source_type: official_statement
+    source_role: secondary
+    relationship_role: domestic_us
+    required: false
+    fallback: [us_ofac_federal_register_api, us_treasury_press_html]
+    license_access_note: "US Treasury OFAC Recent Actions public HTML index (HTTP 200 verified 2026-11-02); US Government public information; check robots.txt before HTML adapter."
+    robots_note: "pending — ofac.treasury.gov robots.txt before HTML adapter"
+    url: https://ofac.treasury.gov/recent-actions
+    country: US
+    language: en
+    access_method: html
+    enabled: true
+    pipeline_default: false
+    collector: PENDING
+    shared_schema: official_raw_v1
+    issue_tags: [US_Sanctions_OFAC, EU_Russia, Iran_Nuclear]
+    cadence: daily
+    priority: high
+    lane: FAST
+    packet: C
+
+  - source_id: us_bis_federal_register_api
+    source_type: regulation_notice
+    source_role: primary
+    relationship_role: domestic_us
+    required: false
+    fallback: [us_federal_register_documents_api]
+    license_access_note: "US Federal Register public JSON API filtered to Bureau of Industry and Security (BIS); Entity List, EAR rules, and semiconductor export controls; HTTP 200 verified 2026-11-02."
+    robots_note: "n/a-api — public Federal Register API; bounded per_page"
+    url: https://www.federalregister.gov/api/v1/documents.json?conditions%5Bagencies%5D%5B%5D=industry-and-security-bureau&per_page=20
+    endpoint: documents.json
+    country: US
+    language: en
+    access_method: api
+    enabled: true
+    pipeline_default: false
+    collector: PENDING
+    shared_schema: official_raw_v1
+    issue_tags: [US_Export_Control, US_Industrial_Policy_CHIPS, Taiwan_Strait]
+    cadence: daily
+    priority: high
+    lane: FAST
+    packet: C
+    notes: "Primary structured BIS export control and Entity List notice feed."
+
+  - source_id: us_bis_news_html
+    source_type: official_statement
+    source_role: secondary
+    relationship_role: domestic_us
+    required: false
+    fallback: [us_bis_federal_register_api]
+    license_access_note: "US BIS public newsroom HTML (HTTP 200 verified 2026-11-02, large payload ~3.5MB); prefer us_bis_federal_register_api for lightweight structured notices."
+    robots_note: "pending — bis.gov robots.txt; avoid frequent full-page fetches"
+    url: https://www.bis.gov/news-updates
+    country: US
+    language: en
+    access_method: html
+    enabled: true
+    pipeline_default: false
+    collector: PENDING
+    shared_schema: official_raw_v1
+    issue_tags: [US_Export_Control, US_Industrial_Policy_CHIPS]
+    cadence: manual
+    priority: medium
+    lane: FAST
+    packet: C
+
+  - source_id: opensanctions_default_index
+    source_type: sanctions_dataset
+    source_role: secondary
+    relationship_role: multilateral
+    required: false
+    fallback: [us_ofac_federal_register_api]
+    license_access_note: "OpenSanctions public dataset metadata index JSON (HTTP 200 verified 2026-11-02); non-commercial/research terms apply for bulk data; store dataset timestamp/index receipt only."
+    robots_note: "n/a-api — public index.json metadata probe"
+    url: https://data.opensanctions.org/datasets/latest/default/index.json
+    country: MULTI
+    language: en
+    access_method: api
+    enabled: true
+    pipeline_default: false
+    collector: PENDING
+    shared_schema: official_raw_v1
+    issue_tags: [US_Sanctions_OFAC, EU_Russia, Iran_Nuclear, North_Korea_Nuclear]
+    cadence: daily
+    priority: medium
+    lane: FAST
+    packet: C
+    notes: "Cross-jurisdictional sanctions index (US OFAC, EU, UN, UK OFSI)."
+
+  # ---------------------------------------------------------------------------
+  # Packet C — Competitor / Adversary Axis Official & State Channels
+  # (relationship_role: competitor_adversary_axis; official narrative only, never ground truth)
+  # ---------------------------------------------------------------------------
+  - source_id: cn_mfa_spokesperson_html
+    source_type: official_statement
+    source_role: primary
+    relationship_role: competitor_adversary_axis
+    required: false
+    fallback: [cn_people_daily_world_rss]
+    license_access_note: "China MFA (FMPRC) English Spokesperson's remarks HTML (HTTP 200 verified 2026-11-02); treat strictly as state actor official narrative, never ground truth."
+    robots_note: "pending — fmprc.gov.cn robots.txt before HTML notice adapter"
+    url: https://www.fmprc.gov.cn/eng/xw/fyrbt/
+    country: CN
+    language: en
+    access_method: html
+    enabled: true
+    pipeline_default: false
+    collector: PENDING
+    shared_schema: official_raw_v1
+    issue_tags: [Taiwan_Strait, South_China_Sea, US_Export_Control, US_Trade_Tariff]
+    cadence: daily
+    priority: high
+    lane: FAST
+    packet: C
+    notes: "Official narrative layer for Signal Gap comparison against independent/Allied sources."
+
+  - source_id: cn_mofcom_en_html
+    source_type: official_statement
+    source_role: primary
+    relationship_role: competitor_adversary_axis
+    required: false
+    fallback: [cn_mfa_spokesperson_html, us_bis_federal_register_api]
+    license_access_note: "China MOFCOM English news releases; connection reset (10054) on 2026-11-02 probe. Do not bypass network blocks; keep enabled=false until stable public access is confirmed."
+    robots_note: "pending — english.mofcom.gov.cn connection reset on probe; collector DISABLED"
+    url: http://english.mofcom.gov.cn/article/newsrelease/
+    country: CN
+    language: en
+    access_method: html
+    enabled: false
+    pipeline_default: false
+    collector: PENDING
+    shared_schema: official_raw_v1
+    issue_tags: [US_Export_Control, US_Trade_Tariff, Taiwan_Strait]
+    cadence: manual
+    priority: medium
+    lane: FAST
+    packet: C
+
+  - source_id: cn_people_daily_world_rss
+    source_type: state_media_news
+    source_role: secondary
+    relationship_role: competitor_adversary_axis
+    required: false
+    fallback: []
+    license_access_note: "People's Daily English World RSS (HTTP 200 verified 2026-11-02); Chinese state media narrative layer for Signal Gap analysis, not ground truth or independent journalism."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: http://en.people.cn/rss/World.xml
+    country: CN
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    shared_schema: official_raw_v1
+    issue_tags: [Taiwan_Strait, South_China_Sea, US_Trade_Tariff, US_Export_Control]
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: C
+    notes: "Active in fetch_signal_gap_rss.py (China Official)."
+
+  - source_id: ru_mid_foreign_policy_html
+    source_type: official_statement
+    source_role: primary
+    relationship_role: competitor_adversary_axis
+    required: false
+    fallback: [ru_tass_en_rss]
+    license_access_note: "Russian MFA (MID) English foreign policy news HTML (HTTP 200 verified 2026-11-02); treat strictly as state official narrative, never ground truth."
+    robots_note: "pending — mid.ru robots.txt before HTML notice adapter"
+    url: https://mid.ru/en/foreign_policy/news/
+    country: RU
+    language: en
+    access_method: html
+    enabled: true
+    pipeline_default: false
+    collector: PENDING
+    shared_schema: official_raw_v1
+    issue_tags: [Ukraine_War, EU_Russia, Baltic_Security]
+    cadence: daily
+    priority: high
+    lane: FAST
+    packet: C
+
+  - source_id: ru_tass_en_rss
+    source_type: state_media_news
+    source_role: secondary
+    relationship_role: competitor_adversary_axis
+    required: false
+    fallback: []
+    license_access_note: "TASS Russian News Agency public RSS (HTTP 200 verified 2026-11-02); Russian state media narrative layer for Signal Gap comparison against exiled/independent outlets."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://tass.com/rss/v2.xml
+    country: RU
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    shared_schema: official_raw_v1
+    issue_tags: [Ukraine_War, EU_Russia, Baltic_Security]
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: C
+    notes: "Active in fetch_signal_gap_rss.py (Russia Official)."
+
   - source_id: irna_en
     source_type: state_media_news
     source_role: secondary
-    relationship_role: other
+    relationship_role: competitor_adversary_axis
     required: false
-    fallback: []
-    license_access_note: "State media RSS; treat as official narrative / news layer, not ground truth."
+    fallback: [ir_tehran_times_rss]
+    license_access_note: "IRNA English RSS (HTTP 200 verified 2026-11-02); Iranian state news agency; treat as official narrative / news layer, never ground truth."
     robots_note: "checked-via-existing-collector — RSS only"
     url: https://en.irna.ir/rss
     country: IR
@@ -409,19 +641,46 @@ sources:
     pipeline_default: true
     collector: scripts/collection/gov_announcements_collector.py
     shared_schema: official_raw_v1
+    issue_tags: [Iran_Nuclear, Middle_East_Energy, Israel_Palestine]
     cadence: daily
-    priority: medium
+    priority: high
     lane: CONTEXT
-    packet: legacy
-    notes: "Packet C may later set relationship_role=competitor_adversary_axis. Not official_statement independence."
+    packet: C
+    notes: "Tagged relationship_role=competitor_adversary_axis in Packet C. Not counted as official_statement independence."
 
+  - source_id: ir_tehran_times_rss
+    source_type: state_media_news
+    source_role: secondary
+    relationship_role: competitor_adversary_axis
+    required: false
+    fallback: [irna_en]
+    license_access_note: "Tehran Times public RSS (HTTP 200 verified 2026-11-02); Iranian state-aligned narrative source for Middle East Signal Gap comparison."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://www.tehrantimes.com/rss
+    country: IR
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    shared_schema: official_raw_v1
+    issue_tags: [Iran_Nuclear, Middle_East_Energy, Israel_Palestine]
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: C
+    notes: "Active in fetch_signal_gap_rss.py (Middle_East Official)."
+
+  # ---------------------------------------------------------------------------
+  # Legacy / Global South & Regional State-Affiliated Media (relationship_role: other)
+  # ---------------------------------------------------------------------------
   - source_id: al_jazeera_all
     source_type: state_media_news
     source_role: secondary
     relationship_role: other
     required: false
     fallback: []
-    license_access_note: "Public Al Jazeera RSS; state-affiliated media, not MFA release."
+    license_access_note: "Public Al Jazeera RSS; Qatari state-affiliated broadcaster, not an MFA release; used in gov_announcements_collector and Global_South signal_gap."
     robots_note: "checked-via-existing-collector — RSS only"
     url: https://www.aljazeera.com/xml/rss/all.xml
     country: QA
@@ -431,6 +690,7 @@ sources:
     pipeline_default: true
     collector: scripts/collection/gov_announcements_collector.py
     shared_schema: official_raw_v1
+    issue_tags: [Israel_Palestine, Middle_East_Energy, Iran_Nuclear, Sudan_Conflict]
     cadence: daily
     priority: medium
     lane: CONTEXT
@@ -453,6 +713,7 @@ sources:
     pipeline_default: true
     collector: scripts/collection/gov_announcements_collector.py
     shared_schema: official_raw_v1
+    issue_tags: [Brazil_Politics, Venezuela_Crisis, Argentina_Economy]
     cadence: daily
     priority: medium
     lane: FAST

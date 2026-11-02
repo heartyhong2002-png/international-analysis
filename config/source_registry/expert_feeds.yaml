@@ -1,16 +1,19 @@
 # CONTEXT lane — think tanks and specialist analysis.
 # Migrated from scripts/analysis/prototype_local_expert_sources.py (2026-09-14 verified).
+# Updated 2026-11-02: aligned with SCHEMA.md v2 (relationship_role, robots_note, issue_tags, packet).
 
-schema_version: 1
-updated_at: "2026-10-28"
+schema_version: 2
+updated_at: "2026-11-02"
 
 sources:
   - source_id: moscow_times_en
     source_type: local_media
     source_role: secondary
+    relationship_role: competitor_adversary_axis
     required: false
-    fallback: []
+    fallback: [ru_meduza_rss]
     license_access_note: "Public RSS; independent-in-exile outlet; retain URL; no login."
+    robots_note: "checked-via-existing-collector — RSS only"
     url: https://www.themoscowtimes.com/rss/news
     country: RU
     language: en
@@ -18,17 +21,24 @@ sources:
     enabled: true
     pipeline_default: true
     collector: scripts/analysis/prototype_local_expert_sources.py
+    issue_tags:
+      - Ukraine_War
+      - EU_Russia
+      - Baltic_Security
     cadence: daily
     priority: high
     lane: CONTEXT
+    packet: C
     orientation: independent-in-exile
 
   - source_id: al_monitor
     source_type: expert_analysis
     source_role: secondary
+    relationship_role: other
     required: false
     fallback: []
     license_access_note: "Public RSS; specialist journalism; retain source URL."
+    robots_note: "checked-via-existing-collector — RSS only"
     url: https://www.al-monitor.com/rss
     country: US
     language: en
@@ -36,17 +46,24 @@ sources:
     enabled: true
     pipeline_default: true
     collector: scripts/analysis/prototype_local_expert_sources.py
+    issue_tags:
+      - Iran_Nuclear
+      - Israel_Palestine
+      - Middle_East_Energy
     cadence: daily
     priority: medium
     lane: CONTEXT
+    packet: legacy
     orientation: middle_east_specialist_journalism
 
   - source_id: chatham_house_expert_comment
     source_type: expert_analysis
     source_role: secondary
+    relationship_role: ally
     required: false
     fallback: []
     license_access_note: "Public Chatham House feed; expert commentary, not official fact."
+    robots_note: "checked-via-existing-collector — RSS only"
     url: https://www.chathamhouse.org/path/83/feed.xml
     country: GB
     language: en
@@ -54,17 +71,25 @@ sources:
     enabled: true
     pipeline_default: true
     collector: scripts/analysis/prototype_local_expert_sources.py
+    issue_tags:
+      - Ukraine_War
+      - EU_Russia
+      - Middle_East_Energy
+      - Taiwan_Strait
     cadence: daily
     priority: medium
     lane: CONTEXT
+    packet: B
     orientation: UK_nonpartisan_thinktank
 
   - source_id: crisis_group_global
     source_type: expert_analysis
     source_role: secondary
+    relationship_role: multilateral
     required: false
     fallback: []
     license_access_note: "Public Crisis Group RSS; conflict-prevention assessments only."
+    robots_note: "checked-via-existing-collector — RSS only"
     url: https://www.crisisgroup.org/rss
     country: BE
     language: en
@@ -72,17 +97,26 @@ sources:
     enabled: true
     pipeline_default: true
     collector: scripts/analysis/prototype_local_expert_sources.py
+    issue_tags:
+      - Ukraine_War
+      - Israel_Palestine
+      - Sudan_Conflict
+      - Ethiopia_Crisis
+      - Myanmar_Crisis
     cadence: daily
     priority: high
     lane: CONTEXT
+    packet: B
     orientation: conflict_prevention_thinktank
 
   - source_id: thirty_eight_north
     source_type: expert_analysis
     source_role: secondary
+    relationship_role: competitor_adversary_axis
     required: false
     fallback: []
     license_access_note: "Public 38 North feed (Stimson); DPRK specialist analysis."
+    robots_note: "checked-via-existing-collector — RSS only"
     url: https://www.38north.org/feed/
     country: US
     language: en
@@ -90,7 +124,11 @@ sources:
     enabled: true
     pipeline_default: true
     collector: scripts/analysis/prototype_local_expert_sources.py
+    issue_tags:
+      - North_Korea_Nuclear
+      - Japan_Korea
     cadence: daily
     priority: high
     lane: CONTEXT
+    packet: C
     orientation: dprk_specialist_platform

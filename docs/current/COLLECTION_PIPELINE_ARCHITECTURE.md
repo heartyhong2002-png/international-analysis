@@ -38,16 +38,14 @@ GDELT Cloud는 학술 계정의 월 5,000 QU 한도를 고려해 FAST 레인에�
 
 싱크탱크와 현지 언론 목록은 코드에 하드코딩하지 않고 `config/source_registry/` 아래에서 관리한다.
 
-현재 초안(2026-10-29):
+현재 상태(2026-11-02):
 
-- `config/source_registry/SCHEMA.md` — `relationship_role`, `issue_tags`, `packet`, `shared_schema` 포함
-- `expert_feeds.yaml`
-- `local_media_feeds.yaml`
-- `government_sources.yaml` — 패킷 A(미국 국내 정책, `pipeline_default: false`) + 패킷 B(동맹 `relationship_role: ally`)
-- `opinion_sources.yaml`
-- `customs_sources.yaml`
-
-패킷 C(`competitor_adversary_axis`, OFAC/BIS)는 A/B 스키마 안정 후 registry만 추가한다.
+- `config/source_registry/SCHEMA.md` — `relationship_role`, `issue_tags`, `packet`(`A`/`B`/`C`/`legacy`), `shared_schema` 포함 (v2)
+- `expert_feeds.yaml` — 패킷 B/C/legacy `relationship_role` 및 `issue_tags` 정렬 완료
+- `local_media_feeds.yaml` — 패킷 A/C/legacy 및 `signal_gap` 독립·망명 언론(`ru_meduza_rss`, `me_raseef22_rss`, `cn_china_digital_times_rss`) `relationship_role: competitor_adversary_axis` 태깅 완료
+- `government_sources.yaml` — 패킷 A(미국 국내 정책, `pipeline_default: false`) + 패킷 B(동맹 `relationship_role: ally`) + 패킷 C(OFAC/BIS/OpenSanctions 제재·수출통제 및 중국·러시아·이란 공식·관영 서사 `relationship_role: competitor_adversary_axis`) 등록 완료
+- `opinion_sources.yaml` — `pincong_public`, `telegram_osint_public` 패킷 C 태깅 및 스키마 v2 정렬 완료
+- `customs_sources.yaml` — 한국 관세청·UN Comtrade 패킷 B 태깅 및 스키마 v2 정렬 완료
 
 각 항목은 최소한 다음을 가진다.
 

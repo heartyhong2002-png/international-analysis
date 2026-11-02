@@ -1,0 +1,101 @@
+{
+  "collector": "scripts/collection/fetch_signal_gap_rss.py",
+  "observed_at": "2026-11-02T06:07:01Z",
+  "packet": "C",
+  "alert_level_set": false,
+  "verification_state_set": false,
+  "total_items_collected": 60,
+  "sources": [
+    {
+      "source_id": "ru_tass_en_rss",
+      "region": "Russia",
+      "source_type": "Official",
+      "relationship_role": "competitor_adversary_axis",
+      "packet": "C",
+      "source_url": "https://tass.com/rss/v2.xml",
+      "observed_at": "2026-11-02T06:07:01Z",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_collected": 10,
+      "license_access_note": "TASS public RSS; Russian state media narrative layer, never ground truth."
+    },
+    {
+      "source_id": "ru_meduza_rss",
+      "region": "Russia",
+      "source_type": "Independent",
+      "relationship_role": "competitor_adversary_axis",
+      "packet": "C",
+      "source_url": "https://meduza.io/rss/all",
+      "observed_at": "2026-11-02T06:07:01Z",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_collected": 10,
+      "license_access_note": "Meduza public RSS; independent Russian-language exiled media."
+    },
+    {
+      "source_id": "cn_people_daily_world_rss",
+      "region": "China",
+      "source_type": "Official",
+      "relationship_role": "competitor_adversary_axis",
+      "packet": "C",
+      "source_url": "http://en.people.cn/rss/World.xml",
+      "observed_at": "2026-11-02T06:07:01Z",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_collected": 10,
+      "license_access_note": "People's Daily English World RSS; Chinese state media narrative layer."
+    },
+    {
+      "source_id": "cn_china_digital_times_rss",
+      "region": "China",
+      "source_type": "Independent",
+      "relationship_role": "competitor_adversary_axis",
+      "packet": "C",
+      "source_url": "https://chinadigitaltimes.net/chinese/feed/",
+      "observed_at": "2026-11-02T06:07:01Z",
+      "http_status": 403,
+      "parse_status": "BLOCKED",
+      "items_collected": 0,
+      "license_access_note": "China Digital Times Chinese feed; independent censorship-archive aggregator."
+    },
+    {
+      "source_id": "ir_tehran_times_rss",
+      "region": "Middle_East",
+      "source_type": "Official",
+      "relationship_role": "competitor_adversary_axis",
+      "packet": "C",
+      "source_url": "https://www.tehrantimes.com/rss",
+      "observed_at": "2026-11-02T06:07:01Z",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_collected": 10,
+      "license_access_note": "Tehran Times public RSS; Iranian state-aligned narrative layer."
+    },
+    {
+      "source_id": "me_raseef22_rss",
+      "region": "Middle_East",
+      "source_type": "Independent",
+      "relationship_role": "competitor_adversary_axis",
+      "packet": "C",
+      "source_url": "https://raseef22.net/feed/",
+      "observed_at": "2026-11-02T06:07:01Z",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_collected": 10,
+      "license_access_note": "Raseef22 Arabic public RSS; independent pan-Arab media network."
+    },
+    {
+      "source_id": "al_jazeera_all",
+      "region": "Global_South",
+      "source_type": "Independent",
+      "relationship_role": "other",
+      "packet": "legacy",
+      "source_url": "https://www.aljazeera.com/xml/rss/all.xml",
+      "observed_at": "2026-11-02T06:07:01Z",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_collected": 10,
+      "license_access_note": "Public Al Jazeera RSS; Qatari state-affiliated broadcaster."
+    }
+  ]
+}
