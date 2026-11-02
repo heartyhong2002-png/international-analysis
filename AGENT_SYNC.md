@@ -85,6 +85,7 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | automation / anomaly-scanner | scripts/automation/*, docs/current/DATA_COLLECTION_ROADMAP.md, docs/current/PYTHON_SCRIPT_INVENTORY.md | 글로벌 이상 징후 무인 스캐너 & 지능형 전처리 파이프라인 구축 및 노션 퍼블리싱 연동 완결 | 2026-10-29 |
 | done | Cursor Agent | automation / anomaly-scanner-review | `scripts/automation/auto_anomaly_scanner.py`, `scripts/automation/preprocess_signals.py`, `scripts/notion/publish_notion_report.py`, `docs/current/DATA_COLLECTION_ROADMAP.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md` | ANTIGRAVITY 초안 검증·문서 깨짐 수정·Alert Level 오인 표현 제거·`--dry-run` 확인 | 2026-10-29 |
 | done | ANTIGRAVITY | sync / trio-platform-sync | `AGENT_SYNC.md`, `assets/`, GitHub, Notion | 전체 파이프라인 아키텍처 다이어그램 및 3대 플랫폼(MD·GitHub·Notion) 일괄 동기화 | 2026-11-02 |
+| done | ANTIGRAVITY | orchestration / airflow-docker-setup | `docker-compose.yaml`, `dags/early_warning_pipeline_dag.py`, `docs/current/AIRFLOW_SETUP_GUIDE.md`, `docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md` | Docker 기반 Apache Airflow 2.10.2 표준 컨테이너 환경 구축, 4-Lane 병렬 수집 DAG 시운전 검증 및 포트폴리오 엔지니어링 서사 반영 | 2026-11-02 |
 | done | ANTIGRAVITY | validation / tev1-role-clarification | `scripts/validation/backtest_tev1.py`, `scripts/automation/preprocess_signals.py`, `docs/current/VALIDATION_PLAN.md` | 번역·분석 모델(Qwen/EXAONE/Llama)과 독립 검증 모델(tev1)의 엄격한 역할 분리 및 다국어 5단계 전처리 필수화 확립 | 2026-11-02 |
 | done | ANTIGRAVITY | data-collection / latin-america-expansion | `scripts/collection/*`, `scripts/automation/*`, `config/source_registry/*`, `docs/current/*` | 중남미 대륙 감시 강화: 브라질 대선·룰라정부·원자재(원유/대두/리튬) 및 파나마 운하 병목 센서 구축 | 2026-10-29 |
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
@@ -650,3 +651,19 @@ un_pipeline.py에 --skip-chokepoints, --skip-cross-verification 등 플래그 �
   - 3. GitHub: 현재 브랜치(`cursor/actions-light-collection`)에 신규 아키텍처 다이어그램 및 동기화 내역 커밋 & 푸시 완료.
 - 다음 작업: 이어서 진행할 관제 대시보드 고도화 또는 패킷 C 소스 레지스트리 작업 대기.
 - 주의할 점: 단일 출처 경보 상승 금지 가드레일과 `.env` 비밀값 비커밋 원칙 준수.
+
+
+## 2026-11-02 [ANTIGRAVITY / Docker 기반 Apache Airflow 오케스트레이션 환경 구축 및 시운전 완결]
+
+- 한 일:
+  1. Docker Desktop(WSL 2 연동) 환경에서 동작하는 **Apache Airflow 2.10.2 경량 표준 컨테이너 환경** 구축 (`docker-compose.yaml`, `.env.airflow`).
+  2. 4대 수집 레인 병렬화, 지능형 4단계 전처리, 복수 계통 교차검증, 경보 산식, DB 적재, 대시보드 및 Notion 동기화가 단계별로 연결된 **Multi-Lane DAG 정의 완료** (`dags/early_warning_pipeline_dag.py`).
+  3. `docker-compose up -d` 가동 및 웹서버(8080 포트, `http://localhost:8080`), 스케줄러, PostgreSQL 15 헬스체크 및 `collect_maritime_chokepoints` 단일 태스크 시운전 성공 확인 (`Marking task as SUCCESS`).
+  4. 단일 파이썬 스크립트 실행의 지연 문제와 장애 전파 문제를 Airflow 병렬 실행 및 장애 격리로 해결한 엔지니어링 서사를 `docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md`에 공식 반영.
+  5. 트리오 동기화 프로토콜에 따라 MD 문서, GitHub 원격 저장소, Notion 프로젝트 허브 일괄 동기화 수행.
+- 바꾼 파일: `docker-compose.yaml`, `.env.airflow`, `dags/early_warning_pipeline_dag.py`, `docs/current/AIRFLOW_SETUP_GUIDE.md`, `docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md`, `AGENT_SYNC.md`.
+- 확인한 것:
+  - 1. Airflow Web UI (`http://localhost:8080`, id/pw: `airflow`/`airflow`) 정상 로그인 및 DAG 트리 구조 확인.
+  - 2. Airflow 내부 DB(PostgreSQL)는 스케줄러 관리용으로 격리되고, 비즈니스 공급망 데이터는 기존 MySQL 및 `data/` 로컬 파일로 정상 적재됨을 검증.
+- 다음 작업: Airflow 웹 콘솔에서 전체 DAG 트리거 실행 테스트 및 모니터링.
+- 주의할 점: 프로덕션 배포 시 추가 pip 패키지는 커스텀 이미지 빌드로 이관 권장.
