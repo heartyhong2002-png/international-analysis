@@ -1,24 +1,24 @@
 {
   "node_type": "Galaxy S20 Ultra (Termux Edge Collector)",
   "round": 1,
-  "started_at": "2026-11-02T16:08:46.747407+00:00",
-  "finished_at": "2026-11-02T16:09:41.014830+00:00",
+  "started_at": "2026-11-02T16:11:07.917348+00:00",
+  "finished_at": "2026-11-02T16:12:08.595357+00:00",
   "total_collectors": 6,
-  "success_count": 5,
-  "failed_count": 1,
+  "success_count": 6,
+  "failed_count": 0,
   "details": [
     {
       "id": "maritime_chokepoints",
       "name": "해협·항만 병목 및 운임·에너지 센서",
       "status": "SUCCESS",
-      "duration_sec": 3.94,
+      "duration_sec": 4.15,
       "error": null
     },
     {
       "id": "whitehouse_official",
       "name": "백악관 공식 성명 및 브리핑 RSS",
       "status": "SUCCESS",
-      "duration_sec": 1.98,
+      "duration_sec": 0.71,
       "error": null
     },
     {
@@ -32,21 +32,21 @@
       "id": "gov_announcements",
       "name": "주요국 공식 정부 발표문 (MOFA/State/FCDO 등)",
       "status": "SUCCESS",
-      "duration_sec": 21.7,
+      "duration_sec": 21.6,
       "error": null
     },
     {
       "id": "signal_gap_rss",
       "name": "4대 권역 신호 괴리 RSS (공식 vs 독립 언론)",
-      "status": "FAILED",
-      "duration_sec": 0.12,
-      "error": "Traceback (most recent call last):\n  File \"/data/data/com.termux/files/home/international-analysis/scripts/collection/fetch_signal_gap_rss.py\", line 15, in <module>\n    import feedparser\nModuleNotFoun"
+      "status": "SUCCESS",
+      "duration_sec": 7.69,
+      "error": null
     },
     {
       "id": "local_opinions",
       "name": "로컬 포럼 및 대안 여론 센서",
       "status": "SUCCESS",
-      "duration_sec": 19.65,
+      "duration_sec": 19.63,
       "error": null
     }
   ]
