@@ -309,17 +309,6 @@
       ]
     },
     {
-      "source": "Al Jazeera",
-      "source_type": "state_media_news",
-      "title": "Saudi-led coalition intercepts a missile as fighting rages in Yemen’s al-Jawf",
-      "link": "https://www.aljazeera.com/news/2026/11/2/saudi-led-coalition-intercepts-a-missile-as-fighting-rages-in-yemens-al-jawf?traffic_source=rss",
-      "pub_date": "Mon, 02 Nov 2026 09:43:59 +0000",
-      "description": "Houthi-affiliated media report that seven people were wounded in strikes on the city of Hodeidah.",
-      "matched_issues": [
-        "Middle_East_Energy"
-      ]
-    },
-    {
       "source": "독일 외교부 (Auswärtiges Amt)",
       "source_type": "official_statement",
       "title": "Gemeinsame Pressemitteilung Deutschlands, Frankreichs, Italiens und des Vereinigten Königreichs sowie Ägyptens, Pakistans, Saudi-Arabiens und der Türkei über das Treffen der Außenminister in Istanbul am 23. Oktober 2026",
@@ -502,18 +491,6 @@
       "pub_date": "Mon, 02 Nov 2026 14:27:50 +0000",
       "description": "As energy from the Gulf and Russia take a hit, American oil and gas firms are the big gainers. ",
       "matched_issues": [
-        "EU_Russia"
-      ]
-    },
-    {
-      "source": "Al Jazeera",
-      "source_type": "state_media_news",
-      "title": "Nuclear radiation in Russia, Ukraine? No, just hacked warning alerts",
-      "link": "https://www.aljazeera.com/news/2026/11/2/nuclear-radiation-in-russia-ukraine-no-just-hacked-warning-alerts?traffic_source=rss",
-      "pub_date": "Mon, 02 Nov 2026 09:35:46 +0000",
-      "description": "Warnings startle people in Ukraine, but authorities say they cleared up the confusion in under an hour.",
-      "matched_issues": [
-        "Ukraine_War",
         "EU_Russia"
       ]
     },
@@ -702,6 +679,17 @@
     {
       "source": "Al Jazeera",
       "source_type": "state_media_news",
+      "title": "Violence in northern Ethiopia pushing health system towards collapse: WHO",
+      "link": "https://www.aljazeera.com/news/2026/11/2/violence-in-northern-ethiopia-pushing-health-system-towards-collapse-who?traffic_source=rss",
+      "pub_date": "Mon, 02 Nov 2026 16:03:40 +0000",
+      "description": "Renewed fighting between rebels from northern Tigray and ​the government in Addis Ababa has shattered 2022 peace deal.",
+      "matched_issues": [
+        "Ethiopia_Crisis"
+      ]
+    },
+    {
+      "source": "Al Jazeera",
+      "source_type": "state_media_news",
       "title": "Sudan files complaints against Ethiopia with UN over deadly drone spree",
       "link": "https://www.aljazeera.com/news/2026/11/2/sudan-files-complaints-against-ethiopia-with-un-over-deadly-drone-spree?traffic_source=rss",
       "pub_date": "Mon, 02 Nov 2026 10:25:22 +0000",
@@ -758,6 +746,18 @@
       "matched_issues": [
         "Baltic_Security"
       ]
+    },
+    {
+      "source": "Al Jazeera",
+      "source_type": "state_media_news",
+      "title": "Lobster industry caught in Maine’s political headwinds before US midterms",
+      "link": "https://www.aljazeera.com/economy/2026/11/2/lobster-industry-caught-in-maines-political-headwinds-before-midterms?traffic_source=rss",
+      "pub_date": "Mon, 02 Nov 2026 15:54:53 +0000",
+      "description": "Senator Susan Collins and Democratic challenger Troy Jackson clash over tariffs and their impact on Maine&#039;s economy.",
+      "matched_issues": [
+        "Trump_Economy",
+        "Baltic_Security"
+      ]
     }
   ],
   "US_Canada_Trade": [
@@ -799,19 +799,21 @@
       ]
     }
   ],
-  "Ukraine_War": [
+  "Trump_Economy": [
     {
       "source": "Al Jazeera",
       "source_type": "state_media_news",
-      "title": "Nuclear radiation in Russia, Ukraine? No, just hacked warning alerts",
-      "link": "https://www.aljazeera.com/news/2026/11/2/nuclear-radiation-in-russia-ukraine-no-just-hacked-warning-alerts?traffic_source=rss",
-      "pub_date": "Mon, 02 Nov 2026 09:35:46 +0000",
-      "description": "Warnings startle people in Ukraine, but authorities say they cleared up the confusion in under an hour.",
+      "title": "Lobster industry caught in Maine’s political headwinds before US midterms",
+      "link": "https://www.aljazeera.com/economy/2026/11/2/lobster-industry-caught-in-maines-political-headwinds-before-midterms?traffic_source=rss",
+      "pub_date": "Mon, 02 Nov 2026 15:54:53 +0000",
+      "description": "Senator Susan Collins and Democratic challenger Troy Jackson clash over tariffs and their impact on Maine&#039;s economy.",
       "matched_issues": [
-        "Ukraine_War",
-        "EU_Russia"
+        "Trump_Economy",
+        "Baltic_Security"
       ]
-    },
+    }
+  ],
+  "Ukraine_War": [
     {
       "source": "영국 FCDO (외교·영연방·개발부)",
       "source_type": "official_statement",

@@ -1050,6 +1050,24 @@
   {
     "source": "IRNA (이란 국영 통신사)",
     "source_type": "state_media_news",
+    "title": "Pezeshkian: Iran will not surrender to military aggression",
+    "link": "https://en.irna.ir/news/86310446/Pezeshkian-Iran-will-not-surrender-to-military-aggression",
+    "pub_date": "Mon, 02 Nov 2026 16:26:40 GMT",
+    "description": "Tehran, IRNA – President Masoud Pezeshkian says Iran will not surrender to military aggression, stressing that the country will firmly resist its enemies while strengthening public resilience and addressing people’s concerns.",
+    "matched_issues": []
+  },
+  {
+    "source": "IRNA (이란 국영 통신사)",
+    "source_type": "state_media_news",
+    "title": "Araghchi returns to Tehran after talks with Turkmen officials",
+    "link": "https://en.irna.ir/news/86310503/Araghchi-returns-to-Tehran-after-talks-with-Turkmen-officials",
+    "pub_date": "Mon, 02 Nov 2026 16:11:15 GMT",
+    "description": "Tehran, IRNA – Foreign Minister Abbas Araghchi returned to Tehran on Monday after a one-day visit to Ashgabat, where he held diplomatic talks with senior Turkmen officials on bilateral relations and ways to expand cooperation.",
+    "matched_issues": []
+  },
+  {
+    "source": "IRNA (이란 국영 통신사)",
+    "source_type": "state_media_news",
     "title": "Iran, Russia reaffirm commitment to strategic cooperation",
     "link": "https://en.irna.ir/news/86310474/Iran-Russia-reaffirm-commitment-to-strategic-cooperation",
     "pub_date": "Mon, 02 Nov 2026 15:33:04 GMT",
@@ -1310,22 +1328,45 @@
     ]
   },
   {
-    "source": "IRNA (이란 국영 통신사)",
+    "source": "Al Jazeera",
     "source_type": "state_media_news",
-    "title": "86th Naval Flotilla’s voyage a historic achievement, says Iranian Navy commander",
-    "link": "https://en.irna.ir/news/86309355/86th-Naval-Flotilla-s-voyage-a-historic-achievement-says-Iranian",
-    "pub_date": "Sun, 01 Nov 2026 13:58:38 GMT",
-    "description": "Tehran, IRNA – Iranian Navy commander Rear Admiral Shahram Irani has described the 86th Naval Flotilla’s voyage as a historic achievement, saying it was the result of months of planning.",
+    "title": "At least seven migrants die on boat bound for Canary Islands amid storm",
+    "link": "https://www.aljazeera.com/video/newsfeed/2026/11/2/at-least-seven-migrants-die-on-boat-bound-for-canary-islands-amid-storm?traffic_source=rss",
+    "pub_date": "Mon, 02 Nov 2026 16:13:21 +0000",
+    "description": "At least seven migrants have died aboard a boat carrying 139 people bound for the Canary Islands after a storm hit.",
     "matched_issues": []
   },
   {
-    "source": "IRNA (이란 국영 통신사)",
+    "source": "Al Jazeera",
     "source_type": "state_media_news",
-    "title": "Leader’s directive paves the way for complete deterrence: IRGC spokesperson",
-    "link": "https://en.irna.ir/news/86309361/Leader-s-directive-paves-the-way-for-complete-deterrence-IRGC",
-    "pub_date": "Sun, 01 Nov 2026 13:16:41 GMT",
-    "description": "Kerman, IRNA – The spokesperson for the Islamic Revolution Guards Corps (IRGC), referring to a recent order from the Leader of the Islamic Revolution to respond swiftly and forcefully to any new aggression, says the removal of geographical limits in targeting enemies paves the way for complete deterrence.",
+    "title": "China steps up Middle East diplomacy with Iran and Oman meetings",
+    "link": "https://www.aljazeera.com/news/2026/11/2/china-steps-up-middle-east-diplomacy-with-iran-and-oman-meetings?traffic_source=rss",
+    "pub_date": "Mon, 02 Nov 2026 16:03:52 +0000",
+    "description": "Beijing urges dialogue on US-Iran war, sends envoy to Gulf as Xi hosts first Omani head of state visit since 1978.",
     "matched_issues": []
+  },
+  {
+    "source": "Al Jazeera",
+    "source_type": "state_media_news",
+    "title": "Violence in northern Ethiopia pushing health system towards collapse: WHO",
+    "link": "https://www.aljazeera.com/news/2026/11/2/violence-in-northern-ethiopia-pushing-health-system-towards-collapse-who?traffic_source=rss",
+    "pub_date": "Mon, 02 Nov 2026 16:03:40 +0000",
+    "description": "Renewed fighting between rebels from northern Tigray and ​the government in Addis Ababa has shattered 2022 peace deal.",
+    "matched_issues": [
+      "Ethiopia_Crisis"
+    ]
+  },
+  {
+    "source": "Al Jazeera",
+    "source_type": "state_media_news",
+    "title": "Lobster industry caught in Maine’s political headwinds before US midterms",
+    "link": "https://www.aljazeera.com/economy/2026/11/2/lobster-industry-caught-in-maines-political-headwinds-before-midterms?traffic_source=rss",
+    "pub_date": "Mon, 02 Nov 2026 15:54:53 +0000",
+    "description": "Senator Susan Collins and Democratic challenger Troy Jackson clash over tariffs and their impact on Maine&#039;s economy.",
+    "matched_issues": [
+      "Trump_Economy",
+      "Baltic_Security"
+    ]
   },
   {
     "source": "Al Jazeera",
@@ -1534,47 +1575,6 @@
     "matched_issues": [
       "Sudan_Conflict"
     ]
-  },
-  {
-    "source": "Al Jazeera",
-    "source_type": "state_media_news",
-    "title": "‘Just the beginning’ for Antonelli, F1’s prodigious, charismatic new king",
-    "link": "https://www.aljazeera.com/sports/2026/11/2/just-the-beginning-for-antonelli-f1s-prodigious-charismatic-new-king?traffic_source=rss",
-    "pub_date": "Mon, 02 Nov 2026 10:00:21 +0000",
-    "description": "Kimi Antonelli, F1’s youngest world champion at 20, has become the life and soul of the paddock with his personality.",
-    "matched_issues": []
-  },
-  {
-    "source": "Al Jazeera",
-    "source_type": "state_media_news",
-    "title": "Saudi-led coalition intercepts a missile as fighting rages in Yemen’s al-Jawf",
-    "link": "https://www.aljazeera.com/news/2026/11/2/saudi-led-coalition-intercepts-a-missile-as-fighting-rages-in-yemens-al-jawf?traffic_source=rss",
-    "pub_date": "Mon, 02 Nov 2026 09:43:59 +0000",
-    "description": "Houthi-affiliated media report that seven people were wounded in strikes on the city of Hodeidah.",
-    "matched_issues": [
-      "Middle_East_Energy"
-    ]
-  },
-  {
-    "source": "Al Jazeera",
-    "source_type": "state_media_news",
-    "title": "Nuclear radiation in Russia, Ukraine? No, just hacked warning alerts",
-    "link": "https://www.aljazeera.com/news/2026/11/2/nuclear-radiation-in-russia-ukraine-no-just-hacked-warning-alerts?traffic_source=rss",
-    "pub_date": "Mon, 02 Nov 2026 09:35:46 +0000",
-    "description": "Warnings startle people in Ukraine, but authorities say they cleared up the confusion in under an hour.",
-    "matched_issues": [
-      "Ukraine_War",
-      "EU_Russia"
-    ]
-  },
-  {
-    "source": "Al Jazeera",
-    "source_type": "state_media_news",
-    "title": "US midterms: 1 day to go – Democrats rally around El-Sayed amid attacks",
-    "link": "https://www.aljazeera.com/news/2026/11/2/us-midterms-1-day-to-go-democrats-rally-around-el-sayed-amid-attacks?traffic_source=rss",
-    "pub_date": "Mon, 02 Nov 2026 09:06:20 +0000",
-    "description": "Democrats slam Haley Stevens over her endorsement of a Republican candidate a day before the polls.",
-    "matched_issues": []
   },
   {
     "source": "영국 FCDO (외교·영연방·개발부)",
