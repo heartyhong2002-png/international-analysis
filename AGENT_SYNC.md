@@ -58,6 +58,7 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
+| in-progress | ANTIGRAVITY | orchestration / edge-to-core-pipeline | `scripts/collection/run_phone_collector.py`, `dags/early_warning_pipeline_dag.py` | 엣지-코어 2-Tier 분산 파이프라인 연동: S20 자동 Git 푸시 & Airflow 엣지 수집 데이터 흡수 태스크 구현 | 2026-11-03 |
 | done | ANTIGRAVITY | preprocessing / session-prompt | `docs/current/PREPROCESSING_SESSION_PROMPT.md`, `docs/SESSION_PROMPTS.md` | 비정형 데이터 전처리 및 신호 필터링 전담 세션 분리 프롬프트 작성 및 등록 완료 | 2026-11-02 |
 | done | ANTIGRAVITY | collection / 24-7-edge-runner | `scripts/collection/run_phone_collector.py`, `start_phone.sh`, `scripts/collection/fetch_signal_gap_rss.py` | 갤럭시 S20 울트라(Termux) 24/7 무중단 자동 수집 러너 구축, pandas 의존성 제거 및 5/5 수집 검증 완료 | 2026-11-03 |
 | done | Cursor / Control Tower | control-tower / scope | `docs/current/PROJECT_PLAN.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `AGENT_SYNC.md` | 미국 국내·동맹·경쟁/대립축 6대 감시축 확정(예측 금지). 패킷 A+B 동시 착수 지시 | 2026-10-30 |
@@ -96,6 +97,17 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-03 [ANTIGRAVITY / Edge-to-Core 2-Tier 분산 파이프라인 아키텍처 확립]
+- 한 일:
+  1. 엣지 수집(S20 울트라)과 코어 분석(메인 PC / Airflow) 간의 지연 시간 및 파이프라인 재설계 전략 수립:
+     - Tier 1 (Edge Node): 갤럭시 S20 울트라가 24/7 저전력으로 5대 수집기를 무중단 주기 실행하고, 수집 완료 즉시 원시 데이터(`data/*`)를 Git으로 자동 푸시(`--sync-git`).
+     - Tier 2 (Core PC): Airflow 파이프라인 맨 앞단에 `sync_edge_data` 태스크를 신설하여 엣지 노드가 푸시한 최신 데이터를 자동 흡수(Pull)한 후 무거운 지능형 전처리(`preprocess_signals.py`)로 연결.
+     - 24시간 신호 유실 제로(Zero-Loss) 및 엣지-코어 R&R 완전 분리 달성.
+- 바꾼 파일: `AGENT_SYNC.md`.
+- 확인한 것: Notion 동기화 및 2-Tier 분산 파이프라인 연동 착수 준비.
+- 다음 작업: `run_phone_collector.py`에 `--sync-git` 옵션 구현 및 `dags/early_warning_pipeline_dag.py` 엣지 동기화 태스크 연동.
+- 주의할 점: 폰의 Git 푸시는 수집 데이터(`data/`)에 한정, 충돌 방지를 위해 자동 rebase/pull 선행.
 
 2026-11-03 [ANTIGRAVITY / 갤럭시 S20 울트라 24/7 무중단 엣지 수집 노드 구축 및 검증 완결]
 - 한 일:
