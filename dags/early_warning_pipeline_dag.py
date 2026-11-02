@@ -50,6 +50,14 @@ with DAG(
     end_pipeline = EmptyOperator(task_id="end_pipeline")
 
     # --------------------------------------------------------------------------
+    # STAGE 0 : 엣지 수집 노드(갤럭시 S20 울트라 24/7 스트림) 데이터 동기화
+    # --------------------------------------------------------------------------
+    sync_edge_data = BashOperator(
+        task_id="sync_edge_collection_data",
+        bash_command="cd /opt/airflow && git pull origin cursor/actions-light-collection || true",
+    )
+
+    # --------------------------------------------------------------------------
     # STAGE 1 : 4대 수집 레인 병렬 수집 (Parallel Collectors)
     # --------------------------------------------------------------------------
     # 1. FAST LANE: 해협 병목 & 공식 정부 발표
@@ -168,7 +176,8 @@ with DAG(
     # ==========================================================================
     # 의존성 그래프(DAG Dependency) 정의
     # ==========================================================================
-    # 1. 시작 -> 10개 수집기 동시 병렬 실행
+    # 0. 시작 -> 엣지 수집 노드(갤럭시 S20) 최신 데이터 자동 흡수(Pull)
+    # 1. 10개 수집기 동시 병렬 실행
     collectors = [
         collect_chokepoints,
         collect_gov_announcements,
@@ -181,7 +190,7 @@ with DAG(
         collect_financial_proxy,
         scan_autonomous_anomalies,
     ]
-    start_pipeline >> collectors >> collect_barrier
+    start_pipeline >> sync_edge_data >> collectors >> collect_barrier
 
     # 2. 수집 완료 -> 지능형 전처리
     collect_barrier >> preprocess_multilingual

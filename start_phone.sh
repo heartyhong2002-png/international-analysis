@@ -13,7 +13,9 @@ echo "✓ CPU Wakelock 활성화 완료"
 echo "✓ 최신 수집기 코드 동기화 (git pull)..."
 git pull
 
-# 3. 24시간 수집기 가동 (기본 1시간 주기)
+# 3. 24시간 수집기 가동 (기본 1시간 주기, --sync-git 전달 시 Git 자동 푸시)
 echo "🚀 24시간 자동 수집기 가동 시작 (종료는 Ctrl+C)"
+echo "💡 팁: 수집 후 깃허브 자동 푸시를 원하시면:"
+echo "   bash start_phone.sh --sync-git"
 echo "=========================================================="
 python scripts/collection/run_phone_collector.py "$@"
