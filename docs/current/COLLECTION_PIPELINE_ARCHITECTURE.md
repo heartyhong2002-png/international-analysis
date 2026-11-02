@@ -72,7 +72,7 @@ lane: CONTEXT
 
 ## 공식 발표 공통 원시 스키마·중복 제거
 
-`fetch_whitehouse_official.py`(선택, `--with-whitehouse`)와 `gov_announcements_collector.py`(기본 파이프라인)는 모두 공식·국영 채널이지만 **저장 경로와 호출 플래그가 다르다**. 교차검증·DB 세션으로 넘기기 전 수집 계층에서는 아래 원시 필드를 맞춘다.
+`fetch_whitehouse_official.py`(선택, `--with-whitehouse`)와 `gov_announcements_collector.py`(기본 파이프라인)는 모두 공식·국영 채널이지만 **호출 플래그가 다르다**. 정부 RSS 산출물은 엣지 `--sync-git`와 맞추기 위해 `data/gov_announcements/`에 둔다(구 `scripts/data/`는 gitignore라 원격 동기화에서 빠졌음). 교차검증·DB 세션으로 넘기기 전 수집 계층에서는 아래 원시 필드를 맞춘다.
 
 공통 필드(해석·경보 없음):
 

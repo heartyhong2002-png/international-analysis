@@ -195,13 +195,20 @@ def sync_to_git(branch: str | None = None) -> bool:
             )
             branch = br_proc.stdout.strip() or "cursor/actions-light-collection"
 
-        # 5. 충돌 방지를 위한 git pull --rebase
-        subprocess.run(
+        # 5. 충돌 방지를 위한 git pull --rebase (실패 시 push 금지)
+        rebase_proc = subprocess.run(
             ["git", "pull", "--rebase", "origin", branch],
             cwd=str(ROOT),
             capture_output=True,
+            text=True,
             timeout=45,
         )
+        if rebase_proc.returncode != 0:
+            print(
+                "  ⚠️ git pull --rebase 실패 — 원격 푸시를 중단합니다. "
+                f"수동 해결 후 재시도: {(rebase_proc.stderr or rebase_proc.stdout)[:200]}"
+            )
+            return False
 
         # 6. git push origin <branch>
         push_proc = subprocess.run(

@@ -67,7 +67,8 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | Cursor / Control Tower | sync / trio-platform | `AGENT_SYNC.md`, Notion hub/history/board, GitHub PR #5 | 트리오 동기화(MD→Notion→GitHub/PR) 완료 | 2026-10-30 |
 | done | Cursor / Control Tower | automation / cloud-light-collection | `.github/workflows/daily_pipeline.yml`, `docs/current/DATA_COLLECTION_GUIDE.md`, `AGENT_SYNC.md` | GitHub Actions 일일 수집 경로 복구 → light RSS lane (gov/WH/signal-gap/financial). LLM·DB·GDELT 제외 | 2026-10-31 |
 | done | Cursor / Control Tower | dashboard / local-html-console | `scripts/console/app.py`, `scripts/console/static/index.html`, `README.md`, `docs/current/DATA_COLLECTION_GUIDE.md` | 로컬 통합 HTML 콘솔 프로토타입(원클릭 run_pipeline/light). 배포·Airflow·LLM 미포함 | 2026-11-02 |
-| in-progress | Cursor Agent / collection | data-collection / US-domestic + allies | `config/source_registry/government_sources.yaml`, `config/source_registry/SCHEMA.md`, `scripts/collection/*` (선택 수집기만) | 패킷 A+B registry 보강 완료 → 다음: Federal Register 선택 수집기. Alert/예측/DB/대시보드/LLM 금지 | 2026-10-29 |
+| done | Cursor Agent / collection | data-collection / gov-path-fix | `scripts/collection/gov_announcements_collector.py`, `scripts/db/build_database.py`, `scripts/collection/run_phone_collector.py` | 정부 발표 산출 경로 `data/gov_announcements/` 통일(폰 --sync-git 누락 수정) + rebase 실패 시 push 중단 | 2026-11-03 |
+| done | Cursor Agent / collection | data-collection / US-domestic + allies | `config/source_registry/government_sources.yaml`, `config/source_registry/SCHEMA.md`, `scripts/collection/*` | 패킷 A+B registry + Federal Register는 ANTIGRAVITY가 선택 수집기까지 연결. 경로 수정만 후속 | 2026-11-03 |
 | done | Cursor Agent / collection | data-collection / X public API | `scripts/collection/fetch_x_public.py`, `scripts/run_pipeline.py`, `config/source_registry/opinion_sources.yaml`, `docs/current/DATA_COLLECTION_GUIDE.md` | 공식 X recent search 선택 수집기(`--with-x`). 기본 파이프라인 미호출·종량제 고지 | 2026-11-02 |
 | done | Cursor Agent / preprocess | automation / noise-relevance-filter | `scripts/automation/preprocess_signals.py`, `AGENT_SYNC.md` | 연예·스포츠·광고·비지정학 기사 hard-drop + 관련도 관문 강화 (LLM 전 필수 필터) | 2026-11-02 |
 | done | ANTIGRAVITY | data-collection / competitor-axis roles | `config/source_registry/*`, signal_gap 소스 | 패킷 C: relationship_role 태깅·OFAC/BIS registry (A/B 스키마 정렬 후) | 2026-11-02 |
@@ -98,6 +99,20 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-03 [Cursor Agent / trio-sync · gov path fix]
+- 한 일: 정부 발표 `data/gov_announcements/` 경로 통일·폰 sync rebase 가드·문서 반영분을 Trio-Sync(MD→GitHub→Notion)로 원격 동기화.
+- 바꾼 파일: `scripts/collection/gov_announcements_collector.py`, `scripts/db/build_database.py`, `scripts/collection/run_phone_collector.py`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`, `data/gov_announcements/*`, `AGENT_SYNC.md`.
+- 확인한 것: 커밋·푸시 대상 브랜치 `cursor/actions-light-collection`.
+- 다음 작업: 폰 `git pull` 후 `--once --sync-git`로 정부 발표 원격 반영 확인.
+- 주의할 점: `scripts/data/`는 계속 gitignore. Alert/DB 스키마/LLM 미변경.
+
+2026-11-03 [Cursor Agent / collection · gov path fix for phone sync]
+- 한 일: 폰 `--sync-git`가 `data/`만 푸시하는데 `gov_announcements_collector`가 `scripts/data/`(gitignore)에 쓰던 누락을 수정. 산출/DB 적재 경로를 `data/gov_announcements/`로 통일. `sync_to_git`의 `pull --rebase` 실패 시 push 중단.
+- 바꾼 파일: `scripts/collection/gov_announcements_collector.py`, `scripts/db/build_database.py`, `scripts/collection/run_phone_collector.py`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`, `AGENT_SYNC.md`, (마이그레이션) `data/gov_announcements/*`.
+- 확인한 것: 레거시 `scripts/data/gov_announcements` JSON을 `data/gov_announcements/`로 복사. `scripts/data/`는 계속 gitignore.
+- 다음 작업: 폰에서 `git pull` 후 1회 `--once --sync-git`로 정부 발표가 GitHub `data/gov_announcements/`에 올라오는지 확인.
+- 주의할 점: DB/대시보드/LLM·Airflow `|| true`는 이번 범위 밖. issues 경로는 아직 `scripts/data/issues/`.
 
 2026-11-03 [ANTIGRAVITY / 2-Tier 분산 파이프라인 완결 및 패킷 A Federal Register 연동]
 - 한 일:

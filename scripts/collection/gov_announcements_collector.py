@@ -75,13 +75,14 @@ import os
 import re
 import time
 
-# NOTE (수정 사항 v1.2 — 작업 디렉터리 문제): issue_data_collector.py와
-# 똑같은 이유로, DATA_DIR을 실행 위치에 상관없이 이 스크립트 파일 기준
-# (scripts/data/gov_announcements)으로 고정합니다. 터미널을 어디서 열었든,
-# VS Code Run 버튼으로 돌리든 항상 같은 폴더를 씁니다.
+# NOTE (수정 사항 v1.2 — 작업 디렉터리 문제): 실행 cwd와 무관하게 경로 고정.
+# NOTE (2026-11-03 — 엣지 Git 동기화): 예전 `scripts/data/gov_announcements`는
+# `.gitignore`의 `scripts/data/`에 걸려 폰 `--sync-git`(data/만 add)에 안 실렸다.
+# 다른 엣지 수집기와 같이 저장소 루트 `data/gov_announcements/`로 통일한다.
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 _SCRIPTS_DIR = os.path.dirname(_SCRIPT_DIR)
-DATA_DIR = os.path.join(_SCRIPTS_DIR, "data", "gov_announcements")
+_PROJECT_ROOT = os.path.dirname(_SCRIPTS_DIR)
+DATA_DIR = os.path.join(_PROJECT_ROOT, "data", "gov_announcements")
 os.makedirs(DATA_DIR, exist_ok=True)
 
 # NOTE (수정 사항 v1.1): 첫 실행에서 State Dept 피드 8개가 전부 403으로
