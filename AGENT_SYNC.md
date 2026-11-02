@@ -63,6 +63,7 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | Cursor / Control Tower | sync / trio-platform | `AGENT_SYNC.md`, Notion hub/history/board, GitHub PR #5 | 트리오 동기화(MD→Notion→GitHub/PR) 완료 | 2026-10-30 |
 | done | Cursor / Control Tower | automation / cloud-light-collection | `.github/workflows/daily_pipeline.yml`, `docs/current/DATA_COLLECTION_GUIDE.md`, `AGENT_SYNC.md` | GitHub Actions 일일 수집 경로 복구 → light RSS lane (gov/WH/signal-gap/financial). LLM·DB·GDELT 제외 | 2026-10-31 |
 | in-progress | Cursor Agent / collection | data-collection / US-domestic + allies | `config/source_registry/government_sources.yaml`, `config/source_registry/SCHEMA.md`, `scripts/collection/*` (선택 수집기만) | 패킷 A+B registry 보강 완료 → 다음: Federal Register 선택 수집기. Alert/예측/DB/대시보드/LLM 금지 | 2026-10-29 |
+| done | Cursor Agent / preprocess | automation / noise-relevance-filter | `scripts/automation/preprocess_signals.py`, `AGENT_SYNC.md` | 연예·스포츠·광고·비지정학 기사 hard-drop + 관련도 관문 강화 (LLM 전 필수 필터) | 2026-11-02 |
 | done | ANTIGRAVITY | data-collection / competitor-axis roles | `config/source_registry/*`, signal_gap 소스 | 패킷 C: relationship_role 태깅·OFAC/BIS registry (A/B 스키마 정렬 후) | 2026-11-02 |
 | done | ANTIGRAVITY | db / pipeline / cross-verification | `scripts/run_pipeline.py`, `scripts/db/load_cross_verification_to_db.py`, `scripts/db/create_views.sql` | 해협 센서·공급망 사건 교차검증의 DB 적재와 대시보드 뷰 연동 | 2026-10-02 |
 | done | ANTIGRAVITY | data-collection / supply-chain-sensors | `scripts/collection/fetch_maritime_chokepoints.py`, `scripts/analysis/cross_verify_events.py`, `data/maritime_chokepoints/`, `data/event_cross_verification/` | 해협·시장 센서 수집 및 복수 계통 교차검증 | 2026-10-02 |
@@ -91,6 +92,17 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-02 [Cursor Agent / preprocess · 노이즈·비지정학 hard-drop 강화]
+- 한 일:
+  1. `classify_article()` 도입: keep/drop + 사유(`noise_domain` / `ad_or_soft_section` / `entertainment_sports_noise` / `low_geopolitical_relevance` 등).
+  2. 연예·스포츠·광고·소프트뉴스 URL 섹션·한국어 노이즈 키워드 보강. `MIN_RELEVANCE_SCORE=0.5` 미만이고 엔티티도 없으면 drop.
+  3. 정부·공식 채널만 관련도 예외(`official_source_bypass`). 통신사 전재는 예외 없음.
+  4. `run_pipeline_preprocessing(..., return_rejects=True)`로 배제 사유 집계 가능. Notion Active Work Board 동기화 완료.
+- 바꾼 파일: `scripts/automation/preprocess_signals.py`, `AGENT_SYNC.md`.
+- 확인한 것: 샘플 10건 기준 ESPN/TMZ/광고/열애설/비관련 BI 기사 drop, BRICS·Saudi oil·White House keep. `py_compile` 통과.
+- 다음 작업: 실제 수집 JSON/CSV에 대해 reject 영수증 파일(`data/.../preprocess_rejects_latest.json`) 옵션 연결, 필요 시 `nltk`/`langdetect`/`rapidfuzz` requirements 반영.
+- 주의할 점: Alert Level·verification_state·LLM 산식은 이 세션 범위 밖. 키워드 사전만으로는 오탐/미탐 남음 — reject 로그로 검수할 것.
 
 2026-11-02 [ANTIGRAVITY / 패킷 C 소스 레지스트리 확장 및 검증 완결]
 - 한 일:

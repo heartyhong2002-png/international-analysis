@@ -55,16 +55,19 @@ except ImportError:
 # ======================================================================
 
 NOISE_KEYWORDS = {
-    # 연예/오락/가십 (EN, FR, DE, ES, PT)
-    "celebrity", "hollywood", "kardashian", "box office", "trailer", "premiere",
+    # 연예/오락/가십 (EN, FR, DE, ES, PT, KO)
+    "celebrity", "celebs", "hollywood", "kardashian", "box office", "trailer", "premiere",
     "red carpet", "oscar", "grammy", "emmy", "singer", "album", "pop star",
     "dating", "romance", "wedding", "divorce", "fashion week", "horoscope",
     "zodiac", "lifestyle", "beauty pageant", "miss universe", "influencer",
+    "reality show", "netflix series", "k-pop", "idol", "gossip",
     "célébrité", "chanteur", "mariage", "mode", "horoscope",
     "promi", "schauspieler", "hochzeit", "mode", "horoskop",
     "celebridad", "cantante", "boda", "divorcio", "moda", "horóscopo",
     "celebridade", "cantor", "casamento", "divórcio", "moda", "horóscopo",
-    # 스포츠 (EN, FR, DE, ES, PT)
+    "연예", "연예인", "아이돌", "드라마", "예능", "열애", "결혼설", "이혼설",
+    "가십", "패션위크", "호러스코프",
+    # 스포츠 (EN, FR, DE, ES, PT, KO)
     "football", "soccer", "champions league", "premier league", "laliga",
     "world cup", "nba", "basketball", "baseball", "mlb", "nfl", "super bowl",
     "tennis", "wimbledon", "formula 1", "f1 grand prix", "olympics medal",
@@ -73,10 +76,30 @@ NOISE_KEYWORDS = {
     "bundesliga", "tor", "halbzeit",
     "copa libertadores", "fútbol", "gol", "partido",
     "futebol", "gol", "partida", "campeonato",
-    # 단순 상업/스팸/금융 프로모션
+    "축구", "야구", "농구", "스포츠", "경기결과", "우승후보", "이적설", "감독선임",
+    # 단순 상업/스팸/금융 프로모션/광고
     "giveaway", "lottery", "jackpot", "crypto airdrop", "meme coin",
-    "black friday discount", "promo code", "weight loss", "diet supplement"
+    "black friday discount", "promo code", "weight loss", "diet supplement",
+    "sponsored content", "partner content", "shop now", "buy now",
+    "limited offer", "click here", "subscribe now", "coupon",
+    "광고", "프로모션", "할인코드", "이벤트 응모", "협찬"
 }
+
+# URL/제목에서 광고·스폰서·소프트뉴스를 강하게 잡는 패턴
+AD_SPONSOR_PATTERNS = [
+    r"\b(sponsored|advertisement|advertorial|promo code|coupon code)\b",
+    r"\b(shop now|buy now|limited[- ]time offer|click here to)\b",
+    r"\b(affiliate link|partner content|brand partner)\b",
+    r"(광고|협찬|스폰서|프로모션|할인코드)",
+    r"[?&](utm_campaign|utm_source)=",
+]
+
+SOFT_NEWS_SECTION_HINTS = [
+    r"/entertainment/", r"/sports/", r"/sport/", r"/celebrity/",
+    r"/lifestyle/", r"/fashion/", r"/horoscope/", r"/culture/celebrity",
+    r"/gossip/", r"/movies/", r"/music/", r"/tvshow", r"/espn/",
+    r"/연예/", r"/스포츠/", r"/라이프/", r"/연애/",
+]
 
 GEOPOLITICAL_KEYWORDS = {
     # 영어
@@ -90,6 +113,8 @@ GEOPOLITICAL_KEYWORDS = {
     "piracy", "insurgent", "houthi", "houthis", "irgc", "hezbollah", "hamas",
     "taiwan", "hormuz", "bosphorus", "malacca", "red sea", "black sea", "ukraine",
     "russia", "china", "israel", "gaza", "yemen", "iran", "protest", "strike", "election",
+    "export controls", "export control", "briefing room", "national security",
+    "supply chain", "chokepoint", "geopolitics", "diplomacy", "diplomatic",
     # 프랑스어 (FR)
     "militaire", "marine", "armée", "missile", "frappe", "attaque", "détroit", "navire",
     "pétrolier", "port", "pétrole", "gaz", "sanctions", "embargo", "conflit", "tensions",
@@ -109,9 +134,24 @@ GEOPOLITICAL_KEYWORDS = {
 
 NOISE_DOMAINS = {
     "tmz.com", "eonline.com", "variety.com", "hollywoodreporter.com",
-    "espn.com", "goal.com", "bleacherreport.com", "marca.com",
-    "fashionunited.com", "vogue.com", "cosmopolitan.com", "lequipe.fr", "ge.globo.com"
+    "people.com", "usmagazine.com", "pagesix.com", "dailymail.co.uk/tvshowbiz",
+    "espn.com", "goal.com", "bleacherreport.com", "marca.com", "cbssports.com",
+    "skysports.com", "foxsports.com", "nba.com", "nfl.com", "mlb.com",
+    "fashionunited.com", "vogue.com", "cosmopolitan.com", "lequipe.fr", "ge.globo.com",
+    "entertainment.cnn.com", "hollywood.yahoo.com", "sports.yahoo.com",
 }
+
+# 공식·규제·정부 채널은 관련도 점수가 낮아도 유지 (제목만으로 오탐 drop 방지)
+OFFICIAL_SOURCE_HINTS = (
+    "white house", "state.gov", "federalregister", "federal register",
+    "ofac", "bis.doc.gov", "commerce.gov", "treasury.gov", "defense.gov",
+    "nato.", "un.org", "imf.org", "worldbank", "wto.org",
+    "mofa", "ministry of foreign", "foreign ministry", "department of state",
+    "gov.br", "gov.uk", "gouv.fr", "bund.de", "go.jp", "go.kr",
+)
+
+# 지정학·공급망 관련도 미달이면 drop (1개 미만 geo 키워드 ≈ 0.2)
+MIN_RELEVANCE_SCORE = 0.5
 
 
 def normalize_accents(text: str) -> str:
@@ -120,31 +160,121 @@ def normalize_accents(text: str) -> str:
     return "".join([c for c in nfkd_form if not unicodedata.combining(c)])
 
 
-def is_noise(title: str, url: str = "", source: str = "") -> bool:
-    """ 연예, 스포츠, 광고 등 노이즈 기사 여부를 다국어로 판별합니다. """
+def _count_keyword_hits(text_clean: str, keywords) -> int:
+    hits = 0
+    for kw in keywords:
+        kw_norm = normalize_accents(kw.lower())
+        # 한글·아랍·한자는 단어경계(\b)가 약해서 부분일치 허용
+        if re.search(r"[\uac00-\ud7a3\u0600-\u06ff\u4e00-\u9fff]", kw_norm):
+            if kw_norm in text_clean:
+                hits += 1
+        else:
+            if re.search(r"\b" + re.escape(kw_norm) + r"\b", text_clean):
+                hits += 1
+    return hits
+
+
+def _is_official_or_wire_source(url: str = "", source: str = "") -> bool:
+    blob = f"{url} {source}".lower()
+    return any(hint in blob for hint in OFFICIAL_SOURCE_HINTS)
+
+
+def _has_ad_or_soft_section(title: str, url: str = "") -> bool:
+    blob = f"{title} {url}".lower()
+    for pat in AD_SPONSOR_PATTERNS:
+        if re.search(pat, blob, flags=re.IGNORECASE):
+            return True
+    for pat in SOFT_NEWS_SECTION_HINTS:
+        if re.search(pat, url.lower()):
+            return True
+    return False
+
+
+def classify_article(title: str, url: str = "", source: str = "") -> Dict[str, Any]:
+    """
+    기사를 keep/drop으로 분류하고 사유를 반환합니다.
+    drop 우선순위: 노이즈 도메인 → 광고/소프트뉴스 URL → 연예·스포츠 노이즈 → 관련도 미달
+    """
+    title = (title or "").strip()
+    if not title:
+        return {"keep": False, "reason": "empty_title", "relevance_score": 0.0, "noise_hits": 0, "geo_hits": 0}
+
     text_lower = f"{title} {source}".lower()
     text_clean = normalize_accents(text_lower)
-    
-    url_lower = url.lower()
-    for domain in NOISE_DOMAINS:
-        if domain in url_lower:
-            return True
+    url_lower = (url or "").lower()
 
-    noise_count = sum(1 for kw in NOISE_KEYWORDS if re.search(r'\b' + re.escape(normalize_accents(kw)) + r'\b', text_clean))
-    geo_count = sum(1 for kw in GEOPOLITICAL_KEYWORDS if re.search(r'\b' + re.escape(normalize_accents(kw)) + r'\b', text_clean))
+    if any(domain in url_lower for domain in NOISE_DOMAINS):
+        return {"keep": False, "reason": "noise_domain", "relevance_score": 0.0, "noise_hits": 0, "geo_hits": 0}
 
-    if noise_count > 0 and geo_count == 0:
-        return True
-    if noise_count >= 2 and geo_count <= 1:
-        return True
+    if _has_ad_or_soft_section(title, url):
+        # 공식 채널 URL에 광고 UTM이 붙은 경우는 드묾 — 소프트섹션/스폰서는 기본 drop
+        if not _is_official_or_wire_source(url, source):
+            return {"keep": False, "reason": "ad_or_soft_section", "relevance_score": 0.0, "noise_hits": 0, "geo_hits": 0}
 
-    return False
+    noise_hits = _count_keyword_hits(text_clean, NOISE_KEYWORDS)
+    geo_hits = _count_keyword_hits(text_clean, GEOPOLITICAL_KEYWORDS)
+    rel_score = calculate_relevance(title)
+    entities = normalize_entities(title)
+    has_entity = bool(
+        entities["chokepoints"]
+        or entities["supply_chain_tags"]
+        or entities["event_types"]
+        or entities["hotspot_regions"]
+    )
+
+    if noise_hits > 0 and geo_hits == 0 and not has_entity:
+        return {
+            "keep": False,
+            "reason": "entertainment_sports_noise",
+            "relevance_score": rel_score,
+            "noise_hits": noise_hits,
+            "geo_hits": geo_hits,
+        }
+    if noise_hits >= 2 and geo_hits <= 1 and not has_entity:
+        return {
+            "keep": False,
+            "reason": "noise_outweighs_geo",
+            "relevance_score": rel_score,
+            "noise_hits": noise_hits,
+            "geo_hits": geo_hits,
+        }
+
+    # 지정학·공급망 신호가 거의 없으면 drop (정부/통신사는 예외)
+    if rel_score < MIN_RELEVANCE_SCORE and not has_entity:
+        if _is_official_or_wire_source(url, source):
+            return {
+                "keep": True,
+                "reason": "official_source_bypass",
+                "relevance_score": rel_score,
+                "noise_hits": noise_hits,
+                "geo_hits": geo_hits,
+            }
+        return {
+            "keep": False,
+            "reason": "low_geopolitical_relevance",
+            "relevance_score": rel_score,
+            "noise_hits": noise_hits,
+            "geo_hits": geo_hits,
+        }
+
+    return {
+        "keep": True,
+        "reason": "geopolitical_relevant",
+        "relevance_score": rel_score,
+        "noise_hits": noise_hits,
+        "geo_hits": geo_hits,
+    }
+
+
+def is_noise(title: str, url: str = "", source: str = "") -> bool:
+    """연예·스포츠·광고·비지정학 기사면 True (하위 호환 래퍼)."""
+    return not classify_article(title, url, source)["keep"]
 
 
 def calculate_relevance(title: str) -> float:
     """ 지정학 및 글로벌 공급망 관련도 점수를 0.0~1.0 사이로 계산합니다 (다국어 지원). """
     text_clean = normalize_accents(title.lower())
-    matches = sum(1 for kw in GEOPOLITICAL_KEYWORDS if re.search(r'\b' + re.escape(normalize_accents(kw)) + r'\b', text_clean))
+    matches = _count_keyword_hits(text_clean, GEOPOLITICAL_KEYWORDS)
     if matches >= 3:
         return 1.0
     elif matches == 2:
@@ -482,18 +612,73 @@ def deduplicate_and_cluster(articles: List[Dict[str, Any]], similarity_threshold
     return results
 
 
-def run_pipeline_preprocessing(raw_articles: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """ 다국어 통합 4단계 전처리 파이프라인 실행기 """
+def run_pipeline_preprocessing(
+    raw_articles: List[Dict[str, Any]],
+    *,
+    return_rejects: bool = False,
+) -> List[Dict[str, Any]] | Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
+    """다국어 통합 전처리: 노이즈/비관련 drop → 중복 압축 → 엔티티 패키징."""
     print(f"  [다국어 전처리] 총 {len(raw_articles)}개 원시 기사 입력 수신.")
-    
-    clean_articles = [
-        a for a in raw_articles 
-        if not is_noise(a.get("title", ""), a.get("url", ""), a.get("source", ""))
-    ]
+
+    clean_articles: List[Dict[str, Any]] = []
+    rejected: List[Dict[str, Any]] = []
+    reason_counts: Dict[str, int] = {}
+
+    for a in raw_articles:
+        decision = classify_article(
+            a.get("title", ""),
+            a.get("url", "") or a.get("link", ""),
+            a.get("source", "") or a.get("domain", ""),
+        )
+        if decision["keep"]:
+            enriched = dict(a)
+            enriched["_filter_reason"] = decision["reason"]
+            enriched["_relevance_score"] = decision["relevance_score"]
+            clean_articles.append(enriched)
+        else:
+            reason_counts[decision["reason"]] = reason_counts.get(decision["reason"], 0) + 1
+            if return_rejects:
+                rejected.append({
+                    "title": a.get("title", ""),
+                    "url": a.get("url", "") or a.get("link", ""),
+                    "source": a.get("source", "") or a.get("domain", ""),
+                    "reject_reason": decision["reason"],
+                    "relevance_score": decision["relevance_score"],
+                })
+
     filtered_out = len(raw_articles) - len(clean_articles)
-    print(f"  [다국어 전처리] 노이즈 기사 필터링: {filtered_out}건 배제, 유효 {len(clean_articles)}건 유지.")
-    
+    reason_summary = ", ".join(f"{k}={v}" for k, v in sorted(reason_counts.items())) or "none"
+    print(
+        f"  [다국어 전처리] 노이즈·비관련 필터링: {filtered_out}건 배제, "
+        f"유효 {len(clean_articles)}건 유지 ({reason_summary})."
+    )
+
     clustered = deduplicate_and_cluster(clean_articles)
-    print(f"  [다국어 전처리] 시맨틱 중복 제거 완료: {len(clean_articles)}건 -> {len(clustered)}개 대표 사건으로 압축.")
-    
+    # 클러스터 대표문도 관련도 관문 재적용 (엔티티 없는 저관련 잔여 제거)
+    # 정부·공식 채널 URL/출처는 제목 키워드가 빈약해도 유지
+    before_rel = len(clustered)
+    clustered = [
+        c for c in clustered
+        if c.get("relevance_score", 0) >= MIN_RELEVANCE_SCORE
+        or c.get("chokepoints")
+        or c.get("supply_chain_tags")
+        or c.get("event_types")
+        or c.get("hotspot_regions")
+        or _is_official_or_wire_source(
+            c.get("url", ""),
+            " ".join(str(s) for s in (c.get("sources") or [])),
+        )
+    ]
+    if before_rel != len(clustered):
+        print(
+            f"  [다국어 전처리] 클러스터 관련도 재필터: {before_rel} → {len(clustered)} "
+            f"(min_relevance={MIN_RELEVANCE_SCORE})."
+        )
+    print(
+        f"  [다국어 전처리] 시맨틱 중복 제거 완료: "
+        f"{len(clean_articles)}건 -> {len(clustered)}개 대표 사건으로 압축."
+    )
+
+    if return_rejects:
+        return clustered, rejected
     return clustered
