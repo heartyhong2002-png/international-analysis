@@ -222,9 +222,10 @@
 
 ### 7.4 X 공개 정보환경 신호
 
-- 공식 X API를 우선 사용하고, 계정·키워드·언어·시간창을 제한한다.
-- `post_id`, `author_id`, `author_type`, `text`, `created_at`, `language`, `public_metrics`, `referenced_posts`, `source_url`, `observed_at`, `api_access_note`를 보존한다.
-- X 게시물은 국민 전체 여론이 아니라 `online_information_environment_signal`로 저장한다.
+- 공식 X API v2 recent search만 사용한다. 수집기: `scripts/collection/fetch_x_public.py`.
+- 인증: `X_BEARER_TOKEN`(또는 `TWITTER_BEARER_TOKEN`). 종량제(post read)이므로 기본 파이프라인에서는 호출하지 않고 `--with-x`일 때만 1페이지(`max_results` 10~25)를 요청한다.
+- `post_id`, `author_id`, `author_type`, `text`, `created_at`, `language`, `public_metrics`, `referenced_posts`, `source_url`, `observed_at`, `license_access_note`를 보존한다.
+- X 게시물은 국민 전체 여론이 아니라 `online_information_environment_signal`로 저장한다. 비공개 계정·스크래핑·로그인 우회는 하지 않는다.
 
 ### 7.5 API가 없는 정부 홈페이지
 
@@ -282,6 +283,13 @@ PC가 꺼져 있어도 **가벼운 공개 RSS/HTTP 수집만** 돌리려면 GitH
 | Kaggle | Secrets(`KAGGLE_USERNAME`/`KAGGLE_KEY`)가 있을 때만 수동 dispatch에서 선택 |
 
 SoT와 무거운 수집·LLM·DB는 계속 로컬 `python scripts/run_pipeline.py --collect-only`(및 선택 플래그)다. Actions 결과는 수집 스냅샷일 뿐 Alert Level이나 `verification_state`를 만들지 않는다.
+
+로컬에서 수집·DB·대시보드를 한 화면으로 돌리려면 HTML 콘솔 프로토타입을 쓴다(배포 아님).
+
+```bash
+.\.venv\Scripts\python.exe scripts/console/app.py
+# http://127.0.0.1:8765 — presets: default | collect-only | light
+```
 
 ## 9. Python 수집 파이프라인 실행 그룹(2026-10-10)
 

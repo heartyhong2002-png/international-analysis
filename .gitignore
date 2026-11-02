@@ -44,6 +44,9 @@ Thumbs.db
 output/charts/*.png
 output/charts/*.jpg
 
+# Airflow 로컬 설정
+airflow.cfg
+
 # 환경변수 (절대 커밋 금지)
 .env
 *.env

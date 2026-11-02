@@ -118,6 +118,8 @@ def main():
                          help="GDELT Cloud Events를 로컬 QU 안전장치와 함께 1회 수집 (기본값: 실행하지 않음)")
     parser.add_argument("--with-whitehouse", action="store_true",
                          help="백악관 공식 RSS 수집 (기본값: 실행하지 않음)")
+    parser.add_argument("--with-x", action="store_true",
+                         help="공식 X API recent search 1페이지 수집 (유료·종량제, 기본값: 실행하지 않음)")
     parser.add_argument("--sync-notion", action="store_true",
                          help="파이프라인 실행 완료 후 Notion 프로젝트 허브(작업 보드 및 보고서) 자동 동기화")
     args = parser.parse_args()
@@ -161,6 +163,8 @@ def main():
             steps.append(("GDELT Cloud Events 제한 수집 (QU 안전장치 적용)", "collection/fetch_gdelt_cloud_events.py", []))
         if args.with_whitehouse:
             steps.append(("백악관 공식 RSS 수집", "collection/fetch_whitehouse_official.py", []))
+        if args.with_x:
+            steps.append(("X 공개 정보환경 신호 (공식 API, 1페이지)", "collection/fetch_x_public.py", []))
         if not args.skip_cross_verification:
             steps.append(("GDELT 사건 및 복수 계통 시계열 교차검증", "analysis/cross_verify_events.py", []))
     # 수집 전용 실행에서는 DB·대시보드 후처리를 붙이지 않습니다.

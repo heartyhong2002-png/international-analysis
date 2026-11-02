@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>조기경보 통합 콘솔</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --panel: #171d25;
+      --text: #e8eef5;
+      --muted: #8b9aab;
+      --line: #2a3441;
+      --accent: #3d8bfd;
+      --ok: #3ecf8e;
+      --warn: #e6b84d;
+      --bad: #e85d5d;
+      --font: "Segoe UI", "Malgun Gothic", sans-serif;
+      --mono: Consolas, "Courier New", monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, #1a2740 0%, transparent 55%),
+        radial-gradient(900px 500px at 100% 0%, #152033 0%, transparent 50%),
+        var(--bg);
+    }
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3.5rem 1.25rem 4rem;
+    }
+    .brand {
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 0.75rem;
+    }
+    h1 {
+      margin: 0 0 0.6rem;
+      font-size: clamp(1.75rem, 4vw, 2.35rem);
+      font-weight: 650;
+      line-height: 1.2;
+    }
+    .lead {
+      margin: 0 0 2rem;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.55;
+      max-width: 38rem;
+    }
+    .panel {
+      background: color-mix(in srgb, var(--panel) 92%, black);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1.25rem 1.2rem 1.35rem;
+    }
+    label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.45rem;
+    }
+    select {
+      width: 100%;
+      padding: 0.7rem 0.8rem;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #0c1117;
+      color: var(--text);
+      font: inherit;
+      margin-bottom: 0.85rem;
+    }
+    .preset-desc {
+      min-height: 1.4rem;
+      margin: 0 0 1.1rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      align-items: center;
+    }
+    button, .link-btn {
+      appearance: none;
+      border: 0;
+      border-radius: 8px;
+      padding: 0.72rem 1.15rem;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    #runBtn {
+      background: var(--accent);
+      color: #fff;
+    }
+    #runBtn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+    .link-btn {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+    .status-row {
+      margin-top: 1.2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.25rem;
+      font-size: 0.92rem;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .dot {
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 50%;
+      background: var(--muted);
+    }
+    .dot.running { background: var(--warn); box-shadow: 0 0 0 3px color-mix(in srgb, var(--warn) 25%, transparent); }
+    .dot.ok { background: var(--ok); }
+    .dot.bad { background: var(--bad); }
+    .dot.idle { background: var(--muted); }
+    .log-wrap {
+      margin-top: 1.5rem;
+    }
+    .log-wrap h2 {
+      margin: 0 0 0.55rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    pre {
+      margin: 0;
+      max-height: 320px;
+      overflow: auto;
+      padding: 0.9rem 1rem;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: #0a0e13;
+      color: #c9d4e0;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      line-height: 1.45;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .note {
+      margin-top: 1.5rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="brand">International Analysis · Local Prototype</p>
+    <h1>조기경보 통합 콘솔</h1>
+    <p class="lead">
+      수집·DB·대시보드를 한 화면에서 실행합니다. LLM/Ollama는 포함하지 않으며,
+      배포용이 아닌 로컬 전용 프로토타입입니다.
+    </p>
+
+    <section class="panel" aria-label="pipeline controls">
+      <label for="preset">실행 프리셋</label>
+      <select id="preset">
+        <option value="default">수집 + DB + 대시보드 (기본)</option>
+        <option value="collect-only">수집만</option>
+        <option value="light">Light RSS (gov / WH / signal-gap / financial)</option>
+      </select>
+      <p class="preset-desc" id="presetDesc"></p>
+
+      <div class="actions">
+        <button type="button" id="runBtn">파이프라인 실행</button>
+        <a class="link-btn" id="dashLink" href="/dashboard">대시보드 열기</a>
+      </div>
+
+      <div class="status-row">
+        <span class="pill"><span class="dot idle" id="statusDot"></span><span id="statusText">대기</span></span>
+        <span id="metaText" style="color:var(--muted)"></span>
+      </div>
+    </section>
+
+    <section class="log-wrap">
+      <h2>실행 로그</h2>
+      <pre id="logBox">아직 실행 기록이 없습니다.</pre>
+    </section>
+
+    <p class="note">
+      서버: <code>python scripts/console/app.py</code> ·
+      주소: <code>http://127.0.0.1:8765</code> ·
+      로그 파일: <code>logs/console_pipeline_*.log</code>
+    </p>
+  </main>
+
+  <script>
+    const PRESET_HELP = {
+      default: "run_pipeline.py --skip-trends · 수집 후 DB·대시보드까지",
+      "collect-only": "run_pipeline.py --collect-only --skip-trends · DB/대시보드 생략",
+      light: "gov · White House · signal-gap · financial proxy만 순차 실행"
+    };
+
+    const presetEl = document.getElementById("preset");
+    const presetDesc = document.getElementById("presetDesc");
+    const runBtn = document.getElementById("runBtn");
+    const statusDot = document.getElementById("statusDot");
+    const statusText = document.getElementById("statusText");
+    const metaText = document.getElementById("metaText");
+    const logBox = document.getElementById("logBox");
+    const dashLink = document.getElementById("dashLink");
+
+    function syncPresetDesc() {
+      presetDesc.textContent = PRESET_HELP[presetEl.value] || "";
+    }
+
+    function paintStatus(s) {
+      statusDot.className = "dot idle";
+      if (s.running) {
+        statusDot.className = "dot running";
+        statusText.textContent = "실행 중 · " + (s.preset || "");
+        runBtn.disabled = true;
+      } else if (s.exit_code === 0) {
+        statusDot.className = "dot ok";
+        statusText.textContent = "완료";
+        runBtn.disabled = false;
+      } else if (s.exit_code != null && s.exit_code !== 0) {
+        statusDot.className = "dot bad";
+        statusText.textContent = "실패 (exit " + s.exit_code + ")";
+        runBtn.disabled = false;
+      } else {
+        statusText.textContent = "대기";
+        runBtn.disabled = false;
+      }
+
+      const bits = [];
+      if (s.started_at) bits.push("시작 " + s.started_at);
+      if (s.finished_at) bits.push("종료 " + s.finished_at);
+      if (s.log_path) bits.push(s.log_path.split(/[/\\\\]/).pop());
+      if (s.error) bits.push(s.error);
+      metaText.textContent = bits.join(" · ");
+
+      if (s.log_tail) logBox.textContent = s.log_tail;
+      dashLink.style.opacity = s.dashboard_exists ? "1" : "0.55";
+      dashLink.title = s.dashboard_exists
+        ? "output/dashboard/index.html"
+        : "대시보드 파일 없음 — default 프리셋 실행 후 생성";
+    }
+
+    async function refresh() {
+      try {
+        const res = await fetch("/api/status", { cache: "no-store" });
+        const data = await res.json();
+        paintStatus(data);
+      } catch (err) {
+        statusText.textContent = "상태 조회 실패";
+        metaText.textContent = String(err);
+      }
+    }
+
+    runBtn.addEventListener("click", async () => {
+      runBtn.disabled = true;
+      try {
+        const res = await fetch("/api/run", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ preset: presetEl.value })
+        });
+        const data = await res.json();
+        if (!data.ok) {
+          alert(data.error || "실행 실패");
+        }
+        paintStatus(data.status || data);
+      } catch (err) {
+        alert(String(err));
+      } finally {
+        refresh();
+      }
+    });
+
+    presetEl.addEventListener("change", syncPresetDesc);
+    syncPresetDesc();
+    refresh();
+    setInterval(refresh, 2000);
+  </script>
+</body>
+</html>

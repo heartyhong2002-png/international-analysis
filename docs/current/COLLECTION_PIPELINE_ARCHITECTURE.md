@@ -150,7 +150,11 @@ python scripts/run_pipeline.py --skip-db
 python scripts/run_pipeline.py --skip-dashboard
 python scripts/run_pipeline.py --only-db
 python scripts/run_pipeline.py --collect-only --with-gdelt-cloud  # QU 가드가 있는 선택 실행
+python scripts/run_pipeline.py --collect-only --with-x            # X API recent search 1페이지(종량제)
 ```
+
+X 공개 신호(`scripts/collection/fetch_x_public.py`)는 OPINION 레인의 선택 센서다. `X_BEARER_TOKEN`이 필요하고 기본 `--collect-only`에서는 호출하지 않는다. 결과는 `online_information_environment_signal`이며 국민 여론·Alert Level이 아니다.
+
 
 다음 구현 단계에서 레인 이름을 추가한다.
 

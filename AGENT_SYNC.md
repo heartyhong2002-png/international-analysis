@@ -58,11 +58,14 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
+| in-progress | ANTIGRAVITY | preprocessing / signal-filtering | `scripts/automation/preprocess_signals.py`, `docs/current/PREPROCESSING_SESSION_PROMPT.md` | 4단계 지능형 전처리 고도화(다국어 노이즈·외교수사 배제, 7개어 정규화, 중복군집화, 5대해협/한국6대공급망 태깅) 착수 | 2026-11-02 |
 | done | Cursor / Control Tower | control-tower / scope | `docs/current/PROJECT_PLAN.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `AGENT_SYNC.md` | 미국 국내·동맹·경쟁/대립축 6대 감시축 확정(예측 금지). 패킷 A+B 동시 착수 지시 | 2026-10-30 |
 | done | Cursor / Control Tower | runtime / python-3.13 | `.venv`, `.python-version`, `requirements.txt`, `README.md`, `PROJECT_CONTEXT.md`, `docs/SESSION_PROMPTS.md` | 표준 런타임 Python 3.13(.venv) 전환 및 세션 프롬프트 정리 — PR #5 | 2026-10-30 |
 | done | Cursor / Control Tower | sync / trio-platform | `AGENT_SYNC.md`, Notion hub/history/board, GitHub PR #5 | 트리오 동기화(MD→Notion→GitHub/PR) 완료 | 2026-10-30 |
 | done | Cursor / Control Tower | automation / cloud-light-collection | `.github/workflows/daily_pipeline.yml`, `docs/current/DATA_COLLECTION_GUIDE.md`, `AGENT_SYNC.md` | GitHub Actions 일일 수집 경로 복구 → light RSS lane (gov/WH/signal-gap/financial). LLM·DB·GDELT 제외 | 2026-10-31 |
+| done | Cursor / Control Tower | dashboard / local-html-console | `scripts/console/app.py`, `scripts/console/static/index.html`, `README.md`, `docs/current/DATA_COLLECTION_GUIDE.md` | 로컬 통합 HTML 콘솔 프로토타입(원클릭 run_pipeline/light). 배포·Airflow·LLM 미포함 | 2026-11-02 |
 | in-progress | Cursor Agent / collection | data-collection / US-domestic + allies | `config/source_registry/government_sources.yaml`, `config/source_registry/SCHEMA.md`, `scripts/collection/*` (선택 수집기만) | 패킷 A+B registry 보강 완료 → 다음: Federal Register 선택 수집기. Alert/예측/DB/대시보드/LLM 금지 | 2026-10-29 |
+| done | Cursor Agent / collection | data-collection / X public API | `scripts/collection/fetch_x_public.py`, `scripts/run_pipeline.py`, `config/source_registry/opinion_sources.yaml`, `docs/current/DATA_COLLECTION_GUIDE.md` | 공식 X recent search 선택 수집기(`--with-x`). 기본 파이프라인 미호출·종량제 고지 | 2026-11-02 |
 | done | Cursor Agent / preprocess | automation / noise-relevance-filter | `scripts/automation/preprocess_signals.py`, `AGENT_SYNC.md` | 연예·스포츠·광고·비지정학 기사 hard-drop + 관련도 관문 강화 (LLM 전 필수 필터) | 2026-11-02 |
 | done | ANTIGRAVITY | data-collection / competitor-axis roles | `config/source_registry/*`, signal_gap 소스 | 패킷 C: relationship_role 태깅·OFAC/BIS registry (A/B 스키마 정렬 후) | 2026-11-02 |
 | done | ANTIGRAVITY | db / pipeline / cross-verification | `scripts/run_pipeline.py`, `scripts/db/load_cross_verification_to_db.py`, `scripts/db/create_views.sql` | 해협 센서·공급망 사건 교차검증의 DB 적재와 대시보드 뷰 연동 | 2026-10-02 |
@@ -92,6 +95,27 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-02 [ANTIGRAVITY / preprocessing · 4단계 지능형 전처리 파이프라인 설계 및 세션 착수]
+- 한 일: `PROJECT_CONTEXT.md`, `AGENT_SYNC.md`, `COLLECTION_PIPELINE_ARCHITECTURE.md`, `PREPROCESSING_SESSION_PROMPT.md` 분석 완료. 4단계 지능형 전처리(1. 다국어 노이즈 및 의례적 외교 수사 배제, 2. 7개 국어 정규화 및 Zero-Crash Fallback, 3. 시맨틱 군집화 및 다중 출처 추적성 강화, 4. 5대 해협 및 한국 6대 핵심 공급망 정밀 사전 매핑) 아키텍처 수립 및 개선 계획 보고 완료.
+- 바꾼 파일: `AGENT_SYNC.md`, `docs/current/PREPROCESSING_SESSION_PROMPT.md`.
+- 확인한 것: 전처리 세션의 R&R(수집기·Airflow·DB·대시보드 수정 금지, `verification_state: "UNVERIFIED"` 엄수) 재확인.
+- 다음 작업: `scripts/automation/preprocess_signals.py` 4단계 파이프라인 전면 고도화 구현 및 단위 테스트.
+- 주의할 점: 단일 출처 임의 경보 격상 금지, 16GB RAM 환경 경량화 유지.
+
+2026-11-02 [Cursor / Control Tower · local HTML console]
+- 한 일: `run_pipeline.py`를 감싸는 로컬 HTML 콘솔 프로토타입 추가. 프리셋 default/collect-only/light, `/api/run`·`/api/status`, 대시보드 링크.
+- 바꾼 파일: `scripts/console/app.py`, `scripts/console/static/index.html`, `README.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `AGENT_SYNC.md`.
+- 확인한 것: stdlib `http.server`만 사용. LLM/배포/Airflow UI 비포함.
+- 다음 작업: 로컬에서 `python scripts/console/app.py` 후 light 프리셋 스모크.
+- 주의할 점: 127.0.0.1 전용. 공개 바인딩·인증 없음.
+
+2026-11-02 [Cursor Agent / data-collection · X public API]
+- 한 일: 공식 X API v2 `GET /2/tweets/search/recent` 선택 수집기를 추가했다. Bearer 토큰·1페이지·공개 포스트만. 기본 파이프라인에는 넣지 않았다.
+- 바꾼 파일: `scripts/collection/fetch_x_public.py`, `scripts/run_pipeline.py`(`--with-x`), `config/source_registry/opinion_sources.yaml`, `docs/current/DATA_COLLECTION_GUIDE.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`, `AGENT_SYNC.md`.
+- 확인한 것: `py_compile` 통과. 토큰 없이 실행 시 `AUTH_REQUIRED` 영수증만 저장하고 API를 호출하지 않음. 키/Authorization은 영수증에 쓰지 않음.
+- 다음 작업: 사용자가 developer.x.com에서 앱·Bearer·선불 크레딧을 준비한 뒤 `X_BEARER_TOKEN`을 `.env`에 넣고 `python scripts/collection/fetch_x_public.py --max-results 10` 또는 `--with-x`로 1회 소량 시험.
+- 주의할 점: X는 종량제다. 국민 여론·Alert Level로 해석하지 않는다. 비공식 스크래핑·비공개 계정 수집 금지. DB/대시보드/LLM 파일은 수정하지 않았다.
 
 2026-11-02 [Cursor Agent / preprocess · 노이즈·비지정학 hard-drop 강화]
 - 한 일:

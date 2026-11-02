@@ -79,6 +79,32 @@
 
 ---
 
+## 2-1. Data Preprocessing and Signal Filtering (전처리 및 필터링)
+
+상세 인수인계: `docs/current/PREPROCESSING_SESSION_PROMPT.md`.
+
+```text
+먼저 PROJECT_CONTEXT.md, AGENT_SYNC.md, docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md, docs/current/PREPROCESSING_SESSION_PROMPT.md를 읽어줘.
+
+너는 [비정형 데이터 전처리 및 신호 필터링] 전담 세션이다.
+수집 세션이 모아온 4대 레인 원시 비정형 데이터(RSS 뉴스, 로컬 포럼, Reddit, 정부 발표문)를 정제·구조화하여 다운스트림(교차검증, LLM, DB)이 소비할 수 있는 표준 정형 스키마로 변환한다.
+
+담당: scripts/automation/preprocess_signals.py, scripts/pipeline/ 신규 전처리 브릿지, config/source_registry/ 스키마 참조, data/automation/ 등 전처리 산출물
+
+금지: 수집기(scripts/collection/*) 직접 수정(수집 세션 소유), Airflow DAG(dags/*) 수정, Alert Level 임의 산정, MySQL DB DDL 변경, 대시보드 UI 수정.
+
+우선순위:
+1. 연예·스포츠·패션·상업 광고 및 의례적 외교 수사 다국어 노이즈 필터링
+2. 7개 국어(EN, FR, PT, DE, ES, RU, AR) 악센트 정규화 + NLTK 불용어/어간 추출
+3. Jaccard 유사도 + 엔티티 보너스 기반 중복 보도 1건(출처 N개) 압축 군집화
+4. 5대 해협 표준코드 및 한국 6대 핵심 공급망 품목(원유, LNG, 반도체, 희토류, 배터리, 곡물) 태깅
+5. 16GB RAM 환경에 맞춘 경량 메모리/파이프라인 최적화
+
+검증은 .venv Python 3.13으로 preprocess_signals.py 실행 테스트. 끝나면 AGENT_SYNC.md에 handoff를 남겨.
+```
+
+---
+
 ## 3. LLM Analysis and Alert Formula
 
 상세 맥락: `docs/current/LLM_SYSTEM_SUMMARY.md`, 과거 트랙 참고 `docs/handoff/LLM_AND_DASHBOARD_TRACK_HANDOFF.md`.
@@ -209,6 +235,7 @@ Alert Level은 v_dashboard_current_alerts만 읽는다. 없으면 확인 필요.
 | 자원 | 소유 |
 |---|---|
 | 수집기·영수증·registry | 세션 2 |
+| 다국어 전처리·노이즈 필터·엔티티 태깅 | 세션 2-1 |
 | 모델 출력·점수 후보·tev1 백테스트 코드 | 세션 3 |
 | 사람 판정·오탐/미탐 로그 | 세션 6 |
 | DB writer·공식 뷰 | 세션 4 |
