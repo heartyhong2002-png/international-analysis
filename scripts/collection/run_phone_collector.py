@@ -159,74 +159,113 @@ def run_single_collector(collector: dict) -> dict:
         }
 
 
+def _git(args: list[str], timeout: int = 60) -> subprocess.CompletedProcess:
+    """git 명령을 캡처 실행한다. check=False — 호출측에서 코드/로그 판정."""
+    return subprocess.run(
+        ["git", *args],
+        cwd=str(ROOT),
+        capture_output=True,
+        text=True,
+        timeout=timeout,
+        encoding="utf-8",
+        errors="replace",
+    )
+
+
+def _git_err(proc: subprocess.CompletedProcess) -> str:
+    return (proc.stderr or proc.stdout or "").strip()[:400]
+
+
 def sync_to_git(branch: str | None = None) -> bool:
-    """수집된 data/ 최신 결과를 Git 원격 저장소로 자동 커밋 & 푸시한다 (Edge-to-Core 동기화)."""
+    """수집된 data/ 최신 결과를 Git 원격으로 커밋·푸시한다 (Edge-to-Core).
+
+    Termux에서 흔한 실패:
+    - user.name/email 미설정 → 커밋 거부
+    - pull --rebase 충돌
+    - HTTPS/SSH 인증 실패
+    전역 git config는 수정하지 않고, 커밋 시에만 -c 로 작성자를 넘긴다.
+    """
     print("\n[Git Data Sync] 최신 수집 데이터 원격 동기화 시도 중...")
     try:
-        # 1. data/ 변경사항 확인
-        st_proc = subprocess.run(
-            ["git", "status", "--porcelain", "data/"],
-            cwd=str(ROOT),
-            capture_output=True,
-            text=True,
-            timeout=30,
-        )
+        st_proc = _git(["status", "--porcelain", "--", "data/"], timeout=30)
+        if st_proc.returncode != 0:
+            print(f"  ⚠️ git status 실패: {_git_err(st_proc)}")
+            return False
         if not st_proc.stdout.strip():
             print("  ℹ️ data/ 에 새로 변경된 파일이 없어 Git 푸시를 생략합니다.")
             return True
 
-        # 2. git add data/
-        subprocess.run(["git", "add", "data/"], cwd=str(ROOT), check=True, timeout=30)
-
-        # 3. git commit
-        now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
-        commit_msg = f"data(edge): latest signals from S20 Ultra [{now_utc}]"
-        subprocess.run(["git", "commit", "-m", commit_msg], cwd=str(ROOT), check=True, timeout=30)
-        print(f"  ✓ 로컬 커밋 완료: {commit_msg}")
-
-        # 4. 현재 브랜치 확인
-        if not branch:
-            br_proc = subprocess.run(
-                ["git", "rev-parse", "--abbrev-ref", "HEAD"],
-                cwd=str(ROOT),
-                capture_output=True,
-                text=True,
-                timeout=15,
-            )
-            branch = br_proc.stdout.strip() or "cursor/actions-light-collection"
-
-        # 5. 충돌 방지를 위한 git pull --rebase (실패 시 push 금지)
-        rebase_proc = subprocess.run(
-            ["git", "pull", "--rebase", "origin", branch],
-            cwd=str(ROOT),
-            capture_output=True,
-            text=True,
-            timeout=45,
-        )
-        if rebase_proc.returncode != 0:
-            print(
-                "  ⚠️ git pull --rebase 실패 — 원격 푸시를 중단합니다. "
-                f"수동 해결 후 재시도: {(rebase_proc.stderr or rebase_proc.stdout)[:200]}"
-            )
+        add_proc = _git(["add", "--", "data/"], timeout=30)
+        if add_proc.returncode != 0:
+            print(f"  ⚠️ git add data/ 실패: {_git_err(add_proc)}")
             return False
 
-        # 6. git push origin <branch>
-        push_proc = subprocess.run(
-            ["git", "push", "origin", branch],
-            cwd=str(ROOT),
-            capture_output=True,
-            text=True,
-            timeout=60,
+        # 전역 config 없이 1회성 작성자 (EDGE_GIT_* 로 덮어쓰기 가능)
+        edge_name = os.getenv("EDGE_GIT_NAME", "S20 Ultra Edge")
+        edge_email = os.getenv("EDGE_GIT_EMAIL", "edge-collector@users.noreply.github.com")
+        now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+        commit_msg = f"data(edge): latest signals from S20 Ultra [{now_utc}]"
+        commit_proc = _git(
+            [
+                "-c",
+                f"user.name={edge_name}",
+                "-c",
+                f"user.email={edge_email}",
+                "commit",
+                "-m",
+                commit_msg,
+            ],
+            timeout=45,
         )
+        if commit_proc.returncode != 0:
+            err = _git_err(commit_proc)
+            print(f"  ⚠️ git commit 실패: {err}")
+            if "author identity unknown" in err.lower() or "user.email" in err.lower():
+                print("  💡 힌트: Termux에서 작성자 미설정입니다. 이 스크립트는 -c 로 우회합니다.")
+                print("     그래도 실패하면 EDGE_GIT_NAME / EDGE_GIT_EMAIL 환경변수를 설정하세요.")
+            return False
+        print(f"  ✓ 로컬 커밋 완료: {commit_msg}")
+
+        if not branch:
+            br_proc = _git(["rev-parse", "--abbrev-ref", "HEAD"], timeout=15)
+            branch = (br_proc.stdout or "").strip() or "cursor/actions-light-collection"
+        if branch == "HEAD":
+            print("  ⚠️ detached HEAD 상태입니다. --branch cursor/actions-light-collection 을 지정하세요.")
+            return False
+
+        rebase_proc = _git(["pull", "--rebase", "origin", branch], timeout=90)
+        if rebase_proc.returncode != 0:
+            err = _git_err(rebase_proc)
+            print(f"  ⚠️ git pull --rebase 실패 — 푸시 중단: {err}")
+            # 중단된 rebase가 남아 있으면 다음 주기 보호를 위해 abort 시도
+            if Path(ROOT / ".git" / "rebase-merge").exists() or Path(ROOT / ".git" / "rebase-apply").exists():
+                abort_proc = _git(["rebase", "--abort"], timeout=30)
+                print(
+                    "  ↩️ rebase --abort 실행: "
+                    + ("OK" if abort_proc.returncode == 0 else _git_err(abort_proc))
+                )
+            print("  💡 폰에서: git status 확인 후 git pull --rebase origin", branch)
+            return False
+
+        push_proc = _git(["push", "origin", branch], timeout=90)
         if push_proc.returncode == 0:
             print(f"  🚀 원격 저장소({branch}) 푸시 성공!")
             return True
-        else:
-            print(f"  ⚠️ 원격 푸시 실패 (인증/네트워크 확인 필요): {push_proc.stderr[:160]}")
-            return False
 
+        err = _git_err(push_proc)
+        print(f"  ⚠️ 원격 푸시 실패: {err}")
+        low = err.lower()
+        if "authentication" in low or "permission" in low or "403" in low or "could not read username" in low:
+            print("  💡 GitHub 인증 문제: Termux에 gh auth / PAT / SSH 키를 다시 확인하세요.")
+        elif "non-fast-forward" in low or "rejected" in low:
+            print("  💡 원격이 앞서 있습니다. git pull --rebase 후 다시 --sync-git 하세요.")
+        return False
+
+    except subprocess.TimeoutExpired:
+        print("  ⚠️ Git 동기화 타임아웃 (네트워크/인증 대기 가능). 다음 주기에 재시도합니다.")
+        return False
     except Exception as e:
-        print(f"  ⚠️ Git 동기화 중 오류 발생 (다음 주기에 재시도): {e}")
+        print(f"  ⚠️ Git 동기화 중 오류 발생 (다음 주기에 재시도): {type(e).__name__}: {e}")
         return False
 
 
@@ -257,20 +296,36 @@ def run_collection_cycle(round_num: int, sync_git: bool = False, branch: str | N
         "success_count": success_count,
         "failed_count": total_count - success_count,
         "details": cycle_results,
+        "git_sync": {"requested": bool(sync_git), "ok": None, "skipped": not sync_git},
     }
 
+    # 동기화 전에 상태 파일을 써서 data/ 커밋에 이번 회차 영수증이 포함되게 한다.
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     with open(STATUS_FILE, "w", encoding="utf-8") as f:
         json.dump(summary, f, ensure_ascii=False, indent=2)
 
+    if sync_git and success_count > 0:
+        ok = sync_to_git(branch)
+        summary["git_sync"] = {"requested": True, "ok": ok, "skipped": False}
+        with open(STATUS_FILE, "w", encoding="utf-8") as f:
+            json.dump(summary, f, ensure_ascii=False, indent=2)
+    elif sync_git:
+        print("\n[Git Data Sync] 성공한 수집기가 없어 푸시를 생략합니다.")
+        summary["git_sync"] = {
+            "requested": True,
+            "ok": False,
+            "skipped": True,
+            "reason": "no_successful_collectors",
+        }
+        with open(STATUS_FILE, "w", encoding="utf-8") as f:
+            json.dump(summary, f, ensure_ascii=False, indent=2)
+
     print("\n" + "-" * 65)
     print(f"제 {round_num}회차 수집 종합: {total_count}개 중 {success_count}개 성공 / {total_count - success_count}개 실패")
     print(f"수집 노드 상태 저장: {STATUS_FILE}")
+    if sync_git:
+        print(f"Git 동기화: {summary['git_sync']}")
     print("-" * 65)
-
-    # Git 원격 동기화 옵션 활성화 시 실행
-    if sync_git and success_count > 0:
-        sync_to_git(branch)
 
     return summary
 

@@ -100,6 +100,13 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
 
+2026-11-03 [Cursor Agent / phone git-sync harden]
+- 한 일: 폰 `--sync-git` 오류 대응. 커밋 시 `-c user.name/email`(전역 config 미수정), 단계별 stderr 출력, rebase 실패 시 abort, push 인증 힌트, `start_phone.sh` 명시 브랜치 pull.
+- 바꾼 파일: `scripts/collection/run_phone_collector.py`, `start_phone.sh`, `AGENT_SYNC.md`.
+- 확인한 것: GitHub에 `data(edge):` 커밋 없음 → 폰 동기화 실패와 일치. 흔한 원인=작성자 미설정/`check=True`로 메시지 손실.
+- 다음 작업: 폰 `git pull` 후 `bash start_phone.sh --once --sync-git` 재시도, 실패 시 콘솔의 `git commit/rebase/push` 요약 확인.
+- 주의할 점: PAT/SSH는 폰에 유지. 전역 `git config`는 건드리지 않음.
+
 2026-11-03 [Cursor Agent / trio-sync · gov path fix]
 - 한 일: 정부 발표 `data/gov_announcements/` 경로 통일·폰 sync rebase 가드·문서 반영분을 Trio-Sync(MD→GitHub→Notion)로 원격 동기화.
 - 바꾼 파일: `scripts/collection/gov_announcements_collector.py`, `scripts/db/build_database.py`, `scripts/collection/run_phone_collector.py`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`, `data/gov_announcements/*`, `AGENT_SYNC.md`.
