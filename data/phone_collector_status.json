@@ -1,0 +1,46 @@
+{
+  "node_type": "Galaxy S20 Ultra (Termux Edge Collector)",
+  "round": 1,
+  "started_at": "2026-11-02T14:29:28.928116+00:00",
+  "finished_at": "2026-11-02T14:30:29.138253+00:00",
+  "total_collectors": 5,
+  "success_count": 5,
+  "failed_count": 0,
+  "details": [
+    {
+      "id": "maritime_chokepoints",
+      "name": "해협·항만 병목 및 운임·에너지 센서",
+      "status": "SUCCESS",
+      "duration_sec": 4.44,
+      "error": null
+    },
+    {
+      "id": "whitehouse_official",
+      "name": "백악관 공식 성명 및 브리핑 RSS",
+      "status": "SUCCESS",
+      "duration_sec": 0.98,
+      "error": null
+    },
+    {
+      "id": "gov_announcements",
+      "name": "주요국 공식 정부 발표문 (MOFA/State/FCDO 등)",
+      "status": "SUCCESS",
+      "duration_sec": 23.05,
+      "error": null
+    },
+    {
+      "id": "signal_gap_rss",
+      "name": "4대 권역 신호 괴리 RSS (공식 vs 독립 언론)",
+      "status": "SUCCESS",
+      "duration_sec": 8.05,
+      "error": null
+    },
+    {
+      "id": "local_opinions",
+      "name": "로컬 포럼 및 대안 여론 센서",
+      "status": "SUCCESS",
+      "duration_sec": 18.68,
+      "error": null
+    }
+  ]
+}

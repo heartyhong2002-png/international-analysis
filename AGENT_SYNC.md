@@ -59,7 +59,7 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
 | done | ANTIGRAVITY | preprocessing / session-prompt | `docs/current/PREPROCESSING_SESSION_PROMPT.md`, `docs/SESSION_PROMPTS.md` | 비정형 데이터 전처리 및 신호 필터링 전담 세션 분리 프롬프트 작성 및 등록 완료 | 2026-11-02 |
-| done | ANTIGRAVITY | collection / edge-node-support | `scripts/collection/fetch_maritime_chokepoints.py`, `dags/` | 갤럭시 S20 울트라 엣지 수집 노드 지원: requests 기반 해운/에너지 프록시 경량화(C 컴파일 의존성 제거) | 2026-11-02 |
+| done | ANTIGRAVITY | collection / 24-7-edge-runner | `scripts/collection/run_phone_collector.py`, `start_phone.sh`, `scripts/collection/fetch_signal_gap_rss.py` | 갤럭시 S20 울트라(Termux) 24/7 무중단 자동 수집 러너 구축, pandas 의존성 제거 및 5/5 수집 검증 완료 | 2026-11-03 |
 | done | Cursor / Control Tower | control-tower / scope | `docs/current/PROJECT_PLAN.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `AGENT_SYNC.md` | 미국 국내·동맹·경쟁/대립축 6대 감시축 확정(예측 금지). 패킷 A+B 동시 착수 지시 | 2026-10-30 |
 | done | Cursor / Control Tower | runtime / python-3.13 | `.venv`, `.python-version`, `requirements.txt`, `README.md`, `PROJECT_CONTEXT.md`, `docs/SESSION_PROMPTS.md` | 표준 런타임 Python 3.13(.venv) 전환 및 세션 프롬프트 정리 — PR #5 | 2026-10-30 |
 | done | Cursor / Control Tower | sync / trio-platform | `AGENT_SYNC.md`, Notion hub/history/board, GitHub PR #5 | 트리오 동기화(MD→Notion→GitHub/PR) 완료 | 2026-10-30 |
@@ -96,6 +96,23 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-03 [ANTIGRAVITY / 갤럭시 S20 울트라 24/7 무중단 엣지 수집 노드 구축 및 검증 완결]
+- 한 일:
+  1. 갤럭시 S20 울트라(Termux) 24/7 전용 무중단 자동 수집 오케스트레이터(`scripts/collection/run_phone_collector.py`) 구축:
+     - 5대 경량 수집기(해협 병목, 백악관 공식 브리핑, 주요국 정부 발표문, 4대 권역 신호 괴리 RSS, 로컬 포럼 여론) 무인 순차 실행.
+     - 서브프로세스 격리 및 타임아웃 보호로 단일 수집기 실패 시에도 프로세스 중단 방지(Fault-Tolerant).
+     - 실행 상태 영수증(`data/phone_collector_status.json`) 자동 기록 및 시간 단위 스케줄러 내장.
+  2. 안드로이드 ARM64 빌드 호환성 개선:
+     - `scripts/collection/fetch_signal_gap_rss.py`에서 `pandas` 의존성을 제거하고 표준 라이브러리 `csv.DictWriter`로 전면 리팩토링.
+     - 원클릭 백그라운드 구동 셸 스크립트(`start_phone.sh`) 작성 (CPU Wakelock 자동 활성화).
+  3. 실기기 검증:
+     - 로컬 테스트: 5개 수집기 55초 만에 5/5 전원 수집 성공 확인.
+     - 갤럭시 S20 울트라(Termux) 실기기 시운전 통과 및 가동 성공.
+- 바꾼 파일: `scripts/collection/run_phone_collector.py`, `start_phone.sh`, `scripts/collection/fetch_signal_gap_rss.py`, `AGENT_SYNC.md`.
+- 확인한 것: S20 울트라 실기기에서 C 컴파일 라이브러리 없이 5개 수집기 정상 가동 및 상태 영수증 기록 확인.
+- 다음 작업: S20 울트라 → 메인 PC/GitHub 데이터 자동 동기화(Sync) 파이프라인 구성 후 패킷 A Federal Register 선택 수집기 연동.
+- 주의할 점: 엣지 수집 노드는 순수 requests/feedparser 기반 초경량화 유지, Alert Level 임의 판정 금지.
 
 2026-11-02 [ANTIGRAVITY / 전처리 세션 분리 & 엣지 수집 노드(S20 울트라) 경량화]
 - 한 일:
