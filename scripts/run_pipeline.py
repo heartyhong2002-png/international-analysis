@@ -118,6 +118,8 @@ def main():
                          help="GDELT Cloud Events를 로컬 QU 안전장치와 함께 1회 수집 (기본값: 실행하지 않음)")
     parser.add_argument("--with-whitehouse", action="store_true",
                          help="백악관 공식 RSS 수집 (기본값: 실행하지 않음)")
+    parser.add_argument("--with-federal-register", action="store_true",
+                         help="미국 연방관보(Federal Register) 정책·통상·수출통제 공식 고시 수집 (기본값: 실행하지 않음)")
     parser.add_argument("--with-x", action="store_true",
                          help="공식 X API recent search 1페이지 수집 (유료·종량제, 기본값: 실행하지 않음)")
     parser.add_argument("--sync-notion", action="store_true",
@@ -163,6 +165,8 @@ def main():
             steps.append(("GDELT Cloud Events 제한 수집 (QU 안전장치 적용)", "collection/fetch_gdelt_cloud_events.py", []))
         if args.with_whitehouse:
             steps.append(("백악관 공식 RSS 수집", "collection/fetch_whitehouse_official.py", []))
+        if args.with_federal_register:
+            steps.append(("미국 연방관보(Federal Register) 공식 고시 수집", "collection/fetch_federal_register.py", []))
         if args.with_x:
             steps.append(("X 공개 정보환경 신호 (공식 API, 1페이지)", "collection/fetch_x_public.py", []))
         if not args.skip_cross_verification:

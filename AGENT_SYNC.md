@@ -58,7 +58,8 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
-| in-progress | ANTIGRAVITY | orchestration / edge-to-core-pipeline | `scripts/collection/run_phone_collector.py`, `dags/early_warning_pipeline_dag.py` | 엣지-코어 2-Tier 분산 파이프라인 연동: S20 자동 Git 푸시 & Airflow 엣지 수집 데이터 흡수 태스크 구현 | 2026-11-03 |
+| done | ANTIGRAVITY | orchestration / edge-to-core-pipeline | `scripts/collection/run_phone_collector.py`, `dags/early_warning_pipeline_dag.py` | 엣지-코어 2-Tier 분산 파이프라인 연동: S20 자동 Git 푸시(--sync-git) & Airflow 엣지 수집 흡수(sync_edge_data) 구현 | 2026-11-03 |
+| done | ANTIGRAVITY | data-collection / packet-a-federal-register | `scripts/collection/fetch_federal_register.py`, `config/source_registry/government_sources.yaml`, `scripts/run_pipeline.py` | 패킷 A Federal Register 공식 REST API 선택 수집기 구현 및 source_registry 연동 완료 | 2026-11-03 |
 | done | ANTIGRAVITY | preprocessing / session-prompt | `docs/current/PREPROCESSING_SESSION_PROMPT.md`, `docs/SESSION_PROMPTS.md` | 비정형 데이터 전처리 및 신호 필터링 전담 세션 분리 프롬프트 작성 및 등록 완료 | 2026-11-02 |
 | done | ANTIGRAVITY | collection / 24-7-edge-runner | `scripts/collection/run_phone_collector.py`, `start_phone.sh`, `scripts/collection/fetch_signal_gap_rss.py` | 갤럭시 S20 울트라(Termux) 24/7 무중단 자동 수집 러너 구축, pandas 의존성 제거 및 5/5 수집 검증 완료 | 2026-11-03 |
 | done | Cursor / Control Tower | control-tower / scope | `docs/current/PROJECT_PLAN.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `AGENT_SYNC.md` | 미국 국내·동맹·경쟁/대립축 6대 감시축 확정(예측 금지). 패킷 A+B 동시 착수 지시 | 2026-10-30 |
@@ -97,6 +98,26 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-03 [ANTIGRAVITY / 2-Tier 분산 파이프라인 완결 및 패킷 A Federal Register 연동]
+- 한 일:
+  1. 엣지-코어 2-Tier 분산 데이터 파이프라인 완성:
+     - `scripts/collection/run_phone_collector.py`: 수집 사이클 종료 시 `git add data/` -> auto-rebase -> `git push`를 수행하는 `--sync-git` 옵션 구현.
+     - `dags/early_warning_pipeline_dag.py`: 파이프라인 개시 직후 폰이 올린 엣지 데이터를 흡수하는 `sync_edge_collection_data` 태스크를 신설하고 수집 배리어와 연동.
+     - `start_phone.sh`: `--sync-git` 가이드 추가.
+  2. 패킷 A 미국 연방관보(Federal Register) 선택 수집기 신규 구현:
+     - `scripts/collection/fetch_federal_register.py`: 공식 REST API(`https://www.federalregister.gov/api/v1/documents.json`) 기반 무인 수집기 구축.
+     - 상무부(BIS), 재무부(OFAC), 무역대표부(USTR), 관세국경보호청(CBP) 등 핵심 규제/제재/관세 고시 타깃팅.
+     - `official_raw_v1` 스키마 준수, 영수증(`data/federal_register/receipt_latest.json`) 및 CSV/JSON 자동 저장.
+     - 순수 `requests` + `csv` 기반 경량화로 S20 울트라 및 PC 전 환경 100% 호환 (2초 시운전 통과).
+  3. 시스템 통합:
+     - `config/source_registry/government_sources.yaml`: `us_federal_register_documents_api`의 수집기를 `scripts/collection/fetch_federal_register.py`로 갱신.
+     - `scripts/run_pipeline.py`: `--with-federal-register` 선택 플래그 지원 추가.
+     - `scripts/collection/run_phone_collector.py`: S20 울트라 6대 경량 수집기 레인에 Federal Register 기본 편입 완료.
+- 바꾼 파일: `scripts/collection/run_phone_collector.py`, `dags/early_warning_pipeline_dag.py`, `scripts/collection/fetch_federal_register.py`, `config/source_registry/government_sources.yaml`, `scripts/run_pipeline.py`, `start_phone.sh`, `AGENT_SYNC.md`.
+- 확인한 것: Federal Register 10건 정상 수집 및 영수증 확인, DAG 컴파일 통과, 엣지 노드 6종 수집 레인 정렬.
+- 다음 작업: S20 울트라에서 `git pull` 후 `bash start_phone.sh --sync-git` 가동 확인.
+- 주의할 점: Federal Register는 공식 고시 신호이며 선거 결과 예측이나 단일 출처 Alert 격상용으로 사용하지 않음.
 
 2026-11-03 [ANTIGRAVITY / Edge-to-Core 2-Tier 분산 파이프라인 아키텍처 확립]
 - 한 일:

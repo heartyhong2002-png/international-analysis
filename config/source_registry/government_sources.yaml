@@ -52,7 +52,7 @@ sources:
     access_method: api
     enabled: true
     pipeline_default: false
-    collector: PENDING
+    collector: scripts/collection/fetch_federal_register.py
     shared_schema: official_raw_v1
     issue_tags: [US_Trade_Tariff, US_Export_Control, US_Sanctions_OFAC, US_Industrial_Policy_CHIPS, US_Immigration_Border]
     cadence: daily

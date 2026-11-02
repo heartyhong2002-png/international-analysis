@@ -34,7 +34,7 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 DATA_DIR = ROOT / "data"
 STATUS_FILE = DATA_DIR / "phone_collector_status.json"
 
-# 스마트폰 엣지 노드에서 안전하게 가동되는 경량 수집기 5종
+# 스마트폰 엣지 노드에서 안전하게 가동되는 경량 수집기 6종
 EDGE_COLLECTORS = [
     {
         "id": "maritime_chokepoints",
@@ -46,6 +46,12 @@ EDGE_COLLECTORS = [
         "id": "whitehouse_official",
         "name": "백악관 공식 성명 및 브리핑 RSS",
         "script": "scripts/collection/fetch_whitehouse_official.py",
+        "timeout": 60,
+    },
+    {
+        "id": "federal_register",
+        "name": "연방관보(Federal Register) 정책·통상·수출통제 고시",
+        "script": "scripts/collection/fetch_federal_register.py",
         "timeout": 60,
     },
     {
