@@ -126,40 +126,88 @@ MARKET_TICKERS = {
 
 
 def fetch_market_proxies() -> list[dict]:
-    """Yahoo Finance에서 해운 운임 및 에너지 시장 프록시 시세를 수집한다."""
-    import yfinance as yf
+    """해운 운임 및 에너지 시장 프록시 시세를 수집한다.
+    
+    경량 환경(안드로이드 Termux, 라즈베리 파이 등) 지원을 위해
+    무거운 yfinance/pandas 대신 requests 기반 Yahoo Finance API를 직접 사용합니다.
+    """
+    import requests
 
     results = []
     now_utc = datetime.now(timezone.utc).isoformat()
     tickers_list = list(MARKET_TICKERS.keys())
-    print(f"  [yfinance] {len(tickers_list)}개 해운·에너지 프록시 지표 수집 중...")
+    print(f"  [Market Proxy] {len(tickers_list)}개 해운·에너지 프록시 지표 수집 중 (경량 requests 모드)...")
+
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    }
 
     try:
+        for ticker, meta in MARKET_TICKERS.items():
+            url = f"https://query1.finance.yahoo.com/v8/finance/chart/{ticker}?interval=1d&range=1mo"
+            try:
+                resp = requests.get(url, headers=headers, timeout=10)
+                if resp.status_code != 200:
+                    continue
+                data_json = resp.json()
+                result_obj = data_json.get("chart", {}).get("result", [{}])[0]
+                quotes = result_obj.get("indicators", {}).get("quote", [{}])[0].get("close", [])
+                clean_closes = [float(x) for x in quotes if x is not None]
+                if not clean_closes:
+                    continue
+
+                latest_val = clean_closes[-1]
+                prev_val = clean_closes[-2] if len(clean_closes) > 1 else latest_val
+                month_ago_val = clean_closes[0]
+
+                daily_chg = round((latest_val - prev_val) / prev_val * 100, 2) if prev_val > 0 else 0.0
+                monthly_chg = round((latest_val - month_ago_val) / month_ago_val * 100, 2) if month_ago_val > 0 else 0.0
+
+                # 리스크 신호 판정
+                signal = "NORMAL"
+                if abs(daily_chg) >= 5.0 or abs(monthly_chg) >= 20.0:
+                    signal = "CRITICAL_SPIKE" if (daily_chg > 5 or monthly_chg > 20) else "SHARP_DROP"
+                elif abs(daily_chg) >= 2.5 or abs(monthly_chg) >= 10.0:
+                    signal = "ELEVATED"
+
+                results.append({
+                    "ticker": ticker,
+                    "asset_name": meta["name"],
+                    "category": meta["category"],
+                    "unit": meta["unit"],
+                    "latest_price": round(latest_val, 2),
+                    "daily_change_pct": daily_chg,
+                    "monthly_change_pct": monthly_chg,
+                    "risk_signal": signal,
+                    "uncertainty_note": "금융 프록시 지표는 시장 심리와 위험 프리미엄을 반영하며 단독으로 실물 톤수를 의미하지 않음",
+                    "observed_at": now_utc,
+                })
+                print(f"    ✓ {ticker:6s} ({meta['name'][:18]:18s}): {latest_val:7.2f} {meta['unit']} (일간 {daily_chg:+.2f}%, 월간 {monthly_chg:+.2f}%) [{signal}]")
+            except Exception:
+                continue
+
+        if results:
+            return results
+    except Exception as e:
+        print(f"  [Market Proxy] requests 수집 중 오류 발생: {e}")
+
+    # Fallback to yfinance if available
+    try:
+        import yfinance as yf
+        print("  [yfinance] fallback 시도...")
         data = yf.download(tickers_list, period="1mo", interval="1d", progress=False)
         close_df = data["Close"]
-
         for ticker, meta in MARKET_TICKERS.items():
             if ticker not in close_df.columns:
                 continue
-
             series = close_df[ticker].dropna()
             if series.empty:
                 continue
-
             latest_val = float(series.iloc[-1])
             prev_val = float(series.iloc[-2]) if len(series) > 1 else latest_val
             month_ago_val = float(series.iloc[0])
-
             daily_chg = round((latest_val - prev_val) / prev_val * 100, 2) if prev_val > 0 else 0.0
             monthly_chg = round((latest_val - month_ago_val) / month_ago_val * 100, 2) if month_ago_val > 0 else 0.0
-
-            # 리스크 신호 판정
-            signal = "NORMAL"
-            if abs(daily_chg) >= 5.0 or abs(monthly_chg) >= 20.0:
-                signal = "CRITICAL_SPIKE" if (daily_chg > 5 or monthly_chg > 20) else "SHARP_DROP"
-            elif abs(daily_chg) >= 2.5 or abs(monthly_chg) >= 10.0:
-                signal = "ELEVATED"
-
             results.append({
                 "ticker": ticker,
                 "asset_name": meta["name"],
@@ -168,13 +216,12 @@ def fetch_market_proxies() -> list[dict]:
                 "latest_price": round(latest_val, 2),
                 "daily_change_pct": daily_chg,
                 "monthly_change_pct": monthly_chg,
-                "risk_signal": signal,
-                "uncertainty_note": "금융 프록시 지표는 시장 심리와 위험 프리미엄을 반영하며 단독으로 실물 톤수를 의미하지 않음",
+                "risk_signal": "NORMAL",
+                "uncertainty_note": "금융 프록시 지표",
                 "observed_at": now_utc,
             })
-            print(f"    ✓ {ticker:6s} ({meta['name'][:18]:18s}): {latest_val:7.2f} {meta['unit']} (일간 {daily_chg:+.2f}%, 월간 {monthly_chg:+.2f}%) [{signal}]")
-    except Exception as e:
-        print(f"    ✗ yfinance 수집 오류: {e}")
+    except Exception:
+        pass
 
     return results
 
