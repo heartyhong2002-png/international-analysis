@@ -14,7 +14,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 import feedparser
 from bs4 import BeautifulSoup
-import pandas as pd
+import csv
 import requests
 import sys
 
@@ -265,11 +265,14 @@ def fetch_rss_data():
     print(f"\n🧾 수집 영수증 저장: {receipt_path}")
 
     if collected_data:
-        df = pd.DataFrame(collected_data)
         file_path = DATA_DIR / "rss_signal_gap_latest.csv"
-        df.to_csv(file_path, index=False, encoding='utf-8-sig')
-        print(f"✅ 총 {len(df)}건의 기사 수집 완료! -> {file_path}")
-        return df
+        fieldnames = list(collected_data[0].keys())
+        with open(file_path, "w", encoding="utf-8-sig", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(collected_data)
+        print(f"✅ 총 {len(collected_data)}건의 기사 수집 완료! -> {file_path}")
+        return collected_data
     else:
         print("\n⚠️ 수집된 데이터가 없습니다.")
         return None
