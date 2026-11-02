@@ -58,7 +58,9 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
-| done | ANTIGRAVITY | orchestration / edge-to-core-pipeline | `scripts/collection/run_phone_collector.py`, `dags/early_warning_pipeline_dag.py` | 엣지-코어 2-Tier 분산 파이프라인 연동: S20 자동 Git 푸시(--sync-git) & Airflow 엣지 수집 흡수(sync_edge_data) 구현 | 2026-11-03 |
+| done | Cursor Agent / collection | sync / trio-platform + edge-verify | `AGENT_SYNC.md`, Notion hub/board/docs/report, GitHub `cursor/actions-light-collection` | 폰 `--sync-git` 원격 검증(0a45c12·6/6·gov path) 후 Trio-Sync(MD→Notion→GitHub) | 2026-11-03 |
+| done | Cursor Agent / collection | edge / phone-git-sync-harden | `scripts/collection/run_phone_collector.py`, `start_phone.sh` | Termux git 작성자·rebase abort·push 힌트 보강. 사용자 수정·푸시 후 `data(edge)` 3커밋·gov_announcements 원격 반영 확인 | 2026-11-03 |
+| done | ANTIGRAVITY | orchestration / edge-to-core-pipeline | `scripts/collection/run_phone_collector.py`, `dags/early_warning_pipeline_dag.py`, `data/phone_collector_status.json` | 엣지-코어 2-Tier 분산 파이프라인 완결: S20 울트라 6대 수집기(6/6 성공) 실기기 Git 자동 푸시 및 PC 동기화 검증 완료 | 2026-11-03 |
 | done | ANTIGRAVITY | data-collection / packet-a-federal-register | `scripts/collection/fetch_federal_register.py`, `config/source_registry/government_sources.yaml`, `scripts/run_pipeline.py` | 패킷 A Federal Register 공식 REST API 선택 수집기 구현 및 source_registry 연동 완료 | 2026-11-03 |
 | done | ANTIGRAVITY | preprocessing / session-prompt | `docs/current/PREPROCESSING_SESSION_PROMPT.md`, `docs/SESSION_PROMPTS.md` | 비정형 데이터 전처리 및 신호 필터링 전담 세션 분리 프롬프트 작성 및 등록 완료 | 2026-11-02 |
 | done | ANTIGRAVITY | collection / 24-7-edge-runner | `scripts/collection/run_phone_collector.py`, `start_phone.sh`, `scripts/collection/fetch_signal_gap_rss.py` | 갤럭시 S20 울트라(Termux) 24/7 무중단 자동 수집 러너 구축, pandas 의존성 제거 및 5/5 수집 검증 완료 | 2026-11-03 |
@@ -100,11 +102,32 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
 
+2026-11-03 [ANTIGRAVITY / 갤럭시 S20 울트라 엣지 수집 노드 실기기 가동 및 원격 Git 자동 푸시 완결]
+- 한 일:
+  1. 갤럭시 S20 울트라(Termux) 실기기 24/7 무중단 수집 노드 가동 및 깃허브 원격 푸시 실증 검증 완료:
+     - 6대 경량 수집기(해협 병목 3.94초, 백악관 RSS 0.91초, 연방관보 REST 1.10초, 정부발표문 22.42초, 4대권역 RSS 6.68초, 로컬여론 19.18초) 단 60초 만에 6/6 전원 수집 성공.
+     - GitHub Personal Access Token(PAT) 기반 자동 인증 연동 및 17개 원시 데이터 파일 원격 푸시 성공 (`0a45c12`).
+     - 메인 PC에서 `git pull`을 통한 엣지 수집 데이터 무손실 흡수 검증 완료.
+  2. 크롤링 법적/윤리적 안전성(Compliance) 정립:
+     - 퍼블릭 도메인 정부 공식 API(Federal Register) 및 공인 RSS(백악관, 외교부)만 소비.
+     - Selenium 및 무단 브라우저 스크래핑 배제, 1시간 저빈도 호출로 서비스 약관 및 저작권 침해 우려 원천 차단.
+- 바꾼 파일: `AGENT_SYNC.md`, `data/phone_collector_status.json`, `data/*`.
+- 확인한 것: S20 울트라 실기기 6/6 성공 영수증 확인, 원격 깃허브 커밋(`0a45c12`) 반영 및 PC 로컬 풀 정상 동기화.
+- 다음 작업: 전처리 세션에서 흡수된 원시 데이터(`data/`) 기반 4단계 지능형 전처리 고도화 진행.
+- 주의할 점: S20 울트라 24시간 가동 시 배터리 최적화 해제 및 termux-wake-lock 활성화 유지.
+
+2026-11-03 [Cursor Agent / trio-sync · phone edge verified]
+- 한 일: 사용자 폰 수정·푸시 후 GitHub 검증(0a45c12 등 `data(edge)` 3커밋, 6/6 SUCCESS, `data/gov_announcements/*20261103*`). Active Work Board·핸드오프 갱신 후 Trio-Sync(MD→Notion→GitHub).
+- 바꾼 파일: `AGENT_SYNC.md`.
+- 확인한 것: `origin/cursor/actions-light-collection` tip=`0a45c12`, 작성자 `heartyhong2002-png`, 로컬 working tree clean 후 본 동기화 커밋.
+- 다음 작업: 일상 엣지 수집 유지. 추가 하드닝/Trio는 요청 시.
+- 주의할 점: Alert Level·DB 스키마·LLM 스코어링 미변경. 유료 API는 기본 파이프라인 비활성 유지.
+
 2026-11-03 [Cursor Agent / phone git-sync harden]
 - 한 일: 폰 `--sync-git` 오류 대응. 커밋 시 `-c user.name/email`(전역 config 미수정), 단계별 stderr 출력, rebase 실패 시 abort, push 인증 힌트, `start_phone.sh` 명시 브랜치 pull.
 - 바꾼 파일: `scripts/collection/run_phone_collector.py`, `start_phone.sh`, `AGENT_SYNC.md`.
-- 확인한 것: GitHub에 `data(edge):` 커밋 없음 → 폰 동기화 실패와 일치. 흔한 원인=작성자 미설정/`check=True`로 메시지 손실.
-- 다음 작업: 폰 `git pull` 후 `bash start_phone.sh --once --sync-git` 재시도, 실패 시 콘솔의 `git commit/rebase/push` 요약 확인.
+- 확인한 것: (당시) GitHub에 `data(edge):` 없음 → 실패와 일치. **후속**: 사용자 수정·푸시 후 `0a45c12` 등 원격 반영 확인 완료.
+- 다음 작업: (완료) 폰 재시도·원격 검증.
 - 주의할 점: PAT/SSH는 폰에 유지. 전역 `git config`는 건드리지 않음.
 
 2026-11-03 [Cursor Agent / trio-sync · gov path fix]
