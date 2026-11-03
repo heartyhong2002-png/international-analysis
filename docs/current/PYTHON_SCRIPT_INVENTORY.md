@@ -86,6 +86,7 @@
 |---|---|---|
 | `automation/auto_anomaly_scanner.py` | 글로벌 이상 징후 무인 스캐너 (GDELT 2.0 DOC·트렌드·4대 해협 Z-Score·Anomaly Score, `--dry-run`/`--publish-notion`) | active / standalone; 기본 `run_pipeline.py` 미연결 |
 | `automation/preprocess_signals.py` | 지능형 4단계 전처리 (노이즈 배제·시맨틱 중복 제거·해협 정규화·한국 핵심 공급망 태깅) | active / library |
+| `pipeline/bridge_preprocess_lanes.py` | 4대 수집 레인 원시 데이터 정제·구조화 및 표준 정형 신호/배제 영수증 브릿지 | active / bridge |
 
 권장 검증: `python scripts/automation/auto_anomaly_scanner.py --dry-run`
 

@@ -1,0 +1,57 @@
+{
+  "schema_version": "preprocess_summary_v1",
+  "generated_at": "2026-11-03T02:44:43.483756+00:00",
+  "alert_level_set": false,
+  "verification_state_default": "UNVERIFIED",
+  "input_counts": {
+    "total_raw": 378,
+    "FAST": 234,
+    "CONTEXT": 60,
+    "OPINION": 84,
+    "BASELINE_SENSORS": 7
+  },
+  "output_counts": {
+    "canonical_clusters": 209,
+    "rejected_noise": 49,
+    "multi_source_clusters": 21
+  },
+  "reject_reason_breakdown": {
+    "entertainment_sports_noise": 9,
+    "low_geopolitical_relevance": 31,
+    "ad_or_soft_section": 7,
+    "diplomatic_protocol_noise": 1,
+    "empty_title": 1
+  },
+  "chokepoint_distribution": {
+    "CHOKEPOINT_HORMUZ": 3,
+    "CHOKEPOINT_BAB_EL_MANDEB": 1,
+    "CHOKEPOINT_MALACCA": 0,
+    "CHOKEPOINT_BOSPHORUS": 0,
+    "CHOKEPOINT_PANAMA": 0,
+    "CHOKEPOINT_TAIWAN_STRAIT": 3
+  },
+  "supply_chain_distribution": {
+    "CRUDE_OIL": 11,
+    "NATURAL_GAS_LNG": 1,
+    "SEMICONDUCTOR": 14,
+    "RARE_EARTHS": 0,
+    "BATTERY_MINERALS": 0,
+    "GRAIN_FOOD": 0
+  },
+  "event_type_distribution": {
+    "MILITARY_CONFLICT": 19,
+    "SANCTIONS_EXPORT_CONTROL": 11,
+    "INFRA_LOGISTICS_DISRUPTION": 11,
+    "PROTEST_STRIKE": 5,
+    "ELECTION_GOVERNMENT": 23
+  },
+  "hotspot_distribution": {
+    "NORTH_AMERICA": 33,
+    "MIDDLE_EAST": 41,
+    "EAST_ASIA": 29,
+    "WESTERN_EUROPE": 23,
+    "CENTRAL_AFRICA": 5,
+    "LATIN_AMERICA": 11,
+    "EASTERN_EUROPE": 22
+  }
+}

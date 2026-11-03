@@ -58,6 +58,7 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
+| done | ANTIGRAVITY | preprocessing / signal-filtering | `scripts/automation/preprocess_signals.py`, `scripts/pipeline/bridge_preprocess_lanes.py`, `data/automation/*` | 4단계 다국어 전처리 고도화(7개국어+CJK 노이즈·외교의전 배제, 정규화, 중복군집화, 5대해협·한국6대공급망 태깅) 및 4대 레인 브릿지 구현 완료 | 2026-11-03 |
 | done | Cursor Agent / collection | sync / trio-platform + edge-verify | `AGENT_SYNC.md`, Notion hub/board/docs/report, GitHub `cursor/actions-light-collection` | 폰 `--sync-git` 원격 검증(0a45c12·6/6·gov path) 후 Trio-Sync(MD→Notion→GitHub) | 2026-11-03 |
 | done | Cursor Agent / collection | edge / phone-git-sync-harden | `scripts/collection/run_phone_collector.py`, `start_phone.sh` | Termux git 작성자·rebase abort·push 힌트 보강. 사용자 수정·푸시 후 `data(edge)` 3커밋·gov_announcements 원격 반영 확인 | 2026-11-03 |
 | done | ANTIGRAVITY | orchestration / edge-to-core-pipeline | `scripts/collection/run_phone_collector.py`, `dags/early_warning_pipeline_dag.py`, `data/phone_collector_status.json` | 엣지-코어 2-Tier 분산 파이프라인 완결: S20 울트라 6대 수집기(6/6 성공) 실기기 Git 자동 푸시 및 PC 동기화 검증 완료 | 2026-11-03 |
@@ -101,6 +102,20 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-03 [ANTIGRAVITY / preprocessing · 4단계 다국어 전처리 고도화 및 4대 레인 정형화 브릿지 완결]
+- 한 일:
+  1. `scripts/automation/preprocess_signals.py` 4단계 파이프라인 전면 고도화:
+     - Step 1: 7개 국어 + 한/중 CJK 노이즈 사전(Meduza 러시아 하키, 대만 PTT Gossiping 유흥·연예, 스폰서 UTM 등) 및 의례적 외교 수사(`DIPLOMATIC_PROTOCOL_KEYWORDS`: 축전·문화행사·엑스포 홍보 등) 분리 필터 구축. `people.com.cn`이 `people.com` 노이즈 도메인으로 오탐되던 정규식 경계 버그 수정.
+     - Step 2: 7개 국어(EN, FR, PT, DE, ES, RU, AR) NFKD 악센트 제거, 아랍어(Tashkeel·Alef·Teh Marbuta) 및 키릴어(`ё→е`) 정규화, NLTK 미설치 환경에서도 동작하는 내장 7개 국어 불용어 사전(`_FALLBACK_STOPWORDS`) 및 SnowballStemmer 연동.
+     - Step 3: 발행 시각 기반 72시간 시간창 가드(`_within_time_window`), 권위도·엔티티 밀도 기반 대표 헤드라인 선정, 다중 출처(`sources`, `source_types`, `observed_lanes`) 누적 군집화.
+     - Step 4: 5대 해상 병목 표준코드(`CHOKEPOINT_HORMUZ`, `CHOKEPOINT_BAB_EL_MANDEB`, `CHOKEPOINT_MALACCA`, `CHOKEPOINT_BOSPHORUS`, `CHOKEPOINT_PANAMA` + `CHOKEPOINT_TAIWAN_STRAIT`) 및 한국 6대 핵심 공급망 품목(`CRUDE_OIL`, `NATURAL_GAS_LNG`, `SEMICONDUCTOR`, `RARE_EARTHS`, `BATTERY_MINERALS`, `GRAIN_FOOD`), 5대 위기 이벤트 다국어 사전 태깅.
+  2. `scripts/pipeline/bridge_preprocess_lanes.py` 구현 및 스마트폰(S20 Ultra) 동기화 실데이터 검증:
+     - 4대 레인 원시 레코드 378건(FAST 234, CONTEXT 60, OPINION 84, BASELINE 7) 일괄 정제 → 노이즈·비관련 49건 배제(`preprocess_rejects_latest.json`), 유효 329건을 209개 대표 클러스터(`canonical_signals_latest.json`)로 압축(다중 출처 클러스터 21개, 호르무즈 3건, 바브엘만데브 1건, 대만해협 3건, 원유 11건, LNG 1건, 반도체 14건).
+- 바꾼 파일: `scripts/automation/preprocess_signals.py`, `scripts/pipeline/bridge_preprocess_lanes.py`, `data/automation/canonical_signals_latest.json`, `data/automation/preprocess_rejects_latest.json`, `data/automation/preprocess_summary_latest.json`, `docs/current/PREPROCESSING_SESSION_PROMPT.md`, `AGENT_SYNC.md`.
+- 확인한 것: `--self-test`, `bridge_preprocess_lanes.py`, `auto_anomaly_scanner.py --dry-run` 모두 무결성 통과. 모든 클러스터 `verification_state="UNVERIFIED"`, `alert_level_set=false` 원칙 준수.
+- 다음 작업: 교차검증 및 LLM 3-Tier 분석 세션에서 `data/automation/canonical_signals_latest.json`을 입력으로 소비하도록 연결.
+- 주의할 점: 수집기(`scripts/collection/*`), Airflow DAG, DB DDL, 대시보드 UI는 수정하지 않음. 단일 출처 신호의 임의 경보 격상 금지.
 
 2026-11-03 [ANTIGRAVITY / 갤럭시 S20 울트라 엣지 수집 노드 실기기 가동 및 원격 Git 자동 푸시 완결]
 - 한 일:

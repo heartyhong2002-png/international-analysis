@@ -1,0 +1,411 @@
+{
+  "schema_version": "preprocess_rejects_v1",
+  "generated_at": "2026-11-03T02:44:43.483756+00:00",
+  "total_rejected": 49,
+  "reason_breakdown": {
+    "entertainment_sports_noise": 9,
+    "low_geopolitical_relevance": 31,
+    "ad_or_soft_section": 7,
+    "diplomatic_protocol_noise": 1,
+    "empty_title": 1
+  },
+  "lane_breakdown": {
+    "FAST": 12,
+    "CONTEXT": 20,
+    "OPINION": 17
+  },
+  "rejects": [
+    {
+      "title": "Former football player Hamid Alidoosti passes away",
+      "url": "https://en.irna.ir/photo/86310129/Former-football-player-Hamid-Alidoosti-passes-away",
+      "source": "IRNA (이란 국영 통신사)",
+      "lane": "FAST",
+      "reject_reason": "entertainment_sports_noise",
+      "relevance_score": 0.5
+    },
+    {
+      "title": "In photos: Persepolis volleyball team training session",
+      "url": "https://en.irna.ir/photo/86309776/In-photos-Persepolis-volleyball-team-training-session",
+      "source": "IRNA (이란 국영 통신사)",
+      "lane": "FAST",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Russian official calls for stronger Tehran-Moscow ties to protect shared interests",
+      "url": "https://en.irna.ir/news/86309494/Russian-official-calls-for-stronger-Tehran-Moscow-ties-to-protect",
+      "source": "IRNA (이란 국영 통신사)",
+      "lane": "FAST",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "At least seven migrants die on boat bound for Canary Islands amid storm",
+      "url": "https://www.aljazeera.com/video/newsfeed/2026/11/2/at-least-seven-migrants-die-on-boat-bound-for-canary-islands-amid-storm?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Displaced in Hebron: Picking up pieces after Israeli siege",
+      "url": "https://www.aljazeera.com/news/2026/11/2/displaced-in-hebron-picking-up-pieces-after-israeli-siege?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Carrick not distracted by speculation over United future",
+      "url": "https://www.aljazeera.com/sports/2026/11/2/carrick-not-distracted-by-speculation-over-united-future?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "ad_or_soft_section",
+      "relevance_score": 0.0
+    },
+    {
+      "title": "Jake Paul to fight MMA star Cedric Doumbe",
+      "url": "https://www.aljazeera.com/sports/2026/11/2/jake-paul-to-fight-mma-star-cedric-doumbe?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "ad_or_soft_section",
+      "relevance_score": 0.0
+    },
+    {
+      "title": "Al Jazeera condemns Israeli ban extension, calls for its immediate lifting",
+      "url": "https://www.aljazeera.com/news/2026/11/2/al-jazeera-condemns-israeli-ban-extension-calls-for-its-immediate-lifting?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Barcelona vs Aston Villa: Champions League – Predictions, news, lineups",
+      "url": "https://www.aljazeera.com/sports/2026/11/2/barcelona-vs-aston-villa-champions-league-predictions-news?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "ad_or_soft_section",
+      "relevance_score": 0.0
+    },
+    {
+      "title": "As Islamophobia ramps up in US midterms, Texas Muslims eye local stakes",
+      "url": "https://www.aljazeera.com/news/2026/11/2/as-islamophobia-ramps-up-in-us-midterms-texas-muslims-eye-local-stakes?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "French school protests resume on small scale as students return from break",
+      "url": "https://www.aljazeera.com/news/2026/11/2/french-school-protests-resume-on-small-scale-as-students-return-from-break?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Can Americans who disagree on politics still find common ground?",
+      "url": "https://www.aljazeera.com/video/newsfeed/2026/11/2/can-americans-who-disagree-on-politics-still-find-common-ground?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "European youth completely brainwashed; they are not being taught history, says senator",
+      "url": "https://tass.com/politics/2212039",
+      "source": "ru_tass_en_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Спортивный суд обязал немедленно вернуть Россию в большой хоккей. К этому оказалось абсолютно ничего не готово. Не исключено, что организаторам ЧМ придется отдать России место Украины, которая попала на турнир впервые за 20 лет",
+      "url": "https://meduza.io/feature/2026/11/02/sportivnyy-sud-obyazal-nemedlenno-vernut-rossiyu-v-bolshoy-hokkey-k-etomu-okazalos-absolyutno-nichego-ne-gotovo",
+      "source": "ru_meduza_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "entertainment_sports_noise",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "'Snowflakes, Uzbekistan's future Olympic stars",
+      "url": "http://english.people.com.cn\n/90777/8065708.html",
+      "source": "cn_people_daily_world_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "entertainment_sports_noise",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Expo 2017 to bring Kazakhstan under global spotlight: Kazakh FM",
+      "url": "http://english.people.com.cn\n/90777/8065488.html",
+      "source": "cn_people_daily_world_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "diplomatic_protocol_noise",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "1",
+      "url": "http://english.people.com.cn\n/90777/8065032.html",
+      "source": "cn_people_daily_world_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "empty_title",
+      "relevance_score": 0.0
+    },
+    {
+      "title": "Thai police seizes 1.3 million meth pills in Chumphon",
+      "url": "http://english.people.com.cn\n/90777/8064767.html",
+      "source": "cn_people_daily_world_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Restoration of Vank Cathedral underway ahead of UNESCO World Heritage bid",
+      "url": "https://www.tehrantimes.com/news/531749/Restoration-of-Vank-Cathedral-underway-ahead-of-UNESCO-World",
+      "source": "ir_tehran_times_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Vafaei beats Selby at 2026 International Championship",
+      "url": "https://www.tehrantimes.com/news/531744/Vafaei-beats-Selby-at-2026-International-Championship",
+      "source": "ir_tehran_times_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "لا تسافروا إلى الأندلس… إنها تختبئ في شوارع القاهرة",
+      "url": "https://raseef22.net/article/1102635-%D9%84%D8%A7-%D8%AA%D8%B3%D8%A7%D9%81%D8%B1%D9%88%D8%A7-%D8%A5%D9%84%D9%89-%D8%A7%D9%84%D8%A3%D9%86%D8%AF%D9%84%D8%B3-%D8%A5%D9%86%D9%87%D8%A7-%D8%AA%D8%AE%D8%AA%D8%A8%D8%A6-%D9%81%D9%8A-%D8%B4%D9%88%D8%A7%D8%B1%D8%B9-%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D8%A9",
+      "source": "me_raseef22_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "إلى طنط ناهد… سأرتدي تجاعيدي بفخر هذا الهالوين",
+      "url": "https://raseef22.net/article/1102634-%D8%A5%D9%84%D9%89-%D8%B7%D9%86%D8%B7-%D9%86%D8%A7%D9%87%D8%AF-%D8%B3%D8%A3%D8%B1%D8%AA%D8%AF%D9%8A-%D8%AA%D8%AC%D8%A7%D8%B9%D9%8A%D8%AF%D9%8A-%D8%A8%D9%81%D8%AE%D8%B1-%D9%87%D8%B0%D8%A7-%D8%A7%D9%84%D9%87%D8%A7%D9%84%D9%88%D9%8A%D9%86",
+      "source": "me_raseef22_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "\"عواصم جديدة للدعارة\"؟… مصطفى محمود ضد مصطفى محمود",
+      "url": "https://raseef22.net/article/1102626-%D8%B9%D9%88%D8%A7%D8%B5%D9%85-%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9-%D9%84%D9%84%D8%AF%D8%B9%D8%A7%D8%B1%D8%A9-%D9%85%D8%B5%D8%B7%D9%81%D9%89-%D9%85%D8%AD%D9%85%D9%88%D8%AF-%D8%B6%D8%AF-%D9%85%D8%B5%D8%B7%D9%81%D9%89-%D9%85%D8%AD%D9%85%D9%88%D8%AF",
+      "source": "me_raseef22_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "كان حسام علوان يرى في كل شيء أثراً لإنسان",
+      "url": "https://raseef22.net/article/1102624-%D9%83%D8%A7%D9%86-%D8%AD%D8%B3%D8%A7%D9%85-%D8%B9%D9%84%D9%88%D8%A7%D9%86-%D9%8A%D8%B1%D9%89-%D9%81%D9%8A-%D9%83%D9%84-%D8%B4%D9%8A%D8%A1-%D8%A3%D8%AB%D8%B1%D8%A7-%D9%84%D8%A5%D9%86%D8%B3%D8%A7%D9%86",
+      "source": "me_raseef22_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "ماذا نعرف عن المرأة التي ارتبط اسمها بأقدم الجامعات؟… فاطمة الفهرية",
+      "url": "https://raseef22.net/article/1102625-%D9%85%D8%A7%D8%B0%D8%A7-%D9%86%D8%B9%D8%B1%D9%81-%D8%B9%D9%86-%D8%A7%D9%84%D9%85%D8%B1%D8%A3%D8%A9-%D8%A7%D9%84%D8%AA%D9%8A-%D8%A7%D8%B1%D8%AA%D8%A8%D8%B7-%D8%A7%D8%B3%D9%85%D9%87%D8%A7-%D8%A8%D8%A3%D9%82%D8%AF%D9%85-%D8%A7%D9%84%D8%AC%D8%A7%D9%85%D8%B9%D8%A7%D8%AA-%D9%81%D8%A7%D8%B7%D9%85%D8%A9-%D8%A7%D9%84%D9%81%D9%87%D8%B1%D9%8A%D8%A9",
+      "source": "me_raseef22_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "حقائق يتجاهلها عرب مارسوا عنصريتهم بحق المحتجين في فرنسا",
+      "url": "https://raseef22.net/article/1102623-%D8%AD%D9%82%D8%A7%D8%A6%D9%82-%D9%8A%D8%AA%D8%AC%D8%A7%D9%87%D9%84%D9%87%D8%A7-%D8%B9%D8%B1%D8%A8-%D9%85%D8%A7%D8%B1%D8%B3%D9%88%D8%A7-%D8%B9%D9%86%D8%B5%D8%B1%D9%8A%D8%AA%D9%87%D9%85-%D8%A8%D8%AD%D9%82-%D8%A7%D9%84%D9%85%D8%AD%D8%AA%D8%AC%D9%8A%D9%86-%D9%81%D9%8A-%D9%81%D8%B1%D9%86%D8%B3%D8%A7",
+      "source": "me_raseef22_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "At least seven migrants die on boat bound for Canary Islands amid storm",
+      "url": "https://www.aljazeera.com/video/newsfeed/2026/11/2/at-least-seven-migrants-die-on-boat-bound-for-canary-islands-amid-storm?traffic_source=rss",
+      "source": "al_jazeera_all",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Displaced in Hebron: Picking up pieces after Israeli siege",
+      "url": "https://www.aljazeera.com/news/2026/11/2/displaced-in-hebron-picking-up-pieces-after-israeli-siege?traffic_source=rss",
+      "source": "al_jazeera_all",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Carrick not distracted by speculation over United future",
+      "url": "https://www.aljazeera.com/sports/2026/11/2/carrick-not-distracted-by-speculation-over-united-future?traffic_source=rss",
+      "source": "al_jazeera_all",
+      "lane": "CONTEXT",
+      "reject_reason": "ad_or_soft_section",
+      "relevance_score": 0.0
+    },
+    {
+      "title": "Jake Paul to fight MMA star Cedric Doumbe",
+      "url": "https://www.aljazeera.com/sports/2026/11/2/jake-paul-to-fight-mma-star-cedric-doumbe?traffic_source=rss",
+      "source": "al_jazeera_all",
+      "lane": "CONTEXT",
+      "reject_reason": "ad_or_soft_section",
+      "relevance_score": 0.0
+    },
+    {
+      "title": "Al Jazeera condemns Israeli ban extension, calls for its immediate lifting",
+      "url": "https://www.aljazeera.com/news/2026/11/2/al-jazeera-condemns-israeli-ban-extension-calls-for-its-immediate-lifting?traffic_source=rss",
+      "source": "al_jazeera_all",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Barcelona vs Aston Villa: Champions League – Predictions, news, lineups",
+      "url": "https://www.aljazeera.com/sports/2026/11/2/barcelona-vs-aston-villa-champions-league-predictions-news?traffic_source=rss",
+      "source": "al_jazeera_all",
+      "lane": "CONTEXT",
+      "reject_reason": "ad_or_soft_section",
+      "relevance_score": 0.0
+    },
+    {
+      "title": "[新聞] 4度流、廢標後終決標！國軍91億寬頻無線",
+      "url": "https://www.ptt.cc/bbs/Military/M.1793590924.A.6D6.html",
+      "source": "PTT_Military",
+      "lane": "OPINION",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "[分享] 93版本的綠色零食",
+      "url": "https://www.ptt.cc/bbs/Military/M.1793591410.A.901.html",
+      "source": "PTT_Military",
+      "lane": "OPINION",
+      "reject_reason": "entertainment_sports_noise",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "[新聞] 美方改提二手M109A6升級A7 遭我陸軍拒絕",
+      "url": "https://www.ptt.cc/bbs/Military/M.1793609213.A.4E8.html",
+      "source": "PTT_Military",
+      "lane": "OPINION",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Re: [新聞] 美方改提二手M109A6升級A7 遭我陸軍拒絕",
+      "url": "https://www.ptt.cc/bbs/Military/M.1793621015.A.0E1.html",
+      "source": "PTT_Military",
+      "lane": "OPINION",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Re: [問卦] 聽君一席話 如聽一席話",
+      "url": "https://www.ptt.cc/bbs/Gossiping/M.1793635291.A.4C5.html",
+      "source": "PTT_Gossiping",
+      "lane": "OPINION",
+      "reject_reason": "entertainment_sports_noise",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "[問卦] ChatGPT開始放廣告了",
+      "url": "https://www.ptt.cc/bbs/Gossiping/M.1793635307.A.A8C.html",
+      "source": "PTT_Gossiping",
+      "lane": "OPINION",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "[問卦] 在夜店吧台喝酒的女生要怎麼搭訕？",
+      "url": "https://www.ptt.cc/bbs/Gossiping/M.1793635321.A.8F6.html",
+      "source": "PTT_Gossiping",
+      "lane": "OPINION",
+      "reject_reason": "entertainment_sports_noise",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Re: [新聞] 賴總統：穩定社會不漲油電健保　盼在野黨",
+      "url": "https://www.ptt.cc/bbs/Gossiping/M.1793635409.A.8BC.html",
+      "source": "PTT_Gossiping",
+      "lane": "OPINION",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "[問卦] 日本有曾經一億總中流",
+      "url": "https://www.ptt.cc/bbs/Gossiping/M.1793635519.A.CC0.html",
+      "source": "PTT_Gossiping",
+      "lane": "OPINION",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Re: [問卦] 一直強調陪伴的意思是什麼啊？",
+      "url": "https://www.ptt.cc/bbs/Gossiping/M.1793635655.A.DF8.html",
+      "source": "PTT_Gossiping",
+      "lane": "OPINION",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "[問卦] 一講到演藝圈長青樹 會想到誰?",
+      "url": "https://www.ptt.cc/bbs/Gossiping/M.1793635692.A.66B.html",
+      "source": "PTT_Gossiping",
+      "lane": "OPINION",
+      "reject_reason": "entertainment_sports_noise",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "[問卦] 為什麼日本人來台灣騎車都會遇到鬼切計程",
+      "url": "https://www.ptt.cc/bbs/Gossiping/M.1793635907.A.5BA.html",
+      "source": "PTT_Gossiping",
+      "lane": "OPINION",
+      "reject_reason": "entertainment_sports_noise",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "[新聞] 洋流一走、垃圾留下 徐巧芯不忍了呼叫沈",
+      "url": "https://www.ptt.cc/bbs/Gossiping/M.1793636074.A.0AC.html",
+      "source": "PTT_Gossiping",
+      "lane": "OPINION",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "[問卦] 商務小飛機為什麼不配置降落傘呢?",
+      "url": "https://www.ptt.cc/bbs/Gossiping/M.1793636119.A.9E5.html",
+      "source": "PTT_Gossiping",
+      "lane": "OPINION",
+      "reject_reason": "entertainment_sports_noise",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "SK Hynix begins HBM4 production as demand for AI chips soars, while Taiwan tightens export controls on advanced sem  We sponsor this channel. Find out. https://www.ProNetGrowth.com/semi/?utm_source=bl",
+      "url": "https://bsky.app/profile/semiconductornews.bsky.social/post/3mzdmb6pzps2y",
+      "source": "Bluesky_Social",
+      "lane": "OPINION",
+      "reject_reason": "ad_or_soft_section",
+      "relevance_score": 0.0
+    },
+    {
+      "title": "📝 Наказание может быть разным 📝 О проблеме реально обманутых подростков Что общего у медалиста, победителя олимпиады и подростка, обвиняемого в терроризме? Иногда это один и тот же человек. Вчера он готовился к поступлению в вуз, а сегодня сидит в СИ",
+      "url": "https://t.me/rybar",
+      "source": "Telegram_@rybar",
+      "lane": "OPINION",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "📝 Первая в истории 📝 Женщина-президент в Софии Интрига выборов главы государства в Болгарии развеялась, Илияна Йотова (действующий вице-президент) обходит Андрея Гюрова и набирает 57,5% голосов, по данным ЦИК. Отрыв от второго места составляет 18% . ",
+      "url": "https://t.me/rybar",
+      "source": "Telegram_@rybar",
+      "lane": "OPINION",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    }
+  ]
+}

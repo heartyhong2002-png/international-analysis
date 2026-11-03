@@ -16,9 +16,9 @@
 
 ### 1. 담당 영역 및 파일 (In-Scope)
 - scripts/automation/preprocess_signals.py (지능형 다국어 4단계 전처리 모듈)
-- scripts/pipeline/ 또는 scripts/automation/ 신규 전처리 브릿지 스크립트
+- scripts/pipeline/bridge_preprocess_lanes.py (4대 수집 레인 원시 데이터 -> 표준 정형 신호 브릿지 스크립트)
 - config/source_registry/ (중복 제거 및 스키마 필터링 규칙 참조)
-- data/automation/, data/signal_gap/ 등 전처리 산출물 JSON/CSV
+- data/automation/canonical_signals_latest.json, preprocess_rejects_latest.json, preprocess_summary_latest.json 등 전처리 산출물 JSON/CSV
 
 ### 2. 4단계 지능형 전처리 파이프라인 구현 기준
 1. Step 1 (다국어 노이즈 필터링):
