@@ -1,26 +1,36 @@
 {
   "schema_version": "preprocess_rejects_v1",
-  "generated_at": "2026-11-04T10:29:54.984372+00:00",
-  "total_rejected": 49,
+  "generated_at": "2026-11-05T03:47:19.267747+00:00",
+  "purity_mode": "standard",
+  "total_rejected": 68,
   "reason_breakdown": {
-    "entertainment_sports_noise": 9,
-    "low_geopolitical_relevance": 31,
+    "retrospective_or_non_current_noise": 4,
+    "low_geopolitical_relevance": 47,
     "ad_or_soft_section": 7,
+    "entertainment_sports_noise": 8,
     "diplomatic_protocol_noise": 1,
     "empty_title": 1
   },
   "lane_breakdown": {
-    "FAST": 12,
-    "CONTEXT": 20,
-    "OPINION": 17
+    "FAST": 13,
+    "CONTEXT": 37,
+    "OPINION": 18
   },
   "rejects": [
+    {
+      "title": "Ex-FM Kharrazi remembered for promoting knowledge-based foreign policy",
+      "url": "https://en.irna.ir/news/86310181/Ex-FM-Kharrazi-remembered-for-promoting-knowledge-based-foreign",
+      "source": "IRNA (이란 국영 통신사)",
+      "lane": "FAST",
+      "reject_reason": "retrospective_or_non_current_noise",
+      "relevance_score": 0.5
+    },
     {
       "title": "Former football player Hamid Alidoosti passes away",
       "url": "https://en.irna.ir/photo/86310129/Former-football-player-Hamid-Alidoosti-passes-away",
       "source": "IRNA (이란 국영 통신사)",
       "lane": "FAST",
-      "reject_reason": "entertainment_sports_noise",
+      "reject_reason": "retrospective_or_non_current_noise",
       "relevance_score": 0.5
     },
     {
@@ -117,6 +127,14 @@
       "source": "ru_tass_en_rss",
       "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "«Мир тюрьмы богат на ярких персонажей». В издательстве «Медузы» вышла книга политика Андрея Пивоварова. Она называется «Закрытая Россия» и рассказывает о гражданском сопротивлении и тюремном опыте",
+      "url": "https://meduza.io/feature/2026/11/02/mir-tyurmy-bogat-na-yarkih-personazhey-v-izdatelstve-meduzy-vyshla-kniga-politika-andreya-pivovarova",
+      "source": "ru_meduza_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "retrospective_or_non_current_noise",
       "relevance_score": 0.2
     },
     {
@@ -270,6 +288,142 @@
       "lane": "CONTEXT",
       "reject_reason": "ad_or_soft_section",
       "relevance_score": 0.0
+    },
+    {
+      "title": "‼️ У Києві мешканці перекрили дорогу на Академі через тривалі відключення світла, — місцеві ЗМІ  Україна Online | Підписатись",
+      "url": "https://t.me/s/UaOnlii",
+      "source": "Telegram_@UaOnlii",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‼️ Жодні акції чи перекриття доріг не допоможуть швидше повернути світло: енергетики цілодобово усувають пошкодження внаслідок російських атак та аварій, — ДТЕК...",
+      "url": "https://t.me/s/UaOnlii",
+      "source": "Telegram_@UaOnlii",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Швидже міняйте шини на зимові: водіїв каратимуть за літню гуму взимку, якщо вона стала причиною ДТП, — Telegraf 📍 В Україні немає закону, який зобов’язує змінюв...",
+      "url": "https://t.me/s/UaOnlii",
+      "source": "Telegram_@UaOnlii",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‼️ Софіївська Борщагівка у вогні: палають склади та торговельні приміщення, над районом здіймається величезне зарево після прильоту Україна Online | Підписатись",
+      "url": "https://t.me/s/UaOnlii",
+      "source": "Telegram_@UaOnlii",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‏ ️ونس، معاون رئیس دولت تروریستی آمریکا: برای اینکه مردم دوباره به ما رأی دهند، باید جنگ با ایران را پایان دهیم، در روابطمان با اسرائیل تجدیدنظر کنیم، بر هزینه‌...",
+      "url": "https://t.me/s/sepah_pasdaran",
+      "source": "Telegram_@sepah_pasdaran",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‏ ️سقوط مرگبار بالگرد در میامی آمریکا به گفتهٔ مقامات محلی، سقوط یک بالگرد کوچک متعلق به یک شرکت عکاسی هوایی در آب، یک کشته و دو زخمی برجای گذاشته است. این سقوط...",
+      "url": "https://t.me/s/sepah_pasdaran",
+      "source": "Telegram_@sepah_pasdaran",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‏ ️ حزب‌الله عراق: درپی دستور رهبر انقلاب، دست‌برماشه آمادهٔ پاسخ دندان‌شکن هستیم درپی صدور فرمان قاطع رهبر معظم انقلاب مبنی‌بر پاسخ دندان‌شکن به تجاوزات دشمن م...",
+      "url": "https://t.me/s/sepah_pasdaran",
+      "source": "Telegram_@sepah_pasdaran",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‏ ️ حزب‌الله عراق: پایان حضور نحس ارتش اشغالگر در غرب آسیا حکمی قطعی است؛ یا با پای خود و با ذلت منطقه را ترک می‌کنید، یا با تابوت‌های افقی بازخواهید گشت تمام پ...",
+      "url": "https://t.me/s/sepah_pasdaran",
+      "source": "Telegram_@sepah_pasdaran",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‏ ️ حزب‌الله عراق: هرگونه حماقت، تجاوز یا ماجراجویی آمریکا و سگ هار آن در منطقه، با پاسخی مافوق تصور و فراتر از همه برآوردهای ارتش آمریکا مواجه خواهد شد جغرافیا...",
+      "url": "https://t.me/s/sepah_pasdaran",
+      "source": "Telegram_@sepah_pasdaran",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‏ ️فوربس: ترامپ امروز حدود ۷۳ میلیون دلار از ثروت خود را از دست داد. علت این کاهش، افت بی‌سابقه و شدید ارزش سهام شرکت ترامپ مدیا بود. ‎ ✅ @sepah_pasdaran",
+      "url": "https://t.me/s/sepah_pasdaran",
+      "source": "Telegram_@sepah_pasdaran",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‏ ️امروز در تاریخ به عنوان روز شکست بزرگ ترامپ ثبت خواهد شد. هنوز کار تمام نشده است... ویدیوی جدید لگویی درباره انتخابات میان‌دوره‌ای ‎ ✅ @sepah_pasdaran",
+      "url": "https://t.me/s/sepah_pasdaran",
+      "source": "Telegram_@sepah_pasdaran",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "بعد سيطرة الديمقراطيين.. وزير الأمن الداخلي: ترحيلات المهاجرين في أميركا مستمرة https://ara.tv/9c882",
+      "url": "https://t.me/s/AlArabiya",
+      "source": "Telegram_@AlArabiya",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "دعوات للمحاسبة تهدد هيغسيث وترامب يعلن دعمه الكامل https://ara.tv/3gg79",
+      "url": "https://t.me/s/AlArabiya",
+      "source": "Telegram_@AlArabiya",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "تشمل صنّاع المحتوى.. موريتانيا تفرض قيودا على إعلانات مواد التجميل https://ara.tv/yyaax",
+      "url": "https://t.me/s/AlArabiya",
+      "source": "Telegram_@AlArabiya",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "المد الأزرق يكتسح الولايات.. الديمقراطيون يوسعون نفوذهم خارج الكونغرس https://ara.tv/wluog",
+      "url": "https://t.me/s/AlArabiya",
+      "source": "Telegram_@AlArabiya",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "بعد ثلاجات السوبرماركت.. قراصنة يعبثون بحرارة بنوك الدم في فرنسا https://ara.tv/ekd86",
+      "url": "https://t.me/s/AlArabiya",
+      "source": "Telegram_@AlArabiya",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "[分享] 川普：如果我當年是總統，一周就能打贏越戰",
+      "url": "https://www.ptt.cc/bbs/Military/M.1793586414.A.477.html",
+      "source": "PTT_Military",
+      "lane": "OPINION",
+      "reject_reason": "retrospective_or_non_current_noise",
+      "relevance_score": 0.2
     },
     {
       "title": "[新聞] 4度流、廢標後終決標！國軍91億寬頻無線",

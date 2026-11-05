@@ -1,66 +1,66 @@
 {
   "schema_version": "preprocess_summary_v1",
-  "generated_at": "2026-11-05T03:36:45.136564+00:00",
+  "generated_at": "2026-11-05T03:48:15.260836+00:00",
   "purity_mode": "high",
   "alert_level_set": false,
   "verification_state_default": "UNVERIFIED",
   "input_counts": {
-    "total_raw": 378,
+    "total_raw": 451,
     "FAST": 234,
-    "CONTEXT": 60,
-    "OPINION": 84,
+    "CONTEXT": 100,
+    "OPINION": 117,
     "BASELINE_SENSORS": 7
   },
   "output_counts": {
-    "canonical_clusters": 19,
-    "rejected_noise": 310,
-    "tier_1_corroborated": 6,
-    "tier_2_verified_entity": 13,
-    "multi_source_clusters": 4
+    "canonical_clusters": 29,
+    "rejected_noise": 343,
+    "tier_1_corroborated": 9,
+    "tier_2_verified_entity": 20,
+    "multi_source_clusters": 7
   },
   "tier_distribution": {
-    "TIER_1_CORROBORATED": 6,
-    "TIER_2_VERIFIED_ENTITY": 13
+    "TIER_1_CORROBORATED": 9,
+    "TIER_2_VERIFIED_ENTITY": 20
   },
   "reject_reason_breakdown": {
-    "high_purity_missing_hard_entity": 274,
+    "high_purity_missing_hard_entity": 302,
     "retrospective_or_non_current_noise": 4,
     "ad_or_soft_section": 7,
     "entertainment_sports_noise": 8,
     "diplomatic_protocol_noise": 1,
     "empty_title": 1,
-    "high_purity_social_threshold_unmet": 15
+    "high_purity_social_threshold_unmet": 20
   },
   "chokepoint_distribution": {
-    "CHOKEPOINT_HORMUZ": 1,
-    "CHOKEPOINT_BAB_EL_MANDEB": 1,
+    "CHOKEPOINT_HORMUZ": 5,
+    "CHOKEPOINT_BAB_EL_MANDEB": 3,
     "CHOKEPOINT_MALACCA": 0,
-    "CHOKEPOINT_BOSPHORUS": 0,
-    "CHOKEPOINT_PANAMA": 0,
-    "CHOKEPOINT_TAIWAN_STRAIT": 3
+    "CHOKEPOINT_BOSPHORUS": 1,
+    "CHOKEPOINT_PANAMA": 2,
+    "CHOKEPOINT_TAIWAN_STRAIT": 4
   },
   "supply_chain_distribution": {
-    "CRUDE_OIL": 8,
+    "CRUDE_OIL": 11,
     "NATURAL_GAS_LNG": 1,
-    "SEMICONDUCTOR": 8,
+    "SEMICONDUCTOR": 12,
     "RARE_EARTHS": 0,
     "BATTERY_MINERALS": 0,
     "GRAIN_FOOD": 0
   },
   "event_type_distribution": {
-    "MILITARY_CONFLICT": 6,
-    "SANCTIONS_EXPORT_CONTROL": 3,
+    "MILITARY_CONFLICT": 7,
+    "SANCTIONS_EXPORT_CONTROL": 4,
     "INFRA_LOGISTICS_DISRUPTION": 6,
     "ELECTION_GOVERNMENT": 3,
     "PROTEST_STRIKE": 2
   },
   "hotspot_distribution": {
-    "MIDDLE_EAST": 4,
-    "NORTH_AMERICA": 5,
-    "WESTERN_EUROPE": 1,
-    "CENTRAL_AFRICA": 1,
+    "MIDDLE_EAST": 9,
+    "EAST_ASIA": 14,
     "EASTERN_EUROPE": 2,
-    "LATIN_AMERICA": 2,
-    "EAST_ASIA": 8
+    "WESTERN_EUROPE": 2,
+    "NORTH_AMERICA": 6,
+    "CENTRAL_AFRICA": 1,
+    "LATIN_AMERICA": 4
   }
 }

@@ -120,7 +120,7 @@ def load_fast_lane() -> List[Dict[str, Any]]:
 
 
 def load_context_lane() -> List[Dict[str, Any]]:
-    """CONTEXT 레인: 4대 권역 신호 괴리 RSS (관영 vs 독립·망명 언론) 로드."""
+    """CONTEXT 레인: 4대 권역 신호 괴리 RSS 및 텔레그램 공개 OSINT 로드."""
     records: List[Dict[str, Any]] = []
     sg_path = DATA_DIR / "signal_gap" / "rss_signal_gap_latest.csv"
     if sg_path.exists():
@@ -144,11 +144,36 @@ def load_context_lane() -> List[Dict[str, Any]]:
                     })
         except Exception as e:
             print(f"  [WARN] Signal Gap RSS 로드 실패: {e}")
+
+    # 2. Telegram Public OSINT (신규 경량 JSON/CSV 포맷 연동)
+    tg_json_path = DATA_DIR / "signal_gap" / "telegram_osint_latest.json"
+    if tg_json_path.exists():
+        try:
+            tg_list = json.loads(tg_json_path.read_text(encoding="utf-8"))
+            if isinstance(tg_list, list):
+                for item in tg_list:
+                    msg = (item.get("Message_Content") or "").strip()
+                    title_part = msg[:160] + ("..." if len(msg) > 160 else "")
+                    records.append({
+                        "title": title_part,
+                        "summary": msg,
+                        "url": item.get("Source_URL", ""),
+                        "source": f"Telegram_{item.get('Channel_ID', 'OSINT')}",
+                        "source_type": "telegram_osint",
+                        "lane": "CONTEXT",
+                        "language": "",
+                        "published_at": item.get("Observed_At_UTC") or item.get("Scraped_At") or "",
+                        "country_or_region": item.get("Region", ""),
+                        "raw_ref": "data/signal_gap/telegram_osint_latest.json",
+                    })
+        except Exception as e:
+            print(f"  [WARN] Telegram OSINT JSON 로드 실패: {e}")
+
     return records
 
 
 def load_opinion_lane() -> List[Dict[str, Any]]:
-    """OPINION 레인: 로컬 포럼(PTT), Bluesky Social, GoogleNews 로컬 여론 로드."""
+    """OPINION 레인: 로컬 포럼(PTT), Bluesky AT Protocol, X Public, GoogleNews 로컬 여론 로드."""
     records: List[Dict[str, Any]] = []
     op_path = DATA_DIR / "local_opinions" / "local_opinions_latest.csv"
     if op_path.exists():
@@ -172,6 +197,32 @@ def load_opinion_lane() -> List[Dict[str, Any]]:
         except Exception as e:
             print(f"  [WARN] Local Opinions 로드 실패: {e}")
 
+    # 2. Bluesky AT Protocol Public Search (신규 수집기 연동)
+    bsky_path = DATA_DIR / "bluesky_public" / "bluesky_latest.json"
+    if bsky_path.exists():
+        try:
+            bsky_list = json.loads(bsky_path.read_text(encoding="utf-8"))
+            if isinstance(bsky_list, list):
+                for item in bsky_list:
+                    text = (item.get("text") or "").strip()
+                    ext_title = (item.get("external_title") or "").strip()
+                    title_str = ext_title if ext_title else (text[:160] + ("..." if len(text) > 160 else ""))
+                    records.append({
+                        "title": title_str,
+                        "summary": text if ext_title else "",
+                        "url": item.get("post_url") or item.get("external_link") or "",
+                        "source": f"Bluesky_{item.get('author_handle') or 'Public'}",
+                        "source_type": "online_information_environment_signal",
+                        "lane": "OPINION",
+                        "language": item.get("language") if item.get("language") != "unknown" else "",
+                        "published_at": item.get("published_at") or item.get("observed_at") or "",
+                        "country_or_region": item.get("issue_tags") or "GLOBAL",
+                        "raw_ref": "data/bluesky_public/bluesky_latest.json",
+                    })
+        except Exception as e:
+            print(f"  [WARN] Bluesky Public JSON 로드 실패: {e}")
+
+    # 3. X Public API
     x_path = DATA_DIR / "x_public" / "latest.json"
     if x_path.exists():
         try:

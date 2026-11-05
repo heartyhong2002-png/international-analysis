@@ -1,21 +1,21 @@
 {
   "schema_version": "preprocess_rejects_v1",
-  "generated_at": "2026-11-05T03:36:45.136564+00:00",
+  "generated_at": "2026-11-05T03:48:15.260836+00:00",
   "purity_mode": "high",
-  "total_rejected": 310,
+  "total_rejected": 343,
   "reason_breakdown": {
-    "high_purity_missing_hard_entity": 274,
+    "high_purity_missing_hard_entity": 302,
     "retrospective_or_non_current_noise": 4,
     "ad_or_soft_section": 7,
     "entertainment_sports_noise": 8,
     "diplomatic_protocol_noise": 1,
     "empty_title": 1,
-    "high_purity_social_threshold_unmet": 15
+    "high_purity_social_threshold_unmet": 20
   },
   "lane_breakdown": {
     "FAST": 207,
-    "CONTEXT": 51,
-    "OPINION": 52
+    "CONTEXT": 77,
+    "OPINION": 59
   },
   "rejects": [
     {
@@ -2083,6 +2083,214 @@
       "relevance_score": 0.0
     },
     {
+      "title": "📝 ФАБ по подземной школе 📝 Скандал с пыточной в Киеве затмил попадание трёхтонного ФАБ с УМПК по школе. И несмотря на то, что подземный объект давно занят чинов...",
+      "url": "https://t.me/s/rybar",
+      "source": "Telegram_@rybar",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "📝 Русский народ — основа единства 📝 о роли русских в сохранении многонациональной России Вопрос национальной идентичности и сохранения культурного многообразия ...",
+      "url": "https://t.me/s/rybar",
+      "source": "Telegram_@rybar",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Зеленський провів розмову зі спецпредставниками Трампа Віткоффом і Кушнером, — ТСН Обговорили підготовку до переговорів в Абу-Дабі 10–11 листопада та консультац...",
+      "url": "https://t.me/s/UaOnlii",
+      "source": "Telegram_@UaOnlii",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‼️ У Києві мешканці перекрили дорогу на Академі через тривалі відключення світла, — місцеві ЗМІ  Україна Online | Підписатись",
+      "url": "https://t.me/s/UaOnlii",
+      "source": "Telegram_@UaOnlii",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‼️ Жодні акції чи перекриття доріг не допоможуть швидше повернути світло: енергетики цілодобово усувають пошкодження внаслідок російських атак та аварій, — ДТЕК...",
+      "url": "https://t.me/s/UaOnlii",
+      "source": "Telegram_@UaOnlii",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Швидже міняйте шини на зимові: водіїв каратимуть за літню гуму взимку, якщо вона стала причиною ДТП, — Telegraf 📍 В Україні немає закону, який зобов’язує змінюв...",
+      "url": "https://t.me/s/UaOnlii",
+      "source": "Telegram_@UaOnlii",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‼️ Софіївська Борщагівка у вогні: палають склади та торговельні приміщення, над районом здіймається величезне зарево після прильоту Україна Online | Підписатись",
+      "url": "https://t.me/s/UaOnlii",
+      "source": "Telegram_@UaOnlii",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‏ ️ونس، معاون رئیس دولت تروریستی آمریکا: برای اینکه مردم دوباره به ما رأی دهند، باید جنگ با ایران را پایان دهیم، در روابطمان با اسرائیل تجدیدنظر کنیم، بر هزینه‌...",
+      "url": "https://t.me/s/sepah_pasdaran",
+      "source": "Telegram_@sepah_pasdaran",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‏ ️سقوط مرگبار بالگرد در میامی آمریکا به گفتهٔ مقامات محلی، سقوط یک بالگرد کوچک متعلق به یک شرکت عکاسی هوایی در آب، یک کشته و دو زخمی برجای گذاشته است. این سقوط...",
+      "url": "https://t.me/s/sepah_pasdaran",
+      "source": "Telegram_@sepah_pasdaran",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‏ ️ حزب‌الله عراق: درپی دستور رهبر انقلاب، دست‌برماشه آمادهٔ پاسخ دندان‌شکن هستیم درپی صدور فرمان قاطع رهبر معظم انقلاب مبنی‌بر پاسخ دندان‌شکن به تجاوزات دشمن م...",
+      "url": "https://t.me/s/sepah_pasdaran",
+      "source": "Telegram_@sepah_pasdaran",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‏ ️ حزب‌الله عراق: پایان حضور نحس ارتش اشغالگر در غرب آسیا حکمی قطعی است؛ یا با پای خود و با ذلت منطقه را ترک می‌کنید، یا با تابوت‌های افقی بازخواهید گشت تمام پ...",
+      "url": "https://t.me/s/sepah_pasdaran",
+      "source": "Telegram_@sepah_pasdaran",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‏ ️ حزب‌الله عراق: هرگونه حماقت، تجاوز یا ماجراجویی آمریکا و سگ هار آن در منطقه، با پاسخی مافوق تصور و فراتر از همه برآوردهای ارتش آمریکا مواجه خواهد شد جغرافیا...",
+      "url": "https://t.me/s/sepah_pasdaran",
+      "source": "Telegram_@sepah_pasdaran",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‏ ️فوربس: ترامپ امروز حدود ۷۳ میلیون دلار از ثروت خود را از دست داد. علت این کاهش، افت بی‌سابقه و شدید ارزش سهام شرکت ترامپ مدیا بود. ‎ ✅ @sepah_pasdaran",
+      "url": "https://t.me/s/sepah_pasdaran",
+      "source": "Telegram_@sepah_pasdaran",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‏ ️امروز در تاریخ به عنوان روز شکست بزرگ ترامپ ثبت خواهد شد. هنوز کار تمام نشده است... ویدیوی جدید لگویی درباره انتخابات میان‌دوره‌ای ‎ ✅ @sepah_pasdaran",
+      "url": "https://t.me/s/sepah_pasdaran",
+      "source": "Telegram_@sepah_pasdaran",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "بتوجيهات القيادة .. السعودية تموّل مشروعات تنموية في سوريا بقيمة تتجاوز 403 مليون دولار https://ara.tv/jg1p0",
+      "url": "https://t.me/s/AlArabiya",
+      "source": "Telegram_@AlArabiya",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.8
+    },
+    {
+      "title": "بعد سيطرة الديمقراطيين.. وزير الأمن الداخلي: ترحيلات المهاجرين في أميركا مستمرة https://ara.tv/9c882",
+      "url": "https://t.me/s/AlArabiya",
+      "source": "Telegram_@AlArabiya",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "ترامب يقر بتأثير ارتفاع أسعار الوقود بسبب حرب إيران على هزيمة الجمهوريين https://ara.tv/3mcte",
+      "url": "https://t.me/s/AlArabiya",
+      "source": "Telegram_@AlArabiya",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.5
+    },
+    {
+      "title": "دعوات للمحاسبة تهدد هيغسيث وترامب يعلن دعمه الكامل https://ara.tv/3gg79",
+      "url": "https://t.me/s/AlArabiya",
+      "source": "Telegram_@AlArabiya",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "تشمل صنّاع المحتوى.. موريتانيا تفرض قيودا على إعلانات مواد التجميل https://ara.tv/yyaax",
+      "url": "https://t.me/s/AlArabiya",
+      "source": "Telegram_@AlArabiya",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "المد الأزرق يكتسح الولايات.. الديمقراطيون يوسعون نفوذهم خارج الكونغرس https://ara.tv/wluog",
+      "url": "https://t.me/s/AlArabiya",
+      "source": "Telegram_@AlArabiya",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "بعد ثلاجات السوبرماركت.. قراصنة يعبثون بحرارة بنوك الدم في فرنسا https://ara.tv/ekd86",
+      "url": "https://t.me/s/AlArabiya",
+      "source": "Telegram_@AlArabiya",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "\"فجر اليمن\".. معارك محتدمة وتقدم في تعز والجوف https://ara.tv/8wvj6",
+      "url": "https://t.me/s/AlArabiya",
+      "source": "Telegram_@AlArabiya",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "تمكنت قواتنا المسلحة بفضل الله من إسقاط طائرة استطلاع مسلح نوع \"وينق لونق 2\" (Wing Loong II) هي العاشرة منذ بدء التصعيد تابعة للعدو السعودي كانت تقوم بأعمال عدا...",
+      "url": "https://t.me/s/army21ye",
+      "source": "Telegram_@army21ye",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.8
+    },
+    {
+      "title": "تمكنت قواتنا المسلحة بفضل الله من تنفيذ ثلاث عمليات عسكرية صباح اليوم، استهدفت العملية الأولى راداراً في شبه جزيرة القحمة شمالي جيزان بطائرة مسيرة وكانت الإصابة...",
+      "url": "https://t.me/s/army21ye",
+      "source": "Telegram_@army21ye",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 1.0
+    },
+    {
+      "title": "بعد قليل .. مشاهد حطام طائرة استطلاعية مسلحة نوع \"وينق لونق 2\" (Wing Loong II) تابعة للعدو السعودي التي تم اسقاطها في أجواء محافظة تعز",
+      "url": "https://t.me/s/army21ye",
+      "source": "Telegram_@army21ye",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.8
+    },
+    {
+      "title": "مشاهد حطام طائرة استطلاعية مسلحة نوع \"وينق لونق 2\" (Wing Loong II) تابعة للعدو السعودي تم اسقاطها في أجواء محافظة تعز - 4 نوفمبر 2026 م",
+      "url": "https://t.me/s/army21ye",
+      "source": "Telegram_@army21ye",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.8
+    },
+    {
       "title": "[新聞] 每瓶120元戰備礦泉水的報價廠商 國防部",
       "url": "https://www.ptt.cc/bbs/Military/M.1793575573.A.453.html",
       "source": "PTT_Military",
@@ -2497,6 +2705,62 @@
       "lane": "OPINION",
       "reject_reason": "high_purity_missing_hard_entity",
       "relevance_score": 0.8
+    },
+    {
+      "title": "Panama canal traffic facing further cuts as drought from El Niño worsens",
+      "url": "https://bsky.app/profile/japoniano.bsky.social/post/3mxzug26bo226",
+      "source": "Bluesky_@japoniano.bsky.social",
+      "lane": "OPINION",
+      "reject_reason": "high_purity_social_threshold_unmet",
+      "relevance_score": 0.5
+    },
+    {
+      "title": "Panama canal traffic facing further cuts as drought from El Niño worsens",
+      "url": "https://bsky.app/profile/anna26458.bsky.social/post/3mwqbdiqfps25",
+      "source": "Bluesky_@anna26458.bsky.social",
+      "lane": "OPINION",
+      "reject_reason": "high_purity_social_threshold_unmet",
+      "relevance_score": 0.5
+    },
+    {
+      "title": "Panama canal traffic facing further cuts as drought from El Niño worsens",
+      "url": "https://bsky.app/profile/anna26458.bsky.social/post/3mwnhwjivu22t",
+      "source": "Bluesky_@anna26458.bsky.social",
+      "lane": "OPINION",
+      "reject_reason": "high_purity_social_threshold_unmet",
+      "relevance_score": 0.5
+    },
+    {
+      "title": "Why Trump Can't Afford to Lose The Rare Earth Race",
+      "url": "https://bsky.app/profile/bigearthdata.ai/post/3myjcxrkpsq2v",
+      "source": "Bluesky_@bigearthdata.ai",
+      "lane": "OPINION",
+      "reject_reason": "high_purity_social_threshold_unmet",
+      "relevance_score": 0.5
+    },
+    {
+      "title": "China's Rare Earth Export Curbs Could Pressure Robot Production, REalloys Gains Traction",
+      "url": "https://bsky.app/profile/vaultlynews.bsky.social/post/3mybku2f6ju2g",
+      "source": "Bluesky_@vaultlynews.bsky.social",
+      "lane": "OPINION",
+      "reject_reason": "high_purity_social_threshold_unmet",
+      "relevance_score": 0.5
+    },
+    {
+      "title": "America Accelerates Push to Break China's Monopoly on Critical Minerals",
+      "url": "https://bsky.app/profile/wsnext.com/post/3mxuvfcaqix22",
+      "source": "Bluesky_@wsnext.com",
+      "lane": "OPINION",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.5
+    },
+    {
+      "title": "Europe Seeks Strategic Mineral Deal with Vietnam to Reduce Reliance on China",
+      "url": "https://bsky.app/profile/wsnext.com/post/3mxu2kyjmwp2i",
+      "source": "Bluesky_@wsnext.com",
+      "lane": "OPINION",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.5
     }
   ]
 }
