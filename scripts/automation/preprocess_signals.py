@@ -193,6 +193,20 @@ DIPLOMATIC_PROTOCOL_KEYWORDS: Set[str] = {
     "برقية تهنئة", "مهرجان ثقافي", "تبادل ثقافي",
 }
 
+# 과거사 회고 / 자서전·도서 출간 / 가정법 잡담 / 부고·추모 (비실시간 신호 배제)
+RETROSPECTIVE_OR_NON_CURRENT_KEYWORDS: Set[str] = {
+    # 책 출간/회고록/자서전
+    "memoir", "autobiography", "published a book", "new book", "book release", "book signing",
+    "вышла книга", "книга политика", "автобиография", "мемуары", "издательстве",
+    "출간", "회고록", "자서전", "신간", "도서 출간", "出書", "回憶錄", "自傳",
+    # 과거사 가정법 / 잡담
+    "if i were president", "if he were president", "当年是总统", "當年是總統",
+    # 부고 / 추모
+    "passes away", "passed away", "dies at age", "obituary", "tribute to",
+    "умер в плену", "умер бывший", "скончался", "погиб в аварии",
+    "별세", "부고", "타계", "사망 소식", "추모", "逝世", "訃告",
+}
+
 AD_SPONSOR_PATTERNS = [
     r"\b(sponsored|advertisement|advertorial|promo code|coupon code)\b",
     r"\b(shop now|buy now|limited[- ]time offer|click here to|we sponsor this channel)\b",
@@ -611,19 +625,31 @@ def calculate_relevance(title: str) -> float:
     return 0.2
 
 
-def classify_article(title: str, url: str = "", source: str = "", summary: str = "") -> Dict[str, Any]:
+def classify_article(
+    title: str,
+    url: str = "",
+    source: str = "",
+    summary: str = "",
+    *,
+    purity_mode: str = "standard",
+    lane: str = "UNSPECIFIED",
+) -> Dict[str, Any]:
     """
     기사를 keep/drop으로 분류하고 사유를 반환합니다.
+    purity_mode:
+      - "standard": 광범위 탐지 (기본값)
+      - "high": 하드 엔티티(해협·핵심공급망·제재·군사충돌) 필수 + 회고/가정법/부고 배제 고순도 정제
     drop 우선순위:
       1) 빈 제목 또는 의미 없는 기호 나열 (empty_title)
       2) 노이즈 도메인 (noise_domain)
       3) 광고/스폰서/소프트뉴스 섹션 (ad_or_soft_section)
-      4) 의례적 외교 수사/의전/박람회 홍보 (diplomatic_protocol_noise)
-      5) 연예·스포츠·가십 노이즈 (entertainment_sports_noise / noise_outweighs_geo)
-      6) 지정학·공급망 관련도 미달 (low_geopolitical_relevance)
+      4) 과거 회고·자서전 출간·가정법·부고 (retrospective_or_non_current_noise)
+      5) 의례적 외교 수사/의전/박람회 홍보 (diplomatic_protocol_noise)
+      6) 연예·스포츠·가십 노이즈 (entertainment_sports_noise / noise_outweighs_geo)
+      7) 고순도 모드 공급망/해협 하드 엔티티 미달 (high_purity_missing_hard_entity)
+      8) 지정학·공급망 관련도 미달 (low_geopolitical_relevance)
     """
     title_str = (title or "").strip()
-    # 의미 있는 글자가 거의 없는 파싱 오류 레코드 배제 (예: "1", "&$ 【1】")
     alpha_chars = re.findall(r"[a-zA-Z가-힣\u0400-\u04FF\u0600-\u06FF\u4E00-\u9FFF]", title_str)
     if not title_str or len(alpha_chars) < 3:
         return {
@@ -664,25 +690,32 @@ def classify_article(title: str, url: str = "", source: str = "", summary: str =
 
     noise_hits = _count_keyword_hits(text_clean, NOISE_KEYWORDS)
     protocol_hits = _count_keyword_hits(text_clean, DIPLOMATIC_PROTOCOL_KEYWORDS)
+    retro_hits = _count_keyword_hits(text_clean, RETROSPECTIVE_OR_NON_CURRENT_KEYWORDS)
     geo_hits = _count_keyword_hits(text_clean, GEOPOLITICAL_KEYWORDS)
     rel_score = calculate_relevance(full_text)
     entities = normalize_entities(full_text)
 
-    has_hard_entity = bool(
-        entities["chokepoints"]
-        or entities["supply_chain_tags"]
-        or any(
-            evt in ("MILITARY_CONFLICT", "SANCTIONS_EXPORT_CONTROL", "INFRA_LOGISTICS_DISRUPTION", "PROTEST_STRIKE")
-            for evt in entities["event_types"]
-        )
+    has_supply_or_chokepoint = bool(entities["chokepoints"] or entities["supply_chain_tags"])
+    has_hard_conflict_or_sanction = bool(
+        any(evt in ("MILITARY_CONFLICT", "SANCTIONS_EXPORT_CONTROL", "INFRA_LOGISTICS_DISRUPTION")
+            for evt in entities["event_types"])
     )
-    has_any_entity = bool(
-        has_hard_entity
-        or entities["event_types"]
-        or entities["hotspot_regions"]
+    has_hard_entity = has_supply_or_chokepoint or has_hard_conflict_or_sanction or (
+        "PROTEST_STRIKE" in entities["event_types"]
     )
+    has_any_entity = bool(has_hard_entity or entities["event_types"] or entities["hotspot_regions"])
 
-    # 의례적 외교 수사(단순 축전, 문화행사, 엑스포 홍보 등) 배제: 실질 위기 엔티티가 없으면 drop
+    # 과거사 회고 / 도서 출간 / 가정법 / 부고 배제
+    if retro_hits > 0 and not has_supply_or_chokepoint:
+        return {
+            "keep": False,
+            "reason": "retrospective_or_non_current_noise",
+            "relevance_score": rel_score,
+            "noise_hits": noise_hits + retro_hits,
+            "geo_hits": geo_hits,
+        }
+
+    # 의례적 외교 수사(단순 축전, 문화행사, 엑스포 홍보 등) 배제
     if protocol_hits > 0 and not has_hard_entity:
         return {
             "keep": False,
@@ -693,7 +726,6 @@ def classify_article(title: str, url: str = "", source: str = "", summary: str =
         }
 
     # 연예·스포츠·가십 노이즈 배제
-    # 제목 자체에 강한 스포츠/연예 노이즈가 있고 핵심 공급망/해협 엔티티가 없으면 국가명이 있어도 drop
     title_noise_hits = _count_keyword_hits(title_clean, NOISE_KEYWORDS)
     if title_noise_hits > 0 and not has_hard_entity:
         return {
@@ -722,6 +754,29 @@ def classify_article(title: str, url: str = "", source: str = "", summary: str =
             "geo_hits": geo_hits,
         }
 
+    # [고순도 모드 (High-Purity Mode) 관문]
+    if purity_mode == "high":
+        # 1. 5대 해협 또는 한국 6대 공급망 또는 긴급 제재/군사충돌 하드 엔티티가 반드시 존재해야 함
+        if not (has_supply_or_chokepoint or has_hard_conflict_or_sanction):
+            return {
+                "keep": False,
+                "reason": "high_purity_missing_hard_entity",
+                "relevance_score": rel_score,
+                "noise_hits": noise_hits,
+                "geo_hits": geo_hits,
+            }
+        # 2. 소셜·포럼(OPINION 레인)은 신뢰도 관문 강화 (관련도 0.8 이상이거나 하드 엔티티 2개 이상)
+        if lane == "OPINION":
+            entity_count = len(entities["chokepoints"]) + len(entities["supply_chain_tags"])
+            if rel_score < 0.8 and entity_count < 2:
+                return {
+                    "keep": False,
+                    "reason": "high_purity_social_threshold_unmet",
+                    "relevance_score": rel_score,
+                    "noise_hits": noise_hits,
+                    "geo_hits": geo_hits,
+                }
+
     # 지정학·공급망 신호가 거의 없으면 drop (공식 정부·규제 발표는 예외)
     if rel_score < MIN_RELEVANCE_SCORE and not has_any_entity:
         if _is_official_or_wire_source(url, source):
@@ -749,9 +804,9 @@ def classify_article(title: str, url: str = "", source: str = "", summary: str =
     }
 
 
-def is_noise(title: str, url: str = "", source: str = "") -> bool:
+def is_noise(title: str, url: str = "", source: str = "", *, purity_mode: str = "standard") -> bool:
     """연예·스포츠·광고·의례수사·비지정학 기사면 True (하위 호환 래퍼)."""
-    return not classify_article(title, url, source)["keep"]
+    return not classify_article(title, url, source, purity_mode=purity_mode)["keep"]
 
 
 # ======================================================================
@@ -881,10 +936,12 @@ def deduplicate_and_cluster(
     articles: List[Dict[str, Any]],
     similarity_threshold: float = 0.25,
     max_time_window_hours: float = 72.0,
+    *,
+    purity_mode: str = "standard",
 ) -> List[Dict[str, Any]]:
     """
     동일 사건에 대한 다국어 중복 보도를 대표 사건 1건으로 클러스터링하고
-    sources=[...], source_types=[...], observed_lanes=[...]를 누적합니다.
+    sources=[...], source_types=[...], observed_lanes=[...], purity_tier를 누적합니다.
     """
     if not articles:
         return []
@@ -914,7 +971,7 @@ def deduplicate_and_cluster(
             or ""
         )
 
-        if not title or is_noise(title, url, source_name):
+        if not title or is_noise(title, url, source_name, purity_mode=purity_mode):
             continue
 
         tokens = tokenize_multilingual(title, lang=lang)
@@ -951,7 +1008,6 @@ def deduplicate_and_cluster(
             if art_events and (art_events & c["event_set"]):
                 bonus += 0.06
 
-            # 단, 토큰 유사도가 0인데 엔티티 보너스만으로 무관한 기사가 묶이는 현상 방지 (최소 공통 토큰 1개 이상 필요)
             if base_sim == 0.0 and not (art_cps and (art_cps & c["chokepoints_set"]) and (art_events & c["event_set"])):
                 effective_sim = 0.0
             else:
@@ -1004,7 +1060,6 @@ def deduplicate_and_cluster(
     results: List[Dict[str, Any]] = []
 
     for i, c in enumerate(clusters, start=1):
-        # 클러스터 내 모든 기사의 제목+요약을 합쳐 엔티티 누락 방지
         combined_text = " ".join(
             f"{a.get('title', '')} {a.get('summary', '') or a.get('description', '')}"
             for a in c["articles"]
@@ -1014,6 +1069,23 @@ def deduplicate_and_cluster(
             calculate_relevance(c["representative_title"]),
             calculate_relevance(combined_text),
         )
+
+        has_multi_source = len(c["sources"]) >= 2
+        is_official_lane = "FAST" in c["observed_lanes"] or any(
+            _is_official_or_wire_source(a.get("url", ""), a.get("source", "")) for a in c["articles"]
+        )
+        has_direct_supply_or_cp = bool(entities["chokepoints"] or entities["supply_chain_tags"])
+
+        if has_multi_source or (is_official_lane and has_direct_supply_or_cp):
+            purity_tier = "TIER_1_CORROBORATED"
+        elif has_direct_supply_or_cp:
+            purity_tier = "TIER_2_VERIFIED_ENTITY"
+        else:
+            purity_tier = "TIER_3_SINGLE_SOURCE"
+
+        # 고순도 모드에서는 TIER_1 및 TIER_2만 통과
+        if purity_mode == "high" and purity_tier == "TIER_3_SINGLE_SOURCE":
+            continue
 
         results.append({
             "cluster_id": f"CLUST-{i:04d}",
@@ -1026,6 +1098,7 @@ def deduplicate_and_cluster(
             "sources": c["sources"],
             "source_types": c["source_types"],
             "observed_lanes": c["observed_lanes"],
+            "purity_tier": purity_tier,
             "relevance_score": rel_score,
             "chokepoints": entities["chokepoints"],
             "supply_chain_tags": entities["supply_chain_tags"],
@@ -1039,12 +1112,12 @@ def deduplicate_and_cluster(
 
     results.sort(
         key=lambda x: (
-            x["unique_sources_count"],
-            x["cluster_size"],
-            len(x["chokepoints"]) + len(x["supply_chain_tags"]),
-            x["relevance_score"],
-        ),
-        reverse=True,
+            1 if x.get("purity_tier") == "TIER_1_CORROBORATED" else (2 if x.get("purity_tier") == "TIER_2_VERIFIED_ENTITY" else 3),
+            -x["unique_sources_count"],
+            -x["cluster_size"],
+            -(len(x["chokepoints"]) + len(x["supply_chain_tags"])),
+            -x["relevance_score"],
+        )
     )
     return results
 
@@ -1052,10 +1125,11 @@ def deduplicate_and_cluster(
 def run_pipeline_preprocessing(
     raw_articles: List[Dict[str, Any]],
     *,
+    purity_mode: str = "standard",
     return_rejects: bool = False,
 ) -> List[Dict[str, Any]] | Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
-    """다국어 통합 4단계 전처리: 노이즈/의례수사 drop → 7개국어 정규화 → 중복 군집화 → 5대해협·6대공급망 태깅."""
-    print(f"  [다국어 전처리] 총 {len(raw_articles)}개 원시 기사 입력 수신.")
+    """다국어 통합 4단계 전처리: 노이즈/의례수사/비관련 drop → 7개국어 정규화 → 중복 군집화 → 5대해협·6대공급망 태깅."""
+    print(f"  [다국어 전처리 (mode={purity_mode})] 총 {len(raw_articles)}개 원시 기사 입력 수신.")
 
     clean_articles: List[Dict[str, Any]] = []
     rejected: List[Dict[str, Any]] = []
@@ -1073,8 +1147,9 @@ def run_pipeline_preprocessing(
             or a.get("domain")
             or ""
         )
+        lane = a.get("lane", "UNSPECIFIED")
 
-        decision = classify_article(title, url, source, summary=summary)
+        decision = classify_article(title, url, source, summary=summary, purity_mode=purity_mode, lane=lane)
         if decision["keep"]:
             enriched = dict(a)
             enriched["title"] = title
@@ -1091,7 +1166,7 @@ def run_pipeline_preprocessing(
                     "title": title,
                     "url": url,
                     "source": source,
-                    "lane": a.get("lane", "UNSPECIFIED"),
+                    "lane": lane,
                     "reject_reason": decision["reason"],
                     "relevance_score": decision["relevance_score"],
                 })
@@ -1103,7 +1178,7 @@ def run_pipeline_preprocessing(
         f"유효 {len(clean_articles)}건 유지 ({reason_summary})."
     )
 
-    clustered = deduplicate_and_cluster(clean_articles)
+    clustered = deduplicate_and_cluster(clean_articles, purity_mode=purity_mode)
     before_rel = len(clustered)
     clustered = [
         c for c in clustered
@@ -1124,7 +1199,7 @@ def run_pipeline_preprocessing(
         )
     print(
         f"  [다국어 전처리] 시맨틱 중복 제거 완료: "
-        f"{len(clean_articles)}건 -> {len(clustered)}개 대표 사건으로 압축."
+        f"{len(clean_articles)}건 -> {len(clustered)}개 대표 사건으로 압축 (mode={purity_mode})."
     )
 
     if return_rejects:

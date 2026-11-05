@@ -1,6 +1,7 @@
 {
   "schema_version": "preprocess_summary_v1",
-  "generated_at": "2026-11-03T02:44:43.483756+00:00",
+  "generated_at": "2026-11-05T03:36:45.136564+00:00",
+  "purity_mode": "high",
   "alert_level_set": false,
   "verification_state_default": "UNVERIFIED",
   "input_counts": {
@@ -11,19 +12,27 @@
     "BASELINE_SENSORS": 7
   },
   "output_counts": {
-    "canonical_clusters": 209,
-    "rejected_noise": 49,
-    "multi_source_clusters": 21
+    "canonical_clusters": 19,
+    "rejected_noise": 310,
+    "tier_1_corroborated": 6,
+    "tier_2_verified_entity": 13,
+    "multi_source_clusters": 4
+  },
+  "tier_distribution": {
+    "TIER_1_CORROBORATED": 6,
+    "TIER_2_VERIFIED_ENTITY": 13
   },
   "reject_reason_breakdown": {
-    "entertainment_sports_noise": 9,
-    "low_geopolitical_relevance": 31,
+    "high_purity_missing_hard_entity": 274,
+    "retrospective_or_non_current_noise": 4,
     "ad_or_soft_section": 7,
+    "entertainment_sports_noise": 8,
     "diplomatic_protocol_noise": 1,
-    "empty_title": 1
+    "empty_title": 1,
+    "high_purity_social_threshold_unmet": 15
   },
   "chokepoint_distribution": {
-    "CHOKEPOINT_HORMUZ": 3,
+    "CHOKEPOINT_HORMUZ": 1,
     "CHOKEPOINT_BAB_EL_MANDEB": 1,
     "CHOKEPOINT_MALACCA": 0,
     "CHOKEPOINT_BOSPHORUS": 0,
@@ -31,27 +40,27 @@
     "CHOKEPOINT_TAIWAN_STRAIT": 3
   },
   "supply_chain_distribution": {
-    "CRUDE_OIL": 11,
+    "CRUDE_OIL": 8,
     "NATURAL_GAS_LNG": 1,
-    "SEMICONDUCTOR": 14,
+    "SEMICONDUCTOR": 8,
     "RARE_EARTHS": 0,
     "BATTERY_MINERALS": 0,
     "GRAIN_FOOD": 0
   },
   "event_type_distribution": {
-    "MILITARY_CONFLICT": 19,
-    "SANCTIONS_EXPORT_CONTROL": 11,
-    "INFRA_LOGISTICS_DISRUPTION": 11,
-    "PROTEST_STRIKE": 5,
-    "ELECTION_GOVERNMENT": 23
+    "MILITARY_CONFLICT": 6,
+    "SANCTIONS_EXPORT_CONTROL": 3,
+    "INFRA_LOGISTICS_DISRUPTION": 6,
+    "ELECTION_GOVERNMENT": 3,
+    "PROTEST_STRIKE": 2
   },
   "hotspot_distribution": {
-    "NORTH_AMERICA": 33,
-    "MIDDLE_EAST": 41,
-    "EAST_ASIA": 29,
-    "WESTERN_EUROPE": 23,
-    "CENTRAL_AFRICA": 5,
-    "LATIN_AMERICA": 11,
-    "EASTERN_EUROPE": 22
+    "MIDDLE_EAST": 4,
+    "NORTH_AMERICA": 5,
+    "WESTERN_EUROPE": 1,
+    "CENTRAL_AFRICA": 1,
+    "EASTERN_EUROPE": 2,
+    "LATIN_AMERICA": 2,
+    "EAST_ASIA": 8
   }
 }

@@ -1,5 +1,5 @@
 {
-  "scanned_at": "2026-11-03T02:45:01.510289+00:00",
+  "scanned_at": "2026-11-04T10:30:15.702175+00:00",
   "dry_run": true,
   "threshold": 2.5,
   "scanned_raw_count": 18,
@@ -7,7 +7,7 @@
   "hotspots": [
     {
       "cluster_id": "CLUST-0001",
-      "signal_id": "SIG-20261103-0001",
+      "signal_id": "SIG-20261104-0001",
       "representative_title": "Houthi anti-ship ballistic missile hits commercial container ship in southern Red Sea near Bab-el-Mandeb",
       "canonical_title": "Houthi anti-ship ballistic missile hits commercial container ship in southern Red Sea near Bab-el-Mandeb",
       "url": "https://reuters.com/world/houthi-red-sea-1",
@@ -48,13 +48,13 @@
       "published_at": "2026-10-29T08:15:00Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-03T02:45:00.666689+00:00",
+      "preprocessed_at": "2026-11-04T10:30:15.490070+00:00",
       "z_score": 8.0,
       "anomaly_score": 79.2
     },
     {
       "cluster_id": "CLUST-0009",
-      "signal_id": "SIG-20261103-0009",
+      "signal_id": "SIG-20261104-0009",
       "representative_title": "Panama Canal drought restricts daily vessel transit slots, causing LNG and grain bulk carrier backlog",
       "canonical_title": "Panama Canal drought restricts daily vessel transit slots, causing LNG and grain bulk carrier backlog",
       "url": "https://reuters.com/business/panama-canal-drought-restrictions-13",
@@ -93,13 +93,13 @@
       "published_at": "2026-10-29T05:10:00Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-03T02:45:00.666689+00:00",
+      "preprocessed_at": "2026-11-04T10:30:15.490070+00:00",
       "z_score": 6.67,
       "anomaly_score": 77.8
     },
     {
       "cluster_id": "CLUST-0005",
-      "signal_id": "SIG-20261103-0005",
+      "signal_id": "SIG-20261104-0005",
       "representative_title": "Russian drone strikes disrupt grain export terminal infrastructure near Bosphorus and Danube corridor",
       "canonical_title": "Russian drone strikes disrupt grain export terminal infrastructure near Bosphorus and Danube corridor",
       "url": "https://kyivindependent.com/russia-grain-danube-6",
@@ -139,13 +139,13 @@
       "published_at": "2026-10-29T06:10:00Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-03T02:45:00.666689+00:00",
+      "preprocessed_at": "2026-11-04T10:30:15.490070+00:00",
       "z_score": 6.5,
       "anomaly_score": 74.8
     },
     {
       "cluster_id": "CLUST-0002",
-      "signal_id": "SIG-20261103-0002",
+      "signal_id": "SIG-20261104-0002",
       "representative_title": "Oil tankers navigate cautiously as tensions spike in Strait of Hormuz after IRGC seizure warning",
       "canonical_title": "Oil tankers navigate cautiously as tensions spike in Strait of Hormuz after IRGC seizure warning",
       "url": "https://bloomberg.com/news/articles/oil-hormuz-tankers-5",
@@ -183,13 +183,13 @@
       "published_at": "2026-10-29T07:45:00Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-03T02:45:00.666689+00:00",
+      "preprocessed_at": "2026-11-04T10:30:15.490070+00:00",
       "z_score": 5.67,
       "anomaly_score": 67.6
     },
     {
       "cluster_id": "CLUST-0003",
-      "signal_id": "SIG-20261103-0003",
+      "signal_id": "SIG-20261104-0003",
       "representative_title": "France: Grève générale et blocage des raffineries de pétrole à Paris suite aux manifestations",
       "canonical_title": "France: Grève générale et blocage des raffineries de pétrole à Paris suite aux manifestations",
       "url": "https://lemonde.fr/societe/greve-france-paris-1",
@@ -219,13 +219,13 @@
       "published_at": "2026-10-29T06:30:00Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-03T02:45:00.666689+00:00",
+      "preprocessed_at": "2026-11-04T10:30:15.490070+00:00",
       "z_score": 5.17,
       "anomaly_score": 62.8
     },
     {
       "cluster_id": "CLUST-0004",
-      "signal_id": "SIG-20261103-0004",
+      "signal_id": "SIG-20261104-0004",
       "representative_title": "Brasil: Vitória de Lula nas eleições presidenciais repercute no mercado de petróleo e Petrobras",
       "canonical_title": "Brasil: Vitória de Lula nas eleições presidenciais repercute no mercado de petróleo e Petrobras",
       "url": "https://folha.uol.com.br/poder/lula-eleicoes-petroleo-1",
@@ -255,13 +255,13 @@
       "published_at": "2026-10-29T04:15:00Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-03T02:45:00.666689+00:00",
+      "preprocessed_at": "2026-11-04T10:30:15.490070+00:00",
       "z_score": 5.17,
       "anomaly_score": 62.8
     },
     {
       "cluster_id": "CLUST-0007",
-      "signal_id": "SIG-20261103-0007",
+      "signal_id": "SIG-20261104-0007",
       "representative_title": "China expands export controls on critical gallium and rare earths targeting defense supply chains",
       "canonical_title": "China expands export controls on critical gallium and rare earths targeting defense supply chains",
       "url": "https://scmp.com/economy/china-rare-earths-9",
@@ -290,7 +290,7 @@
       "published_at": "2026-10-29T04:20:00Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-03T02:45:00.666689+00:00",
+      "preprocessed_at": "2026-11-04T10:30:15.490070+00:00",
       "z_score": 2.67,
       "anomaly_score": 37.4
     }

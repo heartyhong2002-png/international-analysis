@@ -218,9 +218,9 @@ def load_baseline_sensor_summary() -> List[Dict[str, Any]]:
     return sensors
 
 
-def run_bridge() -> Dict[str, Any]:
+def run_bridge(purity_mode: str = "standard") -> Dict[str, Any]:
     print("=" * 72)
-    print("🌐 [4-Lane 전처리 브릿지] 원시 비정형 데이터 로드 및 표준 정형 스키마 변환 시작")
+    print(f"🌐 [4-Lane 전처리 브릿지] 모드={purity_mode.upper()} 원시 비정형 데이터 로드 및 정제 시작")
     print("=" * 72)
 
     fast_records = load_fast_lane()
@@ -235,12 +235,17 @@ def run_bridge() -> Dict[str, Any]:
         f"OPINION={len(opinion_records)}, BASELINE_SENSORS={len(baseline_sensors)})"
     )
 
-    clusters, rejects = run_pipeline_preprocessing(all_raw, return_rejects=True)
+    clusters, rejects = run_pipeline_preprocessing(
+        all_raw,
+        purity_mode=purity_mode,
+        return_rejects=True,
+    )
 
     # 통계 집계
     reject_reason_counts = dict(Counter(r["reject_reason"] for r in rejects))
     reject_lane_counts = dict(Counter(r.get("lane", "UNSPECIFIED") for r in rejects))
 
+    tier_counts = Counter(c.get("purity_tier", "UNSPECIFIED") for c in clusters)
     chokepoint_counts: Counter = Counter()
     supply_counts: Counter = Counter()
     event_counts: Counter = Counter()
@@ -261,6 +266,7 @@ def run_bridge() -> Dict[str, Any]:
     canonical_payload = {
         "schema_version": "canonical_signals_v1",
         "generated_at": now_iso,
+        "purity_mode": purity_mode,
         "verification_policy": "Single-source signals remain UNVERIFIED; Alert Level is never determined in preprocessing.",
         "alert_level_set": False,
         "input_counts": {
@@ -273,6 +279,8 @@ def run_bridge() -> Dict[str, Any]:
         "output_counts": {
             "canonical_clusters": len(clusters),
             "rejected_noise": len(rejects),
+            "tier_1_corroborated": tier_counts.get("TIER_1_CORROBORATED", 0),
+            "tier_2_verified_entity": tier_counts.get("TIER_2_VERIFIED_ENTITY", 0),
             "multi_source_clusters": sum(1 for c in clusters if c["unique_sources_count"] >= 2),
         },
         "baseline_market_sensors": baseline_sensors,
@@ -282,6 +290,7 @@ def run_bridge() -> Dict[str, Any]:
     rejects_payload = {
         "schema_version": "preprocess_rejects_v1",
         "generated_at": now_iso,
+        "purity_mode": purity_mode,
         "total_rejected": len(rejects),
         "reason_breakdown": reject_reason_counts,
         "lane_breakdown": reject_lane_counts,
@@ -291,10 +300,12 @@ def run_bridge() -> Dict[str, Any]:
     summary_payload = {
         "schema_version": "preprocess_summary_v1",
         "generated_at": now_iso,
+        "purity_mode": purity_mode,
         "alert_level_set": False,
         "verification_state_default": "UNVERIFIED",
         "input_counts": canonical_payload["input_counts"],
         "output_counts": canonical_payload["output_counts"],
+        "tier_distribution": dict(tier_counts),
         "reject_reason_breakdown": reject_reason_counts,
         "chokepoint_distribution": {
             code: chokepoint_counts.get(code, 0) for code in CHOKEPOINT_MAPPINGS
@@ -306,21 +317,33 @@ def run_bridge() -> Dict[str, Any]:
         "hotspot_distribution": dict(hotspot_counts),
     }
 
-    canonical_file = OUT_DIR / "canonical_signals_latest.json"
-    rejects_file = OUT_DIR / "preprocess_rejects_latest.json"
-    summary_file = OUT_DIR / "preprocess_summary_latest.json"
+    suffix = "_high_purity" if purity_mode == "high" else ""
+    canonical_file = OUT_DIR / f"canonical_signals{suffix}_latest.json"
+    rejects_file = OUT_DIR / f"preprocess_rejects{suffix}_latest.json"
+    summary_file = OUT_DIR / f"preprocess_summary{suffix}_latest.json"
 
     canonical_file.write_text(json.dumps(canonical_payload, ensure_ascii=False, indent=2), encoding="utf-8")
     rejects_file.write_text(json.dumps(rejects_payload, ensure_ascii=False, indent=2), encoding="utf-8")
     summary_file.write_text(json.dumps(summary_payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
+    # 기본 최신 파일에도 메타데이터 유지 복제 (하위 호환)
+    if purity_mode == "high":
+        (OUT_DIR / "canonical_signals_latest.json").write_text(
+            json.dumps(canonical_payload, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
+        (OUT_DIR / "preprocess_summary_latest.json").write_text(
+            json.dumps(summary_payload, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
+
     print("-" * 72)
-    print(f"✅ [산출물 저장 완료]")
-    print(f"  1) 표준 정형 신호: {canonical_file.relative_to(ROOT)} ({len(clusters)}개 클러스터)")
-    print(f"  2) 배제 감사 영수증: {rejects_file.relative_to(ROOT)} ({len(rejects)}건 배제)")
-    print(f"  3) 전처리 요약 통계: {summary_file.relative_to(ROOT)}")
-    print(f"📊 [5대 해협 감지 현황]: {dict(chokepoint_counts)}")
-    print(f"📦 [한국 6대 공급망 품목 감지 현황]: {dict(supply_counts)}")
+    print(f"✅ [산출물 저장 완료 (mode={purity_mode})]")
+    print(f"  1) 정형 신호: {canonical_file.relative_to(ROOT)} ({len(clusters)}개 클러스터)")
+    print(f"     - Tier-1 (다중출처 교차검증/공식): {tier_counts.get('TIER_1_CORROBORATED', 0)}건")
+    print(f"     - Tier-2 (해협·공급망 직결 단일출처): {tier_counts.get('TIER_2_VERIFIED_ENTITY', 0)}건")
+    print(f"  2) 배제 영수증: {rejects_file.relative_to(ROOT)} ({len(rejects)}건 배제)")
+    print(f"  3) 요약 통계: {summary_file.relative_to(ROOT)}")
+    print(f"📊 [5대 해협 감지]: {dict(chokepoint_counts)}")
+    print(f"📦 [한국 6대 공급망 감지]: {dict(supply_counts)}")
     print("=" * 72)
 
     return summary_payload
@@ -328,5 +351,11 @@ def run_bridge() -> Dict[str, Any]:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="4대 수집 레인 원시 데이터 -> 표준 정형 신호 전처리 브릿지")
-    parser.parse_args()
-    run_bridge()
+    parser.add_argument(
+        "--purity-mode",
+        choices=["standard", "high"],
+        default="standard",
+        help="전처리 순도 모드 (standard: 광범위 탐지, high: 하드 엔티티 및 다중출처 교차검증 엄선)",
+    )
+    args = parser.parse_args()
+    run_bridge(purity_mode=args.purity_mode)

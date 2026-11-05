@@ -58,6 +58,7 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
+| done | ANTIGRAVITY | preprocessing / high-purity-engine | `scripts/automation/preprocess_signals.py`, `scripts/pipeline/bridge_preprocess_lanes.py`, `data/automation/*high_purity*` | 노이즈 극소화 고순도 모드(`--purity-mode high`) 구현: 회고·도서 배제, 하드 엔티티 관문, Tier-1/Tier-2 교차검증 필터링 구축 및 실데이터 19개 핵심 클러스터 압축 검증 완료 | 2026-11-05 |
 | done | ANTIGRAVITY | preprocessing / signal-filtering | `scripts/automation/preprocess_signals.py`, `scripts/pipeline/bridge_preprocess_lanes.py`, `data/automation/*` | 4단계 다국어 전처리 고도화(7개국어+CJK 노이즈·외교의전 배제, 정규화, 중복군집화, 5대해협·한국6대공급망 태깅) 및 4대 레인 브릿지 구현 완료 | 2026-11-03 |
 | done | Cursor Agent / collection | sync / trio-platform + edge-verify | `AGENT_SYNC.md`, Notion hub/board/docs/report, GitHub `cursor/actions-light-collection` | 폰 `--sync-git` 원격 검증(0a45c12·6/6·gov path) 후 Trio-Sync(MD→Notion→GitHub) | 2026-11-03 |
 | done | Cursor Agent / collection | edge / phone-git-sync-harden | `scripts/collection/run_phone_collector.py`, `start_phone.sh` | Termux git 작성자·rebase abort·push 힌트 보강. 사용자 수정·푸시 후 `data(edge)` 3커밋·gov_announcements 원격 반영 확인 | 2026-11-03 |
@@ -102,6 +103,19 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-05 [ANTIGRAVITY / preprocessing · 고순도 모드(High-Purity Mode) 파이프라인 구축 및 검증]
+- 한 일:
+  1. `scripts/automation/preprocess_signals.py`에 `--purity-mode high` (고순도 전처리 엔진) 구현:
+     - 1차: 노이즈/광고/외교의전 외에 `RETROSPECTIVE_OR_NON_CURRENT_KEYWORDS`(과거 회고, 자서전 도서 출간, 가정법 잡담, 부고 등) 정밀 배제 필터 구축.
+     - 2차: 하드 엔티티 관문(Hard-Entity Gate) 적용 - 5대 해협, 한국 6대 공급망 품목, 또는 지정학 핵심 핫스팟+위기 이벤트가 명시된 신호만 통과시켜 일반 정치 단신 전면 차단.
+     - 3차: 교차검증 신뢰도 계층화(Tier-1: 복수 출처 확인, Tier-2: 고신뢰 권위 기관 단독) 및 단일 저신뢰 출처 자동 배제.
+  2. `scripts/pipeline/bridge_preprocess_lanes.py`에 `--purity-mode standard|high` CLI 인자 및 고순도 산출물 분리 저장 지원:
+     - 4대 레인 원시 데이터 378건 대상 실증: 310건 배제, 19개 초고순도 클러스터(Tier-1 6건, Tier-2 13건) 생성.
+     - 호르무즈 피격 1건, 홍해/후티 1건, 대만해협 3건, 반도체 8건, 원유 8건, LNG 1건 등 핵심 공급망 위협에 집중.
+  3. 다운스트림 연계 및 안전 원칙:
+     - Alert Level 임의 확정 배제 원칙 준수 (`verification_state: "UNVERIFIED"`, `alert_level_set: false`).
+- 바꾼 파일: `scripts/automation/preprocess_signals.py`, `scripts/pipeline/bridge_preprocess_lanes.py`, `data/automation/canonical_signals_high_purity_latest.json`, `data/automation/preprocess_rejects_high_purity_latest.json`, `data/automation/preprocess_summary_high_purity_latest.json`, `AGENT_SYNC.md`.
 
 2026-11-03 [ANTIGRAVITY / preprocessing · 4단계 다국어 전처리 고도화 및 4대 레인 정형화 브릿지 완결]
 - 한 일:
