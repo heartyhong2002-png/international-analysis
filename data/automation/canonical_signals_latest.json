@@ -1,6 +1,6 @@
 {
   "schema_version": "canonical_signals_v1.1_multimodal",
-  "generated_at": "2026-11-05T15:23:18.805635+00:00",
+  "generated_at": "2026-11-05T15:23:44.732952+00:00",
   "purity_mode": "standard",
   "verification_policy": "Single-source and visual metadata signals remain UNVERIFIED; Alert Level is never determined in preprocessing.",
   "alert_level_set": false,
@@ -162,7 +162,7 @@
       "published_at": "Mon, 02 Nov 2026 14:29:16 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0284",
@@ -241,7 +241,7 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0057",
@@ -279,7 +279,7 @@
       "published_at": "Mon, 19 Oct 2026 09:04:06 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0298",
@@ -342,7 +342,7 @@
       "published_at": "Sun, 11 Oct 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0044",
@@ -377,7 +377,7 @@
       "published_at": "Sat, 31 Oct 2026 18:14:27 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0046",
@@ -413,7 +413,7 @@
       "published_at": "Fri, 30 Oct 2026 23:01:07 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0047",
@@ -447,7 +447,7 @@
       "published_at": "Fri, 30 Oct 2026 22:15:55 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0328",
@@ -517,7 +517,7 @@
       "published_at": "2026-09-30T11:44:37.860Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0192",
@@ -557,7 +557,7 @@
       "published_at": "Wed, 04 Nov 2026 17:51:33 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0045",
@@ -594,7 +594,7 @@
       "published_at": "Fri, 30 Oct 2026 23:06:55 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0056",
@@ -628,7 +628,7 @@
       "published_at": "Wed, 28 Oct 2026 04:01:00 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0324",
@@ -686,7 +686,7 @@
       "published_at": "2026-05-18T01:44:08.742Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0098",
@@ -733,7 +733,7 @@
       "published_at": "Mon, 02 Nov 2026 07:09:11 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0096",
@@ -774,7 +774,7 @@
       "published_at": "Mon, 02 Nov 2026 08:45:14 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0104",
@@ -814,7 +814,7 @@
       "published_at": "Mon, 02 Nov 2026 15:00:08 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0194",
@@ -855,7 +855,7 @@
       "published_at": "Wed, 04 Nov 2026 17:42:41 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0003",
@@ -891,7 +891,7 @@
       "published_at": "2026-10-29T14:28:02+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0063",
@@ -931,7 +931,7 @@
       "published_at": "Wed, 28 Oct 2026 14:57:09 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0008",
@@ -985,7 +985,7 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0048",
@@ -1019,7 +1019,7 @@
       "published_at": "Fri, 30 Oct 2026 21:33:09 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0053",
@@ -1055,7 +1055,7 @@
       "published_at": "Wed, 21 Oct 2026 18:12:14 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0054",
@@ -1089,7 +1089,7 @@
       "published_at": "Wed, 21 Oct 2026 14:34:52 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0061",
@@ -1125,7 +1125,7 @@
       "published_at": "Mon, 12 Oct 2026 19:26:49 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0064",
@@ -1162,7 +1162,7 @@
       "published_at": "Tue, 27 Oct 2026 00:19:25 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0004",
@@ -1202,7 +1202,7 @@
       "published_at": "2026-10-29T12:14:00+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0105",
@@ -1240,7 +1240,7 @@
       "published_at": "Mon, 02 Nov 2026 14:27:50 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0005",
@@ -1279,7 +1279,7 @@
       "published_at": "2026-10-26T17:06:13+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0131",
@@ -1325,7 +1325,7 @@
       "published_at": "Fri, 23 Oct 2026 09:31:12 +0200",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0307",
@@ -1365,7 +1365,7 @@
       "published_at": "Thu, 12 Mar 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0293",
@@ -1415,7 +1415,7 @@
       "published_at": "Thu, 13 Aug 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0199",
@@ -1464,7 +1464,7 @@
       "published_at": "Tue, 06 Oct 2026 16:14:21 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0299",
@@ -1504,7 +1504,7 @@
       "published_at": "Sat, 17 Oct 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0135",
@@ -1541,7 +1541,7 @@
       "published_at": "Thu, 05 Nov 2026 18:07:28 +0300",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0281",
@@ -1578,7 +1578,7 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0329",
@@ -1644,7 +1644,7 @@
       "published_at": "2026-10-15T23:05:11.973Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0153",
@@ -1700,7 +1700,7 @@
       "published_at": "Mon, 02 Nov 2026 10:25:09 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0326",
@@ -1765,7 +1765,7 @@
       "published_at": "2026-10-26T07:21:36.323Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0289",
@@ -1815,7 +1815,7 @@
       "published_at": "Wed, 12 Aug 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0291",
@@ -1862,7 +1862,7 @@
       "published_at": "Tue, 23 Jun 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0330",
@@ -1909,7 +1909,7 @@
       "published_at": "2026-10-02T16:38:55.122Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0339",
@@ -1954,7 +1954,7 @@
       "published_at": "2026-10-06T10:12:09Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0294",
@@ -1993,7 +1993,7 @@
       "published_at": "Wed, 12 Aug 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0301",
@@ -2030,7 +2030,7 @@
       "published_at": "Sun, 19 Jul 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0323",
@@ -2076,7 +2076,7 @@
       "published_at": "2026-05-27T21:31:18.663Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0325",
@@ -2122,7 +2122,7 @@
       "published_at": "2026-05-14T17:55:48.245Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0331",
@@ -2157,7 +2157,7 @@
       "published_at": "2026-04-09T00:01:48.720Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0332",
@@ -2206,7 +2206,7 @@
       "published_at": "2026-01-22T10:07:21.873Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0168",
@@ -2243,7 +2243,7 @@
       "published_at": "Fri, 03 Oct 2025 07:00:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0279",
@@ -2280,7 +2280,7 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0280",
@@ -2317,7 +2317,7 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0292",
@@ -2357,7 +2357,7 @@
       "published_at": "Wed, 12 Aug 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0322",
@@ -2411,7 +2411,7 @@
       "published_at": "2026-09-18T05:50:00.980Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0150",
@@ -2449,7 +2449,7 @@
       "published_at": "Thu, 05 Nov 2026 13:26:47 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0195",
@@ -2492,7 +2492,7 @@
       "published_at": "Wed, 04 Nov 2026 17:13:15 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0202",
@@ -2532,7 +2532,7 @@
       "published_at": "Wed, 07 Oct 2026 08:09:19 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0240",
@@ -2569,7 +2569,7 @@
       "published_at": "Wed, 04 Nov 2026 22:53:00 +0100",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0242",
@@ -2604,7 +2604,7 @@
       "published_at": "Tue, 03 Nov 2026 19:02:00 +0100",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0286",
@@ -2641,7 +2641,7 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0290",
@@ -2678,7 +2678,7 @@
       "published_at": "Tue, 11 Aug 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0295",
@@ -2713,7 +2713,7 @@
       "published_at": "Sun, 28 Jun 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0296",
@@ -2748,7 +2748,7 @@
       "published_at": "Sun, 30 Aug 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0297",
@@ -2783,7 +2783,7 @@
       "published_at": "Mon, 31 Aug 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0300",
@@ -2818,7 +2818,7 @@
       "published_at": "Tue, 14 Jul 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0303",
@@ -2853,7 +2853,7 @@
       "published_at": "Thu, 10 Sep 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0327",
@@ -2907,7 +2907,7 @@
       "published_at": "2026-10-17T00:45:13.616Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0335",
@@ -2953,7 +2953,7 @@
       "published_at": "2026-10-23T04:15:36.849709+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0336",
@@ -2999,7 +2999,7 @@
       "published_at": "2026-10-20T02:15:24.041Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0305",
@@ -3036,7 +3036,7 @@
       "published_at": "Mon, 05 Oct 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0171",
@@ -3072,7 +3072,7 @@
       "published_at": "Wed, 04 Nov 2026 04:09:57 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0022",
@@ -3110,7 +3110,7 @@
       "published_at": "Sat, 31 Oct 2026 21:51:29 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0274",
@@ -3149,7 +3149,7 @@
       "published_at": "2026-11-05T03:38:40.937301+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0310",
@@ -3188,7 +3188,7 @@
       "published_at": "2026-11-03",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0251",
@@ -3225,7 +3225,7 @@
       "published_at": "Mon, 02 Nov 2026 11:43:17 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0009",
@@ -3288,7 +3288,7 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0089",
@@ -3326,7 +3326,7 @@
       "published_at": "Mon, 02 Nov 2026 16:26:40 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0272",
@@ -3363,7 +3363,7 @@
       "published_at": "2026-11-05T03:38:40.937301+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0116",
@@ -3401,7 +3401,7 @@
       "published_at": "2026-10-29T16:20:57+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0118",
@@ -3437,7 +3437,7 @@
       "published_at": "2026-10-29T15:28:29+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0271",
@@ -3474,7 +3474,7 @@
       "published_at": "2026-11-05T03:38:40.937301+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0113",
@@ -3512,7 +3512,7 @@
       "published_at": "2026-10-30T20:57:58+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0023",
@@ -3547,7 +3547,7 @@
       "published_at": "Sat, 31 Oct 2026 11:22:42 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0075",
@@ -3584,7 +3584,7 @@
       "published_at": "Tue, 27 Oct 2026 17:20:22 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0006",
@@ -3641,7 +3641,7 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0090",
@@ -3677,7 +3677,7 @@
       "published_at": "Mon, 02 Nov 2026 14:55:43 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0205",
@@ -3715,7 +3715,7 @@
       "published_at": "Wed, 07 Oct 2026 10:43:29 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0010",
@@ -3771,7 +3771,7 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0246",
@@ -3808,7 +3808,7 @@
       "published_at": "Mon, 26 Oct 2026 07:00:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0001",
@@ -3845,7 +3845,7 @@
       "published_at": "2026-11-02T14:45:43+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0095",
@@ -3880,7 +3880,7 @@
       "published_at": "Mon, 02 Nov 2026 09:30:32 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0115",
@@ -3918,7 +3918,7 @@
       "published_at": "2026-10-30T15:56:54+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0122",
@@ -3954,7 +3954,7 @@
       "published_at": "2026-10-26T20:07:23+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0136",
@@ -3989,7 +3989,7 @@
       "published_at": "Thu, 05 Nov 2026 18:05:08 +0300",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0250",
@@ -4024,7 +4024,7 @@
       "published_at": "Thu, 05 Nov 2026 13:29:13 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0275",
@@ -4057,7 +4057,7 @@
       "published_at": "2026-11-03",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0002",
@@ -4094,7 +4094,7 @@
       "published_at": "2026-10-29T16:27:20+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0007",
@@ -4147,7 +4147,7 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0017",
@@ -4200,7 +4200,7 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0042",
@@ -4233,7 +4233,7 @@
       "published_at": "Sat, 31 Oct 2026 21:08:19 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0052",
@@ -4266,7 +4266,7 @@
       "published_at": "Fri, 23 Oct 2026 00:02:04 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0073",
@@ -4301,7 +4301,7 @@
       "published_at": "Mon, 19 Oct 2026 18:51:25 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0085",
@@ -4336,7 +4336,7 @@
       "published_at": "Fri, 31 Oct 2025 20:24:00 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0088",
@@ -4371,7 +4371,7 @@
       "published_at": "Thu, 31 Jul 2025 22:20:09 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0173",
@@ -4408,7 +4408,7 @@
       "published_at": "2012-12-20 16:26:34",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0212",
@@ -4443,7 +4443,7 @@
       "published_at": "Mon, 24 Jul 2023 14:23:43 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0091",
@@ -4479,7 +4479,7 @@
       "published_at": "Mon, 02 Nov 2026 14:45:54 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0100",
@@ -4516,7 +4516,7 @@
       "published_at": "Sun, 01 Nov 2026 18:42:21 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0102",
@@ -4552,7 +4552,7 @@
       "published_at": "Mon, 02 Nov 2026 16:03:52 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0111",
@@ -4587,7 +4587,7 @@
       "published_at": "Mon, 02 Nov 2026 12:14:10 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0119",
@@ -4623,7 +4623,7 @@
       "published_at": "2026-10-28T13:28:52+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0129",
@@ -4658,7 +4658,7 @@
       "published_at": "Fri, 23 Oct 2026 16:45:00 +0200",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0178",
@@ -4693,7 +4693,7 @@
       "published_at": "Wed, 28 Oct 2026 23:44:08 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0182",
@@ -4730,7 +4730,7 @@
       "published_at": "Fri, 23 Oct 2026 13:22:42 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0183",
@@ -4768,7 +4768,7 @@
       "published_at": "Mon, 29 Feb 2016 18:48:29 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0184",
@@ -4807,7 +4807,7 @@
       "published_at": "Fri, 26 Feb 2016 17:54:32 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0185",
@@ -4844,7 +4844,7 @@
       "published_at": "Tue, 16 Feb 2016 16:49:43 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0186",
@@ -4884,7 +4884,7 @@
       "published_at": "Fri, 15 Jan 2016 20:33:17 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0198",
@@ -4917,7 +4917,7 @@
       "published_at": "Tue, 03 Nov 2026 16:13:50 +0200",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0203",
@@ -4955,7 +4955,7 @@
       "published_at": "Wed, 07 Oct 2026 09:08:15 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0206",
@@ -4992,7 +4992,7 @@
       "published_at": "Thu, 05 Nov 2026 15:07:15 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0207",
@@ -5028,7 +5028,7 @@
       "published_at": "Thu, 05 Nov 2026 14:13:30 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0208",
@@ -5067,7 +5067,7 @@
       "published_at": "Thu, 05 Nov 2026 14:04:52 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0209",
@@ -5102,7 +5102,7 @@
       "published_at": "Thu, 05 Nov 2026 13:56:59 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0211",
@@ -5140,7 +5140,7 @@
       "published_at": "Thu, 05 Nov 2026 11:08:43 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0263",
@@ -5175,7 +5175,7 @@
       "published_at": "2026-11-05T03:38:40.937301+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0273",
@@ -5210,7 +5210,7 @@
       "published_at": "2026-11-05T03:38:40.937301+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0283",
@@ -5245,7 +5245,7 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0312",
@@ -5280,7 +5280,7 @@
       "published_at": "2026-11-03",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0313",
@@ -5315,7 +5315,7 @@
       "published_at": "2026-11-03",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0333",
@@ -5354,7 +5354,7 @@
       "published_at": "2026-07-20T08:05:37.971Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0334",
@@ -5401,7 +5401,7 @@
       "published_at": "2026-05-22T21:02:17.746Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0062",
@@ -5438,7 +5438,7 @@
       "published_at": "Mon, 12 Oct 2026 17:07:08 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0094",
@@ -5474,7 +5474,7 @@
       "published_at": "Mon, 02 Nov 2026 11:42:17 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0099",
@@ -5509,7 +5509,7 @@
       "published_at": "Sun, 01 Nov 2026 19:33:50 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0134",
@@ -5544,7 +5544,7 @@
       "published_at": "Thu, 05 Nov 2026 18:14:26 +0300",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0139",
@@ -5579,7 +5579,7 @@
       "published_at": "Thu, 05 Nov 2026 18:00:48 +0300",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0143",
@@ -5615,7 +5615,7 @@
       "published_at": "Thu, 05 Nov 2026 15:09:36 +0300",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0146",
@@ -5650,7 +5650,7 @@
       "published_at": "Thu, 05 Nov 2026 07:58:01 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0147",
@@ -5687,7 +5687,7 @@
       "published_at": "Thu, 05 Nov 2026 06:52:14 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0157",
@@ -5722,7 +5722,7 @@
       "published_at": "Thu, 05 Nov 2026 09:46:18 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0161",
@@ -5757,7 +5757,7 @@
       "published_at": "Wed, 16 Sep 2026 16:04:19 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0164",
@@ -5793,7 +5793,7 @@
       "published_at": "Mon, 08 Sep 2025 07:00:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0165",
@@ -5828,7 +5828,7 @@
       "published_at": "Thu, 13 Aug 2026 07:00:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0166",
@@ -5863,7 +5863,7 @@
       "published_at": "Tue, 02 Aug 2022 07:00:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0167",
@@ -5899,7 +5899,7 @@
       "published_at": "Thu, 10 Oct 2024 07:00:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0170",
@@ -5935,7 +5935,7 @@
       "published_at": "Wed, 28 Feb 2018 08:00:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0174",
@@ -5972,7 +5972,7 @@
       "published_at": "2012-12-20 16:19:49",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0175",
@@ -6009,7 +6009,7 @@
       "published_at": "2012-12-20 09:45:20",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0176",
@@ -6044,7 +6044,7 @@
       "published_at": "Tue, 03 Nov 2026 03:30:37 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0179",
@@ -6079,7 +6079,7 @@
       "published_at": "Wed, 28 Oct 2026 00:24:12 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0180",
@@ -6114,7 +6114,7 @@
       "published_at": "Mon, 26 Oct 2026 20:13:24 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0190",
@@ -6149,7 +6149,7 @@
       "published_at": "Wed, 04 Nov 2026 00:00:05 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0196",
@@ -6184,7 +6184,7 @@
       "published_at": "Thu, 05 Nov 2026 09:15:42 +0200",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0197",
@@ -6221,7 +6221,7 @@
       "published_at": "Wed, 04 Nov 2026 11:34:57 +0200",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0204",
@@ -6256,7 +6256,7 @@
       "published_at": "Wed, 07 Oct 2026 10:41:16 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0210",
@@ -6292,7 +6292,7 @@
       "published_at": "Thu, 05 Nov 2026 13:01:58 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0217",
@@ -6330,7 +6330,7 @@
       "published_at": "Fri, 30 Oct 2026 16:22:09 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0230",
@@ -6367,7 +6367,7 @@
       "published_at": "Thu, 01 Oct 2026 21:09:36 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0231",
@@ -6405,7 +6405,7 @@
       "published_at": "Mon, 28 Sep 2026 19:17:58 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0238",
@@ -6440,7 +6440,7 @@
       "published_at": "Thu, 05 Nov 2026 17:51:00 +0900",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0239",
@@ -6475,7 +6475,7 @@
       "published_at": "Thu, 05 Nov 2026 15:41:00 +0100",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0243",
@@ -6510,7 +6510,7 @@
       "published_at": "Mon, 02 Nov 2026 17:44:00 +0100",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0245",
@@ -6545,7 +6545,7 @@
       "published_at": "Mon, 02 Nov 2026 11:00:00 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0249",
@@ -6580,7 +6580,7 @@
       "published_at": "Thu, 08 Oct 2026 07:00:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0255",
@@ -6615,7 +6615,7 @@
       "published_at": "Thu, 05 Nov 2026 14:30:37 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0262",
@@ -6654,7 +6654,7 @@
       "published_at": "2026-11-05T03:38:40.937301+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0265",
@@ -6689,7 +6689,7 @@
       "published_at": "2026-11-05T03:38:40.937301+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0268",
@@ -6724,7 +6724,7 @@
       "published_at": "2026-11-05T03:38:40.937301+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0302",
@@ -6761,7 +6761,7 @@
       "published_at": "Fri, 10 Jul 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0308",
@@ -6796,7 +6796,7 @@
       "published_at": "Mon, 15 Dec 2025",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0309",
@@ -6831,7 +6831,7 @@
       "published_at": "Fri, 12 Dec 2025",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0311",
@@ -6866,7 +6866,7 @@
       "published_at": "2026-11-03",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0314",
@@ -6901,7 +6901,7 @@
       "published_at": "2026-11-03",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0315",
@@ -6934,7 +6934,7 @@
       "published_at": "2026-11-03",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0320",
@@ -6967,7 +6967,7 @@
       "published_at": "2026-11-03",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0321",
@@ -7005,7 +7005,7 @@
       "published_at": "2026-11-03",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0011",
@@ -7052,7 +7052,7 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0019",
@@ -7089,7 +7089,7 @@
       "published_at": "Mon, 02 Nov 2026 13:15:10 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0026",
@@ -7124,7 +7124,7 @@
       "published_at": "Fri, 30 Oct 2026 12:36:43 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0055",
@@ -7159,7 +7159,7 @@
       "published_at": "Thu, 29 Oct 2026 17:37:31 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0060",
@@ -7196,7 +7196,7 @@
       "published_at": "Tue, 13 Oct 2026 13:48:05 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0069",
@@ -7229,7 +7229,7 @@
       "published_at": "Sat, 03 Oct 2026 21:43:40 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0093",
@@ -7264,7 +7264,7 @@
       "published_at": "Mon, 02 Nov 2026 12:47:12 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0097",
@@ -7299,7 +7299,7 @@
       "published_at": "Mon, 02 Nov 2026 08:00:01 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0101",
@@ -7334,7 +7334,7 @@
       "published_at": "Sun, 01 Nov 2026 17:15:25 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0107",
@@ -7371,7 +7371,7 @@
       "published_at": "Mon, 02 Nov 2026 13:37:26 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0108",
@@ -7406,7 +7406,7 @@
       "published_at": "Mon, 02 Nov 2026 13:04:42 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0109",
@@ -7442,7 +7442,7 @@
       "published_at": "Mon, 02 Nov 2026 12:36:23 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0110",
@@ -7477,7 +7477,7 @@
       "published_at": "Mon, 02 Nov 2026 12:18:07 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0112",
@@ -7514,7 +7514,7 @@
       "published_at": "Mon, 02 Nov 2026 10:25:22 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0120",
@@ -7549,7 +7549,7 @@
       "published_at": "2026-10-28T11:16:10+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0123",
@@ -7587,7 +7587,7 @@
       "published_at": "Wed, 28 Oct 2026 15:55:02 +0100",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0138",
@@ -7622,7 +7622,7 @@
       "published_at": "Thu, 05 Nov 2026 18:16:14 +0300",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0154",
@@ -7657,7 +7657,7 @@
       "published_at": "Fri, 30 Oct 2026 09:26:49 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0158",
@@ -7695,7 +7695,7 @@
       "published_at": "Thu, 29 Oct 2026 22:15:59 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0160",
@@ -7732,7 +7732,7 @@
       "published_at": "Thu, 01 Oct 2026 13:46:03 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0162",
@@ -7767,7 +7767,7 @@
       "published_at": "Tue, 03 Dec 2024 08:00:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0163",
@@ -7803,7 +7803,7 @@
       "published_at": "Wed, 05 Oct 2022 07:00:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0169",
@@ -7838,7 +7838,7 @@
       "published_at": "Wed, 17 May 2023 07:00:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0172",
@@ -7873,7 +7873,7 @@
       "published_at": "Sun, 01 Nov 2026 01:29:05 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0177",
@@ -7908,7 +7908,7 @@
       "published_at": "Thu, 29 Oct 2026 23:37:51 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0181",
@@ -7943,7 +7943,7 @@
       "published_at": "Fri, 23 Oct 2026 21:25:52 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0187",
@@ -7980,7 +7980,7 @@
       "published_at": "Thu, 05 Nov 2026 04:39:32 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0188",
@@ -8013,7 +8013,7 @@
       "published_at": "Thu, 05 Nov 2026 00:37:37 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0189",
@@ -8048,7 +8048,7 @@
       "published_at": "Wed, 04 Nov 2026 04:37:39 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0191",
@@ -8083,7 +8083,7 @@
       "published_at": "Tue, 03 Nov 2026 19:00:12 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0193",
@@ -8118,7 +8118,7 @@
       "published_at": "Wed, 04 Nov 2026 17:46:35 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0200",
@@ -8153,7 +8153,7 @@
       "published_at": "Tue, 06 Oct 2026 16:20:30 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0201",
@@ -8189,7 +8189,7 @@
       "published_at": "Wed, 07 Oct 2026 08:07:00 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0214",
@@ -8224,7 +8224,7 @@
       "published_at": "Wed, 19 May 2021 07:00:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0215",
@@ -8259,7 +8259,7 @@
       "published_at": "Mon, 26 Oct 2015 07:00:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0216",
@@ -8294,7 +8294,7 @@
       "published_at": "Tue, 17 Jan 2023 08:00:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0221",
@@ -8331,7 +8331,7 @@
       "published_at": "Fri, 04 Feb 2022 08:00:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0225",
@@ -8369,7 +8369,7 @@
       "published_at": "Thu, 29 Oct 2020 07:00:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0229",
@@ -8406,7 +8406,7 @@
       "published_at": "Tue, 03 Nov 2026 20:00:00 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0232",
@@ -8444,7 +8444,7 @@
       "published_at": "Wed, 19 Aug 2026 17:22:55 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0234",
@@ -8480,7 +8480,7 @@
       "published_at": "Thu, 05 Nov 2026 14:12:58 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0235",
@@ -8513,7 +8513,7 @@
       "published_at": "Thu, 05 Nov 2026 20:20:00 +0900",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0237",
@@ -8551,7 +8551,7 @@
       "published_at": "Thu, 05 Nov 2026 18:00:00 +0900",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0252",
@@ -8586,7 +8586,7 @@
       "published_at": "Wed, 22 Jul 2026 07:00:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0253",
@@ -8621,7 +8621,7 @@
       "published_at": "Thu, 05 Nov 2026 14:45:46 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0256",
@@ -8657,7 +8657,7 @@
       "published_at": "Thu, 05 Nov 2026 14:19:25 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0258",
@@ -8695,7 +8695,7 @@
       "published_at": "2026-11-05T03:38:40.937301+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0259",
@@ -8732,7 +8732,7 @@
       "published_at": "2026-11-05T03:38:40.937301+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0261",
@@ -8769,7 +8769,7 @@
       "published_at": "2026-11-05T03:38:40.937301+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0266",
@@ -8804,7 +8804,7 @@
       "published_at": "2026-11-05T03:38:40.937301+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0267",
@@ -8841,7 +8841,7 @@
       "published_at": "2026-11-05T03:38:40.937301+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0269",
@@ -8876,7 +8876,7 @@
       "published_at": "2026-11-05T03:38:40.937301+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0278",
@@ -8914,7 +8914,7 @@
       "published_at": "2026-11-03",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0282",
@@ -8947,7 +8947,7 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0285",
@@ -8982,7 +8982,7 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0288",
@@ -9018,7 +9018,7 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0319",
@@ -9053,7 +9053,7 @@
       "published_at": "2026-11-03",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0337",
@@ -9097,7 +9097,7 @@
       "published_at": "2026-10-15T01:19:23.171Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0338",
@@ -9141,7 +9141,7 @@
       "published_at": "2026-10-14T17:19:23.287Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0012",
@@ -9187,7 +9187,7 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0013",
@@ -9233,7 +9233,7 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0014",
@@ -9279,7 +9279,7 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0015",
@@ -9325,7 +9325,7 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0016",
@@ -9371,7 +9371,7 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0018",
@@ -9417,7 +9417,7 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0020",
@@ -9450,7 +9450,7 @@
       "published_at": "Sun, 01 Nov 2026 12:48:27 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0021",
@@ -9483,7 +9483,7 @@
       "published_at": "Sat, 31 Oct 2026 22:50:37 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0024",
@@ -9516,7 +9516,7 @@
       "published_at": "Sat, 31 Oct 2026 01:55:03 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0025",
@@ -9549,7 +9549,7 @@
       "published_at": "Sat, 31 Oct 2026 01:40:52 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0027",
@@ -9584,7 +9584,7 @@
       "published_at": "Fri, 30 Oct 2026 09:51:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0028",
@@ -9617,7 +9617,7 @@
       "published_at": "Fri, 30 Oct 2026 08:07:21 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0029",
@@ -9650,7 +9650,7 @@
       "published_at": "Fri, 30 Oct 2026 07:54:46 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0030",
@@ -9685,7 +9685,7 @@
       "published_at": "Fri, 30 Oct 2026 04:24:33 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0031",
@@ -9720,7 +9720,7 @@
       "published_at": "Thu, 29 Oct 2026 11:54:21 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0032",
@@ -9753,7 +9753,7 @@
       "published_at": "Thu, 29 Oct 2026 07:19:55 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0033",
@@ -9786,7 +9786,7 @@
       "published_at": "Thu, 29 Oct 2026 06:34:53 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0034",
@@ -9819,7 +9819,7 @@
       "published_at": "Wed, 28 Oct 2026 09:11:13 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0035",
@@ -9852,7 +9852,7 @@
       "published_at": "Wed, 28 Oct 2026 08:59:12 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0036",
@@ -9885,7 +9885,7 @@
       "published_at": "Wed, 28 Oct 2026 05:54:48 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0037",
@@ -9918,7 +9918,7 @@
       "published_at": "Tue, 27 Oct 2026 08:07:44 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0038",
@@ -9951,7 +9951,7 @@
       "published_at": "Mon, 26 Oct 2026 06:42:20 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0039",
@@ -9984,7 +9984,7 @@
       "published_at": "Mon, 26 Oct 2026 06:31:03 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0040",
@@ -10017,7 +10017,7 @@
       "published_at": "Sat, 24 Oct 2026 00:15:33 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0041",
@@ -10050,7 +10050,7 @@
       "published_at": "Fri, 23 Oct 2026 14:31:25 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0043",
@@ -10083,7 +10083,7 @@
       "published_at": "Sat, 31 Oct 2026 18:30:15 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0049",
@@ -10116,7 +10116,7 @@
       "published_at": "Wed, 28 Oct 2026 01:55:44 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0050",
@@ -10149,7 +10149,7 @@
       "published_at": "Tue, 27 Oct 2026 00:10:51 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0051",
@@ -10182,7 +10182,7 @@
       "published_at": "Sun, 25 Oct 2026 23:17:39 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0058",
@@ -10215,7 +10215,7 @@
       "published_at": "Fri, 30 Oct 2026 14:29:53 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0059",
@@ -10248,7 +10248,7 @@
       "published_at": "Mon, 19 Oct 2026 13:47:31 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0065",
@@ -10281,7 +10281,7 @@
       "published_at": "Mon, 12 Oct 2026 12:08:00 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0066",
@@ -10314,7 +10314,7 @@
       "published_at": "Fri, 09 Oct 2026 04:01:00 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0067",
@@ -10349,7 +10349,7 @@
       "published_at": "Thu, 08 Oct 2026 12:14:48 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0068",
@@ -10382,7 +10382,7 @@
       "published_at": "Sun, 04 Oct 2026 04:01:00 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0070",
@@ -10415,7 +10415,7 @@
       "published_at": "Sun, 25 Oct 2026 00:00:00 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0071",
@@ -10448,7 +10448,7 @@
       "published_at": "Fri, 23 Oct 2026 16:30:59 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0072",
@@ -10481,7 +10481,7 @@
       "published_at": "Tue, 20 Oct 2026 12:35:37 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0074",
@@ -10516,7 +10516,7 @@
       "published_at": "Thu, 29 Oct 2026 19:21:39 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0076",
@@ -10549,7 +10549,7 @@
       "published_at": "Mon, 26 Oct 2026 15:24:20 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0077",
@@ -10584,7 +10584,7 @@
       "published_at": "Fri, 23 Oct 2026 15:53:02 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0078",
@@ -10619,7 +10619,7 @@
       "published_at": "Thu, 22 Oct 2026 23:37:16 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0079",
@@ -10652,7 +10652,7 @@
       "published_at": "Thu, 22 Oct 2026 17:58:11 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0080",
@@ -10685,7 +10685,7 @@
       "published_at": "Wed, 21 Oct 2026 19:22:53 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0081",
@@ -10720,7 +10720,7 @@
       "published_at": "Mon, 12 Oct 2026 18:02:29 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0082",
@@ -10753,7 +10753,7 @@
       "published_at": "Mon, 10 Nov 2025 13:13:42 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0083",
@@ -10788,7 +10788,7 @@
       "published_at": "Tue, 04 Nov 2025 20:15:54 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0084",
@@ -10821,7 +10821,7 @@
       "published_at": "Mon, 03 Nov 2025 20:45:39 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0086",
@@ -10856,7 +10856,7 @@
       "published_at": "Tue, 12 Aug 2025 23:26:25 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0087",
@@ -10891,7 +10891,7 @@
       "published_at": "Tue, 05 Aug 2025 22:38:36 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0103",
@@ -10926,7 +10926,7 @@
       "published_at": "Mon, 02 Nov 2026 16:03:40 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0106",
@@ -10961,7 +10961,7 @@
       "published_at": "Mon, 02 Nov 2026 14:10:31 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0114",
@@ -10996,7 +10996,7 @@
       "published_at": "2026-10-30T16:48:12+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0117",
@@ -11031,7 +11031,7 @@
       "published_at": "2026-10-29T16:14:00+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0121",
@@ -11066,7 +11066,7 @@
       "published_at": "2026-10-27T12:15:00+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0124",
@@ -11101,7 +11101,7 @@
       "published_at": "Wed, 28 Oct 2026 10:14:30 +0100",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0125",
@@ -11136,7 +11136,7 @@
       "published_at": "Tue, 27 Oct 2026 13:17:18 +0100",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0126",
@@ -11171,7 +11171,7 @@
       "published_at": "Mon, 26 Oct 2026 12:00:00 +0100",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0127",
@@ -11206,7 +11206,7 @@
       "published_at": "Mon, 26 Oct 2026 11:34:23 +0100",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0128",
@@ -11241,7 +11241,7 @@
       "published_at": "Fri, 23 Oct 2026 18:16:46 +0200",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0130",
@@ -11274,7 +11274,7 @@
       "published_at": "Fri, 23 Oct 2026 11:13:34 +0200",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0132",
@@ -11307,7 +11307,7 @@
       "published_at": "Mon, 19 Oct 2026 19:22:49 +0200",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0133",
@@ -11342,7 +11342,7 @@
       "published_at": "Mon, 02 Nov 2026 08:52:00 -0300",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0137",
@@ -11377,7 +11377,7 @@
       "published_at": "Thu, 05 Nov 2026 17:56:08 +0300",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0140",
@@ -11412,7 +11412,7 @@
       "published_at": "Thu, 05 Nov 2026 16:59:41 +0300",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0141",
@@ -11449,7 +11449,7 @@
       "published_at": "Thu, 05 Nov 2026 15:53:32 +0300",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0142",
@@ -11484,7 +11484,7 @@
       "published_at": "Thu, 05 Nov 2026 15:41:49 +0300",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0144",
@@ -11522,7 +11522,7 @@
       "published_at": "Thu, 05 Nov 2026 15:01:47 +0300",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0145",
@@ -11557,7 +11557,7 @@
       "published_at": "Thu, 05 Nov 2026 08:54:16 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0148",
@@ -11592,7 +11592,7 @@
       "published_at": "Wed, 04 Nov 2026 16:57:27 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0149",
@@ -11628,7 +11628,7 @@
       "published_at": "Wed, 04 Nov 2026 14:39:09 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0151",
@@ -11663,7 +11663,7 @@
       "published_at": "Wed, 04 Nov 2026 09:06:45 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0152",
@@ -11698,7 +11698,7 @@
       "published_at": "Sun, 01 Nov 2026 08:40:05 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0155",
@@ -11735,7 +11735,7 @@
       "published_at": "Mon, 02 Nov 2026 07:03:05 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0156",
@@ -11770,7 +11770,7 @@
       "published_at": "Thu, 05 Nov 2026 07:23:31 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0159",
@@ -11809,7 +11809,7 @@
       "published_at": "Thu, 15 Oct 2026 10:33:36 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0213",
@@ -11844,7 +11844,7 @@
       "published_at": "Sun, 09 Jul 2023 22:02:51 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0218",
@@ -11881,7 +11881,7 @@
       "published_at": "Thu, 08 Oct 2026 07:00:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0219",
@@ -11917,7 +11917,7 @@
       "published_at": "Tue, 23 Nov 2021 23:58:16 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0220",
@@ -11952,7 +11952,7 @@
       "published_at": "Fri, 24 Jan 2025 08:00:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0222",
@@ -11987,7 +11987,7 @@
       "published_at": "Tue, 28 Jan 2025 18:59:28 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0223",
@@ -12022,7 +12022,7 @@
       "published_at": "Thu, 27 Mar 2025 07:00:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0224",
@@ -12058,7 +12058,7 @@
       "published_at": "Wed, 17 Mar 2021 07:00:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0226",
@@ -12093,7 +12093,7 @@
       "published_at": "Tue, 21 Feb 2017 08:00:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0227",
@@ -12128,7 +12128,7 @@
       "published_at": "Thu, 05 Nov 2026 07:00:00 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0228",
@@ -12163,7 +12163,7 @@
       "published_at": "Wed, 04 Nov 2026 16:13:53 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0233",
@@ -12200,7 +12200,7 @@
       "published_at": "Mon, 27 Jul 2026 17:00:18 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0236",
@@ -12235,7 +12235,7 @@
       "published_at": "Thu, 05 Nov 2026 19:29:00 +0900",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0241",
@@ -12270,7 +12270,7 @@
       "published_at": "Wed, 04 Nov 2026 14:52:00 +0100",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0244",
@@ -12305,7 +12305,7 @@
       "published_at": "Thu, 05 Nov 2026 11:00:00 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0247",
@@ -12340,7 +12340,7 @@
       "published_at": "Wed, 11 Feb 2026 08:00:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0248",
@@ -12375,7 +12375,7 @@
       "published_at": "Tue, 09 Jun 2026 07:00:00 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0254",
@@ -12410,7 +12410,7 @@
       "published_at": "Thu, 05 Nov 2026 14:43:09 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0257",
@@ -12445,7 +12445,7 @@
       "published_at": "2026-11-05T03:38:40.937301+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0260",
@@ -12480,7 +12480,7 @@
       "published_at": "2026-11-05T03:38:40.937301+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0264",
@@ -12515,7 +12515,7 @@
       "published_at": "2026-11-05T03:38:40.937301+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0270",
@@ -12550,7 +12550,7 @@
       "published_at": "2026-11-05T03:38:40.937301+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0276",
@@ -12586,7 +12586,7 @@
       "published_at": "2026-11-03",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0277",
@@ -12623,7 +12623,7 @@
       "published_at": "2026-11-03",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0287",
@@ -12658,7 +12658,7 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0304",
@@ -12693,7 +12693,7 @@
       "published_at": "Thu, 25 Jun 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0306",
@@ -12728,7 +12728,7 @@
       "published_at": "Tue, 19 May 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0316",
@@ -12763,7 +12763,7 @@
       "published_at": "2026-11-03",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0317",
@@ -12798,7 +12798,7 @@
       "published_at": "2026-11-03",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     },
     {
       "cluster_id": "CLUST-0318",
@@ -12833,7 +12833,7 @@
       "published_at": "2026-11-03",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:23:08.738762+00:00"
+      "preprocessed_at": "2026-11-05T15:23:35.335327+00:00"
     }
   ]
 }

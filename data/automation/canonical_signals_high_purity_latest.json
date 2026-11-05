@@ -1,21 +1,21 @@
 {
   "schema_version": "canonical_signals_v1.1_multimodal",
-  "generated_at": "2026-11-05T15:22:01.571102+00:00",
+  "generated_at": "2026-11-05T15:24:37.797147+00:00",
   "purity_mode": "high",
   "verification_policy": "Single-source and visual metadata signals remain UNVERIFIED; Alert Level is never determined in preprocessing.",
   "alert_level_set": false,
   "input_counts": {
-    "total_raw": 685,
+    "total_raw": 725,
     "FAST": 234,
-    "CONTEXT": 334,
+    "CONTEXT": 374,
     "OPINION": 117,
     "BASELINE_SENSORS": 7
   },
   "output_counts": {
-    "canonical_clusters": 32,
-    "rejected_noise": 554,
+    "canonical_clusters": 35,
+    "rejected_noise": 590,
     "tier_1_corroborated": 7,
-    "tier_2_verified_entity": 25,
+    "tier_2_verified_entity": 28,
     "multi_source_clusters": 5,
     "clusters_with_visual_media": 9,
     "total_media_attachments": 11
@@ -162,11 +162,11 @@
       "published_at": "Mon, 02 Nov 2026 14:29:16 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0042",
-      "signal_id": "SIG-20261105-0042",
+      "cluster_id": "CLUST-0046",
+      "signal_id": "SIG-20261105-0046",
       "representative_title": "#BREAKING | 🇸🇦 🇾🇪 — Saudi airstrikes hit the Ras Issa oil port on the Red Sea in Hudaydah, Houthi-controlled western Yemen",
       "canonical_title": "#BREAKING | 🇸🇦 🇾🇪 — Saudi airstrikes hit the Ras Issa oil port on the Red Sea in Hudaydah, Houthi-controlled western Yemen",
       "url": "https://bsky.app/profile/theglobaleye.bsky.social/post/3mzbnevgcu22b",
@@ -225,11 +225,11 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0048",
-      "signal_id": "SIG-20261105-0048",
+      "cluster_id": "CLUST-0052",
+      "signal_id": "SIG-20261105-0052",
       "representative_title": "БПЛА, санкции, обвал цен, дефицит бензина и топливо «похуже»: Российская нефть попала в идеальный шторм - MSK1.RU",
       "canonical_title": "БПЛА, санкции, обвал цен, дефицит бензина и топливо «похуже»: Российская нефть попала в идеальный шторм - MSK1.RU",
       "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE0zM1UzcDJkOHF4T2g5VnYwektYM25mR3J0YndMcVBucFIzOWcxc1B4RFdiTVhmcl9IT2U1QzFhbGMxWVZvNzgxU1hOeHVac3RJSzdYR2Q3bEdmVFc1OWp2Sw?oc=5",
@@ -288,11 +288,11 @@
       "published_at": "Sun, 11 Oct 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0060",
-      "signal_id": "SIG-20261105-0060",
+      "cluster_id": "CLUST-0064",
+      "signal_id": "SIG-20261105-0064",
       "representative_title": "Failures by the Dump in this China trip make one wonder if China's/Xi's Strait of Hormuz is Taiwan Semiconductor (TSMC)?!",
       "canonical_title": "Failures by the Dump in this China trip make one wonder if China's/Xi's Strait of Hormuz is Taiwan Semiconductor (TSMC)?!",
       "url": "https://bsky.app/profile/electricdonkey.me/post/3mm3qthhr5k2u",
@@ -346,7 +346,7 @@
       "published_at": "2026-05-18T01:44:08.742Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
       "cluster_id": "CLUST-0005",
@@ -386,7 +386,7 @@
       "published_at": "Wed, 28 Oct 2026 14:57:09 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
       "cluster_id": "CLUST-0010",
@@ -424,7 +424,7 @@
       "published_at": "Mon, 02 Nov 2026 14:27:50 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
       "cluster_id": "CLUST-0001",
@@ -464,11 +464,11 @@
       "published_at": "2026-10-28T12:29:46+00:00",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0052",
-      "signal_id": "SIG-20261105-0052",
+      "cluster_id": "CLUST-0056",
+      "signal_id": "SIG-20261105-0056",
       "representative_title": "‘Greve não é contra Lula, mas contra intransigentes da gestão da Petrobras’, diz diretor da FUP - Brasil de Fato",
       "canonical_title": "‘Greve não é contra Lula, mas contra intransigentes da gestão da Petrobras’, diz diretor da FUP - Brasil de Fato",
       "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxQRFFnYXBFd2QzRUZpeV9JbXptd2tPVEhQSnBzZGpJbVRpZXgzbHVfUlNtRlgwcDVUVFB5X2hnV2Q3SXNfVHBYSUpBZFV5dldGUDhXNEpQVWp3YmJvM3dtY1VhVHdVbXYyVjA1QXZDd2w2TV9BU21IRUNyWllvbjdDVXZ2VWRYYnB3VFRNcGVCdmVGdFNOUkNpeGk2aVI3d2xmSlo1cTJaRWNld0VsUnRhN1k2LXo0ZndiNzhBUWY5N28ySzRlam90SHJMaEk4eVp6?oc=5",
@@ -504,11 +504,11 @@
       "published_at": "Mon, 15 Dec 2025",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0046",
-      "signal_id": "SIG-20261105-0046",
+      "cluster_id": "CLUST-0050",
+      "signal_id": "SIG-20261105-0050",
       "representative_title": "歐美砸錢也贏不了台積電！德媒揭殘酷現實：台海斷供衝擊遠超波斯灣 - Yahoo新聞",
       "canonical_title": "歐美砸錢也贏不了台積電！德媒揭殘酷現實：台海斷供衝擊遠超波斯灣 - Yahoo新聞",
       "url": "https://news.google.com/rss/articles/CBMisgNBVV95cUxQUEVGZko1QmZod25SRUFnb25uaF9RdkgzeE9WenFkejIzaDczS1kyNHh2cGJrV1VRcC1QR3JqSUN2a2t2YW1lclVBbms1OVNKN2ExVEtOYTRKM1RYLVk3dnJRWFIxU3VNRVZmSXhlbWZVbjdpQ3JJeXdQY19JSm1VcDlGaWxqUkhzdm1TcWdqbk8tNDlzamJMazFyNHVGU250aWpQSXppSXJDT2NzXzJxVGVmdWM3ZU5RSzd5a19hcXFTVW0xd013eV9wSm1Jbm1NQ0I1MF82TlRZYUN5VmE1N2ZoU1FNQlNianJTeFpQSjJtQUtmS1M5ckM5dWU4bFZ4R1VrU3QzTmE2ZTl2LUtoMGRCUWx5NkFDNkRwWkdHZ0kxT1I3UmNheHQ0MXhIMnBUaS0wajNyUTdaR0RUQmhxeTFWQXF1ZnJmaEd5dDVfZkVCY0RaSVZKUlBXNW1lWmRPVE83WUVOR0ZoSVBVZEx3T2FlLWZQTlBNRjFKZFVWSTNmbzJ6Uzl0S0dCeEd6ZFVQQ3BwUXJab1ltVVhkVTJuX0FiTW0yb1pndDVzY3hkcmVLdw?oc=5",
@@ -554,11 +554,11 @@
       "published_at": "Thu, 13 Aug 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0020",
-      "signal_id": "SIG-20261105-0020",
+      "cluster_id": "CLUST-0024",
+      "signal_id": "SIG-20261105-0024",
       "representative_title": "India Condemns Hormuz Ship Attack That Injured 11 Indian Crew Members",
       "canonical_title": "India Condemns Hormuz Ship Attack That Injured 11 Indian Crew Members",
       "url": "https://iranwire.com/en/news/158559-india-condemns-hormuz-ship-attack-that-injured-11-indian-crew-members/",
@@ -603,11 +603,11 @@
       "published_at": "Tue, 06 Oct 2026 16:14:21 +0000",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0049",
-      "signal_id": "SIG-20261105-0049",
+      "cluster_id": "CLUST-0053",
+      "signal_id": "SIG-20261105-0053",
       "representative_title": "Цены на нефть Brent поднялись до $109,64: влияние санкций и дефицита дизеля - Финансы Mail",
       "canonical_title": "Цены на нефть Brent поднялись до $109,64: влияние санкций и дефицита дизеля - Финансы Mail",
       "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOajNlSUdlZGZXbTlrUHRnUDJrWjFPOTdGZ2xWSy1acnRlRlptanBDMVVuVWFDYlhOcWl3YVUzaVRnZzlQc0pBRld2VlRXdFhFNUk3OWs1VU1lTUlxQzhSc0RtZ2dneGZveFhZZ1Y1VVItX2ZxV2w0WlhPQ3lqRWJ3MjFVTDgtVDJ4UnhqZzJTcV9ieEhLdGZDTUpTd1plUVVmUEloSDJKOXk3UlJ6N2hWdmVsMExCcXBoeWdZZw?oc=5",
@@ -641,11 +641,11 @@
       "published_at": "Sat, 17 Oct 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0041",
-      "signal_id": "SIG-20261105-0041",
+      "cluster_id": "CLUST-0045",
+      "signal_id": "SIG-20261105-0045",
       "representative_title": "Musk könnte TSMC die Kontrolle über den Terafab-Betrieb überlassen, während Intels Rolle ungeklärt bleibt #Taiwan #Technologie",
       "canonical_title": "Musk könnte TSMC die Kontrolle über den Terafab-Betrieb überlassen, während Intels Rolle ungeklärt bleibt #Taiwan #Technologie",
       "url": "https://bsky.app/profile/de.asiadaily.org/post/3mzdjvbzk2h22",
@@ -678,11 +678,11 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0064",
-      "signal_id": "SIG-20261105-0064",
+      "cluster_id": "CLUST-0068",
+      "signal_id": "SIG-20261105-0068",
       "representative_title": "Tanker transits (AIS-visible) fell further this week: Hormuz down to 0.6 ships/day, 99% below baseline, as many sail dark. Bosporus -36%, Bab el-Mandeb -29%, Pa...",
       "canonical_title": "Tanker transits (AIS-visible) fell further this week: Hormuz down to 0.6 ships/day, 99% below baseline, as many sail dark. Bosporus -36%, Bab el-Mandeb -29%, Pa...",
       "url": "https://bsky.app/profile/strategicenergymap.org/post/3mxx6ebno6t2u",
@@ -744,11 +744,67 @@
       "published_at": "2026-10-15T23:05:11.973Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0062",
-      "signal_id": "SIG-20261105-0062",
+      "cluster_id": "CLUST-0018",
+      "signal_id": "SIG-20261105-0018",
+      "representative_title": "Танкер российского «теневого флота» был атакован у Ормузского пролива. В июле его уже атаковали в Черном море - The Insider",
+      "canonical_title": "Танкер российского «теневого флота» был атакован у Ормузского пролива. В июле его уже атаковали в Черном море - The Insider",
+      "url": "https://news.google.com/rss/articles/CBMiQ0FVX3lxTE9ZT3BLZDJIbm9qdW9EWVVwZ29JRXhCNzBRTHJMWXFlSHZ0aFRnV2F0TEFJYmUtUDJiZTR0cXFQQjN5a1k?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "ru_insider_rss"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_HORMUZ",
+          "name": "호르무즈 해협 (Strait of Hormuz)",
+          "region": "Middle East / Persian Gulf",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG"
+          ]
+        },
+        {
+          "code": "CHOKEPOINT_BOSPHORUS",
+          "name": "보스포루스 및 흑해 해협 (Bosphorus & Turkish Straits)",
+          "region": "Eurasia / Black Sea",
+          "primary_supply": [
+            "GRAIN_FOOD",
+            "CRUDE_OIL"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EASTERN_EUROPE"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Mon, 02 Nov 2026 10:25:09 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0066",
+      "signal_id": "SIG-20261105-0066",
       "representative_title": "🌍 Houthi attacks in the Red Sea, U.S.-Iran tensions around the Strait of Hormuz, and drought-related restrictions on the Panama Canal have disrupted global ship...",
       "canonical_title": "🌍 Houthi attacks in the Red Sea, U.S.-Iran tensions around the Strait of Hormuz, and drought-related restrictions on the Panama Canal have disrupted global ship...",
       "url": "https://bsky.app/profile/english.nv.ua/post/3myr6r4bpgc25",
@@ -809,11 +865,11 @@
       "published_at": "2026-10-26T07:21:36.323Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0043",
-      "signal_id": "SIG-20261105-0043",
+      "cluster_id": "CLUST-0047",
+      "signal_id": "SIG-20261105-0047",
       "representative_title": "台積電成台海「能源軟肋」！華府兵推揭北京未開戰先施壓 恐用能源、礦產分化美盟友 - 梅花新聞網",
       "canonical_title": "台積電成台海「能源軟肋」！華府兵推揭北京未開戰先施壓 恐用能源、礦產分化美盟友 - 梅花新聞網",
       "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE1vWDlMVEhKRFEzbzNISmdrSzdxdktCdFF6dGQ1YmM5T29RbDgwUkNTdmhLSUtacEZSejd1dUlqSHBZRHh2TDhlU25BZFJ3eTdFaUhkcEVmWWw?oc=5",
@@ -859,11 +915,11 @@
       "published_at": "Wed, 12 Aug 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0044",
-      "signal_id": "SIG-20261105-0044",
+      "cluster_id": "CLUST-0048",
+      "signal_id": "SIG-20261105-0048",
       "representative_title": "台灣不能再讓南韓漁翁得利！從羞辱式斷交到三星告密重創面板業...台海若有事，誰最想搶台積電訂單？ - 今周刊",
       "canonical_title": "台灣不能再讓南韓漁翁得利！從羞辱式斷交到三星告密重創面板業...台海若有事，誰最想搶台積電訂單？ - 今周刊",
       "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPZGtNM1FwdEQwbFE2OURzZEs5SjdRN3BZVDBhZU10eWcyMTJhUlhhQlM2RHhDU2VkblhIZTk4dnMyUnJ0eV9HRTZaZjE3R3JYS1FjX3ZDTnhxVVEyVlhPcXhXUFZhUlh2SHlNbFV5VUV6Vl9mS0wyT003TUF2R3dBLQ?oc=5",
@@ -906,11 +962,11 @@
       "published_at": "Tue, 23 Jun 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0065",
-      "signal_id": "SIG-20261105-0065",
+      "cluster_id": "CLUST-0069",
+      "signal_id": "SIG-20261105-0069",
       "representative_title": "AIS-tracked tanker traffic through Hormuz averaged 1.3/day in the week to 27 Sep, 97% below baseline — many sail dark, so broader tracking shows higher flows. T...",
       "canonical_title": "AIS-tracked tanker traffic through Hormuz averaged 1.3/day in the week to 27 Sep, 97% below baseline — many sail dark, so broader tracking shows higher flows. T...",
       "url": "https://bsky.app/profile/strategicenergymap.org/post/3mwvsplywgg2k",
@@ -953,11 +1009,11 @@
       "published_at": "2026-10-02T16:38:55.122Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0047",
-      "signal_id": "SIG-20261105-0047",
+      "cluster_id": "CLUST-0051",
+      "signal_id": "SIG-20261105-0051",
       "representative_title": "掐住台積電命脈！美智庫：北京祭出「能源封鎖」台灣恐妥協 - 中天新聞網",
       "canonical_title": "掐住台積電命脈！美智庫：北京祭出「能源封鎖」台灣恐妥協 - 中天新聞網",
       "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE40dXRjSUxSQnhib0dUUW9lbzFXUGFsT2FGakh3VmpwdDh1TTVQMy05eG14bDFQX2VIVXFBY1Q2YWNzRG1CSTJSdU9FbEVKUDU1bFo4?oc=5",
@@ -992,11 +1048,11 @@
       "published_at": "Wed, 12 Aug 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0051",
-      "signal_id": "SIG-20261105-0051",
+      "cluster_id": "CLUST-0055",
+      "signal_id": "SIG-20261105-0055",
       "representative_title": "Risco de greve de caminhoneiros em ano eleitoral levou governo a lançar pacote contra alta do diesel - Folha de S.Paulo",
       "canonical_title": "Risco de greve de caminhoneiros em ano eleitoral levou governo a lançar pacote contra alta do diesel - Folha de S.Paulo",
       "url": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxNaGk0NkY4WktPdzg1X0hHZEdud2RudllkTTh6QlI5YWdTQnMzQlBSbzZWLVZGckdjR2paX015NTdnYVY3MlExb3o2YzM3TldCbGZNNC1DNVdvdUhDMmpXNmhyajQ3MC0yQUdOUDVXR3NjMVpMMm9hOWh0bHFiY3hhQU4tWm42aVpFdHo0ci1rRVFNZmlsR21qTHp1TkdpekcteUJlUG01SzNURnB6OTIxdDN5QkxkaDJSZFZqb0xZekZyWVI5QkNqOEZqWjVhWFdoNXRvN0gtc0JuX3Q4NzFKX1hTOUFGZDjSAewBQVVfeXFMTVlaT3B0c3hHWkI2aUpzVG5WZDZ6clFMeEczeklTbm93c1BoVzlaMDZmbUpucnNIREduYXh0em5OeXYtWnVsTjhRNzZkSFBxTDNSaXo3Ry16SHJVb2JlX1RLbDJTeXBkNWVoZlcxN2ZXMDJpZUtFLTZnLTBwVnJsdmFuSTBGQmVFLVNveXdXVDhObzVNblBHN3d4SkRVbElVTnhnaGRjeFVUSTZRMHg5azdyODdBNVlDRFRMTTcwUk5iRVRTTzFjZlRrTVRmNjJlak9tSWpXZjFmRExQTXBsTlF4MFdocEhJVk85VjE?oc=5",
@@ -1030,11 +1086,11 @@
       "published_at": "Thu, 12 Mar 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0059",
-      "signal_id": "SIG-20261105-0059",
+      "cluster_id": "CLUST-0063",
+      "signal_id": "SIG-20261105-0063",
       "representative_title": "In a Cross-Strait Scenario, Taiwan’s Semiconductors are Irrelevant",
       "canonical_title": "In a Cross-Strait Scenario, Taiwan’s Semiconductors are Irrelevant",
       "url": "https://bsky.app/profile/michaelturton.bsky.social/post/3mmuhekr5vk2s",
@@ -1076,11 +1132,11 @@
       "published_at": "2026-05-27T21:31:18.663Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0061",
-      "signal_id": "SIG-20261105-0061",
+      "cluster_id": "CLUST-0065",
+      "signal_id": "SIG-20261105-0065",
       "representative_title": "From the Archives | Taiwan’s Semiconductor Industry, the US-China Tech Fight, and Cross Strait Stability",
       "canonical_title": "From the Archives | Taiwan’s Semiconductor Industry, the US-China Tech Fight, and Cross Strait Stability",
       "url": "https://bsky.app/profile/fpriorbis.bsky.social/post/3mltfbaegjl2g",
@@ -1122,11 +1178,11 @@
       "published_at": "2026-05-14T17:55:48.245Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0066",
-      "signal_id": "SIG-20261105-0066",
+      "cluster_id": "CLUST-0070",
+      "signal_id": "SIG-20261105-0070",
       "representative_title": "Tanker with Iranian crude heading towards India’s east coast, shipping data shows; could mark first import of Tehran’s oil in 7 years: Jaya, a Curacao-flagged v...",
       "canonical_title": "Tanker with Iranian crude heading towards India’s east coast, shipping data shows; could mark first import of Tehran’s oil in 7 years: Jaya, a Curacao-flagged v...",
       "url": "https://bsky.app/profile/rankednews.bsky.social/post/3miziwlu3gj2i",
@@ -1157,11 +1213,11 @@
       "published_at": "2026-04-09T00:01:48.720Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0067",
-      "signal_id": "SIG-20261105-0067",
+      "cluster_id": "CLUST-0071",
+      "signal_id": "SIG-20261105-0071",
       "representative_title": "BIS Fines German Firm Over Unlicensed Transfers to SMIC - Washington Trade & Tariff Letter",
       "canonical_title": "BIS Fines German Firm Over Unlicensed Transfers to SMIC - Washington Trade & Tariff Letter",
       "url": "https://bsky.app/profile/sensehofstede.nl/post/3mcywuifync25",
@@ -1206,7 +1262,7 @@
       "published_at": "2026-01-22T10:07:21.873Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
       "cluster_id": "CLUST-0014",
@@ -1243,11 +1299,48 @@
       "published_at": "Thu, 05 Nov 2026 18:07:28 +0300",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0039",
-      "signal_id": "SIG-20261105-0039",
+      "cluster_id": "CLUST-0021",
+      "signal_id": "SIG-20261105-0021",
+      "representative_title": "Have Ukrainian Drones Really Knocked Out 38% of Russia’s Oil Refining Capacity? - Carnegie Endowment for International Peace",
+      "canonical_title": "Have Ukrainian Drones Really Knocked Out 38% of Russia’s Oil Refining Capacity? - Carnegie Endowment for International Peace",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPbW5PSVA4YkhkUFFaTHpOMVA2RFhjclNrdVgxT3RXamRtdnRHbWJHR0tjcDBXUlROd1gxS1RkTndVb3ZBN29FUWZVMzVfVG5Ya2xSZlh3N2tINFUyRG9RZnBvS2RkeHV3V1A4SXpyeWNOMUpmOWRpa19vODBhM0pyMnV4QlZEV05yYi1PeUJ3?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "carnegie_russia_eurasia"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.8,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EASTERN_EUROPE"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Fri, 03 Oct 2025 07:00:00 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0043",
+      "signal_id": "SIG-20261105-0043",
       "representative_title": "Researchers develop new semiconductor material 00:03 An international research team co-led by National Taiwan University (NTU) professor Chou Yi-chia (周苡嘉) has developed a “2D” semiconductor made of",
       "canonical_title": "Researchers develop new semiconductor material 00:03 An international research team co-led by National Taiwan University (NTU) professor Chou Yi-chia (周苡嘉) has developed a “2D” semiconductor made of",
       "url": "https://bsky.app/profile/taipei-times.pbs.idv.tw.ap.brid.gy/post/3mzdp7onzfkg2",
@@ -1280,11 +1373,11 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0040",
-      "signal_id": "SIG-20261105-0040",
+      "cluster_id": "CLUST-0044",
+      "signal_id": "SIG-20261105-0044",
       "representative_title": "Students will gain hands-on experience with the equipment and processes used to make computer chips through a new program launched with Taiwan Semiconductor Manufacturing Company, the world’s leading",
       "canonical_title": "Students will gain hands-on experience with the equipment and processes used to make computer chips through a new program launched with Taiwan Semiconductor Manufacturing Company, the world’s leading",
       "url": "https://bsky.app/profile/ucsandiego.bsky.social/post/3mzdl57db5p2o",
@@ -1317,11 +1410,11 @@
       "published_at": "2026-11-02",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0045",
-      "signal_id": "SIG-20261105-0045",
+      "cluster_id": "CLUST-0049",
+      "signal_id": "SIG-20261105-0049",
       "representative_title": "斷電等同斷供全世界！台積電成兵推關鍵警告 中共這招比打仗更可怕 - TVBS新聞網",
       "canonical_title": "斷電等同斷供全世界！台積電成兵推關鍵警告 中共這招比打仗更可怕 - TVBS新聞網",
       "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE11RUczVm9HUWdNR3R2VTBwSGdBalZFeUppZjRsS3A0RDk1VFpsVlBvMXEzNzNRWVZERk1DeTF1QTh4UFp3ZXZ6aC04NXBxZjNta25j?oc=5",
@@ -1357,11 +1450,11 @@
       "published_at": "Wed, 12 Aug 2026",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0058",
-      "signal_id": "SIG-20261105-0058",
+      "cluster_id": "CLUST-0062",
+      "signal_id": "SIG-20261105-0062",
       "representative_title": "10 Ways the U.S. Can Strengthen Deterrence in the Taiwan Strait",
       "canonical_title": "10 Ways the U.S. Can Strengthen Deterrence in the Taiwan Strait",
       "url": "https://bsky.app/profile/michaelturton.bsky.social/post/3mvrhwdykls2i",
@@ -1411,11 +1504,11 @@
       "published_at": "2026-09-18T05:50:00.980Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0063",
-      "signal_id": "SIG-20261105-0063",
+      "cluster_id": "CLUST-0067",
+      "signal_id": "SIG-20261105-0067",
       "representative_title": "El Niño drought slows Panama Canal shipping again",
       "canonical_title": "El Niño drought slows Panama Canal shipping again",
       "url": "https://bsky.app/profile/skitts.bsky.social/post/3mwpamf4trk2l",
@@ -1467,11 +1560,49 @@
       "published_at": "2026-09-30T01:59:02.582Z",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0019",
-      "signal_id": "SIG-20261105-0019",
+      "cluster_id": "CLUST-0017",
+      "signal_id": "SIG-20261105-0017",
+      "representative_title": "Два танкера с российским дизелем, направлявшиеся в США, сменили курс - The Insider",
+      "canonical_title": "Два танкера с российским дизелем, направлявшиеся в США, сменили курс - The Insider",
+      "url": "https://news.google.com/rss/articles/CBMiQ0FVX3lxTE9OcHluaGxyQ1BzU0FmRDEycEdsRGpCd2lXRmhwZ1dNeTZXMGRXY0Q0c1B2RWtaYWxFcC1JbUNhWjBMbG8?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "ru_insider_rss"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.5,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EASTERN_EUROPE",
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Thu, 05 Nov 2026 13:26:47 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0023",
+      "signal_id": "SIG-20261105-0023",
       "representative_title": "Majid Majidi to chair jury of Bosphorus Film Festival",
       "canonical_title": "Majid Majidi to chair jury of Bosphorus Film Festival",
       "url": "https://www.tehrantimes.com/news/531826/Majid-Majidi-to-chair-jury-of-Bosphorus-Film-Festival",
@@ -1510,11 +1641,11 @@
       "published_at": "Wed, 04 Nov 2026 17:13:15 GMT",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0027",
-      "signal_id": "SIG-20261105-0027",
+      "cluster_id": "CLUST-0032",
+      "signal_id": "SIG-20261105-0032",
       "representative_title": "Iraq Jails Ex-Oil Boss for Eight Years Over $119M Kickback Scheme",
       "canonical_title": "Iraq Jails Ex-Oil Boss for Eight Years Over $119M Kickback Scheme",
       "url": "https://www.occrp.org/en/news/raq-jails-ex-oil-boss-for-eight-years-over-119m-kickback-scheme",
@@ -1547,11 +1678,11 @@
       "published_at": "Wed, 04 Nov 2026 22:53:00 +0100",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     },
     {
-      "cluster_id": "CLUST-0028",
-      "signal_id": "SIG-20261105-0028",
+      "cluster_id": "CLUST-0033",
+      "signal_id": "SIG-20261105-0033",
       "representative_title": "DRC Orders Probe into Illegal Mining Following Major Copper and Cobalt Seizure",
       "canonical_title": "DRC Orders Probe into Illegal Mining Following Major Copper and Cobalt Seizure",
       "url": "https://www.occrp.org/en/news/drc-orders-probe-into-illegal-mining-following-major-copper-and-cobalt-seizure",
@@ -1582,7 +1713,7 @@
       "published_at": "Tue, 03 Nov 2026 19:02:00 +0100",
       "verification_state": "UNVERIFIED",
       "alert_level_set": false,
-      "preprocessed_at": "2026-11-05T15:21:59.153382+00:00"
+      "preprocessed_at": "2026-11-05T15:24:36.208525+00:00"
     }
   ]
 }

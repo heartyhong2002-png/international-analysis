@@ -1,12 +1,12 @@
 {
   "schema_version": "preprocess_rejects_v1",
-  "generated_at": "2026-11-05T15:22:01.571102+00:00",
+  "generated_at": "2026-11-05T15:24:37.797147+00:00",
   "purity_mode": "high",
-  "total_rejected": 554,
+  "total_rejected": 590,
   "reason_breakdown": {
-    "high_purity_missing_hard_entity": 509,
+    "high_purity_missing_hard_entity": 543,
     "retrospective_or_non_current_noise": 3,
-    "ad_or_soft_section": 11,
+    "ad_or_soft_section": 13,
     "entertainment_sports_noise": 8,
     "diplomatic_protocol_noise": 1,
     "empty_title": 2,
@@ -14,7 +14,7 @@
   },
   "lane_breakdown": {
     "FAST": 207,
-    "CONTEXT": 288,
+    "CONTEXT": 324,
     "OPINION": 59
   },
   "rejects": [
@@ -1891,6 +1891,62 @@
       "relevance_score": 0.2
     },
     {
+      "title": "Демократ впервые за 35 лет выиграл выборы губернатора Техаса — им стала Джина Инохоса, первая латиноамериканка на этом посту - The Insider",
+      "url": "https://news.google.com/rss/articles/CBMiQ0FVX3lxTE5QdllaUXJiZTVNTjFMSmtZVndXejNnZ1lBMTdEUUg3THEzN1lJVDd2LWZsZl9JcjVCQXhhMVp5NXlxdjg?oc=5",
+      "source": "ru_insider_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Укрощение слона: как демократы повлияют на курс Трампа в случае победы в обеих палатах - The Insider",
+      "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTFBSMmxXUExvQ2FFWkd3TXBVZmVsSXNjLW1nY25vVERxMWpfOHFWbkFRdWYyZ1o2TmpCdjh6Y282UWp5NXRjN3c4Qw?oc=5",
+      "source": "ru_insider_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Хакеры заявили о краже 23 ТБ данных Росстата, включая сведения о потерях на войне. Ведомство отрицает утечку - The Insider",
+      "url": "https://news.google.com/rss/articles/CBMiQ0FVX3lxTFA2LWN0eDBRcXczaUszb0pmVnBNLVphSWkzUTNpNjdNeHk5OTJQc0VhTWsteE1sMExScEJTNl9JaDFjVlU?oc=5",
+      "source": "ru_insider_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Украинские беспилотники атаковали ЛПДС «Самара». Спутниковые снимки подтверждают пожар на станции - The Insider",
+      "url": "https://news.google.com/rss/articles/CBMiQ0FVX3lxTE5wR2ZOenJfaVMxX1UtaWJpZ2xnZHVEemVZZnRUenZvcnBFZDVMZXBxektHaHZKNnNlQTZuSHJISkdHc00?oc=5",
+      "source": "ru_insider_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Главные новости, расследования, фактчекинг — The Insider - theins.ru",
+      "url": "https://news.google.com/rss/articles/CBMiNEFVX3lxTE84YVpPY2NwMkduM0ZQclR5OVYyVmtsNXAxd2ZFNk1nN2pUWW1DT3N5Wlp1ZVg?oc=5",
+      "source": "ru_insider_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Главные новости, расследования, фактчекинг - theins.ru",
+      "url": "https://news.google.com/rss/articles/CBMiOkFVX3lxTE12RUF3X2lCWW9nQ3Flall3cFZrTHhxVFgxVFh2djJlSEhfVHZyUk5TeFFvTG5SRkJuWHc?oc=5",
+      "source": "ru_insider_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Арабо-израильская волна: что означает рекордный результат арабских партий для израильской политики - The Insider",
+      "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTFBROGU1TE5Yb1ZOQUNxSXdBZ242bElVbXBLSFBnVHM2THBJSnM5ZkRiZWxxeVhpS3BiMEdTdllKVDdIN3NYMXZnaA?oc=5",
+      "source": "ru_insider_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
       "title": "How Online Maps Lay Bare the US Military Bases Targeted by Iran",
       "url": "https://www.bellingcat.com/news/2026/11/05/how-online-maps-lay-bare-the-us-military-bases-targeted-by-iran/",
       "source": "bellingcat_rss",
@@ -1961,6 +2017,78 @@
       "lane": "CONTEXT",
       "reject_reason": "high_purity_missing_hard_entity",
       "relevance_score": 0.2
+    },
+    {
+      "title": "Russia’s Economic Woes Fuel Search for Scapegoat - Carnegie Endowment for International Peace",
+      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNMG11V25EYXNaR2QtQk5ha3ZwUlFtWXNLQWRtZlZSNzlfOTVRNy1QdGFSa21rYldVTWtIRXRDMURTcV9WWnJjbFdaVTI4WGRIbjlyeEtUbFZyM01Yb1BMeVpUOG1CcFpOVmEyV3h5QzkxcjRyNjlYdEpQeThIRnVCVy1ZWk0zMkRIclNYLUFldFBhbUU?oc=5",
+      "source": "carnegie_russia_eurasia",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.5
+    },
+    {
+      "title": "About Strategic Europe - Carnegie Endowment for International Peace",
+      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE55bVA5Y05wQklhOHNvb2RBbnR4S2t3bTAtVDZBUjl5SmRHUldnb1BtdnhTSjlHcEoyLVJGc1Y1MlFwWFZnaGVmOFZQQmtJMVp1VzdDdmp6MWtQRXFaUkFWU0JCMA?oc=5",
+      "source": "carnegie_russia_eurasia",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "What’s Driving Russia’s Opportunistic Inroads With Saudi Arabia and the Gulf Arabs - Carnegie Endowment for International Peace",
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQWE9uT3NvSEgwcHR0cDkzNHZKOGFmMnptelZiY0hiYnh6dVA2dGVtMW41Q0dDRDdVVFJ5WDYxeWt1U2hfZlU4NUxTZmdzZE8xLVJGQjlHcXJyMzdkUnhvVGNmRDNQd0dwdW1LSkx2NHVrTXVGRWhnMXBkQVpmMTBRRkI3ZVQ1eFliTG9RSUdRY1pCNWsxeUFQUTlrVkU5SnNaTmd4N1JEcVk0Ym1yMllJSE5Gc19CMTEtQ0R6c0lHandGZw?oc=5",
+      "source": "carnegie_russia_eurasia",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.5
+    },
+    {
+      "title": "With Putin in Charge, Russia’s Vassalage to China Will Only Deepen - Carnegie Endowment for International Peace",
+      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQclhBWTB5T25oZ1Y3V0Y4T3VFU1ZQX3dRT1BwX0toMW9VNHBfWHhLWFhNWDlaQ01RYURPUzJTZzRhNTlVUzJ5U3hnakRrdlBHZGZGZHA0NTZqT2lUZk90Smx5TWJySUVjMWtURjh4OEVuVVhEQ05TMUttQTRoejhLQWY4WjBYMmQ1UWhPNm5OZ05WeGhj?oc=5",
+      "source": "carnegie_russia_eurasia",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.8
+    },
+    {
+      "title": "Is the Russia-Ukraine War Vibe Shift Real? - Carnegie Endowment for International Peace",
+      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPVTBkdzhZM2doMkxNRXJJNDVpVWFSaVIzdk9jQ0dfQkU1TjNTVWRIaF9rSFZwLUJYdW04b2xodHVmcGxvSGw2WVQ5eTg4amJQZHBEMlpSVFdINzQzZENCM2ZRMTFUYnFlYmNULWZURVJQWFpINE9rU3BUMW0tZEk4MGRDcnAxNDdFMmcxQXEwYnVFeVJGdWcwdA?oc=5",
+      "source": "carnegie_russia_eurasia",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.8
+    },
+    {
+      "title": "Transdniestria, Moldova, and Russia’s War in Ukraine - Carnegie Endowment for International Peace",
+      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNVndTaXBpbVBsLWo0SG9CZENwcWlPa1A3dlhqLXpYRExGZ3pxNkNPalZDbk9FN09TQ09MdFVRNTM2YUx6a280ano2blhqSWQ2d3R5YmZsSVFKTEtxRUpKclJiNEVGZVdmNzQ3eEowS2RQZVNuTGw1S3dVR3BDSEVHR2ZoTUd4M3VwVTNUNjZWMFBja2c0LWdqZlg5cVU?oc=5",
+      "source": "carnegie_russia_eurasia",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.8
+    },
+    {
+      "title": "Autocrats United: How Russia and Iran Defy the U.S.-Led Global Order - Carnegie Endowment for International Peace",
+      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNb0hlamFma2FvSWx0MEZiN1pWeXZaOFdManE4eWlXMHZjMDdFS3FNSWlQa0ozNnRGWVhMcTl5RVJ2bEJpVTgzSS1jWkJjRUdRc1lzM25FQlV6YlVoQ0MxQXQ3eXhjQnVWNEt0amNVUzFBSmU1dkVSMWVURlVmOU5xMkxrLUFsVU0?oc=5",
+      "source": "carnegie_russia_eurasia",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.8
+    },
+    {
+      "title": "Hong Kong’s Technology Lifeline to Russia - Carnegie Endowment for International Peace",
+      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOYnJLYnp2TUhLTjJ6QmpmV2V6RERNeldkLU5PX241aWNZNnNLMnhmZ0ZlME5Ud3pfUnVQY2stbThWMnhlVkQ0Y1VNclRzcFpnejR4YXRYVVZpQlRna2YxSWdkOFAwRW1zWVp5US1pcmtMQXBUUXJaZEltaWRSZ19sWVlsNEhZUlR0V2h5U1J4Mmc?oc=5",
+      "source": "carnegie_russia_eurasia",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.5
+    },
+    {
+      "title": "Cooperation and Competition: Russia and China in Central Asia, the Russian Far East, and the Arctic - Carnegie Endowment for International Peace",
+      "url": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxNeDlQYUg0akNobVRhdDM3VWJIem9VYU5EbmVvaWgySER1VUVuTTh6NEE3NjcxdU5mT2ZZSGtJOXF3Q2l0RkhseG1kMnR5Zm13NXNLeVp6Q1hqS3ladEI2dElLdVlWODhvS0VJSDhndjVlRk5MeXVZVG5IUnJ2ZVRqeHhGMTZ1WlhUdTUwdWRNMG44OEZMTFhMWU9raGNXQ3djQnpCcnpyeUFBaWxQWjNWRHktWTVZc1h4dWpfdkttdmtPcml5U0J1dnVDX18wam1xN2RuRUFOamhHUzQ?oc=5",
+      "source": "carnegie_russia_eurasia",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.8
     },
     {
       "title": "Iran Update, November 3, 2026 - Institute for the Study of War",
@@ -2859,6 +2987,70 @@
       "relevance_score": 0.2
     },
     {
+      "title": "Fuerte caída de los bonos argentinos: se derrumban hasta 2,4%",
+      "url": "https://www.clarin.com/economia/fuerte-caida-bonos-argentinos-derrumban-24_0_qxGWA5j73y.html",
+      "source": "ar_clarin_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "En medio de la interna del PJ, Axel Kicillof pidió que se elimine el límite a las reelecciones de los intendentes",
+      "url": "https://www.clarin.com/politica/medio-interna-pj-axel-kicillof-pidio-elimine-limite-reelecciones-intendentes_0_2BW529z7hk.html",
+      "source": "ar_clarin_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Mueren seis personas en un incendio en Nueva York",
+      "url": "https://www.clarin.com/estados-unidos/mueren-seis-personas-en-un-incendio-en-nueva-york_0_5mSM3zf3zs.html",
+      "source": "ar_clarin_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Escándalo en Egipto: le prohibieron aparecer en los medios al DT de la Selección tras divorciarse de sus dos mujeres",
+      "url": "https://www.clarin.com/deportes/escandalo-egipto-prohibieron-aparecer-medios-dt-seleccion-divorciarse-mujeres_0_odkbVZNEpn.html",
+      "source": "ar_clarin_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Dejó su trabajo como abogada para ser dobladora de voz en una serie infantil de Netflix: \"Hago ocho personajes, jamás me imaginé que a mis 42 años llegaría a este punto\"",
+      "url": "https://www.clarin.com/internacional/dejo-trabajo-abogada-dobladora-voz-serie-infantil-netflix-hago-personajes-jamas-imagine-42-anos-llegaria-punto_0_0FUkLvo51u.html",
+      "source": "ar_clarin_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Mamdani da prioridad a organizaciones para comprar edificios deteriorados y no perder su hogar en nueva York",
+      "url": "https://www.clarin.com/estados-unidos/mamdani-da-prioridad-organizaciones-comprar-edificios-deteriorados-perder-hogar-nueva-york_0_5kOzI6wPT0.html",
+      "source": "ar_clarin_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Dónde ver las misas del papa León XIV por TV y streaming: todos los canales y horarios",
+      "url": "https://www.clarin.com/informacion-general/ver-misas-papa-leon-xiv-tv-streaming-canales-horarios_0_G7NvHIl47q.html",
+      "source": "ar_clarin_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Florida ejecuta este jueves a su preso número 19 del año e iguala el récord de 2025",
+      "url": "https://www.clarin.com/estados-unidos/florida-ejecuta-este-jueves-a-su-preso-numero-19-del-ano-e-iguala-el-record-de-2025_0_9GhWjLiuZp.html",
+      "source": "ar_clarin_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
       "title": "Pedro, 50 años, fontanero: “Hay trabajo de sobra, hasta el punto de que nosotros hemos tenido que anular hace dos años la luna de miel, porque no podíamos parar”",
       "url": "https://www.clarin.com/internacional/pedro-50-anos-fontanero-trabajo-sobra-punto-anular-hace-anos-luna-miel-podiamos-parar_0_9joNMFT1aE.html",
       "source": "ar_clarin_rss",
@@ -2869,62 +3061,6 @@
     {
       "title": "Quiniela de Santa Fe: resultado del sorteo de la Matutina de hoy, jueves 05 de noviembre",
       "url": "https://www.clarin.com/loterias-y-quinielas/quiniela-santa-fe-resultado-sorteo-matutina-hoy-jueves-05-noviembre_0_iYD0886Fsz.html",
-      "source": "ar_clarin_rss",
-      "lane": "CONTEXT",
-      "reject_reason": "high_purity_missing_hard_entity",
-      "relevance_score": 0.2
-    },
-    {
-      "title": "Quiniela de Córdoba: resultado del sorteo de la Matutina de hoy, jueves 05 de noviembre",
-      "url": "https://www.clarin.com/loterias-y-quinielas/quiniela-cordoba-resultado-sorteo-matutina-hoy-jueves-05-noviembre_0_UY7DNuqSuV.html",
-      "source": "ar_clarin_rss",
-      "lane": "CONTEXT",
-      "reject_reason": "high_purity_missing_hard_entity",
-      "relevance_score": 0.2
-    },
-    {
-      "title": "Quiniela Nacional: resultado del sorteo de la Matutina de hoy, jueves 05 de noviembre",
-      "url": "https://www.clarin.com/loterias-y-quinielas/quiniela-nacional-resultado-sorteo-matutina-hoy-jueves-05-noviembre_0_PDdTPLjJHp.html",
-      "source": "ar_clarin_rss",
-      "lane": "CONTEXT",
-      "reject_reason": "high_purity_missing_hard_entity",
-      "relevance_score": 0.2
-    },
-    {
-      "title": "Bancos cerrados por la visita del Papa: cómo cobrar jubilaciones y asignaciones de ANSeS durante los feriados de noviembre",
-      "url": "https://www.clarin.com/informacion-general/bancos-cerrados-visita-papa-cobrar-jubilaciones-asignaciones-anses-feriados-noviembre_0_uU16NVrGh4.html",
-      "source": "ar_clarin_rss",
-      "lane": "CONTEXT",
-      "reject_reason": "high_purity_missing_hard_entity",
-      "relevance_score": 0.2
-    },
-    {
-      "title": "Francia vive un \"jueves negro\": paro general indefinido y más de un millón de personas contra el alza del costo de vida",
-      "url": "https://www.clarin.com/mundo/francia-vive-jueves-negro-paro-general-indefinido-millon-personas-alza-costo-vida_0_J0Rt6lawmG.html",
-      "source": "ar_clarin_rss",
-      "lane": "CONTEXT",
-      "reject_reason": "high_purity_missing_hard_entity",
-      "relevance_score": 0.2
-    },
-    {
-      "title": "La ayuda de Trump a la Argentina, en riesgo: dos proyectos en el Congreso de EE.UU. podrían complicar un nuevo rescate financiero",
-      "url": "https://www.clarin.com/economia/ayuda-trump-argentina-riesgo-proyectos-congreso-eeuu-podrian-complicar-nuevo-rescate-financiero_0_JVDa7k5fzR.html",
-      "source": "ar_clarin_rss",
-      "lane": "CONTEXT",
-      "reject_reason": "high_purity_missing_hard_entity",
-      "relevance_score": 0.2
-    },
-    {
-      "title": "Trump enfrenta una nueva realidad política, los demócratas prometen investigaciones",
-      "url": "https://www.clarin.com/estados-unidos/trump-enfrenta-una-nueva-realidad-politica-los-democratas-prometen-investigaciones_0_ReeOQ6hkEx.html",
-      "source": "ar_clarin_rss",
-      "lane": "CONTEXT",
-      "reject_reason": "high_purity_missing_hard_entity",
-      "relevance_score": 0.5
-    },
-    {
-      "title": "La intimidad de la F1 en Brasil: el paseo de Colapinto por el paddock, el boom Antonelli y el piloto más madrugador en Interlagos",
-      "url": "https://www.clarin.com/deportes/intimidad-f1-brasil-paseo-colapinto-paddock-boom-antonelli-piloto-madrugador-interlagos_0_Uy5Zeu9hsM.html",
       "source": "ar_clarin_rss",
       "lane": "CONTEXT",
       "reject_reason": "high_purity_missing_hard_entity",
@@ -3203,6 +3339,78 @@
       "relevance_score": 0.2
     },
     {
+      "title": "特定健診「医療費削減効果薄い」支援打ち切りか 財務省 - 毎日新聞",
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFBiNklYeU1FWFZEbXZYNHB1RGRXaklwbE9vUjBDdUhRakRQZ3ZQeFZiWFo1MkNsdHdhT3o3bnNaaTlkVVNXejFydnJSU0FUdTJjUWpiSlpRWFdReTZ4R082c25wT2JqQm9k?oc=5",
+      "source": "jp_mainichi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "変容する米国：米中間選挙、民主党が4年ぶり上下院奪還 事前予測上回る大勝 - 毎日新聞",
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE81QjlvZFFuZkRDalE4OE9FTmlMbzRRc2JGVG1TS2F1M0FZM0xQVjNSc3lZYUVLcHRsV20tdGQtZWJkSzRlX1h1YXh5VUkyWUhXb3Z1TUU0c3lnV25IWEJlWVQxM25CRlJl?oc=5",
+      "source": "jp_mainichi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "非核三原則見直さず 「堅持の方針今後も変わらず」の文言は調整 - 毎日新聞",
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE44T0J1Sk03VmZyZ0d3SGE1Q1RxUW5KMmdUSWVpd0YzV1d0dV9kSWVGQXVVOEl4blgxUlN2ZEF5dVpOaWNEcHYxQU5qaFpuOXd5S0w5UmRrNU9rdU5PeGhKbFc0Q0xnNHRx?oc=5",
+      "source": "jp_mainichi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "映画監督の榊英雄被告、性的暴行で実刑確定へ 最高裁が上告棄却 - 毎日新聞",
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE41SFhabWVTb0hHQlYtOVhCbk9uMzliam9zeHNtaXM4WTd1NXA2a1N3QUNSQ2puY3hEWHM4eWw3ZWRVRHptVEZxblFXcFpSNkNfZndadDJOcjd5OXBPT3NNa2lnVXdxSFpR?oc=5",
+      "source": "jp_mainichi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "JR東日本vsヤマハ スタメン発表 社会人野球日本選手権 - 毎日新聞",
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9QRFBrV3l2VHFlX3BCQ09hMXk4bE1VckFacUNvaUNjVi1BSWJZMXVLemdYN1RaWDUyQjBQTWxwRExsRWxsalZhM3RlME5LQjZpUW83ZzZOZHhzSFVGYVNfWTY5cmxuMUtz?oc=5",
+      "source": "jp_mainichi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "リンクサイド：佐藤駿、モチベーション向上の策は… フィギュア中国杯公式練習 - 毎日新聞",
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFBUWHVlMmo1VEpUdUFIRHpiVkZsSm1McGZZUkNRZnJnTmJNZGsxTkpKaXNOREY5Y3JrRGQtamFOc2lGSmJBZVUxOEFOY2ZOYVdQUjBrQ0plbXRMRXNYV0hsaUtrd1N3OXJn?oc=5",
+      "source": "jp_mainichi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "会計検査院「最高裁が会計法令に違反」 14億円不当と指摘 - 毎日新聞",
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9JSndIYUVyOVR5SHNyM3czMTBTZVFONXhvTDBfUWhuMGtabWJXb0diYm8wdEsxN3FwU0pHT1FkZWhtMFBhTGVaUnRSME40YnlXWGZjRW5HbUxPUENqM09RWFRscGprNlE2?oc=5",
+      "source": "jp_mainichi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "米中間選挙2026：容易ではない外交政策変更 選挙勝利の民主党を待ち受ける課題は - 毎日新聞",
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE1hNXZWaWFpa0NxVnVHa2RoeEVSYkpfTmJnR2h6SUZOY1pzdVhSbjBQVlhaZXJfZFpMcFN5T3ZCbnpSNFJsQ0k2eDZBek8zTzdYOG9qbHpVSGU1djhNRTBuT3JvbVpNTUJF?oc=5",
+      "source": "jp_mainichi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "昭和天皇が語った「下克上」 なぜ開戦を止められなかったのか - 毎日新聞",
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5HTzJtZ1BwSG42OUVkN1VXQ0x6Ykx0Nk9WRjExamtYbU9KTEFSRVJuVGZOT2FpWDVrZW5ZM3RzWmtoM0gtd1o2VngtUWliU1B2WFhnQlZ0QUhoUXNPQndfWHJXdnRmaVBQ?oc=5",
+      "source": "jp_mainichi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
       "title": "駅でオーバーラン、直後にはドアを開けたまま発車 JR山陽線",
       "url": "http://www.asahi.com/articles/ASVC541D3VC5TIPE01YM.html?ref=rss",
       "source": "jp_asahi_rss",
@@ -3430,6 +3638,86 @@
       "title": "茂木敏充外相（71）が対露会談で存在感 省内の“評判”が変わった《“高市G7欠席”答弁でも話題》 - 文春オンライン",
       "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE80UFhmTHVNeXhWVHdheHlyX0JZUzZNQk1NX04zNm5qLU1jVHdNS3pmVjRDS1BSSmdNT2RRdWJYU3pSZXpMaXExZkVjSUowZWdDd1AtOFJTVQ?oc=5",
       "source": "jp_bunshun_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "東京財団 - 東京財団",
+      "url": "https://news.google.com/rss/articles/CBMiO0FVX3lxTE1uaWV2aXlyUXZWUkd4S1F1MXlxTmZrOU1Wd2xMQllYWjRwWDNJd3RZX3hTcFIyUmpqWFA4?oc=5",
+      "source": "tokyo_foundation",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "「経済学者を対象とした経済・財政についてのアンケート調査」結果 - 東京財団",
+      "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE92UDdFSlE1bldFUEdWei0taHFTelVLUEN0TThka2t0YkJFdnRmREdDNTZZM0dOeFA1RFo3VnlkckNpUkl2ejZ0bGtNaHZBX1hNdm94UVVUX3IwX3duNGlv?oc=5",
+      "source": "tokyo_foundation",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "2022年度日本新聞協会賞に選ばれた朝日新聞社 受賞報告に平田主席研究員のコメントが掲載されました - 東京財団",
+      "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9JSUQyaUZ2VlZCd21UWWFmeEtnS3F2ZTFkV3JROGtMajVFcTdjeGFzeVk5dmZGZGwwUG02SWZXOC11R0xrUGFBbTdwbWx4UW80YzdYZXVIUndKbGdUUGljeg?oc=5",
+      "source": "tokyo_foundation",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "ふるさと納税の功罪―非効率な制度設計の「被害者」は誰か―〈政策データウォッチ（24）〉 - 東京財団",
+      "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE11VFpmMjlYRzhRb0xIMGpSemIzRFdZbDVMR0twWDdlMVJMQ0ZrajJ0VU4wNGpmcWIxZmdyeHF6NkswRUZJeXgxSWRZUXVnUmxhNVU1aExab2lLSVBwaTlv?oc=5",
+      "source": "tokyo_foundation",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "日本のドラッグロスとドラッグラグ：現状分析と再生への提案 - 東京財団",
+      "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFB6eXhCRHhtOEtZT2praV9DRG9ob25ZcndHU3BjZ29meHE5RVl0Qnc3TFBCRE9oRHRSUWhhQk5WNDlwblhoZXR0cnlBMTlpLTk1XzIwMEtyV2tweTZmVHNv?oc=5",
+      "source": "tokyo_foundation",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "MMT派の信用創造理解：その貢献と限界 - 東京財団",
+      "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1VbTBVZmlNRVlkY3VSV2gzM1gxa0xyWEVWeFItcGhlRHVRSDFfVGs4UlYzXy1SZ192NEQ0RmR5MkpwamZxaHJBcno0YVA5aW9vU3pxOExXQnRpLUdsNXdV?oc=5",
+      "source": "tokyo_foundation",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "デジタル独自課税を巡る米・欧の攻防とOECD合意の展望（BEPS） - 東京財団",
+      "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFBUYmszSjUtSHJFV1NiYVVtXzJVcG50MlBYVUVDVTRITUtGTXd2QWNoLUd1VlV4TnE0MFB6R2NMcWtxWUJjVVFETEw3Y0cyZXAyYUNNb1h1MVh5aEs4Wkxr?oc=5",
+      "source": "tokyo_foundation",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "日本銀行はどのくらい利上げすると債務超過になるのか - 東京財団",
+      "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFBEQll6ZzhRbVM0NDRwMXVFa1M3NDN5aDRyVlZoX1hTaXd3bUZiV0FHR1R0ejNYNUpEN1AzSjQwM0dnWVFqVnRtUnJheFdhYlRDUm5VZUUxelQwYnlVNmN3?oc=5",
+      "source": "tokyo_foundation",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "消費税逆進性対策 ― なぜ軽減税率ではなく給付付き税額控除なのか - 東京財団",
+      "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE9Cel90LWtRem9Dc2tYZ2lVdlBSWFV2aDR0WDNNTVFiQlRVRG9ZZUlJVFBUdm1lUkhrSktRTzZMVGZKS21GeTJDUFRCeS0xZW1hbEFNejV0MVRqdDlhRUJr?oc=5",
+      "source": "tokyo_foundation",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "【募集締切】東京財団研究プロジェクト2025（7月21日15時まで） - 東京財団",
+      "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFBuU3hFSVZTQXNlVHQ2aDhDYkFjSXk3elFvQXNsYjdoeWpoUjdDM0VkUXNFZkhEbWV1ZU13Zk9PZ2I5dUFPMXkzM3owdmNJajg3VjhyQjhZcng4Qy0weEI4?oc=5",
+      "source": "tokyo_foundation",
       "lane": "CONTEXT",
       "reject_reason": "high_purity_missing_hard_entity",
       "relevance_score": 0.2
@@ -3699,6 +3987,30 @@
       "relevance_score": 0.5
     },
     {
+      "title": "Why has Cristiano Ronaldo retired from international football?",
+      "url": "https://www.aljazeera.com/sports/2026/11/5/why-has-cristiano-ronaldo-retired-from-international-football?traffic_source=rss",
+      "source": "al_jazeera_all",
+      "lane": "CONTEXT",
+      "reject_reason": "ad_or_soft_section",
+      "relevance_score": 0.0
+    },
+    {
+      "title": "Ronaldo in records: International milestones from the football icon",
+      "url": "https://www.aljazeera.com/sports/2026/11/5/ronaldo-in-records-international-milestones-from-the-football-icon?traffic_source=rss",
+      "source": "al_jazeera_all",
+      "lane": "CONTEXT",
+      "reject_reason": "ad_or_soft_section",
+      "relevance_score": 0.0
+    },
+    {
+      "title": "Why Guinea-Bissau halted a controversial hepatitis vaccine trial for babies",
+      "url": "https://www.aljazeera.com/news/2026/11/5/why-guinea-bissau-halted-a-controversial-hepatitis-vaccine-trial-for-babies?traffic_source=rss",
+      "source": "al_jazeera_all",
+      "lane": "CONTEXT",
+      "reject_reason": "high_purity_missing_hard_entity",
+      "relevance_score": 0.2
+    },
+    {
       "title": "Can Iran’s new supreme leader make peace from behind the scenes?",
       "url": "https://www.aljazeera.com/opinions/2026/11/5/can-irans-new-supreme-leader-make-peace-from-behind-the-scenes?traffic_source=rss",
       "source": "al_jazeera_all",
@@ -3745,30 +4057,6 @@
       "lane": "CONTEXT",
       "reject_reason": "high_purity_missing_hard_entity",
       "relevance_score": 1.0
-    },
-    {
-      "title": "What can Democrats do in Congress under President Trump?",
-      "url": "https://www.aljazeera.com/video/newsfeed/2026/11/5/what-can-democrats-do-in-congress-under-president-trump?traffic_source=rss",
-      "source": "al_jazeera_all",
-      "lane": "CONTEXT",
-      "reject_reason": "high_purity_missing_hard_entity",
-      "relevance_score": 0.2
-    },
-    {
-      "title": "Police bodycam captures moments before deadly Russian strike in Ukraine",
-      "url": "https://www.aljazeera.com/video/newsfeed/2026/11/5/police-bodycam-captures-moments-before-deadly-russian-strike-in-ukraine?traffic_source=rss",
-      "source": "al_jazeera_all",
-      "lane": "CONTEXT",
-      "reject_reason": "high_purity_missing_hard_entity",
-      "relevance_score": 0.8
-    },
-    {
-      "title": "Padel’s Olympic ambition",
-      "url": "https://www.aljazeera.com/video/newsfeed/2026/11/5/padels-olympic-ambition?traffic_source=rss",
-      "source": "al_jazeera_all",
-      "lane": "CONTEXT",
-      "reject_reason": "high_purity_missing_hard_entity",
-      "relevance_score": 0.2
     },
     {
       "title": "📝 ФАБ по подземной школе 📝 Скандал с пыточной в Киеве затмил попадание трёхтонного ФАБ с УМПК по школе. И несмотря на то, что подземный объект давно занят чинов...",

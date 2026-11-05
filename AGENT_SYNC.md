@@ -58,6 +58,7 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
+| done | ANTIGRAVITY | preprocessing / multimodal-stage1 | `scripts/automation/preprocess_signals.py`, `scripts/pipeline/bridge_preprocess_lanes.py`, `docs/current/PREPROCESSING_SESSION_PROMPT.md` | 1단계 무다운로드 멀티모달(이미지·영상·문서 URL & Alt-Text 추출, 시각노이즈/밈 필터링, 4대 시각 모달리티 태깅) 구축 및 최신 725건(Standard 339 / High 35 클러스터) 정제·수집 세션 가이드라인 수립 완료 | 2026-11-06 |
 | done | Cursor / Validation·QA | validation / multi-judge-criteria | `docs/current/VALIDATION_PLAN.md` (§10.4), `docs/evidence/early_warning_backtest_report.md`, `AGENT_SYNC.md` | 검증단(tev1/Gemma/DeepSeek) 직교 판정·블라인드 Stage1/2·트리거·KPI 문서화. 외부 자문 합의 반영. Trio-Sync | 2026-11-05 |
 | done | ANTIGRAVITY | collection / bluesky-telegram-integration | `scripts/collection/fetch_bluesky_public.py`, `scripts/collection/fetch_telegram_public.py`, `scripts/collection/run_phone_collector.py`, `dags/early_warning_pipeline_dag.py` | 블루스카이(AT Protocol 8대 쿼리) 공식 수집기 신설, 텔레그램 OSINT 경량화 및 S20 울트라 8대 수집기 체제 확장 완료 | 2026-11-05 |
 | done | ANTIGRAVITY | preprocessing / high-purity-engine | `scripts/automation/preprocess_signals.py`, `scripts/pipeline/bridge_preprocess_lanes.py`, `data/automation/*high_purity*` | 고순도 모드(`--purity-mode high`) + 신규 Bluesky·Telegram 8대 수집 체제(451건) 브릿지 연동 완료 (Standard 242건 / High-Purity 29개 핵심 클러스터 압축) | 2026-11-05 |
@@ -106,6 +107,20 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-06 [ANTIGRAVITY / preprocessing · 1단계 무다운로드 멀티모달(이미지·영상·문서) 전처리 구축 및 수집 가이드라인 확립]
+- 한 일:
+  1. `scripts/automation/preprocess_signals.py`에 1단계 무다운로드 멀티모달 메타데이터 정형화(`extract_multimodal_metadata`) 및 시각 노이즈 필터링 구현:
+     - 원본 이미지·영상 바이너리를 다운로드하지 않고 HTML(`<img>`, `<video>`, `<iframe>`), 인라인 미디어 링크, 수집기 명시 필드(`pdf_url`, `external_link`, `external_title`, `media_urls`, `alt_texts`)에서 첨부 메타데이터(`media_attachments`)와 대체 텍스트(`visual_alt_texts`) 추출.
+     - 대체 텍스트(`alt_text`)를 본문 엔티티 태깅 및 클러스터링 토큰화에 합류시켜 사진/외부카드 설명 속 해협·공급망 키워드 복원.
+     - 시각 노이즈 URL(`is_visual_noise_url`: 아바타, 아이콘, 로고, 1x1 트래킹 픽셀, 배너 광고, Giphy/Tenor/9gag 밈 도메인) 및 밈/유머짤(`VISUAL_MEME_OR_CLICKBAIT_KEYWORDS`) 자동 차단.
+     - 4대 시각 모달리티(`SATELLITE_IMAGERY`, `TACTICAL_MARITIME_MAP`, `FIELD_PHOTO_VIDEO`, `OFFICIAL_DOCUMENT_PDF`) 태깅 및 `visual_verification_state: "UNVERIFIED_METADATA_ONLY"` 가드레일 적용.
+  2. `scripts/pipeline/bridge_preprocess_lanes.py` 멀티모달 스키마(`v1.1_multimodal`) 확장 및 최신 725건 실데이터 정제:
+     - `standard` 모드: 725건 -> 339개 클러스터 (멀티모달 포함 35개 클러스터, 첨부 42건: `external_card` 21, `document_pdf` 20, `video` 1).
+     - `high` 고순도 모드: 725건 -> 35개 핵심 클러스터 (멀티모달 포함 9개 클러스터, 첨부 11건, 호르무즈 7·대만해협 4·바브엘만데브 3·보스포루스 3·파나마 2).
+  3. `docs/current/PREPROCESSING_SESSION_PROMPT.md`에 [수집 세션 ➔ 전처리 세션 간 비정형·멀티모달 인터페이스 규약] 명문화.
+- 바꾼 파일: `scripts/automation/preprocess_signals.py`, `scripts/pipeline/bridge_preprocess_lanes.py`, `docs/current/PREPROCESSING_SESSION_PROMPT.md`, `data/automation/*`, `AGENT_SYNC.md`.
+- 다음 작업: 데이터 수집 담당 세션에서 블루스카이(`embed.images[].alt`/`thumb`), 텔레그램(`Photo_URL`/`Video_URL`), RSS(`media:content`/`enclosure`) 메타데이터 추출 필드 확장.
 
 2026-11-05 [Cursor / Validation·QA · Trio-Sync]
 - 한 일: 외부 AI 자문(Grok/ChatGPT/Gemini/DeepSeek/Kimi/Claude) 대조 후 다자간 검증 **판정 기준**을 `VALIDATION_PLAN` §10.4로 고정. 증거 리포트 과장(75%·NIST 준수) 재완화. MD→Notion→GitHub 동기화.

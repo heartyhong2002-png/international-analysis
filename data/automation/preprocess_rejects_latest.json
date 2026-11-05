@@ -1,6 +1,6 @@
 {
   "schema_version": "preprocess_rejects_v1",
-  "generated_at": "2026-11-05T15:23:18.805635+00:00",
+  "generated_at": "2026-11-05T15:23:44.732952+00:00",
   "purity_mode": "standard",
   "total_rejected": 216,
   "reason_breakdown": {

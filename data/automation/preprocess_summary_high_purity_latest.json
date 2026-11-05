@@ -1,48 +1,48 @@
 {
   "schema_version": "preprocess_summary_v1.1_multimodal",
-  "generated_at": "2026-11-05T15:22:01.571102+00:00",
+  "generated_at": "2026-11-05T15:24:37.797147+00:00",
   "purity_mode": "high",
   "alert_level_set": false,
   "verification_state_default": "UNVERIFIED",
   "input_counts": {
-    "total_raw": 685,
+    "total_raw": 725,
     "FAST": 234,
-    "CONTEXT": 334,
+    "CONTEXT": 374,
     "OPINION": 117,
     "BASELINE_SENSORS": 7
   },
   "output_counts": {
-    "canonical_clusters": 32,
-    "rejected_noise": 554,
+    "canonical_clusters": 35,
+    "rejected_noise": 590,
     "tier_1_corroborated": 7,
-    "tier_2_verified_entity": 25,
+    "tier_2_verified_entity": 28,
     "multi_source_clusters": 5,
     "clusters_with_visual_media": 9,
     "total_media_attachments": 11
   },
   "tier_distribution": {
     "TIER_1_CORROBORATED": 7,
-    "TIER_2_VERIFIED_ENTITY": 25
+    "TIER_2_VERIFIED_ENTITY": 28
   },
   "reject_reason_breakdown": {
-    "high_purity_missing_hard_entity": 509,
+    "high_purity_missing_hard_entity": 543,
     "retrospective_or_non_current_noise": 3,
-    "ad_or_soft_section": 11,
+    "ad_or_soft_section": 13,
     "entertainment_sports_noise": 8,
     "diplomatic_protocol_noise": 1,
     "empty_title": 2,
     "high_purity_social_threshold_unmet": 20
   },
   "chokepoint_distribution": {
-    "CHOKEPOINT_HORMUZ": 6,
+    "CHOKEPOINT_HORMUZ": 7,
     "CHOKEPOINT_BAB_EL_MANDEB": 3,
     "CHOKEPOINT_MALACCA": 0,
-    "CHOKEPOINT_BOSPHORUS": 2,
+    "CHOKEPOINT_BOSPHORUS": 3,
     "CHOKEPOINT_PANAMA": 2,
     "CHOKEPOINT_TAIWAN_STRAIT": 4
   },
   "supply_chain_distribution": {
-    "CRUDE_OIL": 13,
+    "CRUDE_OIL": 16,
     "NATURAL_GAS_LNG": 1,
     "SEMICONDUCTOR": 12,
     "RARE_EARTHS": 0,
@@ -59,9 +59,9 @@
   "hotspot_distribution": {
     "MIDDLE_EAST": 10,
     "EAST_ASIA": 14,
-    "EASTERN_EUROPE": 3,
+    "EASTERN_EUROPE": 6,
     "WESTERN_EUROPE": 2,
-    "NORTH_AMERICA": 5,
+    "NORTH_AMERICA": 6,
     "CENTRAL_AFRICA": 1,
     "LATIN_AMERICA": 5
   },
