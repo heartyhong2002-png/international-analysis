@@ -2,9 +2,10 @@
 bridge_preprocess_lanes.py
 ==========================
 4대 수집 레인(FAST, CONTEXT, OPINION, BASELINE)에서 수집된 원시 비정형 데이터를
-읽어 4단계 지능형 다국어 전처리(preprocess_signals.py)를 수행하고,
-다운스트림(교차검증, LLM 분석, DB 적재)이 즉시 소비할 수 있는 표준 정형 스키마
-(Canonical Structured Schema)와 배제 감사 영수증(Rejects Receipt)으로 변환·저장합니다.
+읽어 4단계 지능형 다국어 전처리 + 1단계 멀티모달(이미지·영상·문서 메타데이터 & Alt-Text)
+전처리(preprocess_signals.py)를 수행하고, 다운스트림(교차검증, LLM 분석, DB 적재)이
+즉시 소비할 수 있는 표준 정형 스키마(Canonical Structured Schema)와 배제 감사 영수증
+(Rejects Receipt)으로 변환·저장합니다.
 
 안전 원칙:
 - 수집기(scripts/collection/*) 및 원시 데이터(data/*) 수정 금지 (Read-Only 소비)
@@ -60,6 +61,7 @@ def load_fast_lane() -> List[Dict[str, Any]]:
                     "url": item.get("source_url", ""),
                     "source": item.get("publisher") or item.get("source_id") or "The White House",
                     "source_type": item.get("source_type") or "official_statement",
+                    "doc_type": item.get("document_type", ""),
                     "lane": "FAST",
                     "language": "en",
                     "published_at": item.get("published_at") or item.get("observed_at") or "",
@@ -69,7 +71,7 @@ def load_fast_lane() -> List[Dict[str, Any]]:
         except Exception as e:
             print(f"  [WARN] White House 로드 실패: {e}")
 
-    # 2. Federal Register
+    # 2. Federal Register (공식 관보 PDF 원문 링크 pdf_url 및 doc_type 보존)
     fr_path = DATA_DIR / "federal_register" / "federal_register_latest.json"
     if fr_path.exists():
         try:
@@ -80,6 +82,8 @@ def load_fast_lane() -> List[Dict[str, Any]]:
                         "title": item.get("title", ""),
                         "summary": item.get("abstract", ""),
                         "url": item.get("html_url") or item.get("pdf_url") or "",
+                        "pdf_url": item.get("pdf_url", ""),
+                        "doc_type": f"Federal Register {item.get('doc_type') or 'Notice'} ({item.get('document_number') or ''})".strip(),
                         "source": item.get("agencies") or item.get("source_id") or "Federal Register",
                         "source_type": "regulation_notice",
                         "lane": "FAST",
@@ -158,6 +162,8 @@ def load_context_lane() -> List[Dict[str, Any]]:
                         "title": title_part,
                         "summary": msg,
                         "url": item.get("Source_URL", ""),
+                        "image_url": item.get("Media_URL") or item.get("Photo_URL") or "",
+                        "video_url": item.get("Video_URL") or "",
                         "source": f"Telegram_{item.get('Channel_ID', 'OSINT')}",
                         "source_type": "telegram_osint",
                         "lane": "CONTEXT",
@@ -197,7 +203,7 @@ def load_opinion_lane() -> List[Dict[str, Any]]:
         except Exception as e:
             print(f"  [WARN] Local Opinions 로드 실패: {e}")
 
-    # 2. Bluesky AT Protocol Public Search (신규 수집기 연동)
+    # 2. Bluesky AT Protocol Public Search (외부 카드 링크·타이틀 및 미디어 필드 보존)
     bsky_path = DATA_DIR / "bluesky_public" / "bluesky_latest.json"
     if bsky_path.exists():
         try:
@@ -211,6 +217,11 @@ def load_opinion_lane() -> List[Dict[str, Any]]:
                         "title": title_str,
                         "summary": text if ext_title else "",
                         "url": item.get("post_url") or item.get("external_link") or "",
+                        "external_link": item.get("external_link", ""),
+                        "external_title": ext_title,
+                        "media_urls": item.get("media_urls", []),
+                        "alt_texts": item.get("alt_texts", []),
+                        "alt_text": item.get("alt_text", ""),
                         "source": f"Bluesky_{item.get('author_handle') or 'Public'}",
                         "source_type": "online_information_environment_signal",
                         "lane": "OPINION",
@@ -301,6 +312,10 @@ def run_bridge(purity_mode: str = "standard") -> Dict[str, Any]:
     supply_counts: Counter = Counter()
     event_counts: Counter = Counter()
     hotspot_counts: Counter = Counter()
+    modality_counts: Counter = Counter()
+    attachment_type_counts: Counter = Counter()
+    clusters_with_media = 0
+    total_attachments = 0
 
     for c in clusters:
         for cp in c.get("chokepoints", []):
@@ -311,14 +326,21 @@ def run_bridge(purity_mode: str = "standard") -> Dict[str, Any]:
             event_counts[ev] += 1
         for hs in c.get("hotspot_regions", []):
             hotspot_counts[hs] += 1
+        if c.get("has_visual_media"):
+            clusters_with_media += 1
+        for mod in c.get("visual_modalities", []):
+            modality_counts[mod] += 1
+        for att in c.get("media_attachments", []):
+            total_attachments += 1
+            attachment_type_counts[att.get("type", "unknown")] += 1
 
     now_iso = datetime.now(timezone.utc).isoformat()
 
     canonical_payload = {
-        "schema_version": "canonical_signals_v1",
+        "schema_version": "canonical_signals_v1.1_multimodal",
         "generated_at": now_iso,
         "purity_mode": purity_mode,
-        "verification_policy": "Single-source signals remain UNVERIFIED; Alert Level is never determined in preprocessing.",
+        "verification_policy": "Single-source and visual metadata signals remain UNVERIFIED; Alert Level is never determined in preprocessing.",
         "alert_level_set": False,
         "input_counts": {
             "total_raw": len(all_raw),
@@ -333,6 +355,8 @@ def run_bridge(purity_mode: str = "standard") -> Dict[str, Any]:
             "tier_1_corroborated": tier_counts.get("TIER_1_CORROBORATED", 0),
             "tier_2_verified_entity": tier_counts.get("TIER_2_VERIFIED_ENTITY", 0),
             "multi_source_clusters": sum(1 for c in clusters if c["unique_sources_count"] >= 2),
+            "clusters_with_visual_media": clusters_with_media,
+            "total_media_attachments": total_attachments,
         },
         "baseline_market_sensors": baseline_sensors,
         "signals": clusters,
@@ -349,7 +373,7 @@ def run_bridge(purity_mode: str = "standard") -> Dict[str, Any]:
     }
 
     summary_payload = {
-        "schema_version": "preprocess_summary_v1",
+        "schema_version": "preprocess_summary_v1.1_multimodal",
         "generated_at": now_iso,
         "purity_mode": purity_mode,
         "alert_level_set": False,
@@ -366,6 +390,8 @@ def run_bridge(purity_mode: str = "standard") -> Dict[str, Any]:
         },
         "event_type_distribution": dict(event_counts),
         "hotspot_distribution": dict(hotspot_counts),
+        "visual_modality_distribution": dict(modality_counts),
+        "media_attachment_type_distribution": dict(attachment_type_counts),
     }
 
     suffix = "_high_purity" if purity_mode == "high" else ""
@@ -377,24 +403,17 @@ def run_bridge(purity_mode: str = "standard") -> Dict[str, Any]:
     rejects_file.write_text(json.dumps(rejects_payload, ensure_ascii=False, indent=2), encoding="utf-8")
     summary_file.write_text(json.dumps(summary_payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    # 기본 최신 파일에도 메타데이터 유지 복제 (하위 호환)
-    if purity_mode == "high":
-        (OUT_DIR / "canonical_signals_latest.json").write_text(
-            json.dumps(canonical_payload, ensure_ascii=False, indent=2), encoding="utf-8"
-        )
-        (OUT_DIR / "preprocess_summary_latest.json").write_text(
-            json.dumps(summary_payload, ensure_ascii=False, indent=2), encoding="utf-8"
-        )
-
     print("-" * 72)
     print(f"✅ [산출물 저장 완료 (mode={purity_mode})]")
     print(f"  1) 정형 신호: {canonical_file.relative_to(ROOT)} ({len(clusters)}개 클러스터)")
     print(f"     - Tier-1 (다중출처 교차검증/공식): {tier_counts.get('TIER_1_CORROBORATED', 0)}건")
     print(f"     - Tier-2 (해협·공급망 직결 단일출처): {tier_counts.get('TIER_2_VERIFIED_ENTITY', 0)}건")
+    print(f"     - 멀티모달 시각/문서 포함 클러스터: {clusters_with_media}건 (첨부 {total_attachments}개)")
     print(f"  2) 배제 영수증: {rejects_file.relative_to(ROOT)} ({len(rejects)}건 배제)")
     print(f"  3) 요약 통계: {summary_file.relative_to(ROOT)}")
     print(f"📊 [5대 해협 감지]: {dict(chokepoint_counts)}")
     print(f"📦 [한국 6대 공급망 감지]: {dict(supply_counts)}")
+    print(f"🖼️ [시각 모달리티 감지]: {dict(modality_counts)} | 첨부유형: {dict(attachment_type_counts)}")
     print("=" * 72)
 
     return summary_payload

@@ -1,66 +1,78 @@
 {
-  "schema_version": "preprocess_summary_v1",
-  "generated_at": "2026-11-05T03:48:15.260836+00:00",
-  "purity_mode": "high",
+  "schema_version": "preprocess_summary_v1.1_multimodal",
+  "generated_at": "2026-11-05T15:23:18.805635+00:00",
+  "purity_mode": "standard",
   "alert_level_set": false,
   "verification_state_default": "UNVERIFIED",
   "input_counts": {
-    "total_raw": 451,
+    "total_raw": 725,
     "FAST": 234,
-    "CONTEXT": 100,
+    "CONTEXT": 374,
     "OPINION": 117,
     "BASELINE_SENSORS": 7
   },
   "output_counts": {
-    "canonical_clusters": 29,
-    "rejected_noise": 343,
-    "tier_1_corroborated": 9,
-    "tier_2_verified_entity": 20,
-    "multi_source_clusters": 7
+    "canonical_clusters": 339,
+    "rejected_noise": 216,
+    "tier_1_corroborated": 28,
+    "tier_2_verified_entity": 40,
+    "multi_source_clusters": 24,
+    "clusters_with_visual_media": 35,
+    "total_media_attachments": 42
   },
   "tier_distribution": {
-    "TIER_1_CORROBORATED": 9,
-    "TIER_2_VERIFIED_ENTITY": 20
+    "TIER_1_CORROBORATED": 28,
+    "TIER_2_VERIFIED_ENTITY": 40,
+    "TIER_3_SINGLE_SOURCE": 271
   },
   "reject_reason_breakdown": {
-    "high_purity_missing_hard_entity": 302,
-    "retrospective_or_non_current_noise": 4,
-    "ad_or_soft_section": 7,
+    "retrospective_or_non_current_noise": 3,
+    "low_geopolitical_relevance": 189,
+    "ad_or_soft_section": 13,
     "entertainment_sports_noise": 8,
     "diplomatic_protocol_noise": 1,
-    "empty_title": 1,
-    "high_purity_social_threshold_unmet": 20
+    "empty_title": 2
   },
   "chokepoint_distribution": {
-    "CHOKEPOINT_HORMUZ": 5,
+    "CHOKEPOINT_HORMUZ": 9,
     "CHOKEPOINT_BAB_EL_MANDEB": 3,
     "CHOKEPOINT_MALACCA": 0,
-    "CHOKEPOINT_BOSPHORUS": 1,
-    "CHOKEPOINT_PANAMA": 2,
+    "CHOKEPOINT_BOSPHORUS": 3,
+    "CHOKEPOINT_PANAMA": 3,
     "CHOKEPOINT_TAIWAN_STRAIT": 4
   },
   "supply_chain_distribution": {
-    "CRUDE_OIL": 11,
+    "CRUDE_OIL": 20,
     "NATURAL_GAS_LNG": 1,
-    "SEMICONDUCTOR": 12,
-    "RARE_EARTHS": 0,
-    "BATTERY_MINERALS": 0,
+    "SEMICONDUCTOR": 19,
+    "RARE_EARTHS": 3,
+    "BATTERY_MINERALS": 1,
     "GRAIN_FOOD": 0
   },
   "event_type_distribution": {
-    "MILITARY_CONFLICT": 7,
-    "SANCTIONS_EXPORT_CONTROL": 4,
-    "INFRA_LOGISTICS_DISRUPTION": 6,
-    "ELECTION_GOVERNMENT": 3,
-    "PROTEST_STRIKE": 2
+    "MILITARY_CONFLICT": 38,
+    "SANCTIONS_EXPORT_CONTROL": 20,
+    "INFRA_LOGISTICS_DISRUPTION": 9,
+    "ELECTION_GOVERNMENT": 46,
+    "PROTEST_STRIKE": 11
   },
   "hotspot_distribution": {
-    "MIDDLE_EAST": 9,
-    "EAST_ASIA": 14,
-    "EASTERN_EUROPE": 2,
-    "WESTERN_EUROPE": 2,
-    "NORTH_AMERICA": 6,
-    "CENTRAL_AFRICA": 1,
-    "LATIN_AMERICA": 4
+    "MIDDLE_EAST": 80,
+    "EAST_ASIA": 57,
+    "NORTH_AMERICA": 80,
+    "EASTERN_EUROPE": 49,
+    "WESTERN_EUROPE": 35,
+    "LATIN_AMERICA": 26,
+    "CENTRAL_AFRICA": 5
+  },
+  "visual_modality_distribution": {
+    "FIELD_PHOTO_VIDEO": 3,
+    "OFFICIAL_DOCUMENT_PDF": 13,
+    "SATELLITE_IMAGERY": 4
+  },
+  "media_attachment_type_distribution": {
+    "external_card": 21,
+    "video": 1,
+    "document_pdf": 20
   }
 }

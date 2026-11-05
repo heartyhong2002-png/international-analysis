@@ -1,66 +1,75 @@
 {
-  "schema_version": "preprocess_summary_v1",
-  "generated_at": "2026-11-05T03:48:15.260836+00:00",
+  "schema_version": "preprocess_summary_v1.1_multimodal",
+  "generated_at": "2026-11-05T15:22:01.571102+00:00",
   "purity_mode": "high",
   "alert_level_set": false,
   "verification_state_default": "UNVERIFIED",
   "input_counts": {
-    "total_raw": 451,
+    "total_raw": 685,
     "FAST": 234,
-    "CONTEXT": 100,
+    "CONTEXT": 334,
     "OPINION": 117,
     "BASELINE_SENSORS": 7
   },
   "output_counts": {
-    "canonical_clusters": 29,
-    "rejected_noise": 343,
-    "tier_1_corroborated": 9,
-    "tier_2_verified_entity": 20,
-    "multi_source_clusters": 7
+    "canonical_clusters": 32,
+    "rejected_noise": 554,
+    "tier_1_corroborated": 7,
+    "tier_2_verified_entity": 25,
+    "multi_source_clusters": 5,
+    "clusters_with_visual_media": 9,
+    "total_media_attachments": 11
   },
   "tier_distribution": {
-    "TIER_1_CORROBORATED": 9,
-    "TIER_2_VERIFIED_ENTITY": 20
+    "TIER_1_CORROBORATED": 7,
+    "TIER_2_VERIFIED_ENTITY": 25
   },
   "reject_reason_breakdown": {
-    "high_purity_missing_hard_entity": 302,
-    "retrospective_or_non_current_noise": 4,
-    "ad_or_soft_section": 7,
+    "high_purity_missing_hard_entity": 509,
+    "retrospective_or_non_current_noise": 3,
+    "ad_or_soft_section": 11,
     "entertainment_sports_noise": 8,
     "diplomatic_protocol_noise": 1,
-    "empty_title": 1,
+    "empty_title": 2,
     "high_purity_social_threshold_unmet": 20
   },
   "chokepoint_distribution": {
-    "CHOKEPOINT_HORMUZ": 5,
+    "CHOKEPOINT_HORMUZ": 6,
     "CHOKEPOINT_BAB_EL_MANDEB": 3,
     "CHOKEPOINT_MALACCA": 0,
-    "CHOKEPOINT_BOSPHORUS": 1,
+    "CHOKEPOINT_BOSPHORUS": 2,
     "CHOKEPOINT_PANAMA": 2,
     "CHOKEPOINT_TAIWAN_STRAIT": 4
   },
   "supply_chain_distribution": {
-    "CRUDE_OIL": 11,
+    "CRUDE_OIL": 13,
     "NATURAL_GAS_LNG": 1,
     "SEMICONDUCTOR": 12,
     "RARE_EARTHS": 0,
-    "BATTERY_MINERALS": 0,
+    "BATTERY_MINERALS": 1,
     "GRAIN_FOOD": 0
   },
   "event_type_distribution": {
     "MILITARY_CONFLICT": 7,
     "SANCTIONS_EXPORT_CONTROL": 4,
-    "INFRA_LOGISTICS_DISRUPTION": 6,
+    "INFRA_LOGISTICS_DISRUPTION": 5,
     "ELECTION_GOVERNMENT": 3,
-    "PROTEST_STRIKE": 2
+    "PROTEST_STRIKE": 3
   },
   "hotspot_distribution": {
-    "MIDDLE_EAST": 9,
+    "MIDDLE_EAST": 10,
     "EAST_ASIA": 14,
-    "EASTERN_EUROPE": 2,
+    "EASTERN_EUROPE": 3,
     "WESTERN_EUROPE": 2,
-    "NORTH_AMERICA": 6,
+    "NORTH_AMERICA": 5,
     "CENTRAL_AFRICA": 1,
-    "LATIN_AMERICA": 4
+    "LATIN_AMERICA": 5
+  },
+  "visual_modality_distribution": {
+    "FIELD_PHOTO_VIDEO": 1
+  },
+  "media_attachment_type_distribution": {
+    "external_card": 10,
+    "video": 1
   }
 }

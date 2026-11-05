@@ -222,6 +222,51 @@ SOFT_NEWS_SECTION_HINTS = [
     r"/연예/", r"/스포츠/", r"/라이프/", r"/연애/",
 ]
 
+# ======================================================================
+# Step 1.5. 멀티모달(이미지·영상·문서) 1단계 메타데이터 정형화 & 시각 노이즈 배제 사전
+# ======================================================================
+
+VISUAL_NOISE_URL_PATTERNS = [
+    r"giphy\.com", r"tenor\.com", r"imgflip\.com", r"9gag\.com", r"knowyourmeme\.com",
+    r"doubleclick\.net", r"googlesyndication\.com", r"googleadservices\.com",
+    r"gravatar\.com", r"facebook\.com/tr", r"analytics",
+    r"(/|_|-)(avatar|emoji|favicon|icon|logo|banner|pixel|spacer|sprite|badge|button)s?(/|_|-|\.)",
+    r"\b1x1\b", r"\.svg(\?|$)", r"^data:image/",
+]
+
+VISUAL_MEME_OR_CLICKBAIT_KEYWORDS: Set[str] = {
+    "meme", "dank meme", "reaction gif", "shitpost", "funny video", "prank video",
+    "cat video", "tiktok dance", "viral challenge", "blooper",
+    "짤방", "유머짤", "움짤", "웃긴 영상", "낚시 영상",
+    "мем", "мемы", "прикол", "смешное видео",
+    "梗圖", "搞笑影片", "表情包",
+}
+
+VISUAL_MODALITY_KEYWORDS: Dict[str, List[str]] = {
+    "SATELLITE_IMAGERY": [
+        "satellite image", "satellite imagery", "satellite photo", "sar imagery",
+        "maxar", "planet labs", "sentinel-2", "optical satellite",
+        "위성사진", "위성 영상", "위성 포착", "спутниковые снимки", "спутниковый снимок",
+        "صور الأقمار الصناعية", "衛星照片", "衛星影像",
+    ],
+    "TACTICAL_MARITIME_MAP": [
+        "ais tracking", "marinetraffic", "tankertrackers", "flightradar",
+        "frontline map", "battle map", "tactical map", "infographic", "shipping map",
+        "전황 지도", "선박 항적", "항적도", "인포그래픽",
+        "карта боевых", "инфографика", "خريطة", "航跡圖",
+    ],
+    "FIELD_PHOTO_VIDEO": [
+        "drone footage", "video shows", "photo shows", "caught on camera",
+        "cctv footage", "strike video", "dashcam", "eyewitness video",
+        "на камеру", "видео удара", "кадры", "فيديو", "مشاهد",
+        "현장 영상", "현장 사진", "드론 영상", "畫面", "影片",
+    ],
+    "OFFICIAL_DOCUMENT_PDF": [
+        "federal register pdf", "official gazette", "annex pdf", "entity list pdf",
+        "관보 원문", "공식 문서", "공식 관보",
+    ],
+}
+
 GEOPOLITICAL_KEYWORDS: Set[str] = {
     # 영어 (EN)
     "military", "navy", "naval", "army", "air force", "missile", "drone", "strike",
@@ -367,6 +412,187 @@ def _has_ad_or_soft_section(title: str, url: str = "") -> bool:
         if re.search(pat, (url or "").lower()):
             return True
     return False
+
+
+_HTML_IMG_RE = re.compile(r"<img\b[^>]*>", flags=re.IGNORECASE)
+_HTML_SRC_RE = re.compile(r'\bsrc=["\']([^"\']+)["\']', flags=re.IGNORECASE)
+_HTML_ALT_RE = re.compile(r'\balt=["\']([^"\']+)["\']', flags=re.IGNORECASE)
+_HTML_VIDEO_IFRAME_RE = re.compile(r"<(?:video|source|iframe)\b[^>]*>", flags=re.IGNORECASE)
+_INLINE_MEDIA_URL_RE = re.compile(
+    r"""https?://[^\s"'<>]+\.(?:jpg|jpeg|png|webp|gif|mp4|webm|mov|m3u8|pdf)(?:\?[^\s"'<>]*)?""",
+    flags=re.IGNORECASE,
+)
+_HTML_TAG_STRIP_RE = re.compile(r"<[^>]+>")
+
+
+def is_visual_noise_url(url: str) -> bool:
+    """아이콘, 아바타, 배너 광고, 트래킹 픽셀, 밈(Giphy/Tenor 등) URL 여부를 판별합니다."""
+    u = (url or "").strip().lower()
+    if not u or len(u) < 8:
+        return True
+    for pat in VISUAL_NOISE_URL_PATTERNS:
+        if re.search(pat, u, flags=re.IGNORECASE):
+            return True
+    return False
+
+
+def strip_html_tags(text: str) -> str:
+    """본문이나 제목에 포함된 Raw HTML 태그를 제거하고 공백을 정규화합니다."""
+    if not text:
+        return ""
+    unescaped = html.unescape(text)
+    no_script = re.sub(r"<(script|style)\b[^>]*>.*?</\1>", " ", unescaped, flags=re.IGNORECASE | re.DOTALL)
+    no_tags = _HTML_TAG_STRIP_RE.sub(" ", no_script)
+    return re.sub(r"\s+", " ", no_tags).strip()
+
+
+def _classify_media_url_type(url: str, default_type: str = "external_card") -> str:
+    u = (url or "").lower().split("?")[0]
+    if u.endswith(".pdf"):
+        return "document_pdf"
+    if u.endswith((".mp4", ".webm", ".mov", ".m3u8")) or any(
+        vh in u for vh in ("youtube.com/watch", "youtu.be/", "vimeo.com/", "/video/")
+    ):
+        return "video"
+    if u.endswith((".jpg", ".jpeg", ".png", ".webp", ".gif")) or any(
+        ih in u for ih in ("pbs.twimg.com/media", "cdn.bsky.app/img", "i.imgur.com/")
+    ):
+        return "image"
+    return default_type
+
+
+def extract_multimodal_metadata(record: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    [1단계 무다운로드 멀티모달 전처리]
+    원시 레코드에서 이미지·영상·공식문서(PDF) URL과 대체 텍스트(alt_text / external_title)를
+    추출·정형화하고, 시각 노이즈(아바타/픽셀/밈 URL) 및 Raw HTML 태그를 제거합니다.
+    """
+    raw_title = str(record.get("title") or record.get("Title") or record.get("title_or_text") or "")
+    raw_summary = str(
+        record.get("summary")
+        or record.get("Summary")
+        or record.get("description")
+        or record.get("abstract")
+        or ""
+    )
+    source_name = str(
+        record.get("source")
+        or record.get("publisher")
+        or record.get("Source_ID")
+        or record.get("source_platform")
+        or ""
+    )
+
+    media_attachments: List[Dict[str, str]] = []
+    seen_urls: Set[str] = set()
+    alt_texts: List[str] = []
+    dropped_noise_count = 0
+
+    def _add_attachment(m_url: str, m_type: str, m_alt: str = "") -> None:
+        nonlocal dropped_noise_count
+        m_url_clean = (m_url or "").strip()
+        m_alt_clean = strip_html_tags(m_alt)
+        if not m_url_clean:
+            if m_alt_clean and len(m_alt_clean) >= 4 and m_alt_clean not in alt_texts:
+                alt_texts.append(m_alt_clean)
+            return
+        if is_visual_noise_url(m_url_clean):
+            dropped_noise_count += 1
+            return
+        if m_url_clean not in seen_urls:
+            seen_urls.add(m_url_clean)
+            media_attachments.append({
+                "type": m_type,
+                "url": m_url_clean,
+                "alt_text": m_alt_clean[:240],
+                "source": source_name,
+            })
+        if m_alt_clean and len(m_alt_clean) >= 4 and m_alt_clean not in alt_texts:
+            alt_texts.append(m_alt_clean[:240])
+
+    # 1) 이미 전달된 media_attachments 처리
+    if isinstance(record.get("media_attachments"), list):
+        for att in record["media_attachments"]:
+            if isinstance(att, dict):
+                _add_attachment(
+                    att.get("url", ""),
+                    att.get("type") or _classify_media_url_type(att.get("url", "")),
+                    att.get("alt_text", ""),
+                )
+
+    # 2) 명시적 수집기 미디어 필드 처리 (Federal Register pdf_url, Bluesky external_link 등)
+    pdf_url = str(record.get("pdf_url") or "").strip()
+    if pdf_url:
+        _add_attachment(pdf_url, "document_pdf", str(record.get("doc_type") or "Official Gazette PDF"))
+
+    ext_link = str(record.get("external_link") or "").strip()
+    ext_title = str(record.get("external_title") or "").strip()
+    if ext_link:
+        _add_attachment(ext_link, _classify_media_url_type(ext_link, "external_card"), ext_title)
+    elif ext_title:
+        _add_attachment("", "external_card", ext_title)
+
+    for key_u, m_t in (("image_url", "image"), ("video_url", "video"), ("media_url", "image")):
+        val_u = str(record.get(key_u) or "").strip()
+        if val_u:
+            _add_attachment(val_u, _classify_media_url_type(val_u, m_t), str(record.get("alt_text") or ""))
+
+    if isinstance(record.get("media_urls"), list):
+        raw_alts = record.get("alt_texts") if isinstance(record.get("alt_texts"), list) else []
+        for idx, u_item in enumerate(record["media_urls"]):
+            a_item = raw_alts[idx] if idx < len(raw_alts) else ""
+            _add_attachment(str(u_item), _classify_media_url_type(str(u_item), "image"), str(a_item))
+
+    if record.get("alt_text") and isinstance(record.get("alt_text"), str):
+        _add_attachment("", "image", record["alt_text"])
+
+    # 3) HTML <img>, <video>, <iframe> 태그 및 인라인 미디어 URL 스캔
+    combined_raw = f"{raw_title} {raw_summary}"
+    for img_tag in _HTML_IMG_RE.findall(combined_raw):
+        src_m = _HTML_SRC_RE.search(img_tag)
+        alt_m = _HTML_ALT_RE.search(img_tag)
+        _add_attachment(
+            src_m.group(1) if src_m else "",
+            "image",
+            alt_m.group(1) if alt_m else "",
+        )
+
+    for vid_tag in _HTML_VIDEO_IFRAME_RE.findall(combined_raw):
+        src_m = _HTML_SRC_RE.search(vid_tag)
+        if src_m:
+            _add_attachment(src_m.group(1), _classify_media_url_type(src_m.group(1), "video"), "")
+
+    for inline_url in _INLINE_MEDIA_URL_RE.findall(combined_raw):
+        _add_attachment(inline_url, _classify_media_url_type(inline_url, "image"), "")
+
+    # 4) 본문 HTML 태그 제거
+    clean_title = strip_html_tags(raw_title)
+    clean_summary = strip_html_tags(raw_summary)
+
+    # 5) 멀티모달 시각 신호 유형(Modality) 태깅
+    full_clean_blob = normalize_accents(
+        f"{clean_title} {clean_summary} {' '.join(alt_texts)}".lower()
+    )
+    detected_modalities: List[str] = []
+    if any(att["type"] == "document_pdf" for att in media_attachments):
+        detected_modalities.append("OFFICIAL_DOCUMENT_PDF")
+    if any(att["type"] == "video" for att in media_attachments):
+        detected_modalities.append("FIELD_PHOTO_VIDEO")
+
+    for mod_code, mod_kws in VISUAL_MODALITY_KEYWORDS.items():
+        if mod_code not in detected_modalities:
+            if _count_keyword_hits(full_clean_blob, set(mod_kws)) > 0:
+                detected_modalities.append(mod_code)
+
+    return {
+        "clean_title": clean_title,
+        "clean_summary": clean_summary,
+        "has_visual_media": bool(media_attachments or detected_modalities),
+        "visual_modalities": detected_modalities,
+        "media_attachments": media_attachments,
+        "visual_alt_texts": alt_texts,
+        "dropped_visual_noise_count": dropped_noise_count,
+    }
 
 
 # ======================================================================
@@ -689,6 +915,7 @@ def classify_article(
             }
 
     noise_hits = _count_keyword_hits(text_clean, NOISE_KEYWORDS)
+    meme_hits = _count_keyword_hits(text_clean, VISUAL_MEME_OR_CLICKBAIT_KEYWORDS)
     protocol_hits = _count_keyword_hits(text_clean, DIPLOMATIC_PROTOCOL_KEYWORDS)
     retro_hits = _count_keyword_hits(text_clean, RETROSPECTIVE_OR_NON_CURRENT_KEYWORDS)
     geo_hits = _count_keyword_hits(text_clean, GEOPOLITICAL_KEYWORDS)
@@ -704,6 +931,16 @@ def classify_article(
         "PROTEST_STRIKE" in entities["event_types"]
     )
     has_any_entity = bool(has_hard_entity or entities["event_types"] or entities["hotspot_regions"])
+
+    # 시각 노이즈(밈/짤방/유머 움짤/낚시 영상) 배제
+    if (meme_hits > 0 or is_visual_noise_url(url_lower)) and not has_hard_entity:
+        return {
+            "keep": False,
+            "reason": "visual_meme_or_clickbait_noise",
+            "relevance_score": rel_score,
+            "noise_hits": noise_hits + meme_hits,
+            "geo_hits": geo_hits,
+        }
 
     # 과거사 회고 / 도서 출간 / 가정법 / 부고 배제
     if retro_hits > 0 and not has_supply_or_chokepoint:
@@ -1060,10 +1297,33 @@ def deduplicate_and_cluster(
     results: List[Dict[str, Any]] = []
 
     for i, c in enumerate(clusters, start=1):
+        # 클러스터 소속 기사들의 멀티모달(이미지·영상·PDF·외부카드) 첨부 및 Alt-Text 병합
+        merged_attachments: List[Dict[str, str]] = []
+        seen_media_urls: Set[str] = set()
+        merged_alt_texts: List[str] = []
+        merged_modalities: List[str] = []
+
+        for a in c["articles"]:
+            mm = a.get("_multimodal") or extract_multimodal_metadata(a)
+            for att in mm.get("media_attachments", []):
+                u_key = att.get("url", "")
+                if u_key and u_key not in seen_media_urls and len(merged_attachments) < 10:
+                    seen_media_urls.add(u_key)
+                    merged_attachments.append(att)
+            for alt_t in mm.get("visual_alt_texts", []):
+                if alt_t and alt_t not in merged_alt_texts and len(merged_alt_texts) < 10:
+                    merged_alt_texts.append(alt_t)
+            for mod_t in mm.get("visual_modalities", []):
+                if mod_t and mod_t not in merged_modalities:
+                    merged_modalities.append(mod_t)
+
         combined_text = " ".join(
             f"{a.get('title', '')} {a.get('summary', '') or a.get('description', '')}"
             for a in c["articles"]
         )
+        if merged_alt_texts:
+            combined_text = f"{combined_text} {' '.join(merged_alt_texts)}"
+
         entities = normalize_entities(combined_text)
         rel_score = max(
             calculate_relevance(c["representative_title"]),
@@ -1104,6 +1364,11 @@ def deduplicate_and_cluster(
             "supply_chain_tags": entities["supply_chain_tags"],
             "event_types": entities["event_types"],
             "hotspot_regions": entities["hotspot_regions"],
+            "has_visual_media": bool(merged_attachments or merged_modalities),
+            "visual_modalities": merged_modalities,
+            "media_attachments": merged_attachments,
+            "visual_alt_texts": merged_alt_texts,
+            "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
             "published_at": c["published_at"],
             "verification_state": "UNVERIFIED",
             "alert_level_set": False,
@@ -1128,16 +1393,25 @@ def run_pipeline_preprocessing(
     purity_mode: str = "standard",
     return_rejects: bool = False,
 ) -> List[Dict[str, Any]] | Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
-    """다국어 통합 4단계 전처리: 노이즈/의례수사/비관련 drop → 7개국어 정규화 → 중복 군집화 → 5대해협·6대공급망 태깅."""
-    print(f"  [다국어 전처리 (mode={purity_mode})] 총 {len(raw_articles)}개 원시 기사 입력 수신.")
+    """다국어 통합 4단계 + 멀티모달 1단계 전처리: 미디어/Alt-Text 추출 및 시각노이즈 배제 → 노이즈 drop → 7개국어 정규화 → 중복 군집화 → 엔티티 태깅."""
+    print(f"  [다국어+멀티모달 전처리 (mode={purity_mode})] 총 {len(raw_articles)}개 원시 기사 입력 수신.")
 
     clean_articles: List[Dict[str, Any]] = []
     rejected: List[Dict[str, Any]] = []
     reason_counts: Dict[str, int] = {}
+    total_visual_noise_dropped = 0
 
     for a in raw_articles:
-        title = a.get("title") or a.get("Title") or a.get("title_or_text") or ""
-        summary = a.get("summary") or a.get("Summary") or a.get("description") or a.get("abstract") or ""
+        mm = extract_multimodal_metadata(a)
+        total_visual_noise_dropped += mm["dropped_visual_noise_count"]
+
+        title = mm["clean_title"]
+        summary_with_alt = mm["clean_summary"]
+        if mm["visual_alt_texts"]:
+            alt_joined = " ".join(mm["visual_alt_texts"])
+            if alt_joined not in summary_with_alt:
+                summary_with_alt = f"{summary_with_alt} {alt_joined}".strip()
+
         url = a.get("url") or a.get("link") or a.get("Link") or a.get("source_url") or a.get("html_url") or ""
         source = (
             a.get("source")
@@ -1149,13 +1423,21 @@ def run_pipeline_preprocessing(
         )
         lane = a.get("lane", "UNSPECIFIED")
 
-        decision = classify_article(title, url, source, summary=summary, purity_mode=purity_mode, lane=lane)
+        decision = classify_article(
+            title,
+            url,
+            source,
+            summary=summary_with_alt,
+            purity_mode=purity_mode,
+            lane=lane,
+        )
         if decision["keep"]:
             enriched = dict(a)
             enriched["title"] = title
-            enriched["summary"] = summary
+            enriched["summary"] = summary_with_alt
             enriched["url"] = url
             enriched["source"] = source
+            enriched["_multimodal"] = mm
             enriched["_filter_reason"] = decision["reason"]
             enriched["_relevance_score"] = decision["relevance_score"]
             clean_articles.append(enriched)

@@ -132,3 +132,254 @@ sources:
     lane: CONTEXT
     packet: C
     orientation: dprk_specialist_platform
+
+  # ---------------------------------------------------------------------------
+  # Expanded Think Tanks & Specialist Research (Adversary OSINT, Latin America, Japan, Trade)
+  # ---------------------------------------------------------------------------
+  - source_id: csis_global
+    source_type: expert_analysis
+    source_role: secondary
+    relationship_role: ally
+    required: false
+    fallback: []
+    license_access_note: "CSIS public RSS; non-partisan security think tank; South China Sea & Taiwan Strait."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://www.csis.org/rss.xml
+    country: US
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Taiwan_Strait
+      - South_China_Sea
+      - US_Export_Control
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: B
+    orientation: US_nonpartisan_strategic_thinktank
+
+  - source_id: aspi_strategist
+    source_type: expert_analysis
+    source_role: secondary
+    relationship_role: ally
+    required: false
+    fallback: []
+    license_access_note: "ASPI Strategist public RSS; Australian strategic & cyber policy analysis on China & Indo-Pacific."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://www.aspistrategist.org.au/feed/
+    country: AU
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - South_China_Sea
+      - Taiwan_Strait
+      - US_Export_Control
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: B
+    orientation: Australian_strategic_defense_thinktank
+
+  - source_id: carnegie_russia_eurasia
+    source_type: expert_analysis
+    source_role: secondary
+    relationship_role: competitor_adversary_axis
+    required: false
+    fallback: []
+    license_access_note: "Carnegie Russia Eurasia Center public RSS (Berlin); independent Russian expert analyses."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://news.google.com/rss/search?q=site:carnegieendowment.org+Russia&hl=en-US&gl=US&ceid=US:en
+    country: DE
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Ukraine_War
+      - EU_Russia
+      - Baltic_Security
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: C
+    orientation: exiled_russian_policy_scholarship
+
+  - source_id: inter_american_dialogue
+    source_type: expert_analysis
+    source_role: secondary
+    relationship_role: other
+    required: false
+    fallback: []
+    license_access_note: "Inter-American Dialogue public RSS; Latin America governance, lithium supply chains, China relations."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://www.thedialogue.org/feed/
+    country: US
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Brazil_Politics
+      - Argentina_Economy
+      - Venezuela_Crisis
+    cadence: daily
+    priority: medium
+    lane: CONTEXT
+    packet: B
+    orientation: pan_american_policy_institute
+
+  - source_id: isw_war_studies
+    source_type: expert_analysis
+    source_role: secondary
+    relationship_role: ally
+    required: false
+    fallback: []
+    license_access_note: "ISW Russian Campaign & Conflict Assessments via Google News targeted RSS."
+    robots_note: "checked-via-existing-collector — RSS via Google News"
+    url: https://news.google.com/rss/search?q=site:understandingwar.org&hl=en-US&gl=US&ceid=US:en
+    country: US
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Ukraine_War
+      - Middle_East_Energy
+      - Iran_Nuclear
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: B
+    orientation: military_intelligence_thinktank
+
+  - source_id: wilson_center_mexico
+    source_type: expert_analysis
+    source_role: secondary
+    relationship_role: ally
+    required: false
+    fallback: []
+    license_access_note: "Wilson Center Mexico Institute & Latin America via Google News targeted RSS."
+    robots_note: "checked-via-existing-collector — RSS via Google News"
+    url: https://news.google.com/rss/search?q=site:wilsoncenter.org&hl=en-US&gl=US&ceid=US:en
+    country: US
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - US_Trade_Tariff
+      - Brazil_Politics
+      - Argentina_Economy
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: B
+    orientation: US_congressional_chartered_thinktank
+
+  - source_id: piie_trade_policy
+    source_type: expert_analysis
+    source_role: secondary
+    relationship_role: ally
+    required: false
+    fallback: []
+    license_access_note: "PIIE international economics and tariff/trade policy via Google News targeted RSS."
+    robots_note: "checked-via-existing-collector — RSS via Google News"
+    url: https://news.google.com/rss/search?q=site:piie.com&hl=en-US&gl=US&ceid=US:en
+    country: US
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - US_Trade_Tariff
+      - US_Export_Control
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: B
+    orientation: international_economic_policy_institute
+
+  - source_id: rusi_military
+    source_type: expert_analysis
+    source_role: secondary
+    relationship_role: ally
+    required: false
+    fallback: []
+    license_access_note: "RUSI defense & military analysis via Google News targeted RSS."
+    robots_note: "checked-via-existing-collector — RSS via Google News"
+    url: https://news.google.com/rss/search?q=site:rusi.org&hl=en-US&gl=US&ceid=US:en
+    country: GB
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Ukraine_War
+      - Baltic_Security
+      - Middle_East_Energy
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: B
+    orientation: UK_defense_and_security_thinktank
+
+  - source_id: wola_latin_america
+    source_type: expert_analysis
+    source_role: secondary
+    relationship_role: other
+    required: false
+    fallback: []
+    license_access_note: "WOLA Latin America human rights, cartels, border via Google News targeted RSS."
+    robots_note: "checked-via-existing-collector — RSS via Google News"
+    url: https://news.google.com/rss/search?q=site:wola.org&hl=en-US&gl=US&ceid=US:en
+    country: US
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Brazil_Politics
+      - Venezuela_Crisis
+    cadence: daily
+    priority: medium
+    lane: CONTEXT
+    packet: B
+    orientation: advocacy_policy_institute
+
+  - source_id: tokyo_foundation
+    source_type: expert_analysis
+    source_role: secondary
+    relationship_role: ally
+    required: false
+    fallback: []
+    license_access_note: "Tokyo Foundation for Policy Research via Google News targeted RSS."
+    robots_note: "checked-via-existing-collector — RSS via Google News"
+    url: https://news.google.com/rss/search?q=site:tkfd.or.jp&hl=ja&gl=JP&ceid=JP:ja
+    country: JP
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Japan_Korea
+      - Taiwan_Strait
+    cadence: daily
+    priority: medium
+    lane: CONTEXT
+    packet: B
+    orientation: Japanese_independent_policy_thinktank
+

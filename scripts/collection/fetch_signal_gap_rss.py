@@ -13,10 +13,24 @@ import hashlib
 from datetime import datetime, timezone
 from pathlib import Path
 import feedparser
-from bs4 import BeautifulSoup
 import csv
 import requests
 import sys
+import re
+
+try:
+    from bs4 import BeautifulSoup
+    def clean_html(raw_html):
+        if not raw_html:
+            return ""
+        soup = BeautifulSoup(raw_html, "html.parser")
+        return soup.get_text(separator=" ", strip=True)
+except ImportError:
+    def clean_html(raw_html):
+        if not raw_html:
+            return ""
+        clean = re.sub(r"<[^>]+>", " ", raw_html)
+        return " ".join(clean.split())
 
 sys.stdout.reconfigure(encoding='utf-8')
 
@@ -24,7 +38,7 @@ sys.stdout.reconfigure(encoding='utf-8')
 DATA_DIR = Path(__file__).parent.parent.parent / "data" / "signal_gap"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
-# 4대 핵심 권역 크롤링 타겟 (관영 매체 vs 망명/독립 언론) — source_registry Packet C 정렬
+# 6대 핵심 권역 크롤링 타겟 (관영 매체 vs 망명/독립 언론 & 특화 싱크탱크) — source_registry 정렬
 RSS_FEEDS = {
     "Russia": {
         "Official": [
@@ -43,6 +57,41 @@ RSS_FEEDS = {
                 "relationship_role": "competitor_adversary_axis",
                 "packet": "C",
                 "license_access_note": "Meduza public RSS; independent Russian-language exiled media."
+            },
+            {
+                "source_id": "ru_istories_rss",
+                "url": "https://istories.media/rss/all.xml",
+                "relationship_role": "competitor_adversary_axis",
+                "packet": "C",
+                "license_access_note": "iStories public RSS; exiled investigative outlet tracking military smuggling."
+            },
+            {
+                "source_id": "ru_insider_rss",
+                "url": "https://news.google.com/rss/search?q=site:theins.ru&hl=ru&gl=RU&ceid=RU:ru",
+                "relationship_role": "competitor_adversary_axis",
+                "packet": "C",
+                "license_access_note": "The Insider Russia public RSS; tracking intelligence operations & hybrid warfare."
+            },
+            {
+                "source_id": "bellingcat_rss",
+                "url": "https://www.bellingcat.com/feed/",
+                "relationship_role": "other",
+                "packet": "C",
+                "license_access_note": "Bellingcat public RSS; open-source intelligence and investigative journalism."
+            },
+            {
+                "source_id": "carnegie_russia_eurasia",
+                "url": "https://news.google.com/rss/search?q=site:carnegieendowment.org+Russia&hl=en-US&gl=US&ceid=US:en",
+                "relationship_role": "competitor_adversary_axis",
+                "packet": "C",
+                "license_access_note": "Carnegie Russia Eurasia Center public RSS (Berlin); independent expert scholarship."
+            },
+            {
+                "source_id": "isw_war_studies",
+                "url": "https://news.google.com/rss/search?q=site:understandingwar.org&hl=en-US&gl=US&ceid=US:en",
+                "relationship_role": "ally",
+                "packet": "B",
+                "license_access_note": "ISW Russian Campaign & Conflict Assessments via Google News targeted RSS."
             }
         ]
     },
@@ -58,11 +107,25 @@ RSS_FEEDS = {
         ],
         "Independent": [
             {
-                "source_id": "cn_china_digital_times_rss",
-                "url": "https://chinadigitaltimes.net/chinese/feed/",
+                "source_id": "cn_rfa_rss",
+                "url": "https://www.rfa.org/english/RSS",
                 "relationship_role": "competitor_adversary_axis",
                 "packet": "C",
-                "license_access_note": "China Digital Times Chinese feed; independent censorship-archive aggregator."
+                "license_access_note": "Radio Free Asia public RSS; covers Xinjiang, South China Sea, and Chinese censorship."
+            },
+            {
+                "source_id": "csis_global",
+                "url": "https://www.csis.org/rss.xml",
+                "relationship_role": "ally",
+                "packet": "B",
+                "license_access_note": "CSIS public RSS; non-partisan security think tank; South China Sea & Taiwan Strait."
+            },
+            {
+                "source_id": "aspi_strategist",
+                "url": "https://www.aspistrategist.org.au/feed/",
+                "relationship_role": "ally",
+                "packet": "B",
+                "license_access_note": "ASPI Strategist public RSS; Australian strategic & cyber policy analysis on China."
             }
         ]
     },
@@ -83,12 +146,162 @@ RSS_FEEDS = {
                 "relationship_role": "competitor_adversary_axis",
                 "packet": "C",
                 "license_access_note": "Raseef22 Arabic public RSS; independent pan-Arab media network."
+            },
+            {
+                "source_id": "me_iranwire_rss",
+                "url": "https://iranwire.com/en/feed/",
+                "relationship_role": "competitor_adversary_axis",
+                "packet": "C",
+                "license_access_note": "IranWire public RSS; exiled Iranian journalists and citizen reporter network."
+            },
+            {
+                "source_id": "me_middle_east_eye_rss",
+                "url": "https://www.middleeasteye.net/rss",
+                "relationship_role": "other",
+                "packet": "C",
+                "license_access_note": "Middle East Eye public RSS; London-based independent Middle East news outlet."
             }
         ]
     },
-    "Global_South": {
-        "Official": [],  # Global South는 특정 국가의 관영보다는 다극화/비서방 대척점 역할
+    "Latin_America_Mexico": {
+        "Official": [],
         "Independent": [
+            {
+                "source_id": "mx_el_universal_rss",
+                "url": "https://www.eluniversal.com.mx/arc/outboundfeeds/rss/?outputType=xml",
+                "relationship_role": "other",
+                "packet": "B",
+                "license_access_note": "El Universal public RSS; major Mexican national daily."
+            },
+            {
+                "source_id": "mx_animal_politico_rss",
+                "url": "https://news.google.com/rss/search?q=site:animalpolitico.com&hl=es-419&gl=MX&ceid=MX:es-419",
+                "relationship_role": "other",
+                "packet": "B",
+                "license_access_note": "Animal Político via Google News targeted RSS; premier Mexican investigative outlet."
+            },
+            {
+                "source_id": "wilson_center_mexico",
+                "url": "https://news.google.com/rss/search?q=site:wilsoncenter.org&hl=en-US&gl=US&ceid=US:en",
+                "relationship_role": "ally",
+                "packet": "B",
+                "license_access_note": "Wilson Center Mexico Institute & Latin America via Google News targeted RSS."
+            },
+            {
+                "source_id": "wola_latin_america",
+                "url": "https://news.google.com/rss/search?q=site:wola.org&hl=en-US&gl=US&ceid=US:en",
+                "relationship_role": "other",
+                "packet": "B",
+                "license_access_note": "WOLA Latin America human rights, cartels, border via Google News targeted RSS."
+            },
+            {
+                "source_id": "ar_clarin_rss",
+                "url": "https://www.clarin.com/rss/lo-ultimo/",
+                "relationship_role": "other",
+                "packet": "B",
+                "license_access_note": "Clarín public RSS; major Argentine daily covering Milei administration."
+            },
+            {
+                "source_id": "ar_pagina12_rss",
+                "url": "https://news.google.com/rss/search?q=site:pagina12.com.ar&hl=es-419&gl=AR&ceid=AR:es-419",
+                "relationship_role": "other",
+                "packet": "B",
+                "license_access_note": "Página/12 via Google News targeted RSS; Argentine progressive daily."
+            },
+            {
+                "source_id": "br_agencia_publica_rss",
+                "url": "https://apublica.org/feed/",
+                "relationship_role": "other",
+                "packet": "B",
+                "license_access_note": "Agência Pública public RSS; Brazilian non-profit investigative journalism."
+            },
+            {
+                "source_id": "ve_armando_info_rss",
+                "url": "https://armando.info/feed/",
+                "relationship_role": "competitor_adversary_axis",
+                "packet": "C",
+                "license_access_note": "Armando.info public RSS; Venezuelan exiled investigative journalism."
+            },
+            {
+                "source_id": "inter_american_dialogue",
+                "url": "https://www.thedialogue.org/feed/",
+                "relationship_role": "other",
+                "packet": "B",
+                "license_access_note": "Inter-American Dialogue public RSS; Latin America governance & lithium supply chains."
+            }
+        ]
+    },
+    "Japan_EastAsia": {
+        "Official": [],
+        "Independent": [
+            {
+                "source_id": "jp_mainichi_rss",
+                "url": "https://news.google.com/rss/search?q=site:mainichi.jp&hl=ja&gl=JP&ceid=JP:ja",
+                "relationship_role": "ally",
+                "packet": "B",
+                "license_access_note": "Mainichi Shimbun English public RSS; Japanese daily covering LDP politics & defense."
+            },
+            {
+                "source_id": "jp_asahi_rss",
+                "url": "https://rss.asahi.com/rss/asahi/newsheadlines.rdf",
+                "relationship_role": "ally",
+                "packet": "B",
+                "license_access_note": "Asahi Shimbun Japanese headlines public RSS; liberal perspective on parliament."
+            },
+            {
+                "source_id": "jp_japan_times_rss",
+                "url": "https://www.japantimes.co.jp/feed/",
+                "relationship_role": "ally",
+                "packet": "B",
+                "license_access_note": "The Japan Times public RSS; independent English daily covering Japanese policy."
+            },
+            {
+                "source_id": "jp_bunshun_rss",
+                "url": "https://news.google.com/rss/search?q=site:bunshun.jp&hl=ja&gl=JP&ceid=JP:ja",
+                "relationship_role": "ally",
+                "packet": "B",
+                "license_access_note": "Bunshun Online via Google News targeted RSS; political funding & scandal watchdog."
+            },
+            {
+                "source_id": "tokyo_foundation",
+                "url": "https://news.google.com/rss/search?q=site:tkfd.or.jp&hl=ja&gl=JP&ceid=JP:ja",
+                "relationship_role": "ally",
+                "packet": "B",
+                "license_access_note": "Tokyo Foundation for Policy Research via Google News targeted RSS."
+            }
+        ]
+    },
+    "Global_Trade_Investigative": {
+        "Official": [],
+        "Independent": [
+            {
+                "source_id": "global_occrp_rss",
+                "url": "https://www.occrp.org/en/feed",
+                "relationship_role": "other",
+                "packet": "C",
+                "license_access_note": "OCCRP public RSS; global reporting on organized crime, shell companies & sanctions."
+            },
+            {
+                "source_id": "us_propublica_rss",
+                "url": "https://feeds.propublica.org/propublica/main",
+                "relationship_role": "domestic_us",
+                "packet": "B",
+                "license_access_note": "ProPublica public RSS; non-profit investigative journalism."
+            },
+            {
+                "source_id": "piie_trade_policy",
+                "url": "https://news.google.com/rss/search?q=site:piie.com&hl=en-US&gl=US&ceid=US:en",
+                "relationship_role": "ally",
+                "packet": "B",
+                "license_access_note": "PIIE international economics and tariff/trade policy via Google News targeted RSS."
+            },
+            {
+                "source_id": "rusi_military",
+                "url": "https://news.google.com/rss/search?q=site:rusi.org&hl=en-US&gl=US&ceid=US:en",
+                "relationship_role": "ally",
+                "packet": "B",
+                "license_access_note": "RUSI defense & military analysis via Google News targeted RSS."
+            },
             {
                 "source_id": "al_jazeera_all",
                 "url": "https://www.aljazeera.com/xml/rss/all.xml",
@@ -101,12 +314,7 @@ RSS_FEEDS = {
 }
 
 
-def clean_html(raw_html):
-    """HTML 태그 제거 및 텍스트 정제"""
-    if not raw_html:
-        return ""
-    soup = BeautifulSoup(raw_html, "html.parser")
-    return soup.get_text(separator=" ", strip=True)
+# clean_html defined above with fallback
 
 
 def fetch_rss_data():
