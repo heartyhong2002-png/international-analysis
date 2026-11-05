@@ -58,6 +58,7 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
+| done | ANTIGRAVITY | collection / zero-byte-multimodal-collectors | `scripts/collection/fetch_telegram_public.py`, `scripts/collection/fetch_bluesky_public.py`, `scripts/collection/fetch_signal_gap_rss.py`, `scripts/collection/gov_announcements_collector.py`, `config/source_registry/*` | 0-Byte 무다운로드 멀티모달 수집기 4종 고도화(Telegram Photo/Video/지도단문 보존, Bluesky embed.images/alt_texts/video, RSS/Gov media:content·enclosure·PDF 보존) 및 34개 글로벌 싱크탱크·독립언론 확장(Standard 멀티모달 클러스터 35→120건, High 9→23건) | 2026-11-06 |
 | done | ANTIGRAVITY | preprocessing / multimodal-stage1 | `scripts/automation/preprocess_signals.py`, `scripts/pipeline/bridge_preprocess_lanes.py`, `docs/current/PREPROCESSING_SESSION_PROMPT.md` | 1단계 무다운로드 멀티모달(이미지·영상·문서 URL & Alt-Text 추출, 시각노이즈/밈 필터링, 4대 시각 모달리티 태깅) 구축 및 최신 725건(Standard 339 / High 35 클러스터) 정제·수집 세션 가이드라인 수립 완료 | 2026-11-06 |
 | done | Cursor / Validation·QA | validation / multi-judge-criteria | `docs/current/VALIDATION_PLAN.md` (§10.4), `docs/evidence/early_warning_backtest_report.md`, `AGENT_SYNC.md` | 검증단(tev1/Gemma/DeepSeek) 직교 판정·블라인드 Stage1/2·트리거·KPI 문서화. 외부 자문 합의 반영. Trio-Sync | 2026-11-05 |
 | done | ANTIGRAVITY | collection / bluesky-telegram-integration | `scripts/collection/fetch_bluesky_public.py`, `scripts/collection/fetch_telegram_public.py`, `scripts/collection/run_phone_collector.py`, `dags/early_warning_pipeline_dag.py` | 블루스카이(AT Protocol 8대 쿼리) 공식 수집기 신설, 텔레그램 OSINT 경량화 및 S20 울트라 8대 수집기 체제 확장 완료 | 2026-11-05 |
@@ -107,6 +108,20 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-06 [ANTIGRAVITY / collection · 0-Byte 무다운로드 멀티모달 수집기 4종 고도화 및 34개 글로벌 싱크탱크·탐사미디어 확장]
+- 한 일:
+  1. [수집 세션 ➔ 전처리 세션 간 비정형·멀티모달 인터페이스 규약]에 맞춰 0-Byte 무다운로드 원칙으로 4대 핵심 수집기 멀티모달 메타데이터 추출 확장:
+     - `scripts/collection/fetch_telegram_public.py`: 메시지 래퍼(`.tgme_widget_message_wrap`) 파싱으로 전환하여 `Photo_URL`(`a.tgme_widget_message_photo_wrap` 배경 URL), `Video_URL`(`video` src 및 `i.tgme_widget_message_video_thumb`), `Has_Media` 추출. 전황 지도·현장 사진 단독 게시물(텍스트 10자 미만)도 유실 없이 수집 및 맥락 태그 보강(50건 중 멀티모달 18건 포착).
+     - `scripts/collection/fetch_bluesky_public.py`: `post.embed` 및 `record.embed`에서 `media_urls`(`embed.images[].thumb`/`fullsize`), `alt_texts`(`embed.images[].alt` 대체 텍스트), `has_video`(`app.bsky.embed.video`) 추출(고유 50건 중 이미지/비디오 9건, 외부 링크카드 34건 포착).
+     - `scripts/collection/fetch_signal_gap_rss.py` & `scripts/collection/gov_announcements_collector.py`: `<media:content>`, `<media:thumbnail>`, `<enclosure>`, 본문 내 `<img>`/`<video>` 및 `.pdf` 원문 링크를 텍스트 절단(`[:500]`) 전에 우선 추출하여 보존하고, 아바타·로고·1x1 트래킹 픽셀·이모지 아이콘은 수집 단계에서 즉시 배제(신호 괴리 RSS 334건 중 멀티모달 137건 포착).
+  2. 권위주의/감시국가(러시아·중국·이란) 독립 탐사 미디어, 남미·멕시코, 일본 및 10대 글로벌 싱크탱크(ISW, CSIS, ASPI, 카네기 유라시아, 윌슨센터, WOLA, 미주대화기구, 도쿄재단, PIIE, RUSI) 등 총 34개 피드 연동 완결 (`config/source_registry/expert_feeds.yaml`, `local_media_feeds.yaml`).
+  3. 전처리 브릿지(`bridge_preprocess_lanes.py`) 연동 검증 완료:
+     - `standard` 모드: 752건 원시 입력 -> 346개 클러스터, **멀티모달 포함 클러스터 35건 ➔ 120건(첨부 162개: `image` 108, `external_card` 25, `document_pdf` 24, `video` 5)으로 3.4배 증가**, 5대 해협 전원 감지(호르무즈 12, 바브엘만데브 7, 말라카 2, 보스포루스 4, 파나마 3, 대만해협 4).
+     - `high` 고순도 모드: 752건 원시 입력 -> 44개 핵심 클러스터, **멀티모달 포함 클러스터 9건 ➔ 23건(첨부 37개)으로 2.5배 증가**.
+  4. Trio-Sync(MD 문서 + Notion + GitHub) 실행.
+- 바꾼 파일: `scripts/collection/fetch_telegram_public.py`, `scripts/collection/fetch_bluesky_public.py`, `scripts/collection/fetch_signal_gap_rss.py`, `scripts/collection/gov_announcements_collector.py`, `config/source_registry/expert_feeds.yaml`, `config/source_registry/local_media_feeds.yaml`, `data/signal_gap/*`, `data/bluesky_public/*`, `data/gov_announcements/*`, `data/automation/*`, `AGENT_SYNC.md`.
+- 다음 작업: S20 울트라 엣지 노드 `git pull` 후 0-Byte 멀티모달 8대 수집 체제 무중단 가동 및 LLM/검증 세션의 멀티모달 메타데이터 소비 연동.
 
 2026-11-06 [ANTIGRAVITY / preprocessing · 1단계 무다운로드 멀티모달(이미지·영상·문서) 전처리 구축 및 수집 가이드라인 확립]
 - 한 일:

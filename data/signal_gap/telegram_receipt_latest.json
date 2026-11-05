@@ -2,8 +2,10 @@
   "collector": "scripts/collection/fetch_telegram_public.py",
   "source_id": "telegram_osint_public",
   "signal_class": "online_information_environment_signal",
-  "observed_at": "2026-11-05T03:38:40.937301+00:00",
-  "total_items_collected": 40,
+  "multimodal_zero_byte_mode": true,
+  "observed_at": "2026-11-05T15:32:59.345576+00:00",
+  "total_items_collected": 50,
+  "total_media_items_collected": 18,
   "alert_level_set": false,
   "verification_state_set": false,
   "channels": [
@@ -13,7 +15,8 @@
       "source_url": "https://t.me/s/rybar",
       "http_status": 200,
       "parse_status": "SUCCESS",
-      "items_collected": 8
+      "items_collected": 10,
+      "media_items_collected": 9
     },
     {
       "region": "Ukraine_Live",
@@ -21,7 +24,8 @@
       "source_url": "https://t.me/s/UaOnlii",
       "http_status": 200,
       "parse_status": "SUCCESS",
-      "items_collected": 8
+      "items_collected": 10,
+      "media_items_collected": 2
     },
     {
       "region": "Iran_IRGC_Proxy",
@@ -29,7 +33,8 @@
       "source_url": "https://t.me/s/sepah_pasdaran",
       "http_status": 200,
       "parse_status": "SUCCESS",
-      "items_collected": 8
+      "items_collected": 10,
+      "media_items_collected": 5
     },
     {
       "region": "Saudi_AlArabiya",
@@ -37,7 +42,8 @@
       "source_url": "https://t.me/s/AlArabiya",
       "http_status": 200,
       "parse_status": "SUCCESS",
-      "items_collected": 8
+      "items_collected": 10,
+      "media_items_collected": 0
     },
     {
       "region": "Yemen_Houthi",
@@ -45,8 +51,9 @@
       "source_url": "https://t.me/s/army21ye",
       "http_status": 200,
       "parse_status": "SUCCESS",
-      "items_collected": 8
+      "items_collected": 10,
+      "media_items_collected": 2
     }
   ],
-  "license_access_note": "Public Telegram web preview (t.me/s/) only; no private groups or invite links."
+  "license_access_note": "Public Telegram web preview (t.me/s/) only; 0-byte metadata extraction (Photo_URL/Video_URL without binary download)."
 }

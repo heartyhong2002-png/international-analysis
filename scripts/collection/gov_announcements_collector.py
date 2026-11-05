@@ -73,7 +73,15 @@ from datetime import datetime
 import json
 import os
 import re
+import sys
 import time
+
+if hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
 
 # NOTE (수정 사항 v1.2 — 작업 디렉터리 문제): 실행 cwd와 무관하게 경로 고정.
 # NOTE (2026-11-03 — 엣지 Git 동기화): 예전 `scripts/data/gov_announcements`는
@@ -272,6 +280,101 @@ _XML_PROLOG_ENCODING_RE = re.compile(rb'<\?xml[^>]*encoding=["\']([\w-]+)["\']',
 # 아니라 href 속성). feed_info에 "format": "atom"이 있으면 이 네임스페이스로
 # 파싱하고, 없으면(기본값) 기존 RSS 2.0 방식을 그대로 씁니다.
 _ATOM_NS = "{http://www.w3.org/2005/Atom}"
+_MEDIA_NS = "{http://search.yahoo.com/mrss/}"
+_CONTENT_NS = "{http://purl.org/rss/1.0/modules/content/}"
+
+_GOV_NOISE_URL_RE = re.compile(
+    r"(/|_|-)(avatar|emoji|favicon|icon|logo|banner|pixel|spacer|sprite|badge|button)s?(/|_|-|\.)"
+    r"|\b1x1\b|\.svg(\?|$)|^data:image/|doubleclick\.net|googlesyndication\.com|gravatar\.com",
+    re.IGNORECASE,
+)
+_GOV_IMG_TAG_RE = re.compile(r"<img\b[^>]*>", re.IGNORECASE)
+_GOV_VID_TAG_RE = re.compile(r"<(?:video|source|iframe)\b[^>]*>", re.IGNORECASE)
+_GOV_SRC_RE = re.compile(r'\bsrc=["\']([^"\']+)["\']', re.IGNORECASE)
+_GOV_ALT_RE = re.compile(r'\balt=["\']([^"\']+)["\']', re.IGNORECASE)
+_GOV_PDF_RE = re.compile(r'https?://[^\s"\'<>]+\.pdf(?:\?[^\s"\'<>]*)?', re.IGNORECASE)
+
+
+def _is_valid_gov_media_url(url: str) -> bool:
+    u = (url or "").strip()
+    if not u or len(u) < 10 or not u.startswith(("http://", "https://")):
+        return False
+    return not bool(_GOV_NOISE_URL_RE.search(u))
+
+
+def _extract_xml_item_multimodal(elem, title: str, full_desc: str) -> dict:
+    """
+    XML(RSS <item> 또는 Atom <entry>) 요소와 본문 전체(full_desc)에서
+    <media:content>, <media:thumbnail>, <enclosure>, <img>, <video>, .pdf 링크를
+    desc[:500] 절단 전에 추출하여 보존 스니펫과 메타데이터로 반환한다.
+    """
+    media_urls = []
+    pdf_urls = []
+    alt_texts = []
+
+    def _add(u: str, alt: str = "") -> None:
+        u_c = (u or "").strip()
+        if not _is_valid_gov_media_url(u_c):
+            return
+        if u_c.lower().split("?")[0].endswith(".pdf"):
+            if u_c not in pdf_urls:
+                pdf_urls.append(u_c)
+        else:
+            if u_c not in media_urls:
+                media_urls.append(u_c)
+        alt_c = re.sub(r"<[^>]+>", " ", alt or "").strip()
+        if alt_c and len(alt_c) >= 4 and alt_c not in alt_texts:
+            alt_texts.append(alt_c[:200])
+
+    # 1. XML 자식 태그에서 <media:content>, <media:thumbnail>, <enclosure> 탐색
+    for child in elem.iter():
+        tag_lower = str(child.tag).lower()
+        if tag_lower.endswith(("content", "thumbnail", "enclosure")):
+            u_attr = child.get("url") or child.get("href") or ""
+            t_attr = (child.get("type") or "").lower()
+            if u_attr and "audio" not in t_attr:
+                _add(u_attr, child.get("title") or "")
+        elif tag_lower.endswith("link") and (child.get("rel") == "enclosure" or str(child.get("href") or "").lower().endswith(".pdf")):
+            _add(child.get("href") or "", child.get("title") or "")
+
+    # 2. 본문 HTML 내 <img>, <video>, .pdf 링크 탐색 (절단 전 전체 텍스트 대상)
+    for img_t in _GOV_IMG_TAG_RE.findall(full_desc):
+        s_m = _GOV_SRC_RE.search(img_t)
+        a_m = _GOV_ALT_RE.search(img_t)
+        if s_m:
+            _add(s_m.group(1), a_m.group(1) if a_m else "")
+
+    for vid_t in _GOV_VID_TAG_RE.findall(full_desc):
+        s_m = _GOV_SRC_RE.search(vid_t)
+        if s_m:
+            _add(s_m.group(1), "")
+
+    for pdf_u in _GOV_PDF_RE.findall(full_desc):
+        _add(pdf_u, "Official Gazette PDF")
+
+    primary_media = media_urls[0] if media_urls else ""
+    primary_pdf = pdf_urls[0] if pdf_urls else ""
+    primary_alt = " | ".join(alt_texts)[:200]
+
+    # desc[:500] 절단으로 태그가 잘리지 않도록 정제 텍스트 + 온전한 미디어 태그 재결합
+    clean_desc_text = re.sub(r"<[^>]+>", " ", full_desc)
+    clean_desc_text = " ".join(clean_desc_text.split())[:500]
+
+    preserved = []
+    if primary_media:
+        safe_alt = (alt_texts[0] if alt_texts else title[:100]).replace('"', "'")
+        preserved.append(f'<img src="{primary_media}" alt="{safe_alt}">')
+    if primary_pdf:
+        preserved.append(primary_pdf)
+
+    final_desc = f"{clean_desc_text} {' '.join(preserved)}".strip() if preserved else clean_desc_text
+    return {
+        "description": final_desc,
+        "media_url": primary_media,
+        "pdf_url": primary_pdf,
+        "alt_text": primary_alt,
+        "has_media": bool(primary_media or primary_pdf),
+    }
 
 
 def fetch_rss_feed(name, feed_info, timeout=20, max_retries=3):
@@ -314,34 +417,42 @@ def fetch_rss_feed(name, feed_info, timeout=20, max_retries=3):
                     title = (entry.findtext(f"{_ATOM_NS}title") or "").strip()
                     link = ""
                     for link_el in entry.findall(f"{_ATOM_NS}link"):
-                        # rel 속성이 없으면 기본이 "alternate"(사람이 읽는 HTML 페이지).
-                        # self/다른 rel도 섞여 나올 수 있어서 alternate만 골라 씀.
                         if link_el.get("rel", "alternate") == "alternate":
                             link = link_el.get("href", "").strip()
                             break
                     pub_date = (entry.findtext(f"{_ATOM_NS}updated") or "").strip()
                     desc = entry.findtext(f"{_ATOM_NS}summary") or entry.findtext(f"{_ATOM_NS}content") or ""
+                    mm = _extract_xml_item_multimodal(entry, title, desc)
                     items.append({
                         "source": name,
                         "source_type": feed_info.get("source_type", "unknown"),
                         "title": title,
                         "link": link,
                         "pub_date": pub_date,
-                        "description": desc[:500],
+                        "description": mm["description"],
+                        "media_url": mm["media_url"],
+                        "pdf_url": mm["pdf_url"],
+                        "alt_text": mm["alt_text"],
+                        "has_media": mm["has_media"],
                     })
             else:
                 for item in root.findall(".//item"):
                     title = (item.findtext("title") or "").strip()
                     link = (item.findtext("link") or "").strip()
                     pub_date = (item.findtext("pubDate") or "").strip()
-                    desc = item.findtext("description") or ""
+                    desc = (item.findtext("description") or "") + " " + (item.findtext(f"{_CONTENT_NS}encoded") or "")
+                    mm = _extract_xml_item_multimodal(item, title, desc)
                     items.append({
                         "source": name,
                         "source_type": feed_info.get("source_type", "unknown"),
                         "title": title,
                         "link": link,
                         "pub_date": pub_date,
-                        "description": desc[:500],
+                        "description": mm["description"],
+                        "media_url": mm["media_url"],
+                        "pdf_url": mm["pdf_url"],
+                        "alt_text": mm["alt_text"],
+                        "has_media": mm["has_media"],
                     })
             return items
 

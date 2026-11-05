@@ -1,187 +1,171 @@
 {
   "schema_version": "preprocess_rejects_v1",
-  "generated_at": "2026-11-05T15:23:44.732952+00:00",
+  "generated_at": "2026-11-05T15:52:21.072453+00:00",
   "purity_mode": "standard",
-  "total_rejected": 216,
+  "total_rejected": 217,
   "reason_breakdown": {
-    "retrospective_or_non_current_noise": 3,
-    "low_geopolitical_relevance": 189,
-    "ad_or_soft_section": 13,
-    "entertainment_sports_noise": 8,
+    "low_geopolitical_relevance": 190,
+    "ad_or_soft_section": 12,
+    "entertainment_sports_noise": 11,
     "diplomatic_protocol_noise": 1,
-    "empty_title": 2
+    "empty_title": 2,
+    "retrospective_or_non_current_noise": 1
   },
   "lane_breakdown": {
-    "FAST": 21,
-    "CONTEXT": 177,
+    "FAST": 16,
+    "CONTEXT": 183,
     "OPINION": 18
   },
   "rejects": [
     {
-      "title": "Ex-FM Kharrazi remembered for promoting knowledge-based foreign policy",
-      "url": "https://en.irna.ir/news/86310181/Ex-FM-Kharrazi-remembered-for-promoting-knowledge-based-foreign",
-      "source": "IRNA (이란 국영 통신사)",
-      "lane": "FAST",
-      "reject_reason": "retrospective_or_non_current_noise",
-      "relevance_score": 0.5
-    },
-    {
-      "title": "Former football player Hamid Alidoosti passes away",
-      "url": "https://en.irna.ir/photo/86310129/Former-football-player-Hamid-Alidoosti-passes-away",
-      "source": "IRNA (이란 국영 통신사)",
-      "lane": "FAST",
-      "reject_reason": "retrospective_or_non_current_noise",
-      "relevance_score": 0.5
-    },
-    {
-      "title": "In photos: Persepolis volleyball team training session",
-      "url": "https://en.irna.ir/photo/86309776/In-photos-Persepolis-volleyball-team-training-session",
+      "title": "Iranian girl secures country’s first quota for 2028 Olympics",
+      "url": "https://en.irna.ir/news/86313510/Iranian-girl-secures-country-s-first-quota-for-2028-Olympics",
       "source": "IRNA (이란 국영 통신사)",
       "lane": "FAST",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "Russian official calls for stronger Tehran-Moscow ties to protect shared interests",
-      "url": "https://en.irna.ir/news/86309494/Russian-official-calls-for-stronger-Tehran-Moscow-ties-to-protect",
-      "source": "IRNA (이란 국영 통신사)",
-      "lane": "FAST",
-      "reject_reason": "low_geopolitical_relevance",
-      "relevance_score": 0.2
-    },
-    {
-      "title": "At least seven migrants die on boat bound for Canary Islands amid storm",
-      "url": "https://www.aljazeera.com/video/newsfeed/2026/11/2/at-least-seven-migrants-die-on-boat-bound-for-canary-islands-amid-storm?traffic_source=rss",
-      "source": "Al Jazeera",
-      "lane": "FAST",
-      "reject_reason": "low_geopolitical_relevance",
-      "relevance_score": 0.2
-    },
-    {
-      "title": "Displaced in Hebron: Picking up pieces after Israeli siege",
-      "url": "https://www.aljazeera.com/news/2026/11/2/displaced-in-hebron-picking-up-pieces-after-israeli-siege?traffic_source=rss",
-      "source": "Al Jazeera",
-      "lane": "FAST",
-      "reject_reason": "low_geopolitical_relevance",
-      "relevance_score": 0.2
-    },
-    {
-      "title": "Carrick not distracted by speculation over United future",
-      "url": "https://www.aljazeera.com/sports/2026/11/2/carrick-not-distracted-by-speculation-over-united-future?traffic_source=rss",
+      "title": "Why has Cristiano Ronaldo retired from international football?",
+      "url": "https://www.aljazeera.com/sports/2026/11/5/why-has-cristiano-ronaldo-retired-from-international-football?traffic_source=rss",
       "source": "Al Jazeera",
       "lane": "FAST",
       "reject_reason": "ad_or_soft_section",
       "relevance_score": 0.0
     },
     {
-      "title": "Jake Paul to fight MMA star Cedric Doumbe",
-      "url": "https://www.aljazeera.com/sports/2026/11/2/jake-paul-to-fight-mma-star-cedric-doumbe?traffic_source=rss",
+      "title": "Ronaldo in records: International milestones from the football icon",
+      "url": "https://www.aljazeera.com/sports/2026/11/5/ronaldo-in-records-international-milestones-from-the-football-icon?traffic_source=rss",
       "source": "Al Jazeera",
       "lane": "FAST",
       "reject_reason": "ad_or_soft_section",
       "relevance_score": 0.0
     },
     {
-      "title": "Al Jazeera condemns Israeli ban extension, calls for its immediate lifting",
-      "url": "https://www.aljazeera.com/news/2026/11/2/al-jazeera-condemns-israeli-ban-extension-calls-for-its-immediate-lifting?traffic_source=rss",
+      "title": "Why Guinea-Bissau halted a controversial hepatitis vaccine trial for babies",
+      "url": "https://www.aljazeera.com/news/2026/11/5/why-guinea-bissau-halted-a-controversial-hepatitis-vaccine-trial-for-babies?traffic_source=rss",
       "source": "Al Jazeera",
       "lane": "FAST",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "Barcelona vs Aston Villa: Champions League – Predictions, news, lineups",
-      "url": "https://www.aljazeera.com/sports/2026/11/2/barcelona-vs-aston-villa-champions-league-predictions-news?traffic_source=rss",
-      "source": "Al Jazeera",
-      "lane": "FAST",
-      "reject_reason": "ad_or_soft_section",
-      "relevance_score": 0.0
-    },
-    {
-      "title": "As Islamophobia ramps up in US midterms, Texas Muslims eye local stakes",
-      "url": "https://www.aljazeera.com/news/2026/11/2/as-islamophobia-ramps-up-in-us-midterms-texas-muslims-eye-local-stakes?traffic_source=rss",
+      "title": "Burning rubbish chokes besieged Yemeni city of Taiz",
+      "url": "https://www.aljazeera.com/features/2026/11/5/burning-rubbish-chokes-besieged-yemeni-city-of-taiz?traffic_source=rss",
       "source": "Al Jazeera",
       "lane": "FAST",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "French school protests resume on small scale as students return from break",
-      "url": "https://www.aljazeera.com/news/2026/11/2/french-school-protests-resume-on-small-scale-as-students-return-from-break?traffic_source=rss",
+      "title": "Padel’s Olympic ambition",
+      "url": "https://www.aljazeera.com/video/newsfeed/2026/11/5/padels-olympic-ambition?traffic_source=rss",
       "source": "Al Jazeera",
       "lane": "FAST",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "Can Americans who disagree on politics still find common ground?",
-      "url": "https://www.aljazeera.com/video/newsfeed/2026/11/2/can-americans-who-disagree-on-politics-still-find-common-ground?traffic_source=rss",
+      "title": "3,000 tarantulas hidden inside luggage seized at Peruvian airport",
+      "url": "https://www.aljazeera.com/video/newsfeed/2026/11/5/3000-tarantulas-hidden-inside-luggage-seized-at-peruvian-airport?traffic_source=rss",
       "source": "Al Jazeera",
       "lane": "FAST",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "Pnuma: emissões precisam cair 18% até 2030 para limitar aquecimento",
-      "url": "https://agenciabrasil.ebc.com.br/meio-ambiente/noticia/2026-11/pnuma-emissoes-precisam-cair-18-ate-2030-para-limitar-aquecimento",
+      "title": "Cristiano Ronaldo announces international retirement",
+      "url": "https://www.aljazeera.com/video/newsfeed/2026/11/5/cristiano-ronaldo-announces-international-retirement?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "entertainment_sports_noise",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "New Yorkers rally against gun violence after Ghanaian teen’s killing",
+      "url": "https://www.aljazeera.com/video/newsfeed/2026/11/5/new-yorkers-rally-against-gun-violence-after-ghanaian-teens-killing?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Why more investment is not making housing affordable in Ghana",
+      "url": "https://www.aljazeera.com/news/2026/11/5/why-more-investment-is-not-making-housing-affordable-in-ghana?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‘Knives out’: Will Congress impeach Pete Hegseth after GOP midterms loss?",
+      "url": "https://www.aljazeera.com/news/2026/11/5/knives-out-will-congress-impeach-pete-hegseth-after-gop-midterms-loss?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Visualising how the US midterms turned the map blue",
+      "url": "https://www.aljazeera.com/news/2026/11/5/visualising-how-the-us-midterms-turned-the-map-blue?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Operação mira rede ilegal de bets que movimentou R$ 734 milhões",
+      "url": "https://agenciabrasil.ebc.com.br/justica/noticia/2026-11/operacao-mira-rede-ilegal-de-bets-que-movimentou-r-734-milhoes",
       "source": "Agência Brasil (브라질 국영 통신사)",
       "lane": "FAST",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "Lembranças e saudades marcam Dia de Finados em Brasília",
-      "url": "https://agenciabrasil.ebc.com.br/geral/noticia/2026-11/saudades-emocionam-visitantes-do-campo-da-esperanca-em-brasilia",
+      "title": "Ministro diz que novos impostos não trazem aumento de carga tributária",
+      "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/ministro-diz-que-novos-impostos-nao-trazem-aumento-de-carga-tributaria",
       "source": "Agência Brasil (브라질 국영 통신사)",
       "lane": "FAST",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "REC'n'Play 2026 será palco de tecnologia e criatividade no Recife",
-      "url": "https://agenciabrasil.ebc.com.br/cultura/noticia/2026-11/recnplay-2026-sera-palco-de-tecnologia-e-criatividade-em-recife",
+      "title": "PF faz operação no Rio para conter repasses ilegais de arma a CACs",
+      "url": "https://agenciabrasil.ebc.com.br/geral/noticia/2026-11/pf-faz-operacao-no-rio-para-conter-repasses-ilegais-de-arma-cacs",
       "source": "Agência Brasil (브라질 국영 통신사)",
       "lane": "FAST",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "Inscrições para vagas remanescentes do Fies terminam na terça-feira",
-      "url": "https://agenciabrasil.ebc.com.br/educacao/noticia/2026-10/inscricoes-para-vagas-remanescentes-do-fies-terminam-na-terca-feira",
+      "title": "Juíza sugere medidas mais duras contra torcidas organizadas",
+      "url": "https://agenciabrasil.ebc.com.br/justica/noticia/2026-11/juiza-sugere-medidas-mais-duras-contra-torcidas-organizadas",
       "source": "Agência Brasil (브라질 국영 통신사)",
       "lane": "FAST",
+      "reject_reason": "entertainment_sports_noise",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Russian Olympic Committee must keep protecting national athletes’ rights — Putin",
+      "url": "https://tass.com/politics/2213421",
+      "source": "ru_tass_en_rss",
+      "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "Turismo de observação contribui para preservar baleias-jubarte",
-      "url": "https://agenciabrasil.ebc.com.br/meio-ambiente/noticia/2026-11/turismo-de-observacao-contribui-para-preservar-baleias-jubarte",
-      "source": "Agência Brasil (브라질 국영 통신사)",
-      "lane": "FAST",
+      "title": "Sber among leaders in AI sovereign platforms development, Putin says",
+      "url": "https://tass.com/politics/2213419",
+      "source": "ru_tass_en_rss",
+      "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "Temporada das baleias-jubarte termina com menos filhotes",
-      "url": "https://agenciabrasil.ebc.com.br/meio-ambiente/noticia/2026-10/temporada-das-baleias-jubarte-termina-com-menos-filhotes",
-      "source": "Agência Brasil (브라질 국영 통신사)",
-      "lane": "FAST",
-      "reject_reason": "low_geopolitical_relevance",
-      "relevance_score": 0.2
-    },
-    {
-      "title": "Em 30 anos população de baleias-jubarte passou de 1,5 mil para 35 mil",
-      "url": "https://agenciabrasil.ebc.com.br/meio-ambiente/noticia/2026-10/instituto-baleia-jubarte-completa-30-anos",
-      "source": "Agência Brasil (브라질 국영 통신사)",
-      "lane": "FAST",
-      "reject_reason": "low_geopolitical_relevance",
-      "relevance_score": 0.2
-    },
-    {
-      "title": "Finados: lei amplia olhar e sensibilidade para vontades antes da morte",
-      "url": "https://agenciabrasil.ebc.com.br/direitos-humanos/noticia/2026-10/finados-lei-amplia-olhar-e-sensibilidade-para-vontades-antes-da-morte",
-      "source": "Agência Brasil (브라질 국영 통신사)",
-      "lane": "FAST",
+      "title": "Thirteen European passenger airplanes made emergency landings due to bomb threats",
+      "url": "https://tass.com/emergencies/2213427",
+      "source": "ru_tass_en_rss",
+      "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
@@ -196,22 +180,6 @@
     {
       "title": "Krasnoyarsk Region plans to launch satellite manufacturing center project in 2027",
       "url": "https://tass.com/science/2213391",
-      "source": "ru_tass_en_rss",
-      "lane": "CONTEXT",
-      "reject_reason": "low_geopolitical_relevance",
-      "relevance_score": 0.2
-    },
-    {
-      "title": "Zelensky wants to censor Elon Musk — French presidential candidate",
-      "url": "https://tass.com/world/2213401",
-      "source": "ru_tass_en_rss",
-      "lane": "CONTEXT",
-      "reject_reason": "low_geopolitical_relevance",
-      "relevance_score": 0.2
-    },
-    {
-      "title": "KLM to cut around 5,000 jobs under cost-saving plan — portal",
-      "url": "https://tass.com/economy/2213387",
       "source": "ru_tass_en_rss",
       "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",
@@ -394,6 +362,22 @@
       "relevance_score": 0.2
     },
     {
+      "title": "The Bio-Pharma Industry and Society",
+      "url": "https://www.csis.org/events/bio-pharma-industry-and-society",
+      "source": "csis_global",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Strategic Opportunities in the Indo-Asia-Pacific with Admiral Harry B. Harris",
+      "url": "https://www.csis.org/events/strategic-opportunities-indo-asia-pacific-admiral-harry-b-harris",
+      "source": "csis_global",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
       "title": "Forward defence in depth: how to preserve Australia’s strategy of denial",
       "url": "https://www.aspistrategist.org.au/forward-defence-in-depth-how-to-preserve-australias-strategy-of-denial/",
       "source": "aspi_strategist",
@@ -506,16 +490,40 @@
       "relevance_score": 0.2
     },
     {
-      "title": "Muere futbolista durante partido amateur en Los Cabos; investigan las causas",
-      "url": "https://www.eluniversal.com.mx/estados/muere-futbolista-durante-partido-amateur-en-los-cabos-investigan-las-causas/",
+      "title": "Luis Ernesto Franco dedica emotiva despedida a su hija Leila, quien murió a las 23 semanas; \"Hasta que nos volvamos a ver\"",
+      "url": "https://www.eluniversal.com.mx/espectaculos/luis-ernesto-franco-dedica-emotiva-despedida-a-su-hija-leila-quien-murio-a-las-23-semanas-hasta-que-nos-volvamos-a-ver/",
       "source": "mx_el_universal_rss",
       "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "Luis Ernesto Franco dedica emotiva despedida a su hija Leila, quien murió a las 23 semanas; \"Hasta que nos volvamos a ver\"",
-      "url": "https://www.eluniversal.com.mx/espectaculos/luis-ernesto-franco-dedica-emotiva-despedida-a-su-hija-leila-quien-murio-a-las-23-semanas-hasta-que-nos-volvamos-a-ver/",
+      "title": "Cinco momentos memorables de Cristiano Ronaldo con Portugal; se despide CR7",
+      "url": "https://www.eluniversal.com.mx/deportes/cinco-momentos-memorables-de-cristiano-ronaldo-con-portugal-se-despide-cr7/",
+      "source": "mx_el_universal_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "UIF actúa sin importar quién sea: dice Reyes Colmenares sobre Amílcar Olán; colabora con instituciones bancarias y de seguridad",
+      "url": "https://www.eluniversal.com.mx/nacion/uif-actua-sin-importar-quien-sea-dice-reyes-colmenares-sobre-amilcar-olan-colabora-con-instituciones-bancarias-y-de-seguridad/",
+      "source": "mx_el_universal_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "5 planes para escapar de CDMX este fin de semana",
+      "url": "https://www.eluniversal.com.mx/destinos/5-planes-para-escapar-de-cdmx-este-fin-de-semana/",
+      "source": "mx_el_universal_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Muere futbolista durante partido amateur en Los Cabos; investigan las causas",
+      "url": "https://www.eluniversal.com.mx/estados/muere-futbolista-durante-partido-amateur-en-los-cabos-investigan-las-causas/",
       "source": "mx_el_universal_rss",
       "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",
@@ -540,38 +548,6 @@
     {
       "title": "Russell Brand, declarado culpable de los delitos de violación y agresión sexual",
       "url": "https://www.eluniversal.com.mx/espectaculos/russell-brand-declarado-culpable-de-los-delitos-de-violacion-y-agresion-sexual/",
-      "source": "mx_el_universal_rss",
-      "lane": "CONTEXT",
-      "reject_reason": "low_geopolitical_relevance",
-      "relevance_score": 0.2
-    },
-    {
-      "title": "Incendio deja 6 muertos y 7 heridos en Brooklyn; investigan posible origen del fuego",
-      "url": "https://www.eluniversal.com.mx/mundo/incendio-deja-6-muertos-y-7-heridos-en-brooklyn-investigan-posible-origen-del-fuego/",
-      "source": "mx_el_universal_rss",
-      "lane": "CONTEXT",
-      "reject_reason": "low_geopolitical_relevance",
-      "relevance_score": 0.2
-    },
-    {
-      "title": "Farmacias Similares ofrece medicamentos de red fría y promociones para su compra",
-      "url": "https://www.eluniversal.com.mx/tendencias/farmacias-similares-ofrece-medicamentos-de-red-fria-y-promociones-para-su-compra/",
-      "source": "mx_el_universal_rss",
-      "lane": "CONTEXT",
-      "reject_reason": "low_geopolitical_relevance",
-      "relevance_score": 0.2
-    },
-    {
-      "title": "Milei equipara socialismo y fascismo en Cumbre Iberoamericana; protagoniza frío saludo con Pedro Sánchez",
-      "url": "https://www.eluniversal.com.mx/mundo/milei-equipara-socialismo-y-fascismo-en-cumbre-iberoamericana-protagoniza-frio-saludo-con-pedro-sanchez/",
-      "source": "mx_el_universal_rss",
-      "lane": "CONTEXT",
-      "reject_reason": "low_geopolitical_relevance",
-      "relevance_score": 0.2
-    },
-    {
-      "title": "UIF actúa sin importar quién sea: dice Reyes Colmenares sobre Amílcar Olán; colabora con instituciones bancarias y de seguridad",
-      "url": "https://www.eluniversal.com.mx/nacion/uif-actua-sin-importar-quien-sea-dice-reyes-colmenares-sobre-amilcar-olan-colabora-con-instituciones-bancarias-y-de-seguridad/",
       "source": "mx_el_universal_rss",
       "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",
@@ -850,14 +826,6 @@
       "relevance_score": 0.2
     },
     {
-      "title": "Contas espalham conteúdo falso sobre bets nas redes enquanto STF discute proibição",
-      "url": "https://apublica.org/2026/11/contas-espalham-conteudo-falso-sobre-bets-nas-redes-enquanto-stf-discute-proibicao/",
-      "source": "br_agencia_publica_rss",
-      "lane": "CONTEXT",
-      "reject_reason": "low_geopolitical_relevance",
-      "relevance_score": 0.2
-    },
-    {
       "title": "Fé VIP e Lagoinha: como plano de Valadão e Vorcaro inflama debate da imunidade de igrejas",
       "url": "https://apublica.org/2026/11/master-e-lagoinha-valadao-vorcaro-debate-igrejas/",
       "source": "br_agencia_publica_rss",
@@ -994,8 +962,8 @@
       "relevance_score": 0.2
     },
     {
-      "title": "昭和天皇が語った「下克上」 なぜ開戦を止められなかったのか - 毎日新聞",
-      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5HTzJtZ1BwSG42OUVkN1VXQ0x6Ykx0Nk9WRjExamtYbU9KTEFSRVJuVGZOT2FpWDVrZW5ZM3RzWmtoM0gtd1o2VngtUWliU1B2WFhnQlZ0QUhoUXNPQndfWHJXdnRmaVBQ?oc=5",
+      "title": "「みみずのように」死んだ人々への誓い 書に思い込める96歳 - 毎日新聞",
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9ELWxlOHdZOHc5OXREdjFiX1dzb2xpVFA1a29kNm1BRlBvTnhmZ0hTTnZpODZfaC0zQ0x2NWhnNjBYcHJzRU9WZHJBaS1yRk5wd3paakVHamtMRGJ2dkJkRUE4UUdkMXl1?oc=5",
       "source": "jp_mainichi_rss",
       "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",
@@ -1334,7 +1302,7 @@
       "url": "https://www.propublica.org/article/lake-champlain-algae-bloom-cyanobacteria-water-pollution-vermont",
       "source": "us_propublica_rss",
       "lane": "CONTEXT",
-      "reject_reason": "low_geopolitical_relevance",
+      "reject_reason": "entertainment_sports_noise",
       "relevance_score": 0.2
     },
     {
@@ -1474,128 +1442,168 @@
       "relevance_score": 0.2
     },
     {
-      "title": "‼️ У Києві мешканці перекрили дорогу на Академі через тривалі відключення світла, — місцеві ЗМІ Україна Online | Підписатись",
-      "url": "https://t.me/s/UaOnlii",
+      "title": "📝 Внезапная смерть баварского бунтаря 📝 Правящая немецкая коалиция и лично премьер Баварии Маркус Зёдер, кажется, лишились одной головной боли. 55-летний вице-п...",
+      "url": "https://t.me/rybar/84448",
+      "source": "Telegram_@rybar",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "📝 Пранк вышел из-под контроля 📝 о необходимости правового контроля за интернет-издевательствами Социальные сети нынче превращают провокации и унижение людей в с...",
+      "url": "https://t.me/rybar/84451",
+      "source": "Telegram_@rybar",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "📝 Кадры без высшего 📝 Тот, кто командовал взводом под огнём, мог бы руководить и отделом в администрации, но без диплома вуза до сих пор путь в программы подгот...",
+      "url": "https://t.me/rybar/84454",
+      "source": "Telegram_@rybar",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Римма Зюбіна озвучила \"Щоденник Катерини Савенко\": аудіокнига вже доступна на Абук Українська акторка прочитала 34 записи мешканки Маріуполя, зроблені під час р...",
+      "url": "https://t.me/UaOnlii/135787",
       "source": "Telegram_@UaOnlii",
       "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "‼️ Жодні акції чи перекриття доріг не допоможуть швидше повернути світло: енергетики цілодобово усувають пошкодження внаслідок російських атак та аварій, — ДТЕК...",
-      "url": "https://t.me/s/UaOnlii",
+      "title": "Закон один для всіх. Посади, звання та повноваження не можуть бути підставою для уникнення відповідальності, — Буданов про нове розслідування НАБУ \"Корупція та ...",
+      "url": "https://t.me/UaOnlii/135789",
       "source": "Telegram_@UaOnlii",
       "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "Швидже міняйте шини на зимові: водіїв каратимуть за літню гуму взимку, якщо вона стала причиною ДТП, — Telegraf 📍 В Україні немає закону, який зобов’язує змінюв...",
-      "url": "https://t.me/s/UaOnlii",
+      "title": "У найближчі місяці рф нападе на країни Балтії: Литва та Латвія розпочали термінові навчання з масової евакуації населення, — Delfi 📍 5 листопада в Литві та Латв...",
+      "url": "https://t.me/UaOnlii/135791",
       "source": "Telegram_@UaOnlii",
       "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "‼️ Софіївська Борщагівка у вогні: палають склади та торговельні приміщення, над районом здіймається величезне зарево після прильоту Україна Online | Підписатись",
-      "url": "https://t.me/s/UaOnlii",
+      "title": "‼️ Європейців закликають бути готовими прожити перші 72 години масштабної кризи без допомоги держави, — Єврокомісія 📍 Рекомендують мати триденний запас води, їж...",
+      "url": "https://t.me/UaOnlii/135792",
       "source": "Telegram_@UaOnlii",
       "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "‏ ️ونس، معاون رئیس دولت تروریستی آمریکا: برای اینکه مردم دوباره به ما رأی دهند، باید جنگ با ایران را پایان دهیم، در روابطمان با اسرائیل تجدیدنظر کنیم، بر هزینه‌...",
-      "url": "https://t.me/s/sepah_pasdaran",
+      "title": "‼️ Бізнесу дозволили збивати повітряні цілі навіть над чужими заводами та складами: Кабмін змінив правила роботи приватної ППО Долучатися до таких груп тепер зм...",
+      "url": "https://t.me/UaOnlii/135794",
+      "source": "Telegram_@UaOnlii",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‏ ️‏ تد لیو: لایحه‌ای تصویب خواهیم کرد تا جلوی جنگ با ایران را بگیریم سناتور دموکرات: ما لایحه‌ای را تصویب خواهیم کرد تا به تعرفه‌های احمقانه ترامپ که باعث افزا...",
+      "url": "https://t.me/sepah_pasdaran/215245",
       "source": "Telegram_@sepah_pasdaran",
       "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "‏ ️سقوط مرگبار بالگرد در میامی آمریکا به گفتهٔ مقامات محلی، سقوط یک بالگرد کوچک متعلق به یک شرکت عکاسی هوایی در آب، یک کشته و دو زخمی برجای گذاشته است. این سقوط...",
-      "url": "https://t.me/s/sepah_pasdaran",
+      "title": "‏ ️ خروج هواپیمای باری آمازون از باند فرودگاه میامی آمریکا ‏ 🔹 یک فروند هواپیمای باری بوئینگ ۷۶۷ متعلق به شرکت «آمازون پرایم ایر» از باند فرودگاه بین‌المللی می...",
+      "url": "https://t.me/sepah_pasdaran/215248",
       "source": "Telegram_@sepah_pasdaran",
       "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "‏ ️ حزب‌الله عراق: درپی دستور رهبر انقلاب، دست‌برماشه آمادهٔ پاسخ دندان‌شکن هستیم درپی صدور فرمان قاطع رهبر معظم انقلاب مبنی‌بر پاسخ دندان‌شکن به تجاوزات دشمن م...",
-      "url": "https://t.me/s/sepah_pasdaran",
+      "title": "‏ ️‏ تجمع سربازان ترامپ در مقابل ستاد مرکزی ارتش و سپاه روز گذشته و در میانه جنگ با دشمن، یک گروه معلوم الحال با اجتماع در مقابل ستاد مرکزی ارتش، به فحاشی به نی...",
+      "url": "https://t.me/sepah_pasdaran/215249",
       "source": "Telegram_@sepah_pasdaran",
       "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "‏ ️ حزب‌الله عراق: پایان حضور نحس ارتش اشغالگر در غرب آسیا حکمی قطعی است؛ یا با پای خود و با ذلت منطقه را ترک می‌کنید، یا با تابوت‌های افقی بازخواهید گشت تمام پ...",
-      "url": "https://t.me/s/sepah_pasdaran",
+      "title": "‏ ️ چرا گناهان ۲۰ سال پیش ناگهان در ذهن شما زنده می‌شوند؟ آیت‌الله جوادی آملی به این سوال پاسخ می‌دهند. ‎ ✅ @sepah_pasdaran",
+      "url": "https://t.me/sepah_pasdaran/215250",
       "source": "Telegram_@sepah_pasdaran",
       "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "‏ ️ حزب‌الله عراق: هرگونه حماقت، تجاوز یا ماجراجویی آمریکا و سگ هار آن در منطقه، با پاسخی مافوق تصور و فراتر از همه برآوردهای ارتش آمریکا مواجه خواهد شد جغرافیا...",
-      "url": "https://t.me/s/sepah_pasdaran",
+      "title": "‏ ️ببینید جنایات جدید از آل‌سعود در یمن! ‎ ✅ @sepah_pasdaran",
+      "url": "https://t.me/sepah_pasdaran/215251",
       "source": "Telegram_@sepah_pasdaran",
       "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "‏ ️فوربس: ترامپ امروز حدود ۷۳ میلیون دلار از ثروت خود را از دست داد. علت این کاهش، افت بی‌سابقه و شدید ارزش سهام شرکت ترامپ مدیا بود. ‎ ✅ @sepah_pasdaran",
-      "url": "https://t.me/s/sepah_pasdaran",
+      "title": "‏ ️ تصاویری از استفاده پلیس فرانسه از گاز اشک‌آور در اعتراضات ‎ ✅ @sepah_pasdaran",
+      "url": "https://t.me/sepah_pasdaran/215252",
       "source": "Telegram_@sepah_pasdaran",
       "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "‏ ️امروز در تاریخ به عنوان روز شکست بزرگ ترامپ ثبت خواهد شد. هنوز کار تمام نشده است... ویدیوی جدید لگویی درباره انتخابات میان‌دوره‌ای ‎ ✅ @sepah_pasdaran",
-      "url": "https://t.me/s/sepah_pasdaran",
+      "title": "‏ تهران در میانه فضاسازی رسانه‌ای درباره تبادل پیام با واشینگتن و فعالیت میانجی‌ها، خط قرمز خود را صریح اعلام کرد: تا زمانی که شروط هفت‌گانه جمهوری اسلامی ایران...",
+      "url": "https://t.me/sepah_pasdaran/215254",
       "source": "Telegram_@sepah_pasdaran",
       "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "بعد سيطرة الديمقراطيين.. وزير الأمن الداخلي: ترحيلات المهاجرين في أميركا مستمرة https://ara.tv/9c882",
-      "url": "https://t.me/s/AlArabiya",
+      "title": "‏ ️گزارش اطلاعاتی آمریکا: ایران در زمره قدرت‌های نوظهور فضایی قرار دارد ‏ 🔹 آژانس اطلاعات دفاعی آمریکا (DIA): با وجود آن‌که آمریکا تأسیسات کلیدی مرتبط با برنامه...",
+      "url": "https://t.me/sepah_pasdaran/215255",
+      "source": "Telegram_@sepah_pasdaran",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "بعد التدخل المروع.. تشريح جثة مهاجم تينيريفي يكشف سبب الوفاة https://ara.tv/cng33",
+      "url": "https://t.me/Alarabiya/169102",
       "source": "Telegram_@AlArabiya",
       "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "دعوات للمحاسبة تهدد هيغسيث وترامب يعلن دعمه الكامل https://ara.tv/3gg79",
-      "url": "https://t.me/s/AlArabiya",
+      "title": "حفيدة نعيمة الصغير تكشف سر تسميمها.. وعلاقتها بعادل إمام https://ara.tv/vin2k",
+      "url": "https://t.me/Alarabiya/169104",
       "source": "Telegram_@AlArabiya",
       "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "تشمل صنّاع المحتوى.. موريتانيا تفرض قيودا على إعلانات مواد التجميل https://ara.tv/yyaax",
-      "url": "https://t.me/s/AlArabiya",
+      "title": "%0Aترامب عن هيغسيث: تلقيت شكاوى عنه ولا أفهم السبب%0A https://ara.tv/3plqm",
+      "url": "https://t.me/Alarabiya/169106",
       "source": "Telegram_@AlArabiya",
       "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "المد الأزرق يكتسح الولايات.. الديمقراطيون يوسعون نفوذهم خارج الكونغرس https://ara.tv/wluog",
-      "url": "https://t.me/s/AlArabiya",
+      "title": "الشاي الأسود أم الأخضر؟ دراسة تكشف أيهما أفضل للقلب https://ara.tv/ep8zi",
+      "url": "https://t.me/Alarabiya/169108",
       "source": "Telegram_@AlArabiya",
       "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",
       "relevance_score": 0.2
     },
     {
-      "title": "بعد ثلاجات السوبرماركت.. قراصنة يعبثون بحرارة بنوك الدم في فرنسا https://ara.tv/ekd86",
-      "url": "https://t.me/s/AlArabiya",
+      "title": "ملك الأردن: لا تهاون في محاربة الإرهاب.. ولن نسمح بتهديد أمننا https://ara.tv/02slw",
+      "url": "https://t.me/Alarabiya/169110",
       "source": "Telegram_@AlArabiya",
       "lane": "CONTEXT",
       "reject_reason": "low_geopolitical_relevance",

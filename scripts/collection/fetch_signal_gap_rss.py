@@ -316,6 +316,138 @@ RSS_FEEDS = {
 
 # clean_html defined above with fallback
 
+_NOISE_MEDIA_URL_RE = re.compile(
+    r"(/|_|-)(avatar|emoji|favicon|icon|logo|banner|pixel|spacer|sprite|badge|button)s?(/|_|-|\.)"
+    r"|\b1x1\b|\.svg(\?|$)|^data:image/|giphy\.com|tenor\.com|9gag\.com"
+    r"|doubleclick\.net|googlesyndication\.com|googleadservices\.com|gravatar\.com|lh3\.googleusercontent\.com/J6_coFbogxhRI9iM864NL_liGXvsQp2AupsKei7z0cNNfDvGUmWUy20nuUhkREQyrpY4bEeIBuc",
+    re.IGNORECASE,
+)
+_IMG_TAG_RE = re.compile(r"<img\b[^>]*>", re.IGNORECASE)
+_VID_TAG_RE = re.compile(r"<(?:video|source|iframe)\b[^>]*>", re.IGNORECASE)
+_SRC_ATTR_RE = re.compile(r'\bsrc=["\']([^"\']+)["\']', re.IGNORECASE)
+_ALT_ATTR_RE = re.compile(r'\balt=["\']([^"\']+)["\']', re.IGNORECASE)
+_PDF_URL_RE = re.compile(r'https?://[^\s"\'<>]+\.pdf(?:\?[^\s"\'<>]*)?', re.IGNORECASE)
+
+
+def is_clean_rss_media_url(url: str) -> bool:
+    u = (url or "").strip()
+    if not u or len(u) < 10 or not u.startswith(("http://", "https://")):
+        return False
+    if _NOISE_MEDIA_URL_RE.search(u):
+        return False
+    return True
+
+
+def extract_entry_multimodal(entry, title: str, raw_summary: str) -> dict:
+    """
+    0-Byte 무다운로드 원칙에 따라 RSS entry의 <media:content>, <media:thumbnail>,
+    <enclosure>, 그리고 본문 HTML 내 <img>/<video>/PDF 링크와 alt_text를 추출한다.
+    아바타, 로고, 1x1 트래킹 픽셀, 이모지 아이콘은 즉시 배제한다.
+    """
+    media_urls: list[str] = []
+    video_urls: list[str] = []
+    pdf_urls: list[str] = []
+    alt_texts: list[str] = []
+
+    def _register_url(u: str, m_kind: str = "image", alt: str = "") -> None:
+        u_clean = (u or "").strip()
+        if not is_clean_rss_media_url(u_clean):
+            return
+        u_lower = u_clean.lower().split("?")[0]
+        if u_lower.endswith(".pdf") or m_kind == "pdf":
+            if u_clean not in pdf_urls:
+                pdf_urls.append(u_clean)
+        elif u_lower.endswith((".mp4", ".webm", ".mov", ".m3u8")) or m_kind == "video":
+            if u_clean not in video_urls:
+                video_urls.append(u_clean)
+        else:
+            if u_clean not in media_urls:
+                media_urls.append(u_clean)
+        alt_clean = clean_html(alt).strip()
+        if alt_clean and len(alt_clean) >= 4 and alt_clean not in alt_texts:
+            alt_texts.append(alt_clean[:240])
+
+    # 1. <media:content>
+    for mc in entry.get("media_content", []) or []:
+        if isinstance(mc, dict):
+            m_url = mc.get("url") or ""
+            m_type = str(mc.get("type") or mc.get("medium") or "").lower()
+            kind = "video" if "video" in m_type else ("pdf" if "pdf" in m_type else "image")
+            _register_url(m_url, kind, str(mc.get("title") or ""))
+
+    # 2. <media:thumbnail>
+    for mt in entry.get("media_thumbnail", []) or []:
+        if isinstance(mt, dict):
+            _register_url(mt.get("url") or "", "image", "")
+
+    # 3. <enclosure> 및 links
+    for enc in entry.get("enclosures", []) or []:
+        if isinstance(enc, dict):
+            e_url = enc.get("href") or enc.get("url") or ""
+            e_type = str(enc.get("type") or "").lower()
+            if "audio" in e_type:
+                continue
+            kind = "video" if "video" in e_type else ("pdf" if "pdf" in e_type else "image")
+            _register_url(e_url, kind, "")
+
+    for lnk in entry.get("links", []) or []:
+        if isinstance(lnk, dict):
+            l_href = str(lnk.get("href") or "").strip()
+            l_rel = str(lnk.get("rel") or "").lower()
+            l_type = str(lnk.get("type") or "").lower()
+            if l_href.lower().split("?")[0].endswith(".pdf") or "pdf" in l_type:
+                _register_url(l_href, "pdf", str(lnk.get("title") or "Official Document PDF"))
+            elif l_rel == "enclosure" and "audio" not in l_type:
+                kind = "video" if "video" in l_type else "image"
+                _register_url(l_href, kind, str(lnk.get("title") or ""))
+
+    # 4. Raw HTML (summary + content 블록) 스캔
+    content_html = ""
+    for c_item in entry.get("content", []) or []:
+        if isinstance(c_item, dict):
+            content_html += " " + str(c_item.get("value") or "")
+    combined_html = f"{raw_summary} {content_html}"
+
+    for img_tag in _IMG_TAG_RE.findall(combined_html):
+        src_m = _SRC_ATTR_RE.search(img_tag)
+        alt_m = _ALT_ATTR_RE.search(img_tag)
+        if src_m:
+            _register_url(src_m.group(1), "image", alt_m.group(1) if alt_m else "")
+
+    for vid_tag in _VID_TAG_RE.findall(combined_html):
+        src_m = _SRC_ATTR_RE.search(vid_tag)
+        if src_m:
+            _register_url(src_m.group(1), "video", "")
+
+    for pdf_u in _PDF_URL_RE.findall(combined_html):
+        _register_url(pdf_u, "pdf", "Official Document PDF")
+
+    primary_media = media_urls[0] if media_urls else ""
+    primary_video = video_urls[0] if video_urls else ""
+    primary_pdf = pdf_urls[0] if pdf_urls else ""
+    primary_alt = " | ".join(alt_texts)[:240]
+    has_media = bool(primary_media or primary_video or primary_pdf)
+
+    # 전처리 브릿지(bridge_preprocess_lanes.py)가 Summary 컬럼에서 멀티모달 태그를
+    # 유실 없이 파싱할 수 있도록 정제된 요약문 끝에 보존용 멀티모달 태그 스니펫 부착
+    preserved_tags: list[str] = []
+    if primary_media:
+        safe_alt = (alt_texts[0] if alt_texts else clean_html(title)[:120]).replace('"', "'")
+        preserved_tags.append(f'<img src="{primary_media}" alt="{safe_alt}">')
+    if primary_video:
+        preserved_tags.append(f'<video src="{primary_video}"></video>')
+    if primary_pdf:
+        preserved_tags.append(primary_pdf)
+
+    return {
+        "media_url": primary_media,
+        "video_url": primary_video,
+        "pdf_url": primary_pdf,
+        "alt_text": primary_alt,
+        "has_media": has_media,
+        "preserved_snippet": " ".join(preserved_tags),
+    }
+
 
 def fetch_rss_data():
     print("📡 글로벌 신호 괴리율(Signal Gap) RSS 데이터 수집 시작 (Packet C 레지스트리 연동)...")
@@ -384,11 +516,21 @@ def fetch_rss_data():
                         })
                         continue
 
+                    feed_media_count = 0
                     for entry in entries:
                         pub_date = entry.get('published', '')
                         link = entry.get('link', '')
                         title = entry.get('title', '')
-                        summary = clean_html(entry.get('summary', ''))
+                        raw_summary = entry.get('summary', '')
+                        cleaned_summary = clean_html(raw_summary)[:500]
+                        mm = extract_entry_multimodal(entry, title, raw_summary)
+                        if mm["has_media"]:
+                            feed_media_count += 1
+                        summary_with_media = (
+                            f"{cleaned_summary} {mm['preserved_snippet']}".strip()
+                            if mm["preserved_snippet"]
+                            else cleaned_summary
+                        )
                         content_hash = hashlib.sha256(
                             f"{source_id}|{link}|{title}".encode("utf-8", errors="ignore")
                         ).hexdigest()[:16]
@@ -401,8 +543,13 @@ def fetch_rss_data():
                             'Packet': packet,
                             'Feed_URL': url,
                             'Title': title,
-                            'Summary': summary,
+                            'Summary': summary_with_media,
                             'Link': link,
+                            'Media_URL': mm["media_url"],
+                            'Video_URL': mm["video_url"],
+                            'PDF_URL': mm["pdf_url"],
+                            'Alt_Text': mm["alt_text"],
+                            'Has_Media': mm["has_media"],
                             'Published_Date': pub_date,
                             'Scraped_At': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                             'Observed_At_UTC': observed_at_utc,
@@ -421,9 +568,10 @@ def fetch_rss_data():
                         "http_status": response.status_code,
                         "parse_status": "SUCCESS",
                         "items_collected": len(entries),
+                        "media_items_collected": feed_media_count,
                         "license_access_note": license_note,
                     })
-                    print(f"     ✓ {len(entries)}개 기사 수집 성공")
+                    print(f"     ✓ {len(entries)}개 기사 수집 성공 (멀티모달 첨부: {feed_media_count}건)")
 
                 except requests.exceptions.Timeout as e:
                     print(f"     ❌ 타임아웃 ({url}): {e}")
