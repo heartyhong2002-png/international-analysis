@@ -100,10 +100,26 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | sync / trio-platform-sync | `AGENT_SYNC.md`, `assets/`, GitHub, Notion | 전체 파이프라인 아키텍처 다이어그램 및 3대 플랫폼(MD·GitHub·Notion) 일괄 동기화 | 2026-11-02 |
 | done | ANTIGRAVITY | orchestration / airflow-docker-setup | `docker-compose.yaml`, `dags/early_warning_pipeline_dag.py`, `docs/current/AIRFLOW_SETUP_GUIDE.md`, `docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md` | Docker 기반 Apache Airflow 2.10.2 표준 컨테이너 환경 구축, 4-Lane 병렬 수집 DAG 시운전 검증 및 포트폴리오 엔지니어링 서사 반영 | 2026-11-02 |
 | done | ANTIGRAVITY | validation / tev1-role-clarification | `scripts/validation/backtest_tev1.py`, `scripts/automation/preprocess_signals.py`, `docs/current/VALIDATION_PLAN.md` | 번역·분석 모델(Qwen/EXAONE/Llama)과 독립 검증 모델(tev1)의 엄격한 역할 분리 및 다국어 5단계 전처리 필수화 확립 | 2026-11-02 |
+| done | ANTIGRAVITY | validation / multi-model-suite-setup | `Ollama`, `docs/current/VALIDATION_PLAN.md`, `docs/current/LLM_SYSTEM_SUMMARY.md` | tev1 보완 다자간 검증단 구축: DeepSeek-R1:7b(추론·비판) 및 Gemma2:9b(사실성 감사) 다운로드 및 6대 모델 역할 체계 완결 | 2026-11-05 |
 | done | ANTIGRAVITY | data-collection / latin-america-expansion | `scripts/collection/*`, `scripts/automation/*`, `config/source_registry/*`, `docs/current/*` | 중남미 대륙 감시 강화: 브라질 대선·룰라정부·원자재(원유/대두/리튬) 및 파나마 운하 병목 센서 구축 | 2026-10-29 |
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-05 [ANTIGRAVITY / 다자간 독립 검증단 모델 확충: DeepSeek-R1 & Gemma 2 구축]
+- 한 일:
+  1. 단일 심판(`tev1`) 한계 극복을 위한 검증단 모델 확충:
+     - `deepseek-r1:7b` (4.7GB): CoT 기반 비판적 반박(Adversarial Critic) 및 과잉 경보/논리적 비약 방어 모델 설치 완료.
+     - `gemma2:9b` (5.4GB): 구글의 엄격한 사실성(Factuality/Faithfulness) 기준 원문 왜곡 검증 모델 설치 완료.
+  2. 완성된 6대 오픈소스 LLM 분업 체계 확립:
+     - 분석·생성 3총사: `qwen2.5:7b` (다국어 팩트 추출) ➔ `exaone3.5:7.8b` (한국어 전략 브리핑) & `llama3.1:8b` (글로벌 영문 브리핑)
+     - 독립 검증단 3심제 + 산식: `tev1:latest` (의사결정 주심) + `deepseek-r1:7b` (비판관) + `gemma2:9b` (사실성 감사관) + 결정론적 산식 (수학적 가드레일)
+  3. 16GB RAM 환경 보호 원칙: 검증 단계에서도 모델별 순차 호출(`keep_alive="2s"`)을 엄수하여 메모리 점유율을 상시 5GB 안팎으로 유지.
+  4. 트리오 동기화 프로토콜(MD 문서 최신화 + Notion 전체 동기화 + GitHub 원격 푸시) 실행.
+- 바꾼 파일: `AGENT_SYNC.md`, Ollama 모델 레지스트리, Notion 프로젝트 허브.
+- 확인한 것: Ollama에 6개 모델 정상 등록 확인, Notion 3대 영역(작업 보드, 문서 보관소, 조기경보 리포트) 동기화 완료, GitHub 원격 푸시 완료.
+- 다음 작업: 5대 감시축 10건 동결 사례 대상 [다자간 백테스트 엔진(Multi-Model Backtest)] 연동 및 비교 감사 리포트 산출.
+- 주의할 점: 다중 모델 구동 시 반드시 순차 호출 원칙을 지키며 동시 상주를 금지함.
 
 2026-11-05 [ANTIGRAVITY / 블루스카이(Bluesky) 공식 수집기 신설 & 텔레그램 경량화 8대 수집기 체제 완결]
 - 한 일:
