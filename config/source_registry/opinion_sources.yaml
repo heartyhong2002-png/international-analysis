@@ -54,19 +54,20 @@ sources:
     relationship_role: other
     required: false
     fallback: []
-    license_access_note: "Public Bluesky API/search; store post URLs; no private accounts."
+    license_access_note: "Public Bluesky AT Protocol searchPosts API; store post URLs + hash + receipt; no private accounts."
     robots_note: "n/a-api — public AT Protocol search"
-    url: https://bsky.app/
+    url: https://api.bsky.app/xrpc/app.bsky.feed.searchPosts
     country: MULTI
     language: multi
     access_method: api
     enabled: true
     pipeline_default: true
-    collector: scripts/collection/fetch_local_opinions.py
+    collector: scripts/collection/fetch_bluesky_public.py
+    issue_tags: [Middle_East_Energy, Taiwan_Strait, US_Export_Control, US_Trade_Tariff, US_Sanctions_OFAC]
     cadence: daily
     priority: medium
     lane: OPINION
-    packet: legacy
+    packet: A
 
   - source_id: google_news_local_rss
     source_type: local_media
@@ -102,7 +103,7 @@ sources:
     access_method: html
     enabled: true
     pipeline_default: true
-    collector: scripts/collection/fetch_local_opinions.py
+    collector: scripts/collection/fetch_telegram_public.py
     issue_tags: [Ukraine_War, Israel_Palestine, Iran_Nuclear, Middle_East_Energy]
     cadence: daily
     priority: medium

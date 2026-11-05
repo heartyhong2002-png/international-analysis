@@ -34,7 +34,7 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 DATA_DIR = ROOT / "data"
 STATUS_FILE = DATA_DIR / "phone_collector_status.json"
 
-# 스마트폰 엣지 노드에서 안전하게 가동되는 경량 수집기 6종
+# 스마트폰 엣지 노드에서 안전하게 가동되는 경량 수집기 8종
 EDGE_COLLECTORS = [
     {
         "id": "maritime_chokepoints",
@@ -67,8 +67,20 @@ EDGE_COLLECTORS = [
         "timeout": 120,
     },
     {
+        "id": "bluesky_public",
+        "name": "블루스카이(Bluesky AT Protocol) 8대 지정학·공급망 신호",
+        "script": "scripts/collection/fetch_bluesky_public.py",
+        "timeout": 60,
+    },
+    {
+        "id": "telegram_osint",
+        "name": "텔레그램 공개 채널 5대 군사·분쟁 OSINT",
+        "script": "scripts/collection/fetch_telegram_public.py",
+        "timeout": 60,
+    },
+    {
         "id": "local_opinions",
-        "name": "로컬 포럼 및 대안 여론 센서",
+        "name": "로컬 포럼 및 대안 여론 센서 (PTT/핀충/로컬뉴스)",
         "script": "scripts/collection/fetch_local_opinions.py",
         "timeout": 60,
     },

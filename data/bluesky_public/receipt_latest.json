@@ -1,0 +1,61 @@
+{
+  "collector": "scripts/collection/fetch_bluesky_public.py",
+  "source_id": "bluesky_public_search",
+  "signal_class": "online_information_environment_signal",
+  "observed_at": "2026-11-05T03:38:40.061236+00:00",
+  "total_unique_posts": 33,
+  "queries_executed": 8,
+  "alert_level_set": false,
+  "verification_state_set": false,
+  "query_receipts": [
+    {
+      "query": "Strait of Hormuz oil tanker",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_fetched": 5
+    },
+    {
+      "query": "Red Sea Houthi shipping",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_fetched": 5
+    },
+    {
+      "query": "Taiwan Strait semiconductor TSMC",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_fetched": 5
+    },
+    {
+      "query": "Panama Canal shipping drought",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_fetched": 5
+    },
+    {
+      "query": "Malacca Strait shipping tanker",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_fetched": 3
+    },
+    {
+      "query": "US export control tariff China semiconductor",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_fetched": 1
+    },
+    {
+      "query": "OFAC sanctions Russia Iran oil",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_fetched": 5
+    },
+    {
+      "query": "rare earths critical minerals supply chain",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_fetched": 5
+    }
+  ],
+  "license_access_note": "Public Bluesky AT Protocol searchPosts API (no auth required). Online information-environment signal only, never national opinion or ground truth."
+}

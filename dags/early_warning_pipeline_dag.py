@@ -76,6 +76,11 @@ with DAG(
         bash_command="python /opt/airflow/scripts/collection/fetch_whitehouse_official.py",
     )
 
+    collect_federal_register = BashOperator(
+        task_id="collect_federal_register",
+        bash_command="python /opt/airflow/scripts/collection/fetch_federal_register.py",
+    )
+
     # 2. CONTEXT LANE: 싱크탱크 & 3자 OSINT
     collect_expert_sources = BashOperator(
         task_id="collect_expert_sources",
@@ -87,10 +92,20 @@ with DAG(
         bash_command="python /opt/airflow/scripts/collection/fetch_signal_gap_rss.py",
     )
 
-    # 3. OPINION LANE: 로컬 포럼 & 검색 트렌드
+    # 3. OPINION LANE: 로컬 포럼, 블루스카이, 텔레그램 & 검색 트렌드
     collect_local_opinions = BashOperator(
         task_id="collect_local_opinions",
         bash_command="python /opt/airflow/scripts/collection/fetch_local_opinions.py",
+    )
+
+    collect_bluesky = BashOperator(
+        task_id="collect_bluesky_public",
+        bash_command="python /opt/airflow/scripts/collection/fetch_bluesky_public.py",
+    )
+
+    collect_telegram = BashOperator(
+        task_id="collect_telegram_osint",
+        bash_command="python /opt/airflow/scripts/collection/fetch_telegram_public.py",
     )
 
     collect_google_trends = BashOperator(
@@ -177,14 +192,17 @@ with DAG(
     # 의존성 그래프(DAG Dependency) 정의
     # ==========================================================================
     # 0. 시작 -> 엣지 수집 노드(갤럭시 S20) 최신 데이터 자동 흡수(Pull)
-    # 1. 10개 수집기 동시 병렬 실행
+    # 1. 13개 수집기 동시 병렬 실행
     collectors = [
         collect_chokepoints,
         collect_gov_announcements,
         collect_whitehouse,
+        collect_federal_register,
         collect_expert_sources,
         collect_signal_gap_rss,
         collect_local_opinions,
+        collect_bluesky,
+        collect_telegram,
         collect_google_trends,
         collect_issue_data,
         collect_financial_proxy,
