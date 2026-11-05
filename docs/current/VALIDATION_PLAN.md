@@ -219,4 +219,93 @@
 | **수학적 가드레일** | `calculate_alert_assessment()` | 결정론적 산식 | 수집 출처 수, 신호 괴리도(Signal Gap), 합의도(Consensus)를 토대로 LLM의 자의적 판단을 방어하는 수학적 경계선 제공 |
 
 ### 10.3 5대 감시축 10건 동결 벤치마크 백테스트 체계
-과거 및 2026년 시점의 5대 핵심 감시축(러-우-유럽, 동아시아 안보·반도체, 중동 호르무즈·홍해 해상 물류, 미중 전략 무역·수출통제, 한미/동맹 안보) 10개 대표 사례를 동결(`scripts/validation/backtest_tev1.py`)하여, 검증단 모델들의 판정 일치도와 불일치(Discrepancy)를 지속적으로 정밀 감사합니다.
+과거 및 2026년 시점의 5대 핵심 감시축(러-우-유럽, 동아시아 안보·반도체, 중동 호르무즈·홍해 해상 물류, 미중 전략 무역·수출통제, 한미/동맹 안보) 10개 대표 사례를 동결(`scripts/validation/backtest_tev1.py`)하여, 검증단 모델들의 판정 일치도와 불일치(Discrepancy)를 지속적으로 정밀 감사합니다. tev1 10건 산식 대조는 **산식↔모델 불일치 감사**이며 Human acceptance·공식 성능이 아니다.
+
+### 10.4 다자간 검증단 판정 기준 (2026-11-05 QA · 외부 자문 합의)
+
+외부 AI 자문(Grok/ChatGPT/Gemini/DeepSeek/Kimi/Claude)을 대조한 뒤 QA가 채택한 운영 기준이다. **3모델 다수결로 Alert Level을 확정하지 않는다.** 최종 권위는 `calculate_alert_assessment` 가드레일과 사람 5항목 검수다.
+
+#### 10.4.1 축 분리 (직교 감사)
+
+| 모델 | 담당 축 | 허용 출력 | 사람 검수 대응 열 | 입력에 넣지 말 것 |
+|---|---|---|---|---|
+| `tev1:latest` | 경보 단계 | `NORMAL` / `WATCH` / `WARNING` / `CRITICAL` / `INSUFFICIENT_EVIDENCE` | `reviewer_decision`(단계 수용 여부) | **산식 Alert 단계**, 타 모델 출력, 사람 라벨, cutoff 이후 지식 |
+| `gemma2:9b` | 근거 충실도 (claim 단위) | `supported` / `partial` / `unsupported` / `unverifiable_source_missing` | `evidence_quote_supported` | 경보 단계, 해석 수위, 타 모델·사람 라벨 |
+| `deepseek-r1:7b` | 해석·비약 | `supported` / `overstated` / `insufficient` (+ `leap_type`) | `interpretation_assessment` | 근거 진위 재판정, 타 모델·사람 라벨. **발령 단계·경보 문장은 입력 가능** |
+
+- 같은 5단계 라벨로 3자 투표하지 않는다.
+- Gemma는 claim별 판정 후 시스템이 `worst(claims)`로 롤업한다. 모델이 종합 등급을 내지 않는다.
+- Gemma가 `unsupported`이면 DeepSeek는 호출·로그는 남기되 집계 시 `INVALIDATED_BY_UNSUPPORTED_FACT`로 표시한다(가짜 사실 위 논리 평가 무의미).
+- 스키마 위반·파싱 실패는 유효 판정이 아니다. 재시도 1회 후 실패 시 사람 검수 큐로 보낸다.
+
+#### 10.4.2 최소 출력 스키마 (필드명 고정)
+
+공통: `alert_id`, `schema_version`, `model_id`, `input_snapshot_id` (선택: `leak_suspect` — 확정이 아니라 트리거 신호).
+
+```json
+{"alert_id":"A-…","schema_version":"v1","stage_verdict":"WARNING","basis_fields":["source_count","verification_state"],"note":"…"}
+```
+```json
+{"alert_id":"A-…","schema_version":"v1","claims":[{"id":"E-01","fact_verdict":"partial","matched_span":"…","gap_type":"modality_mismatch"}]}
+```
+```json
+{"alert_id":"A-…","schema_version":"v1","inference_verdict":"overstated","leap_type":"causal_leap","cited_evidence_ids":["E-01"],"note":"…"}
+```
+
+#### 10.4.3 사람 검수 Stage 1 / Stage 2 (블라인드)
+
+1. `data_cutoff` 이전 원문·출처·산식 단계·경보 요약만 제공. **모델 3종 출력 마스킹.**
+2. 사람 5항목 작성 후 `stage1_locked=true`로 보존. 이후 덮어쓰지 않는다.
+3. 잠금 확인 뒤에만 모델 출력을 공개(Stage 2). 번복은 `human_final_*` 별도 필드 + 변경 사유.
+4. 모델은 사람 라벨을 입력으로 받지 않는다. 모델 간에도 서로의 출력을 공유하지 않는다.
+5. 2인 검수가 가능하면 검수자 간 블라인드. 1인이면 “모델 미열람”만 강제하고 `single_reviewer_provisional`로 표시한다.
+
+#### 10.4.4 사람 검수 강제 트리거
+
+다음 중 하나면 `needs_human_review=true` (불일치는 오류 확정이 아니라 감사 지정이다).
+
+| ID | 조건 | 비고 |
+|---|---|---|
+| T1 | tev1 `stage_verdict` ↔ 산식 Alert 단계 불일치 | tev1은 산식 단계를 보지 않은 독립 판정이어야 함 |
+| T2 | Gemma `worst` ∈ {unsupported, unverifiable_source_missing} | 단계와 무관(환각 무관용) |
+| T3 | (산식 또는 tev1) ≥ WARNING 이고 Gemma = partial | |
+| T4 | (산식 또는 tev1) ≥ WARNING 이고 DeepSeek ∈ {overstated, insufficient} | INVALIDATED면 T4만으로 확정하지 않음 |
+| T5 | Gemma ≠ supported 이고 DeepSeek ≠ supported (동시) | 이중 결함 |
+| T6 | tev1 = INSUFFICIENT_EVIDENCE | |
+| T7 | 임의 모델 `leak_suspect=true` | 사람 확정 전제 |
+| T8 | All-pass 중 무작위 ≥15% 또는 배치당 최소 표본 | `RANDOM_AUDIT_SAMPLE`. Warning·확인 필요는 기존 §4대로 강제 포함 |
+
+- `NORMAL`↔`WATCH`만 불일치이고 Gemma·DeepSeek가 모두 supported이면 **우선순위만 낮춤**. 로그는 남긴다.
+- 3모델이 모두 “괜찮다”여도 **자동 accept 금지**. 모두 “나쁘다”여도 **자동 reject 금지**.
+
+#### 10.4.5 의미 있는 불일치 vs 노이즈 (요약)
+
+| tev1 | Gemma | DeepSeek | 취급 |
+|---|---|---|---|
+| WARNING+ | unsupported | overstated | 최우선 감사 |
+| WARNING+ | unsupported | supported | 의미 있음 (근거 붕괴) |
+| WARNING+ | supported | overstated | 의미 있음 (비약) |
+| WARNING+ | partial | supported | 경계 — 사람 판단 |
+| WARNING+ | supported | supported | 정상 후보 (자동 accept 금지, T8 표본 가능) |
+| NORMAL/WATCH | unsupported | * | 의미 있음 (과소·근거 문제) |
+| INSUFFICIENT_EVIDENCE | * | * | 의미 있음 |
+| NORMAL | supported | supported | 노이즈 후보 (로그 유지, T8만) |
+
+#### 10.4.6 보고 KPI (만장일치율 제외)
+
+분모는 **사람 검수 완료 경보 수**(TEST fixture·tev1 시운전 단독 행 제외).
+
+- 산식↔tev1 단계 불일치 건수 및 그중 accept/revise/reject 비율
+- 근거 미지원·unverifiable 건수 및 사람 판정 비율
+- 해석 과장·insufficient 건수 및 사람 판정 비율
+- Stage1→Stage2 판정 번복률
+- 스키마/실행 실패 건수, 미검수 건수, T8 표본 거짓음성 발견 건수
+
+금지: “검증단 일치율=정확도”, “환각 0%”, “NIST 준수 증명”, tev1 10건을 Human acceptance로 보고.
+
+#### 10.4.7 구현 경계
+
+- QA 소유: 본 절, 사람 검수 열, `validation_backtest_log` / `false_alarm_missed_signal_log` 표현, 벤치마크 **해석 수위**.
+- LLM 세션: 모델 라우팅·프롬프트·호출. **산식·임계값 변경 금지.**
+- DB 세션: 완료 판정만 `alert_validation_audit`에 append-only.
+- 완료 조건 인터페이스: `reviewer_decision` ∈ {accept, revise, reject} 이고 5항목·`reviewed_at`·`stage1_locked`가 채워진 행만 DB 적재 대상.

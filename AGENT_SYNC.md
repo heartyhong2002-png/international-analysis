@@ -58,6 +58,7 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
+| done | Cursor / Validation·QA | validation / multi-judge-criteria | `docs/current/VALIDATION_PLAN.md` (§10.4), `docs/evidence/early_warning_backtest_report.md`, `AGENT_SYNC.md` | 검증단(tev1/Gemma/DeepSeek) 직교 판정·블라인드 Stage1/2·트리거·KPI 문서화. 외부 자문 합의 반영. Trio-Sync | 2026-11-05 |
 | done | ANTIGRAVITY | collection / bluesky-telegram-integration | `scripts/collection/fetch_bluesky_public.py`, `scripts/collection/fetch_telegram_public.py`, `scripts/collection/run_phone_collector.py`, `dags/early_warning_pipeline_dag.py` | 블루스카이(AT Protocol 8대 쿼리) 공식 수집기 신설, 텔레그램 OSINT 경량화 및 S20 울트라 8대 수집기 체제 확장 완료 | 2026-11-05 |
 | done | ANTIGRAVITY | preprocessing / high-purity-engine | `scripts/automation/preprocess_signals.py`, `scripts/pipeline/bridge_preprocess_lanes.py`, `data/automation/*high_purity*` | 고순도 모드(`--purity-mode high`) + 신규 Bluesky·Telegram 8대 수집 체제(451건) 브릿지 연동 완료 (Standard 242건 / High-Purity 29개 핵심 클러스터 압축) | 2026-11-05 |
 | done | ANTIGRAVITY | preprocessing / signal-filtering | `scripts/automation/preprocess_signals.py`, `scripts/pipeline/bridge_preprocess_lanes.py`, `data/automation/*` | 4단계 다국어 전처리 고도화(7개국어+CJK 노이즈·외교의전 배제, 정규화, 중복군집화, 5대해협·한국6대공급망 태깅) 및 4대 레인 브릿지 구현 완료 | 2026-11-03 |
@@ -105,6 +106,13 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-05 [Cursor / Validation·QA · Trio-Sync]
+- 한 일: 외부 AI 자문(Grok/ChatGPT/Gemini/DeepSeek/Kimi/Claude) 대조 후 다자간 검증 **판정 기준**을 `VALIDATION_PLAN` §10.4로 고정. 증거 리포트 과장(75%·NIST 준수) 재완화. MD→Notion→GitHub 동기화.
+- 바꾼 파일: `docs/current/VALIDATION_PLAN.md`, `docs/evidence/early_warning_backtest_report.md`, `AGENT_SYNC.md`.
+- 확인한 것: 축 분리(tev1 단계·Gemma claim 근거·DeepSeek 해석), tev1은 산식 단계 미열람, Stage1 블라인드 잠금, 자동 accept 금지, T1–T8 트리거, 만장일치율 KPI 제외. `validation_backtest_log` 사람 완료 행은 여전히 0에 가깝다.
+- 다음 작업: LLM 세션이 §10.4 스키마·프롬프트 격리로 호출 구현(산식 변경 금지). QA는 동결 2~3건 선등록 + Stage1 표본. DB는 완료 판정만 append-only.
+- 주의할 점: 3모델 다수결≠정답. tev1 10건≠Human acceptance. `SESSION_PROMPTS.md`·수집기·산식·DB DDL·대시보드 미수정. `data/tev1_backtest_results.json` 작업 트리 변경은 본 커밋에 넣지 않음.
 
 2026-11-05 [ANTIGRAVITY / 다자간 독립 검증단 모델 확충: DeepSeek-R1 & Gemma 2 구축]
 - 한 일:
