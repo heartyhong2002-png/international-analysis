@@ -58,6 +58,7 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
+| done | ANTIGRAVITY | collection / bluesky-telegram-integration | `scripts/collection/fetch_bluesky_public.py`, `scripts/collection/fetch_telegram_public.py`, `scripts/collection/run_phone_collector.py`, `dags/early_warning_pipeline_dag.py` | 블루스카이(AT Protocol 8대 쿼리) 공식 수집기 신설, 텔레그램 OSINT 경량화 및 S20 울트라 8대 수집기 체제 확장 완료 | 2026-11-05 |
 | done | ANTIGRAVITY | preprocessing / high-purity-engine | `scripts/automation/preprocess_signals.py`, `scripts/pipeline/bridge_preprocess_lanes.py`, `data/automation/*high_purity*` | 노이즈 극소화 고순도 모드(`--purity-mode high`) 구현: 회고·도서 배제, 하드 엔티티 관문, Tier-1/Tier-2 교차검증 필터링 구축 및 실데이터 19개 핵심 클러스터 압축 검증 완료 | 2026-11-05 |
 | done | ANTIGRAVITY | preprocessing / signal-filtering | `scripts/automation/preprocess_signals.py`, `scripts/pipeline/bridge_preprocess_lanes.py`, `data/automation/*` | 4단계 다국어 전처리 고도화(7개국어+CJK 노이즈·외교의전 배제, 정규화, 중복군집화, 5대해협·한국6대공급망 태깅) 및 4대 레인 브릿지 구현 완료 | 2026-11-03 |
 | done | Cursor Agent / collection | sync / trio-platform + edge-verify | `AGENT_SYNC.md`, Notion hub/board/docs/report, GitHub `cursor/actions-light-collection` | 폰 `--sync-git` 원격 검증(0a45c12·6/6·gov path) 후 Trio-Sync(MD→Notion→GitHub) | 2026-11-03 |
@@ -103,6 +104,25 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-05 [ANTIGRAVITY / 블루스카이(Bluesky) 공식 수집기 신설 & 텔레그램 경량화 8대 수집기 체제 완결]
+- 한 일:
+  1. 블루스카이(Bluesky AT Protocol) 공식 공개 수집기 신설 (`scripts/collection/fetch_bluesky_public.py`):
+     - API 키나 로그인 인증이 불필요한 공식 오픈 XRPC 엔드포인트(`https://api.bsky.app/xrpc/app.bsky.feed.searchPosts`) 연동.
+     - 8대 전략 감시 쿼리(호르무즈, 바브엘만데브, 대만해협, 말라카, 파나마, 대중수출통제, OFAC제재, 핵심광물) 구성.
+     - 시운전 결과: 고유 지정학/물류 포스트 33건 즉시 수집, `data/bluesky_public/` 내 JSON/CSV 및 영수증 자동 저장.
+     - `signal_class: online_information_environment_signal` 및 `verification_state: UNVERIFIED` 가드레일 준수.
+  2. 텔레그램 공개 웹 프리뷰 OSINT 수집기 경량화 리팩토링 (`scripts/collection/fetch_telegram_public.py`):
+     - 스마트폰(Termux) 및 엣지 노드 호환을 위해 무거운 `pandas` 의존성을 제거하고 순수 `requests` + `bs4` + 표준 `csv` 구조로 전면 개편.
+     - 5대 핵심 공개 채널(`@rybar`, `@UaOnlii`, `@sepah_pasdaran`, `@AlArabiya`, `@army21ye`) 총 40건 수집 및 영수증 발행 완료.
+  3. 전체 파이프라인 및 엣지 오케스트레이션 확장:
+     - 갤럭시 S20 울트라 엣지 러너(`scripts/collection/run_phone_collector.py`): 기존 6종에서 블루스카이·텔레그램이 추가된 8종 경량 수집기 체제로 확장.
+     - Airflow DAG(`dags/early_warning_pipeline_dag.py`): 13개 병렬 수집기 체제(`collect_bluesky`, `collect_telegram`, `collect_federal_register` 포함)로 정렬.
+     - 통합 파이프라인(`scripts/run_pipeline.py`) 및 소스 레지스트리(`config/source_registry/opinion_sources.yaml`) 연동 완료.
+- 바꾼 파일: `scripts/collection/fetch_bluesky_public.py`, `scripts/collection/fetch_telegram_public.py`, `scripts/collection/run_phone_collector.py`, `dags/early_warning_pipeline_dag.py`, `scripts/run_pipeline.py`, `config/source_registry/opinion_sources.yaml`, `AGENT_SYNC.md`.
+- 확인한 것: 블루스카이 33건, 텔레그램 40건 정상 수집 및 영수증 확인, DAG 및 전체 파이프라인 py_compile 통과.
+- 다음 작업: S20 울트라 실기기에서 `git pull` 후 8종 수집기 자동 실행 및 Git 푸시 확인.
+- 주의할 점: SNS 데이터는 국민 여론이나 단독 Alert Level 격상용으로 사용하지 않고 정보환경 신호로만 기록.
 
 2026-11-05 [ANTIGRAVITY / preprocessing · 고순도 모드(High-Purity Mode) 파이프라인 구축 및 검증]
 - 한 일:
