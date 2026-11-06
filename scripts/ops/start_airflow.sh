@@ -9,10 +9,8 @@ cd "$ROOT"
 echo "==> airflow preflight"
 "$ROOT/scripts/ops/airflow_preflight.sh" "$ROOT/.env.airflow"
 
-if ! docker network inspect intl_analysis_net >/dev/null 2>&1; then
-  echo "==> creating Docker network intl_analysis_net (MySQL stack also creates this)"
-  docker network create intl_analysis_net
-fi
+echo "==> shared Docker network"
+"$ROOT/scripts/ops/ensure_intl_network.sh" intl_analysis_net
 
 echo "==> airflow-init"
 docker compose --env-file .env.airflow up airflow-preflight airflow-init

@@ -40,8 +40,8 @@ cp .env.airflow.example .env.airflow
 > (3) `airflow-preflight` 서비스가 placeholder/빈 값이면 exit 1 — webserver/scheduler는 preflight 성공 전에는 기동하지 않습니다.
 > MySQL 스택만 쓸 때는 `docker-compose.mysql.yml` + `.env` 를 쓰며 `.env.airflow`가 필요 없습니다.
 >
-> **Airflow ↔ MySQL:** 호스트 포트(`127.0.0.1:3306`)가 아니라 Docker 네트워크 `intl_analysis_net` 으로 연결합니다.
-> MySQL을 먼저 올리거나 `docker network create intl_analysis_net` 후 Airflow를 시작하세요.
+> **Airflow ↔ MySQL:** 호스트 포트(`127.0.0.1:3306`)가 아니라 **external** Docker 네트워크 `intl_analysis_net` 으로 연결합니다.
+> 두 Compose 파일 모두 `external: true` — `./scripts/ops/ensure_intl_network.sh` (또는 start_mysql/start_airflow)가 없으면 생성합니다.
 > `MYSQL_HOST=mysql`. `host.docker.internal` / `0.0.0.0` 공개는 쓰지 않습니다.
 
 Fernet 키 생성 예시:
@@ -51,9 +51,10 @@ python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().d
 
 ### 1) 권장: 원클릭 기동 (프리플라이트 + 네트워크 + compose)
 ```powershell
-# (권장) MySQL 먼저 — intl_analysis_net 생성
-docker compose -f docker-compose.mysql.yml --env-file .env up -d
+# MySQL (네트워크 create-if-missing + compose)
+./scripts/ops/start_mysql.sh
 
+# Airflow (preflight + 동일 네트워크 + compose)
 ./scripts/ops/start_airflow.sh
 ```
 

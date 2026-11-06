@@ -1,10 +1,12 @@
 # MySQL + phpMyAdmin stack for local analysis DB.
-# Usage: docker compose -f docker-compose.mysql.yml --env-file .env up -d
+# Usage:
+#   docker network create intl_analysis_net 2>/dev/null || true
+#   docker compose -f docker-compose.mysql.yml --env-file .env up -d
 # Requires MYSQL_PASSWORD in .env (no hardcoded defaults).
 #
-# Creates Docker network intl_analysis_net. Airflow (docker-compose.yaml) joins
-# it as external and reaches this MySQL via DNS alias `mysql` — host publish
-# stays loopback-only (127.0.0.1); no 0.0.0.0 exposure required.
+# Network intl_analysis_net is EXTERNAL (same as docker-compose.yaml / start_*.sh).
+# Create-if-missing before either stack — do not let one Compose file "own" it.
+# Airflow reaches MySQL via DNS alias `mysql`. Host publish stays 127.0.0.1.
 services:
   mysql:
     image: mysql:8.0
@@ -60,4 +62,5 @@ volumes:
 networks:
   intl_net:
     name: intl_analysis_net
+    external: true
 

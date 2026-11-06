@@ -15,8 +15,8 @@
 #   2) explicit environment keys with ${VAR:?…} so Compose cannot silently omit them
 # Missing .env.airflow or empty MYSQL_PASSWORD / FERNET_KEY → hard failure.
 #
-# Analysis MySQL: shared Docker network intl_analysis_net, MYSQL_HOST=mysql.
-# Host bind stays 127.0.0.1 — do not use host.docker.internal for MySQL.
+# Analysis MySQL: shared EXTERNAL network intl_analysis_net (create-if-missing via
+# scripts/ops/ensure_intl_network.sh). MYSQL_HOST=mysql. Host bind stays 127.0.0.1.
 # ==============================================================================
 x-airflow-common: &airflow-common
   image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.10.2-python3.11}
@@ -134,15 +134,21 @@ services:
       - -c
       - |
         set -euo pipefail
-        if [ -z "${MYSQL_PASSWORD:-}" ] || [ -z "${AIRFLOW__CORE__FERNET_KEY:-}" ]; then
+        # Use $$ so Compose does NOT interpolate secrets into the command string
+        # (avoids docker inspect / process-list leakage). Checks container env only.
+        if [ -z "$${MYSQL_PASSWORD:-}" ] || [ -z "$${AIRFLOW__CORE__FERNET_KEY:-}" ]; then
           echo "FATAL [airflow-init]: MYSQL_PASSWORD / AIRFLOW__CORE__FERNET_KEY missing in container env" >&2
           exit 1
         fi
-        echo "airflow-init: secrets present in env (not printed); migrating DB…"
+        if [ -z "$${_AIRFLOW_WWW_USER_PASSWORD:-}" ]; then
+          echo "FATAL [airflow-init]: _AIRFLOW_WWW_USER_PASSWORD missing in container env" >&2
+          exit 1
+        fi
+        echo "airflow-init: required secrets present in env (values not printed); migrating DB…"
         airflow db migrate
         airflow users create \
-          --username "${_AIRFLOW_WWW_USER_USERNAME:-airflow}" \
-          --password "${_AIRFLOW_WWW_USER_PASSWORD:?Set _AIRFLOW_WWW_USER_PASSWORD in .env.airflow}" \
+          --username "$${_AIRFLOW_WWW_USER_USERNAME:-airflow}" \
+          --password "$${_AIRFLOW_WWW_USER_PASSWORD}" \
           --firstname Admin \
           --lastname User \
           --role Admin \
@@ -191,9 +197,8 @@ volumes:
   postgres-db-volume:
 
 networks:
-  # Shared with docker-compose.mysql.yml — MySQL host publish stays 127.0.0.1;
-  # Airflow uses bridge DNS `mysql` (no 0.0.0.0). Create via MySQL stack or:
-  #   docker network create intl_analysis_net
+  # Same external network as docker-compose.mysql.yml (neither Compose file owns it).
+  # scripts/ops/ensure_intl_network.sh | start_mysql.sh | start_airflow.sh create-if-missing.
   intl_analysis_net:
     name: intl_analysis_net
     external: true
