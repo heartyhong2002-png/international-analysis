@@ -1,6 +1,6 @@
 # Source Registry Schema
 
-기준일: 2026-10-29
+기준일: 2026-11-02
 
 수집기는 URL·피드 목록을 코드에 하드코딩하지 않고, 가능하면 이 디렉터리의 YAML을 읽는다.
 이 초안은 **문서·계약**이며, 기존 수집기를 즉시 registry 전용으로 바꾸지 않는다.
@@ -11,7 +11,7 @@ registry 항목만으로 Alert Level / `verification_state` / 선거·전쟁 예
 | 필드 | 필수 | 설명 |
 |---|---|---|
 | `source_id` | yes | 안정적인 소문자 snake_case 식별자 |
-| `source_type` | yes | `official_statement`, `state_media_news`, `local_media`, `expert_analysis`, `online_expression`, `trade_statistics`, `event_api`, `news_api`, `regulation_notice` 등 |
+| `source_type` | yes | `official_statement`, `state_media_news`, `local_media`, `expert_analysis`, `online_expression`, `trade_statistics`, `event_api`, `news_api`, `regulation_notice`, `sanctions_dataset` 등 |
 | `source_role` | yes | `primary` / `secondary` / `discovery_only` / `fallback` |
 | `relationship_role` | no | `ally` / `competitor_adversary_axis` / `domestic_us` / `multilateral` / `other`. 대외 문서는 “적대국” 대신 `competitor_adversary_axis` |
 | `required` | yes | 기본 수집 레인에서 실패를 치명으로 볼지 여부. 유료·쿼터 API는 보통 `false` |
@@ -21,18 +21,18 @@ registry 항목만으로 Alert Level / `verification_state` / 선거·전쟁 예
 | `url` | yes* | 피드·엔드포인트·문서 URL (`*` API 경로만 있는 경우는 `endpoint`로 대체 가능) |
 | `endpoint` | no | REST/JSON API 기본 경로 |
 | `country` | yes | ISO 3166-1 alpha-2, `MULTI`, 또는 기구 코드(`NATO`, `EU`) |
-| `language` | yes | BCP 47 유사 태그 (`en`, `ko`, `zh`, `multi`) |
+| `language` | yes | BCP 47 유사 태그 (`en`, `ko`, `zh`, `ru`, `ar`, `pt`, `multi`) |
 | `access_method` | yes | `rss` / `atom` / `api` / `html` / `sitemap` / `file` |
 | `enabled` | yes | registry에서 활성 여부 |
 | `pipeline_default` | yes | `run_pipeline.py` 기본 `--collect-only`에서 호출할지. 유료/쿼터/신규 API는 `false` |
 | `collector` | no | 담당 스크립트 경로. 미구현이면 `PENDING` |
 | `shared_schema` | no | 공식 발표 공통 원시 스키마 사용 여부 (`official_raw_v1`) |
-| `issue_tags` | no | 정책 신호 태그 후보(해석·경보 아님). 예: `US_Trade_Tariff` |
+| `issue_tags` | no | 정책 신호 태그 후보(해석·경보 아님). 예: `US_Trade_Tariff`, `US_Sanctions_OFAC`, `US_Export_Control` |
 | `cadence` | no | `hourly` / `daily` / `weekly` / `manual` |
 | `priority` | no | `high` / `medium` / `low` |
 | `orientation` | no | 매체·싱크탱크 성향 메모(해석 결과가 아님) |
 | `lane` | no | `FAST` / `CONTEXT` / `OPINION` / `BASELINE` |
-| `packet` | no | `A` / `B` / `C` / `legacy` — 컨트롤타워 착수 패킷 |
+| `packet` | no | `A`(미국 국내 정책) / `B`(동맹 공식) / `C`(경쟁·대립축 `competitor_adversary_axis` + OFAC/BIS/OpenSanctions 제재·수출통제) / `legacy` — 컨트롤타워 착수 패킷 |
 
 ## 공식 발표 공통 스키마 (`shared_schema: official_raw_v1`)
 

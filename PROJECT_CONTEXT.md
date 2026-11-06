@@ -111,7 +111,7 @@ Most existing code and data should not be discarded. They are reused with a diff
 - Government announcements become official-position signals.
 - Independent/local media, public Telegram, Bluesky, local forums, Google Trends, and Reddit become non-official public information-environment signals.
 - Maritime chokepoint, port, freight/insurance, financial, and trade data become supply-chain proxy signals.
-- LLM tone classification becomes framing and risk-signal extraction.
+- LLM tone classification becomes framing and risk-signal extraction via a 3-tier canonical pivot pipeline (multilingual extraction -> Korean & English briefings).
 - Model consensus and human review become trust and validation layers.
 
 ## Terms to Prefer

@@ -1,0 +1,12 @@
+{
+  "collector": "scripts/collection/fetch_federal_register.py",
+  "source_id": "us_federal_register_documents_api",
+  "relationship_role": "domestic_us",
+  "packet": "A",
+  "observed_at": "2026-11-02T16:31:12.054593+00:00",
+  "total_items_collected": 20,
+  "status": "SUCCESS",
+  "alert_level_set": false,
+  "verification_state_set": false,
+  "notes": "Federal Register public documents ingested under official_raw_v1 contract. No alert escalation performed."
+}

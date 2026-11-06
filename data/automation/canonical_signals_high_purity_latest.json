@@ -1,0 +1,2382 @@
+{
+  "schema_version": "canonical_signals_v1.1_multimodal",
+  "generated_at": "2026-11-05T15:53:31.094805+00:00",
+  "purity_mode": "high",
+  "verification_policy": "Single-source and visual metadata signals remain UNVERIFIED; Alert Level is never determined in preprocessing.",
+  "alert_level_set": false,
+  "input_counts": {
+    "total_raw": 752,
+    "FAST": 234,
+    "CONTEXT": 384,
+    "OPINION": 134,
+    "BASELINE_SENSORS": 7
+  },
+  "output_counts": {
+    "canonical_clusters": 44,
+    "rejected_noise": 591,
+    "tier_1_corroborated": 9,
+    "tier_2_verified_entity": 35,
+    "multi_source_clusters": 7,
+    "clusters_with_visual_media": 23,
+    "total_media_attachments": 37
+  },
+  "baseline_market_sensors": [
+    {
+      "ticker": "BDRY",
+      "asset_name": "발틱 건화물 운임선물 ETF",
+      "category": "Freight_Bulk",
+      "latest_price": "12.19",
+      "daily_change_pct": "0.0",
+      "risk_signal": "ELEVATED",
+      "observed_at": "2026-11-02T16:31:04.355035+00:00"
+    },
+    {
+      "ticker": "ZIM",
+      "asset_name": "ZIM 컨테이너 해운",
+      "category": "Shipping_Container",
+      "latest_price": "28.99",
+      "daily_change_pct": "2.13",
+      "risk_signal": "NORMAL",
+      "observed_at": "2026-11-02T16:31:04.355035+00:00"
+    },
+    {
+      "ticker": "AMKBY",
+      "asset_name": "머스크 (A.P. Moller-Maersk)",
+      "category": "Shipping_Container",
+      "latest_price": "17.17",
+      "daily_change_pct": "-0.06",
+      "risk_signal": "NORMAL",
+      "observed_at": "2026-11-02T16:31:04.355035+00:00"
+    },
+    {
+      "ticker": "FRO",
+      "asset_name": "프론트라인 (Frontline 원유탱커)",
+      "category": "Shipping_Tanker",
+      "latest_price": "53.03",
+      "daily_change_pct": "-6.81",
+      "risk_signal": "SHARP_DROP",
+      "observed_at": "2026-11-02T16:31:04.355035+00:00"
+    },
+    {
+      "ticker": "BZ=F",
+      "asset_name": "브렌트유 선물 (Brent Crude)",
+      "category": "Energy_Crude",
+      "latest_price": "105.26",
+      "daily_change_pct": "-10.52",
+      "risk_signal": "SHARP_DROP",
+      "observed_at": "2026-11-02T16:31:04.355035+00:00"
+    },
+    {
+      "ticker": "CL=F",
+      "asset_name": "WTI 원유 선물",
+      "category": "Energy_Crude",
+      "latest_price": "96.98",
+      "daily_change_pct": "-6.86",
+      "risk_signal": "SHARP_DROP",
+      "observed_at": "2026-11-02T16:31:04.355035+00:00"
+    },
+    {
+      "ticker": "NG=F",
+      "asset_name": "천연가스 선물 (Henry Hub LNG)",
+      "category": "Energy_Gas",
+      "latest_price": "2.9",
+      "daily_change_pct": "0.1",
+      "risk_signal": "NORMAL",
+      "observed_at": "2026-11-02T16:31:04.355035+00:00"
+    }
+  ],
+  "signals": [
+    {
+      "cluster_id": "CLUST-0007",
+      "signal_id": "SIG-20261105-0007",
+      "representative_title": "Offending tanker hits mines, catches fire east of Hormuz",
+      "canonical_title": "Offending tanker hits mines, catches fire east of Hormuz",
+      "url": "https://en.irna.ir/news/86313445/Offending-tanker-hits-mines-catches-fire-east-of-Hormuz",
+      "cluster_size": 11,
+      "unique_sources_count": 7,
+      "sources": [
+        "IRNA (이란 국영 통신사)",
+        "me_middle_east_eye_rss",
+        "Bluesky_@v1s1on-3ndl3ss.bsky.social",
+        "Bluesky_@bigearthdata.ai",
+        "Bluesky_@groundbeat.com",
+        "Bluesky_@newsgroup-site.bsky.social",
+        "Bluesky_@analytics.social.vir.group.ap.brid.gy"
+      ],
+      "source_types": [
+        "state_media_news",
+        "independent_media",
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "FAST",
+        "CONTEXT",
+        "OPINION"
+      ],
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 1.0,
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_HORMUZ",
+          "name": "호르무즈 해협 (Strait of Hormuz)",
+          "region": "Middle East / Persian Gulf",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG"
+          ]
+        },
+        {
+          "code": "CHOKEPOINT_BAB_EL_MANDEB",
+          "name": "바브엘만데브 해협 및 홍해 (Bab-el-Mandeb & Red Sea)",
+          "region": "Middle East / Red Sea",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG",
+            "SEMICONDUCTOR"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [
+        "MILITARY_CONFLICT",
+        "INFRA_LOGISTICS_DISRUPTION"
+      ],
+      "hotspot_regions": [
+        "MIDDLE_EAST",
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://img9.irna.ir/d/r2/2026/11/05/4/173222126.jpg",
+          "alt_text": "Offending tanker hits mines, catches fire east of Hormuz",
+          "source": "IRNA (이란 국영 통신사)"
+        },
+        {
+          "type": "image",
+          "url": "https://img9.irna.ir/d/r2/2026/11/05/4/173221706.jpg",
+          "alt_text": "IRGC: Two oil tankers, tugboat catch fire in Strait of Hormuz; two LUCAS drones seized",
+          "source": "IRNA (이란 국영 통신사)"
+        },
+        {
+          "type": "image",
+          "url": "https://img9.irna.ir/d/r2/2026/11/05/4/173221606.jpg",
+          "alt_text": "General Ghaani: US faces united front in Hormuz, Bab al-Mandab",
+          "source": "IRNA (이란 국영 통신사)"
+        },
+        {
+          "type": "image",
+          "url": "https://img9.irna.ir/d/r2/2026/11/04/4/173221589.jpg",
+          "alt_text": "IRGC downs 15th advanced US MQ-1 drone over Qeshm Island",
+          "source": "IRNA (이란 국영 통신사)"
+        },
+        {
+          "type": "external_card",
+          "url": "https://oilprice.com/Latest-Energy-News/World-News/Iran-Reports-More-Tanker-Fires-in-Strait-of-Hormuz.html",
+          "alt_text": "Iran Reports More Tanker Fires in Strait of Hormuz",
+          "source": "Bluesky_@bigearthdata.ai"
+        }
+      ],
+      "visual_alt_texts": [
+        "Offending tanker hits mines, catches fire east of Hormuz",
+        "IRGC: Two oil tankers, tugboat catch fire in Strait of Hormuz; two LUCAS drones seized",
+        "General Ghaani: US faces united front in Hormuz, Bab al-Mandab",
+        "IRGC downs 15th advanced US MQ-1 drone over Qeshm Island",
+        "Iran Reports More Tanker Fires in Strait of Hormuz",
+        "Two oil tankers and a tugboat caught fire in the Strait of Hormuz, Iran’s Islamic Revolutionary Guard Corps (IRGC) said on Thursday, as Iran continues to report a growing number of incidents with vessels trying to transit the Strait on rout"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Thu, 05 Nov 2026 13:47:38 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0052",
+      "signal_id": "SIG-20261105-0052",
+      "representative_title": "БПЛА, санкции, обвал цен, дефицит бензина и топливо «похуже»: Российская нефть попала в идеальный шторм - MSK1.RU",
+      "canonical_title": "БПЛА, санкции, обвал цен, дефицит бензина и топливо «похуже»: Российская нефть попала в идеальный шторм - MSK1.RU",
+      "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE0zM1UzcDJkOHF4T2g5VnYwektYM25mR3J0YndMcVBucFIzOWcxc1B4RFdiTVhmcl9IT2U1QzFhbGMxWVZvNzgxU1hOeHVac3RJSzdYR2Q3bEdmVFc1OWp2Sw?oc=5",
+      "cluster_size": 8,
+      "unique_sources_count": 7,
+      "sources": [
+        "GoogleNews_RU",
+        "Bluesky_@mrsanctions.bsky.social",
+        "Bluesky_@drugdesigns.bsky.social",
+        "Bluesky_@certainrisk.bsky.social",
+        "Bluesky_@cheryljean.bsky.social",
+        "Bluesky_@longtail-news.bsky.social",
+        "Bluesky_@rferl.com.web.brid.gy"
+      ],
+      "source_types": [
+        "public_opinion_forum",
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 1.0,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [
+        "MILITARY_CONFLICT",
+        "SANCTIONS_EXPORT_CONTROL",
+        "INFRA_LOGISTICS_DISRUPTION"
+      ],
+      "hotspot_regions": [
+        "MIDDLE_EAST",
+        "EASTERN_EUROPE",
+        "WESTERN_EUROPE",
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://mrsanctions.com/2026/05/31/may-28-2026-ofac-update-part-1-iran-related-designations/",
+          "alt_text": "May 28, 2026: OFAC Update, Part 1: Iran-related Designations",
+          "source": "Bluesky_@mrsanctions.bsky.social"
+        },
+        {
+          "type": "external_card",
+          "url": "https://www.rferl.org/a/sanctions-expert-michael-parker-russia-iran-waivers-/33760204.html",
+          "alt_text": "Sanctions Expert Michael Parker On Russia, Iran, And Whether Waivers Work",
+          "source": "Bluesky_@drugdesigns.bsky.social"
+        },
+        {
+          "type": "external_card",
+          "url": "https://www.certainrisk.com/2026/05/19/uk-eases-curbs-on-russian-oil-products-as-ofac-targets-hamas-iran/?utm_campaign=daily&utm_source=bluesky&utm_medium=social",
+          "alt_text": "UK Eases Curbs on Russian Oil-Products as OFAC Targets Hamas, Iran | Certain Risk",
+          "source": "Bluesky_@certainrisk.bsky.social"
+        },
+        {
+          "type": "external_card",
+          "url": "http://www.rferl.org/a/33760204.html",
+          "alt_text": "Sanctions Expert Michael Parker On Russia, Iran, And Whether Waivers Work",
+          "source": "Bluesky_@cheryljean.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "May 28, 2026: OFAC Update, Part 1: Iran-related Designations",
+        "Iran-related Designations; Issuance of Russia-related General License and Amended Frequently Asked Questions Treasury Press Release: Economic Fury Targets Illicit Oil Revenue Fueling Iran's Military State Press Release: U.S. Continues Maxim",
+        "Sanctions Expert Michael Parker On Russia, Iran, And Whether Waivers Work",
+        "Washington is sharply divided over the latest US sanctions waiver for Russian oil. Michael Parker, a former investigator and section chief in the US Treasury’s Office of Foreign Assets Control (OFAC),...",
+        "UK Eases Curbs on Russian Oil-Products as OFAC Targets Hamas, Iran | Certain Risk",
+        "Britain issued a new sanctions waiver on Tuesday allowing the import of certain diesel and jet fuel processed in third countries from Russian-origin oil, even as the United States separately tighte…",
+        "Washington is sharply divided over the latest US sanctions waiver for Russian oil. Michael Parker, a former investigator and section chief in the US Treasury’s Office of Foreign Assets Control (OFAC), explains why sanctions relief remains W"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Sun, 11 Oct 2026",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0045",
+      "signal_id": "SIG-20261105-0045",
+      "representative_title": "#BREAKING | 🇸🇦 🇾🇪 — Saudi airstrikes hit the Ras Issa oil port on the Red Sea in Hudaydah, Houthi-controlled western Yemen",
+      "canonical_title": "#BREAKING | 🇸🇦 🇾🇪 — Saudi airstrikes hit the Ras Issa oil port on the Red Sea in Hudaydah, Houthi-controlled western Yemen",
+      "url": "https://bsky.app/profile/theglobaleye.bsky.social/post/3mzbnevgcu22b",
+      "cluster_size": 5,
+      "unique_sources_count": 4,
+      "sources": [
+        "Bluesky_Social",
+        "Bluesky_@paradigmshiftpk.bsky.social",
+        "Bluesky_@kostianv.bsky.social",
+        "Bluesky_@strategicenergymap.org"
+      ],
+      "source_types": [
+        "public_opinion_forum",
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 1.0,
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_BAB_EL_MANDEB",
+          "name": "바브엘만데브 해협 및 홍해 (Bab-el-Mandeb & Red Sea)",
+          "region": "Middle East / Red Sea",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG",
+            "SEMICONDUCTOR"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [
+        "MILITARY_CONFLICT"
+      ],
+      "hotspot_regions": [
+        "MIDDLE_EAST",
+        "EAST_ASIA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tfqiz7u276laajmjndpcss47/bafkreibistpkrxdns4dnon7uedupaunhnylyet3gvho3mwcynigbtbcd4y",
+          "alt_text": "",
+          "source": "Bluesky_@paradigmshiftpk.bsky.social"
+        },
+        {
+          "type": "external_card",
+          "url": "https://smallwarsjournal.com/2026/11/03/ethiopia-eritrea-conflict-could-open-a-second-red-sea-front/",
+          "alt_text": "Ethiopia-Eritrea Conflict Could Open a Second Red Sea Front",
+          "source": "Bluesky_@kostianv.bsky.social"
+        },
+        {
+          "type": "image",
+          "url": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:q4ftjekb2e6bfoztr3eozief/bafkreiezrse5p3l27mxttbdyyuqmeppvhx2bdjetma5rmx2sithjvbdxfi",
+          "alt_text": "Bab el-Mandeb, chokepoint. Status: disrupted. Oil before the crisis: 4.2 mb/d; Of world oil demand: 4%. Connects Red Sea to Gulf of Aden. With a map of its location.",
+          "source": "Bluesky_@strategicenergymap.org"
+        }
+      ],
+      "visual_alt_texts": [
+        "Ethiopia-Eritrea Conflict Could Open a Second Red Sea Front",
+        "An Ethiopia-Eritrea war near the port of Assab could drive up Red Sea shipping costs and open a second front alongside the Houthi threats.",
+        "Bab el-Mandeb, chokepoint. Status: disrupted. Oil before the crisis: 4.2 mb/d; Of world oil demand: 4%. Connects Red Sea to Gulf of Aden. With a map of its location."
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-11-02",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0070",
+      "signal_id": "SIG-20261105-0070",
+      "representative_title": "Panama canal traffic facing further cuts as drought from El Niño worsens",
+      "canonical_title": "Panama canal traffic facing further cuts as drought from El Niño worsens",
+      "url": "https://bsky.app/profile/anna26458.bsky.social/post/3mwqbdiqfps25",
+      "cluster_size": 5,
+      "unique_sources_count": 3,
+      "sources": [
+        "Bluesky_@anna26458.bsky.social",
+        "Bluesky_@skitts.bsky.social",
+        "Bluesky_@strategicenergymap.org"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 1.0,
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_HORMUZ",
+          "name": "호르무즈 해협 (Strait of Hormuz)",
+          "region": "Middle East / Persian Gulf",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG"
+          ]
+        },
+        {
+          "code": "CHOKEPOINT_BAB_EL_MANDEB",
+          "name": "바브엘만데브 해협 및 홍해 (Bab-el-Mandeb & Red Sea)",
+          "region": "Middle East / Red Sea",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG",
+            "SEMICONDUCTOR"
+          ]
+        },
+        {
+          "code": "CHOKEPOINT_MALACCA",
+          "name": "말라카 해협 (Strait of Malacca)",
+          "region": "Southeast Asia",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG",
+            "SEMICONDUCTOR"
+          ]
+        },
+        {
+          "code": "CHOKEPOINT_BOSPHORUS",
+          "name": "보스포루스 및 흑해 해협 (Bosphorus & Turkish Straits)",
+          "region": "Eurasia / Black Sea",
+          "primary_supply": [
+            "GRAIN_FOOD",
+            "CRUDE_OIL"
+          ]
+        },
+        {
+          "code": "CHOKEPOINT_PANAMA",
+          "name": "파나마 운하 (Panama Canal)",
+          "region": "Americas / Latin America",
+          "primary_supply": [
+            "NATURAL_GAS_LNG",
+            "GRAIN_FOOD"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "MIDDLE_EAST",
+        "LATIN_AMERICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [
+        "FIELD_PHOTO_VIDEO"
+      ],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://www.theguardian.com/world/2026/sep/15/panama-canal-traffic-cut-trade-drought-el-nino?CMP=GTAU_email",
+          "alt_text": "Panama canal traffic facing further cuts as drought from El Niño worsens",
+          "source": "Bluesky_@anna26458.bsky.social"
+        },
+        {
+          "type": "video",
+          "url": "https://weather.com/2026/09/29/travel/news/video/el-nino-panama-canal-slowing?par=samsung_widget_VZW&temp=f&cm_ven=trendingnow_ins_us_en_1&theme=samsungDark&sflag=1&samsung_ver=80500",
+          "alt_text": "El Niño drought slows Panama Canal shipping again",
+          "source": "Bluesky_@skitts.bsky.social"
+        },
+        {
+          "type": "external_card",
+          "url": "https://www.theguardian.com/world/2026/sep/15/panama-canal-traffic-cut-trade-drought-el-nino",
+          "alt_text": "Panama canal traffic facing further cuts as drought from El Niño worsens",
+          "source": "Bluesky_@anna26458.bsky.social"
+        },
+        {
+          "type": "external_card",
+          "url": "https://www.theguardian.com/world/2026/sep/15/panama-canal-traffic-cut-trade-drought-el-nino?CMP=politicsreally_email",
+          "alt_text": "Panama canal traffic facing further cuts as drought from El Niño worsens",
+          "source": "Bluesky_@anna26458.bsky.social"
+        },
+        {
+          "type": "image",
+          "url": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:q4ftjekb2e6bfoztr3eozief/bafkreieievmxyp47aaspg3qkzrisqn2uzcyy6toj4kugpoyegpfoqxmcxe",
+          "alt_text": "Bar chart of 7-day average tanker transits vs pre-crisis baseline, percent change: Strait of Hormuz -97% (1.3/day), Turkish Straits -48% (11.7/day), Bab el-Mandeb -22% (9.4/day), Strait of Malacca -17% (70.0/day), Panama Canal -10% (11.7/da",
+          "source": "Bluesky_@strategicenergymap.org"
+        }
+      ],
+      "visual_alt_texts": [
+        "Panama canal traffic facing further cuts as drought from El Niño worsens",
+        "Planned daily reductions will further choke one of the world’s most important shipping lanes",
+        "El Niño drought slows Panama Canal shipping again",
+        "A developing El Niño could cut Panama's rains short, lowering the reservoirs that feed the Panama Canal and slowing shipping traffic.",
+        "Bar chart of 7-day average tanker transits vs pre-crisis baseline, percent change: Strait of Hormuz -97% (1.3/day), Turkish Straits -48% (11.7/day), Bab el-Mandeb -22% (9.4/day), Strait of Malacca -17% (70.0/day), Panama Canal -10% (11.7/da",
+        "Bar chart of 7-day average tanker transits vs pre-crisis baseline, percent change: Strait of Hormuz -97% (1.3/day), Turkish Straits -48% (11.7/day), Bab el-Mandeb -22% (9.4/day), Strait of Malacca -17% (70.0/day), Panama Canal -10% (11.7/day), Suez Canal -4% (15.0/day)."
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-09-30T11:44:37.860Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0069",
+      "signal_id": "SIG-20261105-0069",
+      "representative_title": "Tanker transits (AIS-visible) fell further this week: Hormuz down to 0.6 ships/day, 99% below baseline, as many sail dark. Bosporus -36%, Bab el-Mandeb -29%, Pa...",
+      "canonical_title": "Tanker transits (AIS-visible) fell further this week: Hormuz down to 0.6 ships/day, 99% below baseline, as many sail dark. Bosporus -36%, Bab el-Mandeb -29%, Pa...",
+      "url": "https://bsky.app/profile/strategicenergymap.org/post/3mxx6ebno6t2u",
+      "cluster_size": 2,
+      "unique_sources_count": 2,
+      "sources": [
+        "Bluesky_@japoniano.bsky.social",
+        "Bluesky_@strategicenergymap.org"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 1.0,
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_HORMUZ",
+          "name": "호르무즈 해협 (Strait of Hormuz)",
+          "region": "Middle East / Persian Gulf",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG"
+          ]
+        },
+        {
+          "code": "CHOKEPOINT_BAB_EL_MANDEB",
+          "name": "바브엘만데브 해협 및 홍해 (Bab-el-Mandeb & Red Sea)",
+          "region": "Middle East / Red Sea",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG",
+            "SEMICONDUCTOR"
+          ]
+        },
+        {
+          "code": "CHOKEPOINT_MALACCA",
+          "name": "말라카 해협 (Strait of Malacca)",
+          "region": "Southeast Asia",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG",
+            "SEMICONDUCTOR"
+          ]
+        },
+        {
+          "code": "CHOKEPOINT_BOSPHORUS",
+          "name": "보스포루스 및 흑해 해협 (Bosphorus & Turkish Straits)",
+          "region": "Eurasia / Black Sea",
+          "primary_supply": [
+            "GRAIN_FOOD",
+            "CRUDE_OIL"
+          ]
+        },
+        {
+          "code": "CHOKEPOINT_PANAMA",
+          "name": "파나마 운하 (Panama Canal)",
+          "region": "Americas / Latin America",
+          "primary_supply": [
+            "NATURAL_GAS_LNG",
+            "GRAIN_FOOD"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "MIDDLE_EAST",
+        "LATIN_AMERICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://www.theguardian.com/world/2026/sep/15/panama-canal-traffic-cut-trade-drought-el-nino",
+          "alt_text": "Panama canal traffic facing further cuts as drought from El Niño worsens",
+          "source": "Bluesky_@japoniano.bsky.social"
+        },
+        {
+          "type": "image",
+          "url": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:q4ftjekb2e6bfoztr3eozief/bafkreicobrd65bhhzexukdvrgz7rdazuui3eng3d4v5xedacvkuzufwsqy",
+          "alt_text": "Bar chart of 7-day average tanker transits vs pre-crisis baseline, percent change, week ending Oct 11: Strait of Hormuz -99% (0.6/day), Bosporus Strait -36% (14.6/day), Bab el-Mandeb -29% (8.6/day), Panama Canal -27% (9.4/day), Strait of Ma",
+          "source": "Bluesky_@strategicenergymap.org"
+        }
+      ],
+      "visual_alt_texts": [
+        "Panama canal traffic facing further cuts as drought from El Niño worsens",
+        "Planned daily reductions will further choke one of the world’s most important shipping lanes",
+        "Bar chart of 7-day average tanker transits vs pre-crisis baseline, percent change, week ending Oct 11: Strait of Hormuz -99% (0.6/day), Bosporus Strait -36% (14.6/day), Bab el-Mandeb -29% (8.6/day), Panama Canal -27% (9.4/day), Strait of Ma",
+        "Bar chart of 7-day average tanker transits vs pre-crisis baseline, percent change, week ending Oct 11: Strait of Hormuz -99% (0.6/day), Bosporus Strait -36% (14.6/day), Bab el-Mandeb -29% (8.6/day), Panama Canal -27% (9.4/day), Strait of Malacca -12% (74.9/day), Suez Canal +9% (17.0/day)."
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-10-17T00:45:13.616Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0064",
+      "signal_id": "SIG-20261105-0064",
+      "representative_title": "Failures by the Dump in this China trip make one wonder if China's/Xi's Strait of Hormuz is Taiwan Semiconductor (TSMC)?!",
+      "canonical_title": "Failures by the Dump in this China trip make one wonder if China's/Xi's Strait of Hormuz is Taiwan Semiconductor (TSMC)?!",
+      "url": "https://bsky.app/profile/electricdonkey.me/post/3mm3qthhr5k2u",
+      "cluster_size": 2,
+      "unique_sources_count": 2,
+      "sources": [
+        "Bluesky_@electricdonkey.me",
+        "Bluesky_@fpri.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 1.0,
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_HORMUZ",
+          "name": "호르무즈 해협 (Strait of Hormuz)",
+          "region": "Middle East / Persian Gulf",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "MIDDLE_EAST",
+        "EAST_ASIA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://buff.ly/aw2a0To",
+          "alt_text": "From the Archives | Taiwan’s Semiconductor Industry, the US-China Tech Fight, and Cross Strait Stability",
+          "source": "Bluesky_@fpri.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "From the Archives | Taiwan’s Semiconductor Industry, the US-China Tech Fight, and Cross Strait Stability",
+        "Learn how Taiwan and TSMC lead in semiconductor manufacturing, shaping the future of technology and global markets."
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-05-18T01:44:08.742Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0005",
+      "signal_id": "SIG-20261105-0005",
+      "representative_title": "U.S. Sanctions Fraudulent Ship Registries and Aviation Support for Iranian Regime",
+      "canonical_title": "U.S. Sanctions Fraudulent Ship Registries and Aviation Support for Iranian Regime",
+      "url": "https://www.state.gov/releases/office-of-the-spokesman/2026/11/u-s-sanctions-fraudulent-ship-registries-and-aviation-support-for-iranian-regime/",
+      "cluster_size": 2,
+      "unique_sources_count": 2,
+      "sources": [
+        "US State Dept - Press Releases",
+        "US State Dept - Near East"
+      ],
+      "source_types": [
+        "official_statement"
+      ],
+      "observed_lanes": [
+        "FAST"
+      ],
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 0.8,
+      "chokepoints": [],
+      "supply_chain_tags": [],
+      "event_types": [
+        "SANCTIONS_EXPORT_CONTROL"
+      ],
+      "hotspot_regions": [
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Wed, 04 Nov 2026 18:20:11 +0000",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0004",
+      "signal_id": "SIG-20261105-0004",
+      "representative_title": "한-폴란드, 방산·배터리·인프라 분야 실질협력 강화",
+      "canonical_title": "한-폴란드, 방산·배터리·인프라 분야 실질협력 강화",
+      "url": "http://www.mofa.go.kr/www/brd/m_4080/view.do?seq=377724",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "한국 외교부 보도자료"
+      ],
+      "source_types": [
+        "official_statement"
+      ],
+      "observed_lanes": [
+        "FAST"
+      ],
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 0.8,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "BATTERY_MINERALS"
+      ],
+      "event_types": [
+        "ELECTION_GOVERNMENT"
+      ],
+      "hotspot_regions": [
+        "WESTERN_EUROPE"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Tue, 03 Nov 2026 22:48:37 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0001",
+      "signal_id": "SIG-20261105-0001",
+      "representative_title": "President Trump Announces Arrival of First One Million Barrels of Oil in Texas Thanks to Historic Oil Deal",
+      "canonical_title": "President Trump Announces Arrival of First One Million Barrels of Oil in Texas Thanks to Historic Oil Deal",
+      "url": "https://www.whitehouse.gov/releases/2026/10/president-trump-announces-arrival-of-first-one-million-barrels-of-oil-in-texas-thanks-to-historic-oil-deal/",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "The White House"
+      ],
+      "source_types": [
+        "official_statement"
+      ],
+      "observed_lanes": [
+        "FAST"
+      ],
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 0.5,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [
+        "ELECTION_GOVERNMENT"
+      ],
+      "hotspot_regions": [
+        "LATIN_AMERICA",
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-10-28T12:29:46+00:00",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0056",
+      "signal_id": "SIG-20261105-0056",
+      "representative_title": "‘Greve não é contra Lula, mas contra intransigentes da gestão da Petrobras’, diz diretor da FUP - Brasil de Fato",
+      "canonical_title": "‘Greve não é contra Lula, mas contra intransigentes da gestão da Petrobras’, diz diretor da FUP - Brasil de Fato",
+      "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxQRFFnYXBFd2QzRUZpeV9JbXptd2tPVEhQSnBzZGpJbVRpZXgzbHVfUlNtRlgwcDVUVFB5X2hnV2Q3SXNfVHBYSUpBZFV5dldGUDhXNEpQVWp3YmJvM3dtY1VhVHdVbXYyVjA1QXZDd2w2TV9BU21IRUNyWllvbjdDVXZ2VWRYYnB3VFRNcGVCdmVGdFNOUkNpeGk2aVI3d2xmSlo1cTJaRWNld0VsUnRhN1k2LXo0ZndiNzhBUWY5N28ySzRlam90SHJMaEk4eVp6?oc=5",
+      "cluster_size": 3,
+      "unique_sources_count": 1,
+      "sources": [
+        "GoogleNews_BR"
+      ],
+      "source_types": [
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [
+        "PROTEST_STRIKE",
+        "ELECTION_GOVERNMENT"
+      ],
+      "hotspot_regions": [
+        "LATIN_AMERICA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Mon, 15 Dec 2025",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0050",
+      "signal_id": "SIG-20261105-0050",
+      "representative_title": "歐美砸錢也贏不了台積電！德媒揭殘酷現實：台海斷供衝擊遠超波斯灣 - Yahoo新聞",
+      "canonical_title": "歐美砸錢也贏不了台積電！德媒揭殘酷現實：台海斷供衝擊遠超波斯灣 - Yahoo新聞",
+      "url": "https://news.google.com/rss/articles/CBMisgNBVV95cUxQUEVGZko1QmZod25SRUFnb25uaF9RdkgzeE9WenFkejIzaDczS1kyNHh2cGJrV1VRcC1QR3JqSUN2a2t2YW1lclVBbms1OVNKN2ExVEtOYTRKM1RYLVk3dnJRWFIxU3VNRVZmSXhlbWZVbjdpQ3JJeXdQY19JSm1VcDlGaWxqUkhzdm1TcWdqbk8tNDlzamJMazFyNHVGU250aWpQSXppSXJDT2NzXzJxVGVmdWM3ZU5RSzd5a19hcXFTVW0xd013eV9wSm1Jbm1NQ0I1MF82TlRZYUN5VmE1N2ZoU1FNQlNianJTeFpQSjJtQUtmS1M5ckM5dWU4bFZ4R1VrU3QzTmE2ZTl2LUtoMGRCUWx5NkFDNkRwWkdHZ0kxT1I3UmNheHQ0MXhIMnBUaS0wajNyUTdaR0RUQmhxeTFWQXF1ZnJmaEd5dDVfZkVCY0RaSVZKUlBXNW1lWmRPVE83WUVOR0ZoSVBVZEx3T2FlLWZQTlBNRjFKZFVWSTNmbzJ6Uzl0S0dCeEd6ZFVQQ3BwUXJab1ltVVhkVTJuX0FiTW0yb1pndDVzY3hkcmVLdw?oc=5",
+      "cluster_size": 2,
+      "unique_sources_count": 1,
+      "sources": [
+        "GoogleNews_TW"
+      ],
+      "source_types": [
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_TAIWAN_STRAIT",
+          "name": "대만 해협 (Taiwan Strait)",
+          "region": "East Asia",
+          "primary_supply": [
+            "SEMICONDUCTOR",
+            "BATTERY_MINERALS"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [
+        "MILITARY_CONFLICT",
+        "INFRA_LOGISTICS_DISRUPTION"
+      ],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Thu, 13 Aug 2026",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0021",
+      "signal_id": "SIG-20261105-0021",
+      "representative_title": "India Condemns Hormuz Ship Attack That Injured 11 Indian Crew Members",
+      "canonical_title": "India Condemns Hormuz Ship Attack That Injured 11 Indian Crew Members",
+      "url": "https://iranwire.com/en/news/158559-india-condemns-hormuz-ship-attack-that-injured-11-indian-crew-members/",
+      "cluster_size": 2,
+      "unique_sources_count": 1,
+      "sources": [
+        "me_iranwire_rss"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_HORMUZ",
+          "name": "호르무즈 해협 (Strait of Hormuz)",
+          "region": "Middle East / Persian Gulf",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG"
+          ]
+        }
+      ],
+      "supply_chain_tags": [],
+      "event_types": [
+        "MILITARY_CONFLICT",
+        "PROTEST_STRIKE"
+      ],
+      "hotspot_regions": [
+        "MIDDLE_EAST",
+        "LATIN_AMERICA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Tue, 06 Oct 2026 16:14:21 +0000",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0053",
+      "signal_id": "SIG-20261105-0053",
+      "representative_title": "Цены на нефть Brent поднялись до $109,64: влияние санкций и дефицита дизеля - Финансы Mail",
+      "canonical_title": "Цены на нефть Brent поднялись до $109,64: влияние санкций и дефицита дизеля - Финансы Mail",
+      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOajNlSUdlZGZXbTlrUHRnUDJrWjFPOTdGZ2xWSy1acnRlRlptanBDMVVuVWFDYlhOcWl3YVUzaVRnZzlQc0pBRld2VlRXdFhFNUk3OWs1VU1lTUlxQzhSc0RtZ2dneGZveFhZZ1Y1VVItX2ZxV2w0WlhPQ3lqRWJ3MjFVTDgtVDJ4UnhqZzJTcV9ieEhLdGZDTUpTd1plUVVmUEloSDJKOXk3UlJ6N2hWdmVsMExCcXBoeWdZZw?oc=5",
+      "cluster_size": 2,
+      "unique_sources_count": 1,
+      "sources": [
+        "GoogleNews_RU"
+      ],
+      "source_types": [
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [
+        "SANCTIONS_EXPORT_CONTROL",
+        "INFRA_LOGISTICS_DISRUPTION"
+      ],
+      "hotspot_regions": [],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Sat, 17 Oct 2026",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0044",
+      "signal_id": "SIG-20261105-0044",
+      "representative_title": "Musk könnte TSMC die Kontrolle über den Terafab-Betrieb überlassen, während Intels Rolle ungeklärt bleibt #Taiwan #Technologie",
+      "canonical_title": "Musk könnte TSMC die Kontrolle über den Terafab-Betrieb überlassen, während Intels Rolle ungeklärt bleibt #Taiwan #Technologie",
+      "url": "https://bsky.app/profile/de.asiadaily.org/post/3mzdjvbzk2h22",
+      "cluster_size": 2,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_Social"
+      ],
+      "source_types": [
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.8,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-11-02",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0015",
+      "signal_id": "SIG-20261105-0015",
+      "representative_title": "Танкер российского «теневого флота» был атакован у Ормузского пролива. В июле его уже атаковали в Черном море - The Insider",
+      "canonical_title": "Танкер российского «теневого флота» был атакован у Ормузского пролива. В июле его уже атаковали в Черном море - The Insider",
+      "url": "https://news.google.com/rss/articles/CBMiQ0FVX3lxTE9ZT3BLZDJIbm9qdW9EWVVwZ29JRXhCNzBRTHJMWXFlSHZ0aFRnV2F0TEFJYmUtUDJiZTR0cXFQQjN5a1k?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "ru_insider_rss"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_HORMUZ",
+          "name": "호르무즈 해협 (Strait of Hormuz)",
+          "region": "Middle East / Persian Gulf",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG"
+          ]
+        },
+        {
+          "code": "CHOKEPOINT_BOSPHORUS",
+          "name": "보스포루스 및 흑해 해협 (Bosphorus & Turkish Straits)",
+          "region": "Eurasia / Black Sea",
+          "primary_supply": [
+            "GRAIN_FOOD",
+            "CRUDE_OIL"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EASTERN_EUROPE"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Mon, 02 Nov 2026 10:25:09 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0066",
+      "signal_id": "SIG-20261105-0066",
+      "representative_title": "台湾のLNG備蓄はわずか11日しかなかった TSMCが依存する電力の足元を、カタール爆撃と米イラン戦争が初めて公然と引きずり出した ヘリウム・ラスラファン・ホルムズ海峡・TSIA・Apple 台湾のLNG戦略備蓄は、わずか11日分。ヘリウムは国家備蓄ゼロです。 4月8日、TSIAが政府に戦略備蓄を要請しました。 ...",
+      "canonical_title": "台湾のLNG備蓄はわずか11日しかなかった TSMCが依存する電力の足元を、カタール爆撃と米イラン戦争が初めて公然と引きずり出した ヘリウム・ラスラファン・ホルムズ海峡・TSIA・Apple 台湾のLNG戦略備蓄は、わずか11日分。ヘリウムは国家備蓄ゼロです。 4月8日、TSIAが政府に戦略備蓄を要請しました。 ...",
+      "url": "https://bsky.app/profile/johonotodai.bsky.social/post/3mj53eu73p22c",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@johonotodai.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_HORMUZ",
+          "name": "호르무즈 해협 (Strait of Hormuz)",
+          "region": "Middle East / Persian Gulf",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "NATURAL_GAS_LNG",
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [
+        "INFRA_LOGISTICS_DISRUPTION"
+      ],
+      "hotspot_regions": [
+        "MIDDLE_EAST",
+        "EAST_ASIA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:sob4j7f5b7t5d2tdiko4n2ev/bafkreif42et3km4yflveqiyeqssjp74wfdukcqfsaretgpfdwdbd5yupnu",
+          "alt_text": "TSMC, Taiwan Semiconductor Manufacturing Company, TSIA, Taiwan Semiconductor Industry Association, LNG strategic reserve, helium shortage, Ras Laffan, Qatar Energy, Saad al-Kaabi, force majeure, Hormuz Strait, Iran ceasefire, Maanshan nucle",
+          "source": "Bluesky_@johonotodai.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "TSMC, Taiwan Semiconductor Manufacturing Company, TSIA, Taiwan Semiconductor Industry Association, LNG strategic reserve, helium shortage, Ras Laffan, Qatar Energy, Saad al-Kaabi, force majeure, Hormuz Strait, Iran ceasefire, Maanshan nucle",
+        "TSMC, Taiwan Semiconductor Manufacturing Company, TSIA, Taiwan Semiconductor Industry Association, LNG strategic reserve, helium shortage, Ras Laffan, Qatar Energy, Saad al-Kaabi, force majeure, Hormuz Strait, Iran ceasefire, Maanshan nuclear plant, Lai Ching-te, DPP nuclear policy, Cliff Hou, Wood"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-04-10T10:09:54.788Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0068",
+      "signal_id": "SIG-20261105-0068",
+      "representative_title": "🌍 Houthi attacks in the Red Sea, U.S.-Iran tensions around the Strait of Hormuz, and drought-related restrictions on the Panama Canal have disrupted global ship...",
+      "canonical_title": "🌍 Houthi attacks in the Red Sea, U.S.-Iran tensions around the Strait of Hormuz, and drought-related restrictions on the Panama Canal have disrupted global ship...",
+      "url": "https://bsky.app/profile/english.nv.ua/post/3myr6r4bpgc25",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@english.nv.ua"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_HORMUZ",
+          "name": "호르무즈 해협 (Strait of Hormuz)",
+          "region": "Middle East / Persian Gulf",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG"
+          ]
+        },
+        {
+          "code": "CHOKEPOINT_BAB_EL_MANDEB",
+          "name": "바브엘만데브 해협 및 홍해 (Bab-el-Mandeb & Red Sea)",
+          "region": "Middle East / Red Sea",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG",
+            "SEMICONDUCTOR"
+          ]
+        },
+        {
+          "code": "CHOKEPOINT_PANAMA",
+          "name": "파나마 운하 (Panama Canal)",
+          "region": "Americas / Latin America",
+          "primary_supply": [
+            "NATURAL_GAS_LNG",
+            "GRAIN_FOOD"
+          ]
+        }
+      ],
+      "supply_chain_tags": [],
+      "event_types": [],
+      "hotspot_regions": [
+        "MIDDLE_EAST",
+        "LATIN_AMERICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:z7lsdlhrbqynzzhkkam7yr7d/bafkreicgzjqmj6bfmhok7g5qpd5qvdhnp5taau6j254aq7sskvgniml224",
+          "alt_text": "",
+          "source": "Bluesky_@english.nv.ua"
+        }
+      ],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-10-26T07:21:36.323Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0046",
+      "signal_id": "SIG-20261105-0046",
+      "representative_title": "Yep, leaving iran in control of the straits, holding a huge percentage of the world's oil and gas supplies hostage, leaving his oligarchs and himself making huge amounts of money from american and Ven",
+      "canonical_title": "Yep, leaving iran in control of the straits, holding a huge percentage of the world's oil and gas supplies hostage, leaving his oligarchs and himself making huge amounts of money from american and Ven",
+      "url": "https://bsky.app/profile/ospot.bsky.social/post/3mzd2tjvmhc2q",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_Social"
+      ],
+      "source_types": [
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL",
+        "NATURAL_GAS_LNG"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "MIDDLE_EAST"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-11-02",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0047",
+      "signal_id": "SIG-20261105-0047",
+      "representative_title": "台積電成台海「能源軟肋」！華府兵推揭北京未開戰先施壓 恐用能源、礦產分化美盟友 - 梅花新聞網",
+      "canonical_title": "台積電成台海「能源軟肋」！華府兵推揭北京未開戰先施壓 恐用能源、礦產分化美盟友 - 梅花新聞網",
+      "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE1vWDlMVEhKRFEzbzNISmdrSzdxdktCdFF6dGQ1YmM5T29RbDgwUkNTdmhLSUtacEZSejd1dUlqSHBZRHh2TDhlU25BZFJ3eTdFaUhkcEVmWWw?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "GoogleNews_TW"
+      ],
+      "source_types": [
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_TAIWAN_STRAIT",
+          "name": "대만 해협 (Taiwan Strait)",
+          "region": "East Asia",
+          "primary_supply": [
+            "SEMICONDUCTOR",
+            "BATTERY_MINERALS"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [
+        "MILITARY_CONFLICT"
+      ],
+      "hotspot_regions": [
+        "EAST_ASIA",
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Wed, 12 Aug 2026",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0061",
+      "signal_id": "SIG-20261105-0061",
+      "representative_title": "Outra enorme coluna de fumaça no estreito de Ormuz essa manhã.",
+      "canonical_title": "Outra enorme coluna de fumaça no estreito de Ormuz essa manhã.",
+      "url": "https://bsky.app/profile/epicurodepedra.bsky.social/post/3mzl2emkmpc2c",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@epicurodepedra.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_HORMUZ",
+          "name": "호르무즈 해협 (Strait of Hormuz)",
+          "region": "Middle East / Persian Gulf",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [],
+      "hotspot_regions": [],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:b3sgkulmmmzz5jqsxx3dovex/bafkreifcp3a2oahs5ctgkbk66xrsteo54ikcvgdcpgzmxgchjdwyb2wmnu",
+          "alt_text": "Mar em primeiro plano. Uma onda quebrando. Céu azul sem nuvens. Uma grande coluna de fumaça escura sobe no horizonte. Embaixo da foto o seguinte texto em inglês: 🇮🇷/🇺🇸 Iranian Navy reported: “A fire broke out this morning on an oil tanker t",
+          "source": "Bluesky_@epicurodepedra.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "Mar em primeiro plano. Uma onda quebrando. Céu azul sem nuvens. Uma grande coluna de fumaça escura sobe no horizonte. Embaixo da foto o seguinte texto em inglês: 🇮🇷/🇺🇸 Iranian Navy reported: “A fire broke out this morning on an oil tanker t",
+        "Mar em primeiro plano. Uma onda quebrando. Céu azul sem nuvens. Uma grande coluna de fumaça escura sobe no horizonte. Embaixo da foto o seguinte texto em inglês: 🇮🇷/🇺🇸 Iranian Navy reported: “A fire broke out this morning on an oil tanker that was operating in an \"unsafe area \" east of the Strait o"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-11-05T14:12:15.412Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0062",
+      "signal_id": "SIG-20261105-0062",
+      "representative_title": "10 Ways the U.S. Can Strengthen Deterrence in the Taiwan Strait",
+      "canonical_title": "10 Ways the U.S. Can Strengthen Deterrence in the Taiwan Strait",
+      "url": "https://bsky.app/profile/michaelturton.bsky.social/post/3mvrhwdykls2i",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@michaelturton.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_TAIWAN_STRAIT",
+          "name": "대만 해협 (Taiwan Strait)",
+          "region": "East Asia",
+          "primary_supply": [
+            "SEMICONDUCTOR",
+            "BATTERY_MINERALS"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://www.fdd.org/analysis/2026/09/15/10-ways-the-u-s-can-strengthen-deterrence-in-the-taiwan-strait/",
+          "alt_text": "10 Ways the U.S. Can Strengthen Deterrence in the Taiwan Strait",
+          "source": "Bluesky_@michaelturton.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "10 Ways the U.S. Can Strengthen Deterrence in the Taiwan Strait",
+        "Figures on TSMC/UMC combined market share and semiconductor export composition drawn from this analysis: RADM (Ret.) Mark Montgomery, “Taiwan is a ‘model ally,’ not trade bait,” Defense One, May 13, 2..."
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-09-18T05:50:00.980Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0076",
+      "signal_id": "SIG-20261105-0076",
+      "representative_title": "US-China Rare Earths and AI Talks Could Shift ETF Holdings This Week",
+      "canonical_title": "US-China Rare Earths and AI Talks Could Shift ETF Holdings This Week",
+      "url": "https://bsky.app/profile/vaultlynews.bsky.social/post/3mvtfp5swyk23",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@vaultlynews.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR",
+        "RARE_EARTHS"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://vaultly-omega.vercel.app/en/article/us-china-rare-earths-ai-talks",
+          "alt_text": "US-China Rare Earths and AI Talks Could Shift ETF Holdings This Week",
+          "source": "Bluesky_@vaultlynews.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "US-China Rare Earths and AI Talks Could Shift ETF Holdings This Week",
+        "Score 7/10 · Impatto: Medium · Finestra: 1 week Asset: Rare Earths ETFs, Semiconductor ETFs, Global Trade ETFs This high-level US-China dialogue on critical minerals and AI could signal supply chain shifts, influencing sector-specific ETFs"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-09-19T00:15:31.405Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0048",
+      "signal_id": "SIG-20261105-0048",
+      "representative_title": "台灣不能再讓南韓漁翁得利！從羞辱式斷交到三星告密重創面板業...台海若有事，誰最想搶台積電訂單？ - 今周刊",
+      "canonical_title": "台灣不能再讓南韓漁翁得利！從羞辱式斷交到三星告密重創面板業...台海若有事，誰最想搶台積電訂單？ - 今周刊",
+      "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPZGtNM1FwdEQwbFE2OURzZEs5SjdRN3BZVDBhZU10eWcyMTJhUlhhQlM2RHhDU2VkblhIZTk4dnMyUnJ0eV9HRTZaZjE3R3JYS1FjX3ZDTnhxVVEyVlhPcXhXUFZhUlh2SHlNbFV5VUV6Vl9mS0wyT003TUF2R3dBLQ?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "GoogleNews_TW"
+      ],
+      "source_types": [
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.8,
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_TAIWAN_STRAIT",
+          "name": "대만 해협 (Taiwan Strait)",
+          "region": "East Asia",
+          "primary_supply": [
+            "SEMICONDUCTOR",
+            "BATTERY_MINERALS"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Tue, 23 Jun 2026",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0051",
+      "signal_id": "SIG-20261105-0051",
+      "representative_title": "掐住台積電命脈！美智庫：北京祭出「能源封鎖」台灣恐妥協 - 中天新聞網",
+      "canonical_title": "掐住台積電命脈！美智庫：北京祭出「能源封鎖」台灣恐妥協 - 中天新聞網",
+      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE40dXRjSUxSQnhib0dUUW9lbzFXUGFsT2FGakh3VmpwdDh1TTVQMy05eG14bDFQX2VIVXFBY1Q2YWNzRG1CSTJSdU9FbEVKUDU1bFo4?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "GoogleNews_TW"
+      ],
+      "source_types": [
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [
+        "INFRA_LOGISTICS_DISRUPTION"
+      ],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Wed, 12 Aug 2026",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0055",
+      "signal_id": "SIG-20261105-0055",
+      "representative_title": "Risco de greve de caminhoneiros em ano eleitoral levou governo a lançar pacote contra alta do diesel - Folha de S.Paulo",
+      "canonical_title": "Risco de greve de caminhoneiros em ano eleitoral levou governo a lançar pacote contra alta do diesel - Folha de S.Paulo",
+      "url": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxNaGk0NkY4WktPdzg1X0hHZEdud2RudllkTTh6QlI5YWdTQnMzQlBSbzZWLVZGckdjR2paX015NTdnYVY3MlExb3o2YzM3TldCbGZNNC1DNVdvdUhDMmpXNmhyajQ3MC0yQUdOUDVXR3NjMVpMMm9hOWh0bHFiY3hhQU4tWm42aVpFdHo0ci1rRVFNZmlsR21qTHp1TkdpekcteUJlUG01SzNURnB6OTIxdDN5QkxkaDJSZFZqb0xZekZyWVI5QkNqOEZqWjVhWFdoNXRvN0gtc0JuX3Q4NzFKX1hTOUFGZDjSAewBQVVfeXFMTVlaT3B0c3hHWkI2aUpzVG5WZDZ6clFMeEczeklTbm93c1BoVzlaMDZmbUpucnNIREduYXh0em5OeXYtWnVsTjhRNzZkSFBxTDNSaXo3Ry16SHJVb2JlX1RLbDJTeXBkNWVoZlcxN2ZXMDJpZUtFLTZnLTBwVnJsdmFuSTBGQmVFLVNveXdXVDhObzVNblBHN3d4SkRVbElVTnhnaGRjeFVUSTZRMHg5azdyODdBNVlDRFRMTTcwUk5iRVRTTzFjZlRrTVRmNjJlak9tSWpXZjFmRExQTXBsTlF4MFdocEhJVk85VjE?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "GoogleNews_BR"
+      ],
+      "source_types": [
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [
+        "PROTEST_STRIKE",
+        "ELECTION_GOVERNMENT"
+      ],
+      "hotspot_regions": [],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Thu, 12 Mar 2026",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0063",
+      "signal_id": "SIG-20261105-0063",
+      "representative_title": "In a Cross-Strait Scenario, Taiwan’s Semiconductors are Irrelevant",
+      "canonical_title": "In a Cross-Strait Scenario, Taiwan’s Semiconductors are Irrelevant",
+      "url": "https://bsky.app/profile/michaelturton.bsky.social/post/3mmuhekr5vk2s",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@michaelturton.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://nationalinterest.org/feature/cross-strait-scenario-taiwans-semiconductors-are-irrelevant-206560",
+          "alt_text": "In a Cross-Strait Scenario, Taiwan’s Semiconductors are Irrelevant",
+          "source": "Bluesky_@michaelturton.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "In a Cross-Strait Scenario, Taiwan’s Semiconductors are Irrelevant",
+        "In recent months, the flagship Taiwanese tech firm, the Taiwan Semiconductor Manufacturing Company (TSMC), has been a focus of discussions about a potential Chinese invasion of Taiwan. For instance, N..."
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-05-27T21:31:18.663Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0065",
+      "signal_id": "SIG-20261105-0065",
+      "representative_title": "From the Archives | Taiwan’s Semiconductor Industry, the US-China Tech Fight, and Cross Strait Stability",
+      "canonical_title": "From the Archives | Taiwan’s Semiconductor Industry, the US-China Tech Fight, and Cross Strait Stability",
+      "url": "https://bsky.app/profile/fpriorbis.bsky.social/post/3mltfbaegjl2g",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@fpriorbis.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://orbisjournal.org/from-the-archives-taiwans-semiconductor-industry-the-us-china-tech-fight-and-cross-strait-stability/",
+          "alt_text": "From the Archives | Taiwan’s Semiconductor Industry, the US-China Tech Fight, and Cross Strait Stability",
+          "source": "Bluesky_@fpriorbis.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "From the Archives | Taiwan’s Semiconductor Industry, the US-China Tech Fight, and Cross Strait Stability",
+        "Learn how Taiwan and TSMC lead in semiconductor manufacturing, shaping the future of technology and global markets."
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-05-14T17:55:48.245Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0067",
+      "signal_id": "SIG-20261105-0067",
+      "representative_title": "Iran standoff puts Taiwan chips at risk",
+      "canonical_title": "Iran standoff puts Taiwan chips at risk",
+      "url": "https://bsky.app/profile/phelimkine.bsky.social/post/3mhtgkh6gik27",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@phelimkine.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "MIDDLE_EAST",
+        "EAST_ASIA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://www.politico.com/newsletters/national-security-daily/2026/03/24/iran-standoff-puts-taiwan-chips-at-risk-00842114",
+          "alt_text": "Iran standoff puts Taiwan chips at risk",
+          "source": "Bluesky_@phelimkine.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "Iran standoff puts Taiwan chips at risk",
+        "Taiwan is scrambling to prevent its semiconductor sector from becoming a casualty of the Iran war."
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-03-24T20:38:04.610Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0071",
+      "signal_id": "SIG-20261105-0071",
+      "representative_title": "Tanker with Iranian crude heading towards India’s east coast, shipping data shows; could mark first import of Tehran’s oil in 7 years: Jaya, a Curacao-flagged v...",
+      "canonical_title": "Tanker with Iranian crude heading towards India’s east coast, shipping data shows; could mark first import of Tehran’s oil in 7 years: Jaya, a Curacao-flagged v...",
+      "url": "https://bsky.app/profile/rankednews.bsky.social/post/3miziwlu3gj2i",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@rankednews.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [],
+      "hotspot_regions": [],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:42han5exrxyrgdsbwosrp7sy/bafkreiftlyyreh6io4hisyfqvq44f7bt7h3i5g4x7rht4yj2tm3wssh6ri",
+          "alt_text": "Article image",
+          "source": "Bluesky_@rankednews.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "Article image"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-04-09T00:01:48.720Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0072",
+      "signal_id": "SIG-20261105-0072",
+      "representative_title": "BIS Fines German Firm Over Unlicensed Transfers to SMIC - Washington Trade & Tariff Letter",
+      "canonical_title": "BIS Fines German Firm Over Unlicensed Transfers to SMIC - Washington Trade & Tariff Letter",
+      "url": "https://bsky.app/profile/sensehofstede.nl/post/3mcywuifync25",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@sensehofstede.nl"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [
+        "SANCTIONS_EXPORT_CONTROL"
+      ],
+      "hotspot_regions": [
+        "EAST_ASIA",
+        "WESTERN_EUROPE",
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://www.wttlonline.com/stories/bis-fines-german-firm-million-over-unlicensed-transfers-to-smic,14677",
+          "alt_text": "BIS Fines German Firm Over Unlicensed Transfers to SMIC - Washington Trade & Tariff Letter",
+          "source": "Bluesky_@sensehofstede.nl"
+        }
+      ],
+      "visual_alt_texts": [
+        "BIS Fines German Firm Over Unlicensed Transfers to SMIC - Washington Trade & Tariff Letter",
+        "The U.S. Commerce Department’s Bureau of Industry and Security has imposed a $1.5 million civil penalty on Exyte Management GmbH, a Germany-based engineering and construction firm, for export-control ..."
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-01-22T10:07:21.873Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0075",
+      "signal_id": "SIG-20261105-0075",
+      "representative_title": "China's Rare Earth Export Curbs Could Pressure Robot Production, REalloys Gains Traction",
+      "canonical_title": "China's Rare Earth Export Curbs Could Pressure Robot Production, REalloys Gains Traction",
+      "url": "https://bsky.app/profile/vaultlynews.bsky.social/post/3mybku2f6ju2g",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@vaultlynews.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "RARE_EARTHS"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://vaultly-omega.vercel.app/en/article/china-rare-earth-export-controls-robotics-impact",
+          "alt_text": "China's Rare Earth Export Curbs Could Pressure Robot Production, REalloys Gains Traction",
+          "source": "Bluesky_@vaultlynews.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "China's Rare Earth Export Curbs Could Pressure Robot Production, REalloys Gains Traction",
+        "Score 7/10 · Impatto: Medium · Finestra: 1 week Asset: Rare Earth Magnets, Humanoid Robots, Tesla, REalloys (ALOY) Geopolitical supply chain risks for critical minerals like rare earths could impact advanced manufacturing and create opportu"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-10-20T02:15:24.041Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0011",
+      "signal_id": "SIG-20261105-0011",
+      "representative_title": "Oil price path in 2026-2027 may be higher than forecasted in July — Bank of Russia",
+      "canonical_title": "Oil price path in 2026-2027 may be higher than forecasted in July — Bank of Russia",
+      "url": "https://tass.com/economy/2213389",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "ru_tass_en_rss"
+      ],
+      "source_types": [
+        "state_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.8,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EASTERN_EUROPE"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Thu, 05 Nov 2026 18:07:28 +0300",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0018",
+      "signal_id": "SIG-20261105-0018",
+      "representative_title": "Have Ukrainian Drones Really Knocked Out 38% of Russia’s Oil Refining Capacity? - Carnegie Endowment for International Peace",
+      "canonical_title": "Have Ukrainian Drones Really Knocked Out 38% of Russia’s Oil Refining Capacity? - Carnegie Endowment for International Peace",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPbW5PSVA4YkhkUFFaTHpOMVA2RFhjclNrdVgxT3RXamRtdnRHbWJHR0tjcDBXUlROd1gxS1RkTndVb3ZBN29FUWZVMzVfVG5Ya2xSZlh3N2tINFUyRG9RZnBvS2RkeHV3V1A4SXpyeWNOMUpmOWRpa19vODBhM0pyMnV4QlZEV05yYi1PeUJ3?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "carnegie_russia_eurasia"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.8,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EASTERN_EUROPE"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Fri, 03 Oct 2025 07:00:00 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0042",
+      "signal_id": "SIG-20261105-0042",
+      "representative_title": "Researchers develop new semiconductor material 00:03 An international research team co-led by National Taiwan University (NTU) professor Chou Yi-chia (周苡嘉) has developed a “2D” semiconductor made of",
+      "canonical_title": "Researchers develop new semiconductor material 00:03 An international research team co-led by National Taiwan University (NTU) professor Chou Yi-chia (周苡嘉) has developed a “2D” semiconductor made of",
+      "url": "https://bsky.app/profile/taipei-times.pbs.idv.tw.ap.brid.gy/post/3mzdp7onzfkg2",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_Social"
+      ],
+      "source_types": [
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.8,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-11-02",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0043",
+      "signal_id": "SIG-20261105-0043",
+      "representative_title": "Students will gain hands-on experience with the equipment and processes used to make computer chips through a new program launched with Taiwan Semiconductor Manufacturing Company, the world’s leading",
+      "canonical_title": "Students will gain hands-on experience with the equipment and processes used to make computer chips through a new program launched with Taiwan Semiconductor Manufacturing Company, the world’s leading",
+      "url": "https://bsky.app/profile/ucsandiego.bsky.social/post/3mzdl57db5p2o",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_Social"
+      ],
+      "source_types": [
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.8,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-11-02",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0049",
+      "signal_id": "SIG-20261105-0049",
+      "representative_title": "斷電等同斷供全世界！台積電成兵推關鍵警告 中共這招比打仗更可怕 - TVBS新聞網",
+      "canonical_title": "斷電等同斷供全世界！台積電成兵推關鍵警告 中共這招比打仗更可怕 - TVBS新聞網",
+      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE11RUczVm9HUWdNR3R2VTBwSGdBalZFeUppZjRsS3A0RDk1VFpsVlBvMXEzNzNRWVZERk1DeTF1QTh4UFp3ZXZ6aC04NXBxZjNta25j?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "GoogleNews_TW"
+      ],
+      "source_types": [
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.8,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [
+        "MILITARY_CONFLICT",
+        "INFRA_LOGISTICS_DISRUPTION"
+      ],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Wed, 12 Aug 2026",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0074",
+      "signal_id": "SIG-20261105-0074",
+      "representative_title": "Why Trump Can't Afford to Lose The Rare Earth Race",
+      "canonical_title": "Why Trump Can't Afford to Lose The Rare Earth Race",
+      "url": "https://bsky.app/profile/bigearthdata.ai/post/3myjcxrkpsq2v",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@bigearthdata.ai"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.8,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "RARE_EARTHS"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://oilprice.com/Energy/Energy-General/Why-Trump-Cant-Afford-to-Lose-The-Rare-Earth-Race.html",
+          "alt_text": "Why Trump Can't Afford to Lose The Rare Earth Race",
+          "source": "Bluesky_@bigearthdata.ai"
+        }
+      ],
+      "visual_alt_texts": [
+        "Why Trump Can't Afford to Lose The Rare Earth Race",
+        "For years, the West has searched for a technological escape hatch from rare earths. Engineers have developed new motor designs, alternative magnet chemistries, and materials that reduce or even eliminate the need for some critical minerals."
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-10-23T04:15:36.849709+00:00",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0014",
+      "signal_id": "SIG-20261105-0014",
+      "representative_title": "Два танкера с российским дизелем, направлявшиеся в США, сменили курс - The Insider",
+      "canonical_title": "Два танкера с российским дизелем, направлявшиеся в США, сменили курс - The Insider",
+      "url": "https://news.google.com/rss/articles/CBMiQ0FVX3lxTE9OcHluaGxyQ1BzU0FmRDEycEdsRGpCd2lXRmhwZ1dNeTZXMGRXY0Q0c1B2RWtaYWxFcC1JbUNhWjBMbG8?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "ru_insider_rss"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.5,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EASTERN_EUROPE",
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Thu, 05 Nov 2026 13:26:47 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0020",
+      "signal_id": "SIG-20261105-0020",
+      "representative_title": "Majid Majidi to chair jury of Bosphorus Film Festival",
+      "canonical_title": "Majid Majidi to chair jury of Bosphorus Film Festival",
+      "url": "https://www.tehrantimes.com/news/531826/Majid-Majidi-to-chair-jury-of-Bosphorus-Film-Festival",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "ir_tehran_times_rss"
+      ],
+      "source_types": [
+        "state_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.5,
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_BOSPHORUS",
+          "name": "보스포루스 및 흑해 해협 (Bosphorus & Turkish Straits)",
+          "region": "Eurasia / Black Sea",
+          "primary_supply": [
+            "GRAIN_FOOD",
+            "CRUDE_OIL"
+          ]
+        }
+      ],
+      "supply_chain_tags": [],
+      "event_types": [],
+      "hotspot_regions": [],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://media.tehrantimes.com/d/t/2026/11/04/4/6248126.jpg",
+          "alt_text": "Majid Majidi to chair jury of Bosphorus Film Festival",
+          "source": "ir_tehran_times_rss"
+        }
+      ],
+      "visual_alt_texts": [
+        "Majid Majidi to chair jury of Bosphorus Film Festival"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Wed, 04 Nov 2026 17:13:15 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0029",
+      "signal_id": "SIG-20261105-0029",
+      "representative_title": "Iraq Jails Ex-Oil Boss for Eight Years Over $119M Kickback Scheme",
+      "canonical_title": "Iraq Jails Ex-Oil Boss for Eight Years Over $119M Kickback Scheme",
+      "url": "https://www.occrp.org/en/news/raq-jails-ex-oil-boss-for-eight-years-over-119m-kickback-scheme",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "global_occrp_rss"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.5,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "MIDDLE_EAST"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://www.occrp.org/processed/containers/assets/iraq-oil-field.jpg/808dbf07bf7448e6d0f427836b18f636/iraq-oil-field.jpg",
+          "alt_text": "Iraq Jails Ex-Oil Boss for Eight Years Over $119M Kickback Scheme",
+          "source": "global_occrp_rss"
+        }
+      ],
+      "visual_alt_texts": [
+        "Iraq Jails Ex-Oil Boss for Eight Years Over $119M Kickback Scheme"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Wed, 04 Nov 2026 22:53:00 +0100",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0030",
+      "signal_id": "SIG-20261105-0030",
+      "representative_title": "DRC Orders Probe into Illegal Mining Following Major Copper and Cobalt Seizure",
+      "canonical_title": "DRC Orders Probe into Illegal Mining Following Major Copper and Cobalt Seizure",
+      "url": "https://www.occrp.org/en/news/drc-orders-probe-into-illegal-mining-following-major-copper-and-cobalt-seizure",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "global_occrp_rss"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.5,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "BATTERY_MINERALS"
+      ],
+      "event_types": [],
+      "hotspot_regions": [],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://www.occrp.org/processed/containers/assets/news-brief-generic-africa.jpg/ec691917b7a0604aae4755d16a7c006e/news-brief-generic-africa.jpg",
+          "alt_text": "DRC Orders Probe into Illegal Mining Following Major Copper and Cobalt Seizure",
+          "source": "global_occrp_rss"
+        }
+      ],
+      "visual_alt_texts": [
+        "DRC Orders Probe into Illegal Mining Following Major Copper and Cobalt Seizure"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Tue, 03 Nov 2026 19:02:00 +0100",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0037",
+      "signal_id": "SIG-20261105-0037",
+      "representative_title": "‏ ️ تازه‌ترین تصاویر از تنگهٔ هرمز ‎ ✅ @sepah_pasdaran",
+      "canonical_title": "‏ ️ تازه‌ترین تصاویر از تنگهٔ هرمز ‎ ✅ @sepah_pasdaran",
+      "url": "https://t.me/sepah_pasdaran/215246",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Telegram_@sepah_pasdaran"
+      ],
+      "source_types": [
+        "telegram_osint"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.5,
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_HORMUZ",
+          "name": "호르무즈 해협 (Strait of Hormuz)",
+          "region": "Middle East / Persian Gulf",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG"
+          ]
+        }
+      ],
+      "supply_chain_tags": [],
+      "event_types": [],
+      "hotspot_regions": [],
+      "has_visual_media": true,
+      "visual_modalities": [
+        "FIELD_PHOTO_VIDEO"
+      ],
+      "media_attachments": [
+        {
+          "type": "video",
+          "url": "https://cdn4.telesco.pe/file/03d513ecf5.mp4?token=AFU8WxxFe3XXia02Xzfb0vH5a_RAJkTBgqub1lMIuaBeeY7zNor3ABUgTHY8HuwJIf1xE-1mJqVMVubbCwAYalcB6T4zxRyu_F_eticRCLZ1gdwSVwxKgZFiV2qBPKhDEoAnow8VmPqPVGvWVqoOwJlVwLeYnnXkoEtNrVujuw9cSVfhceIRL00gLrS4Cu_qneOtVuUDhlo5UI6S7LnyIwVt_D38UCnZsQuTTTSKf8OYRAWVeBx2W9rLWrdq5X11ef2kCPNZEBua464IgFaftKoTG_kI2cC7zFUeJpgJ7iN_k4jXcRU_S0L03BaLudRBv8d9-zXfqEjWQm8b2CqGKaeabU_Da2k8UiQ1_FIDqWV12dpW-GLoD99L1HJhVdpxYHVGbFkaZVLWF-_EzhfTtbfeD-KfiPYn2ajPamG7E3Kw9u4a7NTIiEEcg2q5rkpS9RFvWwQWKAksTSbK3TljZAijwVBbrld2yQH0IKmme4cf3I-MGKYHt6Qtzs-yOYzuxNZqt6R0Eb3_sqkxzVNvmLn0cha4StG0quXnjoNy8ooj705ldYiuy-bTeURh-RtqQbZE2uhxZcKZX2OAhIn-TCialaR81bHAg427N8lDqml8tst3lmOpCxNK0QrK4k4SHKfp0Qgz7krrbgWcZ00MWqEdrcnfYMn6xpVhNSsUhj8",
+          "alt_text": "",
+          "source": "Telegram_@sepah_pasdaran"
+        }
+      ],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-11-05T15:32:59.345576+00:00",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0039",
+      "signal_id": "SIG-20261105-0039",
+      "representative_title": "سمكة ذيلها مرقّط بالذهب.. اكتشاف في أعماق البحر الأحمر https://ara.tv/c9jso",
+      "canonical_title": "سمكة ذيلها مرقّط بالذهب.. اكتشاف في أعماق البحر الأحمر https://ara.tv/c9jso",
+      "url": "https://t.me/Alarabiya/169107",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Telegram_@AlArabiya"
+      ],
+      "source_types": [
+        "telegram_osint"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.5,
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_BAB_EL_MANDEB",
+          "name": "바브엘만데브 해협 및 홍해 (Bab-el-Mandeb & Red Sea)",
+          "region": "Middle East / Red Sea",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG",
+            "SEMICONDUCTOR"
+          ]
+        }
+      ],
+      "supply_chain_tags": [],
+      "event_types": [],
+      "hotspot_regions": [],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-11-05T15:32:59.345576+00:00",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0033",
+      "signal_id": "SIG-20261105-0033",
+      "representative_title": "Смартфон може раптово вимкнутися на морозі навіть із зарядженою батареєю: як захистити телефон узимку, — CHIP 📍 Найпростіший спосіб — носити телефон у внутрішні...",
+      "canonical_title": "Смартфон може раптово вимкнутися на морозі навіть із зарядженою батареєю: як захистити телефон узимку, — CHIP 📍 Найпростіший спосіб — носити телефон у внутрішні...",
+      "url": "https://t.me/UaOnlii/135788",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Telegram_@UaOnlii"
+      ],
+      "source_types": [
+        "telegram_osint"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.2,
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://cdn4.telesco.pe/file/cM78HHrNmS54BM6SpsrwotohBcC6PSCjAmvElMbg03TxeZQklrG7n04-OJ07MenwgkvOtiomgEQ3FYxFLoUZ3WknFv5XRo5U6Ms3OqIMxljDRtMapakBMuPoW10VAt2URNqQgkbrCLMVju3Hx5MQX9b0Pq1SI0gzSYk2Gxxa_gDFVbWhj2JfnHgNVUwQaYQmz_7Wc4a767cdePglf7SO-RAbPMDPYFKmZP54FU5cyHDrahfByFlctnvPUWmW9dP_7pIlc8uGlNa--h58YFa-OlJpWZisoGJcv4s2As71m_-9r_614LYt2Jx2Nc6Rngu37zfj9KUN5tbE-4ccfPwFPg.jpg",
+          "alt_text": "",
+          "source": "Telegram_@UaOnlii"
+        }
+      ],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-11-05T15:32:59.345576+00:00",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-05T15:53:29.111101+00:00"
+    }
+  ]
+}

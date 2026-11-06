@@ -110,6 +110,10 @@ def main():
                          help="구글 트렌드 위험 행동 지표(fetch_google_trends.py) 수집 생략")
     parser.add_argument("--skip-local-opinions", action="store_true",
                          help="대안 로컬 여론 5대 센서(fetch_local_opinions.py) 수집 생략")
+    parser.add_argument("--skip-bluesky", action="store_true",
+                         help="블루스카이 공개 신호 수집 생략")
+    parser.add_argument("--skip-telegram", action="store_true",
+                         help="텔레그램 공개 채널 OSINT 수집 생략")
     parser.add_argument("--skip-chokepoints", action="store_true",
                          help="해협·항만 및 해상 운임·에너지 센서(fetch_maritime_chokepoints.py) 수집 생략")
     parser.add_argument("--skip-cross-verification", action="store_true",
@@ -118,6 +122,10 @@ def main():
                          help="GDELT Cloud Events를 로컬 QU 안전장치와 함께 1회 수집 (기본값: 실행하지 않음)")
     parser.add_argument("--with-whitehouse", action="store_true",
                          help="백악관 공식 RSS 수집 (기본값: 실행하지 않음)")
+    parser.add_argument("--with-federal-register", action="store_true",
+                         help="미국 연방관보(Federal Register) 정책·통상·수출통제 공식 고시 수집 (기본값: 실행하지 않음)")
+    parser.add_argument("--with-x", action="store_true",
+                         help="공식 X API recent search 1페이지 수집 (유료·종량제, 기본값: 실행하지 않음)")
     parser.add_argument("--sync-notion", action="store_true",
                          help="파이프라인 실행 완료 후 Notion 프로젝트 허브(작업 보드 및 보고서) 자동 동기화")
     args = parser.parse_args()
@@ -155,12 +163,20 @@ def main():
             steps.append(("구글 트렌드 위험 행동 지표 수집", "collection/fetch_google_trends.py", []))
         if not args.skip_local_opinions:
             steps.append(("대안 로컬 여론 5대 센서 통합 수집", "collection/fetch_local_opinions.py", []))
+        if not args.skip_bluesky:
+            steps.append(("블루스카이(Bluesky AT Protocol) 공개 신호 수집", "collection/fetch_bluesky_public.py", []))
+        if not args.skip_telegram:
+            steps.append(("텔레그램 공개 채널 OSINT 수집", "collection/fetch_telegram_public.py", []))
         if not args.skip_chokepoints:
             steps.append(("해협·항만 및 해상 운임·에너지 센서 수집", "collection/fetch_maritime_chokepoints.py", []))
         if args.with_gdelt_cloud:
             steps.append(("GDELT Cloud Events 제한 수집 (QU 안전장치 적용)", "collection/fetch_gdelt_cloud_events.py", []))
         if args.with_whitehouse:
             steps.append(("백악관 공식 RSS 수집", "collection/fetch_whitehouse_official.py", []))
+        if args.with_federal_register:
+            steps.append(("미국 연방관보(Federal Register) 공식 고시 수집", "collection/fetch_federal_register.py", []))
+        if args.with_x:
+            steps.append(("X 공개 정보환경 신호 (공식 API, 1페이지)", "collection/fetch_x_public.py", []))
         if not args.skip_cross_verification:
             steps.append(("GDELT 사건 및 복수 계통 시계열 교차검증", "analysis/cross_verify_events.py", []))
     # 수집 전용 실행에서는 DB·대시보드 후처리를 붙이지 않습니다.

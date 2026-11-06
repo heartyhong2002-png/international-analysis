@@ -1,0 +1,72 @@
+{
+  "collector": "scripts/collection/fetch_bluesky_public.py",
+  "source_id": "bluesky_public_search",
+  "signal_class": "online_information_environment_signal",
+  "multimodal_zero_byte_mode": true,
+  "observed_at": "2026-11-05T15:34:29.959191+00:00",
+  "total_unique_posts": 50,
+  "posts_with_images_or_video": 9,
+  "posts_with_external_cards": 34,
+  "queries_executed": 8,
+  "alert_level_set": false,
+  "verification_state_set": false,
+  "query_receipts": [
+    {
+      "query": "Strait of Hormuz oil tanker",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_fetched": 8,
+      "media_items_fetched": 3
+    },
+    {
+      "query": "Red Sea Houthi shipping",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_fetched": 8,
+      "media_items_fetched": 7
+    },
+    {
+      "query": "Taiwan Strait semiconductor TSMC",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_fetched": 7,
+      "media_items_fetched": 6
+    },
+    {
+      "query": "Panama Canal shipping drought",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_fetched": 8,
+      "media_items_fetched": 8
+    },
+    {
+      "query": "Malacca Strait shipping tanker",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_fetched": 3,
+      "media_items_fetched": 3
+    },
+    {
+      "query": "US export control tariff China semiconductor",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_fetched": 1,
+      "media_items_fetched": 1
+    },
+    {
+      "query": "OFAC sanctions Russia Iran oil",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_fetched": 8,
+      "media_items_fetched": 7
+    },
+    {
+      "query": "rare earths critical minerals supply chain",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_fetched": 8,
+      "media_items_fetched": 8
+    }
+  ],
+  "license_access_note": "Public Bluesky AT Protocol searchPosts API (no auth required). 0-byte multimodal metadata only. Online information-environment signal only, never ground truth."
+}

@@ -1,0 +1,1757 @@
+{
+  "schema_version": "preprocess_rejects_v1",
+  "generated_at": "2026-11-05T15:52:21.072453+00:00",
+  "purity_mode": "standard",
+  "total_rejected": 217,
+  "reason_breakdown": {
+    "low_geopolitical_relevance": 190,
+    "ad_or_soft_section": 12,
+    "entertainment_sports_noise": 11,
+    "diplomatic_protocol_noise": 1,
+    "empty_title": 2,
+    "retrospective_or_non_current_noise": 1
+  },
+  "lane_breakdown": {
+    "FAST": 16,
+    "CONTEXT": 183,
+    "OPINION": 18
+  },
+  "rejects": [
+    {
+      "title": "Iranian girl secures country’s first quota for 2028 Olympics",
+      "url": "https://en.irna.ir/news/86313510/Iranian-girl-secures-country-s-first-quota-for-2028-Olympics",
+      "source": "IRNA (이란 국영 통신사)",
+      "lane": "FAST",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Why has Cristiano Ronaldo retired from international football?",
+      "url": "https://www.aljazeera.com/sports/2026/11/5/why-has-cristiano-ronaldo-retired-from-international-football?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "ad_or_soft_section",
+      "relevance_score": 0.0
+    },
+    {
+      "title": "Ronaldo in records: International milestones from the football icon",
+      "url": "https://www.aljazeera.com/sports/2026/11/5/ronaldo-in-records-international-milestones-from-the-football-icon?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "ad_or_soft_section",
+      "relevance_score": 0.0
+    },
+    {
+      "title": "Why Guinea-Bissau halted a controversial hepatitis vaccine trial for babies",
+      "url": "https://www.aljazeera.com/news/2026/11/5/why-guinea-bissau-halted-a-controversial-hepatitis-vaccine-trial-for-babies?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Burning rubbish chokes besieged Yemeni city of Taiz",
+      "url": "https://www.aljazeera.com/features/2026/11/5/burning-rubbish-chokes-besieged-yemeni-city-of-taiz?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Padel’s Olympic ambition",
+      "url": "https://www.aljazeera.com/video/newsfeed/2026/11/5/padels-olympic-ambition?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "3,000 tarantulas hidden inside luggage seized at Peruvian airport",
+      "url": "https://www.aljazeera.com/video/newsfeed/2026/11/5/3000-tarantulas-hidden-inside-luggage-seized-at-peruvian-airport?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Cristiano Ronaldo announces international retirement",
+      "url": "https://www.aljazeera.com/video/newsfeed/2026/11/5/cristiano-ronaldo-announces-international-retirement?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "entertainment_sports_noise",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "New Yorkers rally against gun violence after Ghanaian teen’s killing",
+      "url": "https://www.aljazeera.com/video/newsfeed/2026/11/5/new-yorkers-rally-against-gun-violence-after-ghanaian-teens-killing?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Why more investment is not making housing affordable in Ghana",
+      "url": "https://www.aljazeera.com/news/2026/11/5/why-more-investment-is-not-making-housing-affordable-in-ghana?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‘Knives out’: Will Congress impeach Pete Hegseth after GOP midterms loss?",
+      "url": "https://www.aljazeera.com/news/2026/11/5/knives-out-will-congress-impeach-pete-hegseth-after-gop-midterms-loss?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Visualising how the US midterms turned the map blue",
+      "url": "https://www.aljazeera.com/news/2026/11/5/visualising-how-the-us-midterms-turned-the-map-blue?traffic_source=rss",
+      "source": "Al Jazeera",
+      "lane": "FAST",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Operação mira rede ilegal de bets que movimentou R$ 734 milhões",
+      "url": "https://agenciabrasil.ebc.com.br/justica/noticia/2026-11/operacao-mira-rede-ilegal-de-bets-que-movimentou-r-734-milhoes",
+      "source": "Agência Brasil (브라질 국영 통신사)",
+      "lane": "FAST",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Ministro diz que novos impostos não trazem aumento de carga tributária",
+      "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/ministro-diz-que-novos-impostos-nao-trazem-aumento-de-carga-tributaria",
+      "source": "Agência Brasil (브라질 국영 통신사)",
+      "lane": "FAST",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "PF faz operação no Rio para conter repasses ilegais de arma a CACs",
+      "url": "https://agenciabrasil.ebc.com.br/geral/noticia/2026-11/pf-faz-operacao-no-rio-para-conter-repasses-ilegais-de-arma-cacs",
+      "source": "Agência Brasil (브라질 국영 통신사)",
+      "lane": "FAST",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Juíza sugere medidas mais duras contra torcidas organizadas",
+      "url": "https://agenciabrasil.ebc.com.br/justica/noticia/2026-11/juiza-sugere-medidas-mais-duras-contra-torcidas-organizadas",
+      "source": "Agência Brasil (브라질 국영 통신사)",
+      "lane": "FAST",
+      "reject_reason": "entertainment_sports_noise",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Russian Olympic Committee must keep protecting national athletes’ rights — Putin",
+      "url": "https://tass.com/politics/2213421",
+      "source": "ru_tass_en_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Sber among leaders in AI sovereign platforms development, Putin says",
+      "url": "https://tass.com/politics/2213419",
+      "source": "ru_tass_en_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Thirteen European passenger airplanes made emergency landings due to bomb threats",
+      "url": "https://tass.com/emergencies/2213427",
+      "source": "ru_tass_en_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Total debt of developing countries hits record $9.4 trillion — World Bank",
+      "url": "https://tass.com/economy/2213403",
+      "source": "ru_tass_en_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Krasnoyarsk Region plans to launch satellite manufacturing center project in 2027",
+      "url": "https://tass.com/science/2213391",
+      "source": "ru_tass_en_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Бывший совладелец национализированного Соликамского магниевого завода попросил убежище во Франции",
+      "url": "https://meduza.io/news/2026/11/05/byvshiy-sovladelets-natsionalizirovannogo-solikamskogo-magnievogo-zavoda-poprosil-ubezhische-vo-frantsii",
+      "source": "ru_meduza_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Умер основатель бренда «Экспедиция» Александр Кравцов",
+      "url": "https://meduza.io/news/2026/11/05/umer-osnovatel-brenda-ekspeditsiya-aleksandr-kravtsov",
+      "source": "ru_meduza_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "В СИЗО Симферополя погибла учительница из Харькова",
+      "url": "https://istories.media/news/2026/11/05/v-sizo-sevastopolya-pogibla-uchitelnitsa-iz-kharkova/",
+      "source": "ru_istories_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Путин отдал во временное управление активы крупного производителя сигарет JTI",
+      "url": "https://istories.media/news/2026/11/05/putin-otdal-vo-vremennoe-upravlenie-aktivi-krupnogo-proizvoditelya-sigaret-jti/",
+      "source": "ru_istories_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Хакеры заявили о краже 23 ТБ данных Росстата, включая сведения о потерях на войне. Ведомство отрицает утечку - The Insider",
+      "url": "https://news.google.com/rss/articles/CBMiQ0FVX3lxTFA2LWN0eDBRcXczaUszb0pmVnBNLVphSWkzUTNpNjdNeHk5OTJQc0VhTWsteE1sMExScEJTNl9JaDFjVlU?oc=5",
+      "source": "ru_insider_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Главные новости, расследования, фактчекинг — The Insider - theins.ru",
+      "url": "https://news.google.com/rss/articles/CBMiNEFVX3lxTE84YVpPY2NwMkduM0ZQclR5OVYyVmtsNXAxd2ZFNk1nN2pUWW1DT3N5Wlp1ZVg?oc=5",
+      "source": "ru_insider_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Главные новости, расследования, фактчекинг - theins.ru",
+      "url": "https://news.google.com/rss/articles/CBMiOkFVX3lxTE12RUF3X2lCWW9nQ3Flall3cFZrTHhxVFgxVFh2djJlSEhfVHZyUk5TeFFvTG5SRkJuWHc?oc=5",
+      "source": "ru_insider_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Inside the Secretive, Contradictory World of Campaign Ads Funded by AI Super PACs",
+      "url": "https://www.bellingcat.com/news/2026/11/02/ai-super-pacs-political-advertising/",
+      "source": "bellingcat_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Can LLMs Supercharge Geolocations? Our Tests Show Big Improvements But Humans Remain Key",
+      "url": "https://www.bellingcat.com/resources/2026/10/22/can-llms-supercharge-geolocations-our-tests-show-big-improvements-but-humans-remain-key/",
+      "source": "bellingcat_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Groups Associated With India’s Far-Right Receive Millions Through US Donor-Advised Funds",
+      "url": "https://www.bellingcat.com/news/2026/10/06/dafs-india-rss-donations/",
+      "source": "bellingcat_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Christy Kinahan’s UAE Residence Visa Cancelled",
+      "url": "https://www.bellingcat.com/news/2026/09/19/christy-kinahans-uae-residence-visa-cancelled/",
+      "source": "bellingcat_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Bellingcat Official Merch Design Contest",
+      "url": "https://www.bellingcat.com/uncategorized/2026/09/14/bellingcat-official-merch-design-contest/",
+      "source": "bellingcat_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "About Strategic Europe - Carnegie Endowment for International Peace",
+      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE55bVA5Y05wQklhOHNvb2RBbnR4S2t3bTAtVDZBUjl5SmRHUldnb1BtdnhTSjlHcEoyLVJGc1Y1MlFwWFZnaGVmOFZQQmtJMVp1VzdDdmp6MWtQRXFaUkFWU0JCMA?oc=5",
+      "source": "carnegie_russia_eurasia",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Russian Offensive Campaign Assessment, November 1, 2026 - Institute for the Study of War",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPdHYyWUtEM29yQWxqUFdreGhJM0NwQi1OVHczeDgzQS1pZ19WWFd5V0tUNUVjR1RoQWRvQ3dUaGhvTnZwS29pYW1kTnRUd3ZaNHFaNzQ0a2FmOGUyM2htWHBRTnFONHJKVEUwbjBrQ1FfcU5XQUJDajRQbUwzRE42UVM1a0NKREYtQ2k3UUhIX0wxZngzclk0b215SjBUZUpRQUNUMEVKc09OVGs?oc=5",
+      "source": "isw_war_studies",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Russian Offensive Campaign Assessment, November 4, 2026 - Institute for the Study of War",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPQUs3b2pfMjM2cGdvOUh0Ylp5elBTekxyWVQ2M0t2M0I3NV9QcmMyaFhiMkFtZm8tME5nMXlnSk1lbFRaUEN6NXE1MlhPQzJkamJxZkgwOWR4T3oyZVhaVXB4UlluM2IwZEl5V19NdVNIRHQxSHdDQnpWbGgtT0E2UGZVVmIwbXFzU3NZVGhvNFluU0w1MWNRVXYtMmpSNzhuMGJnZy1yLUNkRzA?oc=5",
+      "source": "isw_war_studies",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Home | Institute for the Study of War - Institute for the Study of War",
+      "url": "https://news.google.com/rss/articles/CBMiQ0FVX3lxTFBRX2plQTEzNGhLQVN0dDVYcGFKZTZHbDByUk9DVDVPVUF5MjFoZnQ2ZGdJb3pHdThXWGhDT3NtcjUtSVk?oc=5",
+      "source": "isw_war_studies",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Russian Offensive Campaign Assessment, October 31, 2026 - Institute for the Study of War",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPN0xCTUNMNnRUYXgweHl6TWQtVXJMTy1icFhWbEUyVERoLU1yYnhWZkhleGdSNFd2TzdtSXpxVjlSWldUWDQySHdlSXE3bllTZFlYbGQ2OEZoNlUyRzktNno4SmpLR3ZjS1NTUXdFX2Q3ZVJTRm1QQXROU05lTHJzVENJSWZOREVXYkhCZklwZGctTWlKaHM0Slljemd1U1pZS044WTlLSE9STTA?oc=5",
+      "source": "isw_war_studies",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "'Snowflakes, Uzbekistan's future Olympic stars",
+      "url": "http://english.people.com.cn\n/90777/8065708.html",
+      "source": "cn_people_daily_world_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "entertainment_sports_noise",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Expo 2017 to bring Kazakhstan under global spotlight: Kazakh FM",
+      "url": "http://english.people.com.cn\n/90777/8065488.html",
+      "source": "cn_people_daily_world_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "diplomatic_protocol_noise",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "1",
+      "url": "http://english.people.com.cn\n/90777/8065032.html",
+      "source": "cn_people_daily_world_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "empty_title",
+      "relevance_score": 0.0
+    },
+    {
+      "title": "Thai police seizes 1.3 million meth pills in Chumphon",
+      "url": "http://english.people.com.cn\n/90777/8064767.html",
+      "source": "cn_people_daily_world_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Live K-pop show makes South Korea more real to former North Korean arts troupe singer",
+      "url": "https://rfa.org/english/korea/2026/10/23/kpop-seoul-north-korea-escapees/",
+      "source": "cn_rfa_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "entertainment_sports_noise",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "The Bio-Pharma Industry and Society",
+      "url": "https://www.csis.org/events/bio-pharma-industry-and-society",
+      "source": "csis_global",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Strategic Opportunities in the Indo-Asia-Pacific with Admiral Harry B. Harris",
+      "url": "https://www.csis.org/events/strategic-opportunities-indo-asia-pacific-admiral-harry-b-harris",
+      "source": "csis_global",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Forward defence in depth: how to preserve Australia’s strategy of denial",
+      "url": "https://www.aspistrategist.org.au/forward-defence-in-depth-how-to-preserve-australias-strategy-of-denial/",
+      "source": "aspi_strategist",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Australia’s defence investment must build the industry to sustain a fight",
+      "url": "https://www.aspistrategist.org.au/australias-defence-investment-must-build-the-industry-to-sustain-a-fight/",
+      "source": "aspi_strategist",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Australia’s small business strategy must make employing and growing easier",
+      "url": "https://www.aspistrategist.org.au/australias-small-business-strategy-must-make-employing-and-growing-easier/",
+      "source": "aspi_strategist",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "15465",
+      "url": "https://www.tehrantimes.com/photo/531849/15465",
+      "source": "ir_tehran_times_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "empty_title",
+      "relevance_score": 0.0
+    },
+    {
+      "title": "‘Insidious: Out of the Further’ screened, discussed in Tehran",
+      "url": "https://www.tehrantimes.com/news/531790/Insidious-Out-of-the-Further-screened-discussed-in-Tehran",
+      "source": "ir_tehran_times_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Iranian director wins at 14th Asian Film Festival Barcelona",
+      "url": "https://www.tehrantimes.com/news/531825/Iranian-director-wins-at-14th-Asian-Film-Festival-Barcelona",
+      "source": "ir_tehran_times_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Mobile library dedicated to Minab school martyrs launched",
+      "url": "https://www.tehrantimes.com/news/531789/Mobile-library-dedicated-to-Minab-school-martyrs-launched",
+      "source": "ir_tehran_times_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "هل يمكننا إعادة اكتشاف أهلنا اليوم؟",
+      "url": "https://raseef22.net/article/1102654-%D9%87%D9%84-%D9%8A%D9%85%D9%83%D9%86%D9%86%D8%A7-%D8%A5%D8%B9%D8%A7%D8%AF%D8%A9-%D8%A7%D9%83%D8%AA%D8%B4%D8%A7%D9%81-%D8%A3%D9%87%D9%84%D9%86%D8%A7-%D8%A7%D9%84%D9%8A%D9%88%D9%85",
+      "source": "me_raseef22_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "فلّاح شاب ومدني في منتصف العمر",
+      "url": "https://raseef22.net/article/1102650-%D9%81%D9%84%D8%A7%D8%AD-%D8%B4%D8%A7%D8%A8-%D9%88%D9%85%D8%AF%D9%86%D9%8A-%D9%81%D9%8A-%D9%85%D9%86%D8%AA%D8%B5%D9%81-%D8%A7%D9%84%D8%B9%D9%85%D8%B1",
+      "source": "me_raseef22_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "عمال في القطاع الخاص خارج مظلّة التأمينات العراقية",
+      "url": "https://raseef22.net/article/1102647-%D8%B9%D9%85%D8%A7%D9%84-%D9%81%D9%8A-%D8%A7%D9%84%D9%82%D8%B7%D8%A7%D8%B9-%D8%A7%D9%84%D8%AE%D8%A7%D8%B5-%D8%AE%D8%A7%D8%B1%D8%AC-%D9%85%D8%B8%D9%84%D8%A9-%D8%A7%D9%84%D8%AA%D8%A3%D9%85%D9%8A%D9%86%D8%A7%D8%AA-%D8%A7%D9%84%D8%B9%D8%B1%D8%A7%D9%82%D9%8A%D8%A9",
+      "source": "me_raseef22_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "\"الدرويش المجنون\" الذي حمل السلاح… ما لا نعرفه عن التصوف في الصومال",
+      "url": "https://raseef22.net/article/1102646-%D8%A7%D9%84%D8%AF%D8%B1%D9%88%D9%8A%D8%B4-%D8%A7%D9%84%D9%85%D8%AC%D9%86%D9%88%D9%86-%D8%A7%D9%84%D8%B0%D9%8A-%D8%AD%D9%85%D9%84-%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D8%AD-%D9%85%D8%A7-%D9%84%D8%A7-%D9%86%D8%B9%D8%B1%D9%81%D9%87-%D8%B9%D9%86-%D8%A7%D9%84%D8%AA%D8%B5%D9%88%D9%81-%D9%81%D9%8A-%D8%A7%D9%84%D8%B5%D9%88%D9%85%D8%A7%D9%84",
+      "source": "me_raseef22_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "\"حقن الكلور\"... حين يُترك ثأرُ الصغار في أيدي الآباء \"الأبرار\"",
+      "url": "https://raseef22.net/article/1102651-%D8%AD%D9%82%D9%86-%D8%A7%D9%84%D9%83%D9%84%D9%88%D8%B1-%D8%AD%D9%8A%D9%86-%D9%8A%D8%AA%D8%B1%D9%83-%D8%AB%D8%A3%D8%B1-%D8%A7%D9%84%D8%B5%D8%BA%D8%A7%D8%B1-%D9%81%D9%8A-%D8%A3%D9%8A%D8%AF%D9%8A-%D8%A7%D9%84%D8%A2%D8%A8%D8%A7%D8%A1-%D8%A7%D9%84%D8%A3%D8%A8%D8%B1%D8%A7%D8%B1",
+      "source": "me_raseef22_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "أسبوع الميت في \"الطف\"... هل يرمّم اعتذار الأردن السيادة السورية؟",
+      "url": "https://raseef22.net/article/1102641-%D8%A3%D8%B3%D8%A8%D9%88%D8%B9-%D8%A7%D9%84%D9%85%D9%8A%D8%AA-%D9%81%D9%8A-%D8%A7%D9%84%D8%B7%D9%81-%D9%87%D9%84-%D9%8A%D8%B1%D9%85%D9%85-%D8%A7%D8%B9%D8%AA%D8%B0%D8%A7%D8%B1-%D8%A7%D9%84%D8%A3%D8%B1%D8%AF%D9%86-%D8%A7%D9%84%D8%B3%D9%8A%D8%A7%D8%AF%D8%A9-%D8%A7%D9%84%D8%B3%D9%88%D8%B1%D9%8A%D8%A9",
+      "source": "me_raseef22_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Tehran Judiciary Issues 163 Indictments in Connection with Recent Wars and Espionage Charges",
+      "url": "https://iranwire.com/en/news/158586-tehran-judiciary-issues-163-indictments-in-connection-with-recent-wars-and-espionage-charges/",
+      "source": "me_iranwire_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Luis Ernesto Franco dedica emotiva despedida a su hija Leila, quien murió a las 23 semanas; \"Hasta que nos volvamos a ver\"",
+      "url": "https://www.eluniversal.com.mx/espectaculos/luis-ernesto-franco-dedica-emotiva-despedida-a-su-hija-leila-quien-murio-a-las-23-semanas-hasta-que-nos-volvamos-a-ver/",
+      "source": "mx_el_universal_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Cinco momentos memorables de Cristiano Ronaldo con Portugal; se despide CR7",
+      "url": "https://www.eluniversal.com.mx/deportes/cinco-momentos-memorables-de-cristiano-ronaldo-con-portugal-se-despide-cr7/",
+      "source": "mx_el_universal_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "UIF actúa sin importar quién sea: dice Reyes Colmenares sobre Amílcar Olán; colabora con instituciones bancarias y de seguridad",
+      "url": "https://www.eluniversal.com.mx/nacion/uif-actua-sin-importar-quien-sea-dice-reyes-colmenares-sobre-amilcar-olan-colabora-con-instituciones-bancarias-y-de-seguridad/",
+      "source": "mx_el_universal_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "5 planes para escapar de CDMX este fin de semana",
+      "url": "https://www.eluniversal.com.mx/destinos/5-planes-para-escapar-de-cdmx-este-fin-de-semana/",
+      "source": "mx_el_universal_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Muere futbolista durante partido amateur en Los Cabos; investigan las causas",
+      "url": "https://www.eluniversal.com.mx/estados/muere-futbolista-durante-partido-amateur-en-los-cabos-investigan-las-causas/",
+      "source": "mx_el_universal_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Así opera la red empresarial de los hermanos Hernández Casillas en el INE; Anticorrupción denuncia simulación de competencia",
+      "url": "https://www.eluniversal.com.mx/nacion/asi-opera-la-red-empresarial-de-los-hermanos-hernandez-casillas-en-el-ine-anticorrupcion-denuncia-simulacion-de-competencia/",
+      "source": "mx_el_universal_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Unión Europea planea incorporar certificados de \"alfabetización en IA\"; buscan ayudar a jóvenes a \"saber cuándo desconectarse\"",
+      "url": "https://www.eluniversal.com.mx/mundo/union-europea-planea-incorporar-certificados-de-alfabetizacion-en-ia-buscan-ayudar-a-jovenes-a-saber-cuando-desconectarse/",
+      "source": "mx_el_universal_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Russell Brand, declarado culpable de los delitos de violación y agresión sexual",
+      "url": "https://www.eluniversal.com.mx/espectaculos/russell-brand-declarado-culpable-de-los-delitos-de-violacion-y-agresion-sexual/",
+      "source": "mx_el_universal_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Hallan sin vida a Sayuri Tajimaroa Ponce en Tijuana; llevaba 4 días desaparecida - Grupo Animal",
+      "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPMEw1NVdVenNEeVJPSnY3YXZTQ0VVLVRJN2p6c2ozRnJ0M255SjlLLV83N2R4VDJna1V4SnQ0YUY5X3pJYXRUYVd4MnRvMnNWYi1BQVRYc0hpQmZ3QmY1QWtIQ3l5aEF3cF9YOFRIbTFqdmQzMHJRdENjY0ZLcGpZTi1OZUN3WGV3d2NUYmlobw?oc=5",
+      "source": "mx_animal_politico_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Cártel de Jalisco opera en 27 estados del país; hay otros 18 grupos criminales - NarcoData",
+      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE5USEZXOXMzODFaajA2aXdxSWJiYms0c1dMUnk3dVFCS1o3VTFEbDhJWVhoUmdyRVBiSFZvbTZaaXZaNXl0azZOV0R6UEJ3YUFJNVdBVlFxWmIyT2JVdV8xaUhFTnM2c2ZmTU1UTi1CMno?oc=5",
+      "source": "mx_animal_politico_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "NarcoData - NarcoData",
+      "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTFBKMFVsRFlsSjc5bEY5ckpLb195Vng5RTRYSlNjVzJPeEVzN0NJU1M2eUlOMXYwaGpZWlZVelE5N18tNlI4d3Z1Tlp3TFJwUQ?oc=5",
+      "source": "mx_animal_politico_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "El Sabueso - Videos - Grupo Animal",
+      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFA2UTJzNkpQaE5NaVNGYThNTWRoUHZzQWwyc2lRZWVtcU5iN1VLanR6RU94bUlFd3NiMWxKUTZPc2h4b05HMUVJRXNVdk9qMTVhcWJac210dXZTY0Y4OVd5QS1SM3Z4OFk?oc=5",
+      "source": "mx_animal_politico_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Fábrica de empresas fantasma desvió más de 3 mil 617 mdp de Veracruz - Grupo Animal",
+      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQTVotWXh5N1BEd0h0VnRNNG1wQ09fLXRPRmZHeEg0MnFsbnhJRVhUa2tPT0RDQ1pnR2laYW52ZTB1MjViM1hNci15TlpwQ0g5MFBYZXh3dFN1WGRvREwtWHdyb2JVSFJDTjh1ZHd4WlFOVGQxNzI2aTE4UFBRLW41SElOcXBTTXhTZlNGNGM3SmRZX2FxYkJfbWdlUUxldFZ2QWZoRmpaWUh4RFNLTlBqblhGSWdmWFNT?oc=5",
+      "source": "mx_animal_politico_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "The Efficacy and Ethics of U.S. Counterterrorism Strategy - www.wilsoncenter.org",
+      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOR25DR2ZGMDBFaHBCajcyZ1BYZnM2NjZ1ZV8yenFFekpVUXJpaFNWc2pOS04tOEVoaG5PWXE4a0V6VTc4MHh5ZzczbDRPUEFvLXltelltSXRqT2NYa1FCWDM0d2FHZkp6d24xZ2syQWZ4Q3lEcTFQcUZza01DZWFBMU94UUJ2dk03M3NvY0hyaW4?oc=5",
+      "source": "wilson_center_mexico",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Chapter 3: Trade Agreements and Economic Theory - wilsoncenter.org",
+      "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPUTVLcXl5QzlwcXY3VTBQNEV2ZkpsdDhOMFFNbENNREVWUXBjR28wa0JBeG8yRDJBa0hyY3k2MzFtMnJ1eWtlV0pqT1lqWGRqakQ0UHUzWjhLSG9VNnJOcE5UNXVzd21wU3ZJdlhYNC1zQ3lHdWNTTk9RbUltRUc5NA?oc=5",
+      "source": "wilson_center_mexico",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Explainer: The Roots and Realities of 10 Conflicts in the Middle East - www.wilsoncenter.org",
+      "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQUUxyTVlRYWFKU0hXQXpmNnJ3LUZDOHdncE5CSFdVZ1hJOVVfUEFXbUttNktmUnV2U3c4YVlOVWdySkVSdFZ5dURPUFhwR3NrckVSaGZVcGpvWG9hTnptQnhTVVlibXRHVGh2MFg3RkFLaUpPQmd5Nzh0aUMzYldvcDRkNVhWTDJ5cjBNUHZkek9ZaW5lRFE?oc=5",
+      "source": "wilson_center_mexico",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Operation “Denver”: KGB and Stasi Disinformation regarding AIDS - www.wilsoncenter.org",
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPT0VubjNVc1VCUW5qNWx0T01Xdjdjb0k4UDdlM0F6Sno5ZzNZRkRaTHB2WTVGWHVHbmhQbk1UVllXOFN5WWhKRzAxZjdQRWpQYXo5WXk0QXlDYXhrQUM0QUhLUDV3X2lCS2E0cVNUa2cxVU9WeWJIMXRqN0VxREpWbkI1ZjJBMmJKLWFBQ3dzVUJEdEVsLUUwckdlbWRzQXBU?oc=5",
+      "source": "wilson_center_mexico",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "New Terrorism and New Media - wilsoncenter.org",
+      "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTFBaYWZ3alpWaFRHemRicjBtVXhmYWIzWUtBQWJCbmprQXpVemVQQ3hqMmNNT3BTc1VNbXJZOERfVEV2VHduM0kxUHNXeDFnLUt4XzJsczlqWldRWDlFQTRWUS1lODFtR2Y2cGJVaEFvZFJ0MjhmaVBV?oc=5",
+      "source": "wilson_center_mexico",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Citizen Science and Policy: A European Perspective - wilsoncenter.org",
+      "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPZTJXaEEyRjJQa1lqNTB3cUpWUmZ2SWMzbzVDY284WnBnSk5TSmpqc0xyOERlcXhMYjFDbXhKSXRuN0NxMlhEWDJDdHNLOFR4YXBkb1FiMC1WUlR4aUI2MGg3SmIyTUliemZGUFpTS1ZfeG9PSmIwOVl4SnplRTdRaE40WFktWkVQcTdtREJSVXNGUQ?oc=5",
+      "source": "wilson_center_mexico",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Building a Slum-Free Mumbai - www.wilsoncenter.org",
+      "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE5lZy1LU3M3UFVoUnJNdWJoZHo4SXRpNmpaSkJIcWd4WWtvdTF6eDFua3hPV2N3bmFIWmZMSVA3YmZpZFVnZjlDa0puTUJpME9TcVdRR2F2UFRNZUE0Y20yejYzWTA3VUpMcHk3cFdQOA?oc=5",
+      "source": "wilson_center_mexico",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Fuerte caída de los bonos argentinos: se derrumban hasta 2,4%",
+      "url": "https://www.clarin.com/economia/fuerte-caida-bonos-argentinos-derrumban-24_0_qxGWA5j73y.html",
+      "source": "ar_clarin_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "En medio de la interna del PJ, Axel Kicillof pidió que se elimine el límite a las reelecciones de los intendentes",
+      "url": "https://www.clarin.com/politica/medio-interna-pj-axel-kicillof-pidio-elimine-limite-reelecciones-intendentes_0_2BW529z7hk.html",
+      "source": "ar_clarin_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Mueren seis personas en un incendio en Nueva York",
+      "url": "https://www.clarin.com/estados-unidos/mueren-seis-personas-en-un-incendio-en-nueva-york_0_5mSM3zf3zs.html",
+      "source": "ar_clarin_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Escándalo en Egipto: le prohibieron aparecer en los medios al DT de la Selección tras divorciarse de sus dos mujeres",
+      "url": "https://www.clarin.com/deportes/escandalo-egipto-prohibieron-aparecer-medios-dt-seleccion-divorciarse-mujeres_0_odkbVZNEpn.html",
+      "source": "ar_clarin_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Dejó su trabajo como abogada para ser dobladora de voz en una serie infantil de Netflix: \"Hago ocho personajes, jamás me imaginé que a mis 42 años llegaría a este punto\"",
+      "url": "https://www.clarin.com/internacional/dejo-trabajo-abogada-dobladora-voz-serie-infantil-netflix-hago-personajes-jamas-imagine-42-anos-llegaria-punto_0_0FUkLvo51u.html",
+      "source": "ar_clarin_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Mamdani da prioridad a organizaciones para comprar edificios deteriorados y no perder su hogar en nueva York",
+      "url": "https://www.clarin.com/estados-unidos/mamdani-da-prioridad-organizaciones-comprar-edificios-deteriorados-perder-hogar-nueva-york_0_5kOzI6wPT0.html",
+      "source": "ar_clarin_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Dónde ver las misas del papa León XIV por TV y streaming: todos los canales y horarios",
+      "url": "https://www.clarin.com/informacion-general/ver-misas-papa-leon-xiv-tv-streaming-canales-horarios_0_G7NvHIl47q.html",
+      "source": "ar_clarin_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Florida ejecuta este jueves a su preso número 19 del año e iguala el récord de 2025",
+      "url": "https://www.clarin.com/estados-unidos/florida-ejecuta-este-jueves-a-su-preso-numero-19-del-ano-e-iguala-el-record-de-2025_0_9GhWjLiuZp.html",
+      "source": "ar_clarin_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Pedro, 50 años, fontanero: “Hay trabajo de sobra, hasta el punto de que nosotros hemos tenido que anular hace dos años la luna de miel, porque no podíamos parar”",
+      "url": "https://www.clarin.com/internacional/pedro-50-anos-fontanero-trabajo-sobra-punto-anular-hace-anos-luna-miel-podiamos-parar_0_9joNMFT1aE.html",
+      "source": "ar_clarin_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Quiniela de Santa Fe: resultado del sorteo de la Matutina de hoy, jueves 05 de noviembre",
+      "url": "https://www.clarin.com/loterias-y-quinielas/quiniela-santa-fe-resultado-sorteo-matutina-hoy-jueves-05-noviembre_0_iYD0886Fsz.html",
+      "source": "ar_clarin_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Cristiano Ronaldo anunció su retiro de la Selección de Portugal - Página|12",
+      "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOWHE3YlpTQ05UYk85U0hFSE5uN3hxTFJEWkRLakwyY2tDT3ZQS0RZQXNqbHBFSnhTbkQ0NmVtU1czRjFmRFJ0dmRkWm1IcHBaQS15MzdoTlBPRG5uMUY2VC1GX0hNc012ODdNR2R3RUI2dE1nY2Y4c1NyUVQwWlozUEtmSmc2Q295VTRfQTFrVWJiaU1TdHZPLWZka3BxUlh5ZzJTU3dn?oc=5",
+      "source": "ar_pagina12_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Bullrich muestra los dientes y amenaza a Milei con bloquearle el Congreso - Página|12",
+      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQeFJ4djFZUUFzMjVwalRjLXNLYjJsODlHSXU2RzkxLXZkdUM4WjRYeXpyYmsxVkRLWkRYZDNxdmM0Zml0Rkw1ZEs3czFFeXN0dU9BbHRCU3ZtcFFPMVpaeTI3ZXhLVGs1OWpzTGsxNUdtN2F2ZnpqMXJhNGR0RjNtRERSVGVhVnZVX0Z3TlE5ejdjVFBwMEVfZFgyREpWSWNhZ1d3UmtGejlnVHVDYlZ5WTdhRQ?oc=5",
+      "source": "ar_pagina12_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Axel Kicillof y Máximo Kirchner se reunieron con sus coroneles en la previa al encuentro del Consejo del PJ - Página|12",
+      "url": "https://news.google.com/rss/articles/CBMi4gFBVV95cUxOMkdVNUdYMjBaMHNLZmVjTHJtQlo2X2lqYWhONHZLSUkwRTlyOFNWWDA2WDhSS1FEVExkSTF6RUpjZ3RzME1GOEtTQlFzZVZYZkxSMUFJa0xPYVZGUmpScXdSM2I4ZEFFemhBWlNtbjlqNFAxaHlHdEpuQjlacVRZbzJ4SGhrYU9obmtJWktOaThXN0FCdmo2blNndFRwTGs1SHJvLUl6TjhmejZMZHgzUmw5cFVUUzBsVERhMkJEVTBGRU9YY1FsaFMzbWIxdXhvb0g5REkyS0E3MWtkY3Ayb2lR?oc=5",
+      "source": "ar_pagina12_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Es el paroxismo ultraliberal, estúpido - Página|12",
+      "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQNWR4eEd4bHFlYVEwX3BRdllYUjJuNVZHc0xoX25vMFNBSmc2d29RdTgtUUV0THJZeUFnOS1MU2owTkZRS0hhWEJnMmRMdGhFalNWS1Qtcjl5YlRzVFlIQVluOU82V2gtbG5zQ19jN1NzcXhLY3VDeU91SmQta0J0WFotQQ?oc=5",
+      "source": "ar_pagina12_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Marcha de las Velas: universidades vuelven a reclamar a Milei por el financiamiento - Página|12",
+      "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxQU0hVeUsybmljeV9TUjVwNUNSbTBzLWlaMHJmUVdGZXNnbkp4LXNWbjFBWnJLT3Z6YjdxTGpqckU5WHhReFd2QkNxeXEzd3pITTdCd2stMm9veXI5bTRITC14MWJtYU1WZGdMdjB3am9OSHg2RnVTdk9SUl9yTnNjY2NnNVRmeUdac2FzOFd2V0l3bmk4ZUxTRTFmZXA1N0tOV181aDZXT2N3VGdQcTRGSnpUQmZmcm1tRWR1WXdFUQ?oc=5",
+      "source": "ar_pagina12_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "En la calle solo hubo repudios a Milei - Página|12",
+      "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE5xeGdCc21RcEczNjRpUTdtUkxkcEx6cEVlVTV1RnVWcmlTM21lWG16RW1CaEJSZlp1NGxFUE52MXM1ek9NT2xYY3B3UGNSdG1Ub2l6RWJUdGltdHZjY0ZIOVBFbnJieTRJOFVLWmlFUlhwNjJHZVFWRWhn?oc=5",
+      "source": "ar_pagina12_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Esquina despide a Nancy Godoy mientras se esperan pruebas claves - Página|12",
+      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxNcFNFWFJmbVg5bnBkYlBrS2U1M3o4V2hSMnAwVnRiVUw3b2tRYzZTYzZfaHZJcHVxOVVsQnZSMVpweEVTeUVzZlJnMEZINDJieG9VaHU3UlBZZmhQbUFLSk9SRUotS0xjNzFOOUJRR1V3Z2VZWEFsM2s1OTJzWi1aVTBJVEd0em1fZldUUFJxc2h2SXNBcDhnclhYeG9XMEh2T0dtLU9yWQ?oc=5",
+      "source": "ar_pagina12_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Vuelve la tensión a los mercados - Página|12",
+      "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE15eGt0UnBpOVZCRW5JLVNuNzQtOWNSZHBFdEx6TGlZdXozR0xES0NoRUM4dUxOM2QzYkZpZ0FTRUxTdl9nd0NIM2ZGVkV4UE1iamY2M0I1MXphbXQxUlZ1aXRianI0S3NpS0pvN2xNREdHTlBtVjRpTV9UT24?oc=5",
+      "source": "ar_pagina12_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Las rebajas que no existieron - Página|12",
+      "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE5UR1lVM3IxMzBmQ2tHVDBMNnRaY3BubzJFUHRxYnlwcUtfUkpYZ3BGb0VTY0V6QzFVVER0Mkp5akhKWEtpaWxWeFZKU0k0WFBFY2dFTnVrQXFuZXhDVy15SXZZeUU0V1lYN24xT2pUdUFOYXV5Q0lyQQ?oc=5",
+      "source": "ar_pagina12_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Rossana Chahla: “La gente antes me pedía baches y hoy me pide empleo” - Página|12",
+      "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNcm9fOGlySUV3S2hSbTU5emJldDEzRElSbjhZRTczU0VDamV0azZRMldLMFBpT0h1ajQ0OG94cXpxaUVNbFZRZWFiMzBiajFLSzl1VS1nYWo4RmZlS2xkLW9SeV9WSXdZMWFuRGNwbi1HSzRIQlR6OUZtekZGX2NIUjRjUGM2bUtzUVJWV3ZRZzRRWVp1ODQwOHpQM1dCeUFveU1DdldOb055dw?oc=5",
+      "source": "ar_pagina12_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "“Em nome do Pai”: evangélicos se afastam de Flávio porque nunca gostaram do filho de Jair",
+      "url": "https://apublica.org/2026/11/em-nome-do-pai-evangelicos-se-afastam-de-flavio-bolsonaro-porque-nunca-gostaram-do-filho-de-jair/",
+      "source": "br_agencia_publica_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Segurança Pública: PEC da redução da maioridade penal no Senado pode ter relator do PT",
+      "url": "https://apublica.org/2026/11/seguranca-publica-pec-da-reducao-da-maioridade-penal-no-senado-pode-ter-relator-do-pt/",
+      "source": "br_agencia_publica_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Fé VIP e Lagoinha: como plano de Valadão e Vorcaro inflama debate da imunidade de igrejas",
+      "url": "https://apublica.org/2026/11/master-e-lagoinha-valadao-vorcaro-debate-igrejas/",
+      "source": "br_agencia_publica_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Un templo para Maduro en la niebla",
+      "url": "https://armando.info/un-templo-para-maduro-en-la-niebla/?utm_source=rss&utm_medium=rss&utm_campaign=un-templo-para-maduro-en-la-niebla",
+      "source": "ve_armando_info_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "ad_or_soft_section",
+      "relevance_score": 0.0
+    },
+    {
+      "title": "El ‘ángel de la guarda’ del teniente coronel Parra le augura impunidad",
+      "url": "https://armando.info/el-angel-de-la-guarda-del-teniente-coronel-parra-le-augura-impunidad/?utm_source=rss&utm_medium=rss&utm_campaign=el-angel-de-la-guarda-del-teniente-coronel-parra-le-augura-impunidad",
+      "source": "ve_armando_info_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "ad_or_soft_section",
+      "relevance_score": 0.0
+    },
+    {
+      "title": "Las “ruinas” de Alex Saab en Venezuela",
+      "url": "https://armando.info/las-ruinas-de-alex-saab-en-venezuela/?utm_source=rss&utm_medium=rss&utm_campaign=las-ruinas-de-alex-saab-en-venezuela",
+      "source": "ve_armando_info_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "ad_or_soft_section",
+      "relevance_score": 0.0
+    },
+    {
+      "title": "Banco de asesor venezolano de Bukele está al centro de demanda por préstamo de $290 millones a TV Azteca",
+      "url": "https://armando.info/banco-de-asesor-venezolano-de-bukele-esta-al-centro-de-demanda-por-prestamo-de-290-millones-a-tv-azteca/?utm_source=rss&utm_medium=rss&utm_campaign=banco-de-asesor-venezolano-de-bukele-esta-al-centro-de-demanda-por-prestamo-de-290-millones-a-tv-azteca",
+      "source": "ve_armando_info_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "ad_or_soft_section",
+      "relevance_score": 0.0
+    },
+    {
+      "title": "Los negocios del Arco Minero no son todos ni de oro ni preciosos",
+      "url": "https://armando.info/los-negocios-del-arco-minero-no-son-todos-ni-de-oro-ni-preciosos/?utm_source=rss&utm_medium=rss&utm_campaign=los-negocios-del-arco-minero-no-son-todos-ni-de-oro-ni-preciosos",
+      "source": "ve_armando_info_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "ad_or_soft_section",
+      "relevance_score": 0.0
+    },
+    {
+      "title": "Con la muerte del ‘Niño’ Guerrero, todo cambió para seguir igual en las minas",
+      "url": "https://armando.info/con-la-muerte-del-nino-guerrero-todo-cambio-para-seguir-igual-en-las-minas/?utm_source=rss&utm_medium=rss&utm_campaign=con-la-muerte-del-nino-guerrero-todo-cambio-para-seguir-igual-en-las-minas",
+      "source": "ve_armando_info_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "ad_or_soft_section",
+      "relevance_score": 0.0
+    },
+    {
+      "title": "The Perils of a Planned Succession",
+      "url": "https://thedialogue.org/blogs/2026/08/the-perils-of-a-planned-succession",
+      "source": "inter_american_dialogue",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Lives in Motion: the role of civil society in protecting migrant children in Latin America",
+      "url": "https://thedialogue.org/blogs/2026/08/lives-in-motion-the-role-of-civil-society-in-protecting-migrant-children-in-latin-america",
+      "source": "inter_american_dialogue",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "特定健診「医療費削減効果薄い」支援打ち切りか 財務省 - 毎日新聞",
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFBiNklYeU1FWFZEbXZYNHB1RGRXaklwbE9vUjBDdUhRakRQZ3ZQeFZiWFo1MkNsdHdhT3o3bnNaaTlkVVNXejFydnJSU0FUdTJjUWpiSlpRWFdReTZ4R082c25wT2JqQm9k?oc=5",
+      "source": "jp_mainichi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "変容する米国：米中間選挙、民主党が4年ぶり上下院奪還 事前予測上回る大勝 - 毎日新聞",
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE81QjlvZFFuZkRDalE4OE9FTmlMbzRRc2JGVG1TS2F1M0FZM0xQVjNSc3lZYUVLcHRsV20tdGQtZWJkSzRlX1h1YXh5VUkyWUhXb3Z1TUU0c3lnV25IWEJlWVQxM25CRlJl?oc=5",
+      "source": "jp_mainichi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "非核三原則見直さず 「堅持の方針今後も変わらず」の文言は調整 - 毎日新聞",
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE44T0J1Sk03VmZyZ0d3SGE1Q1RxUW5KMmdUSWVpd0YzV1d0dV9kSWVGQXVVOEl4blgxUlN2ZEF5dVpOaWNEcHYxQU5qaFpuOXd5S0w5UmRrNU9rdU5PeGhKbFc0Q0xnNHRx?oc=5",
+      "source": "jp_mainichi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "映画監督の榊英雄被告、性的暴行で実刑確定へ 最高裁が上告棄却 - 毎日新聞",
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE41SFhabWVTb0hHQlYtOVhCbk9uMzliam9zeHNtaXM4WTd1NXA2a1N3QUNSQ2puY3hEWHM4eWw3ZWRVRHptVEZxblFXcFpSNkNfZndadDJOcjd5OXBPT3NNa2lnVXdxSFpR?oc=5",
+      "source": "jp_mainichi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "JR東日本vsヤマハ スタメン発表 社会人野球日本選手権 - 毎日新聞",
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9QRFBrV3l2VHFlX3BCQ09hMXk4bE1VckFacUNvaUNjVi1BSWJZMXVLemdYN1RaWDUyQjBQTWxwRExsRWxsalZhM3RlME5LQjZpUW83ZzZOZHhzSFVGYVNfWTY5cmxuMUtz?oc=5",
+      "source": "jp_mainichi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "リンクサイド：佐藤駿、モチベーション向上の策は… フィギュア中国杯公式練習 - 毎日新聞",
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFBUWHVlMmo1VEpUdUFIRHpiVkZsSm1McGZZUkNRZnJnTmJNZGsxTkpKaXNOREY5Y3JrRGQtamFOc2lGSmJBZVUxOEFOY2ZOYVdQUjBrQ0plbXRMRXNYV0hsaUtrd1N3OXJn?oc=5",
+      "source": "jp_mainichi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "会計検査院「最高裁が会計法令に違反」 14億円不当と指摘 - 毎日新聞",
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9JSndIYUVyOVR5SHNyM3czMTBTZVFONXhvTDBfUWhuMGtabWJXb0diYm8wdEsxN3FwU0pHT1FkZWhtMFBhTGVaUnRSME40YnlXWGZjRW5HbUxPUENqM09RWFRscGprNlE2?oc=5",
+      "source": "jp_mainichi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "米中間選挙2026：容易ではない外交政策変更 選挙勝利の民主党を待ち受ける課題は - 毎日新聞",
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE1hNXZWaWFpa0NxVnVHa2RoeEVSYkpfTmJnR2h6SUZOY1pzdVhSbjBQVlhaZXJfZFpMcFN5T3ZCbnpSNFJsQ0k2eDZBek8zTzdYOG9qbHpVSGU1djhNRTBuT3JvbVpNTUJF?oc=5",
+      "source": "jp_mainichi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "「みみずのように」死んだ人々への誓い 書に思い込める96歳 - 毎日新聞",
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9ELWxlOHdZOHc5OXREdjFiX1dzb2xpVFA1a29kNm1BRlBvTnhmZ0hTTnZpODZfaC0zQ0x2NWhnNjBYcHJzRU9WZHJBaS1yRk5wd3paakVHamtMRGJ2dkJkRUE4UUdkMXl1?oc=5",
+      "source": "jp_mainichi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "駅でオーバーラン、直後にはドアを開けたまま発車 JR山陽線",
+      "url": "http://www.asahi.com/articles/ASVC541D3VC5TIPE01YM.html?ref=rss",
+      "source": "jp_asahi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "秋本元議員に懲役6年求刑、風力汚職 検察「族議員と業者の癒着」",
+      "url": "http://www.asahi.com/articles/ASVC53GYXVC5UTIL01RM.html?ref=rss",
+      "source": "jp_asahi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "大雨の取材中に消息絶った中国新聞記者の骨見つかる 広島市内の川で",
+      "url": "http://www.asahi.com/articles/ASVC53JCCVC5PTIL00TM.html?ref=rss",
+      "source": "jp_asahi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "有事の安否確認に使う消防庁システムに不正アクセス 漏洩確認されず",
+      "url": "http://www.asahi.com/articles/ASVC53HH0VC5UTIL024M.html?ref=rss",
+      "source": "jp_asahi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "子ども2人殺害、母の心神耗弱状態認め減刑 水戸地裁が懲役8年判決",
+      "url": "http://www.asahi.com/articles/ASVC534V4VC5UJHB00NM.html?ref=rss",
+      "source": "jp_asahi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "「着替え時間も賃金」求める労組との団交、拒む病院側へ「不当」命令",
+      "url": "http://www.asahi.com/articles/ASVC535CLVC5IIPE00HM.html?ref=rss",
+      "source": "jp_asahi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "地震でビル倒壊、妻子亡くした男性提訴 「同じ思い、誰もしないで」",
+      "url": "http://www.asahi.com/articles/ASVC52S91VC5PJLB009M.html?ref=rss",
+      "source": "jp_asahi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "海上で見つかった男児遺体、死因判明 殺人・死体遺棄事件視野に捜査",
+      "url": "http://www.asahi.com/articles/ASVC531TSVC5TZNB008M.html?ref=rss",
+      "source": "jp_asahi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "児童ポルノ製造、生徒ら49人被害 茨城県の元教員に実刑判決",
+      "url": "http://www.asahi.com/articles/ASVC52W7DVC5OIPE00XM.html?ref=rss",
+      "source": "jp_asahi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "川崎市元幹部を書類送検 官製談合事件で施設改修の価格情報得た疑い",
+      "url": "http://www.asahi.com/articles/ASVC52QBMVC5ULOB014M.html?ref=rss",
+      "source": "jp_asahi_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "NTT Docomo faces network glitches",
+      "url": "https://www.japantimes.co.jp/business/2026/11/05/ntt-docomo-network-glitches/",
+      "source": "jp_japan_times_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Nintendo’s net profit drops in Q2 as Switch 2 unit sales slow",
+      "url": "https://www.japantimes.co.jp/business/2026/11/05/companies/nintendo-quarterly-net-profit-drops/",
+      "source": "jp_japan_times_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Japan’s seemingly unchanging ancient sport of sumo may already be at peak optimization",
+      "url": "https://www.japantimes.co.jp/sports/2026/11/05/sumo/sumo-modern-sports-science/",
+      "source": "jp_japan_times_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "ad_or_soft_section",
+      "relevance_score": 0.0
+    },
+    {
+      "title": "Nigeria’s ‘godfathers’ pull the strings ahead of elections",
+      "url": "https://www.japantimes.co.jp/news/2026/11/05/world/politics/nigeria-godfathers-elections/",
+      "source": "jp_japan_times_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "AI skills are make or break in U.K.’s brutal youth jobs market",
+      "url": "https://www.japantimes.co.jp/business/2026/11/05/tech/ai-skills-uk-youth-job-market/",
+      "source": "jp_japan_times_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Fall foliage expected later than usual this year, weather forecaster says",
+      "url": "https://www.japantimes.co.jp/news/2026/11/05/japan/autumn-leaves-forecast/",
+      "source": "jp_japan_times_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "「約4.2億円の相続税を…」上皇ご夫妻も避けては通れない“相続問題”と、皇室の在り方への「ご懸念」 - 文春オンライン",
+      "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE1jWFdvRkhLSHhtYmtBQkctME9oVEdpdXBFSkdsTnppS0Jud0EzRUZETWQ5MnB6WG45WG1ReUJaSk5wSHJQWEFONTVvbw?oc=5",
+      "source": "jp_bunshun_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "【写真入手】GMO熊谷社長が被害公表当日にシャンパンパーティを満喫していた「タキシード姿で美女2人に囲まれ…」 - 文春オンライン",
+      "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTFBTS3dDVlF0TEJkb3dva0dJQy1PNTdEYkJ0OERVRVlkcHNXUnBDcXhhXzUwSmFEQ0k1X3dmdlpXT0ItNjlxUzhaYjV0RQ?oc=5",
+      "source": "jp_bunshun_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "GMO熊谷正寿社長 サイバー攻撃の全内幕《号泣会見の裏で「犯人は北朝鮮ハッカー」》《被害発表当日に美女2人に囲まれ…》 - 文春オンライン",
+      "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE5CS2o2RmVILVg3UjdVY2ZFTnJTeFpKU2w1WnJvOV9MaU9oc2Y3N29PVWRUbHN0clZYOUcxdFFmVTd5d09YU3ItRDYzYnowZXBYZk1kaVlJcw?oc=5",
+      "source": "jp_bunshun_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "耳鳴りは耳に蝉、飛蚊症は目に蚊を飼っていると思い込めば、年中夏休み気分!? みうらじゅん流「老いるショック」の楽しみ方 - 文春オンライン",
+      "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE9xSVJaVDNaOFNlRTVTeVowdmxsTjhTOGxWb0l4Q0ROUHlKMUNqVU5KU1F1SFJzSW5JU05yc2QxTFVDY0M2bnN3NWFGZw?oc=5",
+      "source": "jp_bunshun_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "おヨネ同級生が語る高校時代、サカイJr.知られざる「東京建物」時代、ケンケン「オーディションなし」加入の理由、じん涙のレッスン秘話ほか…〈「週刊文春」モナキ特集〉 - 文春オンライン",
+      "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTFA3QW1Uc3hSUFpHNEk3UUpQaFU4SmNUR0ltcHM4eVdKX0ZKdE1WZzlvaDdLQzRrSl9UTzN1bGM1V2FDWk1CR3pXT1U1dw?oc=5",
+      "source": "jp_bunshun_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "「母娘2代でキャバ嬢に」大手ディスカウントストアの女性店員→「池袋の超人気キャバ嬢」に転職したワケ - 文春オンライン",
+      "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE9rM2tjb1JLeXF0UzB6Mk5uQUI5RGFQSVJGdFVXMVkxZFlGdHBxSVlaWnZ6UDREdzkyWWpyQWNaQWxLTGRvRFA4ck5JWQ?oc=5",
+      "source": "jp_bunshun_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "メールマガジンの配信システム変更に伴う各種手続きの一時停止について - 文春オンライン",
+      "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTFA5Qm5LQXNGRXk4M1N1OG1aYWdBVG9XVGpPLVVRbWd5TGIyWkkwVkx4eVR6TXg4WWF4elA5YXZuTzh1QS1WeGItZVN3SQ?oc=5",
+      "source": "jp_bunshun_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "「おヨネが見つかった時点で『勝った』と思った」モナキプロデューサー・酒井一圭が明かす、異端スター誕生秘話「ちょっと待った！ こいつの歌を聞こう」 - 文春オンライン",
+      "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTFBfbTNKV0lJS2JnS3ZscC1JazZTZk5NeDhXaFFxb2pKWEtndEdBYlBoeUJOVHEteXBueEg5VDJWNVJEa0gxM3RPdVlNQkxmanlJ?oc=5",
+      "source": "jp_bunshun_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "「『助けて』とは言えなかった」ドラフト直前“ビデオ出演スキャンダル”で天国から地獄へ…元日ハム・多田野数人（46歳）が語る24年前の真相（近藤裕介） - Number Web",
+      "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE9lc1ZkN3BSb2VUUVZjbERFemtvdzVDRTRHdnVkUWhfQ0xNT1BpMWVYVFZ5WWQ3b0Q0OFNqN09vLVMtcWxfbGk1YkZUVmNZV1ZMbnRTVklJOFJVMUVDTlF3?oc=5",
+      "source": "jp_bunshun_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "茂木敏充外相（71）が対露会談で存在感 省内の“評判”が変わった《“高市G7欠席”答弁でも話題》 - 文春オンライン",
+      "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE80UFhmTHVNeXhWVHdheHlyX0JZUzZNQk1NX04zNm5qLU1jVHdNS3pmVjRDS1BSSmdNT2RRdWJYU3pSZXpMaXExZkVjSUowZWdDd1AtOFJTVQ?oc=5",
+      "source": "jp_bunshun_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "東京財団 - 東京財団",
+      "url": "https://news.google.com/rss/articles/CBMiO0FVX3lxTE1uaWV2aXlyUXZWUkd4S1F1MXlxTmZrOU1Wd2xMQllYWjRwWDNJd3RZX3hTcFIyUmpqWFA4?oc=5",
+      "source": "tokyo_foundation",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "「経済学者を対象とした経済・財政についてのアンケート調査」結果 - 東京財団",
+      "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE92UDdFSlE1bldFUEdWei0taHFTelVLUEN0TThka2t0YkJFdnRmREdDNTZZM0dOeFA1RFo3VnlkckNpUkl2ejZ0bGtNaHZBX1hNdm94UVVUX3IwX3duNGlv?oc=5",
+      "source": "tokyo_foundation",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "2022年度日本新聞協会賞に選ばれた朝日新聞社 受賞報告に平田主席研究員のコメントが掲載されました - 東京財団",
+      "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9JSUQyaUZ2VlZCd21UWWFmeEtnS3F2ZTFkV3JROGtMajVFcTdjeGFzeVk5dmZGZGwwUG02SWZXOC11R0xrUGFBbTdwbWx4UW80YzdYZXVIUndKbGdUUGljeg?oc=5",
+      "source": "tokyo_foundation",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "ふるさと納税の功罪―非効率な制度設計の「被害者」は誰か―〈政策データウォッチ（24）〉 - 東京財団",
+      "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE11VFpmMjlYRzhRb0xIMGpSemIzRFdZbDVMR0twWDdlMVJMQ0ZrajJ0VU4wNGpmcWIxZmdyeHF6NkswRUZJeXgxSWRZUXVnUmxhNVU1aExab2lLSVBwaTlv?oc=5",
+      "source": "tokyo_foundation",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "日本のドラッグロスとドラッグラグ：現状分析と再生への提案 - 東京財団",
+      "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFB6eXhCRHhtOEtZT2praV9DRG9ob25ZcndHU3BjZ29meHE5RVl0Qnc3TFBCRE9oRHRSUWhhQk5WNDlwblhoZXR0cnlBMTlpLTk1XzIwMEtyV2tweTZmVHNv?oc=5",
+      "source": "tokyo_foundation",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "MMT派の信用創造理解：その貢献と限界 - 東京財団",
+      "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1VbTBVZmlNRVlkY3VSV2gzM1gxa0xyWEVWeFItcGhlRHVRSDFfVGs4UlYzXy1SZ192NEQ0RmR5MkpwamZxaHJBcno0YVA5aW9vU3pxOExXQnRpLUdsNXdV?oc=5",
+      "source": "tokyo_foundation",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "デジタル独自課税を巡る米・欧の攻防とOECD合意の展望（BEPS） - 東京財団",
+      "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFBUYmszSjUtSHJFV1NiYVVtXzJVcG50MlBYVUVDVTRITUtGTXd2QWNoLUd1VlV4TnE0MFB6R2NMcWtxWUJjVVFETEw3Y0cyZXAyYUNNb1h1MVh5aEs4Wkxr?oc=5",
+      "source": "tokyo_foundation",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "日本銀行はどのくらい利上げすると債務超過になるのか - 東京財団",
+      "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFBEQll6ZzhRbVM0NDRwMXVFa1M3NDN5aDRyVlZoX1hTaXd3bUZiV0FHR1R0ejNYNUpEN1AzSjQwM0dnWVFqVnRtUnJheFdhYlRDUm5VZUUxelQwYnlVNmN3?oc=5",
+      "source": "tokyo_foundation",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "消費税逆進性対策 ― なぜ軽減税率ではなく給付付き税額控除なのか - 東京財団",
+      "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE9Cel90LWtRem9Dc2tYZ2lVdlBSWFV2aDR0WDNNTVFiQlRVRG9ZZUlJVFBUdm1lUkhrSktRTzZMVGZKS21GeTJDUFRCeS0xZW1hbEFNejV0MVRqdDlhRUJr?oc=5",
+      "source": "tokyo_foundation",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "【募集締切】東京財団研究プロジェクト2025（7月21日15時まで） - 東京財団",
+      "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFBuU3hFSVZTQXNlVHQ2aDhDYkFjSXk3elFvQXNsYjdoeWpoUjdDM0VkUXNFZkhEbWV1ZU13Zk9PZ2I5dUFPMXkzM3owdmNJajg3VjhyQjhZcng4Qy0weEI4?oc=5",
+      "source": "tokyo_foundation",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "US Sentences Venezuelan National to 12 Years for Laundering Over $1 Billion",
+      "url": "https://www.occrp.org/en/news/us-sentences-venezuelan-national-to-12-years-for-laundering-over-1-billion",
+      "source": "global_occrp_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Nepal Anti-graft Body Charges ex-PM Madhav Nepal, 96 Others with Corruption",
+      "url": "https://www.occrp.org/en/news/nepal-anti-graft-body-charges-ex-pm-madhav-nepal-96-others-with-corruption",
+      "source": "global_occrp_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Seven Arrested in International Operation Targeting Investment Fraud",
+      "url": "https://www.occrp.org/en/news/seven-arrested-in-international-investment-fraud-raids",
+      "source": "global_occrp_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "SafeSport Will Now Alert Schools, Clubs if Coaches Sanctioned for Abuse Continue to Work With Kids",
+      "url": "https://www.propublica.org/article/safesport-child-abuse-notification-system-impact",
+      "source": "us_propublica_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Vermont Was Supposed to Get an Audit of Its Lake Champlain Cleanup. It Never Happened.",
+      "url": "https://www.propublica.org/article/vermont-clean-water-act-champlain-audit",
+      "source": "us_propublica_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Vermont Has Spent Nearly a Billion Dollars to Clean Up Lake Champlain. But the Green Slime Keeps Coming Back.",
+      "url": "https://www.propublica.org/article/lake-champlain-algae-bloom-cyanobacteria-water-pollution-vermont",
+      "source": "us_propublica_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "entertainment_sports_noise",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Do You Live Near Lake Champlain? Help Seven Days and ProPublica Investigate Algae Blooms.",
+      "url": "https://www.propublica.org/getinvolved/lake-champlain-vermont-algae-bloom-pollution-callout",
+      "source": "us_propublica_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "How We’re Covering the Midterms — and the Aftermath",
+      "url": "https://www.propublica.org/article/propublica-approach-2026-midterm-elections",
+      "source": "us_propublica_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "I Was There to Document the Aftermath of Deadly Flooding. Then, It Started Raining.",
+      "url": "https://www.propublica.org/article/ruidoso-new-mexico-floods-fire",
+      "source": "us_propublica_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "After ProPublica Investigation, House Democrats Demand Answers on U.S. Citizens Detained by Immigration Agents",
+      "url": "https://www.propublica.org/article/american-citizens-ice-detention-congress-impact",
+      "source": "us_propublica_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Tribal Leaders Warned Border Wall Construction Would Disturb Native American Remains. They Were Right.",
+      "url": "https://www.propublica.org/article/border-wall-remains-native-american-organ-pipe",
+      "source": "us_propublica_rss",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "AI Could Do My First Job. Not My Last. - Peterson Institute for International Economics",
+      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPeTVlWWQtRFlid1NEbUsxRndaZ0RMRTNaWW1rZ01IV1liOGczRUpOeFNYX1lMRlNERWU3QzRMNzZzS3NSUHVkYTFnb1ZtcERWWE81TEhtc2pUbXlOTU1LYzZZZm93NUFfemdndWN2QnBTVnRhOXlZZERyc05mVXlHaWFLb25tcXVvZG1Vc0RTZE4?oc=5",
+      "source": "piie_trade_policy",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Why generals need economists to win long wars - Peterson Institute for International Economics",
+      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxOaEtleDZhMEJVTGNJdlRqd1JYdU1takYwdWQ5Ykw5LWQxdUNadHdhU0RZLTZqWk43T29iM0x5azVOeVFaZXEtUl9tR0ctQ3AzVk1MRVJwZ0ZuMEM4QlM0TV9oZ2p1cWFXbW5HakdSNlNqczBZVlNYWHNseVI3b0R3bXdnTU8yQzlSb0ZYb1VBWGhTX2Z4QV9DZQ?oc=5",
+      "source": "piie_trade_policy",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "What Is Globalization? - Peterson Institute for International Economics",
+      "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9hWFBqeEtpYkZHYkxGQ0NrblNiaGdWQVB2U0x6WjJQcFZsWmhpc0VrbFkyc3pGMTRCLVM3MjRYTlJNLUhJOVhPeWEyazZQVjZTWncxeTFKRl9xTWY0dWM1dmJoTnBhSVZmSjVKRnVJLWxCaVNocXc?oc=5",
+      "source": "piie_trade_policy",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "WORKING PAPER - Peterson Institute for International Economics",
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFAxV1Q4b1J1dUVBUUpsNG00MVBLeHVuZlAtS3NMYWRJUWxWT19iaGp0bEYwRFdpeXVvMEowSkNOVkM2eGhrWk5idkpRQjRnakNNQ0hNalBobVpCeGc3MDFxdFhEcXRXUlpINU1HRg?oc=5",
+      "source": "piie_trade_policy",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "PIIE Charts - Peterson Institute for International Economics",
+      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBjRm9pQ3ZZSGxiRjNIS3dvSkJCcE5pY1BxVlZ5d19YUHc5Qkt3b1dwZXFlT3o0TUpCbnZudDRJaXpnUlRmb0FRVDhlRWhVRV9IWGFZ?oc=5",
+      "source": "piie_trade_policy",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Chad P. Bown - Peterson Institute for International Economics",
+      "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE9PVEhMZlJYZEV0TnFyUDg1MG1MMmRvSUx0SV9vdnBGVi11SEhZcUZnWEE2bG5GaVpmY00tQlVQMDlfTHRrUnM4aE0tcHdhd1NMRXJib1FLNDNWOVZuenBwRjdJTm0yZGRXczdDaU0yZw?oc=5",
+      "source": "piie_trade_policy",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Homepage | Royal United Services Institute - Royal United Services Institute (RUSI)",
+      "url": "https://news.google.com/rss/articles/CBMiOEFVX3lxTE1TRDUwZWNFTE1RM2M5UGFxdVNjMllVaXhZWHU4THp4RFZiUGVqMHMtcVNMUEllZG50?oc=5",
+      "source": "rusi_military",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Explore our Research - Royal United Services Institute (RUSI)",
+      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE1YRU5GcXJZU24zcmk5Nm5ERTBFUm5yZXI4bTJxaEZtM0FtdUNxRm54SkFtNmdGR3Q2X01kMnpPR1BrRzlWVUc1aDRoT3EzN3Jhc2Q4?oc=5",
+      "source": "rusi_military",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Why has Cristiano Ronaldo retired from international football?",
+      "url": "https://www.aljazeera.com/sports/2026/11/5/why-has-cristiano-ronaldo-retired-from-international-football?traffic_source=rss",
+      "source": "al_jazeera_all",
+      "lane": "CONTEXT",
+      "reject_reason": "ad_or_soft_section",
+      "relevance_score": 0.0
+    },
+    {
+      "title": "Ronaldo in records: International milestones from the football icon",
+      "url": "https://www.aljazeera.com/sports/2026/11/5/ronaldo-in-records-international-milestones-from-the-football-icon?traffic_source=rss",
+      "source": "al_jazeera_all",
+      "lane": "CONTEXT",
+      "reject_reason": "ad_or_soft_section",
+      "relevance_score": 0.0
+    },
+    {
+      "title": "Why Guinea-Bissau halted a controversial hepatitis vaccine trial for babies",
+      "url": "https://www.aljazeera.com/news/2026/11/5/why-guinea-bissau-halted-a-controversial-hepatitis-vaccine-trial-for-babies?traffic_source=rss",
+      "source": "al_jazeera_all",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Burning rubbish chokes besieged Yemeni city of Taiz",
+      "url": "https://www.aljazeera.com/features/2026/11/5/burning-rubbish-chokes-besieged-yemeni-city-of-taiz?traffic_source=rss",
+      "source": "al_jazeera_all",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "📝 Внезапная смерть баварского бунтаря 📝 Правящая немецкая коалиция и лично премьер Баварии Маркус Зёдер, кажется, лишились одной головной боли. 55-летний вице-п...",
+      "url": "https://t.me/rybar/84448",
+      "source": "Telegram_@rybar",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "📝 Пранк вышел из-под контроля 📝 о необходимости правового контроля за интернет-издевательствами Социальные сети нынче превращают провокации и унижение людей в с...",
+      "url": "https://t.me/rybar/84451",
+      "source": "Telegram_@rybar",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "📝 Кадры без высшего 📝 Тот, кто командовал взводом под огнём, мог бы руководить и отделом в администрации, но без диплома вуза до сих пор путь в программы подгот...",
+      "url": "https://t.me/rybar/84454",
+      "source": "Telegram_@rybar",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Римма Зюбіна озвучила \"Щоденник Катерини Савенко\": аудіокнига вже доступна на Абук Українська акторка прочитала 34 записи мешканки Маріуполя, зроблені під час р...",
+      "url": "https://t.me/UaOnlii/135787",
+      "source": "Telegram_@UaOnlii",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Закон один для всіх. Посади, звання та повноваження не можуть бути підставою для уникнення відповідальності, — Буданов про нове розслідування НАБУ \"Корупція та ...",
+      "url": "https://t.me/UaOnlii/135789",
+      "source": "Telegram_@UaOnlii",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "У найближчі місяці рф нападе на країни Балтії: Литва та Латвія розпочали термінові навчання з масової евакуації населення, — Delfi 📍 5 листопада в Литві та Латв...",
+      "url": "https://t.me/UaOnlii/135791",
+      "source": "Telegram_@UaOnlii",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‼️ Європейців закликають бути готовими прожити перші 72 години масштабної кризи без допомоги держави, — Єврокомісія 📍 Рекомендують мати триденний запас води, їж...",
+      "url": "https://t.me/UaOnlii/135792",
+      "source": "Telegram_@UaOnlii",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‼️ Бізнесу дозволили збивати повітряні цілі навіть над чужими заводами та складами: Кабмін змінив правила роботи приватної ППО Долучатися до таких груп тепер зм...",
+      "url": "https://t.me/UaOnlii/135794",
+      "source": "Telegram_@UaOnlii",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‏ ️‏ تد لیو: لایحه‌ای تصویب خواهیم کرد تا جلوی جنگ با ایران را بگیریم سناتور دموکرات: ما لایحه‌ای را تصویب خواهیم کرد تا به تعرفه‌های احمقانه ترامپ که باعث افزا...",
+      "url": "https://t.me/sepah_pasdaran/215245",
+      "source": "Telegram_@sepah_pasdaran",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‏ ️ خروج هواپیمای باری آمازون از باند فرودگاه میامی آمریکا ‏ 🔹 یک فروند هواپیمای باری بوئینگ ۷۶۷ متعلق به شرکت «آمازون پرایم ایر» از باند فرودگاه بین‌المللی می...",
+      "url": "https://t.me/sepah_pasdaran/215248",
+      "source": "Telegram_@sepah_pasdaran",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‏ ️‏ تجمع سربازان ترامپ در مقابل ستاد مرکزی ارتش و سپاه روز گذشته و در میانه جنگ با دشمن، یک گروه معلوم الحال با اجتماع در مقابل ستاد مرکزی ارتش، به فحاشی به نی...",
+      "url": "https://t.me/sepah_pasdaran/215249",
+      "source": "Telegram_@sepah_pasdaran",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‏ ️ چرا گناهان ۲۰ سال پیش ناگهان در ذهن شما زنده می‌شوند؟ آیت‌الله جوادی آملی به این سوال پاسخ می‌دهند. ‎ ✅ @sepah_pasdaran",
+      "url": "https://t.me/sepah_pasdaran/215250",
+      "source": "Telegram_@sepah_pasdaran",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‏ ️ببینید جنایات جدید از آل‌سعود در یمن! ‎ ✅ @sepah_pasdaran",
+      "url": "https://t.me/sepah_pasdaran/215251",
+      "source": "Telegram_@sepah_pasdaran",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‏ ️ تصاویری از استفاده پلیس فرانسه از گاز اشک‌آور در اعتراضات ‎ ✅ @sepah_pasdaran",
+      "url": "https://t.me/sepah_pasdaran/215252",
+      "source": "Telegram_@sepah_pasdaran",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‏ تهران در میانه فضاسازی رسانه‌ای درباره تبادل پیام با واشینگتن و فعالیت میانجی‌ها، خط قرمز خود را صریح اعلام کرد: تا زمانی که شروط هفت‌گانه جمهوری اسلامی ایران...",
+      "url": "https://t.me/sepah_pasdaran/215254",
+      "source": "Telegram_@sepah_pasdaran",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "‏ ️گزارش اطلاعاتی آمریکا: ایران در زمره قدرت‌های نوظهور فضایی قرار دارد ‏ 🔹 آژانس اطلاعات دفاعی آمریکا (DIA): با وجود آن‌که آمریکا تأسیسات کلیدی مرتبط با برنامه...",
+      "url": "https://t.me/sepah_pasdaran/215255",
+      "source": "Telegram_@sepah_pasdaran",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "بعد التدخل المروع.. تشريح جثة مهاجم تينيريفي يكشف سبب الوفاة https://ara.tv/cng33",
+      "url": "https://t.me/Alarabiya/169102",
+      "source": "Telegram_@AlArabiya",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "حفيدة نعيمة الصغير تكشف سر تسميمها.. وعلاقتها بعادل إمام https://ara.tv/vin2k",
+      "url": "https://t.me/Alarabiya/169104",
+      "source": "Telegram_@AlArabiya",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "%0Aترامب عن هيغسيث: تلقيت شكاوى عنه ولا أفهم السبب%0A https://ara.tv/3plqm",
+      "url": "https://t.me/Alarabiya/169106",
+      "source": "Telegram_@AlArabiya",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "الشاي الأسود أم الأخضر؟ دراسة تكشف أيهما أفضل للقلب https://ara.tv/ep8zi",
+      "url": "https://t.me/Alarabiya/169108",
+      "source": "Telegram_@AlArabiya",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "ملك الأردن: لا تهاون في محاربة الإرهاب.. ولن نسمح بتهديد أمننا https://ara.tv/02slw",
+      "url": "https://t.me/Alarabiya/169110",
+      "source": "Telegram_@AlArabiya",
+      "lane": "CONTEXT",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "[分享] 川普：如果我當年是總統，一周就能打贏越戰",
+      "url": "https://www.ptt.cc/bbs/Military/M.1793586414.A.477.html",
+      "source": "PTT_Military",
+      "lane": "OPINION",
+      "reject_reason": "retrospective_or_non_current_noise",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "[新聞] 4度流、廢標後終決標！國軍91億寬頻無線",
+      "url": "https://www.ptt.cc/bbs/Military/M.1793590924.A.6D6.html",
+      "source": "PTT_Military",
+      "lane": "OPINION",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "[分享] 93版本的綠色零食",
+      "url": "https://www.ptt.cc/bbs/Military/M.1793591410.A.901.html",
+      "source": "PTT_Military",
+      "lane": "OPINION",
+      "reject_reason": "entertainment_sports_noise",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "[新聞] 美方改提二手M109A6升級A7 遭我陸軍拒絕",
+      "url": "https://www.ptt.cc/bbs/Military/M.1793609213.A.4E8.html",
+      "source": "PTT_Military",
+      "lane": "OPINION",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Re: [新聞] 美方改提二手M109A6升級A7 遭我陸軍拒絕",
+      "url": "https://www.ptt.cc/bbs/Military/M.1793621015.A.0E1.html",
+      "source": "PTT_Military",
+      "lane": "OPINION",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Re: [問卦] 聽君一席話 如聽一席話",
+      "url": "https://www.ptt.cc/bbs/Gossiping/M.1793635291.A.4C5.html",
+      "source": "PTT_Gossiping",
+      "lane": "OPINION",
+      "reject_reason": "entertainment_sports_noise",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "[問卦] ChatGPT開始放廣告了",
+      "url": "https://www.ptt.cc/bbs/Gossiping/M.1793635307.A.A8C.html",
+      "source": "PTT_Gossiping",
+      "lane": "OPINION",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "[問卦] 在夜店吧台喝酒的女生要怎麼搭訕？",
+      "url": "https://www.ptt.cc/bbs/Gossiping/M.1793635321.A.8F6.html",
+      "source": "PTT_Gossiping",
+      "lane": "OPINION",
+      "reject_reason": "entertainment_sports_noise",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Re: [新聞] 賴總統：穩定社會不漲油電健保 盼在野黨",
+      "url": "https://www.ptt.cc/bbs/Gossiping/M.1793635409.A.8BC.html",
+      "source": "PTT_Gossiping",
+      "lane": "OPINION",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "[問卦] 日本有曾經一億總中流",
+      "url": "https://www.ptt.cc/bbs/Gossiping/M.1793635519.A.CC0.html",
+      "source": "PTT_Gossiping",
+      "lane": "OPINION",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "Re: [問卦] 一直強調陪伴的意思是什麼啊？",
+      "url": "https://www.ptt.cc/bbs/Gossiping/M.1793635655.A.DF8.html",
+      "source": "PTT_Gossiping",
+      "lane": "OPINION",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "[問卦] 一講到演藝圈長青樹 會想到誰?",
+      "url": "https://www.ptt.cc/bbs/Gossiping/M.1793635692.A.66B.html",
+      "source": "PTT_Gossiping",
+      "lane": "OPINION",
+      "reject_reason": "entertainment_sports_noise",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "[問卦] 為什麼日本人來台灣騎車都會遇到鬼切計程",
+      "url": "https://www.ptt.cc/bbs/Gossiping/M.1793635907.A.5BA.html",
+      "source": "PTT_Gossiping",
+      "lane": "OPINION",
+      "reject_reason": "entertainment_sports_noise",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "[新聞] 洋流一走、垃圾留下 徐巧芯不忍了呼叫沈",
+      "url": "https://www.ptt.cc/bbs/Gossiping/M.1793636074.A.0AC.html",
+      "source": "PTT_Gossiping",
+      "lane": "OPINION",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "[問卦] 商務小飛機為什麼不配置降落傘呢?",
+      "url": "https://www.ptt.cc/bbs/Gossiping/M.1793636119.A.9E5.html",
+      "source": "PTT_Gossiping",
+      "lane": "OPINION",
+      "reject_reason": "entertainment_sports_noise",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "SK Hynix begins HBM4 production as demand for AI chips soars, while Taiwan tightens export controls on advanced sem We sponsor this channel. Find out. https://www.ProNetGrowth.com/semi/?utm_source=bl",
+      "url": "https://bsky.app/profile/semiconductornews.bsky.social/post/3mzdmb6pzps2y",
+      "source": "Bluesky_Social",
+      "lane": "OPINION",
+      "reject_reason": "ad_or_soft_section",
+      "relevance_score": 0.0
+    },
+    {
+      "title": "📝 Наказание может быть разным 📝 О проблеме реально обманутых подростков Что общего у медалиста, победителя олимпиады и подростка, обвиняемого в терроризме? Иногда это один и тот же человек. Вчера он готовился к поступлению в вуз, а сегодня сидит в СИ",
+      "url": "https://t.me/rybar",
+      "source": "Telegram_@rybar",
+      "lane": "OPINION",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    },
+    {
+      "title": "📝 Первая в истории 📝 Женщина-президент в Софии Интрига выборов главы государства в Болгарии развеялась, Илияна Йотова (действующий вице-президент) обходит Андрея Гюрова и набирает 57,5% голосов, по данным ЦИК. Отрыв от второго места составляет 18% .",
+      "url": "https://t.me/rybar",
+      "source": "Telegram_@rybar",
+      "lane": "OPINION",
+      "reject_reason": "low_geopolitical_relevance",
+      "relevance_score": 0.2
+    }
+  ]
+}

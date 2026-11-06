@@ -44,13 +44,20 @@ Thumbs.db
 output/charts/*.png
 output/charts/*.jpg
 
-# 환경변수 (절대 커밋 금지)
-.env
-*.env
+# Airflow 로컬 설정
+airflow.cfg
 
-# 환경변수
+# 환경변수 (절대 커밋 금지) — examples만 예외
 .env
 *.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Gmail OAuth client/token (never commit)
+prof_kang_project/config/credentials.json
+prof_kang_project/config/token.json
+prof_kang_project/config/*.json
 
 # 임시 테스트 파일
 Untitled-1.py

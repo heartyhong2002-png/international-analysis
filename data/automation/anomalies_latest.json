@@ -1,20 +1,28 @@
 {
-  "scanned_at": "2026-10-29T08:22:20.062181+00:00",
+  "scanned_at": "2026-11-04T10:30:15.702175+00:00",
   "dry_run": true,
   "threshold": 2.5,
   "scanned_raw_count": 18,
-  "hotspot_count": 6,
+  "hotspot_count": 7,
   "hotspots": [
     {
       "cluster_id": "CLUST-0001",
-      "representative_title": "Red Sea Shipping Update: Another vessel attacked near Bab al-Mandab strait causing Cape of Good Hope detours",
-      "url": "https://apnews.com/article/red-sea-vessel-2",
+      "signal_id": "SIG-20261104-0001",
+      "representative_title": "Houthi anti-ship ballistic missile hits commercial container ship in southern Red Sea near Bab-el-Mandeb",
+      "canonical_title": "Houthi anti-ship ballistic missile hits commercial container ship in southern Red Sea near Bab-el-Mandeb",
+      "url": "https://reuters.com/world/houthi-red-sea-1",
       "cluster_size": 3,
       "unique_sources_count": 3,
       "sources": [
         "Reuters",
         "AP News",
         "BBC News"
+      ],
+      "source_types": [
+        "unclassified"
+      ],
+      "observed_lanes": [
+        "UNSPECIFIED"
       ],
       "relevance_score": 1.0,
       "chokepoints": [
@@ -23,30 +31,135 @@
           "name": "바브엘만데브 해협 및 홍해 (Bab-el-Mandeb & Red Sea)",
           "region": "Middle East / Red Sea",
           "primary_supply": [
-            "CONTAINER_CARGO",
             "CRUDE_OIL",
-            "EUROPE_EXPORT"
+            "NATURAL_GAS_LNG",
+            "SEMICONDUCTOR"
           ]
         }
       ],
       "supply_chain_tags": [],
-      "event_types": [],
+      "event_types": [
+        "MILITARY_CONFLICT"
+      ],
       "hotspot_regions": [
-        "MIDDLE_EAST"
+        "MIDDLE_EAST",
+        "WESTERN_EUROPE"
       ],
       "published_at": "2026-10-29T08:15:00Z",
-      "z_score": 7.17,
-      "anomaly_score": 75.2
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-04T10:30:15.490070+00:00",
+      "z_score": 8.0,
+      "anomaly_score": 79.2
+    },
+    {
+      "cluster_id": "CLUST-0009",
+      "signal_id": "SIG-20261104-0009",
+      "representative_title": "Panama Canal drought restricts daily vessel transit slots, causing LNG and grain bulk carrier backlog",
+      "canonical_title": "Panama Canal drought restricts daily vessel transit slots, causing LNG and grain bulk carrier backlog",
+      "url": "https://reuters.com/business/panama-canal-drought-restrictions-13",
+      "cluster_size": 2,
+      "unique_sources_count": 2,
+      "sources": [
+        "Reuters",
+        "El País"
+      ],
+      "source_types": [
+        "unclassified"
+      ],
+      "observed_lanes": [
+        "UNSPECIFIED"
+      ],
+      "relevance_score": 1.0,
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_PANAMA",
+          "name": "파나마 운하 (Panama Canal)",
+          "region": "Americas / Latin America",
+          "primary_supply": [
+            "NATURAL_GAS_LNG",
+            "GRAIN_FOOD"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "NATURAL_GAS_LNG",
+        "GRAIN_FOOD"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "LATIN_AMERICA"
+      ],
+      "published_at": "2026-10-29T05:10:00Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-04T10:30:15.490070+00:00",
+      "z_score": 6.67,
+      "anomaly_score": 77.8
+    },
+    {
+      "cluster_id": "CLUST-0005",
+      "signal_id": "SIG-20261104-0005",
+      "representative_title": "Russian drone strikes disrupt grain export terminal infrastructure near Bosphorus and Danube corridor",
+      "canonical_title": "Russian drone strikes disrupt grain export terminal infrastructure near Bosphorus and Danube corridor",
+      "url": "https://kyivindependent.com/russia-grain-danube-6",
+      "cluster_size": 2,
+      "unique_sources_count": 2,
+      "sources": [
+        "Kyiv Independent",
+        "Daily Sabah"
+      ],
+      "source_types": [
+        "unclassified"
+      ],
+      "observed_lanes": [
+        "UNSPECIFIED"
+      ],
+      "relevance_score": 1.0,
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_BOSPHORUS",
+          "name": "보스포루스 및 흑해 해협 (Bosphorus & Turkish Straits)",
+          "region": "Eurasia / Black Sea",
+          "primary_supply": [
+            "GRAIN_FOOD",
+            "CRUDE_OIL"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "GRAIN_FOOD"
+      ],
+      "event_types": [
+        "MILITARY_CONFLICT"
+      ],
+      "hotspot_regions": [
+        "EASTERN_EUROPE"
+      ],
+      "published_at": "2026-10-29T06:10:00Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-04T10:30:15.490070+00:00",
+      "z_score": 6.5,
+      "anomaly_score": 74.8
     },
     {
       "cluster_id": "CLUST-0002",
+      "signal_id": "SIG-20261104-0002",
       "representative_title": "Oil tankers navigate cautiously as tensions spike in Strait of Hormuz after IRGC seizure warning",
+      "canonical_title": "Oil tankers navigate cautiously as tensions spike in Strait of Hormuz after IRGC seizure warning",
       "url": "https://bloomberg.com/news/articles/oil-hormuz-tankers-5",
       "cluster_size": 2,
       "unique_sources_count": 2,
       "sources": [
         "Al Jazeera",
         "Bloomberg"
+      ],
+      "source_types": [
+        "unclassified"
+      ],
+      "observed_lanes": [
+        "UNSPECIFIED"
       ],
       "relevance_score": 1.0,
       "chokepoints": [
@@ -56,8 +169,7 @@
           "region": "Middle East / Persian Gulf",
           "primary_supply": [
             "CRUDE_OIL",
-            "NATURAL_GAS_LNG",
-            "NAPHTHA"
+            "NATURAL_GAS_LNG"
           ]
         }
       ],
@@ -65,54 +177,69 @@
         "CRUDE_OIL"
       ],
       "event_types": [],
-      "hotspot_regions": [],
+      "hotspot_regions": [
+        "MIDDLE_EAST"
+      ],
       "published_at": "2026-10-29T07:45:00Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-04T10:30:15.490070+00:00",
       "z_score": 5.67,
       "anomaly_score": 67.6
     },
     {
-      "cluster_id": "CLUST-0005",
-      "representative_title": "Russian drone strikes disrupt grain export terminal infrastructure near Bosphorus and Danube corridor",
-      "url": "https://kyivindependent.com/russia-grain-danube-6",
+      "cluster_id": "CLUST-0003",
+      "signal_id": "SIG-20261104-0003",
+      "representative_title": "France: Grève générale et blocage des raffineries de pétrole à Paris suite aux manifestations",
+      "canonical_title": "France: Grève générale et blocage des raffineries de pétrole à Paris suite aux manifestations",
+      "url": "https://lemonde.fr/societe/greve-france-paris-1",
       "cluster_size": 2,
       "unique_sources_count": 2,
       "sources": [
-        "Kyiv Independent",
-        "Daily Sabah"
+        "Le Monde",
+        "Le Figaro"
+      ],
+      "source_types": [
+        "unclassified"
+      ],
+      "observed_lanes": [
+        "UNSPECIFIED"
       ],
       "relevance_score": 1.0,
-      "chokepoints": [
-        {
-          "code": "CHOKEPOINT_BOSPHORUS",
-          "name": "보스포루스 및 흑해 해협 (Bosphorus & Turkish Straits)",
-          "region": "Eurasia / Black Sea",
-          "primary_supply": [
-            "GRAIN_WHEAT",
-            "CRUDE_OIL",
-            "FERTILIZER"
-          ]
-        }
-      ],
+      "chokepoints": [],
       "supply_chain_tags": [
-        "GRAIN_FOOD"
+        "CRUDE_OIL"
       ],
-      "event_types": [],
+      "event_types": [
+        "PROTEST_STRIKE"
+      ],
       "hotspot_regions": [
-        "EASTERN_EUROPE"
+        "WESTERN_EUROPE"
       ],
-      "published_at": "2026-10-29T06:10:00Z",
-      "z_score": 5.67,
-      "anomaly_score": 67.6
+      "published_at": "2026-10-29T06:30:00Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-04T10:30:15.490070+00:00",
+      "z_score": 5.17,
+      "anomaly_score": 62.8
     },
     {
       "cluster_id": "CLUST-0004",
+      "signal_id": "SIG-20261104-0004",
       "representative_title": "Brasil: Vitória de Lula nas eleições presidenciais repercute no mercado de petróleo e Petrobras",
+      "canonical_title": "Brasil: Vitória de Lula nas eleições presidenciais repercute no mercado de petróleo e Petrobras",
       "url": "https://folha.uol.com.br/poder/lula-eleicoes-petroleo-1",
       "cluster_size": 2,
       "unique_sources_count": 2,
       "sources": [
         "Folha de S.Paulo",
         "G1 Globo"
+      ],
+      "source_types": [
+        "unclassified"
+      ],
+      "observed_lanes": [
+        "UNSPECIFIED"
       ],
       "relevance_score": 1.0,
       "chokepoints": [],
@@ -126,63 +253,46 @@
         "LATIN_AMERICA"
       ],
       "published_at": "2026-10-29T04:15:00Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-04T10:30:15.490070+00:00",
       "z_score": 5.17,
       "anomaly_score": 62.8
     },
     {
-      "cluster_id": "CLUST-0003",
-      "representative_title": "Tensions en France: Nouvelles manifestations massives et grève dans les transports et terminaux pétroliers",
-      "url": "https://lefigaro.fr/actualites/manifestations-france-2",
-      "cluster_size": 2,
-      "unique_sources_count": 2,
+      "cluster_id": "CLUST-0007",
+      "signal_id": "SIG-20261104-0007",
+      "representative_title": "China expands export controls on critical gallium and rare earths targeting defense supply chains",
+      "canonical_title": "China expands export controls on critical gallium and rare earths targeting defense supply chains",
+      "url": "https://scmp.com/economy/china-rare-earths-9",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
       "sources": [
-        "Le Monde",
-        "Le Figaro"
+        "SCMP"
+      ],
+      "source_types": [
+        "unclassified"
+      ],
+      "observed_lanes": [
+        "UNSPECIFIED"
       ],
       "relevance_score": 1.0,
       "chokepoints": [],
-      "supply_chain_tags": [],
+      "supply_chain_tags": [
+        "RARE_EARTHS"
+      ],
       "event_types": [
-        "PROTEST_STRIKE"
+        "SANCTIONS_EXPORT_CONTROL"
       ],
       "hotspot_regions": [
-        "WESTERN_EUROPE"
+        "EAST_ASIA"
       ],
-      "published_at": "2026-10-29T06:30:00Z",
-      "z_score": 4.17,
-      "anomaly_score": 50.2
-    },
-    {
-      "cluster_id": "CLUST-0009",
-      "representative_title": "Sequía en el Canal de Panamá obliga a buques graneleros y gaseros a buscar rutas alternativas por el Cabo de Hornos",
-      "url": "https://elpais.com/economia/canal-panama-sequia-14",
-      "cluster_size": 2,
-      "unique_sources_count": 2,
-      "sources": [
-        "Reuters",
-        "El País"
-      ],
-      "relevance_score": 0.2,
-      "chokepoints": [
-        {
-          "code": "CHOKEPOINT_PANAMA",
-          "name": "파나마 운하 (Panama Canal)",
-          "region": "Americas / Latin America",
-          "primary_supply": [
-            "NATURAL_GAS_LNG",
-            "GRAIN_FOOD",
-            "CONTAINER_CARGO"
-          ]
-        }
-      ],
-      "supply_chain_tags": [],
-      "event_types": [],
-      "hotspot_regions": [
-        "LATIN_AMERICA"
-      ],
-      "published_at": "2026-10-29T05:10:00Z",
-      "z_score": 4.67,
-      "anomaly_score": 15.0
+      "published_at": "2026-10-29T04:20:00Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-04T10:30:15.490070+00:00",
+      "z_score": 2.67,
+      "anomaly_score": 37.4
     }
   ],
   "chokepoints": {

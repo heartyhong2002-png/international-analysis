@@ -58,17 +58,35 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
+| done | ANTIGRAVITY | collection / zero-byte-multimodal-collectors | `scripts/collection/fetch_telegram_public.py`, `scripts/collection/fetch_bluesky_public.py`, `scripts/collection/fetch_signal_gap_rss.py`, `scripts/collection/gov_announcements_collector.py`, `config/source_registry/*` | 0-Byte 무다운로드 멀티모달 수집기 4종 고도화(Telegram Photo/Video/지도단문 보존, Bluesky embed.images/alt_texts/video, RSS/Gov media:content·enclosure·PDF 보존) 및 34개 글로벌 싱크탱크·독립언론 확장(Standard 멀티모달 클러스터 35→120건, High 9→23건) | 2026-11-06 |
+| done | ANTIGRAVITY | preprocessing / multimodal-stage1 | `scripts/automation/preprocess_signals.py`, `scripts/pipeline/bridge_preprocess_lanes.py`, `docs/current/PREPROCESSING_SESSION_PROMPT.md` | 1단계 무다운로드 멀티모달(이미지·영상·문서 URL & Alt-Text 추출, 시각노이즈/밈 필터링, 4대 시각 모달리티 태깅) 구축 및 최신 725건(Standard 339 / High 35 클러스터) 정제·수집 세션 가이드라인 수립 완료 | 2026-11-06 |
+| done | Cursor / Validation·QA | validation / multi-judge-criteria | `docs/current/VALIDATION_PLAN.md` (§10.4), `docs/evidence/early_warning_backtest_report.md`, `AGENT_SYNC.md` | 검증단(tev1/Gemma/DeepSeek) 직교 판정·블라인드 Stage1/2·트리거·KPI 문서화. 외부 자문 합의 반영. Trio-Sync | 2026-11-05 |
+| done | ANTIGRAVITY | collection / bluesky-telegram-integration | `scripts/collection/fetch_bluesky_public.py`, `scripts/collection/fetch_telegram_public.py`, `scripts/collection/run_phone_collector.py`, `dags/early_warning_pipeline_dag.py` | 블루스카이(AT Protocol 8대 쿼리) 공식 수집기 신설, 텔레그램 OSINT 경량화 및 S20 울트라 8대 수집기 체제 확장 완료 | 2026-11-05 |
+| done | ANTIGRAVITY | preprocessing / high-purity-engine | `scripts/automation/preprocess_signals.py`, `scripts/pipeline/bridge_preprocess_lanes.py`, `data/automation/*high_purity*` | 고순도 모드(`--purity-mode high`) + 신규 Bluesky·Telegram 8대 수집 체제(451건) 브릿지 연동 완료 (Standard 242건 / High-Purity 29개 핵심 클러스터 압축) | 2026-11-05 |
+| done | ANTIGRAVITY | preprocessing / signal-filtering | `scripts/automation/preprocess_signals.py`, `scripts/pipeline/bridge_preprocess_lanes.py`, `data/automation/*` | 4단계 다국어 전처리 고도화(7개국어+CJK 노이즈·외교의전 배제, 정규화, 중복군집화, 5대해협·한국6대공급망 태깅) 및 4대 레인 브릿지 구현 완료 | 2026-11-03 |
+| done | Cursor Agent / collection | sync / trio-platform + edge-verify | `AGENT_SYNC.md`, Notion hub/board/docs/report, GitHub `cursor/actions-light-collection` | 폰 `--sync-git` 원격 검증(0a45c12·6/6·gov path) 후 Trio-Sync(MD→Notion→GitHub) | 2026-11-03 |
+| done | Cursor Agent / collection | edge / phone-git-sync-harden | `scripts/collection/run_phone_collector.py`, `start_phone.sh` | Termux git 작성자·rebase abort·push 힌트 보강. 사용자 수정·푸시 후 `data(edge)` 3커밋·gov_announcements 원격 반영 확인 | 2026-11-03 |
+| done | ANTIGRAVITY | orchestration / edge-to-core-pipeline | `scripts/collection/run_phone_collector.py`, `dags/early_warning_pipeline_dag.py`, `data/phone_collector_status.json` | 엣지-코어 2-Tier 분산 파이프라인 완결: S20 울트라 6대 수집기(6/6 성공) 실기기 Git 자동 푸시 및 PC 동기화 검증 완료 | 2026-11-03 |
+| done | ANTIGRAVITY | data-collection / packet-a-federal-register | `scripts/collection/fetch_federal_register.py`, `config/source_registry/government_sources.yaml`, `scripts/run_pipeline.py` | 패킷 A Federal Register 공식 REST API 선택 수집기 구현 및 source_registry 연동 완료 | 2026-11-03 |
+| done | ANTIGRAVITY | preprocessing / session-prompt | `docs/current/PREPROCESSING_SESSION_PROMPT.md`, `docs/SESSION_PROMPTS.md` | 비정형 데이터 전처리 및 신호 필터링 전담 세션 분리 프롬프트 작성 및 등록 완료 | 2026-11-02 |
+| done | ANTIGRAVITY | collection / 24-7-edge-runner | `scripts/collection/run_phone_collector.py`, `start_phone.sh`, `scripts/collection/fetch_signal_gap_rss.py` | 갤럭시 S20 울트라(Termux) 24/7 무중단 자동 수집 러너 구축, pandas 의존성 제거 및 5/5 수집 검증 완료 | 2026-11-03 |
 | done | Cursor / Control Tower | control-tower / scope | `docs/current/PROJECT_PLAN.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `AGENT_SYNC.md` | 미국 국내·동맹·경쟁/대립축 6대 감시축 확정(예측 금지). 패킷 A+B 동시 착수 지시 | 2026-10-30 |
 | done | Cursor / Control Tower | runtime / python-3.13 | `.venv`, `.python-version`, `requirements.txt`, `README.md`, `PROJECT_CONTEXT.md`, `docs/SESSION_PROMPTS.md` | 표준 런타임 Python 3.13(.venv) 전환 및 세션 프롬프트 정리 — PR #5 | 2026-10-30 |
 | done | Cursor / Control Tower | sync / trio-platform | `AGENT_SYNC.md`, Notion hub/history/board, GitHub PR #5 | 트리오 동기화(MD→Notion→GitHub/PR) 완료 | 2026-10-30 |
-| in-progress | Cursor Agent / collection | data-collection / US-domestic + allies | `config/source_registry/government_sources.yaml`, `config/source_registry/SCHEMA.md`, `scripts/collection/*` (선택 수집기만) | 패킷 A+B registry 보강 완료 → 다음: Federal Register 선택 수집기. Alert/예측/DB/대시보드/LLM 금지 | 2026-10-29 |
-| open | (세션 2 수집) | data-collection / competitor-axis roles | `config/source_registry/*`, signal_gap 소스 | 패킷 C: relationship_role 태깅·OFAC/BIS registry (A/B 스키마 정렬 후) | 2026-10-29 |
+| done | Cursor / Control Tower | automation / cloud-light-collection | `.github/workflows/daily_pipeline.yml`, `docs/current/DATA_COLLECTION_GUIDE.md`, `AGENT_SYNC.md` | GitHub Actions 일일 수집 경로 복구 → light RSS lane (gov/WH/signal-gap/financial). LLM·DB·GDELT 제외 | 2026-10-31 |
+| done | Cursor / Control Tower | dashboard / local-html-console | `scripts/console/app.py`, `scripts/console/static/index.html`, `README.md`, `docs/current/DATA_COLLECTION_GUIDE.md` | 로컬 통합 HTML 콘솔 프로토타입(원클릭 run_pipeline/light). 배포·Airflow·LLM 미포함 | 2026-11-02 |
+| done | Cursor Agent / collection | data-collection / gov-path-fix | `scripts/collection/gov_announcements_collector.py`, `scripts/db/build_database.py`, `scripts/collection/run_phone_collector.py` | 정부 발표 산출 경로 `data/gov_announcements/` 통일(폰 --sync-git 누락 수정) + rebase 실패 시 push 중단 | 2026-11-03 |
+| done | Cursor Agent / collection | data-collection / US-domestic + allies | `config/source_registry/government_sources.yaml`, `config/source_registry/SCHEMA.md`, `scripts/collection/*` | 패킷 A+B registry + Federal Register는 ANTIGRAVITY가 선택 수집기까지 연결. 경로 수정만 후속 | 2026-11-03 |
+| done | Cursor Agent / collection | data-collection / X public API | `scripts/collection/fetch_x_public.py`, `scripts/run_pipeline.py`, `config/source_registry/opinion_sources.yaml`, `docs/current/DATA_COLLECTION_GUIDE.md` | 공식 X recent search 선택 수집기(`--with-x`). 기본 파이프라인 미호출·종량제 고지 | 2026-11-02 |
+| done | Cursor Agent / preprocess | automation / noise-relevance-filter | `scripts/automation/preprocess_signals.py`, `AGENT_SYNC.md` | 연예·스포츠·광고·비지정학 기사 hard-drop + 관련도 관문 강화 (LLM 전 필수 필터) | 2026-11-02 |
+| done | ANTIGRAVITY | data-collection / competitor-axis roles | `config/source_registry/*`, signal_gap 소스 | 패킷 C: relationship_role 태깅·OFAC/BIS registry (A/B 스키마 정렬 후) | 2026-11-02 |
 | done | ANTIGRAVITY | db / pipeline / cross-verification | `scripts/run_pipeline.py`, `scripts/db/load_cross_verification_to_db.py`, `scripts/db/create_views.sql` | 해협 센서·공급망 사건 교차검증의 DB 적재와 대시보드 뷰 연동 | 2026-10-02 |
 | done | ANTIGRAVITY | data-collection / supply-chain-sensors | `scripts/collection/fetch_maritime_chokepoints.py`, `scripts/analysis/cross_verify_events.py`, `data/maritime_chokepoints/`, `data/event_cross_verification/` | 해협·시장 센서 수집 및 복수 계통 교차검증 | 2026-10-02 |
 | done | ANTIGRAVITY | data-collection / public-opinion | `scripts/collection/fetch_local_opinions.py`, `scripts/collection/fetch_google_trends.py`, `data/local_opinions/`, `data/google_trends/` | 대안 로컬 여론·검색 트렌드 센서 구축 | 2026-09-29 |
 | in-progress | ANTIGRAVITY | dashboard / ui | `scripts/dashboard/streamlit_dashboard.py` | Streamlit 대시보드 유지보수 및 고도화 | 2026-09-28 |
 | done | Cursor / dashboard-report | dashboard / html-ui | `scripts/dashboard/generate_dashboard_v2.py`, `output/dashboard/` | Information 축 과장 표현 교정(국민 여론·하드코딩 Critical·WATCH 후보 제거) 후 HTML 재생성 | 2026-10-28 |
-| in-progress | Cursor / LLM 분석·경보 산식 | llm-analysis / alert-scoring | `scripts/validation/backtest_tev1.py`, `scripts/analysis/analyze_signal_gap.py`, `data/tev1_backtest_results.json`, `data/pending_human_review.csv` | tev1 10건 시운전(일치5/불일치5). 합격 게이트(동결·URL·인용·사람검수) 고정 전 성능 주장 금지. t-test/ANOVA 보류 | 2026-10-29 |
+| done | ANTIGRAVITY | llm-pipeline / 3-tier-canonical-pivot | `scripts/analysis/analyze_signal_gap.py`, `scripts/analysis/analyze_middle_east_osint.py`, `scripts/analysis/analyze_ib_insights.py`, `scripts/validation/verify_model_consensus.py`, `data/signal_gap/signal_gap_analysis.json` | 16GB 갤북5 프로 최적화 3단계 순차 파이프라인(Qwen2.5:7b 다국어 추출 → EXAONE 3.5 한국어 브리핑 & Llama3.1:8b 영어 브리핑) 구축 및 실증 완료 | 2026-11-02 |
+| done | ANTIGRAVITY | llm-analysis / alert-scoring | `scripts/validation/backtest_tev1.py`, `scripts/analysis/analyze_signal_gap.py`, `data/tev1_backtest_results.json`, `scripts/dashboard/generate_dashboard_v2.py` | tev1 10건 동결 사례 시운전 10/10 호출 완결(일치 5/불일치 5 감사 트리거), 대시보드 결측치 가드레일 보강 | 2026-11-02 |
 | done | Codex | docs / session-sync | `PROJECT_CONTEXT.md`, `AGENT_SYNC.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `project-handoff.md` | 현재 방향, 센서 분류, 교차검증 규칙, 세션 상태 문서 정리 | 2026-10-02 |
 | done | Codex | dashboard / Figma handoff | `docs/current/DASHBOARD_SESSION_PROMPT.md`, `PROJECT_CONTEXT.md`, `AGENT_SYNC.md` | Figma의 5대 감시축 균형 UI와 비상 관제 화면을 대시보드 세션에 인수인계 | 2026-10-04 |
 | done | ANTIGRAVITY | dashboard / report / docs-sync | docs/, scripts/dashboard/generate_dashboard_v2.py | 최신 MD(수집 레인 아키텍처, 스크립트 인벤토리, 지도교수 면담자료) 확인 및 대시보드 뷰/표현 정합성 검증 | 2026-10-11 |
@@ -82,11 +100,294 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | docs / notion-sync | AGENT_SYNC.md, project-handoff.md, scripts/notion/* | 전체 작업 내역 MD 문서 최신화 및 노션 허브·종합 현황 실시간 동기화 | 2026-10-28 |
 | done | ANTIGRAVITY | automation / anomaly-scanner | scripts/automation/*, docs/current/DATA_COLLECTION_ROADMAP.md, docs/current/PYTHON_SCRIPT_INVENTORY.md | 글로벌 이상 징후 무인 스캐너 & 지능형 전처리 파이프라인 구축 및 노션 퍼블리싱 연동 완결 | 2026-10-29 |
 | done | Cursor Agent | automation / anomaly-scanner-review | `scripts/automation/auto_anomaly_scanner.py`, `scripts/automation/preprocess_signals.py`, `scripts/notion/publish_notion_report.py`, `docs/current/DATA_COLLECTION_ROADMAP.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md` | ANTIGRAVITY 초안 검증·문서 깨짐 수정·Alert Level 오인 표현 제거·`--dry-run` 확인 | 2026-10-29 |
-| done | ANTIGRAVITY | sync / trio-platform-sync | `AGENT_SYNC.md`, `PROJECT_CONTEXT.md`, GitHub, Notion | MD 문서, GitHub(커밋/푸시), Notion(작업보드/문서/이력/보고서) 3대 플랫폼 전체 동기화 | 2026-10-29 |
+| done | ANTIGRAVITY | sync / trio-platform-sync | `AGENT_SYNC.md`, `assets/`, GitHub, Notion | 전체 파이프라인 아키텍처 다이어그램 및 3대 플랫폼(MD·GitHub·Notion) 일괄 동기화 | 2026-11-02 |
+| done | ANTIGRAVITY | orchestration / airflow-docker-setup | `docker-compose.yaml`, `dags/early_warning_pipeline_dag.py`, `docs/current/AIRFLOW_SETUP_GUIDE.md`, `docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md` | Docker 기반 Apache Airflow 2.10.2 표준 컨테이너 환경 구축, 4-Lane 병렬 수집 DAG 시운전 검증 및 포트폴리오 엔지니어링 서사 반영 | 2026-11-02 |
+| done | ANTIGRAVITY | validation / tev1-role-clarification | `scripts/validation/backtest_tev1.py`, `scripts/automation/preprocess_signals.py`, `docs/current/VALIDATION_PLAN.md` | 번역·분석 모델(Qwen/EXAONE/Llama)과 독립 검증 모델(tev1)의 엄격한 역할 분리 및 다국어 5단계 전처리 필수화 확립 | 2026-11-02 |
+| done | ANTIGRAVITY | validation / multi-model-suite-setup | `Ollama`, `docs/current/VALIDATION_PLAN.md`, `docs/current/LLM_SYSTEM_SUMMARY.md` | tev1 보완 다자간 검증단 구축: DeepSeek-R1:7b(추론·비판) 및 Gemma2:9b(사실성 감사) 다운로드 및 6대 모델 역할 체계 완결 | 2026-11-05 |
 | done | ANTIGRAVITY | data-collection / latin-america-expansion | `scripts/collection/*`, `scripts/automation/*`, `config/source_registry/*`, `docs/current/*` | 중남미 대륙 감시 강화: 브라질 대선·룰라정부·원자재(원유/대두/리튬) 및 파나마 운하 병목 센서 구축 | 2026-10-29 |
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-06 [ANTIGRAVITY / collection · 0-Byte 무다운로드 멀티모달 수집기 4종 고도화 및 34개 글로벌 싱크탱크·탐사미디어 확장]
+- 한 일:
+  1. [수집 세션 ➔ 전처리 세션 간 비정형·멀티모달 인터페이스 규약]에 맞춰 0-Byte 무다운로드 원칙으로 4대 핵심 수집기 멀티모달 메타데이터 추출 확장:
+     - `scripts/collection/fetch_telegram_public.py`: 메시지 래퍼(`.tgme_widget_message_wrap`) 파싱으로 전환하여 `Photo_URL`(`a.tgme_widget_message_photo_wrap` 배경 URL), `Video_URL`(`video` src 및 `i.tgme_widget_message_video_thumb`), `Has_Media` 추출. 전황 지도·현장 사진 단독 게시물(텍스트 10자 미만)도 유실 없이 수집 및 맥락 태그 보강(50건 중 멀티모달 18건 포착).
+     - `scripts/collection/fetch_bluesky_public.py`: `post.embed` 및 `record.embed`에서 `media_urls`(`embed.images[].thumb`/`fullsize`), `alt_texts`(`embed.images[].alt` 대체 텍스트), `has_video`(`app.bsky.embed.video`) 추출(고유 50건 중 이미지/비디오 9건, 외부 링크카드 34건 포착).
+     - `scripts/collection/fetch_signal_gap_rss.py` & `scripts/collection/gov_announcements_collector.py`: `<media:content>`, `<media:thumbnail>`, `<enclosure>`, 본문 내 `<img>`/`<video>` 및 `.pdf` 원문 링크를 텍스트 절단(`[:500]`) 전에 우선 추출하여 보존하고, 아바타·로고·1x1 트래킹 픽셀·이모지 아이콘은 수집 단계에서 즉시 배제(신호 괴리 RSS 334건 중 멀티모달 137건 포착).
+  2. 권위주의/감시국가(러시아·중국·이란) 독립 탐사 미디어, 남미·멕시코, 일본 및 10대 글로벌 싱크탱크(ISW, CSIS, ASPI, 카네기 유라시아, 윌슨센터, WOLA, 미주대화기구, 도쿄재단, PIIE, RUSI) 등 총 34개 피드 연동 완결 (`config/source_registry/expert_feeds.yaml`, `local_media_feeds.yaml`).
+  3. 전처리 브릿지(`bridge_preprocess_lanes.py`) 연동 검증 완료:
+     - `standard` 모드: 752건 원시 입력 -> 346개 클러스터, **멀티모달 포함 클러스터 35건 ➔ 120건(첨부 162개: `image` 108, `external_card` 25, `document_pdf` 24, `video` 5)으로 3.4배 증가**, 5대 해협 전원 감지(호르무즈 12, 바브엘만데브 7, 말라카 2, 보스포루스 4, 파나마 3, 대만해협 4).
+     - `high` 고순도 모드: 752건 원시 입력 -> 44개 핵심 클러스터, **멀티모달 포함 클러스터 9건 ➔ 23건(첨부 37개)으로 2.5배 증가**.
+  4. Trio-Sync(MD 문서 + Notion + GitHub) 실행.
+- 바꾼 파일: `scripts/collection/fetch_telegram_public.py`, `scripts/collection/fetch_bluesky_public.py`, `scripts/collection/fetch_signal_gap_rss.py`, `scripts/collection/gov_announcements_collector.py`, `config/source_registry/expert_feeds.yaml`, `config/source_registry/local_media_feeds.yaml`, `data/signal_gap/*`, `data/bluesky_public/*`, `data/gov_announcements/*`, `data/automation/*`, `AGENT_SYNC.md`.
+- 다음 작업: S20 울트라 엣지 노드 `git pull` 후 0-Byte 멀티모달 8대 수집 체제 무중단 가동 및 LLM/검증 세션의 멀티모달 메타데이터 소비 연동.
+
+2026-11-06 [ANTIGRAVITY / preprocessing · 1단계 무다운로드 멀티모달(이미지·영상·문서) 전처리 구축 및 수집 가이드라인 확립]
+- 한 일:
+  1. `scripts/automation/preprocess_signals.py`에 1단계 무다운로드 멀티모달 메타데이터 정형화(`extract_multimodal_metadata`) 및 시각 노이즈 필터링 구현:
+     - 원본 이미지·영상 바이너리를 다운로드하지 않고 HTML(`<img>`, `<video>`, `<iframe>`), 인라인 미디어 링크, 수집기 명시 필드(`pdf_url`, `external_link`, `external_title`, `media_urls`, `alt_texts`)에서 첨부 메타데이터(`media_attachments`)와 대체 텍스트(`visual_alt_texts`) 추출.
+     - 대체 텍스트(`alt_text`)를 본문 엔티티 태깅 및 클러스터링 토큰화에 합류시켜 사진/외부카드 설명 속 해협·공급망 키워드 복원.
+     - 시각 노이즈 URL(`is_visual_noise_url`: 아바타, 아이콘, 로고, 1x1 트래킹 픽셀, 배너 광고, Giphy/Tenor/9gag 밈 도메인) 및 밈/유머짤(`VISUAL_MEME_OR_CLICKBAIT_KEYWORDS`) 자동 차단.
+     - 4대 시각 모달리티(`SATELLITE_IMAGERY`, `TACTICAL_MARITIME_MAP`, `FIELD_PHOTO_VIDEO`, `OFFICIAL_DOCUMENT_PDF`) 태깅 및 `visual_verification_state: "UNVERIFIED_METADATA_ONLY"` 가드레일 적용.
+  2. `scripts/pipeline/bridge_preprocess_lanes.py` 멀티모달 스키마(`v1.1_multimodal`) 확장 및 최신 725건 실데이터 정제:
+     - `standard` 모드: 725건 -> 339개 클러스터 (멀티모달 포함 35개 클러스터, 첨부 42건: `external_card` 21, `document_pdf` 20, `video` 1).
+     - `high` 고순도 모드: 725건 -> 35개 핵심 클러스터 (멀티모달 포함 9개 클러스터, 첨부 11건, 호르무즈 7·대만해협 4·바브엘만데브 3·보스포루스 3·파나마 2).
+  3. `docs/current/PREPROCESSING_SESSION_PROMPT.md`에 [수집 세션 ➔ 전처리 세션 간 비정형·멀티모달 인터페이스 규약] 명문화.
+- 바꾼 파일: `scripts/automation/preprocess_signals.py`, `scripts/pipeline/bridge_preprocess_lanes.py`, `docs/current/PREPROCESSING_SESSION_PROMPT.md`, `data/automation/*`, `AGENT_SYNC.md`.
+- 다음 작업: 데이터 수집 담당 세션에서 블루스카이(`embed.images[].alt`/`thumb`), 텔레그램(`Photo_URL`/`Video_URL`), RSS(`media:content`/`enclosure`) 메타데이터 추출 필드 확장.
+
+2026-11-05 [Cursor / Validation·QA · Trio-Sync]
+- 한 일: 외부 AI 자문(Grok/ChatGPT/Gemini/DeepSeek/Kimi/Claude) 대조 후 다자간 검증 **판정 기준**을 `VALIDATION_PLAN` §10.4로 고정. 증거 리포트 과장(75%·NIST 준수) 재완화. MD→Notion→GitHub 동기화.
+- 바꾼 파일: `docs/current/VALIDATION_PLAN.md`, `docs/evidence/early_warning_backtest_report.md`, `AGENT_SYNC.md`.
+- 확인한 것: 축 분리(tev1 단계·Gemma claim 근거·DeepSeek 해석), tev1은 산식 단계 미열람, Stage1 블라인드 잠금, 자동 accept 금지, T1–T8 트리거, 만장일치율 KPI 제외. `validation_backtest_log` 사람 완료 행은 여전히 0에 가깝다.
+- 다음 작업: LLM 세션이 §10.4 스키마·프롬프트 격리로 호출 구현(산식 변경 금지). QA는 동결 2~3건 선등록 + Stage1 표본. DB는 완료 판정만 append-only.
+- 주의할 점: 3모델 다수결≠정답. tev1 10건≠Human acceptance. `SESSION_PROMPTS.md`·수집기·산식·DB DDL·대시보드 미수정. `data/tev1_backtest_results.json` 작업 트리 변경은 본 커밋에 넣지 않음.
+
+2026-11-05 [ANTIGRAVITY / 다자간 독립 검증단 모델 확충: DeepSeek-R1 & Gemma 2 구축]
+- 한 일:
+  1. 단일 심판(`tev1`) 한계 극복을 위한 검증단 모델 확충:
+     - `deepseek-r1:7b` (4.7GB): CoT 기반 비판적 반박(Adversarial Critic) 및 과잉 경보/논리적 비약 방어 모델 설치 완료.
+     - `gemma2:9b` (5.4GB): 구글의 엄격한 사실성(Factuality/Faithfulness) 기준 원문 왜곡 검증 모델 설치 완료.
+  2. 완성된 6대 오픈소스 LLM 분업 체계 확립:
+     - 분석·생성 3총사: `qwen2.5:7b` (다국어 팩트 추출) ➔ `exaone3.5:7.8b` (한국어 전략 브리핑) & `llama3.1:8b` (글로벌 영문 브리핑)
+     - 독립 검증단 3심제 + 산식: `tev1:latest` (의사결정 주심) + `deepseek-r1:7b` (비판관) + `gemma2:9b` (사실성 감사관) + 결정론적 산식 (수학적 가드레일)
+  3. 16GB RAM 환경 보호 원칙: 검증 단계에서도 모델별 순차 호출(`keep_alive="2s"`)을 엄수하여 메모리 점유율을 상시 5GB 안팎으로 유지.
+  4. 트리오 동기화 프로토콜(MD 문서 최신화 + Notion 전체 동기화 + GitHub 원격 푸시) 실행.
+- 바꾼 파일: `AGENT_SYNC.md`, Ollama 모델 레지스트리, Notion 프로젝트 허브.
+- 확인한 것: Ollama에 6개 모델 정상 등록 확인, Notion 3대 영역(작업 보드, 문서 보관소, 조기경보 리포트) 동기화 완료, GitHub 원격 푸시 완료.
+- 다음 작업: 5대 감시축 10건 동결 사례 대상 [다자간 백테스트 엔진(Multi-Model Backtest)] 연동 및 비교 감사 리포트 산출.
+- 주의할 점: 다중 모델 구동 시 반드시 순차 호출 원칙을 지키며 동시 상주를 금지함.
+
+2026-11-05 [ANTIGRAVITY / 블루스카이(Bluesky) 공식 수집기 신설 & 텔레그램 경량화 8대 수집기 체제 완결]
+- 한 일:
+  1. 블루스카이(Bluesky AT Protocol) 공식 공개 수집기 신설 (`scripts/collection/fetch_bluesky_public.py`):
+     - API 키나 로그인 인증이 불필요한 공식 오픈 XRPC 엔드포인트(`https://api.bsky.app/xrpc/app.bsky.feed.searchPosts`) 연동.
+     - 8대 전략 감시 쿼리(호르무즈, 바브엘만데브, 대만해협, 말라카, 파나마, 대중수출통제, OFAC제재, 핵심광물) 구성.
+     - 시운전 결과: 고유 지정학/물류 포스트 33건 즉시 수집, `data/bluesky_public/` 내 JSON/CSV 및 영수증 자동 저장.
+     - `signal_class: online_information_environment_signal` 및 `verification_state: UNVERIFIED` 가드레일 준수.
+  2. 텔레그램 공개 웹 프리뷰 OSINT 수집기 경량화 리팩토링 (`scripts/collection/fetch_telegram_public.py`):
+     - 스마트폰(Termux) 및 엣지 노드 호환을 위해 무거운 `pandas` 의존성을 제거하고 순수 `requests` + `bs4` + 표준 `csv` 구조로 전면 개편.
+     - 5대 핵심 공개 채널(`@rybar`, `@UaOnlii`, `@sepah_pasdaran`, `@AlArabiya`, `@army21ye`) 총 40건 수집 및 영수증 발행 완료.
+  3. 전체 파이프라인 및 엣지 오케스트레이션 확장:
+     - 갤럭시 S20 울트라 엣지 러너(`scripts/collection/run_phone_collector.py`): 기존 6종에서 블루스카이·텔레그램이 추가된 8종 경량 수집기 체제로 확장.
+     - Airflow DAG(`dags/early_warning_pipeline_dag.py`): 13개 병렬 수집기 체제(`collect_bluesky`, `collect_telegram`, `collect_federal_register` 포함)로 정렬.
+     - 통합 파이프라인(`scripts/run_pipeline.py`) 및 소스 레지스트리(`config/source_registry/opinion_sources.yaml`) 연동 완료.
+- 바꾼 파일: `scripts/collection/fetch_bluesky_public.py`, `scripts/collection/fetch_telegram_public.py`, `scripts/collection/run_phone_collector.py`, `dags/early_warning_pipeline_dag.py`, `scripts/run_pipeline.py`, `config/source_registry/opinion_sources.yaml`, `AGENT_SYNC.md`.
+- 확인한 것: 블루스카이 33건, 텔레그램 40건 정상 수집 및 영수증 확인, DAG 및 전체 파이프라인 py_compile 통과.
+- 다음 작업: S20 울트라 실기기에서 `git pull` 후 8종 수집기 자동 실행 및 Git 푸시 확인.
+- 주의할 점: SNS 데이터는 국민 여론이나 단독 Alert Level 격상용으로 사용하지 않고 정보환경 신호로만 기록.
+
+2026-11-05 [ANTIGRAVITY / preprocessing · 고순도 모드(High-Purity Mode) 파이프라인 구축 및 검증]
+- 한 일:
+  1. `scripts/automation/preprocess_signals.py`에 `--purity-mode high` (고순도 전처리 엔진) 구현:
+     - 1차: 노이즈/광고/외교의전 외에 `RETROSPECTIVE_OR_NON_CURRENT_KEYWORDS`(과거 회고, 자서전 도서 출간, 가정법 잡담, 부고 등) 정밀 배제 필터 구축.
+     - 2차: 하드 엔티티 관문(Hard-Entity Gate) 적용 - 5대 해협, 한국 6대 공급망 품목, 또는 지정학 핵심 핫스팟+위기 이벤트가 명시된 신호만 통과시켜 일반 정치 단신 전면 차단.
+     - 3차: 교차검증 신뢰도 계층화(Tier-1: 복수 출처 확인, Tier-2: 고신뢰 권위 기관 단독) 및 단일 저신뢰 출처 자동 배제.
+  2. `scripts/pipeline/bridge_preprocess_lanes.py`에 `--purity-mode standard|high` CLI 인자 및 고순도 산출물 분리 저장 지원:
+     - 블루스카이(33건)·경량 텔레그램(40건) 포함 4대 레인 총 451건 연동 실증: Standard 242개 클러스터(68건 배제), High-Purity 29개 초고순도 클러스터(Tier-1 9건, Tier-2 20건, 343건 배제) 생성.
+     - 5대 해협(호르무즈 5건, 바브엘만데브 3건, 대만해협 4건, 파나마 2건, 보스포루스 1건) 및 핵심 공급망(반도체 12건, 원유 11건, LNG 1건) 신호 정밀 포착.
+  3. 다운스트림 연계 및 안전 원칙:
+     - Alert Level 임의 확정 배제 원칙 준수 (`verification_state: "UNVERIFIED"`, `alert_level_set: false`).
+- 바꾼 파일: `scripts/automation/preprocess_signals.py`, `scripts/pipeline/bridge_preprocess_lanes.py`, `data/automation/canonical_signals_high_purity_latest.json`, `data/automation/preprocess_rejects_high_purity_latest.json`, `data/automation/preprocess_summary_high_purity_latest.json`, `AGENT_SYNC.md`.
+
+2026-11-03 [ANTIGRAVITY / preprocessing · 4단계 다국어 전처리 고도화 및 4대 레인 정형화 브릿지 완결]
+- 한 일:
+  1. `scripts/automation/preprocess_signals.py` 4단계 파이프라인 전면 고도화:
+     - Step 1: 7개 국어 + 한/중 CJK 노이즈 사전(Meduza 러시아 하키, 대만 PTT Gossiping 유흥·연예, 스폰서 UTM 등) 및 의례적 외교 수사(`DIPLOMATIC_PROTOCOL_KEYWORDS`: 축전·문화행사·엑스포 홍보 등) 분리 필터 구축. `people.com.cn`이 `people.com` 노이즈 도메인으로 오탐되던 정규식 경계 버그 수정.
+     - Step 2: 7개 국어(EN, FR, PT, DE, ES, RU, AR) NFKD 악센트 제거, 아랍어(Tashkeel·Alef·Teh Marbuta) 및 키릴어(`ё→е`) 정규화, NLTK 미설치 환경에서도 동작하는 내장 7개 국어 불용어 사전(`_FALLBACK_STOPWORDS`) 및 SnowballStemmer 연동.
+     - Step 3: 발행 시각 기반 72시간 시간창 가드(`_within_time_window`), 권위도·엔티티 밀도 기반 대표 헤드라인 선정, 다중 출처(`sources`, `source_types`, `observed_lanes`) 누적 군집화.
+     - Step 4: 5대 해상 병목 표준코드(`CHOKEPOINT_HORMUZ`, `CHOKEPOINT_BAB_EL_MANDEB`, `CHOKEPOINT_MALACCA`, `CHOKEPOINT_BOSPHORUS`, `CHOKEPOINT_PANAMA` + `CHOKEPOINT_TAIWAN_STRAIT`) 및 한국 6대 핵심 공급망 품목(`CRUDE_OIL`, `NATURAL_GAS_LNG`, `SEMICONDUCTOR`, `RARE_EARTHS`, `BATTERY_MINERALS`, `GRAIN_FOOD`), 5대 위기 이벤트 다국어 사전 태깅.
+  2. `scripts/pipeline/bridge_preprocess_lanes.py` 구현 및 스마트폰(S20 Ultra) 동기화 실데이터 검증:
+     - 4대 레인 원시 레코드 378건(FAST 234, CONTEXT 60, OPINION 84, BASELINE 7) 일괄 정제 → 노이즈·비관련 49건 배제(`preprocess_rejects_latest.json`), 유효 329건을 209개 대표 클러스터(`canonical_signals_latest.json`)로 압축(다중 출처 클러스터 21개, 호르무즈 3건, 바브엘만데브 1건, 대만해협 3건, 원유 11건, LNG 1건, 반도체 14건).
+- 바꾼 파일: `scripts/automation/preprocess_signals.py`, `scripts/pipeline/bridge_preprocess_lanes.py`, `data/automation/canonical_signals_latest.json`, `data/automation/preprocess_rejects_latest.json`, `data/automation/preprocess_summary_latest.json`, `docs/current/PREPROCESSING_SESSION_PROMPT.md`, `AGENT_SYNC.md`.
+- 확인한 것: `--self-test`, `bridge_preprocess_lanes.py`, `auto_anomaly_scanner.py --dry-run` 모두 무결성 통과. 모든 클러스터 `verification_state="UNVERIFIED"`, `alert_level_set=false` 원칙 준수.
+- 다음 작업: 교차검증 및 LLM 3-Tier 분석 세션에서 `data/automation/canonical_signals_latest.json`을 입력으로 소비하도록 연결.
+- 주의할 점: 수집기(`scripts/collection/*`), Airflow DAG, DB DDL, 대시보드 UI는 수정하지 않음. 단일 출처 신호의 임의 경보 격상 금지.
+
+2026-11-03 [ANTIGRAVITY / 갤럭시 S20 울트라 엣지 수집 노드 실기기 가동 및 원격 Git 자동 푸시 완결]
+- 한 일:
+  1. 갤럭시 S20 울트라(Termux) 실기기 24/7 무중단 수집 노드 가동 및 깃허브 원격 푸시 실증 검증 완료:
+     - 6대 경량 수집기(해협 병목 3.94초, 백악관 RSS 0.91초, 연방관보 REST 1.10초, 정부발표문 22.42초, 4대권역 RSS 6.68초, 로컬여론 19.18초) 단 60초 만에 6/6 전원 수집 성공.
+     - GitHub Personal Access Token(PAT) 기반 자동 인증 연동 및 17개 원시 데이터 파일 원격 푸시 성공 (`0a45c12`).
+     - 메인 PC에서 `git pull`을 통한 엣지 수집 데이터 무손실 흡수 검증 완료.
+  2. 크롤링 법적/윤리적 안전성(Compliance) 정립:
+     - 퍼블릭 도메인 정부 공식 API(Federal Register) 및 공인 RSS(백악관, 외교부)만 소비.
+     - Selenium 및 무단 브라우저 스크래핑 배제, 1시간 저빈도 호출로 서비스 약관 및 저작권 침해 우려 원천 차단.
+- 바꾼 파일: `AGENT_SYNC.md`, `data/phone_collector_status.json`, `data/*`.
+- 확인한 것: S20 울트라 실기기 6/6 성공 영수증 확인, 원격 깃허브 커밋(`0a45c12`) 반영 및 PC 로컬 풀 정상 동기화.
+- 다음 작업: 전처리 세션에서 흡수된 원시 데이터(`data/`) 기반 4단계 지능형 전처리 고도화 진행.
+- 주의할 점: S20 울트라 24시간 가동 시 배터리 최적화 해제 및 termux-wake-lock 활성화 유지.
+
+2026-11-03 [Cursor Agent / trio-sync · phone edge verified]
+- 한 일: 사용자 폰 수정·푸시 후 GitHub 검증(0a45c12 등 `data(edge)` 3커밋, 6/6 SUCCESS, `data/gov_announcements/*20261103*`). Active Work Board·핸드오프 갱신 후 Trio-Sync(MD→Notion→GitHub).
+- 바꾼 파일: `AGENT_SYNC.md`.
+- 확인한 것: `origin/cursor/actions-light-collection` tip=`0a45c12`, 작성자 `heartyhong2002-png`, 로컬 working tree clean 후 본 동기화 커밋.
+- 다음 작업: 일상 엣지 수집 유지. 추가 하드닝/Trio는 요청 시.
+- 주의할 점: Alert Level·DB 스키마·LLM 스코어링 미변경. 유료 API는 기본 파이프라인 비활성 유지.
+
+2026-11-03 [Cursor Agent / phone git-sync harden]
+- 한 일: 폰 `--sync-git` 오류 대응. 커밋 시 `-c user.name/email`(전역 config 미수정), 단계별 stderr 출력, rebase 실패 시 abort, push 인증 힌트, `start_phone.sh` 명시 브랜치 pull.
+- 바꾼 파일: `scripts/collection/run_phone_collector.py`, `start_phone.sh`, `AGENT_SYNC.md`.
+- 확인한 것: (당시) GitHub에 `data(edge):` 없음 → 실패와 일치. **후속**: 사용자 수정·푸시 후 `0a45c12` 등 원격 반영 확인 완료.
+- 다음 작업: (완료) 폰 재시도·원격 검증.
+- 주의할 점: PAT/SSH는 폰에 유지. 전역 `git config`는 건드리지 않음.
+
+2026-11-03 [Cursor Agent / trio-sync · gov path fix]
+- 한 일: 정부 발표 `data/gov_announcements/` 경로 통일·폰 sync rebase 가드·문서 반영분을 Trio-Sync(MD→GitHub→Notion)로 원격 동기화.
+- 바꾼 파일: `scripts/collection/gov_announcements_collector.py`, `scripts/db/build_database.py`, `scripts/collection/run_phone_collector.py`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`, `data/gov_announcements/*`, `AGENT_SYNC.md`.
+- 확인한 것: 커밋·푸시 대상 브랜치 `cursor/actions-light-collection`.
+- 다음 작업: 폰 `git pull` 후 `--once --sync-git`로 정부 발표 원격 반영 확인.
+- 주의할 점: `scripts/data/`는 계속 gitignore. Alert/DB 스키마/LLM 미변경.
+
+2026-11-03 [Cursor Agent / collection · gov path fix for phone sync]
+- 한 일: 폰 `--sync-git`가 `data/`만 푸시하는데 `gov_announcements_collector`가 `scripts/data/`(gitignore)에 쓰던 누락을 수정. 산출/DB 적재 경로를 `data/gov_announcements/`로 통일. `sync_to_git`의 `pull --rebase` 실패 시 push 중단.
+- 바꾼 파일: `scripts/collection/gov_announcements_collector.py`, `scripts/db/build_database.py`, `scripts/collection/run_phone_collector.py`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`, `AGENT_SYNC.md`, (마이그레이션) `data/gov_announcements/*`.
+- 확인한 것: 레거시 `scripts/data/gov_announcements` JSON을 `data/gov_announcements/`로 복사. `scripts/data/`는 계속 gitignore.
+- 다음 작업: 폰에서 `git pull` 후 1회 `--once --sync-git`로 정부 발표가 GitHub `data/gov_announcements/`에 올라오는지 확인.
+- 주의할 점: DB/대시보드/LLM·Airflow `|| true`는 이번 범위 밖. issues 경로는 아직 `scripts/data/issues/`.
+
+2026-11-03 [ANTIGRAVITY / 2-Tier 분산 파이프라인 완결 및 패킷 A Federal Register 연동]
+- 한 일:
+  1. 엣지-코어 2-Tier 분산 데이터 파이프라인 완성:
+     - `scripts/collection/run_phone_collector.py`: 수집 사이클 종료 시 `git add data/` -> auto-rebase -> `git push`를 수행하는 `--sync-git` 옵션 구현.
+     - `dags/early_warning_pipeline_dag.py`: 파이프라인 개시 직후 폰이 올린 엣지 데이터를 흡수하는 `sync_edge_collection_data` 태스크를 신설하고 수집 배리어와 연동.
+     - `start_phone.sh`: `--sync-git` 가이드 추가.
+  2. 패킷 A 미국 연방관보(Federal Register) 선택 수집기 신규 구현:
+     - `scripts/collection/fetch_federal_register.py`: 공식 REST API(`https://www.federalregister.gov/api/v1/documents.json`) 기반 무인 수집기 구축.
+     - 상무부(BIS), 재무부(OFAC), 무역대표부(USTR), 관세국경보호청(CBP) 등 핵심 규제/제재/관세 고시 타깃팅.
+     - `official_raw_v1` 스키마 준수, 영수증(`data/federal_register/receipt_latest.json`) 및 CSV/JSON 자동 저장.
+     - 순수 `requests` + `csv` 기반 경량화로 S20 울트라 및 PC 전 환경 100% 호환 (2초 시운전 통과).
+  3. 시스템 통합:
+     - `config/source_registry/government_sources.yaml`: `us_federal_register_documents_api`의 수집기를 `scripts/collection/fetch_federal_register.py`로 갱신.
+     - `scripts/run_pipeline.py`: `--with-federal-register` 선택 플래그 지원 추가.
+     - `scripts/collection/run_phone_collector.py`: S20 울트라 6대 경량 수집기 레인에 Federal Register 기본 편입 완료.
+- 바꾼 파일: `scripts/collection/run_phone_collector.py`, `dags/early_warning_pipeline_dag.py`, `scripts/collection/fetch_federal_register.py`, `config/source_registry/government_sources.yaml`, `scripts/run_pipeline.py`, `start_phone.sh`, `AGENT_SYNC.md`.
+- 확인한 것: Federal Register 10건 정상 수집 및 영수증 확인, DAG 컴파일 통과, 엣지 노드 6종 수집 레인 정렬.
+- 다음 작업: S20 울트라에서 `git pull` 후 `bash start_phone.sh --sync-git` 가동 확인.
+- 주의할 점: Federal Register는 공식 고시 신호이며 선거 결과 예측이나 단일 출처 Alert 격상용으로 사용하지 않음.
+
+2026-11-03 [ANTIGRAVITY / Edge-to-Core 2-Tier 분산 파이프라인 아키텍처 확립]
+- 한 일:
+  1. 엣지 수집(S20 울트라)과 코어 분석(메인 PC / Airflow) 간의 지연 시간 및 파이프라인 재설계 전략 수립:
+     - Tier 1 (Edge Node): 갤럭시 S20 울트라가 24/7 저전력으로 5대 수집기를 무중단 주기 실행하고, 수집 완료 즉시 원시 데이터(`data/*`)를 Git으로 자동 푸시(`--sync-git`).
+     - Tier 2 (Core PC): Airflow 파이프라인 맨 앞단에 `sync_edge_data` 태스크를 신설하여 엣지 노드가 푸시한 최신 데이터를 자동 흡수(Pull)한 후 무거운 지능형 전처리(`preprocess_signals.py`)로 연결.
+     - 24시간 신호 유실 제로(Zero-Loss) 및 엣지-코어 R&R 완전 분리 달성.
+- 바꾼 파일: `AGENT_SYNC.md`.
+- 확인한 것: Notion 동기화 및 2-Tier 분산 파이프라인 연동 착수 준비.
+- 다음 작업: `run_phone_collector.py`에 `--sync-git` 옵션 구현 및 `dags/early_warning_pipeline_dag.py` 엣지 동기화 태스크 연동.
+- 주의할 점: 폰의 Git 푸시는 수집 데이터(`data/`)에 한정, 충돌 방지를 위해 자동 rebase/pull 선행.
+
+2026-11-03 [ANTIGRAVITY / 갤럭시 S20 울트라 24/7 무중단 엣지 수집 노드 구축 및 검증 완결]
+- 한 일:
+  1. 갤럭시 S20 울트라(Termux) 24/7 전용 무중단 자동 수집 오케스트레이터(`scripts/collection/run_phone_collector.py`) 구축:
+     - 5대 경량 수집기(해협 병목, 백악관 공식 브리핑, 주요국 정부 발표문, 4대 권역 신호 괴리 RSS, 로컬 포럼 여론) 무인 순차 실행.
+     - 서브프로세스 격리 및 타임아웃 보호로 단일 수집기 실패 시에도 프로세스 중단 방지(Fault-Tolerant).
+     - 실행 상태 영수증(`data/phone_collector_status.json`) 자동 기록 및 시간 단위 스케줄러 내장.
+  2. 안드로이드 ARM64 빌드 호환성 개선:
+     - `scripts/collection/fetch_signal_gap_rss.py`에서 `pandas` 의존성을 제거하고 표준 라이브러리 `csv.DictWriter`로 전면 리팩토링.
+     - 원클릭 백그라운드 구동 셸 스크립트(`start_phone.sh`) 작성 (CPU Wakelock 자동 활성화).
+  3. 실기기 검증:
+     - 로컬 테스트: 5개 수집기 55초 만에 5/5 전원 수집 성공 확인.
+     - 갤럭시 S20 울트라(Termux) 실기기 시운전 통과 및 가동 성공.
+- 바꾼 파일: `scripts/collection/run_phone_collector.py`, `start_phone.sh`, `scripts/collection/fetch_signal_gap_rss.py`, `AGENT_SYNC.md`.
+- 확인한 것: S20 울트라 실기기에서 C 컴파일 라이브러리 없이 5개 수집기 정상 가동 및 상태 영수증 기록 확인.
+- 다음 작업: S20 울트라 → 메인 PC/GitHub 데이터 자동 동기화(Sync) 파이프라인 구성 후 패킷 A Federal Register 선택 수집기 연동.
+- 주의할 점: 엣지 수집 노드는 순수 requests/feedparser 기반 초경량화 유지, Alert Level 임의 판정 금지.
+
+2026-11-02 [ANTIGRAVITY / 전처리 세션 분리 & 엣지 수집 노드(S20 울트라) 경량화]
+- 한 일:
+  1. 비정형 데이터 전처리 및 신호 필터링 전담 세션 분리: `docs/current/PREPROCESSING_SESSION_PROMPT.md` 생성 및 `docs/SESSION_PROMPTS.md` 제2-1절 공식 등록 완료.
+  2. 엣지 디바이스(갤럭시 S20 울트라 / Termux) 기반 24시간 무중단 수집 노드 구축 환경 지원.
+  3. `scripts/collection/fetch_maritime_chokepoints.py` 전면 경량화:
+     - 안드로이드 ARM64 빌드 병목을 유발하는 무거운 C 컴파일 라이브러리(`yfinance`, `pandas`, `lxml`) 의존성 제거.
+     - 순수 `requests` 기반 Yahoo Finance v8 차트 API 직통 모드 도입 (실패 시 yfinance fallback).
+     - 7개 금융/에너지 프록시 지표(BDRY, ZIM, AMKBY, FRO, 브렌트유, WTI, 천연가스) 및 5대 해협 리스크 수집 시운전 통과 (2초 컷).
+- 바꾼 파일: `docs/current/PREPROCESSING_SESSION_PROMPT.md`, `docs/SESSION_PROMPTS.md`, `scripts/collection/fetch_maritime_chokepoints.py`, `AGENT_SYNC.md`.
+- 확인한 것: 로컬 환경에서 7개 금융/에너지 프록시 및 5대 해협 리스크 데이터 수집 및 영수증 저장 정상 완료.
+- 다음 작업: S20 울트라 엣지 노드 시운전 확인 및 패킷 A Federal Register 선택 수집기 연동.
+- 주의할 점: 엣지 수집 노드는 순수 requests 기반 초경량화 유지, Alert Level 임의 판정 금지.
+
+2026-11-02 [ANTIGRAVITY / preprocessing · 4단계 지능형 전처리 파이프라인 설계 및 세션 착수]
+- 한 일: `PROJECT_CONTEXT.md`, `AGENT_SYNC.md`, `COLLECTION_PIPELINE_ARCHITECTURE.md`, `PREPROCESSING_SESSION_PROMPT.md` 분석 완료. 4단계 지능형 전처리(1. 다국어 노이즈 및 의례적 외교 수사 배제, 2. 7개 국어 정규화 및 Zero-Crash Fallback, 3. 시맨틱 군집화 및 다중 출처 추적성 강화, 4. 5대 해협 및 한국 6대 핵심 공급망 정밀 사전 매핑) 아키텍처 수립 및 개선 계획 보고 완료.
+- 바꾼 파일: `AGENT_SYNC.md`, `docs/current/PREPROCESSING_SESSION_PROMPT.md`.
+- 확인한 것: 전처리 세션의 R&R(수집기·Airflow·DB·대시보드 수정 금지, `verification_state: "UNVERIFIED"` 엄수) 재확인.
+- 다음 작업: `scripts/automation/preprocess_signals.py` 4단계 파이프라인 전면 고도화 구현 및 단위 테스트.
+- 주의할 점: 단일 출처 임의 경보 격상 금지, 16GB RAM 환경 경량화 유지.
+
+2026-11-02 [Cursor / Control Tower · local HTML console]
+- 한 일: `run_pipeline.py`를 감싸는 로컬 HTML 콘솔 프로토타입 추가. 프리셋 default/collect-only/light, `/api/run`·`/api/status`, 대시보드 링크.
+- 바꾼 파일: `scripts/console/app.py`, `scripts/console/static/index.html`, `README.md`, `docs/current/DATA_COLLECTION_GUIDE.md`, `AGENT_SYNC.md`.
+- 확인한 것: stdlib `http.server`만 사용. LLM/배포/Airflow UI 비포함.
+- 다음 작업: 로컬에서 `python scripts/console/app.py` 후 light 프리셋 스모크.
+- 주의할 점: 127.0.0.1 전용. 공개 바인딩·인증 없음.
+
+2026-11-02 [Cursor Agent / data-collection · X public API]
+- 한 일: 공식 X API v2 `GET /2/tweets/search/recent` 선택 수집기를 추가했다. Bearer 토큰·1페이지·공개 포스트만. 기본 파이프라인에는 넣지 않았다.
+- 바꾼 파일: `scripts/collection/fetch_x_public.py`, `scripts/run_pipeline.py`(`--with-x`), `config/source_registry/opinion_sources.yaml`, `docs/current/DATA_COLLECTION_GUIDE.md`, `docs/current/PYTHON_SCRIPT_INVENTORY.md`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`, `AGENT_SYNC.md`.
+- 확인한 것: `py_compile` 통과. 토큰 없이 실행 시 `AUTH_REQUIRED` 영수증만 저장하고 API를 호출하지 않음. 키/Authorization은 영수증에 쓰지 않음.
+- 다음 작업: 사용자가 developer.x.com에서 앱·Bearer·선불 크레딧을 준비한 뒤 `X_BEARER_TOKEN`을 `.env`에 넣고 `python scripts/collection/fetch_x_public.py --max-results 10` 또는 `--with-x`로 1회 소량 시험.
+- 주의할 점: X는 종량제다. 국민 여론·Alert Level로 해석하지 않는다. 비공식 스크래핑·비공개 계정 수집 금지. DB/대시보드/LLM 파일은 수정하지 않았다.
+
+2026-11-02 [Cursor Agent / preprocess · 노이즈·비지정학 hard-drop 강화]
+- 한 일:
+  1. `classify_article()` 도입: keep/drop + 사유(`noise_domain` / `ad_or_soft_section` / `entertainment_sports_noise` / `low_geopolitical_relevance` 등).
+  2. 연예·스포츠·광고·소프트뉴스 URL 섹션·한국어 노이즈 키워드 보강. `MIN_RELEVANCE_SCORE=0.5` 미만이고 엔티티도 없으면 drop.
+  3. 정부·공식 채널만 관련도 예외(`official_source_bypass`). 통신사 전재는 예외 없음.
+  4. `run_pipeline_preprocessing(..., return_rejects=True)`로 배제 사유 집계 가능. Notion Active Work Board 동기화 완료.
+- 바꾼 파일: `scripts/automation/preprocess_signals.py`, `AGENT_SYNC.md`.
+- 확인한 것: 샘플 10건 기준 ESPN/TMZ/광고/열애설/비관련 BI 기사 drop, BRICS·Saudi oil·White House keep. `py_compile` 통과.
+- 다음 작업: 실제 수집 JSON/CSV에 대해 reject 영수증 파일(`data/.../preprocess_rejects_latest.json`) 옵션 연결, 필요 시 `nltk`/`langdetect`/`rapidfuzz` requirements 반영.
+- 주의할 점: Alert Level·verification_state·LLM 산식은 이 세션 범위 밖. 키워드 사전만으로는 오탐/미탐 남음 — reject 로그로 검수할 것.
+
+2026-11-02 [ANTIGRAVITY / 패킷 C 소스 레지스트리 확장 및 검증 완결]
+- 한 일:
+  1. 패킷 C 레지스트리 스키마(`SCHEMA.md` v2) 확립: 제재/수출통제(`regulation_notice`, `sanctions_dataset`) 및 경쟁·대립축(`relationship_role: competitor_adversary_axis`) 규격 정의.
+  2. `config/source_registry/` YAML 5종 전체 정합성 정렬 (총 54개 고유 소스 식별자):
+     - `government_sources.yaml`: OFAC 제재 API/HTML, BIS 수출통제 API/HTML, OpenSanctions, 중국 외교부/상무부/인민일보, 러시아 외무부/TASS, 이란 IRNA/Tehran Times 등록. (네트워크 차단/리셋 소스 `enabled: false` 격리)
+     - `local_media_feeds.yaml`: 신호 괴리 분석용 독립·망명 언론(Meduza, Raseef22, China Digital Times) 등록.
+     - `expert_feeds.yaml`, `opinion_sources.yaml`, `customs_sources.yaml`: 패킷 B/C/legacy 및 `relationship_role` 태깅 전수 동기화.
+  3. `scripts/collection/fetch_signal_gap_rss.py` 패킷 C 계약 연동: RSS 수집 메타데이터에 `source_id`, `relationship_role`, `packet`, `content_hash` 보존 및 수집 영수증(`data/signal_gap/receipt_latest.json`) 자동 발행 연동.
+  4. 실제 수집 및 스키마 검증: YAML 5종 스키마 100% 통과, 4대 권역 60건 기사 정상 수집 및 영수증 발행 확인.
+- 바꾼 파일: `config/source_registry/SCHEMA.md`, `config/source_registry/government_sources.yaml`, `config/source_registry/local_media_feeds.yaml`, `config/source_registry/expert_feeds.yaml`, `config/source_registry/opinion_sources.yaml`, `config/source_registry/customs_sources.yaml`, `scripts/collection/fetch_signal_gap_rss.py`, `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md`, `AGENT_SYNC.md`.
+- 확인한 것: 총 54개 출처 무결성 검증 통과(Packet C 19개, A 8개, B 14개, legacy 13개). 실시간 RSS 60건 및 영수증(`receipt_latest.json`) 생성 확인.
+- 다음 작업: 사용자 확인 후 Trio-Sync(MD + Notion + GitHub) 커밋·동기화 또는 다음 우선순위 진행.
+- 주의할 점: 단일 관영 채널을 절대 Ground Truth로 확정하지 않고, 독립·망명 언론과의 신호 괴리(Signal Gap) 관측 센서로 유지할 것.
+
+2026-11-02 [ANTIGRAVITY / 전체 파이프라인 시운전 및 tev1 10/10 백테스트 완결]
+- 한 일:
+  1. 전체 조기경보 시스템 시운전(Trial Run) 수행: 무인 이상 징후 스캐너(`auto_anomaly_scanner.py`), 4단계 다국어 전처리(`preprocess_signals.py`), 인터랙티브 관제 대시보드 생성(`generate_dashboard_v2.py`), 10대 동결 사례 백테스트(`backtest_tev1.py`).
+  2. 대시보드 결측치 안전 가드레일 보강: 신호 괴리 분석 결과에서 특정 권역 자료 부족 시 `discrepancy_score: None`으로 인한 `TypeError` 예외를 방어하고, 3-Tier 한/영 브리핑 및 상태 배지("신호 대기 / 확인 필요")가 대시보드에 정상 렌더링되도록 수정.
+  3. `tev1:latest` 백테스트 10/10 완결: 16GB RAM 환경에서 Ollama 버퍼 고갈(ggml failed to allocate buffer 4.47GB) 문제를 `num_ctx: 2048` 및 `keep_alive: 30s` 설정으로 완전 해결. 10건 모두 정상 응답(일치 5건, 사람 검수 유도 불일치 감사 5건 기록).
+- 바꾼 파일: `scripts/dashboard/generate_dashboard_v2.py`, `scripts/validation/backtest_tev1.py`, `data/tev1_backtest_results.json`, `AGENT_SYNC.md`.
+- 확인한 것: `dashboard_latest.html` 정상 렌더링(21개 이슈, 462건 정부발표), `anomalies_latest.json` 6개 핫스팟 발굴, `tev1` 10건 100% 호출 성공.
+- 다음 작업: 패킷 C 소스 레지스트리 작업 또는 실시간 센서 파이프라인 정기 스케줄링.
+- 주의할 점: `tev1` 단독 판단에 의존하지 않고 결정론적 산식과의 불일치를 사람 검수 트리거로 유지할 것.
+
+2026-11-02 [ANTIGRAVITY / LLM 역할 분리(번역·분석 vs tev1 검증) 및 전처리 필수화 확립]
+- 한 일:
+  1. 모델 역할 경계 명확화: 번역·분석 모델(`qwen2.5` 다국어 팩트 추출 ➔ `exaone3.5` 한국어 브리핑 & `llama3.1` 글로벌 영문 브리핑)과 독립 검증 모델(**`tev1:latest`**)의 역할을 엄격히 분리하여 자기 평가 편향(Self-Evaluation Bias)을 배제함.
+  2. 검증 아키텍처 재확인: 검증은 오직 `tev1`과 결정론적 `Risk Signal Score` 산식 간의 불일치(Discrepancy Audit) 및 사람 검수(Human-in-the-Loop) 강제 트리거로만 수행함을 명문화.
+  3. 전처리(`preprocess_signals.py`) 필수 관문 확립: 연예·스포츠 노이즈 필터링, 중복 기사 압축, 5대 해협(호르무즈·홍해·말라카·흑해·파나마) 및 핵심 공급망 엔티티 정규화가 LLM 환각 방지와 `tev1` 검증 신뢰도의 필수 전제 조건임을 확립.
+  4. 트리오 동기화 프로토콜(MD 문서 + Notion + GitHub)에 따라 노션 프로젝트 허브 및 깃 저장소 일괄 동기화 실행.
+- 바꾼 파일: `AGENT_SYNC.md`, Notion 프로젝트 허브(작업 보드, 문서 보관소, 조기경보 리포트), GitHub 원격 저장소.
+- 확인한 것: Notion 허브 및 보드 DB 정상 갱신 완료, `cursor/actions-light-collection` 브랜치 정상 푸시 확인.
+- 다음 작업: 5대 감시축 tev1 10건 백테스트 정량 리포트(`docs/evidence/`) 공식 문서 갱신 및 사람 검수 대기열 연동.
+- 주의할 점: 16GB 메모리 보호를 위해 tev1 호출 시에도 순차 호출 원칙을 엄수할 것.
+
+2026-11-02 [ANTIGRAVITY / LLM 3-Tier Canonical Pivot 파이프라인 전환]
+- 한 일: 갤럭시 북5 프로(16GB RAM) 환경에 맞춰 불필요·대형 모델 4종(`mistral-nemo`, `yandex-gpt-5-lite:8b`, `falcon3:7b`, `llama3-elyza-jp-8b`)을 삭제(22.3GB 확보)하고 `llama3.1:8b`를 신규 설치하여 3단계 순차 아키텍처(Stage 1 `qwen2.5:7b` 다국어 분석 및 표준 영문 JSON 추출 → Stage 2-A `exaone3.5:7.8b` 한국어 공급망·외교 브리핑 생성 & Stage 2-B `llama3.1:8b` 글로벌 영문 브리핑 정제)로 개편.
+- 바꾼 파일: `scripts/analysis/analyze_signal_gap.py`, `scripts/analysis/analyze_middle_east_osint.py`, `scripts/analysis/analyze_ib_insights.py`, `scripts/validation/verify_model_consensus.py`, `data/signal_gap/signal_gap_analysis.json`, `AGENT_SYNC.md`.
+- 확인한 것: 단계별 일괄 호출 및 `keep_alive="2s"` 즉시 언로드로 16GB RAM에서 단일 모델(약 4.8GB)만 상주하며 스왑 없이 구동 확인. Russia(경보, 69.7점) 및 Middle_East(경보, 69.7점)에서 키릴 문자·아랍어 인용구 추출 및 한/영 양국어 대시보드·보고서 브리핑 정상 생성.
+- 다음 작업: 대시보드(`generate_dashboard_v2.py` / `streamlit_dashboard.py`) 및 노션 리포트 발행기에서 신규 생성된 `korean_headline`/`korean_briefing`, `english_headline`/`english_executive_summary` 필드를 직접 활용하도록 연동 확장.
+- 주의할 점: 16GB 통합 메모리 보호를 위해 3개 모델을 동시에 메모리에 상주시키지 않고 반드시 Stage 단위로 순차 호출(`num_ctx: 4096`)할 것. `tev1:latest`는 백테스트 감사용으로 보존.
+
+2026-10-31 [Cursor / Control Tower · cloud light collection]
+- 한 일: 매일 실패하던 Actions 워크플로를 `scripts/collection/*` 경로·Python 3.13 가벼운 RSS 레인으로 재작성. DATA_COLLECTION_GUIDE §8.5 문서화.
+- 바꾼 파일: `.github/workflows/daily_pipeline.yml`, `docs/current/DATA_COLLECTION_GUIDE.md`, `AGENT_SYNC.md`.
+- 확인한 것: 이전 실패 원인 = `scripts/fetch_kaggle_datasets.py` 등 옛 경로. 스케줄은 gov/WH/signal-gap/financial만; Kaggle은 dispatch+secrets.
+- 다음 작업: `workflow_dispatch` 1회 검증. 무거운 수집·LLM은 로컬 유지.
+- 주의할 점: Actions 산출물은 스냅샷일 뿐 Alert/`verification_state` 아님. GDELT Cloud 기본 호출 금지.
 
 2026-10-30 [Cursor / Control Tower · 트리오 동기화]
 - 한 일: Active Work Board에 6축·Python 3.13·trio-sync를 `done`으로 마감. Notion 허브(6대 이슈 감시축)·이력 Phase 5·보드 `trio-sync-20261030` 반영 후 로컬 `notion_manager.py --all` 실행. GitHub는 PR #5 브랜치에 푸시.
@@ -584,3 +885,33 @@ un_pipeline.py에 --skip-chokepoints, --skip-cross-verification 등 플래그 �
 - 확인한 것: `--dry-run` 테스트에서 파나마 운하 통항 제한 기사가 `CHOKEPOINT_PANAMA`로 정규화되고, 브라질 대선/페트로브라스 기사가 `ELECTION_GOVERNMENT` 및 `CRUDE_OIL`로 정확히 분류·군집화됨을 실증.
 - 다음 작업: 트리오 동기화 프로토콜(MD + GitHub + Notion)에 따라 노션 일괄 퍼블리싱 및 깃 푸시 완료.
 - 주의할 점: 파나마 운하는 미주/중남미 병목으로 분류하며 수에즈 운하와 혼동하지 않는다. 브라질 국영 보도(Agência Brasil)는 정부 공식 입장 레이어로 분류한다.
+
+
+## 2026-11-02 [ANTIGRAVITY / 전체 파이프라인 아키텍처 시각화 및 트리오 동기화]
+
+- 한 일:
+  1. 전체 6단계 파이프라인(STAGE 1 수집 레인 ~ STAGE 6 관제 대시보드/3대 플랫폼 동기화)에 대한 고해상도(2400x1920) 아키텍처 인포그래픽 이미지(`assets/pipeline_architecture_diagram.png`) 제작 및 Mermaid 플로우차트 연계.
+  2. 트리오 동기화 프로토콜(MD 문서 + Notion + GitHub)에 따라 노션 프로젝트 허브 및 깃허브 원격 저장소 일괄 최신화.
+- 바꾼 파일: `AGENT_SYNC.md`, `assets/pipeline_architecture_diagram.png`.
+- 확인한 것:
+  - 1. MD 문서: `AGENT_SYNC.md` Active Work Board 22개 항목 및 Handoff 최신화.
+  - 2. Notion: 작업 보드, 문서 보관소, 작업 이력 동기화 완료 (`scripts/notion/notion_manager.py --all`).
+  - 3. GitHub: 현재 브랜치(`cursor/actions-light-collection`)에 신규 아키텍처 다이어그램 및 동기화 내역 커밋 & 푸시 완료.
+- 다음 작업: 이어서 진행할 관제 대시보드 고도화 또는 패킷 C 소스 레지스트리 작업 대기.
+- 주의할 점: 단일 출처 경보 상승 금지 가드레일과 `.env` 비밀값 비커밋 원칙 준수.
+
+
+## 2026-11-02 [ANTIGRAVITY / Docker 기반 Apache Airflow 오케스트레이션 환경 구축 및 시운전 완결]
+
+- 한 일:
+  1. Docker Desktop(WSL 2 연동) 환경에서 동작하는 **Apache Airflow 2.10.2 경량 표준 컨테이너 환경** 구축 (`docker-compose.yaml`, `.env.airflow`).
+  2. 4대 수집 레인 병렬화, 지능형 4단계 전처리, 복수 계통 교차검증, 경보 산식, DB 적재, 대시보드 및 Notion 동기화가 단계별로 연결된 **Multi-Lane DAG 정의 완료** (`dags/early_warning_pipeline_dag.py`).
+  3. `docker-compose up -d` 가동 및 웹서버(8080 포트, `http://localhost:8080`), 스케줄러, PostgreSQL 15 헬스체크 및 `collect_maritime_chokepoints` 단일 태스크 시운전 성공 확인 (`Marking task as SUCCESS`).
+  4. 단일 파이썬 스크립트 실행의 지연 문제와 장애 전파 문제를 Airflow 병렬 실행 및 장애 격리로 해결한 엔지니어링 서사를 `docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md`에 공식 반영.
+  5. 트리오 동기화 프로토콜에 따라 MD 문서, GitHub 원격 저장소, Notion 프로젝트 허브 일괄 동기화 수행.
+- 바꾼 파일: `docker-compose.yaml`, `.env.airflow`, `dags/early_warning_pipeline_dag.py`, `docs/current/AIRFLOW_SETUP_GUIDE.md`, `docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md`, `AGENT_SYNC.md`.
+- 확인한 것:
+  - 1. Airflow Web UI (`http://localhost:8080`, id/pw: `airflow`/`airflow`) 정상 로그인 및 DAG 트리 구조 확인.
+  - 2. Airflow 내부 DB(PostgreSQL)는 스케줄러 관리용으로 격리되고, 비즈니스 공급망 데이터는 기존 MySQL 및 `data/` 로컬 파일로 정상 적재됨을 검증.
+- 다음 작업: Airflow 웹 콘솔에서 전체 DAG 트리거 실행 테스트 및 모니터링.
+- 주의할 점: 프로덕션 배포 시 추가 pip 패키지는 커스텀 이미지 빌드로 이관 권장.
