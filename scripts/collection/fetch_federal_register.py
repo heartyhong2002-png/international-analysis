@@ -26,6 +26,7 @@ import csv
 import hashlib
 import json
 import os
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -60,13 +61,46 @@ WATCH_AGENCIES = [
     "state-department",                       # 국무부 (방위물자수출, 제재)
 ]
 
-# 이슈 태그 분류 규칙 (키워드 매핑)
+# 이슈 태그 분류 규칙 (구문/단어 경계 — 짧은 토큰 부분문자열 오탐 방지)
 ISSUE_TAG_RULES = {
-    "US_Export_Control": ["export administration regulations", "entity list", "bis", "export control", "unverified list"],
-    "US_Trade_Tariff": ["tariff", "anti-dumping", "countervailing", "section 301", "trade representative", "import relief"],
-    "US_Sanctions_OFAC": ["sanctions", "specially designated", "sdn", "ofac", "blocking property", "russian harmful"],
-    "US_Industrial_Policy_CHIPS": ["chips act", "semiconductor", "science act", "critical minerals", "supply chain"],
-    "US_Immigration_Border": ["border protection", "customs", "withhold release", "forced labor", "uyghur"],
+    "US_Export_Control": [
+        r"export administration regulations",
+        r"entity list",
+        r"\bbis\b",
+        r"export control",
+        r"unverified list",
+        r"bureau of industry and security",
+    ],
+    "US_Trade_Tariff": [
+        r"tariff",
+        r"anti-dumping",
+        r"countervailing",
+        r"section 301",
+        r"trade representative",
+        r"import relief",
+    ],
+    "US_Sanctions_OFAC": [
+        r"sanctions",
+        r"specially designated",
+        r"\bsdn\b",
+        r"\bofac\b",
+        r"blocking property",
+        r"russian harmful",
+    ],
+    "US_Industrial_Policy_CHIPS": [
+        r"chips act",
+        r"semiconductor",
+        r"science act",
+        r"critical minerals",
+        r"supply chain",
+    ],
+    "US_Immigration_Border": [
+        r"border protection",
+        r"\bcustoms\b",
+        r"withhold release",
+        r"forced labor",
+        r"uyghur",
+    ],
 }
 
 
@@ -74,8 +108,8 @@ def tag_issue(title: str, abstract: str) -> list[str]:
     """문서 제목 및 초록을 기반으로 조기경보 감시 이슈 태그를 결정론적으로 매핑한다."""
     text = f"{title} {abstract}".lower()
     tags = []
-    for tag, keywords in ISSUE_TAG_RULES.items():
-        if any(kw in text for kw in keywords):
+    for tag, patterns in ISSUE_TAG_RULES.items():
+        if any(re.search(pat, text) for pat in patterns):
             tags.append(tag)
     return tags or ["US_General_Policy"]
 
@@ -90,6 +124,7 @@ def fetch_federal_register_documents(per_page: int = 20, max_pages: int = 1) -> 
 
     params = {
         "conditions[type][]": ["RULE", "PRORULE", "NOTICE"],
+        "conditions[agencies][]": WATCH_AGENCIES,
         "order": "newest",
         "per_page": per_page,
     }
@@ -169,12 +204,17 @@ def save_documents_and_receipt(documents: list[dict]) -> None:
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump(documents, f, ensure_ascii=False, indent=2)
 
-    # 2. CSV 저장
-    if documents:
-        fieldnames = list(documents[0].keys())
-        with open(csv_path, "w", encoding="utf-8-sig", newline="") as f:
-            writer = csv.DictWriter(f, fieldnames=fieldnames)
-            writer.writeheader()
+    # 2. CSV 저장 (빈 결과여도 헤더만 써 JSON과 동기화 — stale CSV 방지)
+    fieldnames = list(documents[0].keys()) if documents else [
+        "source_id", "relationship_role", "packet", "document_number", "title",
+        "publication_date", "agencies", "action", "doc_type", "abstract",
+        "html_url", "pdf_url", "issue_tags", "content_hash", "observed_at",
+        "license_access_note",
+    ]
+    with open(csv_path, "w", encoding="utf-8-sig", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        if documents:
             writer.writerows(documents)
 
     # 3. 수집 영수증(Receipt) 저장

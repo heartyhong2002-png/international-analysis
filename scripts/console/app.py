@@ -309,13 +309,38 @@ class ConsoleHandler(BaseHTTPRequestHandler):
 
         self._send(404, b"not found", "text/plain; charset=utf-8")
 
+    def _same_origin_ok(self) -> bool:
+        """Reject cross-site POSTs that browsers still send to loopback."""
+        expected = {f"http://{HOST}:{PORT}", f"http://127.0.0.1:{PORT}", f"http://localhost:{PORT}"}
+        origin = (self.headers.get("Origin") or "").rstrip("/")
+        referer = self.headers.get("Referer") or ""
+        if origin:
+            return origin in expected
+        if referer:
+            return any(referer.startswith(base + "/") or referer.rstrip("/") == base for base in expected)
+        # No Origin/Referer (non-browser clients): require explicit local console header
+        return (self.headers.get("X-Console-Local") or "") == "1"
+
     def do_POST(self) -> None:  # noqa: N802
         path = urlparse(self.path).path
         if path != "/api/run":
             self._send(404, b"not found", "text/plain; charset=utf-8")
             return
+        ctype = (self.headers.get("Content-Type") or "").split(";")[0].strip().lower()
+        if ctype and ctype != "application/json":
+            self._send_json(415, {"ok": False, "error": "Content-Type must be application/json"})
+            return
+        if not self._same_origin_ok():
+            self._send_json(403, {"ok": False, "error": "cross-origin POST blocked"})
+            return
         body = self._read_json()
-        preset = str(body.get("preset") or "default").strip()
+        if "preset" not in body:
+            self._send_json(400, {"ok": False, "error": "JSON body with preset is required"})
+            return
+        preset = str(body.get("preset") or "").strip()
+        if not preset:
+            self._send_json(400, {"ok": False, "error": "preset must be non-empty"})
+            return
         result = _start_job(preset)
         code = 200 if result.get("ok") else 409
         self._send_json(code, result)

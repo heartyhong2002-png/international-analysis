@@ -35,54 +35,55 @@ DATA_DIR = ROOT / "data"
 STATUS_FILE = DATA_DIR / "phone_collector_status.json"
 
 # 스마트폰 엣지 노드에서 안전하게 가동되는 경량 수집기 8종
+# Timeouts must exceed per-request budgets inside collectors (often 10–20s × N).
 EDGE_COLLECTORS = [
     {
         "id": "maritime_chokepoints",
         "name": "해협·항만 병목 및 운임·에너지 센서",
         "script": "scripts/collection/fetch_maritime_chokepoints.py",
-        "timeout": 60,
+        "timeout": 180,
     },
     {
         "id": "whitehouse_official",
         "name": "백악관 공식 성명 및 브리핑 RSS",
         "script": "scripts/collection/fetch_whitehouse_official.py",
-        "timeout": 60,
+        "timeout": 120,
     },
     {
         "id": "federal_register",
         "name": "연방관보(Federal Register) 정책·통상·수출통제 고시",
         "script": "scripts/collection/fetch_federal_register.py",
-        "timeout": 60,
+        "timeout": 120,
     },
     {
         "id": "gov_announcements",
         "name": "주요국 공식 정부 발표문 (MOFA/State/FCDO 등)",
         "script": "scripts/collection/gov_announcements_collector.py",
-        "timeout": 120,
+        "timeout": 300,
     },
     {
         "id": "signal_gap_rss",
         "name": "4대 권역 신호 괴리 RSS (공식 vs 독립 언론)",
         "script": "scripts/collection/fetch_signal_gap_rss.py",
-        "timeout": 120,
+        "timeout": 300,
     },
     {
         "id": "bluesky_public",
         "name": "블루스카이(Bluesky AT Protocol) 8대 지정학·공급망 신호",
         "script": "scripts/collection/fetch_bluesky_public.py",
-        "timeout": 60,
+        "timeout": 180,
     },
     {
         "id": "telegram_osint",
         "name": "텔레그램 공개 채널 5대 군사·분쟁 OSINT",
         "script": "scripts/collection/fetch_telegram_public.py",
-        "timeout": 60,
+        "timeout": 180,
     },
     {
         "id": "local_opinions",
         "name": "로컬 포럼 및 대안 여론 센서 (PTT/핀충/로컬뉴스)",
         "script": "scripts/collection/fetch_local_opinions.py",
-        "timeout": 60,
+        "timeout": 180,
     },
 ]
 
@@ -275,6 +276,23 @@ def sync_to_git(branch: str | None = None) -> bool:
 
     except subprocess.TimeoutExpired:
         print("  ⚠️ Git 동기화 타임아웃 (네트워크/인증 대기 가능). 다음 주기에 재시도합니다.")
+        # Timeout during pull --rebase can leave rebase state / index.lock behind.
+        try:
+            if Path(ROOT / ".git" / "rebase-merge").exists() or Path(ROOT / ".git" / "rebase-apply").exists():
+                abort_proc = _git(["rebase", "--abort"], timeout=30)
+                print(
+                    "  ↩️ timeout 후 rebase --abort: "
+                    + ("OK" if abort_proc.returncode == 0 else _git_err(abort_proc))
+                )
+            lock = ROOT / ".git" / "index.lock"
+            if lock.exists():
+                try:
+                    lock.unlink()
+                    print("  ↩️ stale index.lock 제거")
+                except OSError as exc:
+                    print(f"  ⚠️ index.lock 제거 실패: {exc}")
+        except Exception as cleanup_exc:
+            print(f"  ⚠️ timeout 정리 중 오류: {cleanup_exc}")
         return False
     except Exception as e:
         print(f"  ⚠️ Git 동기화 중 오류 발생 (다음 주기에 재시도): {type(e).__name__}: {e}")

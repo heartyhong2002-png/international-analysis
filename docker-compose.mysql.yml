@@ -1,0 +1,55 @@
+# MySQL + phpMyAdmin stack for local analysis DB.
+# Usage: docker compose -f docker-compose.mysql.yml --env-file .env up -d
+# Requires MYSQL_PASSWORD in .env (no hardcoded defaults).
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: intl_analysis_mysql
+    restart: unless-stopped
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD:?Set MYSQL_PASSWORD in .env}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-international_analysis}
+    ports:
+      - "127.0.0.1:${MYSQL_PORT:-3306}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      # Views need application tables first — run scripts/db/create_views.sql
+      # after `python scripts/db/build_database.py`, not on empty init.
+    networks:
+      - intl_net
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: intl_analysis_pma
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: ${MYSQL_USER:-root}
+      PMA_PASSWORD: ${MYSQL_PASSWORD:?Set MYSQL_PASSWORD in .env}
+    ports:
+      # Loopback only; port 8081 avoids clash with Airflow webserver on 8080
+      - "127.0.0.1:${PMA_PORT:-8081}:80"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - intl_net
+
+volumes:
+  mysql_data:
+    name: intl_analysis_mysql_data
+
+networks:
+  intl_net:
+    name: intl_analysis_net

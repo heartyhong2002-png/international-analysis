@@ -1,8 +1,9 @@
-name: Daily Light Collection
+name: Daily Geopolitics Data Collection
 
 # Cloud light lane: RSS / public HTTP collectors only.
 # No Ollama, MySQL, GDELT Cloud, or dashboard.
 # Heavy collectors stay on the local PC pipeline.
+# Kaggle is optional and never blocks the daily schedule.
 
 on:
   schedule:
@@ -56,6 +57,7 @@ jobs:
         run: python scripts/collection/fetch_financial_proxy.py
 
       - name: Optional Kaggle sync
+        # Manual runs only; scheduled runs skip Kaggle (secrets often unset).
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.with_kaggle }}
         continue-on-error: true
         env:
@@ -73,11 +75,13 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+          # Artifacts live under data/ (not scripts/data/, which is gitignored).
           git add \
-            scripts/data/gov_announcements \
+            data/gov_announcements \
             data/whitehouse_official \
             data/signal_gap \
             data/sources/kayhan \
+            data/federal_register \
             || true
 
           if git diff --staged --quiet; then

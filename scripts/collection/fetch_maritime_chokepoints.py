@@ -185,43 +185,59 @@ def fetch_market_proxies() -> list[dict]:
                 print(f"    ✓ {ticker:6s} ({meta['name'][:18]:18s}): {latest_val:7.2f} {meta['unit']} (일간 {daily_chg:+.2f}%, 월간 {monthly_chg:+.2f}%) [{signal}]")
             except Exception:
                 continue
-
-        if results:
-            return results
     except Exception as e:
         print(f"  [Market Proxy] requests 수집 중 오류 발생: {e}")
 
-    # Fallback to yfinance if available
-    try:
-        import yfinance as yf
-        print("  [yfinance] fallback 시도...")
-        data = yf.download(tickers_list, period="1mo", interval="1d", progress=False)
-        close_df = data["Close"]
-        for ticker, meta in MARKET_TICKERS.items():
-            if ticker not in close_df.columns:
-                continue
-            series = close_df[ticker].dropna()
-            if series.empty:
-                continue
-            latest_val = float(series.iloc[-1])
-            prev_val = float(series.iloc[-2]) if len(series) > 1 else latest_val
-            month_ago_val = float(series.iloc[0])
-            daily_chg = round((latest_val - prev_val) / prev_val * 100, 2) if prev_val > 0 else 0.0
-            monthly_chg = round((latest_val - month_ago_val) / month_ago_val * 100, 2) if month_ago_val > 0 else 0.0
-            results.append({
-                "ticker": ticker,
-                "asset_name": meta["name"],
-                "category": meta["category"],
-                "unit": meta["unit"],
-                "latest_price": round(latest_val, 2),
-                "daily_change_pct": daily_chg,
-                "monthly_change_pct": monthly_chg,
-                "risk_signal": "NORMAL",
-                "uncertainty_note": "금융 프록시 지표",
-                "observed_at": now_utc,
-            })
-    except Exception:
-        pass
+    # Partial/empty requests results: fill missing tickers via yfinance when available
+    have = {r["ticker"] for r in results}
+    missing = [t for t in tickers_list if t not in have]
+    if missing:
+        try:
+            import yfinance as yf
+            print(f"  [yfinance] fallback 시도 ({len(missing)}개 미수집 티커)...")
+            data = yf.download(missing, period="1mo", interval="1d", progress=False, group_by="ticker")
+            for ticker in missing:
+                meta = MARKET_TICKERS[ticker]
+                try:
+                    if len(missing) == 1:
+                        series = data["Close"].dropna() if "Close" in data.columns else data.dropna()
+                    else:
+                        # Multi-ticker: columns may be (ticker, field) or field-first
+                        if ticker in data.columns.get_level_values(0):
+                            series = data[ticker]["Close"].dropna()
+                        elif ("Close", ticker) in data.columns:
+                            series = data[("Close", ticker)].dropna()
+                        else:
+                            continue
+                    if series is None or getattr(series, "empty", False):
+                        continue
+                    latest_val = float(series.iloc[-1])
+                    prev_val = float(series.iloc[-2]) if len(series) > 1 else latest_val
+                    month_ago_val = float(series.iloc[0])
+                    daily_chg = round((latest_val - prev_val) / prev_val * 100, 2) if prev_val > 0 else 0.0
+                    monthly_chg = round((latest_val - month_ago_val) / month_ago_val * 100, 2) if month_ago_val > 0 else 0.0
+                    signal = "NORMAL"
+                    if abs(daily_chg) >= 5.0 or abs(monthly_chg) >= 20.0:
+                        signal = "CRITICAL_SPIKE" if (daily_chg > 5 or monthly_chg > 20) else "SHARP_DROP"
+                    elif abs(daily_chg) >= 2.5 or abs(monthly_chg) >= 10.0:
+                        signal = "ELEVATED"
+                    results.append({
+                        "ticker": ticker,
+                        "asset_name": meta["name"],
+                        "category": meta["category"],
+                        "unit": meta["unit"],
+                        "latest_price": round(latest_val, 2),
+                        "daily_change_pct": daily_chg,
+                        "monthly_change_pct": monthly_chg,
+                        "risk_signal": signal,
+                        "uncertainty_note": "금융 프록시 지표 (yfinance fallback)",
+                        "observed_at": now_utc,
+                    })
+                    print(f"    ✓ {ticker:6s} (yfinance): {latest_val:7.2f} [{signal}]")
+                except Exception:
+                    continue
+        except Exception as e:
+            print(f"  [yfinance] fallback 실패: {e}")
 
     return results
 

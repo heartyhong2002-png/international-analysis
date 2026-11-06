@@ -1565,7 +1565,20 @@ def _run_self_test() -> int:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="지능형 다국어 4단계 전처리 파이프라인")
     parser.add_argument("--self-test", action="store_true", help="내장 다국어 샘플로 4단계 파이프라인 검증")
+    parser.add_argument(
+        "--purity-mode",
+        choices=["standard", "high"],
+        default="standard",
+        help="레인 브릿지 전처리 순도 모드 (기본 CLI는 bridge_preprocess_lanes 실행)",
+    )
     args = parser.parse_args()
     if args.self_test:
         sys.exit(_run_self_test())
-    sys.exit(_run_self_test())
+
+    # Default: run the lane bridge so collectors' data/* artifacts are processed.
+    import runpy
+
+    bridge = Path(__file__).resolve().parent.parent / "pipeline" / "bridge_preprocess_lanes.py"
+    sys.argv = [str(bridge), f"--purity-mode={args.purity_mode}"]
+    runpy.run_path(str(bridge), run_name="__main__")
+

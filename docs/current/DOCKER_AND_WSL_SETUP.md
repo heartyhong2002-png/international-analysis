@@ -1,7 +1,7 @@
 # Docker 및 로컬 개발 환경 가이드
 
 **문서 식별자:** `docs/current/DOCKER_AND_WSL_SETUP.md`  
-**기준 일자:** 2026-11-03  
+**기준 일자:** 2026-11-06  
 
 ---
 
@@ -13,50 +13,54 @@
 
 ## 🐳 2. Docker를 통한 MySQL 8.0 원클릭 실행
 
-로컬 PC에 MySQL을 따로 설치할 필요 없이 Docker Compose로 1초 만에 실행할 수 있습니다.
+로컬 PC에 MySQL을 따로 설치할 필요 없이 Docker Compose로 실행할 수 있습니다.
+
+### 사전 준비
+```bash
+cp .env.example .env
+# .env 에서 MYSQL_PASSWORD 등 값을 직접 설정하세요. 비밀번호는 커밋하지 마세요.
+```
+
+MySQL 스택은 Airflow용 `docker-compose.yaml` 과 분리된 **`docker-compose.mysql.yml`** 을 사용합니다 (포트 충돌 방지).
 
 ### 실행 명령어 (터미널)
 ```bash
 # MySQL 컨테이너 백그라운드 실행
-docker compose up -d mysql
+docker compose -f docker-compose.mysql.yml --env-file .env up -d mysql
 
 # (선택) 웹 기반 DB GUI 도구(phpMyAdmin) 함께 실행
-docker compose up -d
+docker compose -f docker-compose.mysql.yml --env-file .env up -d
 ```
 
 ### 접속 정보
-* **Host**: `localhost` (컨테이너 내부 통신 시 `mysql`)
-* **Port**: `3306`
-* **User**: `root`
-* **Password**: `jk614623!!` (.env 설정값)
-* **Database**: `international_analysis` (초기 구동 시 자동 생성)
-* **초기 DDL 뷰 자동 주입**: `scripts/db/create_views.sql` 자동 마운트
-* **웹 GUI 관리자 (phpMyAdmin)**: 브라우저에서 `http://localhost:8080` 접속 (Root 계정 로그인)
+* **Host**: `127.0.0.1` (컨테이너 내부 통신 시 `mysql`)
+* **Port**: `.env`의 `MYSQL_PORT` (기본 `3306`)
+* **User**: `.env`의 `MYSQL_USER` (기본 `root`)
+* **Password**: `.env`의 `MYSQL_PASSWORD` (필수 — 저장소에 기본값 없음)
+* **Database**: `.env`의 `MYSQL_DATABASE` (기본 `international_analysis`)
+* **뷰 DDL**: 테이블 생성 후 `mysql … < scripts/db/create_views.sql` 실행
+  (`build_database.py`로 스키마/데이터를 만든 뒤 적용)
+* **웹 GUI (phpMyAdmin)**: `http://127.0.0.1:8081` (루프백 전용, Airflow 8080과 분리)
 
 ### 컨테이너 관리
 ```bash
-# 상태 확인
-docker compose ps
-
-# 컨테이너 중지 (데이터는 docker volume에 영구 보존됨)
-docker compose down
+docker compose -f docker-compose.mysql.yml --env-file .env ps
+docker compose -f docker-compose.mysql.yml --env-file .env down
 ```
 
 ---
 
 ## 🐧 3. WSL2 (Ubuntu) 환경에서 작업하기
 
-Windows 내에 이미 설치된 `Ubuntu-26.04`를 활용하여 모든 파이썬 스크립트를 Linux UTF-8 환경에서 구동할 수 있습니다.
+Windows 내에 이미 설치된 `Ubuntu`를 활용하여 모든 파이썬 스크립트를 Linux UTF-8 환경에서 구동할 수 있습니다.
 
 ### 1) Cursor에서 WSL 연결
-1. Cursor 에디터 좌측 하단 초록색/파란색 원격 연결 아이콘 클릭 (또는 `Ctrl + Shift + P`)
+1. Cursor 에디터 좌측 하단 원격 연결 아이콘 클릭 (또는 `Ctrl + Shift + P`)
 2. `WSL에 다시 연결 (Connect to WSL)` 선택
 3. 터미널이 자동으로 `Ubuntu` bash 셸로 열립니다.
 
 ### 2) 파이프라인 무인 자동화 실행 (cron)
-Ubuntu 터미널에서 리눅스 크론탭을 통해 주기적 수집을 안전하게 백그라운드로 실행할 수 있습니다.
 ```bash
-# 크론탭 편집
 crontab -e
 
 # 매일 오전 6시에 가벼운 수집 실행 예시

@@ -110,6 +110,10 @@ def main():
                          help="구글 트렌드 위험 행동 지표(fetch_google_trends.py) 수집 생략")
     parser.add_argument("--skip-local-opinions", action="store_true",
                          help="대안 로컬 여론 5대 센서(fetch_local_opinions.py) 수집 생략")
+    parser.add_argument("--skip-bluesky", action="store_true",
+                         help="블루스카이 공개 신호 수집 생략")
+    parser.add_argument("--skip-telegram", action="store_true",
+                         help="텔레그램 공개 채널 OSINT 수집 생략")
     parser.add_argument("--skip-chokepoints", action="store_true",
                          help="해협·항만 및 해상 운임·에너지 센서(fetch_maritime_chokepoints.py) 수집 생략")
     parser.add_argument("--skip-cross-verification", action="store_true",
@@ -159,7 +163,9 @@ def main():
             steps.append(("구글 트렌드 위험 행동 지표 수집", "collection/fetch_google_trends.py", []))
         if not args.skip_local_opinions:
             steps.append(("대안 로컬 여론 5대 센서 통합 수집", "collection/fetch_local_opinions.py", []))
+        if not args.skip_bluesky:
             steps.append(("블루스카이(Bluesky AT Protocol) 공개 신호 수집", "collection/fetch_bluesky_public.py", []))
+        if not args.skip_telegram:
             steps.append(("텔레그램 공개 채널 OSINT 수집", "collection/fetch_telegram_public.py", []))
         if not args.skip_chokepoints:
             steps.append(("해협·항만 및 해상 운임·에너지 센서 수집", "collection/fetch_maritime_chokepoints.py", []))
