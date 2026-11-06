@@ -1,16 +1,25 @@
 # ==============================================================================
 # Apache Airflow 2.10.2 — local orchestration for international-analysis
-# Usage:
-#   cp .env.airflow.example .env.airflow   # then edit secrets
+#
+# Secrets are NEVER committed. Airflow services require a local env file:
+#   cp .env.airflow.example .env.airflow   # then edit secrets (gitignored)
 #   docker compose --env-file .env.airflow up airflow-init
 #   docker compose --env-file .env.airflow up -d
+#
+# --env-file supplies Compose interpolation (POSTGRES_*, Fernet, admin password).
+# service env_file injects the same file into containers for DAG tasks
+# (MYSQL_*, NOTION_API_KEY, …). Missing .env.airflow → clear Compose error.
+# MySQL-only stack: use docker-compose.mysql.yml (does not need .env.airflow).
 # ==============================================================================
 x-airflow-common: &airflow-common
   image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.10.2-python3.11}
+  # Required only for Airflow services — fail fast if the local secrets file is absent.
+  env_file:
+    - .env.airflow
   environment: &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
-    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER:?Set POSTGRES_USER}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}@postgres/airflow
-    AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW__CORE__FERNET_KEY:?Set AIRFLOW__CORE__FERNET_KEY in .env.airflow}
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER:?Set POSTGRES_USER in .env.airflow (cp .env.airflow.example .env.airflow)}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env.airflow (cp .env.airflow.example .env.airflow)}@postgres/airflow
+    AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW__CORE__FERNET_KEY:?Set AIRFLOW__CORE__FERNET_KEY in .env.airflow (cp .env.airflow.example .env.airflow)}
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"
     AIRFLOW__CORE__LOAD_EXAMPLES: "false"
     AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth,airflow.api.auth.backend.session
@@ -18,6 +27,8 @@ x-airflow-common: &airflow-common
     PYTHONPATH: /opt/airflow:/opt/airflow/scripts
     OLLAMA_HOST: ${OLLAMA_HOST:-http://host.docker.internal:11434}
     _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-requests python-dotenv pyyaml pandas yfinance nltk feedparser beautifulsoup4 lxml pytrends mysql-connector-python}
+    # Do NOT re-declare MYSQL_*/NOTION_* here with ${VAR:-}: empty Compose
+    # interpolation would override values loaded from env_file into the container.
   volumes:
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
@@ -37,8 +48,8 @@ services:
   postgres:
     image: postgres:15-alpine
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:?Set POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+      POSTGRES_USER: ${POSTGRES_USER:?Set POSTGRES_USER in .env.airflow (cp .env.airflow.example .env.airflow)}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env.airflow (cp .env.airflow.example .env.airflow)}
       POSTGRES_DB: ${POSTGRES_DB:-airflow}
     volumes:
       - postgres-db-volume:/var/lib/postgresql/data
@@ -58,7 +69,7 @@ services:
         airflow db migrate
         airflow users create \
           --username "${_AIRFLOW_WWW_USER_USERNAME:-airflow}" \
-          --password "${_AIRFLOW_WWW_USER_PASSWORD:?Set _AIRFLOW_WWW_USER_PASSWORD}" \
+          --password "${_AIRFLOW_WWW_USER_PASSWORD:?Set _AIRFLOW_WWW_USER_PASSWORD in .env.airflow}" \
           --firstname Admin \
           --lastname User \
           --role Admin \

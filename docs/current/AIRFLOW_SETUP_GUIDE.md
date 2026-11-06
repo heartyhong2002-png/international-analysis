@@ -25,9 +25,16 @@
 ### 0) 환경 파일 준비 (최초 1회)
 ```powershell
 cp .env.airflow.example .env.airflow
-# .env.airflow 에서 POSTGRES_PASSWORD, AIRFLOW__CORE__FERNET_KEY,
-# _AIRFLOW_WWW_USER_PASSWORD 를 강한 값으로 교체하세요.
+# .env.airflow 에서 아래를 강한 값으로 교체하세요 (절대 git 커밋 금지):
+#   POSTGRES_PASSWORD, AIRFLOW__CORE__FERNET_KEY, _AIRFLOW_WWW_USER_PASSWORD
+#   MYSQL_PASSWORD  (DAG의 DB 적재 단계용; 컨테이너→호스트 MySQL은 MYSQL_HOST=host.docker.internal)
+#   NOTION_API_KEY  (선택, Notion 동기화 태스크용)
 ```
+
+> [!IMPORTANT]
+> `.env.airflow` 는 gitignore 대상입니다. 저장소에는 `.env.airflow.example` 템플릿만 둡니다.
+> Airflow Compose는 이 파일을 `env_file`로 **필수** 참조합니다. 파일이 없으면 Compose가 즉시 실패합니다.
+> MySQL 스택만 쓸 때는 `docker-compose.mysql.yml` + `.env` 를 쓰며 `.env.airflow`가 필요 없습니다.
 
 Fernet 키 생성 예시:
 ```powershell
@@ -38,6 +45,7 @@ python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().d
 ```powershell
 docker compose --env-file .env.airflow up airflow-init
 ```
+(`--env-file` = Compose 변수 치환, `env_file:` = 컨테이너 환경 주입. 둘 다 `.env.airflow`를 사용합니다.)
 
 ### 2) Airflow 전체 컨테이너 가동 (백그라운드)
 ```powershell
@@ -47,6 +55,7 @@ docker compose --env-file .env.airflow up -d
   - `postgres` (Airflow 메타데이터 DB)
   - `airflow-webserver` (웹 관제 화면, **127.0.0.1:8080** 루프백)
   - `airflow-scheduler` (스케줄러 & LocalExecutor)
+- DB/Notion DAG 태스크는 컨테이너 env의 `MYSQL_*` / `NOTION_API_KEY`를 사용합니다 (파일 마운트 없음).
 
 ### 3) Airflow Web UI 접속
 - 브라우저 주소: `http://127.0.0.1:8080`
