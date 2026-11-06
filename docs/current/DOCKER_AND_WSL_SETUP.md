@@ -22,10 +22,11 @@ cp .env.example .env
 ```
 
 MySQL 스택은 Airflow용 `docker-compose.yaml` 과 분리된 **`docker-compose.mysql.yml`** 을 사용합니다 (포트 충돌 방지).
+이 파일이 Docker 네트워크 **`intl_analysis_net`** 을 만듭니다. Airflow 컨테이너는 이 네트워크에 조인해 `MYSQL_HOST=mysql` 로 DB에 붙습니다 (호스트 루프백 바인딩 유지, `0.0.0.0` 불필요).
 
 ### 실행 명령어 (터미널)
 ```bash
-# MySQL 컨테이너 백그라운드 실행
+# MySQL 컨테이너 백그라운드 실행 (intl_analysis_net 생성)
 docker compose -f docker-compose.mysql.yml --env-file .env up -d mysql
 
 # (선택) 웹 기반 DB GUI 도구(phpMyAdmin) 함께 실행
@@ -33,7 +34,8 @@ docker compose -f docker-compose.mysql.yml --env-file .env up -d
 ```
 
 ### 접속 정보
-* **Host**: `127.0.0.1` (컨테이너 내부 통신 시 `mysql`)
+* **Host (호스트/WSL 클라이언트)**: `127.0.0.1` (루프백 publish만)
+* **Host (Airflow 컨테이너)**: `mysql` (`intl_analysis_net` DNS alias)
 * **Port**: `.env`의 `MYSQL_PORT` (기본 `3306`)
 * **User**: `.env`의 `MYSQL_USER` (기본 `root`)
 * **Password**: `.env`의 `MYSQL_PASSWORD` (필수 — 저장소에 기본값 없음)

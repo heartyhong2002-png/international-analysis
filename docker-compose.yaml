@@ -9,7 +9,12 @@
 # --env-file supplies Compose interpolation (POSTGRES_*, Fernet, admin password).
 # service env_file injects the same file into containers for DAG tasks
 # (MYSQL_*, NOTION_API_KEY, …). Missing .env.airflow → clear Compose error.
-# MySQL-only stack: use docker-compose.mysql.yml (does not need .env.airflow).
+#
+# Analysis MySQL: join shared Docker network intl_analysis_net (created by
+# docker-compose.mysql.yml). Do NOT rely on host.docker.internal → 127.0.0.1.
+#   docker compose -f docker-compose.mysql.yml --env-file .env up -d
+#   # or: docker network create intl_analysis_net
+# MYSQL_HOST=mysql (network alias on that bridge). Host bind stays 127.0.0.1.
 # ==============================================================================
 x-airflow-common: &airflow-common
   image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.10.2-python3.11}
@@ -40,6 +45,9 @@ x-airflow-common: &airflow-common
   user: "${AIRFLOW_UID:-50000}:0"
   extra_hosts:
     - "host.docker.internal:host-gateway"
+  networks:
+    - default
+    - intl_analysis_net
   depends_on:
     postgres:
       condition: service_healthy
@@ -59,6 +67,8 @@ services:
       timeout: 5s
       retries: 5
     restart: always
+    networks:
+      - default
 
   airflow-init:
     <<: *airflow-common
@@ -112,3 +122,10 @@ services:
 
 volumes:
   postgres-db-volume:
+
+networks:
+  # Shared with docker-compose.mysql.yml — MySQL stays on 127.0.0.1 for the host;
+  # Airflow reaches it via the bridge DNS name `mysql` (no 0.0.0.0 publish).
+  intl_analysis_net:
+    name: intl_analysis_net
+    external: true

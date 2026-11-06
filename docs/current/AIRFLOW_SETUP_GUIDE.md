@@ -27,7 +27,7 @@
 cp .env.airflow.example .env.airflow
 # .env.airflow 에서 아래를 강한 값으로 교체하세요 (절대 git 커밋 금지):
 #   POSTGRES_PASSWORD, AIRFLOW__CORE__FERNET_KEY, _AIRFLOW_WWW_USER_PASSWORD
-#   MYSQL_PASSWORD  (DAG의 DB 적재 단계용; 컨테이너→호스트 MySQL은 MYSQL_HOST=host.docker.internal)
+#   MYSQL_PASSWORD  (DAG DB 적재용; MYSQL_HOST=mysql → 공유 네트워크 intl_analysis_net)
 #   NOTION_API_KEY  (선택, Notion 동기화 태스크용)
 ```
 
@@ -35,6 +35,10 @@ cp .env.airflow.example .env.airflow
 > `.env.airflow` 는 gitignore 대상입니다. 저장소에는 `.env.airflow.example` 템플릿만 둡니다.
 > Airflow Compose는 이 파일을 `env_file`로 **필수** 참조합니다. 파일이 없으면 Compose가 즉시 실패합니다.
 > MySQL 스택만 쓸 때는 `docker-compose.mysql.yml` + `.env` 를 쓰며 `.env.airflow`가 필요 없습니다.
+>
+> **Airflow ↔ MySQL:** 호스트 포트(`127.0.0.1:3306`)가 아니라 Docker 네트워크 `intl_analysis_net` 으로 연결합니다.
+> MySQL을 먼저 올리거나(`docker-compose.mysql.yml`이 네트워크 생성), `docker network create intl_analysis_net` 후 Airflow를 시작하세요.
+> `MYSQL_HOST=mysql` (네트워크 alias). `host.docker.internal` / `0.0.0.0` 공개는 쓰지 않습니다.
 
 Fernet 키 생성 예시:
 ```powershell
