@@ -22,51 +22,64 @@
 > Docker Desktop이 켜져 있는 상태에서 프로젝트 루트에서 실행합니다.
 > MySQL 스택(`docker-compose.mysql.yml`)과 별도입니다.
 
-### 0) 환경 파일 준비 (최초 1회)
+### 0) 환경 파일 준비 (최초 1회) — 시크릿 없이 기동 불가
 ```powershell
 cp .env.airflow.example .env.airflow
 # .env.airflow 에서 아래를 강한 값으로 교체하세요 (절대 git 커밋 금지):
 #   POSTGRES_PASSWORD, AIRFLOW__CORE__FERNET_KEY, _AIRFLOW_WWW_USER_PASSWORD
 #   MYSQL_PASSWORD  (DAG DB 적재용; MYSQL_HOST=mysql → 공유 네트워크 intl_analysis_net)
 #   NOTION_API_KEY  (선택, Notion 동기화 태스크용)
+
+# 로컬 프리플라이트 (값 미출력). 파일 없음/빈 값/예시 placeholder 면 즉시 실패:
+./scripts/ops/airflow_preflight.sh
 ```
 
 > [!IMPORTANT]
 > `.env.airflow` 는 gitignore 대상입니다. 저장소에는 `.env.airflow.example` 템플릿만 둡니다.
-> Airflow Compose는 이 파일을 `env_file`로 **필수** 참조합니다. 파일이 없으면 Compose가 즉시 실패합니다.
+> **시크릿 강제:** Compose는 (1) 필수 `env_file: .env.airflow`, (2) `MYSQL_PASSWORD` / `AIRFLOW__CORE__FERNET_KEY` 등 `${VAR:?…}` 명시 주입,
+> (3) `airflow-preflight` 서비스가 placeholder/빈 값이면 exit 1 — webserver/scheduler는 preflight 성공 전에는 기동하지 않습니다.
 > MySQL 스택만 쓸 때는 `docker-compose.mysql.yml` + `.env` 를 쓰며 `.env.airflow`가 필요 없습니다.
 >
 > **Airflow ↔ MySQL:** 호스트 포트(`127.0.0.1:3306`)가 아니라 Docker 네트워크 `intl_analysis_net` 으로 연결합니다.
-> MySQL을 먼저 올리거나(`docker-compose.mysql.yml`이 네트워크 생성), `docker network create intl_analysis_net` 후 Airflow를 시작하세요.
-> `MYSQL_HOST=mysql` (네트워크 alias). `host.docker.internal` / `0.0.0.0` 공개는 쓰지 않습니다.
+> MySQL을 먼저 올리거나 `docker network create intl_analysis_net` 후 Airflow를 시작하세요.
+> `MYSQL_HOST=mysql`. `host.docker.internal` / `0.0.0.0` 공개는 쓰지 않습니다.
 
 Fernet 키 생성 예시:
 ```powershell
 python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
 ```
 
-### 1) 최초 DB 초기화 + 관리자 계정 생성
+### 1) 권장: 원클릭 기동 (프리플라이트 + 네트워크 + compose)
 ```powershell
-docker compose --env-file .env.airflow up airflow-init
-```
-(`--env-file` = Compose 변수 치환, `env_file:` = 컨테이너 환경 주입. 둘 다 `.env.airflow`를 사용합니다.)
+# (권장) MySQL 먼저 — intl_analysis_net 생성
+docker compose -f docker-compose.mysql.yml --env-file .env up -d
 
-### 2) Airflow 전체 컨테이너 가동 (백그라운드)
+./scripts/ops/start_airflow.sh
+```
+
+### 2) 수동: 최초 DB 초기화 + 관리자 계정 생성
+```powershell
+docker compose --env-file .env.airflow up airflow-preflight airflow-init
+```
+(`--env-file` = Compose 변수 치환, `env_file:` = 컨테이너 환경 주입. 둘 다 `.env.airflow`.)
+
+### 3) 수동: Airflow 전체 컨테이너 가동 (백그라운드)
 ```powershell
 docker compose --env-file .env.airflow up -d
 ```
 - 구동되는 서비스:
+  - `airflow-preflight` (시크릿 검사 후 종료 — 실패 시 스택 중단)
   - `postgres` (Airflow 메타데이터 DB)
   - `airflow-webserver` (웹 관제 화면, **127.0.0.1:8080** 루프백)
   - `airflow-scheduler` (스케줄러 & LocalExecutor)
-- DB/Notion DAG 태스크는 컨테이너 env의 `MYSQL_*` / `NOTION_API_KEY`를 사용합니다 (파일 마운트 없음).
+- DB/Notion DAG 태스크는 컨테이너 env의 `MYSQL_*` / `NOTION_API_KEY`를 사용합니다 (시크릿 파일 마운트 없음).
 
-### 3) Airflow Web UI 접속
+### 4) Airflow Web UI 접속
 - 브라우저 주소: `http://127.0.0.1:8080`
 - 로그인: `.env.airflow`의 `_AIRFLOW_WWW_USER_USERNAME` / `_AIRFLOW_WWW_USER_PASSWORD`
 - 새 DAG는 기본적으로 **paused** 상태입니다. UI에서 토글로 활성화하세요.
 
-### 4) 컨테이너 종료
+### 5) 컨테이너 종료
 ```powershell
 docker compose --env-file .env.airflow down
 ```

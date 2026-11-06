@@ -1,30 +1,32 @@
 # ==============================================================================
 # Apache Airflow 2.10.2 — local orchestration for international-analysis
 #
-# Secrets are NEVER committed. Airflow services require a local env file:
-#   cp .env.airflow.example .env.airflow   # then edit secrets (gitignored)
-#   docker compose --env-file .env.airflow up airflow-init
+# Secrets are NEVER committed. Intended flow:
+#   cp .env.airflow.example .env.airflow   # edit real values; gitignored
+#   ./scripts/ops/airflow_preflight.sh    # fails loud if missing/empty/placeholder
+#   docker compose -f docker-compose.mysql.yml --env-file .env up -d   # intl_analysis_net
+#   ./scripts/ops/start_airflow.sh        # preflight + compose up
+# Or:
+#   docker compose --env-file .env.airflow up airflow-preflight airflow-init
 #   docker compose --env-file .env.airflow up -d
 #
-# --env-file supplies Compose interpolation (POSTGRES_*, Fernet, admin password).
-# service env_file injects the same file into containers for DAG tasks
-# (MYSQL_*, NOTION_API_KEY, …). Missing .env.airflow → clear Compose error.
+# App secrets (MYSQL_*, Notion, …) are injected into Airflow containers via:
+#   1) required service env_file: .env.airflow
+#   2) explicit environment keys with ${VAR:?…} so Compose cannot silently omit them
+# Missing .env.airflow or empty MYSQL_PASSWORD / FERNET_KEY → hard failure.
 #
-# Analysis MySQL: join shared Docker network intl_analysis_net (created by
-# docker-compose.mysql.yml). Do NOT rely on host.docker.internal → 127.0.0.1.
-#   docker compose -f docker-compose.mysql.yml --env-file .env up -d
-#   # or: docker network create intl_analysis_net
-# MYSQL_HOST=mysql (network alias on that bridge). Host bind stays 127.0.0.1.
+# Analysis MySQL: shared Docker network intl_analysis_net, MYSQL_HOST=mysql.
+# Host bind stays 127.0.0.1 — do not use host.docker.internal for MySQL.
 # ==============================================================================
 x-airflow-common: &airflow-common
   image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.10.2-python3.11}
-  # Required only for Airflow services — fail fast if the local secrets file is absent.
+  # Required — Compose errors if the local secrets file is absent.
   env_file:
     - .env.airflow
   environment: &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
-    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER:?Set POSTGRES_USER in .env.airflow (cp .env.airflow.example .env.airflow)}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env.airflow (cp .env.airflow.example .env.airflow)}@postgres/airflow
-    AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW__CORE__FERNET_KEY:?Set AIRFLOW__CORE__FERNET_KEY in .env.airflow (cp .env.airflow.example .env.airflow)}
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER:?Set POSTGRES_USER in .env.airflow (cp .env.airflow.example .env.airflow)}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env.airflow}@postgres/airflow
+    AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW__CORE__FERNET_KEY:?Set AIRFLOW__CORE__FERNET_KEY in .env.airflow (run scripts/ops/airflow_preflight.sh)}
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"
     AIRFLOW__CORE__LOAD_EXAMPLES: "false"
     AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth,airflow.api.auth.backend.session
@@ -32,8 +34,14 @@ x-airflow-common: &airflow-common
     PYTHONPATH: /opt/airflow:/opt/airflow/scripts
     OLLAMA_HOST: ${OLLAMA_HOST:-http://host.docker.internal:11434}
     _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-requests python-dotenv pyyaml pandas yfinance nltk feedparser beautifulsoup4 lxml pytrends mysql-connector-python}
-    # Do NOT re-declare MYSQL_*/NOTION_* here with ${VAR:-}: empty Compose
-    # interpolation would override values loaded from env_file into the container.
+    # App secrets for DAG tasks (DB / Notion). Require via Compose interpolation so
+    # containers cannot start without them when --env-file .env.airflow is used.
+    MYSQL_HOST: ${MYSQL_HOST:?Set MYSQL_HOST=mysql in .env.airflow (intl_analysis_net)}
+    MYSQL_PORT: ${MYSQL_PORT:-3306}
+    MYSQL_USER: ${MYSQL_USER:-root}
+    MYSQL_PASSWORD: ${MYSQL_PASSWORD:?Set MYSQL_PASSWORD in .env.airflow (run scripts/ops/airflow_preflight.sh)}
+    MYSQL_DATABASE: ${MYSQL_DATABASE:-international_analysis}
+    NOTION_API_KEY: ${NOTION_API_KEY:-}
   volumes:
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
@@ -51,13 +59,15 @@ x-airflow-common: &airflow-common
   depends_on:
     postgres:
       condition: service_healthy
+    airflow-preflight:
+      condition: service_completed_successfully
 
 services:
   postgres:
     image: postgres:15-alpine
     environment:
       POSTGRES_USER: ${POSTGRES_USER:?Set POSTGRES_USER in .env.airflow (cp .env.airflow.example .env.airflow)}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env.airflow (cp .env.airflow.example .env.airflow)}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env.airflow}
       POSTGRES_DB: ${POSTGRES_DB:-airflow}
     volumes:
       - postgres-db-volume:/var/lib/postgresql/data
@@ -70,12 +80,65 @@ services:
     networks:
       - default
 
+  # Fails the stack loudly if required app/Airflow secrets are missing or placeholders.
+  # Does not print secret values.
+  airflow-preflight:
+    image: busybox:1.36
+    env_file:
+      - .env.airflow
+    environment:
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?Set MYSQL_PASSWORD in .env.airflow}
+      AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW__CORE__FERNET_KEY:?Set AIRFLOW__CORE__FERNET_KEY in .env.airflow}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env.airflow}
+      _AIRFLOW_WWW_USER_PASSWORD: ${_AIRFLOW_WWW_USER_PASSWORD:?Set _AIRFLOW_WWW_USER_PASSWORD in .env.airflow}
+      MYSQL_HOST: ${MYSQL_HOST:?Set MYSQL_HOST=mysql in .env.airflow}
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        set -eu
+        echo "airflow-preflight: checking required secrets (values hidden)…"
+        [ -n "$$MYSQL_PASSWORD" ] || { echo "FATAL [airflow-preflight]: MYSQL_PASSWORD empty — cp .env.airflow.example .env.airflow" >&2; exit 1; }
+        [ -n "$$AIRFLOW__CORE__FERNET_KEY" ] || { echo "FATAL [airflow-preflight]: AIRFLOW__CORE__FERNET_KEY empty" >&2; exit 1; }
+        [ -n "$$POSTGRES_PASSWORD" ] || { echo "FATAL [airflow-preflight]: POSTGRES_PASSWORD empty" >&2; exit 1; }
+        [ -n "$$_AIRFLOW_WWW_USER_PASSWORD" ] || { echo "FATAL [airflow-preflight]: _AIRFLOW_WWW_USER_PASSWORD empty" >&2; exit 1; }
+        [ -n "$$MYSQL_HOST" ] || { echo "FATAL [airflow-preflight]: MYSQL_HOST empty (use mysql)" >&2; exit 1; }
+        case "$$MYSQL_PASSWORD" in
+          replace-with-a-strong-password|replace-me|changeme|password)
+            echo "FATAL [airflow-preflight]: MYSQL_PASSWORD is still an example placeholder" >&2; exit 1 ;;
+        esac
+        case "$$AIRFLOW__CORE__FERNET_KEY" in
+          replace-with-fernet-key|replace-me)
+            echo "FATAL [airflow-preflight]: AIRFLOW__CORE__FERNET_KEY is still an example placeholder" >&2; exit 1 ;;
+        esac
+        case "$$POSTGRES_PASSWORD" in
+          replace-me-postgres|airflow|password)
+            echo "FATAL [airflow-preflight]: POSTGRES_PASSWORD is still an example placeholder" >&2; exit 1 ;;
+        esac
+        case "$$_AIRFLOW_WWW_USER_PASSWORD" in
+          replace-me-airflow-admin|airflow|admin)
+            echo "FATAL [airflow-preflight]: _AIRFLOW_WWW_USER_PASSWORD is still an example placeholder" >&2; exit 1 ;;
+        esac
+        case "$$MYSQL_HOST" in
+          host.docker.internal|127.0.0.1|localhost)
+            echo "FATAL [airflow-preflight]: MYSQL_HOST=$$MYSQL_HOST cannot reach compose MySQL; use MYSQL_HOST=mysql" >&2; exit 1 ;;
+        esac
+        echo "OK [airflow-preflight]: required secrets present; Airflow may start."
+    restart: "no"
+    networks:
+      - default
+
   airflow-init:
     <<: *airflow-common
     entrypoint: /bin/bash
     command:
       - -c
       - |
+        set -euo pipefail
+        if [ -z "${MYSQL_PASSWORD:-}" ] || [ -z "${AIRFLOW__CORE__FERNET_KEY:-}" ]; then
+          echo "FATAL [airflow-init]: MYSQL_PASSWORD / AIRFLOW__CORE__FERNET_KEY missing in container env" >&2
+          exit 1
+        fi
+        echo "airflow-init: secrets present in env (not printed); migrating DB…"
         airflow db migrate
         airflow users create \
           --username "${_AIRFLOW_WWW_USER_USERNAME:-airflow}" \
@@ -101,6 +164,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      airflow-preflight:
+        condition: service_completed_successfully
       airflow-init:
         condition: service_completed_successfully
 
@@ -117,6 +182,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      airflow-preflight:
+        condition: service_completed_successfully
       airflow-init:
         condition: service_completed_successfully
 
@@ -124,8 +191,9 @@ volumes:
   postgres-db-volume:
 
 networks:
-  # Shared with docker-compose.mysql.yml — MySQL stays on 127.0.0.1 for the host;
-  # Airflow reaches it via the bridge DNS name `mysql` (no 0.0.0.0 publish).
+  # Shared with docker-compose.mysql.yml — MySQL host publish stays 127.0.0.1;
+  # Airflow uses bridge DNS `mysql` (no 0.0.0.0). Create via MySQL stack or:
+  #   docker network create intl_analysis_net
   intl_analysis_net:
     name: intl_analysis_net
     external: true
