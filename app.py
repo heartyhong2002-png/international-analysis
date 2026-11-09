@@ -85,12 +85,18 @@ st.markdown("""
 # 2. 헬퍼 함수: 백엔드 스크립트 실행
 # ------------------------------------------------------------------------------
 def _kill_process_tree(process):
-    """Timeout 시 자식 프로세스 트리까지 종료."""
+    """Timeout 시 자식 프로세스 트리까지 종료 (POSIX process group / Windows taskkill /T)."""
     if process.poll() is not None:
         return
     try:
         if sys.platform == "win32":
-            process.kill()
+            # /T = kill child tree; /F = force
+            subprocess.run(
+                ["taskkill", "/F", "/T", "/PID", str(process.pid)],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                check=False,
+            )
         else:
             os.killpg(process.pid, signal.SIGKILL)
     except ProcessLookupError:
@@ -125,6 +131,16 @@ def run_command(cmd_list, timeout=300):
         if sys.platform != "win32":
             popen_kwargs["start_new_session"] = True
         process = subprocess.Popen(**popen_kwargs)
+
+        # Windows: select() only accepts sockets, so use communicate(timeout=...).
+        if sys.platform == "win32":
+            try:
+                out, _ = process.communicate(timeout=timeout)
+            except subprocess.TimeoutExpired:
+                _kill_process_tree(process)
+                out, _ = process.communicate()
+                return False, (out or "") + f"\n[TIMEOUT] Command exceeded {timeout}s and was killed.\n"
+            return process.returncode == 0, out or ""
 
         logs = []
         deadline = time.monotonic() + timeout
