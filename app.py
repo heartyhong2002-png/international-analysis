@@ -13,6 +13,8 @@ import os
 import sys
 import json
 import time
+import select
+import signal
 import subprocess
 from pathlib import Path
 from datetime import datetime
@@ -82,28 +84,84 @@ st.markdown("""
 # ------------------------------------------------------------------------------
 # 2. 헬퍼 함수: 백엔드 스크립트 실행
 # ------------------------------------------------------------------------------
+def _kill_process_tree(process):
+    """Timeout 시 자식 프로세스 트리까지 종료."""
+    if process.poll() is not None:
+        return
+    try:
+        if sys.platform == "win32":
+            process.kill()
+        else:
+            os.killpg(process.pid, signal.SIGKILL)
+    except ProcessLookupError:
+        pass
+    except Exception:
+        try:
+            process.kill()
+        except Exception:
+            pass
+    try:
+        process.wait(timeout=5)
+    except Exception:
+        pass
+
+
 def run_command(cmd_list, timeout=300):
-    """ subprocess 실행 후 실시간 출력 반환 """
+    """subprocess 실행 후 출력 반환. timeout 동안만 대기하고 초과 시 자식을 강제 종료."""
+    process = None
     try:
         env = os.environ.copy()
         env["PYTHONIOENCODING"] = "utf-8"
-        process = subprocess.Popen(
-            cmd_list,
+        popen_kwargs = dict(
+            args=cmd_list,
             cwd=str(REPO_ROOT),
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,
             encoding="utf-8",
             errors="replace",
-            env=env
+            env=env,
         )
+        if sys.platform != "win32":
+            popen_kwargs["start_new_session"] = True
+        process = subprocess.Popen(**popen_kwargs)
+
         logs = []
-        for line in iter(process.stdout.readline, ''):
-            logs.append(line)
-        process.stdout.close()
-        return_code = process.wait(timeout=timeout)
+        deadline = time.monotonic() + timeout
+        stdout = process.stdout
+
+        while True:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                _kill_process_tree(process)
+                logs.append(f"\n[TIMEOUT] Command exceeded {timeout}s and was killed.\n")
+                return False, "".join(logs)
+
+            if process.poll() is not None:
+                rest = stdout.read() if stdout is not None else ""
+                if rest:
+                    logs.append(rest)
+                break
+
+            if stdout is None:
+                time.sleep(min(0.2, remaining))
+                continue
+
+            ready, _, _ = select.select([stdout], [], [], min(1.0, max(remaining, 0.01)))
+            if ready:
+                line = stdout.readline()
+                if line:
+                    logs.append(line)
+                elif process.poll() is not None:
+                    break
+
+        if stdout is not None:
+            stdout.close()
+        return_code = process.wait(timeout=5)
         return return_code == 0, "".join(logs)
     except Exception as e:
+        if process is not None and process.poll() is None:
+            _kill_process_tree(process)
         return False, str(e)
 
 # ------------------------------------------------------------------------------
@@ -150,13 +208,15 @@ tev1_file = REPO_ROOT / "data" / "tev1_backtest_results.json"
 total_signals = 0
 high_purity_clusters = 0
 anomaly_spikes = 0
-agreement_rate = "90.0%"
+agreement_rate = "N/A"
 
 if canonical_file.exists():
     try:
         with open(canonical_file, "r", encoding="utf-8") as f:
             c_data = json.load(f)
-            if isinstance(c_data, list):
+            if isinstance(c_data, dict):
+                high_purity_clusters = len(c_data.get("signals", []) or [])
+            elif isinstance(c_data, list):
                 high_purity_clusters = len(c_data)
     except Exception:
         pass
@@ -165,7 +225,26 @@ if anomalies_file.exists():
     try:
         with open(anomalies_file, "r", encoding="utf-8") as f:
             a_data = json.load(f)
-            anomaly_spikes = len(a_data.get("anomalies", []))
+            if isinstance(a_data, dict):
+                hotspots = a_data.get("hotspots")
+                if hotspots is None:
+                    hotspots = a_data.get("anomalies", [])
+                anomaly_spikes = len(hotspots or [])
+            elif isinstance(a_data, list):
+                anomaly_spikes = len(a_data)
+    except Exception:
+        pass
+
+if tev1_file.exists():
+    try:
+        with open(tev1_file, "r", encoding="utf-8") as f:
+            tev1_meta = json.load(f)
+            agree_count = tev1_meta.get("agreement_with_formula_count")
+            case_count = tev1_meta.get("case_count")
+            if case_count is None:
+                case_count = len(tev1_meta.get("results") or tev1_meta.get("cases") or [])
+            if agree_count is not None and case_count:
+                agreement_rate = f"{(100.0 * float(agree_count) / float(case_count)):.1f}%"
     except Exception:
         pass
 
@@ -220,7 +299,22 @@ if auto_run_all:
     ok5, out5 = run_command([PYTHON_EXE, "scripts/notion/notion_manager.py", "--all"])
     log_area.text("=== 5단계 노션 로그 ===\n" + out5[-1000:])
 
-    status_text.success("🎉 축하합니다! 전체 조기경보 파이프라인이 성공적으로 완결되었습니다.")
+    step_results = [
+        ("1 수집", ok1),
+        ("2 정제", ok2),
+        ("3 분석", ok3),
+        ("4 대시보드", ok4),
+        ("5 Notion", ok5),
+    ]
+    failed_steps = [name for name, ok in step_results if not ok]
+    if not failed_steps:
+        status_text.success("🎉 축하합니다! 전체 조기경보 파이프라인이 성공적으로 완결되었습니다.")
+    else:
+        status_text.error(
+            "❌ 파이프라인 일부 단계가 실패했습니다: "
+            + ", ".join(failed_steps)
+            + " (상세 로그를 확인하세요)"
+        )
 
 elif sync_notion_btn:
     with st.spinner("Notion 프로젝트 허브 실시간 전체 동기화 중..."):
@@ -298,17 +392,47 @@ with tab1:
         try:
             with open(anomalies_file, "r", encoding="utf-8") as f:
                 anom_data = json.load(f)
-                anom_list = anom_data.get("anomalies", [])
+                if isinstance(anom_data, dict):
+                    anom_list = anom_data.get("hotspots")
+                    if anom_list is None:
+                        anom_list = anom_data.get("anomalies", [])
+                elif isinstance(anom_data, list):
+                    anom_list = anom_data
+                else:
+                    anom_list = []
+                anom_list = anom_list or []
                 if anom_list:
-                    df_anom = pd.DataFrame(anom_list)
+                    rows = []
+                    for item in anom_list:
+                        score = item.get("z_score")
+                        if score is None:
+                            score = item.get("anomaly_score")
+                        regions = item.get("hotspot_regions") or []
+                        sources = item.get("sources") or []
+                        if isinstance(regions, list):
+                            regions_txt = ", ".join(str(r) for r in regions)
+                        else:
+                            regions_txt = str(regions)
+                        if isinstance(sources, list):
+                            sources_txt = ", ".join(str(s) for s in sources)
+                        else:
+                            sources_txt = str(sources)
+                        rows.append({
+                            "representative_title": item.get("representative_title")
+                            or item.get("canonical_title")
+                            or item.get("topic", ""),
+                            "z_score": score,
+                            "hotspot_regions": regions_txt,
+                            "sources": sources_txt,
+                        })
+                    df_anom = pd.DataFrame(rows)
                     st.dataframe(
-                        df_anom[["topic", "spike_score", "axis", "source", "evidence_summary"]],
+                        df_anom[["representative_title", "z_score", "hotspot_regions", "sources"]],
                         column_config={
-                            "topic": "위기 징후 헤드라인",
-                            "spike_score": "이상치 점수 (Z-Score)",
-                            "axis": "감시축",
-                            "source": "신호 출처",
-                            "evidence_summary": "핵심 교차 근거 요약"
+                            "representative_title": "위기 징후 헤드라인",
+                            "z_score": "이상치 점수 (Z-Score)",
+                            "hotspot_regions": "핫스팟 지역",
+                            "sources": "신호 출처",
                         },
                         use_container_width=True,
                         height=280
@@ -364,17 +488,26 @@ with tab3:
     if canonical_file.exists():
         try:
             with open(canonical_file, "r", encoding="utf-8") as f:
-                canon_items = json.load(f)
+                canon_payload = json.load(f)
+                if isinstance(canon_payload, dict):
+                    canon_items = canon_payload.get("signals", []) or []
+                elif isinstance(canon_payload, list):
+                    canon_items = canon_payload
+                else:
+                    canon_items = []
                 st.success(f"현재 고순도 필터링을 통과한 핵심 신호 클러스터: **{len(canon_items)}개**")
-                
+
                 rows = []
                 for item in canon_items[:15]:
+                    regions = item.get("hotspot_regions") or []
+                    tags = item.get("supply_chain_tags") or []
                     rows.append({
-                        "헤드라인 / 주장": item.get("title_or_claim", ""),
-                        "감시축": item.get("axis", ""),
-                        "공급망 연관": ", ".join(item.get("supply_chain_tags", [])),
-                        "원시 기사수": item.get("raw_count", 1),
-                        "신뢰 등급": item.get("reliability_tier", "B")
+                        "헤드라인 / 주장": item.get("canonical_title")
+                        or item.get("representative_title", ""),
+                        "핫스팟 지역": ", ".join(str(r) for r in regions) if isinstance(regions, list) else str(regions),
+                        "클러스터 크기": item.get("cluster_size", 1),
+                        "순도 등급": item.get("purity_tier", ""),
+                        "공급망 연관": ", ".join(str(t) for t in tags) if isinstance(tags, list) else str(tags),
                     })
                 st.dataframe(pd.DataFrame(rows), use_container_width=True)
         except Exception as e:
@@ -416,12 +549,29 @@ with tab4:
         try:
             with open(tev1_file, "r", encoding="utf-8") as f:
                 tev1_data = json.load(f)
-                cases = tev1_data.get("cases", [])
-                st.write(f"동결된 10대 검증 사례 대상 모델 합의 일치율: **90.0% (9/10 합격)**")
+                results = tev1_data.get("results")
+                if results is None:
+                    results = tev1_data.get("cases", [])
+                results = results or []
+                agree_count = tev1_data.get("agreement_with_formula_count")
+                case_count = tev1_data.get("case_count")
+                if case_count is None:
+                    case_count = len(results)
+                if agree_count is None:
+                    st.warning("백테스트 결과에 `agreement_with_formula_count`가 없습니다.")
+                elif not case_count:
+                    st.warning("백테스트 사례 수가 0입니다.")
+                else:
+                    rate_pct = 100.0 * float(agree_count) / float(case_count)
+                    st.write(
+                        f"동결된 검증 사례 대상 모델-공식 일치율: "
+                        f"**{rate_pct:.1f}% ({agree_count}/{case_count} 일치)** "
+                        f"(출처: `tev1_backtest_results.json`)"
+                    )
                 with st.expander("검증 케이스 상세 보기"):
-                    st.json(cases[:3])
-        except Exception:
-            pass
+                    st.json(results[:3])
+        except Exception as e:
+            st.error(f"백테스트 결과 로드 오류: {e}")
 
 # ------------------------------------------------------------------------------
 # TAB 5: 조기경보 리포트 & Notion
