@@ -1,0 +1,10 @@
+# Local-only Streamlit control center (root app.py).
+# Bind loopback like scripts/console/app.py — never all interfaces.
+[server]
+address = "127.0.0.1"
+headless = true
+# Keep default XSRF protection on; do not expose beyond localhost.
+
+[browser]
+serverAddress = "127.0.0.1"
+gatherUsageStats = false

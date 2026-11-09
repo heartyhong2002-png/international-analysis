@@ -7,6 +7,17 @@ app.py — 글로벌 공급망·지정학 리스크 조기경보 올인원 통�
   [3] AI 분석 (LLM Analysis: 3-Tier 로컬 모델 위험도 평가)
   [4] 검증 (Validation: 6-Model 합의율, NIST AI RMF 체계)
   [5] 발표/발행 (Dashboard & Notion: 대시보드 렌더링, 노션 자동 발행)
+
+Local only — bind loopback like scripts/console/app.py (never 0.0.0.0).
+
+Usage:
+    # preferred (enforces --server.address 127.0.0.1)
+    scripts/ops/start_streamlit_app.sh
+    scripts\\ops\\start_streamlit_app.bat
+
+    # or from repo root (reads .streamlit/config.toml)
+    .venv/bin/python -m streamlit run app.py --server.address 127.0.0.1
+    # open http://127.0.0.1:8501
 """
 
 import os

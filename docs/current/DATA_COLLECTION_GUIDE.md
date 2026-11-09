@@ -291,6 +291,16 @@ SoT와 무거운 수집·LLM·DB는 계속 로컬 `python scripts/run_pipeline.p
 # http://127.0.0.1:8765 — presets: default | collect-only | light
 ```
 
+Streamlit 올인원 관제 센터(`app.py`)도 **루프백만** 바인딩한다(`scripts/console/app.py`와 동일, `0.0.0.0` 금지).
+
+```bash
+# preferred launchers (enforce --server.address 127.0.0.1)
+scripts/ops/start_streamlit_app.sh
+scripts\ops\start_streamlit_app.bat
+# or: .venv\Scripts\python.exe -m streamlit run app.py --server.address 127.0.0.1
+# http://127.0.0.1:8501 — .streamlit/config.toml also sets address=127.0.0.1
+```
+
 ## 9. Python 수집 파이프라인 실행 그룹(2026-10-10)
 
 Python 스크립트의 역할과 실제 호출 여부는 [`PYTHON_SCRIPT_INVENTORY.md`](PYTHON_SCRIPT_INVENTORY.md)에 기록한다. 수집 세션에서는 다음처럼 후처리와 분리해 실행할 수 있다.
