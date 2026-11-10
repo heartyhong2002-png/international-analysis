@@ -34,21 +34,48 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 
 두 도구가 같은 파일을 동시에 고치지 않는 것이 원칙이다.
 
-## Synchronization Protocol (3대 플랫폼 트리오 동기화 원칙)
+## Synchronization Protocol
 
-사용자가 **"동기화"**, **"동기화해줘"**, **"싱크 맞춰줘"** 등을 요청할 경우, 항상 아래 **3대 플랫폼(MD 문서 + GitHub + Notion)**을 순차적으로 일괄 동기화(Trio-Sync)한다:
+Cursor / ANTIGRAVITY / 로컬 터미널이 **같은 폴더**(Desktop Junction → `C:\dev\international-analysis`)를 쓰더라도, **대화 컨텍스트·미커밋·fetch 시점**이 다르면 “최신”이 어긋나 보인다. 아래 두 모드를 구분한다.
+
+### A. 상태 확인 동기화 (기본 — “동기화해줘 / 동기화된 내용 확인해봐”)
+
+구현·Notion 전체 재발행을 **하지 않는다**. 항상 이 순서로 **짧게** 보고한다.
+
+1. `git fetch origin` (및 `desktop-local` remote가 있으면 `git fetch desktop-local`)
+2. tip 확인: `git log -1 --oneline` · `git status -sb` · origin/desktop-local tip이 HEAD와 같은지
+3. `AGENT_SYNC.md` Active Work Board 상단 + 최신 handoff 날짜 줄만 요약
+4. **미커밋/untracked**가 있으면 파일 목록만 명시 (커밋하지 말 것 — 사용자가 요청할 때만)
+5. 보고 형식(고정):
+   - **tip** (hash + subject)
+   - **origin / desktop-local 일치 여부**
+   - **지난 확인 이후 새 커밋** (있으면 3~8줄)
+   - **보드 상단 변경** (있으면)
+   - **워킹트리 dirty** (없으면 “깨끗”)
+
+진실의 원천은 **git tip**이다. 에이전트 대화 요약보다 tip을 우선한다.
+
+### B. Trio-Sync (명시 요청만 — “트리오 동기화 / Notion까지 / MD·GitHub·Notion 전부”)
+
+사용자가 **Trio / Notion까지 / 3대 플랫폼**을 명시한 경우에만 아래를 순차 실행한다.
 
 1. **마크다운(MD) 문서 최신화**:
-   - `AGENT_SYNC.md`: 작업 보드(Active Work Board) 상태(`done` 등) 갱신, 세션 Handoff 및 동기화 이력 기록.
-   - `PROJECT_CONTEXT.md` 및 `docs/current/*`: 신규 파이프라인, 모듈 명세 최신화.
-2. **Notion 실시간 전체 동기화 (`scripts/notion/notion_manager.py --all`)**:
-   - 📋 **작업 보드(Active Work Board)** 동기화 (`--sync-board`)
-   - 📚 **MD 문서 보관소 & 전체 프로젝트 작업 이력** 동기화 (`--sync-docs`)
-   - 🚨 **최신 조기경보 및 이상 징후 브리프 리포트** 자동 발행/갱신 (`--publish-report`)
-3. **GitHub 원격 저장소 동기화**:
-   - 변경/신규 파일 스테이징 (`git add`)
-   - 유의미한 커밋 메시지 작성 (`git commit -m "..."`)
-   - 원격 브랜치 반영 (`git push origin <branch>`)
+   - `AGENT_SYNC.md`: 작업 보드 상태 갱신, 세션 Handoff·동기화 이력 기록.
+   - 필요 시 `PROJECT_CONTEXT.md`, `docs/current/*` 정합.
+2. **Notion** (`scripts/notion/notion_manager.py --all` 또는 동등):
+   - 작업 보드 · MD 문서 보관소/이력 · 조기경보 리포트.
+3. **GitHub**:
+   - 관련 파일만 stage → commit → `git push origin <branch>` (비밀·`.env` 제외).
+
+### 멀티 에이전트 운영 한 줄
+
+| 역할 | 규칙 |
+| --- | --- |
+| ANTIGRAVITY | 구현 후 **commit + push** + `AGENT_SYNC` handoff 한 블록 |
+| Cursor | 세션 시작·“동기화” 요청 시 **§A 상태 확인**부터. 구현은 Board의 in-progress 파일과 겹치지 않게 |
+| 로컬 사용자 | 헷갈리면 `git fetch origin && git log -1 --oneline` — 그 tip이 최신 |
+
+복사해 쓸 프롬프트: `docs/SESSION_PROMPTS.md` **§ Sync Status**.
 
 ---
 
@@ -58,6 +85,10 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
+| done | Cursor Agent / preprocess | preprocessing / standard-refresh | `scripts/pipeline/bridge_preprocess_lanes.py`, `data/automation/canonical_signals_latest.json`, `data/automation/preprocess_*_latest.json`, `AGENT_SYNC.md` | standard 전처리 재실행 완료: 795→373 클러스터·223 배제. high는 기존 최신 유지 | 2026-11-10 |
+| done | ANTIGRAVITY | workspace / cleanup-and-korean-labeling | `00_프로젝트_핵심문서`, 01~06 정션, `.gitignore` | 불필요 Docker/Airflow/임시파일 18종 삭제 및 직관적인 7대 한글 번호표 폴더 구축 완료 (핵심 MD 파일 4종 한글화 보관함 연동) | 2026-11-10 |
+| done | ANTIGRAVITY | collection / us-tech-politics-expansion | `scripts/collection/fetch_bluesky_public.py`, `scripts/collection/fetch_signal_gap_rss.py`, `scripts/automation/preprocess_signals.py` | 미국 뉴스·기술안보 수집망 보강: 젠슨 황/엔비디아 스파이 의혹 첩보전 및 미 중간선거/의회/CHIPS Act 쿼리·RSS 신설 (57개 정형 클러스터 및 13개 소스 TIER_1 군집 형성 검증) | 2026-11-10 |
+| done | Cursor / Control Tower | sync / multi-agent-status-protocol | `AGENT_SYNC.md`, `docs/SESSION_PROMPTS.md`, `.cursor/rules/agent-sync-status.mdc` | 「동기화해줘」= §A tip/보드/dirty 짧은 보고 고정. Trio는 명시 시에만. 타 세션용 Sync Status 프롬프트 등록 | 2026-11-09 |
 | done | ANTIGRAVITY | collection / zero-byte-multimodal-collectors | `scripts/collection/fetch_telegram_public.py`, `scripts/collection/fetch_bluesky_public.py`, `scripts/collection/fetch_signal_gap_rss.py`, `scripts/collection/gov_announcements_collector.py`, `config/source_registry/*` | 0-Byte 무다운로드 멀티모달 수집기 4종 고도화(Telegram Photo/Video/지도단문 보존, Bluesky embed.images/alt_texts/video, RSS/Gov media:content·enclosure·PDF 보존) 및 34개 글로벌 싱크탱크·독립언론 확장(Standard 멀티모달 클러스터 35→120건, High 9→23건) | 2026-11-06 |
 | done | ANTIGRAVITY | preprocessing / multimodal-stage1 | `scripts/automation/preprocess_signals.py`, `scripts/pipeline/bridge_preprocess_lanes.py`, `docs/current/PREPROCESSING_SESSION_PROMPT.md` | 1단계 무다운로드 멀티모달(이미지·영상·문서 URL & Alt-Text 추출, 시각노이즈/밈 필터링, 4대 시각 모달리티 태깅) 구축 및 최신 725건(Standard 339 / High 35 클러스터) 정제·수집 세션 가이드라인 수립 완료 | 2026-11-06 |
 | done | Cursor / Validation·QA | validation / multi-judge-criteria | `docs/current/VALIDATION_PLAN.md` (§10.4), `docs/evidence/early_warning_backtest_report.md`, `AGENT_SYNC.md` | 검증단(tev1/Gemma/DeepSeek) 직교 판정·블라인드 Stage1/2·트리거·KPI 문서화. 외부 자문 합의 반영. Trio-Sync | 2026-11-05 |
@@ -108,6 +139,20 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-10 [Cursor Agent / preprocess · standard 전처리 재실행]
+- 한 일: 오늘 갱신된 RSS·Bluesky 등 원시 795건에 대해 `bridge_preprocess_lanes.py --purity-mode standard` 재실행. 노이즈·저관련 223건 배제 후 373개 canonical 클러스터 산출(Tier-1 32 / Tier-2 56 / 멀티모달 129·첨부 171). high-purity 산출물은 기존 최신 유지.
+- 바꾼 파일: `data/automation/canonical_signals_latest.json`, `data/automation/preprocess_rejects_latest.json`, `data/automation/preprocess_summary_latest.json`, `AGENT_SYNC.md` (+ 워킹트리에 있던 high_purity automation 산출물도 함께 동기화).
+- 확인한 것: 배제 사유 low_geopolitical_relevance=195, entertainment_sports_noise=10, ad_or_soft_section=11. 해협·반도체 태그 정상. Alert Level 미설정·UNVERIFIED 유지.
+- 다음 작업: 낡은 Telegram/local_opinions/Reddit·Trends 재수집 후 필요 시 standard/high 재브릿지. LLM/tev1는 분석·검증 세션 영역.
+- 주의할 점: 수집 원본은 수정하지 않음(read-only). 다른 세션의 미관련 dirty(삭제·정션·수집기)는 이 커밋에 넣지 않음.
+
+2026-11-09 [Cursor / Control Tower · multi-agent sync status protocol]
+- 한 일: 「동기화해줘」기본 동작을 §A 상태 확인(fetch→tip→보드→dirty)으로 고정. Trio-Sync는 명시 요청만. `SESSION_PROMPTS` Sync Status 프롬프트 + Cursor alwaysApply 규칙 추가.
+- 바꾼 파일: `AGENT_SYNC.md`, `docs/SESSION_PROMPTS.md`, `.cursor/rules/agent-sync-status.mdc`.
+- 확인한 것: Desktop Junction = `C:\dev\international-analysis`. tip 우선, 대화 기억 단독으로 최신 단정 금지.
+- 다음 작업: 새 Cursor/ANTIGRAVITY 세션 첫 메시지에 Sync Status 프롬프트(또는 공통 규칙 4–7) 사용.
+- 주의할 점: §A에서는 무단 커밋·구현 금지.
 
 2026-11-06 [ANTIGRAVITY / collection · 0-Byte 무다운로드 멀티모달 수집기 4종 고도화 및 34개 글로벌 싱크탱크·탐사미디어 확장]
 - 한 일:
