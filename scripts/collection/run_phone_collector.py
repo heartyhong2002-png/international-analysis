@@ -246,7 +246,8 @@ def sync_to_git(branch: str | None = None) -> bool:
             print("  ⚠️ detached HEAD 상태입니다. --branch cursor/actions-light-collection 을 지정하세요.")
             return False
 
-        rebase_proc = _git(["pull", "--rebase", "origin", branch], timeout=90)
+        # data/ 파일은 방금 수집한 최신 스냅샷이므로 rebase 시 -X theirs(리베이스에서 재적용되는 현재 커밋 우선)로 자동 해결
+        rebase_proc = _git(["pull", "--rebase", "-X", "theirs", "origin", branch], timeout=90)
         if rebase_proc.returncode != 0:
             err = _git_err(rebase_proc)
             print(f"  ⚠️ git pull --rebase 실패 — 푸시 중단: {err}")

@@ -57,7 +57,7 @@ WATCH_AGENCIES = [
     "international-trade-administration",     # 상무부 국제무역청 (반덤핑, 상계관세)
     "foreign-assets-control-office",          # 재무부 해외자산통제국 (OFAC 제재)
     "trade-representative-office-of-united-states",  # 미 무역대표부 (USTR 관세, 301조)
-    "customs-and-border-protection",          # 관세국경보호청 (CBP 강제노동 수입금지)
+    "u-s-customs-and-border-protection",     # 관세국경보호청 (CBP 강제노동 수입금지 공식 슬러그)
     "state-department",                       # 국무부 (방위물자수출, 제재)
 ]
 

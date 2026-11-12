@@ -105,6 +105,24 @@ WATCH_QUERIES = [
         "chokepoint": "NONE",
         "commodity": "Rare_Earths_Battery",
     },
+    {
+        "query": "Jensen Huang spy espionage",
+        "issue_tags": ["Tech_Espionage_SupplyChain", "US_Industrial_Policy_CHIPS", "Semiconductor_Security"],
+        "chokepoint": "NONE",
+        "commodity": "Semiconductor",
+    },
+    {
+        "query": "US election semiconductor tariff",
+        "issue_tags": ["US_Domestic_Politics", "US_Industrial_Policy_CHIPS", "US_Trade_Tariff"],
+        "chokepoint": "NONE",
+        "commodity": "Semiconductor",
+    },
+    {
+        "query": "Nvidia export control China",
+        "issue_tags": ["US_Export_Control", "Semiconductor_Security", "US_Industrial_Policy_CHIPS"],
+        "chokepoint": "NONE",
+        "commodity": "Semiconductor",
+    },
 ]
 
 

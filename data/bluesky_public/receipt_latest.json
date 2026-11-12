@@ -3,11 +3,11 @@
   "source_id": "bluesky_public_search",
   "signal_class": "online_information_environment_signal",
   "multimodal_zero_byte_mode": true,
-  "observed_at": "2026-11-05T15:34:29.959191+00:00",
-  "total_unique_posts": 50,
-  "posts_with_images_or_video": 9,
-  "posts_with_external_cards": 34,
-  "queries_executed": 8,
+  "observed_at": "2026-11-12T08:55:29.071155+00:00",
+  "total_unique_posts": 66,
+  "posts_with_images_or_video": 6,
+  "posts_with_external_cards": 46,
+  "queries_executed": 11,
   "alert_level_set": false,
   "verification_state_set": false,
   "query_receipts": [
@@ -16,14 +16,14 @@
       "http_status": 200,
       "parse_status": "SUCCESS",
       "items_fetched": 8,
-      "media_items_fetched": 3
+      "media_items_fetched": 6
     },
     {
       "query": "Red Sea Houthi shipping",
       "http_status": 200,
       "parse_status": "SUCCESS",
       "items_fetched": 8,
-      "media_items_fetched": 7
+      "media_items_fetched": 5
     },
     {
       "query": "Taiwan Strait semiconductor TSMC",
@@ -37,7 +37,7 @@
       "http_status": 200,
       "parse_status": "SUCCESS",
       "items_fetched": 8,
-      "media_items_fetched": 8
+      "media_items_fetched": 7
     },
     {
       "query": "Malacca Strait shipping tanker",
@@ -66,6 +66,27 @@
       "parse_status": "SUCCESS",
       "items_fetched": 8,
       "media_items_fetched": 8
+    },
+    {
+      "query": "Jensen Huang spy espionage",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_fetched": 7,
+      "media_items_fetched": 6
+    },
+    {
+      "query": "US election semiconductor tariff",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_fetched": 1,
+      "media_items_fetched": 1
+    },
+    {
+      "query": "Nvidia export control China",
+      "http_status": 200,
+      "parse_status": "SUCCESS",
+      "items_fetched": 8,
+      "media_items_fetched": 2
     }
   ],
   "license_access_note": "Public Bluesky AT Protocol searchPosts API (no auth required). 0-byte multimodal metadata only. Online information-environment signal only, never ground truth."

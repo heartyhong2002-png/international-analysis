@@ -310,6 +310,54 @@ RSS_FEEDS = {
                 "license_access_note": "Public Al Jazeera RSS; Qatari state-affiliated broadcaster."
             }
         ]
+    },
+    "United_States_Policy_Tech": {
+        "Official": [
+            {
+                "source_id": "us_state_dept_press",
+                "url": "https://news.google.com/rss/search?q=site:state.gov+briefing+OR+statement&hl=en-US&gl=US&ceid=US:en",
+                "relationship_role": "ally",
+                "packet": "A",
+                "license_access_note": "US State Department briefings and official statements."
+            },
+            {
+                "source_id": "us_commerce_bis",
+                "url": "https://news.google.com/rss/search?q=%22Bureau+of+Industry+and+Security%22+export+control+OR+%22Entity+List%22&hl=en-US&gl=US&ceid=US:en",
+                "relationship_role": "ally",
+                "packet": "A",
+                "license_access_note": "US Commerce BIS export control updates on semiconductors & AI hardware."
+            }
+        ],
+        "Independent": [
+            {
+                "source_id": "us_politico_congress",
+                "url": "https://rss.politico.com/congress.xml",
+                "relationship_role": "domestic_us",
+                "packet": "B",
+                "license_access_note": "Politico Congress RSS; US midterm elections, legislation, CHIPS Act scrutiny."
+            },
+            {
+                "source_id": "us_thehill_tech",
+                "url": "https://thehill.com/policy/technology/feed/",
+                "relationship_role": "domestic_us",
+                "packet": "B",
+                "license_access_note": "The Hill Technology policy; tech espionage, AI regulation, and antitrust."
+            },
+            {
+                "source_id": "us_csis_tech_semiconductors",
+                "url": "https://news.google.com/rss/search?q=site:csis.org+%22semiconductor%22+OR+%22CHIPS%22+OR+%22NVIDIA%22&hl=en-US&gl=US&ceid=US:en",
+                "relationship_role": "ally",
+                "packet": "B",
+                "license_access_note": "CSIS strategic technology research; export controls, NVIDIA & chip chokepoints."
+            },
+            {
+                "source_id": "us_chips_supplychain_osint",
+                "url": "https://news.google.com/rss/search?q=%22Jensen+Huang%22+OR+%22NVIDIA%22+export+control+OR+espionage&hl=en-US&gl=US&ceid=US:en",
+                "relationship_role": "other",
+                "packet": "B",
+                "license_access_note": "Targeted Google News RSS on NVIDIA CEO Jensen Huang, export control compliance & security rumors."
+            }
+        ]
     }
 }
 

@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-11-03T01:32:03.369229",
-  "total_count": 84,
+  "generated_at": "2026-11-12T17:55:57.710385",
+  "total_count": 80,
   "by_platform": {
     "PTT_Military": 10,
-    "PTT_Gossiping": 10,
-    "Bluesky_Social": 14,
+    "PTT_Gossiping": 5,
+    "Bluesky_Social": 15,
     "GoogleNews_TW": 10,
     "GoogleNews_RU": 10,
     "GoogleNews_BR": 10,
@@ -12,8 +12,8 @@
     "Telegram_@rybar": 10
   },
   "by_region": {
-    "TW": 30,
-    "GLOBAL": 14,
+    "TW": 25,
+    "GLOBAL": 15,
     "RU": 20,
     "BR": 10,
     "ME": 10
@@ -22,134 +22,134 @@
     {
       "source_platform": "PTT_Military",
       "country_or_region": "TW",
-      "title_or_text": "[新聞] 每瓶120元戰備礦泉水的報價廠商 國防部",
-      "url": "https://www.ptt.cc/bbs/Military/M.1793575573.A.453.html",
+      "title_or_text": "[分享] 軍盲瞎槓錄(20)：NASAMS主雷達",
+      "url": "https://www.ptt.cc/bbs/Military/M.1794393436.A.AD9.html",
       "author": "PTT_User",
-      "published_at": "2026-11-03",
+      "published_at": "2026-11-12",
       "risk_theme": "양안 긴장·대만 방위·반도체 민심",
       "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
-      "collected_at": "2026-11-03 01:32:03"
+      "collected_at": "2026-11-12 17:55:57"
     },
     {
       "source_platform": "PTT_Military",
       "country_or_region": "TW",
-      "title_or_text": "[分享] 川普：如果我當年是總統，一周就能打贏越戰",
-      "url": "https://www.ptt.cc/bbs/Military/M.1793586414.A.477.html",
+      "title_or_text": "[新聞] 川普稱共和黨敗選涉戰爭油價 選民極度反感以色列",
+      "url": "https://www.ptt.cc/bbs/Military/M.1794393655.A.DCB.html",
       "author": "PTT_User",
-      "published_at": "2026-11-03",
+      "published_at": "2026-11-12",
       "risk_theme": "양안 긴장·대만 방위·반도체 민심",
       "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
-      "collected_at": "2026-11-03 01:32:03"
+      "collected_at": "2026-11-12 17:55:57"
     },
     {
       "source_platform": "PTT_Military",
       "country_or_region": "TW",
-      "title_or_text": "[新聞] 4度流、廢標後終決標！國軍91億寬頻無線",
-      "url": "https://www.ptt.cc/bbs/Military/M.1793590924.A.6D6.html",
+      "title_or_text": "[情報] 俄軍在攔截無人機時損失兩架Ka-52",
+      "url": "https://www.ptt.cc/bbs/Military/M.1794394045.A.B50.html",
       "author": "PTT_User",
-      "published_at": "2026-11-03",
+      "published_at": "2026-11-12",
       "risk_theme": "양안 긴장·대만 방위·반도체 민심",
       "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
-      "collected_at": "2026-11-03 01:32:03"
+      "collected_at": "2026-11-12 17:55:57"
     },
     {
       "source_platform": "PTT_Military",
       "country_or_region": "TW",
-      "title_or_text": "[分享] 93版本的綠色零食",
-      "url": "https://www.ptt.cc/bbs/Military/M.1793591410.A.901.html",
+      "title_or_text": "[分享] 軍盲瞎槓錄(21)：抗彈板標準",
+      "url": "https://www.ptt.cc/bbs/Military/M.1794394345.A.344.html",
       "author": "PTT_User",
-      "published_at": "2026-11-03",
+      "published_at": "2026-11-12",
       "risk_theme": "양안 긴장·대만 방위·반도체 민심",
       "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
-      "collected_at": "2026-11-03 01:32:03"
+      "collected_at": "2026-11-12 17:55:57"
     },
     {
       "source_platform": "PTT_Military",
       "country_or_region": "TW",
-      "title_or_text": "Re: [新聞] WSJ：普丁約川普與習近平下月討論如何結束烏俄戰爭",
-      "url": "https://www.ptt.cc/bbs/Military/M.1793599898.A.8E1.html",
+      "title_or_text": "Re: [情報] 俄軍在攔截無人機時損失兩架Ka-52",
+      "url": "https://www.ptt.cc/bbs/Military/M.1794406835.A.49D.html",
       "author": "PTT_User",
-      "published_at": "2026-11-03",
+      "published_at": "2026-11-12",
       "risk_theme": "양안 긴장·대만 방위·반도체 민심",
       "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
-      "collected_at": "2026-11-03 01:32:03"
+      "collected_at": "2026-11-12 17:55:57"
     },
     {
       "source_platform": "PTT_Military",
       "country_or_region": "TW",
-      "title_or_text": "[情報] 烏軍官方殲敵統計 (26/11/02)",
-      "url": "https://www.ptt.cc/bbs/Military/M.1793601834.A.8F1.html",
+      "title_or_text": "工作李(5)[新聞] 不只供貨給陸軍！亞拓無人機涉",
+      "url": "https://www.ptt.cc/bbs/Military/M.1794408640.A.144.html",
       "author": "PTT_User",
-      "published_at": "2026-11-03",
+      "published_at": "2026-11-12",
       "risk_theme": "양안 긴장·대만 방위·반도체 민심",
       "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
-      "collected_at": "2026-11-03 01:32:03"
+      "collected_at": "2026-11-12 17:55:57"
     },
     {
       "source_platform": "PTT_Military",
       "country_or_region": "TW",
-      "title_or_text": "Re: [新聞] 每瓶120元戰備礦泉水的報價廠商 國防部",
-      "url": "https://www.ptt.cc/bbs/Military/M.1793603572.A.B35.html",
+      "title_or_text": "[新聞] 俄談判代表團長：所有屬於俄國的土地都將以某種方式取回",
+      "url": "https://www.ptt.cc/bbs/Military/M.1794410055.A.DD5.html",
       "author": "PTT_User",
-      "published_at": "2026-11-03",
+      "published_at": "2026-11-12",
       "risk_theme": "양안 긴장·대만 방위·반도체 민심",
       "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
-      "collected_at": "2026-11-03 01:32:03"
+      "collected_at": "2026-11-12 17:55:57"
     },
     {
       "source_platform": "PTT_Military",
       "country_or_region": "TW",
-      "title_or_text": "[新聞] 美方改提二手M109A6升級A7 遭我陸軍拒絕",
-      "url": "https://www.ptt.cc/bbs/Military/M.1793609213.A.4E8.html",
+      "title_or_text": "[情報] 烏軍官方殲敵統計 (26/11/11)",
+      "url": "https://www.ptt.cc/bbs/Military/M.1794412897.A.A07.html",
       "author": "PTT_User",
-      "published_at": "2026-11-03",
+      "published_at": "2026-11-12",
       "risk_theme": "양안 긴장·대만 방위·반도체 민심",
       "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
-      "collected_at": "2026-11-03 01:32:03"
+      "collected_at": "2026-11-12 17:55:57"
     },
     {
       "source_platform": "PTT_Military",
       "country_or_region": "TW",
-      "title_or_text": "Re: [新聞] 美方改提二手M109A6升級A7 遭我陸軍拒絕",
-      "url": "https://www.ptt.cc/bbs/Military/M.1793621015.A.0E1.html",
+      "title_or_text": "Re: [情報] 俄軍在攔截無人機時損失兩架直升機與一架戰機",
+      "url": "https://www.ptt.cc/bbs/Military/M.1794443828.A.017.html",
       "author": "PTT_User",
-      "published_at": "2026-11-03",
+      "published_at": "2026-11-12",
       "risk_theme": "양안 긴장·대만 방위·반도체 민심",
       "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
-      "collected_at": "2026-11-03 01:32:03"
+      "collected_at": "2026-11-12 17:55:57"
     },
     {
       "source_platform": "PTT_Military",
       "country_or_region": "TW",
-      "title_or_text": "[情報] 據傳以色列遊說川普對伊朗核打擊",
-      "url": "https://www.ptt.cc/bbs/Military/M.1793626972.A.DED.html",
+      "title_or_text": "[情報] 烏克蘭戰況簡報2026/11/11",
+      "url": "https://www.ptt.cc/bbs/Military/M.1794444190.A.E4D.html",
       "author": "PTT_User",
-      "published_at": "2026-11-03",
+      "published_at": "2026-11-12",
       "risk_theme": "양안 긴장·대만 방위·반도체 민심",
       "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
-      "collected_at": "2026-11-03 01:32:03"
+      "collected_at": "2026-11-12 17:55:57"
     },
     {
       "source_platform": "PTT_Gossiping",
       "country_or_region": "TW",
-      "title_or_text": "Re: [問卦] 聽君一席話 如聽一席話",
-      "url": "https://www.ptt.cc/bbs/Gossiping/M.1793635291.A.4C5.html",
+      "title_or_text": "[問卦] 上次是忘記丟掉羅大佑專輯嗎?",
+      "url": "https://www.ptt.cc/bbs/Gossiping/M.1794473425.A.B14.html",
       "author": "PTT_User",
-      "published_at": "2026-11-03",
+      "published_at": "2026-11-12",
       "risk_theme": "양안 긴장·대만 방위·반도체 민심",
       "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
-      "collected_at": "2026-11-03 01:32:03"
+      "collected_at": "2026-11-12 17:55:57"
     },
     {
       "source_platform": "PTT_Gossiping",
       "country_or_region": "TW",
-      "title_or_text": "[問卦] ChatGPT開始放廣告了",
-      "url": "https://www.ptt.cc/bbs/Gossiping/M.1793635307.A.A8C.html",
+      "title_or_text": "[問卦] 幹 買了GTA6沒有遊戲片",
+      "url": "https://www.ptt.cc/bbs/Gossiping/M.1794473479.A.570.html",
       "author": "PTT_User",
-      "published_at": "2026-11-03",
+      "published_at": "2026-11-12",
       "risk_theme": "양안 긴장·대만 방위·반도체 민심",
       "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
-      "collected_at": "2026-11-03 01:32:03"
+      "collected_at": "2026-11-12 17:55:57"
     }
   ]
 }

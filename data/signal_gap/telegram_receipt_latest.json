@@ -3,9 +3,9 @@
   "source_id": "telegram_osint_public",
   "signal_class": "online_information_environment_signal",
   "multimodal_zero_byte_mode": true,
-  "observed_at": "2026-11-05T15:32:59.345576+00:00",
-  "total_items_collected": 50,
-  "total_media_items_collected": 18,
+  "observed_at": "2026-11-12T08:55:30.444897+00:00",
+  "total_items_collected": 48,
+  "total_media_items_collected": 19,
   "alert_level_set": false,
   "verification_state_set": false,
   "channels": [
@@ -15,8 +15,8 @@
       "source_url": "https://t.me/s/rybar",
       "http_status": 200,
       "parse_status": "SUCCESS",
-      "items_collected": 10,
-      "media_items_collected": 9
+      "items_collected": 8,
+      "media_items_collected": 4
     },
     {
       "region": "Ukraine_Live",
@@ -25,7 +25,7 @@
       "http_status": 200,
       "parse_status": "SUCCESS",
       "items_collected": 10,
-      "media_items_collected": 2
+      "media_items_collected": 6
     },
     {
       "region": "Iran_IRGC_Proxy",
@@ -34,7 +34,7 @@
       "http_status": 200,
       "parse_status": "SUCCESS",
       "items_collected": 10,
-      "media_items_collected": 5
+      "media_items_collected": 7
     },
     {
       "region": "Saudi_AlArabiya",
