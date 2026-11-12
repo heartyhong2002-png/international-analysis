@@ -258,8 +258,10 @@ def load_opinion_lane() -> List[Dict[str, Any]]:
 
 
 def load_baseline_sensor_summary() -> List[Dict[str, Any]]:
-    """BASELINE / SENSOR 레인: 해협·운임·에너지 프록시 지표 요약 로드."""
+    """BASELINE / SENSOR 레인: 해협·운임·에너지 프록시 및 반도체 시장 지표 요약 로드."""
     sensors: List[Dict[str, Any]] = []
+    
+    # 1. 해협·운임·에너지 프록시
     m_path = DATA_DIR / "maritime_chokepoints" / "maritime_latest.csv"
     if m_path.exists():
         try:
@@ -277,6 +279,37 @@ def load_baseline_sensor_summary() -> List[Dict[str, Any]]:
                     })
         except Exception:
             pass
+
+    # 2. 반도체 장비·주요주·DRAM 현물 가격 센서
+    semi_path = DATA_DIR / "semiconductor_market" / "semiconductor_latest.json"
+    if semi_path.exists():
+        try:
+            with semi_path.open("r", encoding="utf-8", errors="replace") as f:
+                semi_data = json.load(f)
+                obs_time = semi_data.get("collected_at_utc", "")
+                for eq in semi_data.get("equities_and_indices", []):
+                    sensors.append({
+                        "ticker": eq.get("ticker", ""),
+                        "asset_name": eq.get("name", ""),
+                        "category": f"Semiconductor_{eq.get('category', 'EQUITY')}",
+                        "latest_price": str(eq.get("latest_price", "")),
+                        "daily_change_pct": str(eq.get("day_change_pct", "")),
+                        "risk_signal": eq.get("status_signal", ""),
+                        "observed_at": obs_time,
+                    })
+                for sp in semi_data.get("spot_memory_prices", []):
+                    sensors.append({
+                        "ticker": sp.get("item", ""),
+                        "asset_name": f"{sp.get('category', '')} {sp.get('item', '')}",
+                        "category": "Memory_Spot_Price",
+                        "latest_price": str(sp.get("avg_price", "")),
+                        "daily_change_pct": str(sp.get("change_pct", "")),
+                        "risk_signal": sp.get("status_signal", ""),
+                        "observed_at": obs_time,
+                    })
+        except Exception:
+            pass
+
     return sensors
 
 
@@ -314,6 +347,10 @@ def run_bridge(purity_mode: str = "standard") -> Dict[str, Any]:
     hotspot_counts: Counter = Counter()
     modality_counts: Counter = Counter()
     attachment_type_counts: Counter = Counter()
+    language_counts: Counter = Counter()
+    threat_severity_counts: Counter = Counter()
+    actor_counts: Counter = Counter()
+    cross_lingual_clusters = 0
     clusters_with_media = 0
     total_attachments = 0
 
@@ -333,11 +370,24 @@ def run_bridge(purity_mode: str = "standard") -> Dict[str, Any]:
         for att in c.get("media_attachments", []):
             total_attachments += 1
             attachment_type_counts[att.get("type", "unknown")] += 1
+        
+        # 언어 및 5W1H 이벤트 집계
+        primary_lang = c.get("primary_language", "en")
+        language_counts[primary_lang] += 1
+        if c.get("is_cross_lingual"):
+            cross_lingual_clusters += 1
+        
+        ev_tuple = c.get("event_tuple", {})
+        if ev_tuple:
+            t_sev = ev_tuple.get("threat_severity", "MONITORING")
+            threat_severity_counts[t_sev] += 1
+            w_code = ev_tuple.get("who_code", "UNKNOWN")
+            actor_counts[w_code] += 1
 
     now_iso = datetime.now(timezone.utc).isoformat()
 
     canonical_payload = {
-        "schema_version": "canonical_signals_v1.1_multimodal",
+        "schema_version": "canonical_signals_v1.2_nlp_structured",
         "generated_at": now_iso,
         "purity_mode": purity_mode,
         "verification_policy": "Single-source and visual metadata signals remain UNVERIFIED; Alert Level is never determined in preprocessing.",
@@ -355,6 +405,7 @@ def run_bridge(purity_mode: str = "standard") -> Dict[str, Any]:
             "tier_1_corroborated": tier_counts.get("TIER_1_CORROBORATED", 0),
             "tier_2_verified_entity": tier_counts.get("TIER_2_VERIFIED_ENTITY", 0),
             "multi_source_clusters": sum(1 for c in clusters if c["unique_sources_count"] >= 2),
+            "cross_lingual_clusters": cross_lingual_clusters,
             "clusters_with_visual_media": clusters_with_media,
             "total_media_attachments": total_attachments,
         },
@@ -373,7 +424,7 @@ def run_bridge(purity_mode: str = "standard") -> Dict[str, Any]:
     }
 
     summary_payload = {
-        "schema_version": "preprocess_summary_v1.1_multimodal",
+        "schema_version": "preprocess_summary_v1.2_nlp_structured",
         "generated_at": now_iso,
         "purity_mode": purity_mode,
         "alert_level_set": False,
@@ -390,6 +441,10 @@ def run_bridge(purity_mode: str = "standard") -> Dict[str, Any]:
         },
         "event_type_distribution": dict(event_counts),
         "hotspot_distribution": dict(hotspot_counts),
+        "language_distribution": dict(language_counts),
+        "cross_lingual_cluster_count": cross_lingual_clusters,
+        "threat_severity_distribution": dict(threat_severity_counts),
+        "actor_distribution": dict(actor_counts),
         "visual_modality_distribution": dict(modality_counts),
         "media_attachment_type_distribution": dict(attachment_type_counts),
     }

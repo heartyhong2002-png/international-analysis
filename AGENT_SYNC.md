@@ -1,4 +1,4 @@
-# Agent Sync Board
+﻿# Agent Sync Board
 
 이 파일은 Codex와 ANTIGRAVITY처럼 여러 AI 도구가 같은 저장소에서 병행 작업할 때 충돌을 줄이기 위한 공유 작업판이다.
 
@@ -85,6 +85,10 @@ Cursor / ANTIGRAVITY / 로컬 터미널이 **같은 폴더**(Desktop Junction �
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
+| done | ANTIGRAVITY | preprocessing / nlp-event-tuple-and-language-labeling | scripts/automation/preprocess_signals.py, scripts/pipeline/bridge_preprocess_lanes.py, data/automation/* | 텍스트마이닝·자연어처리 연계: 5W1H 정형 이벤트 튜플(who/action/target/where/when/threat_severity) 자동 추출기 및 ISO-639 다국어 라벨링(10개 언어 감지·교차언어 클러스터 지표) 구현 완료 | 2026-11-13 |
+| done | ANTIGRAVITY | agent-ops / hermes-optimization | `config.yaml`, `SOUL.md`, `nul` 삭제 | Hermes Agent 추론 엔진 전면 교체(Groq Qwen 27B ➔ Google Gemini 3 Flash Preview 100만 토큰), SOUL.md 프로젝트 맵 주입, Windows nul 장치 충돌 제거 및 백그라운드 게이트웨이(PID: 8780) 정상 재기동 완료 | 2026-11-12 |
+| done | ANTIGRAVITY | agent-ops / hermes-discord-mcp | `AGENTS.md`, `config.yaml`, `SOUL.md`, `docs/current/AI_AGENT_SESSION_PROMPT.md`, `docs/SESSION_PROMPTS.md` | Hermes Agent 인프라 구축, Discord 모바일 원격 연동, MySQL MCP 연동, 토큰 최적화 및 AI 에이전트 전담 세션(세션 10) 분리 인수인계 완료 | 2026-11-12 |
+| done | ANTIGRAVITY | collection / semiconductor-value-chain | scripts/collection/fetch_semiconductor_market.py, data/semiconductor_market/*, pp.py | 반도체 3대 밸류체인(필라델피아SOX·NVDA·TSMC·하이닉스 / 4대 독점장비 ASML·AMAT·LRCX·KLAC / 신에츠 웨이퍼·희토류 / TrendForce DRAM·GDDR 현물가) 통합 수집기 구축 및 관제센터 연동 완료 | 2026-11-10 |
 | done | Cursor Agent / preprocess | preprocessing / standard-refresh | `scripts/pipeline/bridge_preprocess_lanes.py`, `data/automation/canonical_signals_latest.json`, `data/automation/preprocess_*_latest.json`, `AGENT_SYNC.md` | standard 전처리 재실행 완료: 795→373 클러스터·223 배제. high는 기존 최신 유지 | 2026-11-10 |
 | done | ANTIGRAVITY | workspace / cleanup-and-korean-labeling | `00_프로젝트_핵심문서`, 01~06 정션, `.gitignore` | 불필요 Docker/Airflow/임시파일 18종 삭제 및 직관적인 7대 한글 번호표 폴더 구축 완료 (핵심 MD 파일 4종 한글화 보관함 연동) | 2026-11-10 |
 | done | ANTIGRAVITY | collection / us-tech-politics-expansion | `scripts/collection/fetch_bluesky_public.py`, `scripts/collection/fetch_signal_gap_rss.py`, `scripts/automation/preprocess_signals.py` | 미국 뉴스·기술안보 수집망 보강: 젠슨 황/엔비디아 스파이 의혹 첩보전 및 미 중간선거/의회/CHIPS Act 쿼리·RSS 신설 (57개 정형 클러스터 및 13개 소스 TIER_1 군집 형성 검증) | 2026-11-10 |
@@ -139,6 +143,45 @@ Cursor / ANTIGRAVITY / 로컬 터미널이 **같은 폴더**(Desktop Junction �
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-13 [ANTIGRAVITY / preprocessing · 5W1H 정형 이벤트 튜플 추출 및 ISO-639 다국어 라벨링 엔진 구현 Handoff]
+- 한 일:
+  1. 텍스트마이닝·자연어처리(NLP) 연계 5W1H 이벤트 튜플 추출기(`extract_event_tuple`) 구현:
+     - 비정형 기사 본문/제목에서 행위자(`who`), 행위(`action`), 대상(`target`), 장소(`where`), 시점(`when`), 공급망 영향(`supply_impact_tags`), 위협 심각도(`threat_severity`: CRITICAL_DISRUPTION, HIGH_DISRUPTION 등)를 정밀 정형화하여 `canonical_signals` 스키마에 통합.
+  2. ISO-639 다국어 감지 및 라벨링 엔진(`detect_language_detailed`) 구현:
+     - 유니코드 스크립트(한글 ko, CJK한자 zh, 가나 ja, 아랍어 ar, 키릴 ru) 및 라틴 기능어(fr, de, es, pt, en)를 통한 고속·경량 10개 언어 라벨링.
+     - 클러스터별 주 언어(`primary_language`), 감지된 언어군(`detected_languages`), 다국어 교차 보도 여부(`is_cross_lingual`) 메트릭 산출.
+  3. 전체 818건 원시 수집 데이터에 대해 Standard 및 High-Purity 모드 전처리 파이프라인 완결:
+     - Standard: 818건 -> 355개 클러스터 (10개 언어 감지, 교차언어 클러스터 6건, 치명적 위협 6건).
+     - High-Purity: 818건 -> 66개 핵심 클러스터 (6개 언어 감지, 치명적 위협 4건).
+- 바꾼 파일: `scripts/automation/preprocess_signals.py`, `scripts/pipeline/bridge_preprocess_lanes.py`, `data/automation/canonical_signals_latest.json`, `data/automation/canonical_signals_high_purity_latest.json`, `data/automation/preprocess_*_latest.json`, `AGENT_SYNC.md`.
+- 확인한 것: `--self-test` 성공 통과, Standard 및 High-Purity 정상 종료 (exit code 0), 호르무즈 유조선 피격 사건 5W1H 팩트 튜플 추출 실증 검증 완료.
+- 다음 작업: 하류 세션(LLM 분석 및 대시보드)에서 정형 튜플을 소비하여 팩트 요약 브리핑 및 교차언어 가중치 반영.
+
+2026-11-12 [ANTIGRAVITY · Hermes Agent 인프라 구축 및 AI 에이전트 전담 세션 분리 Handoff]
+- 한 일: 
+  1. Hermes Agent 0.19.0 및 Discord 봇(헤르메스#3484) 게이트웨이 연동 완료 (아이패드 디스코드 원격 관제).
+  2. 로컬 MySQL(localhost:3306, international_analysis 45개 테이블) MCP 서버(uvx mysql_mcp_server) 연동 및 조회 도구 3종 검증 완료.
+  3. Groq 무료 티어(7,000 ITPM 한도) 호환을 위한 시스템 프롬프트 및 도구 경량화(16,130 토큰 -> ~4,500 토큰 축소, 28개 미사용 도구 제거).
+  4. 다중 모델 벤치마크 및 특성 정리 (Groq qwen3.8-27b / gpt-oss-120b 분당 토큰 제한 분석, Google Gemini Flash 100만 컨텍스트 무제한 대안 확보).
+  5. AI 에이전트 인프라·운영 업무 전담 세션 분리를 위한 인수인계 문서(`docs/current/AI_AGENT_SESSION_PROMPT.md`) 및 세션 프롬프트(`docs/SESSION_PROMPTS.md` §10) 신설.
+- 바꾼 파일: `docs/current/AI_AGENT_SESSION_PROMPT.md`, `docs/SESSION_PROMPTS.md`, `AGENTS.md`, `AGENT_SYNC.md`, `SOUL.md`, `config.yaml`.
+- 확인한 것: Discord 봇 정상 로그인, Hermes Desktop 게이트웨이 기동, MySQL MCP 7개 도구 등록, Groq/Gemini 한국어 요약 200 OK.
+- 다음 작업 (AI 에이전트 전담 세션 10에서 진행): 
+  1. Groq 분당 토큰 한도(7,000 TPM) 병목 없는 대화 환경을 위해 Gemini Flash(100만 TPM) 또는 모델 튜닝 확정.
+  2. 디스코드에서 자연어로 전체 수집기 실행 및 MySQL 쿼리 호출 시나리오 안정화.
+- 주의할 점: Hermes Desktop GUI 실행 중 터미널에서 `hermes gateway run` 중복 실행 시 포트 충돌 주의. 유료 과금 모델 사용 금지.
+
+2026-11-12 [ANTIGRAVITY / agent-ops · Hermes 추론 엔진 고지능화(Gemini 3 Flash) 및 게이트웨이 무장애 최적화]
+- 한 일:
+  1. Groq 무료 티어(분당 7,000 ITPM 한도)로 인한 225초 지연 및 429/413 연쇄 장애, 세션 자동 리셋 문제를 해결하기 위해 기본 추론 엔진을 `gemini-3-flash-preview` (Google AI Studio 무료 티어, 100만 토큰 컨텍스트 및 100만 TPM)로 전면 교체 (`config.yaml`).
+  2. Fallback 모델 체계 정비: 1차 `gemini-3.1-flash-lite`, 2차 로컬 Ollama `qwen2.5:7b`로 완전 무과금 고지능 다중화.
+  3. `SOUL.md` 페르소나 전면 고도화: 단순 2줄에서 벗어나 프로젝트 핵심 지식(OSINT 조기경보 시스템) 및 사용자의 "진행 현황/상태" 질문 시 `AGENT_SYNC.md`와 `PROJECT_CONTEXT.md`를 즉시 1회 확인하여 3단계로 명쾌하게 브리핑하도록 전담 가이드 장착.
+  4. 윈도우 특수 장치 버그 파일(`nul`) 영구 제거 (Hermes 자동완성 relpath 크래시 차단).
+  5. 기존 좀비 게이트웨이 종료 및 신규 백그라운드 게이트웨이(PID: 8780) 무장애 기동 검증 완료 (`Model context warmed: gemini-3-flash-preview -> 1048576 tokens`, `Discord connected as 헤르메스#3484`).
+- 바꾼 파일: `C:\Users\홍준기\AppData\Local\hermes\config.yaml`, `C:\Users\홍준기\AppData\Local\hermes\SOUL.md`, `nul` 삭제, `AGENT_SYNC.md`.
+- 확인한 것: Discord 게이트웨이 정상 연결 확인, Google AI Studio 공식 API 연동 통과.
+- 다음 작업: 디스코드/데스크톱에서 체감 속도 및 답변 퀄리티 검증, 수집/전처리 Cron 스케줄러 자동화 설계.
 
 2026-11-10 [Cursor Agent / preprocess · standard 전처리 재실행]
 - 한 일: 오늘 갱신된 RSS·Bluesky 등 원시 795건에 대해 `bridge_preprocess_lanes.py --purity-mode standard` 재실행. 노이즈·저관련 223건 배제 후 373개 canonical 클러스터 산출(Tier-1 32 / Tier-2 56 / 멀티모달 129·첨부 171). high-purity 산출물은 기존 최신 유지.

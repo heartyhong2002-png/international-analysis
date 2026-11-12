@@ -207,6 +207,7 @@ sync_notion_btn = st.sidebar.button("📑 Notion 허브 전체 동기화", use_c
 st.sidebar.markdown("---")
 st.sidebar.subheader("🛠️ 단계별 개별 실행")
 run_step1 = st.sidebar.button("1️⃣ 4대 레인 데이터 수집", use_container_width=True)
+run_semi_btn = st.sidebar.button("🔬 반도체 지수·설비·현물가 수집", use_container_width=True)
 run_step2 = st.sidebar.button("2️⃣ 고순도 신호 전처리/정제", use_container_width=True)
 run_step3 = st.sidebar.button("3️⃣ 로컬 3-Tier LLM 위험도 분석", use_container_width=True)
 run_step4 = st.sidebar.button("4️⃣ 백테스트 벤치마크 검증", use_container_width=True)
@@ -216,7 +217,7 @@ st.sidebar.markdown("---")
 st.sidebar.info("""
 **💡 시스템 아키텍처:**
 - **HW**: 16GB RAM / No-GPU 최적화
-- **DB**: MySQL 8.0 & Docker Airflow
+- **Control**: Streamlit 올인원 관제
 - **LLM**: 3-Tier Canonical Relay
   (Qwen ➔ EXAONE & Llama)
 """)
@@ -359,6 +360,12 @@ elif run_step1:
         st.success("1단계 수집 완료!") if ok else st.error("1단계 수집 실패")
         st.text_area("로그", out, height=200)
 
+elif run_semi_btn:
+    with st.spinner("글로벌 반도체 지수·설비·실물 DRAM 현물가 수집 중..."):
+        ok, out = run_command([PYTHON_EXE, "scripts/collection/fetch_semiconductor_market.py"])
+        st.success("✅ 반도체 3대 밸류체인(지수·설비·현물가) 수집 완료!") if ok else st.error("반도체 지표 수집 실패")
+        st.text_area("로그", out, height=200)
+
 elif run_step2:
     with st.spinner("고순도 신호 정제 브릿지 가동 중..."):
         ok, out = run_command([PYTHON_EXE, "scripts/pipeline/bridge_preprocess_lanes.py"])
@@ -470,6 +477,52 @@ with tab1:
             st.error(f"이상 징후 파일 로드 오류: {e}")
     else:
         st.info("이상 징후 탐지 결과 파일(`anomalies_latest.json`)이 아직 생성되지 않았습니다.")
+
+    st.markdown("---")
+    st.subheader("🔬 글로벌 반도체 3대 밸류체인 (지수 · 4대 독점 설비 · 실물 DRAM 현물가) 레이더")
+    semi_file = REPO_ROOT / "data" / "semiconductor_market" / "semiconductor_latest.json"
+    if semi_file.exists():
+        try:
+            semi_data = json.loads(semi_file.read_text(encoding="utf-8"))
+            eq_list = semi_data.get("equities_and_indices", [])
+            spot_list = semi_data.get("memory_spot_prices", [])
+
+            if eq_list:
+                df_eq = pd.DataFrame(eq_list)
+                st.markdown("**📈 [1] 글로벌 지수 · 완제품 · 4대 독점 설비 · 원소재 실시간 동향**")
+                st.dataframe(
+                    df_eq[["name", "ticker", "category", "latest_price", "currency", "day_change_pct", "week_change_pct", "status_signal", "role"]],
+                    column_config={
+                        "name": "기업 / 지수명",
+                        "ticker": "티커",
+                        "category": "밸류체인 계층",
+                        "latest_price": "현재가",
+                        "currency": "단위",
+                        "day_change_pct": "1일 등락(%)",
+                        "week_change_pct": "1주 등락(%)",
+                        "status_signal": "변동 신호",
+                        "role": "공급망 병목 역할",
+                    },
+                    use_container_width=True,
+                )
+            if spot_list:
+                df_spot = pd.DataFrame(spot_list)
+                st.markdown("**💾 [2] TrendForce DRAMeXchange 실물 메모리(DDR5 · DDR4 · GPU용 GDDR) 현물 시세**")
+                st.dataframe(
+                    df_spot[["item", "session_avg_usd", "session_change", "daily_high_usd", "daily_low_usd"]],
+                    column_config={
+                        "item": "실물 메모리 규격",
+                        "session_avg_usd": "현물 평균가 (USD)",
+                        "session_change": "변동률",
+                        "daily_high_usd": "당일 고가",
+                        "daily_low_usd": "당일 저가",
+                    },
+                    use_container_width=True,
+                )
+        except Exception as e:
+            st.error(f"반도체 지표 로드 오류: {e}")
+    else:
+        st.info("사이드바의 '🔬 반도체 지수·설비·현물가 수집' 버튼을 눌러 최신 지표를 수집하세요.")
 
 # ------------------------------------------------------------------------------
 # TAB 2: 데이터 수집 현황

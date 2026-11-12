@@ -24,6 +24,7 @@ preprocess_signals.py
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import html
 import json
 import re
@@ -284,6 +285,7 @@ GEOPOLITICAL_KEYWORDS: Set[str] = {
     "ukraine", "russia", "china", "israel", "gaza", "yemen", "iran", "protest",
     "election", "national security", "supply chain", "geopolitics", "diplomacy",
     "diplomatic", "cyberattack", "hackers", "central bank", "frozen assets",
+    "espionage", "spy", "counterintelligence", "jensen huang", "nvidia", "ai chip", "gpu", "midterm", "congress",
     # 프랑스어 (FR)
     "militaire", "marine", "armee", "armée", "missile", "frappe", "attaque", "detroit",
     "détroit", "navire", "petrolier", "pétrolier", "port", "petrole", "pétrole", "gaz",
@@ -320,10 +322,12 @@ GEOPOLITICAL_KEYWORDS: Set[str] = {
     "말라카", "보스포루스", "파나마", "선박", "유조선", "항만", "운임", "원유", "석유",
     "천연가스", "반도체", "희토류", "배터리", "리튬", "곡물", "제재", "수출통제",
     "관세", "반덤핑", "공급망", "외교장관", "안보", "전략대화",
+    "간첩", "스파이", "기술유출", "엔비디아", "젠슨 황", "젠슨황", "중간선거", "미 의회",
     # 중국어 (ZH)
     "軍事", "海軍", "飛彈", "導彈", "無人機", "空襲", "封鎖", "海峽", "台海", "荷姆茲",
     "紅海", "油輪", "港口", "原油", "天然氣", "能源", "台積電", "半導體", "晶片",
     "稀土", "鋰", "糧食", "制裁", "出口管制", "關稅", "兵推", "國防部", "核打擊",
+    "黃仁勳", "英偉達", "輝達", "間諜", "期中選舉",
 }
 
 NOISE_DOMAINS: Set[str] = {
@@ -687,10 +691,11 @@ SUPPLY_CHAIN_ITEMS: Dict[str, List[str]] = {
     "SEMICONDUCTOR": [
         "semiconductor", "semiconductors", "chip", "chips", "foundry", "tsmc", "wafer",
         "lithography", "euv", "hbm", "hbm4", "dram", "nand", "nvidia", "asml", "sk hynix",
+        "jensen huang", "jensen", "b200", "blackwell", "h100", "ai gpu", "ai chip",
         "semi-conducteur", "puce", "semicondutor", "halbleiter",
         "полупроводник", "микросхем", "чип", "أشباه الموصلات", "رقائق",
-        "반도체", "웨이퍼", "파운드리", "노광장비", "하이닉스",
-        "台積電", "半導體", "晶片", "晶圓", "艾司摩爾",
+        "반도체", "웨이퍼", "파운드리", "노광장비", "하이닉스", "엔비디아", "젠슨 황", "젠슨황",
+        "台積電", "半導體", "晶片", "晶圓", "艾司摩爾", "黃仁勳", "輝達", "英偉達",
     ],
     "RARE_EARTHS": [
         "rare earth", "rare earths", "gallium", "germanium", "graphite", "antimony",
@@ -729,9 +734,10 @@ CRISIS_EVENT_TYPES: Dict[str, List[str]] = {
     "SANCTIONS_EXPORT_CONTROL": [
         "sanction", "sanctions", "export control", "export controls", "embargo", "tariff",
         "tariffs", "antidumping", "less-than-fair-value", "countervailing", "blacklist",
-        "entity list", "frozen assets", "ofac",
+        "entity list", "frozen assets", "ofac", "espionage", "spy", "counterintelligence", "leak", "tech leak",
         "sanktionen", "sanciones", "sancoes", "санкции", "санкций", "замороженных", "пошлины",
-        "عقوبات", "제재", "수출통제", "관세", "반덤핑", "자산동결", "制裁", "出口管制", "關稅",
+        "عقوبات", "제재", "수출통제", "관세", "반덤핑", "자산동결", "스파이", "간첩", "기술유출", "방첩", "방첩수사",
+        "制裁", "出口管制", "關稅", "間諜", "洩密",
     ],
     "INFRA_LOGISTICS_DISRUPTION": [
         "blockade", "port closure", "Grounded", "cyberattack", "hackers", "outage", "shortage",
@@ -748,10 +754,12 @@ CRISIS_EVENT_TYPES: Dict[str, List[str]] = {
     ],
     "ELECTION_GOVERNMENT": [
         "election", "vote", "victory", "lula", "president", "parliament", "coup", "inauguration",
-        "executive order", "decree", "summit", "bilateral talks",
+        "executive order", "decree", "summit", "bilateral talks", "midterm", "midterms", "congress", "senate",
+        "house of representatives", "chips act",
         "election", "victoire", "gouvernement", "eleicao", "eleicoes", "vitoria", "governo",
         "wahl", "regierung", "eleccion", "elecciones", "gobierno",
         "указ", "выборы", "переговоры", "대선", "총선", "정권", "정상회담", "외교장관", "차관",
+        "중간선거", "미 의회", "상원", "하원", "반도체법", "期中選舉",
     ],
 }
 
@@ -1050,6 +1058,202 @@ def is_noise(title: str, url: str = "", source: str = "", *, purity_mode: str = 
 # Step 3. 다국어 토큰화 및 Jaccard + 엔티티 보너스 기반 중복 보도 군집화
 # ======================================================================
 
+LANGUAGE_PATTERNS = {
+    "ko": (r"[\uac00-\ud7a3]{2,}", "Korean"),
+    "ja": (r"[\u3040-\u30ff]{2,}", "Japanese"),
+    "ar": (r"[\u0600-\u06ff]{2,}", "Arabic"),
+    "ru": (r"[\u0400-\u04ff]{3,}", "Russian"),
+    "zh": (r"[\u4e00-\u9fff]{3,}", "Chinese"),
+}
+
+LATIN_STOPWORDS = {
+    "fr": (r"\b(le|la|les|des|du|dans|avec|pour|est|sont|détroit|pétrole|navire|frappe|attaque)\b", "French"),
+    "de": (r"\b(der|die|das|und|mit|auf|fuer|ist|sind|straße|erdöl|schiff|angriff|sanktionen)\b", "German"),
+    "es": (r"\b(el|la|los|las|del|por|con|para|estrecho|petróleo|buque|ataque|sanciones)\b", "Spanish"),
+    "pt": (r"\b(o|os|as|do|da|dos|das|em|com|para|estreito|petróleo|navio|ataque|sanções|lula)\b", "Portuguese"),
+    "en": (r"\b(the|and|for|with|that|strait|tanker|missile|attack|shipping|export|control)\b", "English"),
+}
+
+
+def detect_language_detailed(text: str) -> Dict[str, Any]:
+    """
+    텍스트의 유니코드 스크립트(한글, CJK한자, 가나, 아랍어, 키릴) 및 기능어(라틴 불용어)를
+    통해 ISO 639-1 언어 코드(ko, en, zh, ru, ar, fr, de, es, pt, ja)와 신뢰도를 반환합니다.
+    """
+    t = (text or "").strip()
+    if not t:
+        return {"language_code": "unknown", "language_name": "Unknown", "confidence": 0.0}
+
+    # 1. Non-Latin scripts check (CJK, Arabic, Cyrillic)
+    for code, (pat, name) in LANGUAGE_PATTERNS.items():
+        matches = re.findall(pat, t)
+        if matches:
+            total_chars = sum(len(m) for m in matches)
+            confidence = min(0.99, round(total_chars / max(1, len(t) * 0.4), 2))
+            return {
+                "language_code": code,
+                "language_name": name,
+                "confidence": max(0.6, confidence),
+            }
+
+    # 2. Latin scripts check
+    t_lower = t.lower()
+    scores = {}
+    for code, (pat, name) in LATIN_STOPWORDS.items():
+        matches = re.findall(pat, t_lower)
+        if matches:
+            scores[code] = (len(matches), name)
+
+    if scores:
+        best_code = max(scores.keys(), key=lambda k: scores[k][0])
+        hits, name = scores[best_code]
+        conf = min(0.95, round(hits / 5.0, 2))
+        return {
+            "language_code": best_code,
+            "language_name": name,
+            "confidence": max(0.5, conf),
+        }
+
+    return {"language_code": "en", "language_name": "English", "confidence": 0.5}
+
+
+ACTOR_RULES = [
+    (r"\b(irgc|iranian (navy|military|army|forces)|iran|tehran)\b|이란|혁명수비대|طهران|حرس ثوري", "IRAN_MILITARY_OR_GOV", "이란 혁명수비대 / 정부 (IRGC / Iran)"),
+    (r"\b(houthi|ansarallah|yahya saree|yemen armed forces)\b|후티|안사룰라|الحوثي|أنصار الله", "HOUTHI_YEMEN", "예멘 후티 반군 (Houthi / Ansarallah)"),
+    (r"\b(idf|israeli (military|forces|army|air force)|israel|netanyahu)\b|이스라엘|네타냐후|إسرائيل", "ISRAEL_IDF", "이스라엘 방위군 / 정부 (IDF / Israel)"),
+    (r"\b(us|u\.s\.|usa|united states|us navy|pentagon|white house|biden|trump|department of commerce|bis|ofac)\b|미국|미군|백악관|미 상무부|재무부|워싱턴|펜타곤|сша", "US_GOV_OR_MILITARY", "미국 정부 / 군 (US Gov / Military)"),
+    (r"\b(russian (military|forces|navy|army)|kremlin|putin|moscow|mod russia)\b|러시아군|크렘린|푸틴|러시아 국방부|минобороны рф|вс рф", "RUSSIA_MILITARY_OR_GOV", "러시아 정부 / 군 (Russia Gov / Military)"),
+    (r"\b(ukrainian (armed forces|military)|zelensky|kyiv|afu)\b|우크라이나군|젤렌스키|키이우|всу", "UKRAINE_GOV_OR_MILITARY", "우크라이나 정부 / 군 (Ukraine Gov / Military)"),
+    (r"\b(pla|chinese (navy|military)|beijing|china)\b|중국군|해방군|중국 해군|인민해방군|중국", "CHINA_PLA_OR_GOV", "중국 인민해방군 / 정부 (China PLA / Gov)"),
+    (r"\b(taiwan (defense ministry|military|navy)|taipei|taiwan)\b|대만 국방부|대만군|타이베이|대만", "TAIWAN_AUTHORITY", "대만 국방부 / 당국 (Taiwan Authority)"),
+    (r"\b(tsmc|sk hynix|samsung( electronics)?|asml|nvidia|applied materials|lam research|intel)\b|삼성전자|sk하이닉스|엔비디아|台積電", "SEMICONDUCTOR_CHIPMAKER", "글로벌 반도체 기업 (Semiconductor Enterprise)"),
+    (r"\b(maersk|frontline|zim|cosco)\b|머스크|프론트라인", "SHIPPING_CARRIER", "글로벌 해운사 (Shipping Carrier)"),
+]
+
+ACTION_RULES = [
+    (r"\b(struck|strike|strikes|hit|attack|attacked|attacks|bombed|missile strike|drone attack|airstrike|airstrikes|intercepted|intercept)\b|피격|공습|미사일 공격|드론 공격|격추|ضرب|استهداف|هجوم|قصف|удар|атака", "PHYSICAL_STRIKE", "물리적 공격 / 공습 (Physical Strike / Attack)"),
+    (r"\b(exploded|explosion|detonated|mine strike|blew up|on fire|catches fire)\b|폭발|기뢰 피격|화재 발생|انفجار|взрыв|пожар", "EXPLOSION_OR_FIRE", "기뢰 폭발 / 선박 화재 (Explosion / Mine Strike)"),
+    (r"\b(seized|seizure|hijacked|boarded|detained|blockade|blockaded|diverted|rerouted|stopped shipping)\b|나포|억류|봉쇄|통항 차단|항로 우회|احتجاز|حصار|задержан|перехват", "SEIZURE_OR_BLOCKADE", "선박 나포 / 통항 봉쇄 (Seizure / Maritime Blockade)"),
+    (r"\b(export control|export controls|controls|sanction|sanctions|sanctioned|tariff|tariffs|embargo|blacklist|entity list|countervailing|antidumping|curb)\b|수출통제|제재|관세|엠바고|블랙리스트|규제|عقوبات|санкции|пошлины", "REGULATORY_SANCTION", "수출통제 / 무역제재 (Export Control / Sanctions)"),
+    (r"\b(production shutdown|fab halt|shortage|strike halted|disrupted|supply halt)\b|생산 중단|가동 중단|공급 중단|차질|파업|остановка|сбой", "PRODUCTION_DISRUPTION", "생산 중단 / 공급망 차질 (Production Disruption)"),
+    (r"\b(drill|drills|exercise|exercises|maneuver|maneuvers|war game)\b|군사훈련|기동훈련|실사격|تدريبات|учения", "MILITARY_EXERCISE", "군사 훈련 / 무력 시위 (Military Exercise)"),
+    (r"\b(scandal|investigation|corruption|probe|lawsuit|antitrust)\b|스캔들|수사|조사|반독점|부패", "LEGAL_OR_COMPLIANCE_PROBE", "규제 조사 / 법적 리스크 (Regulatory / Compliance Probe)"),
+    (r"\b(dialogue|negotiation|talks|ceasefire|truce|agreement|diplomatic)\b|회담|협상|휴전|외교 대화|مفاوضات|هدنة|переговоры", "DIPLOMATIC_NEGOTIATION", "외교 협상 / 휴전 대화 (Diplomatic Negotiation)"),
+]
+
+TARGET_RULES = [
+    (r"\b(oil tanker|tanker|tankers|crude tanker|vlcc|petroleum tanker)\b|유조선|원유 운반선|ناقلة نفط|танкер", "CRUDE_OIL_TANKER", "원유 수송 유조선 (Crude Oil Tanker)"),
+    (r"\b(lng carrier|gas carrier|methane carrier)\b|lng선|가스 운반선|ناقلة غاز", "LNG_GAS_CARRIER", "LNG 천연가스 운반선 (LNG Carrier)"),
+    (r"\b(cargo ship|container ship|freighter|merchant vessel|commercial ship)\b|상선|화물선|컨테이너선|سفينة شحن|судно", "COMMERCIAL_CARGO_SHIP", "상선 / 컨테이너 화물선 (Commercial Cargo Ship)"),
+    (r"\b(port|terminal|harbor|dock|refinery|pipeline)\b|항만|터미널|정유소|파이프라인|부두|ميناء|مرفأ|порт|нпз", "PORT_ENERGY_INFRA", "항만 / 정유 / 에너지 인프라 (Port & Energy Infra)"),
+    (r"\b(semiconductor|semiconductors|chip|chips|hbm|hbm4|fab|wafer|lithography|euv|gpu)\b|반도체|웨이퍼|팹|노광장비|晶片|полупроводник", "SEMICONDUCTOR_SUPPLY_ASSET", "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)"),
+    (r"\b(rare earth|rare earths|critical minerals|lithium|nickel|cobalt)\b|희토류|리튬|핵심광물|редкоземельные", "CRITICAL_MINERAL_ASSET", "희토류 / 핵심 광물 자원 (Critical Mineral Asset)"),
+    (r"\b(warship|destroyer|frigate|military base|radar|air defense)\b|군함|구축함|군사기지|방공망|военный корабль", "MILITARY_FACILITY_OR_WARSHIP", "군함 / 군사 기지 시설 (Military Asset)"),
+]
+
+
+def extract_event_tuple(
+    title: str,
+    summary: str = "",
+    entities: Optional[Dict[str, Any]] = None,
+    published_at: str = "",
+) -> Dict[str, Any]:
+    """
+    [NLP 정보추출(IE) 기반 5W1H 이벤트 튜플 생성]
+    비정형 텍스트에서 주체(Who), 행위(Action), 대상(Target), 장소(Where),
+    시점(When), 공급망 영향(Impact), 위협 심각도(Severity)를 추출하여 정형 튜플로 반환합니다.
+    """
+    blob = f"{title} {summary}".strip()
+    blob_lower = blob.lower()
+
+    # 1. Who (Actor)
+    actor_code = "UNKNOWN_OR_UNSPECIFIED"
+    actor_label = "미상 / 민간 다국적 출처 (Unspecified / Multiple Sources)"
+    for pat, code, label in ACTOR_RULES:
+        if re.search(pat, blob_lower, re.IGNORECASE):
+            actor_code = code
+            actor_label = label
+            break
+
+    # 2. Action (Predicate)
+    action_code = "MONITORING_OR_GENERAL_EVENT"
+    action_label = "일반 정세 보고 및 모니터링 (General Geopolitical Observation)"
+    for pat, code, label in ACTION_RULES:
+        if re.search(pat, blob_lower, re.IGNORECASE):
+            action_code = code
+            action_label = label
+            break
+
+    # 3. Target (Patient)
+    target_code = "UNSPECIFIED_TARGET"
+    target_label = "특정 대상 미상 (Unspecified Target)"
+    for pat, code, label in TARGET_RULES:
+        if re.search(pat, blob_lower, re.IGNORECASE):
+            target_code = code
+            target_label = label
+            break
+
+    # 4. Where (Location / Chokepoint)
+    chokepoints = entities.get("chokepoints", []) if entities else []
+    hotspots = entities.get("hotspot_regions", []) if entities else []
+
+    where_parts = []
+    if chokepoints:
+        for cp in chokepoints:
+            where_parts.append(cp.get("name") or cp.get("code"))
+    elif hotspots:
+        where_parts.extend(hotspots)
+    where_label = ", ".join(where_parts) if where_parts else "글로벌 지정학 해역 (Global Maritime / Geopolitical Area)"
+
+    # 5. Supply Impact
+    supplies = list(entities.get("supply_chain_tags", [])) if entities else []
+    if not supplies:
+        if target_code == "CRUDE_OIL_TANKER":
+            supplies = ["CRUDE_OIL"]
+        elif target_code == "LNG_GAS_CARRIER":
+            supplies = ["NATURAL_GAS_LNG"]
+        elif target_code == "SEMICONDUCTOR_SUPPLY_ASSET":
+            supplies = ["SEMICONDUCTOR"]
+        elif target_code == "CRITICAL_MINERAL_ASSET":
+            supplies = ["RARE_EARTHS"]
+
+    # 6. Threat Severity
+    if action_code in ("PHYSICAL_STRIKE", "EXPLOSION_OR_FIRE") and target_code in (
+        "CRUDE_OIL_TANKER", "LNG_GAS_CARRIER", "PORT_ENERGY_INFRA"
+    ):
+        threat_severity = "CRITICAL_DISRUPTION"
+        threat_desc = "🚨 치명적 물리 공격 (실제 해운/에너지 인프라 파괴·피격)"
+    elif action_code in ("PHYSICAL_STRIKE", "EXPLOSION_OR_FIRE", "SEIZURE_OR_BLOCKADE"):
+        threat_severity = "HIGH_DISRUPTION"
+        threat_desc = "⚠️ 고위험 교전·나포·봉쇄 (해상 통항 및 공급망 심각한 지연)"
+    elif action_code in ("REGULATORY_SANCTION", "PRODUCTION_DISRUPTION"):
+        threat_severity = "HIGH_REGULATORY_DISRUPTION"
+        threat_desc = "📋 통상·규제 공급망 타격 (수출통제·생산중단·자산동결)"
+    elif action_code == "MILITARY_EXERCISE":
+        threat_severity = "ELEVATED_TENSION"
+        threat_desc = "⚡ 군사 긴장 고조 (무력시위·군사훈련)"
+    elif action_code == "DIPLOMATIC_NEGOTIATION":
+        threat_severity = "MONITORING_DEESCALATION"
+        threat_desc = "🕊️ 긴장 완화 / 외교적 해결 탐색"
+    else:
+        threat_severity = "MONITORING"
+        threat_desc = "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+
+    return {
+        "who": actor_label,
+        "who_code": actor_code,
+        "action": action_label,
+        "action_code": action_code,
+        "target": target_label,
+        "target_code": target_code,
+        "where": where_label,
+        "when": published_at or "최근 관측 (Recent Observation)",
+        "supply_impact_tags": supplies,
+        "threat_severity": threat_severity,
+        "threat_description": threat_desc,
+    }
+
+
 def detect_language_simple(text: str, default: str = "english") -> str:
     """텍스트의 문자 체계 및 기능어를 기반으로 7개 국어를 추정합니다."""
     t = (text or "").lower()
@@ -1347,6 +1551,24 @@ def deduplicate_and_cluster(
         if purity_mode == "high" and purity_tier == "TIER_3_SINGLE_SOURCE":
             continue
 
+        # 언어별 라벨링 (Language Labeling)
+        article_langs = [
+            (a.get("detected_language") or detect_language_detailed(a.get("title", ""))["language_code"])
+            for a in c["articles"]
+        ]
+        lang_counts = Counter(article_langs)
+        primary_lang = lang_counts.most_common(1)[0][0] if lang_counts else "en"
+        unique_langs = sorted(list(set(article_langs)))
+        is_cross_lingual = len(unique_langs) >= 2
+
+        # NLP 정보추출(IE) 기반 5W1H 이벤트 튜플 생성
+        event_tuple = extract_event_tuple(
+            c["representative_title"],
+            combined_text,
+            entities,
+            published_at=str(c.get("published_at", "")),
+        )
+
         results.append({
             "cluster_id": f"CLUST-{i:04d}",
             "signal_id": f"SIG-{datetime.now(timezone.utc).strftime('%Y%m%d')}-{i:04d}",
@@ -1358,8 +1580,12 @@ def deduplicate_and_cluster(
             "sources": c["sources"],
             "source_types": c["source_types"],
             "observed_lanes": c["observed_lanes"],
+            "primary_language": primary_lang,
+            "detected_languages": unique_langs,
+            "is_cross_lingual": is_cross_lingual,
             "purity_tier": purity_tier,
             "relevance_score": rel_score,
+            "event_tuple": event_tuple,
             "chokepoints": entities["chokepoints"],
             "supply_chain_tags": entities["supply_chain_tags"],
             "event_types": entities["event_types"],
@@ -1437,6 +1663,7 @@ def run_pipeline_preprocessing(
             enriched["summary"] = summary_with_alt
             enriched["url"] = url
             enriched["source"] = source
+            enriched["detected_language"] = detect_language_detailed(f"{title} {summary_with_alt}")["language_code"]
             enriched["_multimodal"] = mm
             enriched["_filter_reason"] = decision["reason"]
             enriched["_relevance_score"] = decision["relevance_score"]

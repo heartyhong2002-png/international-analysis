@@ -89,3 +89,8 @@ docs/advisor_meeting/rendered*/
 *backup*.csv
 auto_deleted_*.csv
 deleted_*.csv
+
+# 한글 편의용 정션 및 바로가기 폴더
+0[0-9]_*/
+reports/*(DOCX_PDF)*/
+*.safety_backup

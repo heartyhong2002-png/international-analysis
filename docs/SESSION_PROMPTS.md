@@ -6,11 +6,12 @@
 1. 모든 세션은 `PROJECT_CONTEXT.md`와 `AGENT_SYNC.md`를 먼저 읽는다.
 2. 역할을 고르기 전에 전체 맥락이 필요하면 섹션 0을 먼저 사용한다.
 3. `docs/history/`, `docs/archive/`의 예측·챗봇 자료는 이력일 뿐 현재 계획이 아니다.
-4. 작업 시작 전 `git status --short`를 확인하고, Active Work Board에 담당 영역·파일을 등록한다.
-5. 다른 세션이 `in-progress`인 파일은 조율 없이 수정하지 않는다.
-6. 작업이 끝나면 `AGENT_SYNC.md`에 한 일·바꾼 파일·확인한 것·다음 작업·주의할 점을 짧게 남긴다.
-7. 표준 런타임은 **Python 3.13** (프로젝트 `.venv`). PATH의 구형 Python을 쓰지 않는다.
-8. 개인 포트폴리오 트랙(`docs/`, `scripts/`, `output/`)과 강송희 교수님 트랙(`prof_kang_project/`)은 문서를 섞지 않는다.
+4. 작업 시작 전 `git fetch origin` 후 `git status -sb` / `git log -1 --oneline`으로 tip을 확인하고, Active Work Board에 담당 영역·파일을 등록한다. Desktop은 `C:\dev\international-analysis` Junction이다.
+5. 사용자가 **「동기화해줘」/「동기화된 내용 확인해봐」**면 `AGENT_SYNC.md` **§A 상태 확인 동기화**만 한다(구현·무단 커밋 금지). **Trio/Notion까지**를 명시한 때만 §B Trio-Sync.
+6. 다른 세션이 `in-progress`인 파일은 조율 없이 수정하지 않는다. Cursor ↔ ANTIGRAVITY는 tip·보드를 진실로 쓰고 대화 기억만으로 “최신”을 단정하지 않는다.
+7. 작업이 끝나면 `AGENT_SYNC.md`에 한 일·바꾼 파일·확인한 것·다음 작업·주의할 점을 짧게 남긴다. ANTIGRAVITY는 가능하면 **commit + push**까지.
+8. 표준 런타임은 **Python 3.13** (프로젝트 `.venv`). PATH의 구형 Python을 쓰지 않는다.
+9. 개인 포트폴리오 트랙(`docs/`, `scripts/`, `output/`)과 강송희 교수님 트랙(`prof_kang_project/`)은 문서를 섞지 않는다.
 
 기준일: 2026-11-02.
 현재 스냅샷: 패킷 A+B registry 보강 진행 중 · 증거 writer 완료 · 3단계 LLM 파이프라인·tev1 역할 분리 완료 · tev1 10건 시운전(일치5/불일치5, 합격 게이트 미고정) · HTML 대시보드 Information 축 교정 완료 · Streamlit 유지보수 진행 중 · 이상징후 스캐너·Notion 트리오 동기화 가동.
@@ -230,6 +231,33 @@ Alert Level은 v_dashboard_current_alerts만 읽는다. 없으면 확인 필요.
 
 ---
 
+## 10. AI Agent Operations & Multi-Agent Infrastructure (Hermes / Discord / MCP 전담)
+
+상세 인수인계: `docs/current/AI_AGENT_SESSION_PROMPT.md`.
+
+```text
+먼저 PROJECT_CONTEXT.md, AGENT_SYNC.md, AGENTS.md, docs/current/AI_AGENT_SESSION_PROMPT.md를 읽어줘.
+
+너는 [AI 에이전트 인프라 및 운영(Agent Operations)] 전담 세션이다.
+본 프로젝트(international-analysis)의 조기경보 수집·분석 자산을 외부(아이패드 디스코드, 로컬 터미널, GUI 데스크톱)에서 제어하는 Hermes Agent 및 멀티 에이전트 협업 생태계의 설정, 유지보수, 모델 최적화를 전담한다.
+
+[핵심 3대 원칙]
+1. 비용 제로(Zero-Cost): 어떠한 경우에도 유료 과금이 발생하지 않는 무료 API 티어(Google Gemini, Groq) 및 로컬 Ollama만 사용한다.
+2. 한국어 지원 및 도구 실행: 한국어 대화가 자연스럽고 MySQL MCP, 파일, 터미널 도구를 오류 없이 호출해야 한다.
+3. 컨텍스트 및 토큰 한도 방어: 불필요한 내장 도구와 장황한 프롬프트 주입을 억제하여 TPM(Tokens Per Minute) 에러("This conversation has grown too large...")가 재발하지 않도록 유지한다.
+
+[주요 담당 영역]
+- Hermes Agent 설정: C:\Users\홍준기\AppData\Local\hermes\config.yaml, .env, SOUL.md
+- 멀티 에이전트 프로토콜: AGENTS.md, .cursor/rules/
+- Discord 모바일 게이트웨이 및 원격 제어 연동 상태 점검
+- MySQL MCP (international_analysis DB) 연동 도구 상태 점검
+- LLM 모델 라우팅 최적화 (Groq vs Gemini Flash vs Ollama)
+
+현재 프로젝트의 에이전트 설정 상태와 모델별 제약사항을 점검하고, 내가 지시하는 에이전트 튜닝 및 운영 작업을 진행해줘.
+```
+
+---
+
 ## 세션 간 파일 소유 요약
 
 | 자원 | 소유 |
@@ -243,5 +271,48 @@ Alert Level은 v_dashboard_current_alerts만 읽는다. 없으면 확인 필요.
 | 우선순위·문서 정합 | 세션 1 |
 | 발표 스토리(개인) | 세션 7 |
 | 교수님 보고서·PPT·논문 | 세션 8 |
+| AI 에이전트 인프라·Hermes·Discord·MCP | 세션 10 |
 
 권장 병렬: **1+2+4+7/8** → **3+6(게이트·검수)** → **5(공식 행 후)**.
+
+---
+
+## Sync Status (Cursor ↔ ANTIGRAVITY ↔ 로컬)
+
+멀티 에이전트가 같은 저장소를 쓸 때 tip이 어긋나 보이는 문제를 막기 위한 **상태 확인 전용** 프롬프트다. 상세 규칙은 `AGENT_SYNC.md` Synchronization Protocol §A / §B.
+
+### 짧은 트리거 (일상)
+
+사용자가 아래처럼만 말해도 §A를 실행한다: `동기화해줘` · `동기화된 내용 확인해봐` · `싱크 맞춰줘` · `최신 tip 확인해줘`.
+
+### 복사해서 쓸 프롬프트
+
+```text
+AGENT_SYNC.md의 Synchronization Protocol을 따라라.
+
+지금 요청은 「상태 확인 동기화(§A)」다. Trio-Sync(§B)·코드 구현·무단 커밋/푸시는 하지 마.
+
+순서:
+1. git fetch origin (desktop-local remote 있으면 fetch)
+2. git log -1 --oneline, git status -sb, origin(및 desktop-local) tip vs HEAD
+3. AGENT_SYNC.md Active Work Board 상단 + 최신 handoff만 읽기
+4. 미커밋/untracked가 있으면 목록만 (커밋하지 마)
+
+보고는 짧게:
+- tip (hash + subject)
+- origin / desktop-local 일치 여부
+- 새 커밋 요약 (있으면)
+- 보드 상단 변경 (있으면)
+- 워킹트리 dirty (없으면 「깨끗」)
+
+진실의 원천은 git tip이다. 이전 대화 기억보다 tip을 우선해.
+Desktop 경로는 C:\dev\international-analysis Junction과 동일하다.
+```
+
+### Trio-Sync가 필요할 때 (명시)
+
+```text
+AGENT_SYNC.md Synchronization Protocol §B Trio-Sync를 실행해줘.
+MD(AGENT_SYNC 보드·handoff) → Notion(notion_manager --all 또는 동등) → GitHub(관련 파일만 commit/push).
+비밀·.env는 커밋하지 마. 끝나면 tip과 push 여부만 짧게 보고해.
+```
