@@ -85,6 +85,7 @@ Cursor / ANTIGRAVITY / 로컬 터미널이 **같은 폴더**(Desktop Junction �
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
+| done | ANTIGRAVITY | llm-analysis / 3-tier-signal-gap-refresh | `scripts/analysis/analyze_signal_gap.py`, `data/signal_gap/signal_gap_analysis.json` | LLM 3-Tier(Qwen 2.5 팩트추출 ➔ EXAONE 3.5 한국어 브리핑 & Llama 3.1 영문 정제) 및 결정론적 경보 산식 재분석 완결 (독립 검증단은 QA 세션 분리 보존) | 2026-11-13 |
 | done | ANTIGRAVITY | preprocessing / nlp-event-tuple-and-language-labeling | scripts/automation/preprocess_signals.py, scripts/pipeline/bridge_preprocess_lanes.py, data/automation/* | 텍스트마이닝·자연어처리 연계: 5W1H 정형 이벤트 튜플(who/action/target/where/when/threat_severity) 자동 추출기 및 ISO-639 다국어 라벨링(10개 언어 감지·교차언어 클러스터 지표) 구현 완료 | 2026-11-13 |
 | done | ANTIGRAVITY | agent-ops / hermes-optimization | `config.yaml`, `SOUL.md`, `nul` 삭제 | Hermes Agent 추론 엔진 전면 교체(Groq Qwen 27B ➔ Google Gemini 3 Flash Preview 100만 토큰), SOUL.md 프로젝트 맵 주입, Windows nul 장치 충돌 제거 및 백그라운드 게이트웨이(PID: 8780) 정상 재기동 완료 | 2026-11-12 |
 | done | ANTIGRAVITY | agent-ops / hermes-discord-mcp | `AGENTS.md`, `config.yaml`, `SOUL.md`, `docs/current/AI_AGENT_SESSION_PROMPT.md`, `docs/SESSION_PROMPTS.md` | Hermes Agent 인프라 구축, Discord 모바일 원격 연동, MySQL MCP 연동, 토큰 최적화 및 AI 에이전트 전담 세션(세션 10) 분리 인수인계 완료 | 2026-11-12 |
@@ -143,6 +144,18 @@ Cursor / ANTIGRAVITY / 로컬 터미널이 **같은 폴더**(Desktop Junction �
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-13 [ANTIGRAVITY / llm-analysis · LLM 3-Tier 분석 & 결정론적 경보 산식 파이프라인 재분석 완결 Handoff]
+- 한 일:
+  1. 사용자 지침에 따라 독립 검증단(tev1/Gemma/DeepSeek)을 QA 세션으로 분리 보존하고, 순수 분석 및 경보 산정 파이프라인(Stage 1 + Stage 2 + 산식) 실행 완료:
+     - Stage 1 (Qwen 2.5:7b): 다국어(러시아어·아랍어·중국어 등) 원문 인용 및 공식-독립 프레이밍 괴리 추출 (4개 주요 권역 신호 괴리율 85.0/100 도출).
+     - 결정론적 경보 산식(calculate_alert_assessment): 신호 괴리(40%) + 자료량(25%) + 출처 다양성(20%) 결합 평가 ➔ 4개 권역(러시아, 중국, 중동, 미국 정책기술) '경보(WARNING)' 판정 및 3개 권역(중남미, 일본, 글로벌무역) '확인 필요(INSUFFICIENT_EVIDENCE)' 보류 가드레일 정상 작동.
+     - Stage 2-A (EXAONE 3.5:7.8b): 한국 공급망·외교안보 관점의 한국어 헤드라인 및 전문 브리핑 4건 생성.
+     - Stage 2-B (Llama 3.1:8b): 글로벌 싱크탱크 스타일의 영문 헤드라인 및 Executive Summary 4건 정제.
+  2. 최신 분석 결과물 `data/signal_gap/signal_gap_analysis.json` 생성 및 무결성 검증 완료.
+- 바꾼 파일: `data/signal_gap/signal_gap_analysis.json`, `AGENT_SYNC.md`.
+- 확인한 것: Ollama 로컬 모델 순차 호출 정상 완료, 4개 권역 69.7점 '경보' 및 3개 권역 환각 차단 '확인 필요' 정상 기록 확인.
+- 다음 작업: Session 6(Validation and QA) 세션에서 §10.4 기준에 따른 3심제 직교 감사(tev1, Gemma 2, DeepSeek-R1) 수행 또는 HTML 대시보드 재생성 연동.
 
 2026-11-13 [ANTIGRAVITY / preprocessing · 5W1H 정형 이벤트 튜플 추출 및 ISO-639 다국어 라벨링 엔진 구현 Handoff]
 - 한 일:
