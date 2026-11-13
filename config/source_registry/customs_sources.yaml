@@ -1,16 +1,19 @@
 # BASELINE lane — trade / customs statistics.
 # Expand country adapters only after portal ToS and key quotas are recorded.
+# Updated 2026-11-02: aligned with SCHEMA.md v2 (relationship_role, robots_note, issue_tags, packet).
 
-schema_version: 1
-updated_at: "2026-10-28"
+schema_version: 2
+updated_at: "2026-11-02"
 
 sources:
   - source_id: kr_customs_nitemtrade_cn
     source_type: trade_statistics
     source_role: primary
+    relationship_role: ally
     required: false
     fallback: [un_comtrade_semiconductors]
     license_access_note: "Korea data.go.kr Open API; CUSTOMS_API_KEY required; store raw response + receipt; do not commit key."
+    robots_note: "n/a-api — data.go.kr Open API"
     url: https://apis.data.go.kr/1220000/nitemtrade/getNitemtradeList
     country: KR
     language: ko
@@ -18,17 +21,21 @@ sources:
     enabled: true
     pipeline_default: false
     collector: scripts/collection/fetch_customs_korea_china.py
+    issue_tags: [US_Export_Control, US_Industrial_Policy_CHIPS, Taiwan_Strait]
     cadence: manual
     priority: high
     lane: BASELINE
+    packet: B
     notes: "Partner filter CN; HS 8541/8542 semiconductor probe."
 
   - source_id: un_comtrade_semiconductors
     source_type: trade_statistics
     source_role: secondary
+    relationship_role: multilateral
     required: false
     fallback: []
     license_access_note: "UN Comtrade public/API terms; rate limits; cite UN as source."
+    robots_note: "n/a-api — UN Comtrade REST API"
     url: https://comtradeplus.un.org/
     country: MULTI
     language: en
@@ -36,16 +43,20 @@ sources:
     enabled: true
     pipeline_default: false
     collector: scripts/collection/fetch_uncomtrade_semiconductors.py
+    issue_tags: [US_Export_Control, US_Industrial_Policy_CHIPS, Taiwan_Strait]
     cadence: manual
     priority: medium
     lane: BASELINE
+    packet: B
 
   - source_id: panama_canal_ops
     source_type: trade_statistics
     source_role: secondary
+    relationship_role: other
     required: false
     fallback: []
     license_access_note: "PENDING: confirm ACP / Panama Canal Authority public data license, robots, and rate limits before fetch_panama_canal.py."
+    robots_note: "pending — pancanal.com robots.txt"
     url: https://pancanal.com/
     country: PA
     language: en
@@ -53,17 +64,21 @@ sources:
     enabled: false
     pipeline_default: false
     collector: scripts/collection/fetch_panama_canal.py
+    issue_tags: [US_Trade_Tariff, Brazil_Politics, Venezuela_Crisis]
     cadence: manual
     priority: medium
     lane: BASELINE
+    packet: legacy
     notes: "Americas chokepoint; do not confuse with Suez."
 
   - source_id: multi_country_customs_stub
     source_type: trade_statistics
     source_role: discovery_only
+    relationship_role: multilateral
     required: false
     fallback: []
     license_access_note: "PENDING: per-country portal API/download terms for JP/TW/US/VN/SG/IN/MX/BR/EU before fetch_customs_multi_country.py."
+    robots_note: "pending — per-country customs portal terms"
     url: ""
     country: MULTI
     language: multi
@@ -74,3 +89,4 @@ sources:
     cadence: manual
     priority: low
     lane: BASELINE
+    packet: legacy

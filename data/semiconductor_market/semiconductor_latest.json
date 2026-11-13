@@ -1,0 +1,242 @@
+{
+  "collected_at_utc": "2026-11-10T13:50:48.974734+00:00",
+  "source_summary": {
+    "equities_count": 11,
+    "spot_memory_count": 11
+  },
+  "equities_and_indices": [
+    {
+      "category": "1_INDEX_CHIPMAKER",
+      "ticker": "^SOX",
+      "name": "필라델피아 반도체 지수 (SOX)",
+      "role": "글로벌 반도체 30대 기업 종합 벤치마크",
+      "currency": "pt",
+      "latest_price": 10033.93,
+      "day_change_pct": 6.85,
+      "week_change_pct": -2.85,
+      "month_change_pct": -24.09,
+      "status_signal": "🔥 강세 급등 (SURGE)",
+      "observed_date": "2026-11-09"
+    },
+    {
+      "category": "1_INDEX_CHIPMAKER",
+      "ticker": "NVDA",
+      "name": "NVIDIA (엔비디아)",
+      "role": "AI GPU(H100·B200) 독점 설계 및 대중 수출통제 핵심 타깃",
+      "currency": "USD",
+      "latest_price": 178.67,
+      "day_change_pct": -4.27,
+      "week_change_pct": -11.58,
+      "month_change_pct": -25.32,
+      "status_signal": "⚠️ 급락 주의 (VOLATILE_DROP)",
+      "observed_date": "2026-11-09"
+    },
+    {
+      "category": "1_INDEX_CHIPMAKER",
+      "ticker": "TSM",
+      "name": "TSMC (ADR)",
+      "role": "글로벌 첨단 파운드리 1위 · 대만해협 지정학 직결",
+      "currency": "USD",
+      "latest_price": 388.62,
+      "day_change_pct": 3.51,
+      "week_change_pct": -2.51,
+      "month_change_pct": -19.42,
+      "status_signal": "🔥 강세 급등 (SURGE)",
+      "observed_date": "2026-11-09"
+    },
+    {
+      "category": "1_INDEX_CHIPMAKER",
+      "ticker": "000660.KS",
+      "name": "SK하이닉스",
+      "role": "글로벌 HBM(고대역폭 메모리) 1위 · 한국 공급망 핵심",
+      "currency": "KRW",
+      "latest_price": 1212000.0,
+      "day_change_pct": 6.69,
+      "week_change_pct": -13.3,
+      "month_change_pct": -31.64,
+      "status_signal": "⚠️ 급락 주의 (VOLATILE_DROP)",
+      "observed_date": "2026-11-10"
+    },
+    {
+      "category": "1_INDEX_CHIPMAKER",
+      "ticker": "005930.KS",
+      "name": "삼성전자",
+      "role": "글로벌 메모리 1위 및 종합반도체(IDM)",
+      "currency": "KRW",
+      "latest_price": 198900.0,
+      "day_change_pct": 4.74,
+      "week_change_pct": -9.38,
+      "month_change_pct": -26.88,
+      "status_signal": "⚠️ 급락 주의 (VOLATILE_DROP)",
+      "observed_date": "2026-11-10"
+    },
+    {
+      "category": "2_EQUIPMENT_CHOKEPOINT",
+      "ticker": "ASML",
+      "name": "ASML (네덜란드)",
+      "role": "EUV(극자외선) 노광장비 전 세계 100% 독점 · 대중 제재 핵심",
+      "currency": "USD",
+      "latest_price": 1513.25,
+      "day_change_pct": 6.21,
+      "week_change_pct": -0.84,
+      "month_change_pct": -17.38,
+      "status_signal": "🔥 강세 급등 (SURGE)",
+      "observed_date": "2026-11-09"
+    },
+    {
+      "category": "2_EQUIPMENT_CHOKEPOINT",
+      "ticker": "AMAT",
+      "name": "Applied Materials (AMAT)",
+      "role": "글로벌 1위 종합 반도체 증착·식각 설비",
+      "currency": "USD",
+      "latest_price": 370.55,
+      "day_change_pct": 11.37,
+      "week_change_pct": -1.06,
+      "month_change_pct": -30.12,
+      "status_signal": "🔥 강세 급등 (SURGE)",
+      "observed_date": "2026-11-09"
+    },
+    {
+      "category": "2_EQUIPMENT_CHOKEPOINT",
+      "ticker": "LRCX",
+      "name": "Lam Research (램리서치)",
+      "role": "글로벌 1위 식각(Etch) 및 HBM/3D NAND 수직적층 핵심 설비",
+      "currency": "USD",
+      "latest_price": 221.31,
+      "day_change_pct": 10.41,
+      "week_change_pct": -2.75,
+      "month_change_pct": -33.72,
+      "status_signal": "🔥 강세 급등 (SURGE)",
+      "observed_date": "2026-11-09"
+    },
+    {
+      "category": "2_EQUIPMENT_CHOKEPOINT",
+      "ticker": "KLAC",
+      "name": "KLA Corp",
+      "role": "웨이퍼 결함 검사 및 수율 계측(Metrology) 독점 설비",
+      "currency": "USD",
+      "latest_price": 151.38,
+      "day_change_pct": 9.31,
+      "week_change_pct": -1.13,
+      "month_change_pct": -23.34,
+      "status_signal": "🔥 강세 급등 (SURGE)",
+      "observed_date": "2026-11-09"
+    },
+    {
+      "category": "3_MATERIALS_MINERALS",
+      "ticker": "4063.T",
+      "name": "신에츠 화학 (Shin-Etsu)",
+      "role": "글로벌 실리콘 웨이퍼(원판) 시장 점유율 1위 (일본)",
+      "currency": "JPY",
+      "latest_price": 5658.0,
+      "day_change_pct": 3.99,
+      "week_change_pct": -4.44,
+      "month_change_pct": -10.49,
+      "status_signal": "🔥 강세 급등 (SURGE)",
+      "observed_date": "2026-11-10"
+    },
+    {
+      "category": "3_MATERIALS_MINERALS",
+      "ticker": "MP",
+      "name": "MP Materials",
+      "role": "북미 최대 희토류(네오디뮴 등) 광산·정련 공급망",
+      "currency": "USD",
+      "latest_price": 37.75,
+      "day_change_pct": 6.61,
+      "week_change_pct": -1.56,
+      "month_change_pct": -22.21,
+      "status_signal": "🔥 강세 급등 (SURGE)",
+      "observed_date": "2026-11-09"
+    }
+  ],
+  "memory_spot_prices": [
+    {
+      "item": "DDR5 16Gb (2Gx8) 4800/5600",
+      "daily_high_usd": "72.50",
+      "daily_low_usd": "46.00",
+      "session_avg_usd": 60.167,
+      "session_change": "0.00 %",
+      "source": "TrendForce_DRAMeXchange"
+    },
+    {
+      "item": "DDR5 16Gb (2Gx8) eTT",
+      "daily_high_usd": "31.50",
+      "daily_low_usd": "29.60",
+      "session_avg_usd": 30.3,
+      "session_change": "0.17 %",
+      "source": "TrendForce_DRAMeXchange"
+    },
+    {
+      "item": "DDR4 16Gb (2Gx8) 3200",
+      "daily_high_usd": "114.00",
+      "daily_low_usd": "45.00",
+      "session_avg_usd": 79.99,
+      "session_change": "-0.31 %",
+      "source": "TrendForce_DRAMeXchange"
+    },
+    {
+      "item": "DDR4 16Gb (2Gx8) eTT",
+      "daily_high_usd": "13.70",
+      "daily_low_usd": "11.60",
+      "session_avg_usd": 13.225,
+      "session_change": "-0.19 %",
+      "source": "TrendForce_DRAMeXchange"
+    },
+    {
+      "item": "DDR4 8Gb (1Gx8) 3200",
+      "daily_high_usd": "82.00",
+      "daily_low_usd": "24.80",
+      "session_avg_usd": 45.0,
+      "session_change": "-0.47 %",
+      "source": "TrendForce_DRAMeXchange"
+    },
+    {
+      "item": "DDR4 8Gb (1Gx8) eTT",
+      "daily_high_usd": "5.90",
+      "daily_low_usd": "5.50",
+      "session_avg_usd": 5.68,
+      "session_change": "-0.70 %",
+      "source": "TrendForce_DRAMeXchange"
+    },
+    {
+      "item": "DDR5 UDIMM 16GB 4800/5600",
+      "daily_high_usd": "278.00",
+      "daily_low_usd": "225.00",
+      "session_avg_usd": 243.333,
+      "session_change": "0.69 %",
+      "source": "TrendForce_DRAMeXchange"
+    },
+    {
+      "item": "DDR5 RDIMM 32GB 4800/5600",
+      "daily_high_usd": "2120.00",
+      "daily_low_usd": "1930.00",
+      "session_avg_usd": 2025.0,
+      "session_change": "-6.47 %",
+      "source": "TrendForce_DRAMeXchange"
+    },
+    {
+      "item": "DDR4 UDIMM 16GB 3200",
+      "daily_high_usd": "185.00",
+      "daily_low_usd": "156.00",
+      "session_avg_usd": 164.2,
+      "session_change": "0.00 %",
+      "source": "TrendForce_DRAMeXchange"
+    },
+    {
+      "item": "GDDR5  8Gb",
+      "daily_high_usd": "17.50",
+      "daily_low_usd": "10.20",
+      "session_avg_usd": 12.336,
+      "session_change": "0.37 %",
+      "source": "TrendForce_DRAMeXchange"
+    },
+    {
+      "item": "GDDR6  8Gb",
+      "daily_high_usd": "18.00",
+      "daily_low_usd": "10.30",
+      "session_avg_usd": 12.515,
+      "session_change": "0.34 %",
+      "source": "TrendForce_DRAMeXchange"
+    }
+  ]
+}

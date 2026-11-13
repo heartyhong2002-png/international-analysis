@@ -21,6 +21,7 @@
 | `fetch_maritime_chokepoints.py` | 해협·해운·에너지 프록시 | active |
 | `fetch_gdelt_cloud_events.py` | GDELT Cloud Events | active/구독 상태 의존 |
 | `fetch_whitehouse_official.py` | 백악관 공식 RSS·제한적 사이트맵 보완 | optional active; `--with-whitehouse` |
+| `fetch_x_public.py` | X API v2 recent search (공개 포스트) | optional active; `--with-x`; 종량제·기본 미호출 |
 | `fetch_signal_gap_rss.py` | 권위주의 국가 신호 공백 RSS | active |
 | `gov_announcements_collector.py` | 정부 발표 RSS | active |
 | `issue_data_collector.py` | 이슈·Wikipedia·FRED·제재·무역 | active |
@@ -50,7 +51,7 @@
 ### 실제 호출 여부 확인(2026-10-10)
 
 - `analysis/prototype_local_expert_sources.py`는 이름에 prototype이 남아 있지만 현재 `run_pipeline.py`에서 기본 호출되므로 **active (legacy naming)**로 분류한다.
-- `collection/fetch_reddit_opinion.py`, `collection/fetch_kaggle_datasets.py`는 각각 `--with-reddit`, `--with-kaggle` 선택 시 호출되는 **optional active** 수집기다.
+- `collection/fetch_reddit_opinion.py`, `collection/fetch_kaggle_datasets.py`, `collection/fetch_x_public.py`는 각각 `--with-reddit`, `--with-kaggle`, `--with-x` 선택 시 호출되는 **optional active** 수집기다.
 - `analysis/prototype_gdelt_supply_chain_watch.py`, `analysis/prototype_llm_tone_extraction.py`, `collection/fetch_ib_research.py`, `collection/fetch_reddit_localized.py`는 현재 오케스트레이터에서 직접 호출되지 않는 **manual/candidate**다.
 - `analysis/analyze_*.py` 대부분은 파이프라인에서 직접 실행되지 않는 수동 분석 도구이며, 검증 세션과 소유권을 확인한 뒤 `manual` 또는 `archive`로 이동한다.
 - `scripts/archive/` 파일은 계속 legacy 보관 대상으로 유지하며 이번 정리에서 삭제하지 않는다.
@@ -85,6 +86,7 @@
 |---|---|---|
 | `automation/auto_anomaly_scanner.py` | 글로벌 이상 징후 무인 스캐너 (GDELT 2.0 DOC·트렌드·4대 해협 Z-Score·Anomaly Score, `--dry-run`/`--publish-notion`) | active / standalone; 기본 `run_pipeline.py` 미연결 |
 | `automation/preprocess_signals.py` | 지능형 4단계 전처리 (노이즈 배제·시맨틱 중복 제거·해협 정규화·한국 핵심 공급망 태깅) | active / library |
+| `pipeline/bridge_preprocess_lanes.py` | 4대 수집 레인 원시 데이터 정제·구조화 및 표준 정형 신호/배제 영수증 브릿지 | active / bridge |
 
 권장 검증: `python scripts/automation/auto_anomaly_scanner.py --dry-run`
 
@@ -140,7 +142,7 @@ run_pipeline.py
 | 항공 화물·공항 운항 | `scripts/collection/fetch_aviation_supply_chain.py` | 항만 센서와 동일한 원시 영수증 형식으로 저장하되 별도 데이터셋 유지 |
 | 파나마 운하 | `scripts/collection/fetch_panama_canal.py` | 기존 해협 수집기와 분리해 운하 통행·대기·제한 공지를 독립 수집 |
 | 다국가 세관 | `scripts/collection/fetch_customs_multi_country.py` | 국가별 어댑터를 한 수집기 아래에 두고 소스 목록은 `config/source_registry/`에 관리 |
-| X 공개 신호 | `scripts/collection/fetch_x_public.py` | API·공개 검색 범위만 사용하고 온라인 정보환경 신호로 표시 |
+| X 공개 신호 | `scripts/collection/fetch_x_public.py` | 공식 recent search만; `--with-x`; 온라인 정보환경 신호로 표시 |
 | 정부 웹/API·RSS·HTML/PDF | `scripts/collection/fetch_government_web.py` | 기존 RSS 수집기와 분리해 API→RSS→sitemap→HTML/PDF 순서의 허용된 공개 접근만 사용 |
 
 ## 다음 정리 작업

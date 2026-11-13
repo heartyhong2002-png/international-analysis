@@ -222,9 +222,10 @@
 
 ### 7.4 X 공개 정보환경 신호
 
-- 공식 X API를 우선 사용하고, 계정·키워드·언어·시간창을 제한한다.
-- `post_id`, `author_id`, `author_type`, `text`, `created_at`, `language`, `public_metrics`, `referenced_posts`, `source_url`, `observed_at`, `api_access_note`를 보존한다.
-- X 게시물은 국민 전체 여론이 아니라 `online_information_environment_signal`로 저장한다.
+- 공식 X API v2 recent search만 사용한다. 수집기: `scripts/collection/fetch_x_public.py`.
+- 인증: `X_BEARER_TOKEN`(또는 `TWITTER_BEARER_TOKEN`). 종량제(post read)이므로 기본 파이프라인에서는 호출하지 않고 `--with-x`일 때만 1페이지(`max_results` 10~25)를 요청한다.
+- `post_id`, `author_id`, `author_type`, `text`, `created_at`, `language`, `public_metrics`, `referenced_posts`, `source_url`, `observed_at`, `license_access_note`를 보존한다.
+- X 게시물은 국민 전체 여론이 아니라 `online_information_environment_signal`로 저장한다. 비공개 계정·스크래핑·로그인 우회는 하지 않는다.
 
 ### 7.5 API가 없는 정부 홈페이지
 
@@ -267,6 +268,37 @@ python scripts/run_pipeline.py --collect-only
 
 # 필요할 때만 제한 수집
 python scripts/run_pipeline.py --collect-only --with-gdelt-cloud
+```
+
+## 8.5 Cloud light collection lane (GitHub Actions, 2026-10-31)
+
+PC가 꺼져 있어도 **가벼운 공개 RSS/HTTP 수집만** 돌리려면 GitHub Actions 워크플로 [`.github/workflows/daily_pipeline.yml`](../../.github/workflows/daily_pipeline.yml)를 사용한다.
+
+| 구분 | 내용 |
+|---|---|
+| 스케줄 | 매일 07:00 KST (`cron: 0 22 * * *` UTC) + `workflow_dispatch` |
+| 포함 | 정부 RSS, 백악관 RSS, signal-gap RSS, financial proxy |
+| 제외 | Ollama/LLM, MySQL, GDELT Cloud, 대시보드, Trends/로컬여론/해협, `issue_data_collector` |
+| 산출물 | `scripts/data/gov_announcements/`, `data/whitehouse_official/`, `data/signal_gap/` (변경 시 `[skip ci]` 커밋) |
+| Kaggle | Secrets(`KAGGLE_USERNAME`/`KAGGLE_KEY`)가 있을 때만 수동 dispatch에서 선택 |
+
+SoT와 무거운 수집·LLM·DB는 계속 로컬 `python scripts/run_pipeline.py --collect-only`(및 선택 플래그)다. Actions 결과는 수집 스냅샷일 뿐 Alert Level이나 `verification_state`를 만들지 않는다.
+
+로컬에서 수집·DB·대시보드를 한 화면으로 돌리려면 HTML 콘솔 프로토타입을 쓴다(배포 아님).
+
+```bash
+.\.venv\Scripts\python.exe scripts/console/app.py
+# http://127.0.0.1:8765 — presets: default | collect-only | light
+```
+
+Streamlit 올인원 관제 센터(`app.py`)도 **루프백만** 바인딩한다(`scripts/console/app.py`와 동일, `0.0.0.0` 금지).
+
+```bash
+# preferred launchers (enforce --server.address 127.0.0.1)
+scripts/ops/start_streamlit_app.sh
+scripts\ops\start_streamlit_app.bat
+# or: .venv\Scripts\python.exe -m streamlit run app.py --server.address 127.0.0.1
+# http://127.0.0.1:8501 — .streamlit/config.toml also sets address=127.0.0.1
 ```
 
 ## 9. Python 수집 파이프라인 실행 그룹(2026-10-10)

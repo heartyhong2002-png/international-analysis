@@ -8,11 +8,13 @@ Notion API v1과 통신하는 기본 클라이언트 모듈.
 import os
 import re
 import json
+import time
 import urllib.request
 import urllib.error
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
+
 
 def load_env():
     """ .env 파일에서 환경변수를 로드합니다. """
@@ -30,6 +32,7 @@ def load_env():
                     if k not in os.environ:
                         os.environ[k] = v
     return env_vars
+
 
 class NotionClient:
     API_BASE = "https://api.notion.com/v1"
@@ -60,25 +63,36 @@ class NotionClient:
             return f"{h[:8]}-{h[8:12]}-{h[12:16]}-{h[16:20]}-{h[20:]}"
         return raw_id
 
-    def request(self, method, endpoint, payload=None):
+    def request(self, method, endpoint, payload=None, max_retries=4):
         url = f"{self.API_BASE}/{endpoint.lstrip('/')}"
         data = json.dumps(payload).encode("utf-8") if payload is not None else None
-        
-        req = urllib.request.Request(url, data=data, headers=self.headers, method=method)
-        try:
-            with urllib.request.urlopen(req) as resp:
-                res_body = resp.read().decode("utf-8")
-                return json.loads(res_body) if res_body else {}
-        except urllib.error.HTTPError as e:
-            err_body = e.read().decode("utf-8")
+
+        for attempt in range(max_retries):
+            req = urllib.request.Request(url, data=data, headers=self.headers, method=method)
             try:
-                err_json = json.loads(err_body)
-                msg = err_json.get("message", err_body)
-            except Exception:
-                msg = err_body
-            raise RuntimeError(f"Notion API Error [{e.code}]: {msg}")
-        except Exception as e:
-            raise RuntimeError(f"Notion Connection Error: {e}")
+                with urllib.request.urlopen(req) as resp:
+                    res_body = resp.read().decode("utf-8")
+                    return json.loads(res_body) if res_body else {}
+            except urllib.error.HTTPError as e:
+                err_body = e.read().decode("utf-8")
+                try:
+                    err_json = json.loads(err_body)
+                    msg = err_json.get("message", err_body)
+                except Exception:
+                    msg = err_body
+
+                # Notion 409 Conflict 또는 429 Rate Limit 발생 시 지수 백오프로 재시도
+                if e.code in (409, 429) and attempt < max_retries - 1:
+                    sleep_sec = (attempt + 1) * 2.0
+                    time.sleep(sleep_sec)
+                    continue
+
+                raise RuntimeError(f"Notion API Error [{e.code}]: {msg}")
+            except Exception as e:
+                if attempt < max_retries - 1:
+                    time.sleep(1.0)
+                    continue
+                raise RuntimeError(f"Notion Connection Error: {e}")
 
     def test_connection(self):
         """ API 키 및 봇 인증 유효성 확인 """

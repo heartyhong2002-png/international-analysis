@@ -1,0 +1,547 @@
+{
+  "generated_at": "2026-11-13T19:42:12.789065+00:00",
+  "schema_version": "multi_judge_audit_v1",
+  "source_file": "C:\\dev\\international-analysis\\data\\signal_gap\\signal_gap_analysis.json",
+  "total_audited": 7,
+  "needs_human_review_count": 7,
+  "results": [
+    {
+      "alert_id": "SG-Latin_America_Mexico",
+      "region": "Latin_America_Mexico",
+      "formula_alert_ko": "확인 필요",
+      "formula_alert_en": "INSUFFICIENT_EVIDENCE",
+      "risk_signal_score": 29.0,
+      "tev1": {
+        "alert_id": "SG-Latin_America_Mexico",
+        "schema_version": "v1",
+        "model_id": "tev1:latest",
+        "input_snapshot_id": "8c82b8d89dd2",
+        "stage_verdict": "INSUFFICIENT_EVIDENCE",
+        "confidence": 0.47233268026560266,
+        "probabilities": {
+          "NORMAL": 0.0012223938012866015,
+          "WATCH": 0.32898011295752283,
+          "WARNING": 0.0739936705197503,
+          "CRITICAL": 0.017937678508958062,
+          "INSUFFICIENT_EVIDENCE": 0.5778661442124822
+        },
+        "basis_fields": [
+          "risk_signal_score",
+          "evidence_coverage",
+          "source_diversity",
+          "signal_gap_score",
+          "source_item_count",
+          "evidence_count"
+        ],
+        "latency_ms": 15386.7,
+        "status": "ok"
+      },
+      "gemma2": {
+        "alert_id": "SG-Latin_America_Mexico",
+        "schema_version": "v1",
+        "model_id": "gemma2:9b",
+        "input_snapshot_id": "8c82b8d89dd2",
+        "claims": [
+          {
+            "id": "E-01",
+            "fact_verdict": "unverifiable_source_missing",
+            "matched_span": "",
+            "gap_type": "missing_evidence"
+          }
+        ],
+        "worst_verdict": "unverifiable_source_missing",
+        "latency_ms": 0.0,
+        "status": "ok"
+      },
+      "deepseek_r1": {
+        "alert_id": "SG-Latin_America_Mexico",
+        "schema_version": "v1",
+        "model_id": "deepseek-r1:7b",
+        "input_snapshot_id": "8c82b8d89dd2",
+        "inference_verdict": "overstated",
+        "leap_type": "causal_leap|scope_leap",
+        "cited_evidence_ids": [
+          "E-01"
+        ],
+        "note": "The conclusion overstates the issue as there is insufficient evidence to support the claim of missing formal or independent signals, leading to an unjustified inference without a valid bridge to the evidence provided.",
+        "latency_ms": 55261.9,
+        "status": "ok"
+      },
+      "governance": {
+        "triggers": [
+          "T2",
+          "T5",
+          "T6"
+        ],
+        "needs_human_review": true,
+        "priority": "high",
+        "invalidated_by_unsupported_fact": false,
+        "auto_accept": false
+      }
+    },
+    {
+      "alert_id": "SG-Japan_EastAsia",
+      "region": "Japan_EastAsia",
+      "formula_alert_ko": "확인 필요",
+      "formula_alert_en": "INSUFFICIENT_EVIDENCE",
+      "risk_signal_score": 29.0,
+      "tev1": {
+        "alert_id": "SG-Japan_EastAsia",
+        "schema_version": "v1",
+        "model_id": "tev1:latest",
+        "input_snapshot_id": "70270da2a05b",
+        "stage_verdict": "INSUFFICIENT_EVIDENCE",
+        "confidence": 0.4707782265471637,
+        "probabilities": {
+          "NORMAL": 0.0011763216672643108,
+          "WATCH": 0.3309282351750576,
+          "WARNING": 0.07432189548459261,
+          "CRITICAL": 0.01695096643535448,
+          "INSUFFICIENT_EVIDENCE": 0.576622581237731
+        },
+        "basis_fields": [
+          "risk_signal_score",
+          "evidence_coverage",
+          "source_diversity",
+          "signal_gap_score",
+          "source_item_count",
+          "evidence_count"
+        ],
+        "latency_ms": 6484.1,
+        "status": "ok"
+      },
+      "gemma2": {
+        "alert_id": "SG-Japan_EastAsia",
+        "schema_version": "v1",
+        "model_id": "gemma2:9b",
+        "input_snapshot_id": "70270da2a05b",
+        "claims": [
+          {
+            "id": "E-01",
+            "fact_verdict": "unverifiable_source_missing",
+            "matched_span": "",
+            "gap_type": "missing_evidence"
+          }
+        ],
+        "worst_verdict": "unverifiable_source_missing",
+        "latency_ms": 0.0,
+        "status": "ok"
+      },
+      "deepseek_r1": {
+        "alert_id": "SG-Japan_EastAsia",
+        "schema_version": "v1",
+        "model_id": "deepseek-r1:7b",
+        "input_snapshot_id": "70270da2a05b",
+        "inference_verdict": "overstated",
+        "leap_type": "none",
+        "cited_evidence_ids": [
+          "E-01"
+        ],
+        "note": "The conclusion is overstated because it is based on an alert stage without provided evidence to support the claim of insufficient signals.",
+        "latency_ms": 63310.6,
+        "status": "ok"
+      },
+      "governance": {
+        "triggers": [
+          "T2",
+          "T5",
+          "T6"
+        ],
+        "needs_human_review": true,
+        "priority": "high",
+        "invalidated_by_unsupported_fact": false,
+        "auto_accept": false
+      }
+    },
+    {
+      "alert_id": "SG-Global_Trade_Investigative",
+      "region": "Global_Trade_Investigative",
+      "formula_alert_ko": "확인 필요",
+      "formula_alert_en": "INSUFFICIENT_EVIDENCE",
+      "risk_signal_score": 29.0,
+      "tev1": {
+        "alert_id": "SG-Global_Trade_Investigative",
+        "schema_version": "v1",
+        "model_id": "tev1:latest",
+        "input_snapshot_id": "906a5f3d0639",
+        "stage_verdict": "INSUFFICIENT_EVIDENCE",
+        "confidence": 0.4707782265471637,
+        "probabilities": {
+          "NORMAL": 0.0011763216672643108,
+          "WATCH": 0.3309282351750576,
+          "WARNING": 0.07432189548459261,
+          "CRITICAL": 0.01695096643535448,
+          "INSUFFICIENT_EVIDENCE": 0.576622581237731
+        },
+        "basis_fields": [
+          "risk_signal_score",
+          "evidence_coverage",
+          "source_diversity",
+          "signal_gap_score",
+          "source_item_count",
+          "evidence_count"
+        ],
+        "latency_ms": 6279.5,
+        "status": "ok"
+      },
+      "gemma2": {
+        "alert_id": "SG-Global_Trade_Investigative",
+        "schema_version": "v1",
+        "model_id": "gemma2:9b",
+        "input_snapshot_id": "906a5f3d0639",
+        "claims": [
+          {
+            "id": "E-01",
+            "fact_verdict": "unverifiable_source_missing",
+            "matched_span": "",
+            "gap_type": "missing_evidence"
+          }
+        ],
+        "worst_verdict": "unverifiable_source_missing",
+        "latency_ms": 0.0,
+        "status": "ok"
+      },
+      "deepseek_r1": {
+        "alert_id": "SG-Global_Trade_Investigative",
+        "schema_version": "v1",
+        "model_id": "deepseek-r1:7b",
+        "input_snapshot_id": "906a5f3d0639",
+        "inference_verdict": null,
+        "latency_ms": 51352.4,
+        "status": "schema_error",
+        "error": "Invalid inference_verdict: unsupported"
+      },
+      "governance": {
+        "triggers": [
+          "SCHEMA_OR_CALL_ERROR",
+          "T2",
+          "T6"
+        ],
+        "needs_human_review": true,
+        "priority": "high",
+        "invalidated_by_unsupported_fact": false,
+        "auto_accept": false
+      }
+    },
+    {
+      "alert_id": "SG-Russia",
+      "region": "Russia",
+      "formula_alert_ko": "경보",
+      "formula_alert_en": "WARNING",
+      "risk_signal_score": 69.7,
+      "tev1": {
+        "alert_id": "SG-Russia",
+        "schema_version": "v1",
+        "model_id": "tev1:latest",
+        "input_snapshot_id": "f93384571cbe",
+        "stage_verdict": "WARNING",
+        "confidence": 0.2799924006182866,
+        "probabilities": {
+          "NORMAL": 0.00042219047442066825,
+          "WATCH": 0.32952477828135324,
+          "WARNING": 0.4239939204946293,
+          "CRITICAL": 0.031319736543590423,
+          "INSUFFICIENT_EVIDENCE": 0.21473937420600633
+        },
+        "basis_fields": [
+          "risk_signal_score",
+          "evidence_coverage",
+          "source_diversity",
+          "signal_gap_score",
+          "source_item_count",
+          "evidence_count"
+        ],
+        "latency_ms": 6357.4,
+        "status": "ok"
+      },
+      "gemma2": {
+        "alert_id": "SG-Russia",
+        "schema_version": "v1",
+        "model_id": "gemma2:9b",
+        "input_snapshot_id": "f93384571cbe",
+        "claims": [
+          {
+            "id": "E-01",
+            "fact_verdict": "supported",
+            "matched_span": "Belarus capable of giving immediate crushing response to enemy — defense minister: According to Viktor Khrenin, a training exercise involving territorial defense troops is currently underway in the Mo",
+            "gap_type": "none"
+          },
+          {
+            "id": "E-02",
+            "fact_verdict": "supported",
+            "matched_span": "Путин предложил провести вместе с Украиной гуманитарную операцию в Константиновке — как в Алешках: Президент РФ Владимир Путин перед началом встречи со спецпосланниками президента США Стивом Уиткоффом",
+            "gap_type": "none"
+          }
+        ],
+        "worst_verdict": "supported",
+        "latency_ms": 39842.3,
+        "status": "ok"
+      },
+      "deepseek_r1": {
+        "alert_id": "SG-Russia",
+        "schema_version": "v1",
+        "model_id": "deepseek-r1:7b",
+        "input_snapshot_id": "f93384571cbe",
+        "inference_verdict": "overstated",
+        "leap_type": "missing_bridge",
+        "cited_evidence_ids": [
+          "E-01",
+          "E-02"
+        ],
+        "note": "The conclusion overstates the impact of media focus on geopolitical risk signals as there is insufficient evidence linking differing media coverage to discrepancies in risk signals. The causal leap is unsupported without evidence of how media focus translates into risk discrepancies.",
+        "latency_ms": 55748.1,
+        "status": "ok"
+      },
+      "governance": {
+        "triggers": [
+          "T4"
+        ],
+        "needs_human_review": true,
+        "priority": "high",
+        "invalidated_by_unsupported_fact": false,
+        "auto_accept": false
+      }
+    },
+    {
+      "alert_id": "SG-China",
+      "region": "China",
+      "formula_alert_ko": "경보",
+      "formula_alert_en": "WARNING",
+      "risk_signal_score": 69.7,
+      "tev1": {
+        "alert_id": "SG-China",
+        "schema_version": "v1",
+        "model_id": "tev1:latest",
+        "input_snapshot_id": "3352c3f14f12",
+        "stage_verdict": "WARNING",
+        "confidence": 0.30748953216292674,
+        "probabilities": {
+          "NORMAL": 0.0003790241423892318,
+          "WATCH": 0.31914463897405076,
+          "WARNING": 0.4459916257303414,
+          "CRITICAL": 0.029199499540626964,
+          "INSUFFICIENT_EVIDENCE": 0.20528521161259172
+        },
+        "basis_fields": [
+          "risk_signal_score",
+          "evidence_coverage",
+          "source_diversity",
+          "signal_gap_score",
+          "source_item_count",
+          "evidence_count"
+        ],
+        "latency_ms": 6270.1,
+        "status": "ok"
+      },
+      "gemma2": {
+        "alert_id": "SG-China",
+        "schema_version": "v1",
+        "model_id": "gemma2:9b",
+        "input_snapshot_id": "3352c3f14f12",
+        "claims": [
+          {
+            "id": "E-01",
+            "fact_verdict": "supported",
+            "matched_span": "Turkey said Wednesday Israel's new announcements of settlement construction is provocative despite international warnings, a Turkish official statement said.",
+            "gap_type": "none"
+          },
+          {
+            "id": "E-02",
+            "fact_verdict": "partial",
+            "matched_span": "Workers start every month deep in the red as inflation guts official wages and forces reliance on side hustles.",
+            "gap_type": "topic"
+          }
+        ],
+        "worst_verdict": "partial",
+        "latency_ms": 22588.3,
+        "status": "ok"
+      },
+      "deepseek_r1": {
+        "alert_id": "SG-China",
+        "schema_version": "v1",
+        "model_id": "deepseek-r1:7b",
+        "input_snapshot_id": "3352c3f14f12",
+        "inference_verdict": "overstated",
+        "leap_type": "scope_leap",
+        "cited_evidence_ids": [
+          "E-01",
+          "E-02"
+        ],
+        "note": "The conclusion overstates by generalizing from a specific issue (North Korea's internet disruption) to broader geopolitical and economic risks without sufficient evidence support.",
+        "latency_ms": 39401.2,
+        "status": "ok"
+      },
+      "governance": {
+        "triggers": [
+          "T3",
+          "T4",
+          "T5"
+        ],
+        "needs_human_review": true,
+        "priority": "high",
+        "invalidated_by_unsupported_fact": false,
+        "auto_accept": false
+      }
+    },
+    {
+      "alert_id": "SG-Middle_East",
+      "region": "Middle_East",
+      "formula_alert_ko": "경보",
+      "formula_alert_en": "WARNING",
+      "risk_signal_score": 69.7,
+      "tev1": {
+        "alert_id": "SG-Middle_East",
+        "schema_version": "v1",
+        "model_id": "tev1:latest",
+        "input_snapshot_id": "5875f351246e",
+        "stage_verdict": "WARNING",
+        "confidence": 0.30748953216292674,
+        "probabilities": {
+          "NORMAL": 0.0003790241423892318,
+          "WATCH": 0.31914463897405076,
+          "WARNING": 0.4459916257303414,
+          "CRITICAL": 0.029199499540626964,
+          "INSUFFICIENT_EVIDENCE": 0.20528521161259172
+        },
+        "basis_fields": [
+          "risk_signal_score",
+          "evidence_coverage",
+          "source_diversity",
+          "signal_gap_score",
+          "source_item_count",
+          "evidence_count"
+        ],
+        "latency_ms": 6304.8,
+        "status": "ok"
+      },
+      "gemma2": {
+        "alert_id": "SG-Middle_East",
+        "schema_version": "v1",
+        "model_id": "gemma2:9b",
+        "input_snapshot_id": "5875f351246e",
+        "claims": [
+          {
+            "id": "E-01",
+            "fact_verdict": "supported",
+            "matched_span": "The enemy’s plan must be foiled: In an article, Kayhan examined what it described as the enemy’s objective in spreading reports about the possible resumption of war. The newspaper argued that preservi",
+            "gap_type": "none"
+          },
+          {
+            "id": "E-02",
+            "fact_verdict": "unsupported",
+            "matched_span": "عن الاقتصاد السوري... المليارات في المصارف والأموال تتحرك في حقائب: كيف تحوّل القطاع المصرفي السوري من أداة للتنمية إلى نظام معزول؟ تكشف الأزمة أثر العقوبات والفساد والكاش على المواطنين والتجارة وفرص ",
+            "gap_type": "region"
+          }
+        ],
+        "worst_verdict": "unsupported",
+        "latency_ms": 35164.7,
+        "status": "ok"
+      },
+      "deepseek_r1": {
+        "alert_id": "SG-Middle_East",
+        "schema_version": "v1",
+        "model_id": "deepseek-r1:7b",
+        "input_snapshot_id": "5875f351246e",
+        "inference_verdict": "overstated",
+        "leap_type": "scope_leap",
+        "cited_evidence_ids": [
+          "E-01",
+          "E-02"
+        ],
+        "note": "The conclusion may be making an unjustified causal or scope leap beyond the provided evidence, as it infers broader implications not directly supported by the evidence snippets.",
+        "latency_ms": 62016.8,
+        "status": "ok"
+      },
+      "governance": {
+        "triggers": [
+          "T2",
+          "T5"
+        ],
+        "needs_human_review": true,
+        "priority": "high",
+        "invalidated_by_unsupported_fact": true,
+        "auto_accept": false
+      }
+    },
+    {
+      "alert_id": "SG-United_States_Policy_Tech",
+      "region": "United_States_Policy_Tech",
+      "formula_alert_ko": "경보",
+      "formula_alert_en": "WARNING",
+      "risk_signal_score": 69.7,
+      "tev1": {
+        "alert_id": "SG-United_States_Policy_Tech",
+        "schema_version": "v1",
+        "model_id": "tev1:latest",
+        "input_snapshot_id": "eb011457d128",
+        "stage_verdict": "WARNING",
+        "confidence": 0.2881769918121444,
+        "probabilities": {
+          "NORMAL": 0.0004030034609396425,
+          "WATCH": 0.3287517403962751,
+          "WARNING": 0.43054159344971554,
+          "CRITICAL": 0.031312426629170394,
+          "INSUFFICIENT_EVIDENCE": 0.20899123606389938
+        },
+        "basis_fields": [
+          "risk_signal_score",
+          "evidence_coverage",
+          "source_diversity",
+          "signal_gap_score",
+          "source_item_count",
+          "evidence_count"
+        ],
+        "latency_ms": 6278.7,
+        "status": "ok"
+      },
+      "gemma2": {
+        "alert_id": "SG-United_States_Policy_Tech",
+        "schema_version": "v1",
+        "model_id": "gemma2:9b",
+        "input_snapshot_id": "eb011457d128",
+        "claims": [
+          {
+            "id": "E-01",
+            "fact_verdict": "unsupported",
+            "matched_span": "",
+            "gap_type": "topic"
+          },
+          {
+            "id": "E-02",
+            "fact_verdict": "partial",
+            "matched_span": "Democrats accuse GOP of helping Trump put ‘fox in the henhouse’ at top watchdog: They warn that Republicans are driving a “sham” process to pick the next Government Accountability Office head.",
+            "gap_type": "topic"
+          }
+        ],
+        "worst_verdict": "unsupported",
+        "latency_ms": 23689.3,
+        "status": "ok"
+      },
+      "deepseek_r1": {
+        "alert_id": "SG-United_States_Policy_Tech",
+        "schema_version": "v1",
+        "model_id": "deepseek-r1:7b",
+        "input_snapshot_id": "eb011457d128",
+        "inference_verdict": "overstated",
+        "leap_type": "scope_leap",
+        "cited_evidence_ids": [
+          "E-01",
+          "E-02"
+        ],
+        "note": "The conclusion incorrectly generalizes the media gap to include international or geopolitical issues, which is not supported by the provided evidence.",
+        "latency_ms": 45657.9,
+        "status": "ok"
+      },
+      "governance": {
+        "triggers": [
+          "T2",
+          "T5"
+        ],
+        "needs_human_review": true,
+        "priority": "high",
+        "invalidated_by_unsupported_fact": true,
+        "auto_accept": false
+      }
+    }
+  ]
+}

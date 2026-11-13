@@ -1,0 +1,8 @@
+ticker,asset_name,category,unit,latest_price,daily_change_pct,monthly_change_pct,risk_signal,uncertainty_note,observed_at
+BDRY,발틱 건화물 운임선물 ETF,Freight_Bulk,USD,13.85,2.06,1.47,NORMAL,금융 프록시 지표는 시장 심리와 위험 프리미엄을 반영하며 단독으로 실물 톤수를 의미하지 않음,2026-11-11T16:20:32.673483+00:00
+ZIM,ZIM 컨테이너 해운,Shipping_Container,USD,28.97,3.1,-6.25,ELEVATED,금융 프록시 지표는 시장 심리와 위험 프리미엄을 반영하며 단독으로 실물 톤수를 의미하지 않음,2026-11-11T16:20:32.673483+00:00
+AMKBY,머스크 (A.P. Moller-Maersk),Shipping_Container,USD,14.67,1.38,-20.62,SHARP_DROP,금융 프록시 지표는 시장 심리와 위험 프리미엄을 반영하며 단독으로 실물 톤수를 의미하지 않음,2026-11-11T16:20:32.673483+00:00
+FRO,프론트라인 (Frontline 원유탱커),Shipping_Tanker,USD,45.6,3.94,-22.96,SHARP_DROP,금융 프록시 지표는 시장 심리와 위험 프리미엄을 반영하며 단독으로 실물 톤수를 의미하지 않음,2026-11-11T16:20:32.673483+00:00
+BZ=F,브렌트유 선물 (Brent Crude),Energy_Crude,USD/bbl,93.89,2.62,-11.96,ELEVATED,금융 프록시 지표는 시장 심리와 위험 프리미엄을 반영하며 단독으로 실물 톤수를 의미하지 않음,2026-11-11T16:20:32.673483+00:00
+CL=F,WTI 원유 선물,Energy_Crude,USD/bbl,87.93,2.2,-6.2,NORMAL,금융 프록시 지표는 시장 심리와 위험 프리미엄을 반영하며 단독으로 실물 톤수를 의미하지 않음,2026-11-11T16:20:32.673483+00:00
+NG=F,천연가스 선물 (Henry Hub LNG),Energy_Gas,USD/MMBtu,3.3,0.06,4.14,NORMAL,금융 프록시 지표는 시장 심리와 위험 프리미엄을 반영하며 단독으로 실물 톤수를 의미하지 않음,2026-11-11T16:20:32.673483+00:00

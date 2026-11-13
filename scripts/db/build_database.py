@@ -77,18 +77,14 @@ if sys.platform == "win32":
     except Exception:
         pass
 
-# NOTE (수정 사항 v1.1 — 작업 디렉터리 문제): issue_data_collector.py /
-# gov_announcements_collector.py와 동일하게, 실행 위치에 상관없이 이 스크립트
-# 파일 기준(scripts/data/...)으로 고정합니다. 실제로 사용자 환경에서
-# "issues_summary 0행, gov_announcements 0건"으로 나온 원인이 바로 이거였습니다
-# — 터미널을 프로젝트 루트에서 열었을 때와 scripts 폴더에서 열었을 때
-# "data/issues"가 서로 다른 곳을 가리켜서, 실제 수집 데이터(scripts/data/)와
-# build_database.py가 찾는 곳(당시 작업 디렉터리 기준)이 어긋났습니다.
+# NOTE (수정 사항 v1.1 — 작업 디렉터리 문제): cwd와 무관하게 프로젝트 루트 기준.
+# NOTE (2026-11-03): gov 산출물은 `data/gov_announcements/`로 통일(폰 --sync-git 대응).
+# issues는 당분간 기존 `scripts/data/issues/`를 유지한다(gitignore·대용량).
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 _SCRIPTS_DIR = os.path.dirname(_SCRIPT_DIR)
 _PROJECT_ROOT = os.path.dirname(_SCRIPTS_DIR)
 ISSUES_DIR = os.path.join(_SCRIPTS_DIR, "data", "issues")
-GOV_DIR = os.path.join(_SCRIPTS_DIR, "data", "gov_announcements")
+GOV_DIR = os.path.join(_PROJECT_ROOT, "data", "gov_announcements")
 
 MYSQL_HOST = os.getenv("MYSQL_HOST", "localhost")
 MYSQL_PORT = int(os.getenv("MYSQL_PORT", "3306"))

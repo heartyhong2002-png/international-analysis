@@ -1,0 +1,4814 @@
+{
+  "schema_version": "canonical_signals_v1.2_nlp_structured",
+  "generated_at": "2026-11-12T15:17:15.530580+00:00",
+  "purity_mode": "high",
+  "verification_policy": "Single-source and visual metadata signals remain UNVERIFIED; Alert Level is never determined in preprocessing.",
+  "alert_level_set": false,
+  "input_counts": {
+    "total_raw": 818,
+    "FAST": 231,
+    "CONTEXT": 441,
+    "OPINION": 146,
+    "BASELINE_SENSORS": 18
+  },
+  "output_counts": {
+    "canonical_clusters": 66,
+    "rejected_noise": 603,
+    "tier_1_corroborated": 21,
+    "tier_2_verified_entity": 45,
+    "multi_source_clusters": 20,
+    "cross_lingual_clusters": 4,
+    "clusters_with_visual_media": 35,
+    "total_media_attachments": 58
+  },
+  "baseline_market_sensors": [
+    {
+      "ticker": "BDRY",
+      "asset_name": "발틱 건화물 운임선물 ETF",
+      "category": "Freight_Bulk",
+      "latest_price": "13.62",
+      "daily_change_pct": "0.37",
+      "risk_signal": "NORMAL",
+      "observed_at": "2026-11-12T08:53:35.893989+00:00"
+    },
+    {
+      "ticker": "ZIM",
+      "asset_name": "ZIM 컨테이너 해운",
+      "category": "Shipping_Container",
+      "latest_price": "29.01",
+      "daily_change_pct": "3.24",
+      "risk_signal": "ELEVATED",
+      "observed_at": "2026-11-12T08:53:35.893989+00:00"
+    },
+    {
+      "ticker": "AMKBY",
+      "asset_name": "머스크 (A.P. Moller-Maersk)",
+      "category": "Shipping_Container",
+      "latest_price": "14.68",
+      "daily_change_pct": "1.45",
+      "risk_signal": "SHARP_DROP",
+      "observed_at": "2026-11-12T08:53:35.893989+00:00"
+    },
+    {
+      "ticker": "FRO",
+      "asset_name": "프론트라인 (Frontline 원유탱커)",
+      "category": "Shipping_Tanker",
+      "latest_price": "45.54",
+      "daily_change_pct": "3.81",
+      "risk_signal": "SHARP_DROP",
+      "observed_at": "2026-11-12T08:53:35.893989+00:00"
+    },
+    {
+      "ticker": "BZ=F",
+      "asset_name": "브렌트유 선물 (Brent Crude)",
+      "category": "Energy_Crude",
+      "latest_price": "93.41",
+      "daily_change_pct": "0.7",
+      "risk_signal": "ELEVATED",
+      "observed_at": "2026-11-12T08:53:35.893989+00:00"
+    },
+    {
+      "ticker": "CL=F",
+      "asset_name": "WTI 원유 선물",
+      "category": "Energy_Crude",
+      "latest_price": "87.14",
+      "daily_change_pct": "0.7",
+      "risk_signal": "NORMAL",
+      "observed_at": "2026-11-12T08:53:35.893989+00:00"
+    },
+    {
+      "ticker": "NG=F",
+      "asset_name": "천연가스 선물 (Henry Hub LNG)",
+      "category": "Energy_Gas",
+      "latest_price": "3.28",
+      "daily_change_pct": "1.99",
+      "risk_signal": "NORMAL",
+      "observed_at": "2026-11-12T08:53:35.893989+00:00"
+    },
+    {
+      "ticker": "^SOX",
+      "asset_name": "필라델피아 반도체 지수 (SOX)",
+      "category": "Semiconductor_1_INDEX_CHIPMAKER",
+      "latest_price": "10033.93",
+      "daily_change_pct": "6.85",
+      "risk_signal": "🔥 강세 급등 (SURGE)",
+      "observed_at": "2026-11-10T13:50:48.974734+00:00"
+    },
+    {
+      "ticker": "NVDA",
+      "asset_name": "NVIDIA (엔비디아)",
+      "category": "Semiconductor_1_INDEX_CHIPMAKER",
+      "latest_price": "178.67",
+      "daily_change_pct": "-4.27",
+      "risk_signal": "⚠️ 급락 주의 (VOLATILE_DROP)",
+      "observed_at": "2026-11-10T13:50:48.974734+00:00"
+    },
+    {
+      "ticker": "TSM",
+      "asset_name": "TSMC (ADR)",
+      "category": "Semiconductor_1_INDEX_CHIPMAKER",
+      "latest_price": "388.62",
+      "daily_change_pct": "3.51",
+      "risk_signal": "🔥 강세 급등 (SURGE)",
+      "observed_at": "2026-11-10T13:50:48.974734+00:00"
+    },
+    {
+      "ticker": "000660.KS",
+      "asset_name": "SK하이닉스",
+      "category": "Semiconductor_1_INDEX_CHIPMAKER",
+      "latest_price": "1212000.0",
+      "daily_change_pct": "6.69",
+      "risk_signal": "⚠️ 급락 주의 (VOLATILE_DROP)",
+      "observed_at": "2026-11-10T13:50:48.974734+00:00"
+    },
+    {
+      "ticker": "005930.KS",
+      "asset_name": "삼성전자",
+      "category": "Semiconductor_1_INDEX_CHIPMAKER",
+      "latest_price": "198900.0",
+      "daily_change_pct": "4.74",
+      "risk_signal": "⚠️ 급락 주의 (VOLATILE_DROP)",
+      "observed_at": "2026-11-10T13:50:48.974734+00:00"
+    },
+    {
+      "ticker": "ASML",
+      "asset_name": "ASML (네덜란드)",
+      "category": "Semiconductor_2_EQUIPMENT_CHOKEPOINT",
+      "latest_price": "1513.25",
+      "daily_change_pct": "6.21",
+      "risk_signal": "🔥 강세 급등 (SURGE)",
+      "observed_at": "2026-11-10T13:50:48.974734+00:00"
+    },
+    {
+      "ticker": "AMAT",
+      "asset_name": "Applied Materials (AMAT)",
+      "category": "Semiconductor_2_EQUIPMENT_CHOKEPOINT",
+      "latest_price": "370.55",
+      "daily_change_pct": "11.37",
+      "risk_signal": "🔥 강세 급등 (SURGE)",
+      "observed_at": "2026-11-10T13:50:48.974734+00:00"
+    },
+    {
+      "ticker": "LRCX",
+      "asset_name": "Lam Research (램리서치)",
+      "category": "Semiconductor_2_EQUIPMENT_CHOKEPOINT",
+      "latest_price": "221.31",
+      "daily_change_pct": "10.41",
+      "risk_signal": "🔥 강세 급등 (SURGE)",
+      "observed_at": "2026-11-10T13:50:48.974734+00:00"
+    },
+    {
+      "ticker": "KLAC",
+      "asset_name": "KLA Corp",
+      "category": "Semiconductor_2_EQUIPMENT_CHOKEPOINT",
+      "latest_price": "151.38",
+      "daily_change_pct": "9.31",
+      "risk_signal": "🔥 강세 급등 (SURGE)",
+      "observed_at": "2026-11-10T13:50:48.974734+00:00"
+    },
+    {
+      "ticker": "4063.T",
+      "asset_name": "신에츠 화학 (Shin-Etsu)",
+      "category": "Semiconductor_3_MATERIALS_MINERALS",
+      "latest_price": "5658.0",
+      "daily_change_pct": "3.99",
+      "risk_signal": "🔥 강세 급등 (SURGE)",
+      "observed_at": "2026-11-10T13:50:48.974734+00:00"
+    },
+    {
+      "ticker": "MP",
+      "asset_name": "MP Materials",
+      "category": "Semiconductor_3_MATERIALS_MINERALS",
+      "latest_price": "37.75",
+      "daily_change_pct": "6.61",
+      "risk_signal": "🔥 강세 급등 (SURGE)",
+      "observed_at": "2026-11-10T13:50:48.974734+00:00"
+    }
+  ],
+  "signals": [
+    {
+      "cluster_id": "CLUST-0006",
+      "signal_id": "SIG-20261112-0006",
+      "representative_title": "Mines strike two tankers in Strait of Hormuz: IRGC Navy",
+      "canonical_title": "Mines strike two tankers in Strait of Hormuz: IRGC Navy",
+      "url": "https://www.tehrantimes.com/news/532069/Mines-strike-two-tankers-in-Strait-of-Hormuz-IRGC-Navy",
+      "cluster_size": 10,
+      "unique_sources_count": 8,
+      "sources": [
+        "IRNA (이란 국영 통신사)",
+        "ir_tehran_times_rss",
+        "Bluesky_Social",
+        "Bluesky_@umlegacypress.com",
+        "Bluesky_@arcstrike.bsky.social",
+        "Bluesky_@radioproletario.bsky.social",
+        "Bluesky_@greasydump.bsky.social",
+        "Bluesky_@cko155.bsky.social"
+      ],
+      "source_types": [
+        "state_media_news",
+        "state_media",
+        "public_opinion_forum",
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "FAST",
+        "CONTEXT",
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "이란 혁명수비대 / 정부 (IRGC / Iran)",
+        "who_code": "IRAN_MILITARY_OR_GOV",
+        "action": "물리적 공격 / 공습 (Physical Strike / Attack)",
+        "action_code": "PHYSICAL_STRIKE",
+        "target": "원유 수송 유조선 (Crude Oil Tanker)",
+        "target_code": "CRUDE_OIL_TANKER",
+        "where": "호르무즈 해협 (Strait of Hormuz)",
+        "when": "Thu, 12 Nov 2026 07:52:28 GMT",
+        "supply_impact_tags": [
+          "CRUDE_OIL"
+        ],
+        "threat_severity": "CRITICAL_DISRUPTION",
+        "threat_description": "🚨 치명적 물리 공격 (실제 해운/에너지 인프라 파괴·피격)"
+      },
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_HORMUZ",
+          "name": "호르무즈 해협 (Strait of Hormuz)",
+          "region": "Middle East / Persian Gulf",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [
+        "MILITARY_CONFLICT",
+        "INFRA_LOGISTICS_DISRUPTION",
+        "PROTEST_STRIKE",
+        "ELECTION_GOVERNMENT"
+      ],
+      "hotspot_regions": [
+        "MIDDLE_EAST",
+        "EASTERN_EUROPE",
+        "WESTERN_EUROPE",
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://img9.irna.ir/d/r2/2026/11/12/4/173235287.jpg",
+          "alt_text": "IRGC: Two defiant oil tankers explode in Strait of Hormuz",
+          "source": "IRNA (이란 국영 통신사)"
+        },
+        {
+          "type": "image",
+          "url": "https://img9.irna.ir/d/r2/2026/11/11/4/173233542.jpg",
+          "alt_text": "Two more violating oil tankers hit naval mines in Strait of Hormuz: IRGC",
+          "source": "IRNA (이란 국영 통신사)"
+        },
+        {
+          "type": "image",
+          "url": "https://img9.irna.ir/d/r2/2026/11/11/4/173232843.jpg",
+          "alt_text": "Violating oil tanker catches fire east of Strait of Hormuz: Iran Army",
+          "source": "IRNA (이란 국영 통신사)"
+        },
+        {
+          "type": "image",
+          "url": "https://media.mehrnews.com/d/2026/11/11/4/6258062.jpg",
+          "alt_text": "Mines strike two tankers in Strait of Hormuz: IRGC Navy",
+          "source": "ir_tehran_times_rss"
+        },
+        {
+          "type": "external_card",
+          "url": "https://umlegacypressqsefc.com/iran-escalates-in-hormuz-claims-strike-on-omani-island-it-says-enemy-uses-for-us-military-ops/?utm_source=bluesky&utm_medium=jetpack_social",
+          "alt_text": "Iran escalates in Hormuz, claims strike on Omani island it says ‘enemy’ uses for US military ops",
+          "source": "Bluesky_@umlegacypress.com"
+        },
+        {
+          "type": "external_card",
+          "url": "https://www.presstv.co.uk/Detail/2026/11/11/780469/another-oil-tanker-catches-fire-after-striking-naval-mine-in-eastern-strait-of-hormuz",
+          "alt_text": "IRGC Navy says two more oil tankers ablaze in Strait of Hormuz after hitting mines",
+          "source": "Bluesky_@radioproletario.bsky.social"
+        },
+        {
+          "type": "external_card",
+          "url": "https://www.independent.co.uk/news/world/americas/trump-russia-diesel-deal-tanker-putin-b3083134.html",
+          "alt_text": "Russian diesel tanker turns away from US as Trump’s deal with Putin falls apart",
+          "source": "Bluesky_@cko155.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "IRGC: Two defiant oil tankers explode in Strait of Hormuz",
+        "Two more violating oil tankers hit naval mines in Strait of Hormuz: IRGC",
+        "Violating oil tanker catches fire east of Strait of Hormuz: Iran Army",
+        "Mines strike two tankers in Strait of Hormuz: IRGC Navy",
+        "Iran escalates in Hormuz, claims strike on Omani island it says ‘enemy’ uses for US military ops",
+        "Iran claims it struck a small Omani island in the Strait of Hormuz, targeting oil tanker navigation infrastructure as CENTCOM maintains its blockade of Iranian ports and protects commercial shipping from Iranian attacks along the southern r",
+        "IRGC Navy says two more oil tankers ablaze in Strait of Hormuz after hitting mines",
+        "An oil tanker caught fire after hitting a naval mine in a restricted and unsafe area in the eastern Strait of Hormuz early Wednesday, according to Iran’s Army Navy.",
+        "Russian diesel tanker turns away from US as Trump’s deal with Putin falls apart",
+        "Despite President Trump promising up to a million tons of diesel from Russia, so far no barrels have arrived in the US"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Thu, 12 Nov 2026 07:52:28 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0030",
+      "signal_id": "SIG-20261112-0030",
+      "representative_title": "US to widen AI chip export controls to seven nations, curb China remote access - Chosunbiz",
+      "canonical_title": "US to widen AI chip export controls to seven nations, curb China remote access - Chosunbiz",
+      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQMy1RTTlQM1phT2puYkhHSmVJVExldDE2dkhINF9FV3hTVjNreVlDc2JJRm5aS2g3eHp1NklXZi1Lbk1GS21TVU1GamxyREtqb0VUMXV1RTU3dkZ5TVAxMXRXdWNTc195NGZtNjRWeV9kakNvckRLbkdLaXNPWVYycHJXUk5Xa3gw0gGcAUFVX3lxTFBrYU9OdmQ3UGhzaGthSUUzclJMZldLbHEzR3RXbU82MHgtTVFJX21mWVVmalNlbVFKZUJUVTFjMHJLa1BVUkZkdzZSQ05sMmVJaWVad05HUUxkRHh2bmpIUFRCRVJuMzMwUGpqaFhyVW1HNnptMWszVXcxMFdaOVdaeFo1cGtRUWV5UlQ3elp0cXFRbVNVUmxtemdEaw?oc=5",
+      "cluster_size": 10,
+      "unique_sources_count": 6,
+      "sources": [
+        "jp_japan_times_rss",
+        "us_commerce_bis",
+        "us_thehill_tech",
+        "us_chips_supplychain_osint",
+        "Bluesky_@ramshankarshri121.bsky.social",
+        "Bluesky_@evmanforever.bsky.social"
+      ],
+      "source_types": [
+        "independent_media",
+        "state_media",
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "CONTEXT",
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en",
+        "pt"
+      ],
+      "is_cross_lingual": true,
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "미국 정부 / 군 (US Gov / Military)",
+        "who_code": "US_GOV_OR_MILITARY",
+        "action": "수출통제 / 무역제재 (Export Control / Sanctions)",
+        "action_code": "REGULATORY_SANCTION",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "EAST_ASIA, NORTH_AMERICA",
+        "when": "Thu, 12 Nov 2026 16:27:00 +0900",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "HIGH_REGULATORY_DISRUPTION",
+        "threat_description": "📋 통상·규제 공급망 타격 (수출통제·생산중단·자산동결)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [
+        "SANCTIONS_EXPORT_CONTROL",
+        "ELECTION_GOVERNMENT"
+      ],
+      "hotspot_regions": [
+        "EAST_ASIA",
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://www.japantimes.co.jp/japantimes/uploads/images/2026/11/12/573665.JPG",
+          "alt_text": "Chinese AI firms rush to secure Nvidia chip capacity as scandal stirs fear of curbs",
+          "source": "jp_japan_times_rss"
+        },
+        {
+          "type": "image",
+          "url": "https://thehill.com/wp-content/uploads/sites/2/2025/09/trump_donald_huang_jensen_nvidia_04302025_AP25120806136069-1.jpg?w=900",
+          "alt_text": "Trump embraces Huang as espionage scandal shakes Nvidia",
+          "source": "us_thehill_tech"
+        },
+        {
+          "type": "image",
+          "url": "https://thehill.com/wp-content/uploads/sites/2/2026/09/AP26238747371061-e1790621169206.jpg?w=900",
+          "alt_text": "Kudlow calls on Nvidia CEO to step down",
+          "source": "us_thehill_tech"
+        },
+        {
+          "type": "external_card",
+          "url": "https://theprint.in/opinion/jensen-huang-affair-the-spy-the-seductress-and-the-story-we-keep-falling-for/3095758/",
+          "alt_text": "Jensen Huang affair — The spy, the seductress and the story we keep falling for",
+          "source": "Bluesky_@ramshankarshri121.bsky.social"
+        },
+        {
+          "type": "external_card",
+          "url": "https://share.google/DqeTPsvE0xu6bmY8G",
+          "alt_text": "Nvidia Chinese Spy Story Is Getting Worse: Huang’s Affair Helped Move $7.5 Billion in Chips to China",
+          "source": "Bluesky_@evmanforever.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "Chinese AI firms rush to secure Nvidia chip capacity as scandal stirs fear of curbs",
+        "Trump embraces Huang as espionage scandal shakes Nvidia",
+        "Kudlow calls on Nvidia CEO to step down",
+        "Jensen Huang affair — The spy, the seductress and the story we keep falling for",
+        "Just three of the 224 cases of Chinese espionage against the United States between 2000 and 2024 involved sex.",
+        "Nvidia Chinese Spy Story Is Getting Worse: Huang’s Affair Helped Move $7.5 Billion in Chips to China",
+        "A personal scandal at the top of Nvidia just became a federal export-control problem, and the company's own China numbers don't add up. With earnings days away, investors are asking what the board kne..."
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Thu, 12 Nov 2026 16:27:00 +0900",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0036",
+      "signal_id": "SIG-20261112-0036",
+      "representative_title": "The Nvidia Scandal Is Not a Spy Thriller — It’s Corruption - Center for International Policy",
+      "canonical_title": "The Nvidia Scandal Is Not a Spy Thriller — It’s Corruption - Center for International Policy",
+      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNaHpzSXJTc1lHVTRRb2FUVFREak5SRlJYNTdibmVndFRRdzB0Z2lEZVBlZWdZWTNBbVUybVowR3ZRQlZfTlB2Y1R6QXJDT1RwZEsyU2RvYVFydTRRaVRvMkl3ZlFqZlNCb0FEVUY2UThHR2hRaUZ4a3pFTzExTXYwcWxrMjdPMzJNLU5YYmVtR2lRb2ZYSWU5SWFaTFplZHl6UnVn?oc=5",
+      "cluster_size": 5,
+      "unique_sources_count": 5,
+      "sources": [
+        "us_commerce_bis",
+        "us_thehill_tech",
+        "us_chips_supplychain_osint",
+        "Bluesky_Social",
+        "Bluesky_@osint-mirrors.bsky.social"
+      ],
+      "source_types": [
+        "state_media",
+        "independent_media",
+        "public_opinion_forum",
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "CONTEXT",
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "중국 인민해방군 / 정부 (China PLA / Gov)",
+        "who_code": "CHINA_PLA_OR_GOV",
+        "action": "규제 조사 / 법적 리스크 (Regulatory / Compliance Probe)",
+        "action_code": "LEGAL_OR_COMPLIANCE_PROBE",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "EAST_ASIA",
+        "when": "Tue, 10 Nov 2026 21:33:39 GMT",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [
+        "SANCTIONS_EXPORT_CONTROL"
+      ],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://thehill.com/wp-content/uploads/sites/2/2026/11/GettyImages-2303986706-e1794406198818.jpg?w=900",
+          "alt_text": "Who is Alice Huang, alleged spy who reportedly had affair with Nvidia CEO?",
+          "source": "us_thehill_tech"
+        }
+      ],
+      "visual_alt_texts": [
+        "Who is Alice Huang, alleged spy who reportedly had affair with Nvidia CEO?"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Tue, 10 Nov 2026 21:33:39 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0029",
+      "signal_id": "SIG-20261112-0029",
+      "representative_title": "Export control against China for NVIDIA chips was a bad idea. (Yeah, yeah, I know, Jensen Huang should not have cheated on his wife.)",
+      "canonical_title": "Export control against China for NVIDIA chips was a bad idea. (Yeah, yeah, I know, Jensen Huang should not have cheated on his wife.)",
+      "url": "https://bsky.app/profile/manlycoffee.techhub.social.ap.brid.gy/post/3n23l6hmhp772",
+      "cluster_size": 5,
+      "unique_sources_count": 4,
+      "sources": [
+        "ar_clarin_rss",
+        "us_thehill_tech",
+        "Bluesky_@zambianobserver.bsky.social",
+        "Bluesky_@manlycoffee.techhub.social.ap.brid.gy"
+      ],
+      "source_types": [
+        "independent_media",
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "CONTEXT",
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en",
+        "es"
+      ],
+      "is_cross_lingual": true,
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "중국 인민해방군 / 정부 (China PLA / Gov)",
+        "who_code": "CHINA_PLA_OR_GOV",
+        "action": "수출통제 / 무역제재 (Export Control / Sanctions)",
+        "action_code": "REGULATORY_SANCTION",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "EAST_ASIA",
+        "when": "Thu, 12 Nov 2026 08:20:11 +0000",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "HIGH_REGULATORY_DISRUPTION",
+        "threat_description": "📋 통상·규제 공급망 타격 (수출통제·생산중단·자산동결)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [
+        "SANCTIONS_EXPORT_CONTROL"
+      ],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://www.clarin.com/img/2026/09/03/opG8cy99-_1200x630__1.jpg",
+          "alt_text": "Jensen Huang, el rey de los chips de IA, al borde de ser destituido de Nvidia",
+          "source": "ar_clarin_rss"
+        },
+        {
+          "type": "image",
+          "url": "https://thehill.com/wp-content/uploads/sites/2/2025/08/cramerkevin_072425gn01_w.jpg?w=900",
+          "alt_text": "GOP senator feels",
+          "source": "us_thehill_tech"
+        },
+        {
+          "type": "image",
+          "url": "https://thehill.com/wp-content/uploads/sites/2/2026/09/6abacdb77f73a9.56384948-e1794414154238.jpeg?w=900",
+          "alt_text": "Nvidia stock rebounds as scrutiny into Huang mounts",
+          "source": "us_thehill_tech"
+        },
+        {
+          "type": "external_card",
+          "url": "https://zambianobserver.com/nvidia-ceo-jensen-huang-allegedly-had-a-second-affair/",
+          "alt_text": "Nvidia CEO Jensen Huang allegedly had a second affair - The Zambian Observer",
+          "source": "Bluesky_@zambianobserver.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "Jensen Huang, el rey de los chips de IA, al borde de ser destituido de Nvidia",
+        "GOP senator feels",
+        "Nvidia stock rebounds as scrutiny into Huang mounts",
+        "Nvidia CEO Jensen Huang allegedly had a second affair - The Zambian Observer",
+        "Nvidia CEO Jensen Huang allegedly had a second affair | NewsNovember 11, 2026 — Days after Nvidia CEO Jensen Huang admitted to having an extramarital affair with an alleged Chinese spy (China denies any espionage), The New York Times has re"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Thu, 12 Nov 2026 08:20:11 +0000",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0082",
+      "signal_id": "SIG-20261112-0082",
+      "representative_title": "Panama canal traffic facing further cuts as drought from El Niño worsens",
+      "canonical_title": "Panama canal traffic facing further cuts as drought from El Niño worsens",
+      "url": "https://bsky.app/profile/anna26458.bsky.social/post/3mwqbdiqfps25",
+      "cluster_size": 5,
+      "unique_sources_count": 3,
+      "sources": [
+        "Bluesky_@anna26458.bsky.social",
+        "Bluesky_@skitts.bsky.social",
+        "Bluesky_@strategicenergymap.org"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "pt",
+      "detected_languages": [
+        "en",
+        "pt"
+      ],
+      "is_cross_lingual": true,
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "미상 / 민간 다국적 출처 (Unspecified / Multiple Sources)",
+        "who_code": "UNKNOWN_OR_UNSPECIFIED",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "원유 수송 유조선 (Crude Oil Tanker)",
+        "target_code": "CRUDE_OIL_TANKER",
+        "where": "호르무즈 해협 (Strait of Hormuz), 바브엘만데브 해협 및 홍해 (Bab-el-Mandeb & Red Sea), 말라카 해협 (Strait of Malacca), 보스포루스 및 흑해 해협 (Bosphorus & Turkish Straits), 파나마 운하 (Panama Canal)",
+        "when": "2026-09-30T11:44:37.860Z",
+        "supply_impact_tags": [
+          "CRUDE_OIL"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_HORMUZ",
+          "name": "호르무즈 해협 (Strait of Hormuz)",
+          "region": "Middle East / Persian Gulf",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG"
+          ]
+        },
+        {
+          "code": "CHOKEPOINT_BAB_EL_MANDEB",
+          "name": "바브엘만데브 해협 및 홍해 (Bab-el-Mandeb & Red Sea)",
+          "region": "Middle East / Red Sea",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG",
+            "SEMICONDUCTOR"
+          ]
+        },
+        {
+          "code": "CHOKEPOINT_MALACCA",
+          "name": "말라카 해협 (Strait of Malacca)",
+          "region": "Southeast Asia",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG",
+            "SEMICONDUCTOR"
+          ]
+        },
+        {
+          "code": "CHOKEPOINT_BOSPHORUS",
+          "name": "보스포루스 및 흑해 해협 (Bosphorus & Turkish Straits)",
+          "region": "Eurasia / Black Sea",
+          "primary_supply": [
+            "GRAIN_FOOD",
+            "CRUDE_OIL"
+          ]
+        },
+        {
+          "code": "CHOKEPOINT_PANAMA",
+          "name": "파나마 운하 (Panama Canal)",
+          "region": "Americas / Latin America",
+          "primary_supply": [
+            "NATURAL_GAS_LNG",
+            "GRAIN_FOOD"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "MIDDLE_EAST",
+        "LATIN_AMERICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [
+        "FIELD_PHOTO_VIDEO"
+      ],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://www.theguardian.com/world/2026/sep/15/panama-canal-traffic-cut-trade-drought-el-nino?CMP=GTAU_email",
+          "alt_text": "Panama canal traffic facing further cuts as drought from El Niño worsens",
+          "source": "Bluesky_@anna26458.bsky.social"
+        },
+        {
+          "type": "video",
+          "url": "https://weather.com/2026/09/29/travel/news/video/el-nino-panama-canal-slowing?par=samsung_widget_VZW&temp=f&cm_ven=trendingnow_ins_us_en_1&theme=samsungDark&sflag=1&samsung_ver=80500",
+          "alt_text": "El Niño drought slows Panama Canal shipping again",
+          "source": "Bluesky_@skitts.bsky.social"
+        },
+        {
+          "type": "external_card",
+          "url": "https://www.theguardian.com/world/2026/sep/15/panama-canal-traffic-cut-trade-drought-el-nino",
+          "alt_text": "Panama canal traffic facing further cuts as drought from El Niño worsens",
+          "source": "Bluesky_@anna26458.bsky.social"
+        },
+        {
+          "type": "external_card",
+          "url": "https://www.theguardian.com/world/2026/sep/15/panama-canal-traffic-cut-trade-drought-el-nino?CMP=politicsreally_email",
+          "alt_text": "Panama canal traffic facing further cuts as drought from El Niño worsens",
+          "source": "Bluesky_@anna26458.bsky.social"
+        },
+        {
+          "type": "image",
+          "url": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:q4ftjekb2e6bfoztr3eozief/bafkreieievmxyp47aaspg3qkzrisqn2uzcyy6toj4kugpoyegpfoqxmcxe",
+          "alt_text": "Bar chart of 7-day average tanker transits vs pre-crisis baseline, percent change: Strait of Hormuz -97% (1.3/day), Turkish Straits -48% (11.7/day), Bab el-Mandeb -22% (9.4/day), Strait of Malacca -17% (70.0/day), Panama Canal -10% (11.7/da",
+          "source": "Bluesky_@strategicenergymap.org"
+        }
+      ],
+      "visual_alt_texts": [
+        "Panama canal traffic facing further cuts as drought from El Niño worsens",
+        "Planned daily reductions will further choke one of the world’s most important shipping lanes",
+        "El Niño drought slows Panama Canal shipping again",
+        "A developing El Niño could cut Panama's rains short, lowering the reservoirs that feed the Panama Canal and slowing shipping traffic.",
+        "Bar chart of 7-day average tanker transits vs pre-crisis baseline, percent change: Strait of Hormuz -97% (1.3/day), Turkish Straits -48% (11.7/day), Bab el-Mandeb -22% (9.4/day), Strait of Malacca -17% (70.0/day), Panama Canal -10% (11.7/da",
+        "Bar chart of 7-day average tanker transits vs pre-crisis baseline, percent change: Strait of Hormuz -97% (1.3/day), Turkish Straits -48% (11.7/day), Bab el-Mandeb -22% (9.4/day), Strait of Malacca -17% (70.0/day), Panama Canal -10% (11.7/day), Suez Canal -4% (15.0/day)."
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-09-30T11:44:37.860Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0011",
+      "signal_id": "SIG-20261112-0011",
+      "representative_title": "What could Chinese intelligence have learned from Nvidia CEO’s affair?",
+      "canonical_title": "What could Chinese intelligence have learned from Nvidia CEO’s affair?",
+      "url": "https://www.aljazeera.com/news/2026/11/12/what-could-chinese-intelligence-have-learned-from-nvidia-ceos-affair?traffic_source=rss",
+      "cluster_size": 5,
+      "unique_sources_count": 3,
+      "sources": [
+        "Al Jazeera",
+        "us_thehill_tech",
+        "us_chips_supplychain_osint"
+      ],
+      "source_types": [
+        "state_media_news",
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "FAST",
+        "CONTEXT"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 0.8,
+      "event_tuple": {
+        "who": "글로벌 반도체 기업 (Semiconductor Enterprise)",
+        "who_code": "SEMICONDUCTOR_CHIPMAKER",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "NORTH_AMERICA",
+        "when": "Thu, 12 Nov 2026 01:33:09 +0000",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://thehill.com/wp-content/uploads/sites/2/2026/06/6a31d615188665.55605695-e1785164164264.jpeg?w=900",
+          "alt_text": "Nvidia stock tanks after report of second Jensen Huang affair",
+          "source": "us_thehill_tech"
+        }
+      ],
+      "visual_alt_texts": [
+        "Nvidia stock tanks after report of second Jensen Huang affair"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Thu, 12 Nov 2026 01:33:09 +0000",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0063",
+      "signal_id": "SIG-20261112-0063",
+      "representative_title": "Somalia: Somaliland's Red Sea Security Role Highlighted At Washington Conference",
+      "canonical_title": "Somalia: Somaliland's Red Sea Security Role Highlighted At Washington Conference",
+      "url": "https://bsky.app/profile/no-niin.bsky.social/post/3mzxd7b7orc2d",
+      "cluster_size": 4,
+      "unique_sources_count": 3,
+      "sources": [
+        "Bluesky_Social",
+        "Bluesky_@no-niin.bsky.social",
+        "Bluesky_@s-hirleylim.bsky.social"
+      ],
+      "source_types": [
+        "public_opinion_forum",
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "예멘 후티 반군 (Houthi / Ansarallah)",
+        "who_code": "HOUTHI_YEMEN",
+        "action": "물리적 공격 / 공습 (Physical Strike / Attack)",
+        "action_code": "PHYSICAL_STRIKE",
+        "target": "항만 / 정유 / 에너지 인프라 (Port & Energy Infra)",
+        "target_code": "PORT_ENERGY_INFRA",
+        "where": "바브엘만데브 해협 및 홍해 (Bab-el-Mandeb & Red Sea)",
+        "when": "2026-11-12",
+        "supply_impact_tags": [
+          "CRUDE_OIL"
+        ],
+        "threat_severity": "CRITICAL_DISRUPTION",
+        "threat_description": "🚨 치명적 물리 공격 (실제 해운/에너지 인프라 파괴·피격)"
+      },
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_BAB_EL_MANDEB",
+          "name": "바브엘만데브 해협 및 홍해 (Bab-el-Mandeb & Red Sea)",
+          "region": "Middle East / Red Sea",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG",
+            "SEMICONDUCTOR"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "MIDDLE_EAST",
+        "NORTH_AMERICA",
+        "CENTRAL_AFRICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://allafrica.com/stories/202611090129.html",
+          "alt_text": "Somalia: Somaliland's Red Sea Security Role Highlighted At Washington Conference",
+          "source": "Bluesky_@no-niin.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "Somalia: Somaliland's Red Sea Security Role Highlighted At Washington Conference",
+        "Somaliland's coastal security efforts and Berbera's port and airport could make it an important partner in protecting Red Sea shipping routes, Somaliland's U.S. representative Bashir Goth and Atlantic..."
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-11-12",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0040",
+      "signal_id": "SIG-20261112-0040",
+      "representative_title": "Taiwan Says It Would Have Barred Woman Linked to Nvidia CEO if Officials Had Known She Was a Spy",
+      "canonical_title": "Taiwan Says It Would Have Barred Woman Linked to Nvidia CEO if Officials Had Known She Was a Spy",
+      "url": "https://bsky.app/profile/cbdeiparine.bsky.social/post/3n23sfhkdpc2l",
+      "cluster_size": 3,
+      "unique_sources_count": 3,
+      "sources": [
+        "us_thehill_tech",
+        "Bluesky_@cbdeiparine.bsky.social",
+        "Bluesky_@handle.invalid"
+      ],
+      "source_types": [
+        "independent_media",
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "CONTEXT",
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "중국 인민해방군 / 정부 (China PLA / Gov)",
+        "who_code": "CHINA_PLA_OR_GOV",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "EAST_ASIA, WESTERN_EUROPE",
+        "when": "Wed, 11 Nov 2026 16:37:51 +0000",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [
+        "SANCTIONS_EXPORT_CONTROL"
+      ],
+      "hotspot_regions": [
+        "EAST_ASIA",
+        "WESTERN_EUROPE"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://thehill.com/wp-content/uploads/sites/2/2026/09/Huang_Nazzaro-Shapero_AP_JonathanBrady.jpg?w=900",
+          "alt_text": "Nvidia CEO",
+          "source": "us_thehill_tech"
+        },
+        {
+          "type": "external_card",
+          "url": "https://www.ibtimes.co.uk/taiwan-alice-huang-alleged-spy-entry-permit-1831666",
+          "alt_text": "Taiwan Says It Would Have Barred Woman Linked to Nvidia CEO if Officials Had Known She Was a Spy",
+          "source": "Bluesky_@cbdeiparine.bsky.social"
+        },
+        {
+          "type": "external_card",
+          "url": "https://news.netasgard.com/a/67acb81e4251b08d?s=bluesky",
+          "alt_text": "Nvidia Considers Removing CEO Over Spy Allegations",
+          "source": "Bluesky_@handle.invalid"
+        }
+      ],
+      "visual_alt_texts": [
+        "Nvidia CEO",
+        "Taiwan Says It Would Have Barred Woman Linked to Nvidia CEO if Officials Had Known She Was a Spy",
+        "Taiwan says it would have denied entry to Alice Huang if officials had known of the espionage allegation, as authorities investigate her travel and links to Megaspeed.",
+        "Nvidia Considers Removing CEO Over Spy Allegations",
+        "Nvidia's board is reportedly considering removing CEO Jensen Huang following allegations that he had a relationship with a woman suspected of ties to Chinese intelligence. The controversy stems from r… · Photo : Agencia de Noticias ANDES ·"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Wed, 11 Nov 2026 16:37:51 +0000",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0087",
+      "signal_id": "SIG-20261112-0087",
+      "representative_title": "UK Eases Curbs on Russian Oil-Products as OFAC Targets Hamas, Iran | Certain Risk",
+      "canonical_title": "UK Eases Curbs on Russian Oil-Products as OFAC Targets Hamas, Iran | Certain Risk",
+      "url": "https://bsky.app/profile/certainrisk.bsky.social/post/3mmc4rg4wsk26",
+      "cluster_size": 3,
+      "unique_sources_count": 3,
+      "sources": [
+        "Bluesky_@drugdesigns.bsky.social",
+        "Bluesky_@certainrisk.bsky.social",
+        "Bluesky_@cheryljean.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "이란 혁명수비대 / 정부 (IRGC / Iran)",
+        "who_code": "IRAN_MILITARY_OR_GOV",
+        "action": "수출통제 / 무역제재 (Export Control / Sanctions)",
+        "action_code": "REGULATORY_SANCTION",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "MIDDLE_EAST, EASTERN_EUROPE, WESTERN_EUROPE, NORTH_AMERICA",
+        "when": "2026-05-22T21:02:17.746Z",
+        "supply_impact_tags": [
+          "CRUDE_OIL"
+        ],
+        "threat_severity": "HIGH_REGULATORY_DISRUPTION",
+        "threat_description": "📋 통상·규제 공급망 타격 (수출통제·생산중단·자산동결)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [
+        "SANCTIONS_EXPORT_CONTROL"
+      ],
+      "hotspot_regions": [
+        "MIDDLE_EAST",
+        "EASTERN_EUROPE",
+        "WESTERN_EUROPE",
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://www.rferl.org/a/sanctions-expert-michael-parker-russia-iran-waivers-/33760204.html",
+          "alt_text": "Sanctions Expert Michael Parker On Russia, Iran, And Whether Waivers Work",
+          "source": "Bluesky_@drugdesigns.bsky.social"
+        },
+        {
+          "type": "external_card",
+          "url": "https://www.certainrisk.com/2026/05/19/uk-eases-curbs-on-russian-oil-products-as-ofac-targets-hamas-iran/?utm_campaign=daily&utm_source=bluesky&utm_medium=social",
+          "alt_text": "UK Eases Curbs on Russian Oil-Products as OFAC Targets Hamas, Iran | Certain Risk",
+          "source": "Bluesky_@certainrisk.bsky.social"
+        },
+        {
+          "type": "external_card",
+          "url": "http://www.rferl.org/a/33760204.html",
+          "alt_text": "Sanctions Expert Michael Parker On Russia, Iran, And Whether Waivers Work",
+          "source": "Bluesky_@cheryljean.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "Sanctions Expert Michael Parker On Russia, Iran, And Whether Waivers Work",
+        "Washington is sharply divided over the latest US sanctions waiver for Russian oil. Michael Parker, a former investigator and section chief in the US Treasury’s Office of Foreign Assets Control (OFAC),...",
+        "UK Eases Curbs on Russian Oil-Products as OFAC Targets Hamas, Iran | Certain Risk",
+        "Britain issued a new sanctions waiver on Tuesday allowing the import of certain diesel and jet fuel processed in third countries from Russian-origin oil, even as the United States separately tighte…"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-05-22T21:02:17.746Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0004",
+      "signal_id": "SIG-20261112-0004",
+      "representative_title": "U.S. Sanctions Cripple Financial Networks Sustaining the Iranian Regime",
+      "canonical_title": "U.S. Sanctions Cripple Financial Networks Sustaining the Iranian Regime",
+      "url": "https://www.state.gov/releases/office-of-the-spokesman/2026/11/u-s-sanctions-cripple-financial-networks-sustaining-the-iranian-regime/",
+      "cluster_size": 5,
+      "unique_sources_count": 2,
+      "sources": [
+        "US State Dept - Near East",
+        "US State Dept - Western Hemisphere"
+      ],
+      "source_types": [
+        "official_statement"
+      ],
+      "observed_lanes": [
+        "FAST"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "미국 정부 / 군 (US Gov / Military)",
+        "who_code": "US_GOV_OR_MILITARY",
+        "action": "수출통제 / 무역제재 (Export Control / Sanctions)",
+        "action_code": "REGULATORY_SANCTION",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "NORTH_AMERICA",
+        "when": "Fri, 06 Nov 2026 21:00:53 +0000",
+        "supply_impact_tags": [],
+        "threat_severity": "HIGH_REGULATORY_DISRUPTION",
+        "threat_description": "📋 통상·규제 공급망 타격 (수출통제·생산중단·자산동결)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [],
+      "event_types": [
+        "SANCTIONS_EXPORT_CONTROL"
+      ],
+      "hotspot_regions": [
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Fri, 06 Nov 2026 21:00:53 +0000",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0013",
+      "signal_id": "SIG-20261112-0013",
+      "representative_title": "Governo deve prorrogar subsídio ao diesel para conter inflação e greve - Metrópoles",
+      "canonical_title": "Governo deve prorrogar subsídio ao diesel para conter inflação e greve - Metrópoles",
+      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxQMm5mY2RyelNfQlllQ1pzTXpVamtOZDVLQnVoVGswMk9BdkU1RG5WQnU2bk9tdGw3VEV0VjlwdlVlZ1VZeVA0M3FuTEZPVGxsTUNjRC04eWxOTUFVWHlwXzZfZ0lkaWdRUVM4eTI2RzNRSWhYV1JNMWQ1akRZNGhuX0JYWWdxNWJLQW1aaHBuV3VuR2tCVDVRa3lOQU5xTF9NUGl0azNmcmRNWlJ2eDVnTm9tQzhzWEtlU1NwWQ?oc=5",
+      "cluster_size": 4,
+      "unique_sources_count": 2,
+      "sources": [
+        "Agência Brasil (브라질 국영 통신사)",
+        "GoogleNews_BR"
+      ],
+      "source_types": [
+        "state_media_news",
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "FAST",
+        "OPINION"
+      ],
+      "primary_language": "pt",
+      "detected_languages": [
+        "en",
+        "es",
+        "pt"
+      ],
+      "is_cross_lingual": true,
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "미상 / 민간 다국적 출처 (Unspecified / Multiple Sources)",
+        "who_code": "UNKNOWN_OR_UNSPECIFIED",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "LATIN_AMERICA",
+        "when": "Wed, 11 Nov 2026 19:13:00 -0300",
+        "supply_impact_tags": [
+          "CRUDE_OIL"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [
+        "PROTEST_STRIKE",
+        "ELECTION_GOVERNMENT"
+      ],
+      "hotspot_regions": [
+        "LATIN_AMERICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://agenciabrasil.ebc.com.br/ebc.png?id=1708500&o=rss",
+          "alt_text": "Projeto quer retirar R$ 10,5 bi em subsídios ao diesel da meta fiscal",
+          "source": "Agência Brasil (브라질 국영 통신사)"
+        }
+      ],
+      "visual_alt_texts": [
+        "Projeto quer retirar R$ 10,5 bi em subsídios ao diesel da meta fiscal"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Wed, 11 Nov 2026 19:13:00 -0300",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0022",
+      "signal_id": "SIG-20261112-0022",
+      "representative_title": "Tanker transits (AIS-visible) fell further this week: Hormuz down to 0.6 ships/day, 99% below baseline, as many sail dark. Bosporus -36%, Bab el-Mandeb -29%, Pa...",
+      "canonical_title": "Tanker transits (AIS-visible) fell further this week: Hormuz down to 0.6 ships/day, 99% below baseline, as many sail dark. Bosporus -36%, Bab el-Mandeb -29%, Pa...",
+      "url": "https://bsky.app/profile/strategicenergymap.org/post/3mxx6ebno6t2u",
+      "cluster_size": 2,
+      "unique_sources_count": 2,
+      "sources": [
+        "me_iranwire_rss",
+        "Bluesky_@strategicenergymap.org"
+      ],
+      "source_types": [
+        "independent_media",
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "CONTEXT",
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "이란 혁명수비대 / 정부 (IRGC / Iran)",
+        "who_code": "IRAN_MILITARY_OR_GOV",
+        "action": "물리적 공격 / 공습 (Physical Strike / Attack)",
+        "action_code": "PHYSICAL_STRIKE",
+        "target": "원유 수송 유조선 (Crude Oil Tanker)",
+        "target_code": "CRUDE_OIL_TANKER",
+        "where": "호르무즈 해협 (Strait of Hormuz), 바브엘만데브 해협 및 홍해 (Bab-el-Mandeb & Red Sea), 말라카 해협 (Strait of Malacca), 보스포루스 및 흑해 해협 (Bosphorus & Turkish Straits), 파나마 운하 (Panama Canal)",
+        "when": "Tue, 13 Oct 2026 09:15:36 +0000",
+        "supply_impact_tags": [
+          "CRUDE_OIL"
+        ],
+        "threat_severity": "CRITICAL_DISRUPTION",
+        "threat_description": "🚨 치명적 물리 공격 (실제 해운/에너지 인프라 파괴·피격)"
+      },
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_HORMUZ",
+          "name": "호르무즈 해협 (Strait of Hormuz)",
+          "region": "Middle East / Persian Gulf",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG"
+          ]
+        },
+        {
+          "code": "CHOKEPOINT_BAB_EL_MANDEB",
+          "name": "바브엘만데브 해협 및 홍해 (Bab-el-Mandeb & Red Sea)",
+          "region": "Middle East / Red Sea",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG",
+            "SEMICONDUCTOR"
+          ]
+        },
+        {
+          "code": "CHOKEPOINT_MALACCA",
+          "name": "말라카 해협 (Strait of Malacca)",
+          "region": "Southeast Asia",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG",
+            "SEMICONDUCTOR"
+          ]
+        },
+        {
+          "code": "CHOKEPOINT_BOSPHORUS",
+          "name": "보스포루스 및 흑해 해협 (Bosphorus & Turkish Straits)",
+          "region": "Eurasia / Black Sea",
+          "primary_supply": [
+            "GRAIN_FOOD",
+            "CRUDE_OIL"
+          ]
+        },
+        {
+          "code": "CHOKEPOINT_PANAMA",
+          "name": "파나마 운하 (Panama Canal)",
+          "region": "Americas / Latin America",
+          "primary_supply": [
+            "NATURAL_GAS_LNG",
+            "GRAIN_FOOD"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "MIDDLE_EAST",
+        "LATIN_AMERICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:q4ftjekb2e6bfoztr3eozief/bafkreicobrd65bhhzexukdvrgz7rdazuui3eng3d4v5xedacvkuzufwsqy",
+          "alt_text": "Bar chart of 7-day average tanker transits vs pre-crisis baseline, percent change, week ending Oct 11: Strait of Hormuz -99% (0.6/day), Bosporus Strait -36% (14.6/day), Bab el-Mandeb -29% (8.6/day), Panama Canal -27% (9.4/day), Strait of Ma",
+          "source": "Bluesky_@strategicenergymap.org"
+        }
+      ],
+      "visual_alt_texts": [
+        "Bar chart of 7-day average tanker transits vs pre-crisis baseline, percent change, week ending Oct 11: Strait of Hormuz -99% (0.6/day), Bosporus Strait -36% (14.6/day), Bab el-Mandeb -29% (8.6/day), Panama Canal -27% (9.4/day), Strait of Ma",
+        "Bar chart of 7-day average tanker transits vs pre-crisis baseline, percent change, week ending Oct 11: Strait of Hormuz -99% (0.6/day), Bosporus Strait -36% (14.6/day), Bab el-Mandeb -29% (8.6/day), Panama Canal -27% (9.4/day), Strait of Malacca -12% (74.9/day), Suez Canal +9% (17.0/day)."
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Tue, 13 Oct 2026 09:15:36 +0000",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0075",
+      "signal_id": "SIG-20261112-0075",
+      "representative_title": "Failures by the Dump in this China trip make one wonder if China's/Xi's Strait of Hormuz is Taiwan Semiconductor (TSMC)?!",
+      "canonical_title": "Failures by the Dump in this China trip make one wonder if China's/Xi's Strait of Hormuz is Taiwan Semiconductor (TSMC)?!",
+      "url": "https://bsky.app/profile/electricdonkey.me/post/3mm3qthhr5k2u",
+      "cluster_size": 2,
+      "unique_sources_count": 2,
+      "sources": [
+        "Bluesky_@electricdonkey.me",
+        "Bluesky_@fpri.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "미국 정부 / 군 (US Gov / Military)",
+        "who_code": "US_GOV_OR_MILITARY",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "호르무즈 해협 (Strait of Hormuz)",
+        "when": "2026-05-18T01:44:08.742Z",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_HORMUZ",
+          "name": "호르무즈 해협 (Strait of Hormuz)",
+          "region": "Middle East / Persian Gulf",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "MIDDLE_EAST",
+        "EAST_ASIA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://buff.ly/aw2a0To",
+          "alt_text": "From the Archives | Taiwan’s Semiconductor Industry, the US-China Tech Fight, and Cross Strait Stability",
+          "source": "Bluesky_@fpri.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "From the Archives | Taiwan’s Semiconductor Industry, the US-China Tech Fight, and Cross Strait Stability",
+        "Learn how Taiwan and TSMC lead in semiconductor manufacturing, shaping the future of technology and global markets."
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-05-18T01:44:08.742Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0072",
+      "signal_id": "SIG-20261112-0072",
+      "representative_title": "To Cross the Red Sea, Shippers Email Houthi Rebels. Read Their Inbox.",
+      "canonical_title": "To Cross the Red Sea, Shippers Email Houthi Rebels. Read Their Inbox.",
+      "url": "https://bsky.app/profile/ahmadalgohbary.bsky.social/post/3mzqajlwk6k26",
+      "cluster_size": 2,
+      "unique_sources_count": 2,
+      "sources": [
+        "Bluesky_@ahmadalgohbary.bsky.social",
+        "Bluesky_@osint-signals.com"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "예멘 후티 반군 (Houthi / Ansarallah)",
+        "who_code": "HOUTHI_YEMEN",
+        "action": "규제 조사 / 법적 리스크 (Regulatory / Compliance Probe)",
+        "action_code": "LEGAL_OR_COMPLIANCE_PROBE",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "바브엘만데브 해협 및 홍해 (Bab-el-Mandeb & Red Sea)",
+        "when": "2026-11-07T15:45:43.671Z",
+        "supply_impact_tags": [],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_BAB_EL_MANDEB",
+          "name": "바브엘만데브 해협 및 홍해 (Bab-el-Mandeb & Red Sea)",
+          "region": "Middle East / Red Sea",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG",
+            "SEMICONDUCTOR"
+          ]
+        }
+      ],
+      "supply_chain_tags": [],
+      "event_types": [],
+      "hotspot_regions": [
+        "MIDDLE_EAST"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://www.wsj.com/world/middle-east/to-cross-the-red-sea-shippers-email-houthi-rebels-read-their-inbox-5ecace40",
+          "alt_text": "To Cross the Red Sea, Shippers Email Houthi Rebels. Read Their Inbox.",
+          "source": "Bluesky_@ahmadalgohbary.bsky.social"
+        },
+        {
+          "type": "external_card",
+          "url": "https://osint-signals.com/summary/3096",
+          "alt_text": "Houthi Offensive in Yemen and Red Sea Shipping Concerns",
+          "source": "Bluesky_@osint-signals.com"
+        }
+      ],
+      "visual_alt_texts": [
+        "To Cross the Red Sea, Shippers Email Houthi Rebels. Read Their Inbox.",
+        "The Wall Street Journal reviewed the correspondence between shippers and the Yemeni militant group’s little-known clearance office.",
+        "Houthi Offensive in Yemen and Red Sea Shipping Concerns",
+        "According to Houthi military media, forces captured the Kahbub mountain range east of Bab al-Mandab. Reuters reports Syrian military personnel were allegedly sent to Saudi Arabia for advisory and training roles."
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-11-07T15:45:43.671Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0088",
+      "signal_id": "SIG-20261112-0088",
+      "representative_title": "Sanctions Expert Michael Parker On Russia, Iran, And Whether Waivers Work",
+      "canonical_title": "Sanctions Expert Michael Parker On Russia, Iran, And Whether Waivers Work",
+      "url": "https://bsky.app/profile/longtail-news.bsky.social/post/3mm7ooewqej27",
+      "cluster_size": 2,
+      "unique_sources_count": 2,
+      "sources": [
+        "Bluesky_@longtail-news.bsky.social",
+        "Bluesky_@rferl.com.web.brid.gy"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "이란 혁명수비대 / 정부 (IRGC / Iran)",
+        "who_code": "IRAN_MILITARY_OR_GOV",
+        "action": "수출통제 / 무역제재 (Export Control / Sanctions)",
+        "action_code": "REGULATORY_SANCTION",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "MIDDLE_EAST, EASTERN_EUROPE, NORTH_AMERICA",
+        "when": "2026-05-19T15:16:08.636084+00:00",
+        "supply_impact_tags": [
+          "CRUDE_OIL"
+        ],
+        "threat_severity": "HIGH_REGULATORY_DISRUPTION",
+        "threat_description": "📋 통상·규제 공급망 타격 (수출통제·생산중단·자산동결)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [
+        "SANCTIONS_EXPORT_CONTROL"
+      ],
+      "hotspot_regions": [
+        "MIDDLE_EAST",
+        "EASTERN_EUROPE",
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://www.rferl.org/a/sanctions-expert-michael-parker-russia-iran-waivers-/33760204.html",
+          "alt_text": "Sanctions Expert Michael Parker On Russia, Iran, And Whether Waivers Work",
+          "source": "Bluesky_@longtail-news.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "Sanctions Expert Michael Parker On Russia, Iran, And Whether Waivers Work",
+        "Washington is sharply divided over the latest US sanctions waiver for Russian oil. Michael Parker, a former investigator and section chief in the US Treasury’s Office of Foreign Assets Control (OFAC), explains why sanctions relief remains W"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-05-19T15:16:08.636084+00:00",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0092",
+      "signal_id": "SIG-20261112-0092",
+      "representative_title": "Nvidia CEO's relationship under scrutiny amid US intelligence claims of Chinese espionage",
+      "canonical_title": "Nvidia CEO's relationship under scrutiny amid US intelligence claims of Chinese espionage",
+      "url": "https://bsky.app/profile/killbait-uk.bsky.social/post/3n23sdjofqo2r",
+      "cluster_size": 2,
+      "unique_sources_count": 2,
+      "sources": [
+        "Bluesky_@killbait-uk.bsky.social",
+        "Bluesky_@kill-bait.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "미국 정부 / 군 (US Gov / Military)",
+        "who_code": "US_GOV_OR_MILITARY",
+        "action": "규제 조사 / 법적 리스크 (Regulatory / Compliance Probe)",
+        "action_code": "LEGAL_OR_COMPLIANCE_PROBE",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "NORTH_AMERICA",
+        "when": "2026-11-12T06:03:44.348564600Z",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [
+        "SANCTIONS_EXPORT_CONTROL"
+      ],
+      "hotspot_regions": [
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://en.killbait.com/nvidia-ceo-s-relationship-under-scrutiny-amid-us-intelligence-claims-of-chinese-espionage.html?utm_source=bluesky&utm_medium=social&utm_campaign=killbait-uk.bsky.social",
+          "alt_text": "Nvidia CEO's relationship under scrutiny amid US intelligence claims of Chinese espionage",
+          "source": "Bluesky_@killbait-uk.bsky.social"
+        },
+        {
+          "type": "external_card",
+          "url": "https://en.killbait.com/senators-challenge-trump-administration-over-alleged-nvidia-ceo-espionage-concerns.html?utm_source=bluesky&utm_medium=social&utm_campaign=kill-bait.bsky.social",
+          "alt_text": "Senators Challenge Trump Administration Over Alleged Nvidia CEO Espionage Concerns",
+          "source": "Bluesky_@kill-bait.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "Nvidia CEO's relationship under scrutiny amid US intelligence claims of Chinese espionage",
+        "The global technology editor Dan Milmo discusses a developing scandal involving Nvidia, one of the world's leading AI technology companies. According to reports, US intelligence services believe that Jensen Huang, Nvidia's chief executive o",
+        "Senators Challenge Trump Administration Over Alleged Nvidia CEO Espionage Concerns",
+        "The article discusses a recent development in U.S. politics involving senators taking action against Trump administration officials regarding concerns about the Nvidia CEO's potential involvement in espionage activities. According to the Wa"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-11-12T06:03:44.348564600Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0017",
+      "signal_id": "SIG-20261112-0017",
+      "representative_title": "Россия нарастила продажу дизеля в два раза из-за отмены санкций США",
+      "canonical_title": "Россия нарастила продажу дизеля в два раза из-за отмены санкций США",
+      "url": "https://istories.media/news/2026/11/12/rossiya-narastila-prodazhu-dizelya-v-dva-raza-iz-za-otmeni-sanktsii-ssha/",
+      "cluster_size": 2,
+      "unique_sources_count": 2,
+      "sources": [
+        "ru_istories_rss",
+        "GoogleNews_RU"
+      ],
+      "source_types": [
+        "independent_media",
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "CONTEXT",
+        "OPINION"
+      ],
+      "primary_language": "ru",
+      "detected_languages": [
+        "ru"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 0.8,
+      "event_tuple": {
+        "who": "미국 정부 / 군 (US Gov / Military)",
+        "who_code": "US_GOV_OR_MILITARY",
+        "action": "수출통제 / 무역제재 (Export Control / Sanctions)",
+        "action_code": "REGULATORY_SANCTION",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "EASTERN_EUROPE, NORTH_AMERICA",
+        "when": "Thu, 12 Nov 2026 06:15:42 GMT",
+        "supply_impact_tags": [
+          "CRUDE_OIL"
+        ],
+        "threat_severity": "HIGH_REGULATORY_DISRUPTION",
+        "threat_description": "📋 통상·규제 공급망 타격 (수출통제·생산중단·자산동결)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [
+        "SANCTIONS_EXPORT_CONTROL"
+      ],
+      "hotspot_regions": [
+        "EASTERN_EUROPE",
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Thu, 12 Nov 2026 06:15:42 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0050",
+      "signal_id": "SIG-20261112-0050",
+      "representative_title": "Scoop: Lutnick stalled curbing Nvidia chip sales to China — again — after Oval Office showdown - Axios",
+      "canonical_title": "Scoop: Lutnick stalled curbing Nvidia chip sales to China — again — after Oval Office showdown - Axios",
+      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPa01VNnZpTE10OFNfTFRXZDZzeUJwSjFkNmlhVjFwUVExM3RmaUlNOG1jWm1aYXJMRHkyb2s1WGdMQU9IQUN6RE5kVi1ub3JkQ0wxVnc2YWFvY2VzTWRiX0FZeVlpdDNsMzBhcWpzOVhqNVh4UUFCa2cySy1ZSlkwTGRxbHVjcEU?oc=5",
+      "cluster_size": 2,
+      "unique_sources_count": 2,
+      "sources": [
+        "us_chips_supplychain_osint",
+        "Bluesky_@ajsdecepida.bsky.social"
+      ],
+      "source_types": [
+        "independent_media",
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "CONTEXT",
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 0.8,
+      "event_tuple": {
+        "who": "미국 정부 / 군 (US Gov / Military)",
+        "who_code": "US_GOV_OR_MILITARY",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "EAST_ASIA, NORTH_AMERICA",
+        "when": "Thu, 12 Nov 2026 03:11:19 GMT",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EAST_ASIA",
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Thu, 12 Nov 2026 03:11:19 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0035",
+      "signal_id": "SIG-20261112-0035",
+      "representative_title": "Commerce Dept. Chip Inquiry Was Halted After Nvidia Intervention - The New York Times",
+      "canonical_title": "Commerce Dept. Chip Inquiry Was Halted After Nvidia Intervention - The New York Times",
+      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQRUh5TFdGSHdZMldSRkxUUjRNYjFRV3ZVdURtUkEwSG9mSHVhdlhES2ZObmtJVzFLRUhNbm4xdkl6YmZHV2d1VUNHNE9Md2ZKVlowUU5yOU8wa1AyMGNtdWNlX2NIUXpsOUJVa3pJNjRKa2MxWGdrTW9jYVNqLVM5cmpCblZSVzkwTVR5YzJ2TER0c3VpZ3AyZw?oc=5",
+      "cluster_size": 2,
+      "unique_sources_count": 2,
+      "sources": [
+        "us_commerce_bis",
+        "us_chips_supplychain_osint"
+      ],
+      "source_types": [
+        "state_media",
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 0.5,
+      "event_tuple": {
+        "who": "글로벌 반도체 기업 (Semiconductor Enterprise)",
+        "who_code": "SEMICONDUCTOR_CHIPMAKER",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "글로벌 지정학 해역 (Global Maritime / Geopolitical Area)",
+        "when": "Mon, 09 Nov 2026 16:02:52 GMT",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Mon, 09 Nov 2026 16:02:52 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0025",
+      "signal_id": "SIG-20261112-0025",
+      "representative_title": "Saudi-led coalition says drone intercepted over Riyadh",
+      "canonical_title": "Saudi-led coalition says drone intercepted over Riyadh",
+      "url": "https://www.middleeasteye.net/live-blog/live-blog-update/saudi-led-coalition-says-drone-intercepted-over-riyadh",
+      "cluster_size": 2,
+      "unique_sources_count": 2,
+      "sources": [
+        "me_middle_east_eye_rss",
+        "Bluesky_Social"
+      ],
+      "source_types": [
+        "independent_media",
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "CONTEXT",
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "예멘 후티 반군 (Houthi / Ansarallah)",
+        "who_code": "HOUTHI_YEMEN",
+        "action": "물리적 공격 / 공습 (Physical Strike / Attack)",
+        "action_code": "PHYSICAL_STRIKE",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "MIDDLE_EAST",
+        "when": "Thu, 12 Nov 2026 05:32:05 +0000",
+        "supply_impact_tags": [],
+        "threat_severity": "HIGH_DISRUPTION",
+        "threat_description": "⚠️ 고위험 교전·나포·봉쇄 (해상 통항 및 공급망 심각한 지연)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [],
+      "event_types": [
+        "MILITARY_CONFLICT"
+      ],
+      "hotspot_regions": [
+        "MIDDLE_EAST"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Thu, 12 Nov 2026 05:32:05 +0000",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0012",
+      "signal_id": "SIG-20261112-0012",
+      "representative_title": "Petrobras amplia capacidade de 11 plataformas sem novos investimentos",
+      "canonical_title": "Petrobras amplia capacidade de 11 plataformas sem novos investimentos",
+      "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-11/petrobras-amplia-capacidade-de-11-plataformas-sem-novos-investimentos",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Agência Brasil (브라질 국영 통신사)"
+      ],
+      "source_types": [
+        "state_media_news"
+      ],
+      "observed_lanes": [
+        "FAST"
+      ],
+      "primary_language": "pt",
+      "detected_languages": [
+        "pt"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_1_CORROBORATED",
+      "relevance_score": 0.8,
+      "event_tuple": {
+        "who": "미상 / 민간 다국적 출처 (Unspecified / Multiple Sources)",
+        "who_code": "UNKNOWN_OR_UNSPECIFIED",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "LATIN_AMERICA",
+        "when": "Wed, 11 Nov 2026 20:19:00 -0300",
+        "supply_impact_tags": [
+          "CRUDE_OIL"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "LATIN_AMERICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://agenciabrasil.ebc.com.br/ebc.png?id=1708504&o=rss",
+          "alt_text": "Petrobras amplia capacidade de 11 plataformas sem novos investimentos",
+          "source": "Agência Brasil (브라질 국영 통신사)"
+        }
+      ],
+      "visual_alt_texts": [
+        "Petrobras amplia capacidade de 11 plataformas sem novos investimentos"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Wed, 11 Nov 2026 20:19:00 -0300",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0065",
+      "signal_id": "SIG-20261112-0065",
+      "representative_title": "中國逼降台灣免動武？美兵推想定「台積電警鈴響」 學者：台海危機不一定始於飛彈| 李瑋萱 | 新聞 - 風傳媒",
+      "canonical_title": "中國逼降台灣免動武？美兵推想定「台積電警鈴響」 學者：台海危機不一定始於飛彈| 李瑋萱 | 新聞 - 風傳媒",
+      "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE9qN3JPRE95WUh6bXFncEo5XzF3SXhxZkhMYlpObXFQeUxNZTNRZGRzMFpOc0NrTGo0dGFTUmhmX1U1MTY2U2VibVY4QVFJUQ?oc=5",
+      "cluster_size": 2,
+      "unique_sources_count": 1,
+      "sources": [
+        "GoogleNews_TW"
+      ],
+      "source_types": [
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "zh",
+      "detected_languages": [
+        "zh"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "글로벌 반도체 기업 (Semiconductor Enterprise)",
+        "who_code": "SEMICONDUCTOR_CHIPMAKER",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "대만 해협 (Taiwan Strait)",
+        "when": "Sat, 15 Aug 2026",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_TAIWAN_STRAIT",
+          "name": "대만 해협 (Taiwan Strait)",
+          "region": "East Asia",
+          "primary_supply": [
+            "SEMICONDUCTOR",
+            "BATTERY_MINERALS"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [
+        "MILITARY_CONFLICT"
+      ],
+      "hotspot_regions": [
+        "EAST_ASIA",
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Sat, 15 Aug 2026",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0071",
+      "signal_id": "SIG-20261112-0071",
+      "representative_title": "إيران تعلن احتراق ناقلة نفط في هرمز",
+      "canonical_title": "إيران تعلن احتراق ناقلة نفط في هرمز",
+      "url": "https://bsky.app/profile/intlnewsen.eurosky.social/post/3n23fmvc2rw2m",
+      "cluster_size": 2,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@intlnewsen.eurosky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "ar",
+      "detected_languages": [
+        "ar"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "이란 혁명수비대 / 정부 (IRGC / Iran)",
+        "who_code": "IRAN_MILITARY_OR_GOV",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "원유 수송 유조선 (Crude Oil Tanker)",
+        "target_code": "CRUDE_OIL_TANKER",
+        "where": "호르무즈 해협 (Strait of Hormuz)",
+        "when": "2026-11-12T02:16:11.590Z",
+        "supply_impact_tags": [
+          "CRUDE_OIL"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_HORMUZ",
+          "name": "호르무즈 해협 (Strait of Hormuz)",
+          "region": "Middle East / Persian Gulf",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "MIDDLE_EAST"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://www.hespress.com/%d8%a5%d9%8a%d8%b1%d8%a7%d9%86-%d8%aa%d8%b9%d9%84%d9%86-%d8%a7%d8%ad%d8%aa%d8%b1%d8%a7%d9%82-%d9%86%d8%a7%d9%82%d9%84%d8%a9-%d9%86%d9%81%d8%b7-%d9%81%d9%8a-%d9%87%d8%b1%d9%85%d8%b2-1837879.html",
+          "alt_text": "إيران تعلن احتراق ناقلة نفط في هرمز",
+          "source": "Bluesky_@intlnewsen.eurosky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "إيران تعلن احتراق ناقلة نفط في هرمز",
+        "أعلنت القوات البحرية الإيرانية، اليوم الأربعاء، اندلاع حريق في ناقلة نفط بمضيق هرمز، إثر اصطدامها بلغم بحري في منطقة وصفتها بأنها محظورة وغير آمنة، في حادث جديد يشهده الممر المائي الحيوي الذي يخضع…"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-11-12T02:16:11.590Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0067",
+      "signal_id": "SIG-20261112-0067",
+      "representative_title": "台灣不能再讓南韓漁翁得利！從羞辱式斷交到三星告密重創面板業...台海若有事，誰最想搶台積電訂單？ - 今周刊",
+      "canonical_title": "台灣不能再讓南韓漁翁得利！從羞辱式斷交到三星告密重創面板業...台海若有事，誰最想搶台積電訂單？ - 今周刊",
+      "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPZGtNM1FwdEQwbFE2OURzZEs5SjdRN3BZVDBhZU10eWcyMTJhUlhhQlM2RHhDU2VkblhIZTk4dnMyUnJ0eV9HRTZaZjE3R3JYS1FjX3ZDTnhxVVEyVlhPcXhXUFZhUlh2SHlNbFV5VUV6Vl9mS0wyT003TUF2R3dBLQ?oc=5",
+      "cluster_size": 2,
+      "unique_sources_count": 1,
+      "sources": [
+        "GoogleNews_TW"
+      ],
+      "source_types": [
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "zh",
+      "detected_languages": [
+        "zh"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.8,
+      "event_tuple": {
+        "who": "글로벌 반도체 기업 (Semiconductor Enterprise)",
+        "who_code": "SEMICONDUCTOR_CHIPMAKER",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "대만 해협 (Taiwan Strait)",
+        "when": "Tue, 23 Jun 2026",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_TAIWAN_STRAIT",
+          "name": "대만 해협 (Taiwan Strait)",
+          "region": "East Asia",
+          "primary_supply": [
+            "SEMICONDUCTOR",
+            "BATTERY_MINERALS"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Tue, 23 Jun 2026",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0051",
+      "signal_id": "SIG-20261112-0051",
+      "representative_title": "Congress Set to Subpoena Nvidia’s Jensen Huang, Republican Says - Bloomberg.com",
+      "canonical_title": "Congress Set to Subpoena Nvidia’s Jensen Huang, Republican Says - Bloomberg.com",
+      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOakdhZTdRenZXbi1rOEpYcTlXc2xFZkI2X3pDUFAydWc3LUFkdXBxV2ZTTTRtaVg3UnNuR1FJRE42a3NBQXNzSUJ4Vi1wUUJoNGFsb0pPVk9SRDNvcnd0ZzJkOUw3ZnUwQWFzNXF3OFYyQXdmR2ZzM0tRdGRTanp1eENoNVhad0hmMlk3R0dCcHhOdjZwcmg3cjJpY3NXWEhfdkl6Xy1FcVl0Vkp3SnUwQVRtdw?oc=5",
+      "cluster_size": 2,
+      "unique_sources_count": 1,
+      "sources": [
+        "us_chips_supplychain_osint"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "primary_language": "pt",
+      "detected_languages": [
+        "pt"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "글로벌 반도체 기업 (Semiconductor Enterprise)",
+        "who_code": "SEMICONDUCTOR_CHIPMAKER",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "글로벌 지정학 해역 (Global Maritime / Geopolitical Area)",
+        "when": "Wed, 11 Nov 2026 18:18:23 GMT",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [
+        "ELECTION_GOVERNMENT"
+      ],
+      "hotspot_regions": [],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Wed, 11 Nov 2026 18:18:23 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0061",
+      "signal_id": "SIG-20261112-0061",
+      "representative_title": "11月11日のTaiwan Semiconductor Manufacturing Co Ltd (TSM) 始値は3.15%上昇：値動きの背後にある要因 https://www.wacoca.com/news/2982069/ 台湾積体電路製造（TSMC）は本日、先端ノードの稼働率に対する機関投資家の継続的な信認や、人工知能（AI）および高性能計算（HPC）分野における底堅い需要に支えられ、",
+      "canonical_title": "11月11日のTaiwan Semiconductor Manufacturing Co Ltd (TSM) 始値は3.15%上昇：値動きの背後にある要因 https://www.wacoca.com/news/2982069/ 台湾積体電路製造（TSMC）は本日、先端ノードの稼働率に対する機関投資家の継続的な信認や、人工知能（AI）および高性能計算（HPC）分野における底堅い需要に支えられ、",
+      "url": "https://bsky.app/profile/cocanews.bsky.social/post/3n23tu3gikg2h",
+      "cluster_size": 2,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_Social"
+      ],
+      "source_types": [
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "ja",
+      "detected_languages": [
+        "ja"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.8,
+      "event_tuple": {
+        "who": "글로벌 반도체 기업 (Semiconductor Enterprise)",
+        "who_code": "SEMICONDUCTOR_CHIPMAKER",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "글로벌 지정학 해역 (Global Maritime / Geopolitical Area)",
+        "when": "2026-11-12",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-11-12",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0055",
+      "signal_id": "SIG-20261112-0055",
+      "representative_title": "‏ ️انفجار دو نفتکش سرکش و مجرم در تنگه هرمز روابط عمومی نیروی دریایی سپاه پاسداران: شب گذشته دو فروند نفتکش متخلف، علی رغم هشدار و اخطار مکرر مرکز کنترل تردد تن...",
+      "canonical_title": "‏ ️انفجار دو نفتکش سرکش و مجرم در تنگه هرمز روابط عمومی نیروی دریایی سپاه پاسداران: شب گذشته دو فروند نفتکش متخلف، علی رغم هشدار و اخطار مکرر مرکز کنترل تردد تن...",
+      "url": "https://t.me/sepah_pasdaran/215794",
+      "cluster_size": 2,
+      "unique_sources_count": 1,
+      "sources": [
+        "Telegram_@sepah_pasdaran"
+      ],
+      "source_types": [
+        "telegram_osint"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "primary_language": "ar",
+      "detected_languages": [
+        "ar"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.5,
+      "event_tuple": {
+        "who": "미상 / 민간 다국적 출처 (Unspecified / Multiple Sources)",
+        "who_code": "UNKNOWN_OR_UNSPECIFIED",
+        "action": "기뢰 폭발 / 선박 화재 (Explosion / Mine Strike)",
+        "action_code": "EXPLOSION_OR_FIRE",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "호르무즈 해협 (Strait of Hormuz)",
+        "when": "2026-11-12T08:55:30.444897+00:00",
+        "supply_impact_tags": [],
+        "threat_severity": "HIGH_DISRUPTION",
+        "threat_description": "⚠️ 고위험 교전·나포·봉쇄 (해상 통항 및 공급망 심각한 지연)"
+      },
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_HORMUZ",
+          "name": "호르무즈 해협 (Strait of Hormuz)",
+          "region": "Middle East / Persian Gulf",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG"
+          ]
+        }
+      ],
+      "supply_chain_tags": [],
+      "event_types": [],
+      "hotspot_regions": [],
+      "has_visual_media": true,
+      "visual_modalities": [
+        "FIELD_PHOTO_VIDEO"
+      ],
+      "media_attachments": [
+        {
+          "type": "video",
+          "url": "https://cdn4.telesco.pe/file/aed621b275.mp4?token=g4t-gwLxKwBr_JmPNO_I-MA4PFAxpmryNuF0a4Rmc7U-3EmmvFN3uHL6xT2czA4uHBmKZfZXruZk0T8P6h5mo3vKqw1Y35aXUZANQWnIOKP3xKjZd1aUT8IenUH7n1bkWmVNL6gdfvGd_kyz1IS4xHWtGKkuGXBkYTEf2MntcDKnZCr4y9X-qvl2mu5JLwa6F35sxTLeXHT6WvKiQfu3-i_6w87LPqByHD7Jb6ze29os9JKNRBut8D7kOGjWzz3FwjnG5zv4Y5CPzG5pAlKnPMz2OqoEMmYWpZTiwa-6tXhKb3OhpMDpp-TO6MGiRlZ8-ceSIhUmC9iw8_TQcmuP4g",
+          "alt_text": "",
+          "source": "Telegram_@sepah_pasdaran"
+        }
+      ],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-11-12T08:55:30.444897+00:00",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0077",
+      "signal_id": "SIG-20261112-0077",
+      "representative_title": "台湾のLNG備蓄はわずか11日しかなかった TSMCが依存する電力の足元を、カタール爆撃と米イラン戦争が初めて公然と引きずり出した ヘリウム・ラスラファン・ホルムズ海峡・TSIA・Apple 台湾のLNG戦略備蓄は、わずか11日分。ヘリウムは国家備蓄ゼロです。 4月8日、TSIAが政府に戦略備蓄を要請しました。 ...",
+      "canonical_title": "台湾のLNG備蓄はわずか11日しかなかった TSMCが依存する電力の足元を、カタール爆撃と米イラン戦争が初めて公然と引きずり出した ヘリウム・ラスラファン・ホルムズ海峡・TSIA・Apple 台湾のLNG戦略備蓄は、わずか11日分。ヘリウムは国家備蓄ゼロです。 4月8日、TSIAが政府に戦略備蓄を要請しました。 ...",
+      "url": "https://bsky.app/profile/johonotodai.bsky.social/post/3mj53eu73p22c",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@johonotodai.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "ja",
+      "detected_languages": [
+        "ja"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "이란 혁명수비대 / 정부 (IRGC / Iran)",
+        "who_code": "IRAN_MILITARY_OR_GOV",
+        "action": "생산 중단 / 공급망 차질 (Production Disruption)",
+        "action_code": "PRODUCTION_DISRUPTION",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "호르무즈 해협 (Strait of Hormuz)",
+        "when": "2026-04-10T10:09:54.788Z",
+        "supply_impact_tags": [
+          "NATURAL_GAS_LNG",
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "HIGH_REGULATORY_DISRUPTION",
+        "threat_description": "📋 통상·규제 공급망 타격 (수출통제·생산중단·자산동결)"
+      },
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_HORMUZ",
+          "name": "호르무즈 해협 (Strait of Hormuz)",
+          "region": "Middle East / Persian Gulf",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "NATURAL_GAS_LNG",
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [
+        "INFRA_LOGISTICS_DISRUPTION"
+      ],
+      "hotspot_regions": [
+        "MIDDLE_EAST",
+        "EAST_ASIA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:sob4j7f5b7t5d2tdiko4n2ev/bafkreif42et3km4yflveqiyeqssjp74wfdukcqfsaretgpfdwdbd5yupnu",
+          "alt_text": "TSMC, Taiwan Semiconductor Manufacturing Company, TSIA, Taiwan Semiconductor Industry Association, LNG strategic reserve, helium shortage, Ras Laffan, Qatar Energy, Saad al-Kaabi, force majeure, Hormuz Strait, Iran ceasefire, Maanshan nucle",
+          "source": "Bluesky_@johonotodai.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "TSMC, Taiwan Semiconductor Manufacturing Company, TSIA, Taiwan Semiconductor Industry Association, LNG strategic reserve, helium shortage, Ras Laffan, Qatar Energy, Saad al-Kaabi, force majeure, Hormuz Strait, Iran ceasefire, Maanshan nucle",
+        "TSMC, Taiwan Semiconductor Manufacturing Company, TSIA, Taiwan Semiconductor Industry Association, LNG strategic reserve, helium shortage, Ras Laffan, Qatar Energy, Saad al-Kaabi, force majeure, Hormuz Strait, Iran ceasefire, Maanshan nuclear plant, Lai Ching-te, DPP nuclear policy, Cliff Hou, Wood"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-04-10T10:09:54.788Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0080",
+      "signal_id": "SIG-20261112-0080",
+      "representative_title": "🌍 Houthi attacks in the Red Sea, U.S.-Iran tensions around the Strait of Hormuz, and drought-related restrictions on the Panama Canal have disrupted global ship...",
+      "canonical_title": "🌍 Houthi attacks in the Red Sea, U.S.-Iran tensions around the Strait of Hormuz, and drought-related restrictions on the Panama Canal have disrupted global ship...",
+      "url": "https://bsky.app/profile/english.nv.ua/post/3myr6r4bpgc25",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@english.nv.ua"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "이란 혁명수비대 / 정부 (IRGC / Iran)",
+        "who_code": "IRAN_MILITARY_OR_GOV",
+        "action": "물리적 공격 / 공습 (Physical Strike / Attack)",
+        "action_code": "PHYSICAL_STRIKE",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "호르무즈 해협 (Strait of Hormuz), 바브엘만데브 해협 및 홍해 (Bab-el-Mandeb & Red Sea), 파나마 운하 (Panama Canal)",
+        "when": "2026-10-26T07:21:36.323Z",
+        "supply_impact_tags": [],
+        "threat_severity": "HIGH_DISRUPTION",
+        "threat_description": "⚠️ 고위험 교전·나포·봉쇄 (해상 통항 및 공급망 심각한 지연)"
+      },
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_HORMUZ",
+          "name": "호르무즈 해협 (Strait of Hormuz)",
+          "region": "Middle East / Persian Gulf",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG"
+          ]
+        },
+        {
+          "code": "CHOKEPOINT_BAB_EL_MANDEB",
+          "name": "바브엘만데브 해협 및 홍해 (Bab-el-Mandeb & Red Sea)",
+          "region": "Middle East / Red Sea",
+          "primary_supply": [
+            "CRUDE_OIL",
+            "NATURAL_GAS_LNG",
+            "SEMICONDUCTOR"
+          ]
+        },
+        {
+          "code": "CHOKEPOINT_PANAMA",
+          "name": "파나마 운하 (Panama Canal)",
+          "region": "Americas / Latin America",
+          "primary_supply": [
+            "NATURAL_GAS_LNG",
+            "GRAIN_FOOD"
+          ]
+        }
+      ],
+      "supply_chain_tags": [],
+      "event_types": [],
+      "hotspot_regions": [
+        "MIDDLE_EAST",
+        "LATIN_AMERICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:z7lsdlhrbqynzzhkkam7yr7d/bafkreicgzjqmj6bfmhok7g5qpd5qvdhnp5taau6j254aq7sskvgniml224",
+          "alt_text": "",
+          "source": "Bluesky_@english.nv.ua"
+        }
+      ],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-10-26T07:21:36.323Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0032",
+      "signal_id": "SIG-20261112-0032",
+      "representative_title": "A Natural Gas Project Off Alaska’s Coast May Be a Russian Ploy for Intel on the Arctic",
+      "canonical_title": "A Natural Gas Project Off Alaska’s Coast May Be a Russian Ploy for Intel on the Arctic",
+      "url": "https://www.propublica.org/article/alaska-prudhoe-lng-polar-novatek",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "us_propublica_rss"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "글로벌 반도체 기업 (Semiconductor Enterprise)",
+        "who_code": "SEMICONDUCTOR_CHIPMAKER",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "항만 / 정유 / 에너지 인프라 (Port & Energy Infra)",
+        "target_code": "PORT_ENERGY_INFRA",
+        "where": "글로벌 지정학 해역 (Global Maritime / Geopolitical Area)",
+        "when": "Tue, 10 Nov 2026 19:00:00 +0000",
+        "supply_impact_tags": [
+          "CRUDE_OIL",
+          "NATURAL_GAS_LNG"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL",
+        "NATURAL_GAS_LNG"
+      ],
+      "event_types": [],
+      "hotspot_regions": [],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://www.propublica.org/wp-content/uploads/2026/11/20261109-alaska-afk-collage-final.jpg?w=1149",
+          "alt_text": "A collage depicting a schematic map on the left, an aerial and on-ground view of an oil pipeline in a snow-covered and mountainous landscape, framing a submarine surfaced through polar ice with personnel walking along the snow.",
+          "source": "us_propublica_rss"
+        }
+      ],
+      "visual_alt_texts": [
+        "A collage depicting a schematic map on the left, an aerial and on-ground view of an oil pipeline in a snow-covered and mountainous landscape, framing a submarine surfaced through polar ice with personnel walking along the snow."
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Tue, 10 Nov 2026 19:00:00 +0000",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0073",
+      "signal_id": "SIG-20261112-0073",
+      "representative_title": "10 Ways the U.S. Can Strengthen Deterrence in the Taiwan Strait",
+      "canonical_title": "10 Ways the U.S. Can Strengthen Deterrence in the Taiwan Strait",
+      "url": "https://bsky.app/profile/michaelturton.bsky.social/post/3mvrhwdykls2i",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@michaelturton.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "대만 국방부 / 당국 (Taiwan Authority)",
+        "who_code": "TAIWAN_AUTHORITY",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "대만 해협 (Taiwan Strait)",
+        "when": "2026-09-18T05:50:00.980Z",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_TAIWAN_STRAIT",
+          "name": "대만 해협 (Taiwan Strait)",
+          "region": "East Asia",
+          "primary_supply": [
+            "SEMICONDUCTOR",
+            "BATTERY_MINERALS"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://www.fdd.org/analysis/2026/09/15/10-ways-the-u-s-can-strengthen-deterrence-in-the-taiwan-strait/",
+          "alt_text": "10 Ways the U.S. Can Strengthen Deterrence in the Taiwan Strait",
+          "source": "Bluesky_@michaelturton.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "10 Ways the U.S. Can Strengthen Deterrence in the Taiwan Strait",
+        "Figures on TSMC/UMC combined market share and semiconductor export composition drawn from this analysis: RADM (Ret.) Mark Montgomery, “Taiwan is a ‘model ally,’ not trade bait,” Defense One, May 13, 2..."
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-09-18T05:50:00.980Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0091",
+      "signal_id": "SIG-20261112-0091",
+      "representative_title": "US-China Rare Earths and AI Talks Could Shift ETF Holdings This Week",
+      "canonical_title": "US-China Rare Earths and AI Talks Could Shift ETF Holdings This Week",
+      "url": "https://bsky.app/profile/vaultlynews.bsky.social/post/3mvtfp5swyk23",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@vaultlynews.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "미국 정부 / 군 (US Gov / Military)",
+        "who_code": "US_GOV_OR_MILITARY",
+        "action": "외교 협상 / 휴전 대화 (Diplomatic Negotiation)",
+        "action_code": "DIPLOMATIC_NEGOTIATION",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "EAST_ASIA",
+        "when": "2026-09-19T00:15:31.405Z",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR",
+          "RARE_EARTHS"
+        ],
+        "threat_severity": "MONITORING_DEESCALATION",
+        "threat_description": "🕊️ 긴장 완화 / 외교적 해결 탐색"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR",
+        "RARE_EARTHS"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://vaultly-omega.vercel.app/en/article/us-china-rare-earths-ai-talks",
+          "alt_text": "US-China Rare Earths and AI Talks Could Shift ETF Holdings This Week",
+          "source": "Bluesky_@vaultlynews.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "US-China Rare Earths and AI Talks Could Shift ETF Holdings This Week",
+        "Score 7/10 · Impatto: Medium · Finestra: 1 week Asset: Rare Earths ETFs, Semiconductor ETFs, Global Trade ETFs This high-level US-China dialogue on critical minerals and AI could signal supply chain shifts, influencing sector-specific ETFs"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-09-19T00:15:31.405Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0068",
+      "signal_id": "SIG-20261112-0068",
+      "representative_title": "台海危機｜美國最高情報總監警告：若陸攻台令台積電停產 全球經濟每年損失高達1萬億美元 - Yahoo 財經",
+      "canonical_title": "台海危機｜美國最高情報總監警告：若陸攻台令台積電停產 全球經濟每年損失高達1萬億美元 - Yahoo 財經",
+      "url": "https://news.google.com/rss/articles/CBMiqwRBVV95cUxOTDVEcFpkWDUwWURzUkREQzFsZWRwbFkyX19xd25HSWZCRmlncWFEeDF5amkwWTQySVpiZzE0YWZpVmE4aXIzT3JERE83V01sZHFQTEJ4b002NjlNLV9pei1uRDJpX3FFTGgxamNHSlgwZzF2MHBmUmlzT2lwTkdpZG1RbHRrbmEwZVA5eGU4d3RKQUFweXNaX3czSFZ6cGJKcEpVQjlMSlJnaVE2eUtYSzhKQ2J3OF9XNzJ0dWpxQ0pKSlRnMGQwSHhFMjFSOWlYNTdiQVBWd0tfbVhhcS1EcW8tcnJZdllWdlVQcFJ3QUtxTHZxZGZzTDIxcU1NQW5IdkNKUDVrd2xUNnpnWG5SMmszczdHOEMtTzFxYmxsQmZ2S191MUlKOWRZZmY0Mjd6azVBazI0U1JCQ201ckx0Y0ZIaVBfTmY5NndPRlN0YXVRc1MyYXNHN1VhUVlrVXo3QnhzN1h0RGhlS3JHMFFQWU1Ibi1XYXNGTDZaYmxtS1BEb21nVXVEbk5HZEFMWnI1V2lRM0YtZ2x6SExaUUNSRm9CTm1PdGFFN2ZKSEt0Z2p0Qy1odnZLZTJmWW16S0ViZjI0U3VNWkg2a3BqNE1qTVFpV3NIeEp0czVITTIyaTlqaXpockI5MDFqekZ6ekptVndTN3Y1OTMtM25pSEVjREM3UDhkVkYtRnkwM1ZNUkpsUXQ2T3JPMEZsNXBqcGotUWd4MVVPNXZxWDQ?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "GoogleNews_TW"
+      ],
+      "source_types": [
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "zh",
+      "detected_languages": [
+        "zh"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.8,
+      "event_tuple": {
+        "who": "글로벌 반도체 기업 (Semiconductor Enterprise)",
+        "who_code": "SEMICONDUCTOR_CHIPMAKER",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "대만 해협 (Taiwan Strait)",
+        "when": "Fri, 05 May 2023",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_TAIWAN_STRAIT",
+          "name": "대만 해협 (Taiwan Strait)",
+          "region": "East Asia",
+          "primary_supply": [
+            "SEMICONDUCTOR",
+            "BATTERY_MINERALS"
+          ]
+        }
+      ],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Fri, 05 May 2023",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0021",
+      "signal_id": "SIG-20261112-0021",
+      "representative_title": "Fault Lines – China’s navy mobilises, Marines in Manila, PNG’s LNG",
+      "canonical_title": "Fault Lines – China’s navy mobilises, Marines in Manila, PNG’s LNG",
+      "url": "https://www.aspistrategist.org.au/fault-lines-chinas-navy-mobilises-marines-in-manila-pngs-lng/",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "aspi_strategist"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "중국 인민해방군 / 정부 (China PLA / Gov)",
+        "who_code": "CHINA_PLA_OR_GOV",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "EAST_ASIA",
+        "when": "Thu, 12 Nov 2026 00:00:02 +0000",
+        "supply_impact_tags": [
+          "NATURAL_GAS_LNG"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "NATURAL_GAS_LNG"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Thu, 12 Nov 2026 00:00:02 +0000",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0024",
+      "signal_id": "SIG-20261112-0024",
+      "representative_title": "UAE's Ras Al Khaimah reopens a number of beaches after oil spill from tanker",
+      "canonical_title": "UAE's Ras Al Khaimah reopens a number of beaches after oil spill from tanker",
+      "url": "https://www.middleeasteye.net/live-blog/live-blog-update/uaes-ras-al-khaimah-reopens-number-beaches-after-oil-spill-tanker",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "me_middle_east_eye_rss"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "미상 / 민간 다국적 출처 (Unspecified / Multiple Sources)",
+        "who_code": "UNKNOWN_OR_UNSPECIFIED",
+        "action": "물리적 공격 / 공습 (Physical Strike / Attack)",
+        "action_code": "PHYSICAL_STRIKE",
+        "target": "원유 수송 유조선 (Crude Oil Tanker)",
+        "target_code": "CRUDE_OIL_TANKER",
+        "where": "글로벌 지정학 해역 (Global Maritime / Geopolitical Area)",
+        "when": "Thu, 12 Nov 2026 05:53:29 +0000",
+        "supply_impact_tags": [
+          "CRUDE_OIL"
+        ],
+        "threat_severity": "CRITICAL_DISRUPTION",
+        "threat_description": "🚨 치명적 물리 공격 (실제 해운/에너지 인프라 파괴·피격)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [
+        "MILITARY_CONFLICT"
+      ],
+      "hotspot_regions": [],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Thu, 12 Nov 2026 05:53:29 +0000",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0047",
+      "signal_id": "SIG-20261112-0047",
+      "representative_title": "Taiwan’s Semiconductor Dominance: Implications for Cross-Strait Relations and the Prospect of Forceful Unification - CSIS | Center for Strategic and International Studies",
+      "canonical_title": "Taiwan’s Semiconductor Dominance: Implications for Cross-Strait Relations and the Prospect of Forceful Unification - CSIS | Center for Strategic and International Studies",
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxQWGtCb0dral9fSmxkOTluT3dQQkJhYUxEMWNCYWFjc3JVdGp4TVJuMFhRNDJDV0hfMmszYmNtLVlyUEwwLU5JMnVJeFN2UVJSbnJLd0JQZGdqdUlmR25SaXU3VVpBUnotNmotU1RNelpwSnR1MUVMRWNncVdjekFCSG5SYzFrYjFKd1BDak4xeDhXRnFiblFpRnp1dlM4NjNlMEhOZ2NoaU9pRjZHTG5nZ1dpenJVcElpZUE?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "us_csis_tech_semiconductors"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "대만 국방부 / 당국 (Taiwan Authority)",
+        "who_code": "TAIWAN_AUTHORITY",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "EAST_ASIA",
+        "when": "Tue, 22 Mar 2022 07:00:00 GMT",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Tue, 22 Mar 2022 07:00:00 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0062",
+      "signal_id": "SIG-20261112-0062",
+      "representative_title": "Sexpionage #美人計 is a common tactic used by China to target semiconductor talents from Taiwan's science parks. Rival Chinese firms employ young saleswomen to convince senior project developers and mid",
+      "canonical_title": "Sexpionage #美人計 is a common tactic used by China to target semiconductor talents from Taiwan's science parks. Rival Chinese firms employ young saleswomen to convince senior project developers and mid",
+      "url": "https://bsky.app/profile/wordsfromtaiwan.bsky.social/post/3n23sxy4rkk2n",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_Social"
+      ],
+      "source_types": [
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "zh",
+      "detected_languages": [
+        "zh"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "중국 인민해방군 / 정부 (China PLA / Gov)",
+        "who_code": "CHINA_PLA_OR_GOV",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "EAST_ASIA",
+        "when": "2026-11-12",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-11-12",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0070",
+      "signal_id": "SIG-20261112-0070",
+      "representative_title": "Risco de greve de caminhoneiros em ano eleitoral levou governo a lançar pacote contra alta do diesel - Folha de S.Paulo",
+      "canonical_title": "Risco de greve de caminhoneiros em ano eleitoral levou governo a lançar pacote contra alta do diesel - Folha de S.Paulo",
+      "url": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxNaGk0NkY4WktPdzg1X0hHZEdud2RudllkTTh6QlI5YWdTQnMzQlBSbzZWLVZGckdjR2paX015NTdnYVY3MlExb3o2YzM3TldCbGZNNC1DNVdvdUhDMmpXNmhyajQ3MC0yQUdOUDVXR3NjMVpMMm9hOWh0bHFiY3hhQU4tWm42aVpFdHo0ci1rRVFNZmlsR21qTHp1TkdpekcteUJlUG01SzNURnB6OTIxdDN5QkxkaDJSZFZqb0xZekZyWVI5QkNqOEZqWjVhWFdoNXRvN0gtc0JuX3Q4NzFKX1hTOUFGZDjSAewBQVVfeXFMTVlaT3B0c3hHWkI2aUpzVG5WZDZ6clFMeEczeklTbm93c1BoVzlaMDZmbUpucnNIREduYXh0em5OeXYtWnVsTjhRNzZkSFBxTDNSaXo3Ry16SHJVb2JlX1RLbDJTeXBkNWVoZlcxN2ZXMDJpZUtFLTZnLTBwVnJsdmFuSTBGQmVFLVNveXdXVDhObzVNblBHN3d4SkRVbElVTnhnaGRjeFVUSTZRMHg5azdyODdBNVlDRFRMTTcwUk5iRVRTTzFjZlRrTVRmNjJlak9tSWpXZjFmRExQTXBsTlF4MFdocEhJVk85VjE?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "GoogleNews_BR"
+      ],
+      "source_types": [
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "pt",
+      "detected_languages": [
+        "pt"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "미상 / 민간 다국적 출처 (Unspecified / Multiple Sources)",
+        "who_code": "UNKNOWN_OR_UNSPECIFIED",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "글로벌 지정학 해역 (Global Maritime / Geopolitical Area)",
+        "when": "Thu, 12 Mar 2026",
+        "supply_impact_tags": [
+          "CRUDE_OIL"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [
+        "PROTEST_STRIKE",
+        "ELECTION_GOVERNMENT"
+      ],
+      "hotspot_regions": [],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Thu, 12 Mar 2026",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0074",
+      "signal_id": "SIG-20261112-0074",
+      "representative_title": "In a Cross-Strait Scenario, Taiwan’s Semiconductors are Irrelevant",
+      "canonical_title": "In a Cross-Strait Scenario, Taiwan’s Semiconductors are Irrelevant",
+      "url": "https://bsky.app/profile/michaelturton.bsky.social/post/3mmuhekr5vk2s",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@michaelturton.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "대만 국방부 / 당국 (Taiwan Authority)",
+        "who_code": "TAIWAN_AUTHORITY",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "EAST_ASIA",
+        "when": "2026-05-27T21:31:18.663Z",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://nationalinterest.org/feature/cross-strait-scenario-taiwans-semiconductors-are-irrelevant-206560",
+          "alt_text": "In a Cross-Strait Scenario, Taiwan’s Semiconductors are Irrelevant",
+          "source": "Bluesky_@michaelturton.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "In a Cross-Strait Scenario, Taiwan’s Semiconductors are Irrelevant",
+        "In recent months, the flagship Taiwanese tech firm, the Taiwan Semiconductor Manufacturing Company (TSMC), has been a focus of discussions about a potential Chinese invasion of Taiwan. For instance, N..."
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-05-27T21:31:18.663Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0076",
+      "signal_id": "SIG-20261112-0076",
+      "representative_title": "From the Archives | Taiwan’s Semiconductor Industry, the US-China Tech Fight, and Cross Strait Stability",
+      "canonical_title": "From the Archives | Taiwan’s Semiconductor Industry, the US-China Tech Fight, and Cross Strait Stability",
+      "url": "https://bsky.app/profile/fpriorbis.bsky.social/post/3mltfbaegjl2g",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@fpriorbis.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "미국 정부 / 군 (US Gov / Military)",
+        "who_code": "US_GOV_OR_MILITARY",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "EAST_ASIA",
+        "when": "2026-05-14T17:55:48.245Z",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://orbisjournal.org/from-the-archives-taiwans-semiconductor-industry-the-us-china-tech-fight-and-cross-strait-stability/",
+          "alt_text": "From the Archives | Taiwan’s Semiconductor Industry, the US-China Tech Fight, and Cross Strait Stability",
+          "source": "Bluesky_@fpriorbis.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "From the Archives | Taiwan’s Semiconductor Industry, the US-China Tech Fight, and Cross Strait Stability",
+        "Learn how Taiwan and TSMC lead in semiconductor manufacturing, shaping the future of technology and global markets."
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-05-14T17:55:48.245Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0078",
+      "signal_id": "SIG-20261112-0078",
+      "representative_title": "Iran standoff puts Taiwan chips at risk",
+      "canonical_title": "Iran standoff puts Taiwan chips at risk",
+      "url": "https://bsky.app/profile/phelimkine.bsky.social/post/3mhtgkh6gik27",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@phelimkine.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "이란 혁명수비대 / 정부 (IRGC / Iran)",
+        "who_code": "IRAN_MILITARY_OR_GOV",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "MIDDLE_EAST, EAST_ASIA",
+        "when": "2026-03-24T20:38:04.610Z",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "MIDDLE_EAST",
+        "EAST_ASIA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://www.politico.com/newsletters/national-security-daily/2026/03/24/iran-standoff-puts-taiwan-chips-at-risk-00842114",
+          "alt_text": "Iran standoff puts Taiwan chips at risk",
+          "source": "Bluesky_@phelimkine.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "Iran standoff puts Taiwan chips at risk",
+        "Taiwan is scrambling to prevent its semiconductor sector from becoming a casualty of the Iran war."
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-03-24T20:38:04.610Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0079",
+      "signal_id": "SIG-20261112-0079",
+      "representative_title": "Global shipping has been a mess this year - the Panama Canal has had drought issues so it's not been at 100% this year, on top of the Iran war and the fighting ...",
+      "canonical_title": "Global shipping has been a mess this year - the Panama Canal has had drought issues so it's not been at 100% this year, on top of the Iran war and the fighting ...",
+      "url": "https://bsky.app/profile/cyneheard.bsky.social/post/3mzzxdmvdu22n",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@cyneheard.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "이란 혁명수비대 / 정부 (IRGC / Iran)",
+        "who_code": "IRAN_MILITARY_OR_GOV",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "파나마 운하 (Panama Canal)",
+        "when": "2026-11-11T12:27:57.064Z",
+        "supply_impact_tags": [],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_PANAMA",
+          "name": "파나마 운하 (Panama Canal)",
+          "region": "Americas / Latin America",
+          "primary_supply": [
+            "NATURAL_GAS_LNG",
+            "GRAIN_FOOD"
+          ]
+        }
+      ],
+      "supply_chain_tags": [],
+      "event_types": [],
+      "hotspot_regions": [
+        "MIDDLE_EAST",
+        "LATIN_AMERICA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-11-11T12:27:57.064Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0083",
+      "signal_id": "SIG-20261112-0083",
+      "representative_title": "Tanker with Iranian crude heading towards India’s east coast, shipping data shows; could mark first import of Tehran’s oil in 7 years: Jaya, a Curacao-flagged v...",
+      "canonical_title": "Tanker with Iranian crude heading towards India’s east coast, shipping data shows; could mark first import of Tehran’s oil in 7 years: Jaya, a Curacao-flagged v...",
+      "url": "https://bsky.app/profile/rankednews.bsky.social/post/3miziwlu3gj2i",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@rankednews.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "이란 혁명수비대 / 정부 (IRGC / Iran)",
+        "who_code": "IRAN_MILITARY_OR_GOV",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "원유 수송 유조선 (Crude Oil Tanker)",
+        "target_code": "CRUDE_OIL_TANKER",
+        "where": "글로벌 지정학 해역 (Global Maritime / Geopolitical Area)",
+        "when": "2026-04-09T00:01:48.720Z",
+        "supply_impact_tags": [
+          "CRUDE_OIL"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [],
+      "hotspot_regions": [],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:42han5exrxyrgdsbwosrp7sy/bafkreiftlyyreh6io4hisyfqvq44f7bt7h3i5g4x7rht4yj2tm3wssh6ri",
+          "alt_text": "Article image",
+          "source": "Bluesky_@rankednews.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "Article image"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-04-09T00:01:48.720Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0084",
+      "signal_id": "SIG-20261112-0084",
+      "representative_title": "BIS Fines German Firm Over Unlicensed Transfers to SMIC - Washington Trade & Tariff Letter",
+      "canonical_title": "BIS Fines German Firm Over Unlicensed Transfers to SMIC - Washington Trade & Tariff Letter",
+      "url": "https://bsky.app/profile/sensehofstede.nl/post/3mcywuifync25",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@sensehofstede.nl"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "미국 정부 / 군 (US Gov / Military)",
+        "who_code": "US_GOV_OR_MILITARY",
+        "action": "수출통제 / 무역제재 (Export Control / Sanctions)",
+        "action_code": "REGULATORY_SANCTION",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "EAST_ASIA, WESTERN_EUROPE, NORTH_AMERICA",
+        "when": "2026-01-22T10:07:21.873Z",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "HIGH_REGULATORY_DISRUPTION",
+        "threat_description": "📋 통상·규제 공급망 타격 (수출통제·생산중단·자산동결)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [
+        "SANCTIONS_EXPORT_CONTROL"
+      ],
+      "hotspot_regions": [
+        "EAST_ASIA",
+        "WESTERN_EUROPE",
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://www.wttlonline.com/stories/bis-fines-german-firm-million-over-unlicensed-transfers-to-smic,14677",
+          "alt_text": "BIS Fines German Firm Over Unlicensed Transfers to SMIC - Washington Trade & Tariff Letter",
+          "source": "Bluesky_@sensehofstede.nl"
+        }
+      ],
+      "visual_alt_texts": [
+        "BIS Fines German Firm Over Unlicensed Transfers to SMIC - Washington Trade & Tariff Letter",
+        "The U.S. Commerce Department’s Bureau of Industry and Security has imposed a $1.5 million civil penalty on Exyte Management GmbH, a Germany-based engineering and construction firm, for export-control ..."
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-01-22T10:07:21.873Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0086",
+      "signal_id": "SIG-20261112-0086",
+      "representative_title": "May 28, 2026: OFAC Update, Part 1: Iran-related Designations",
+      "canonical_title": "May 28, 2026: OFAC Update, Part 1: Iran-related Designations",
+      "url": "https://bsky.app/profile/mrsanctions.bsky.social/post/3mn6wpumdab23",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@mrsanctions.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "이란 혁명수비대 / 정부 (IRGC / Iran)",
+        "who_code": "IRAN_MILITARY_OR_GOV",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "MIDDLE_EAST, EASTERN_EUROPE",
+        "when": "2026-06-01T01:32:40Z",
+        "supply_impact_tags": [
+          "CRUDE_OIL"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [
+        "SANCTIONS_EXPORT_CONTROL"
+      ],
+      "hotspot_regions": [
+        "MIDDLE_EAST",
+        "EASTERN_EUROPE"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://mrsanctions.com/2026/05/31/may-28-2026-ofac-update-part-1-iran-related-designations/",
+          "alt_text": "May 28, 2026: OFAC Update, Part 1: Iran-related Designations",
+          "source": "Bluesky_@mrsanctions.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "May 28, 2026: OFAC Update, Part 1: Iran-related Designations",
+        "Iran-related Designations; Issuance of Russia-related General License and Amended Frequently Asked Questions Treasury Press Release: Economic Fury Targets Illicit Oil Revenue Fueling Iran's Military State Press Release: U.S. Continues Maxim"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-06-01T01:32:40Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0090",
+      "signal_id": "SIG-20261112-0090",
+      "representative_title": "China's Rare Earth Export Curbs Could Pressure Robot Production, REalloys Gains Traction",
+      "canonical_title": "China's Rare Earth Export Curbs Could Pressure Robot Production, REalloys Gains Traction",
+      "url": "https://bsky.app/profile/vaultlynews.bsky.social/post/3mybku2f6ju2g",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@vaultlynews.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "중국 인민해방군 / 정부 (China PLA / Gov)",
+        "who_code": "CHINA_PLA_OR_GOV",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "희토류 / 핵심 광물 자원 (Critical Mineral Asset)",
+        "target_code": "CRITICAL_MINERAL_ASSET",
+        "where": "EAST_ASIA",
+        "when": "2026-10-20T02:15:24.041Z",
+        "supply_impact_tags": [
+          "RARE_EARTHS"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "RARE_EARTHS"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://vaultly-omega.vercel.app/en/article/china-rare-earth-export-controls-robotics-impact",
+          "alt_text": "China's Rare Earth Export Curbs Could Pressure Robot Production, REalloys Gains Traction",
+          "source": "Bluesky_@vaultlynews.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "China's Rare Earth Export Curbs Could Pressure Robot Production, REalloys Gains Traction",
+        "Score 7/10 · Impatto: Medium · Finestra: 1 week Asset: Rare Earth Magnets, Humanoid Robots, Tesla, REalloys (ALOY) Geopolitical supply chain risks for critical minerals like rare earths could impact advanced manufacturing and create opportu"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-10-20T02:15:24.041Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0093",
+      "signal_id": "SIG-20261112-0093",
+      "representative_title": "Biden sharply hikes US tariffs on an array of Chinese imports",
+      "canonical_title": "Biden sharply hikes US tariffs on an array of Chinese imports",
+      "url": "https://bsky.app/profile/supastevo.bsky.social/post/3l5mbzeac4o2l",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@supastevo.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 1.0,
+      "event_tuple": {
+        "who": "미국 정부 / 군 (US Gov / Military)",
+        "who_code": "US_GOV_OR_MILITARY",
+        "action": "수출통제 / 무역제재 (Export Control / Sanctions)",
+        "action_code": "REGULATORY_SANCTION",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "EAST_ASIA, NORTH_AMERICA",
+        "when": "2024-10-03T12:50:10.741Z",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "HIGH_REGULATORY_DISRUPTION",
+        "threat_description": "📋 통상·규제 공급망 타격 (수출통제·생산중단·자산동결)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [
+        "SANCTIONS_EXPORT_CONTROL",
+        "ELECTION_GOVERNMENT"
+      ],
+      "hotspot_regions": [
+        "EAST_ASIA",
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://www.reuters.com/markets/us/biden-sharply-hikes-us-tariffs-billions-chinese-chips-cars-2024-05-14/",
+          "alt_text": "Biden sharply hikes US tariffs on an array of Chinese imports",
+          "source": "Bluesky_@supastevo.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "Biden sharply hikes US tariffs on an array of Chinese imports",
+        "U.S. President Joe Biden on Tuesday unveiled steep tariff increases on an array of Chinese imports including electric vehicle (EV) batteries, computer chips and medical products, risking an election-year standoff with Beijing as he woos Ame"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2024-10-03T12:50:10.741Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0015",
+      "signal_id": "SIG-20261112-0015",
+      "representative_title": "Financial Times: сделка Трампа с Путиным помогла России удвоить экспорт дизельного топлива, хотя сами американцы пока ничего не получили",
+      "canonical_title": "Financial Times: сделка Трампа с Путиным помогла России удвоить экспорт дизельного топлива, хотя сами американцы пока ничего не получили",
+      "url": "https://meduza.io/news/2026/11/12/financial-times-sdelka-trampa-s-putinym-pomogla-rossii-udvoit-eksport-dizelnogo-topliva-hotya-sami-amerikantsy-poka-nichego-ne-poluchili",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "ru_meduza_rss"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "primary_language": "ru",
+      "detected_languages": [
+        "ru"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.8,
+      "event_tuple": {
+        "who": "미상 / 민간 다국적 출처 (Unspecified / Multiple Sources)",
+        "who_code": "UNKNOWN_OR_UNSPECIFIED",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "항만 / 정유 / 에너지 인프라 (Port & Energy Infra)",
+        "target_code": "PORT_ENERGY_INFRA",
+        "where": "EASTERN_EUROPE, NORTH_AMERICA",
+        "when": "Thu, 12 Nov 2026 11:30:14 +0300",
+        "supply_impact_tags": [
+          "CRUDE_OIL"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EASTERN_EUROPE",
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://meduza.io/imgly/share/1794472269/news/2026/11/12/financial-times-sdelka-trampa-s-putinym-pomogla-rossii-udvoit-eksport-dizelnogo-topliva-hotya-sami-amerikantsy-poka-nichego-ne-poluchili",
+          "alt_text": "Financial Times: сделка Трампа с Путиным помогла России удвоить экспорт дизельного топлива, хотя сами американцы пока ни",
+          "source": "ru_meduza_rss"
+        }
+      ],
+      "visual_alt_texts": [
+        "Financial Times: сделка Трампа с Путиным помогла России удвоить экспорт дизельного топлива, хотя сами американцы пока ни"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Thu, 12 Nov 2026 11:30:14 +0300",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0043",
+      "signal_id": "SIG-20261112-0043",
+      "representative_title": "Mapping the Semiconductor Supply Chain: The Critical Role of the Indo-Pacific Region - CSIS | Center for Strategic and International Studies",
+      "canonical_title": "Mapping the Semiconductor Supply Chain: The Critical Role of the Indo-Pacific Region - CSIS | Center for Strategic and International Studies",
+      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQMW9OMWRUSTFkRHRxZktEeDM0VEZ1cjhqRktPYWxvN1RQY1RPcHRxUTFIVlc3MHMwU1dtY0dnbV9wdThiRVI0dEpIaWdDWlBvek9tSEd0V21XeGhCbFE5aEtPak9VMUJBVjBaM0RvVW9BMXVHN01PX1dxZkRJcGZHYkNRZ2NLaGJUa3FtVlZTRlMzczg5Y0VYb3M1NUtHa2c?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "us_csis_tech_semiconductors"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.8,
+      "event_tuple": {
+        "who": "미상 / 민간 다국적 출처 (Unspecified / Multiple Sources)",
+        "who_code": "UNKNOWN_OR_UNSPECIFIED",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "글로벌 지정학 해역 (Global Maritime / Geopolitical Area)",
+        "when": "Tue, 30 May 2023 07:00:00 GMT",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Tue, 30 May 2023 07:00:00 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0060",
+      "signal_id": "SIG-20261112-0060",
+      "representative_title": "TSM is maintaining a high-conviction ceiling at 7.8/10, even with a minor -0.7 pt dip. Despite the slight cooling, Taiwan Semi shows one of the cleanest reporting paths in the semiconductor space, avo",
+      "canonical_title": "TSM is maintaining a high-conviction ceiling at 7.8/10, even with a minor -0.7 pt dip. Despite the slight cooling, Taiwan Semi shows one of the cleanest reporting paths in the semiconductor space, avo",
+      "url": "https://bsky.app/profile/assetfeel.bsky.social/post/3n23ytvn2ft2q",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_Social"
+      ],
+      "source_types": [
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.8,
+      "event_tuple": {
+        "who": "대만 국방부 / 당국 (Taiwan Authority)",
+        "who_code": "TAIWAN_AUTHORITY",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "EAST_ASIA",
+        "when": "2026-11-12",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-11-12",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0064",
+      "signal_id": "SIG-20261112-0064",
+      "representative_title": "Given the current economy, Jensen Huang should just claim that his agentic wang took those actions by itself, and thus he should receive no blame for these affairs and diverting of Nvidia hardware to",
+      "canonical_title": "Given the current economy, Jensen Huang should just claim that his agentic wang took those actions by itself, and thus he should receive no blame for these affairs and diverting of Nvidia hardware to",
+      "url": "https://bsky.app/profile/hackkitten.bsky.social/post/3n242thpe7k2b",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_Social"
+      ],
+      "source_types": [
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.8,
+      "event_tuple": {
+        "who": "글로벌 반도체 기업 (Semiconductor Enterprise)",
+        "who_code": "SEMICONDUCTOR_CHIPMAKER",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "글로벌 지정학 해역 (Global Maritime / Geopolitical Area)",
+        "when": "2026-11-12",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-11-12",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0066",
+      "signal_id": "SIG-20261112-0066",
+      "representative_title": "斷電等同斷供全世界！台積電成兵推關鍵警告 中共這招比打仗更可怕 - TVBS新聞網",
+      "canonical_title": "斷電等同斷供全世界！台積電成兵推關鍵警告 中共這招比打仗更可怕 - TVBS新聞網",
+      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE11RUczVm9HUWdNR3R2VTBwSGdBalZFeUppZjRsS3A0RDk1VFpsVlBvMXEzNzNRWVZERk1DeTF1QTh4UFp3ZXZ6aC04NXBxZjNta25j?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "GoogleNews_TW"
+      ],
+      "source_types": [
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "zh",
+      "detected_languages": [
+        "zh"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.8,
+      "event_tuple": {
+        "who": "글로벌 반도체 기업 (Semiconductor Enterprise)",
+        "who_code": "SEMICONDUCTOR_CHIPMAKER",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "EAST_ASIA",
+        "when": "Wed, 12 Aug 2026",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [
+        "MILITARY_CONFLICT",
+        "INFRA_LOGISTICS_DISRUPTION"
+      ],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Wed, 12 Aug 2026",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0069",
+      "signal_id": "SIG-20261112-0069",
+      "representative_title": "【深度解析】台積電地緣政治風險全解析：2026 台灣半導體產業的戰略挑戰與因應 - 陳弘益 教授",
+      "canonical_title": "【深度解析】台積電地緣政治風險全解析：2026 台灣半導體產業的戰略挑戰與因應 - 陳弘益 教授",
+      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE9JZkhyS1JtdG1KVnJMbXRRVE5KTVhQRjVMSkJ2T2pKX3JkMHVEbUtYU2ZzZEpnYkV0M3FzMHJxeG1mMGNfdzdOOEhFb21YLXFMSVRfb2ktSFJ4VXNsSDlYSlRvZkJKb0RCMk9LOGctWDQ?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "GoogleNews_TW"
+      ],
+      "source_types": [
+        "public_opinion_forum"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "zh",
+      "detected_languages": [
+        "zh"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.8,
+      "event_tuple": {
+        "who": "글로벌 반도체 기업 (Semiconductor Enterprise)",
+        "who_code": "SEMICONDUCTOR_CHIPMAKER",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "EAST_ASIA",
+        "when": "Sun, 08 Mar 2026",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Sun, 08 Mar 2026",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0081",
+      "signal_id": "SIG-20261112-0081",
+      "representative_title": "Panama canal traffic facing further cuts as drought from El Niño worsens",
+      "canonical_title": "Panama canal traffic facing further cuts as drought from El Niño worsens",
+      "url": "https://bsky.app/profile/japoniano.bsky.social/post/3mxzug26bo226",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@japoniano.bsky.social"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "pt",
+      "detected_languages": [
+        "pt"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.8,
+      "event_tuple": {
+        "who": "미상 / 민간 다국적 출처 (Unspecified / Multiple Sources)",
+        "who_code": "UNKNOWN_OR_UNSPECIFIED",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "파나마 운하 (Panama Canal)",
+        "when": "2026-10-17T00:45:13.616Z",
+        "supply_impact_tags": [],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [
+        {
+          "code": "CHOKEPOINT_PANAMA",
+          "name": "파나마 운하 (Panama Canal)",
+          "region": "Americas / Latin America",
+          "primary_supply": [
+            "NATURAL_GAS_LNG",
+            "GRAIN_FOOD"
+          ]
+        }
+      ],
+      "supply_chain_tags": [],
+      "event_types": [],
+      "hotspot_regions": [
+        "LATIN_AMERICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://www.theguardian.com/world/2026/sep/15/panama-canal-traffic-cut-trade-drought-el-nino",
+          "alt_text": "Panama canal traffic facing further cuts as drought from El Niño worsens",
+          "source": "Bluesky_@japoniano.bsky.social"
+        }
+      ],
+      "visual_alt_texts": [
+        "Panama canal traffic facing further cuts as drought from El Niño worsens",
+        "Planned daily reductions will further choke one of the world’s most important shipping lanes"
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-10-17T00:45:13.616Z",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0089",
+      "signal_id": "SIG-20261112-0089",
+      "representative_title": "Why Trump Can't Afford to Lose The Rare Earth Race",
+      "canonical_title": "Why Trump Can't Afford to Lose The Rare Earth Race",
+      "url": "https://bsky.app/profile/bigearthdata.ai/post/3myjcxrkpsq2v",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Bluesky_@bigearthdata.ai"
+      ],
+      "source_types": [
+        "online_information_environment_signal"
+      ],
+      "observed_lanes": [
+        "OPINION"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.8,
+      "event_tuple": {
+        "who": "미국 정부 / 군 (US Gov / Military)",
+        "who_code": "US_GOV_OR_MILITARY",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "희토류 / 핵심 광물 자원 (Critical Mineral Asset)",
+        "target_code": "CRITICAL_MINERAL_ASSET",
+        "where": "NORTH_AMERICA",
+        "when": "2026-10-23T04:15:36.849709+00:00",
+        "supply_impact_tags": [
+          "RARE_EARTHS"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "RARE_EARTHS"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "external_card",
+          "url": "https://oilprice.com/Energy/Energy-General/Why-Trump-Cant-Afford-to-Lose-The-Rare-Earth-Race.html",
+          "alt_text": "Why Trump Can't Afford to Lose The Rare Earth Race",
+          "source": "Bluesky_@bigearthdata.ai"
+        }
+      ],
+      "visual_alt_texts": [
+        "Why Trump Can't Afford to Lose The Rare Earth Race",
+        "For years, the West has searched for a technological escape hatch from rare earths. Engineers have developed new motor designs, alternative magnet chemistries, and materials that reduce or even eliminate the need for some critical minerals."
+      ],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-10-23T04:15:36.849709+00:00",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0019",
+      "signal_id": "SIG-20261112-0019",
+      "representative_title": "Два танкера с российским дизелем, направлявшиеся в США, сменили курс - The Insider",
+      "canonical_title": "Два танкера с российским дизелем, направлявшиеся в США, сменили курс - The Insider",
+      "url": "https://news.google.com/rss/articles/CBMiQ0FVX3lxTE9OcHluaGxyQ1BzU0FmRDEycEdsRGpCd2lXRmhwZ1dNeTZXMGRXY0Q0c1B2RWtaYWxFcC1JbUNhWjBMbG8?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "ru_insider_rss"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "primary_language": "ru",
+      "detected_languages": [
+        "ru"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.5,
+      "event_tuple": {
+        "who": "미국 정부 / 군 (US Gov / Military)",
+        "who_code": "US_GOV_OR_MILITARY",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "원유 수송 유조선 (Crude Oil Tanker)",
+        "target_code": "CRUDE_OIL_TANKER",
+        "where": "EASTERN_EUROPE, NORTH_AMERICA",
+        "when": "Thu, 05 Nov 2026 13:26:47 GMT",
+        "supply_impact_tags": [
+          "CRUDE_OIL"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EASTERN_EUROPE",
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Thu, 05 Nov 2026 13:26:47 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0038",
+      "signal_id": "SIG-20261112-0038",
+      "representative_title": "Who controls Nvidia when its power becomes a matter of state interest? - Tomorrow's Affairs",
+      "canonical_title": "Who controls Nvidia when its power becomes a matter of state interest? - Tomorrow's Affairs",
+      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOeDNUMklrbTN2U2RXQ0NtMlhScmJsMlZDcTBhUlBLS3g4UXgydnkyQWU1dDl5TFlIOVNVQzc3NU1WTHJMcm5TeHZHM1RwNVV4eGYzMm45OVhuLXdvZzZCclB0ekg4ZG1YYmxHcXMzbE0xbUxTUnBFTFUwZ0g5aVFxWE9ONDA1cGR6NXUyTUtZRVRtanY3RXNadGZWeUYtTXM?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "us_commerce_bis"
+      ],
+      "source_types": [
+        "state_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.5,
+      "event_tuple": {
+        "who": "글로벌 반도체 기업 (Semiconductor Enterprise)",
+        "who_code": "SEMICONDUCTOR_CHIPMAKER",
+        "action": "수출통제 / 무역제재 (Export Control / Sanctions)",
+        "action_code": "REGULATORY_SANCTION",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "글로벌 지정학 해역 (Global Maritime / Geopolitical Area)",
+        "when": "Tue, 10 Nov 2026 17:10:47 GMT",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "HIGH_REGULATORY_DISRUPTION",
+        "threat_description": "📋 통상·규제 공급망 타격 (수출통제·생산중단·자산동결)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Tue, 10 Nov 2026 17:10:47 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0041",
+      "signal_id": "SIG-20261112-0041",
+      "representative_title": "One Year After Busan: Has China Kept Its Rare Earth Promises? - CSIS | Center for Strategic and International Studies",
+      "canonical_title": "One Year After Busan: Has China Kept Its Rare Earth Promises? - CSIS | Center for Strategic and International Studies",
+      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOV3BqWHBac0pVdnQwY2lRQVlXYndZVFU0YVZNQ3pqdlNSRDUtYmVhSkFHQzlnMk41NXlXM3RXdk1YaEYwWDBtdEdsLVo3aU1nekkyWDFBdzd5T1dyWnREeWFrdC1WWlpqQ2FUTC03OUJqRVpDWEhjcXhJSHVpdlR4d05YOFZNeG5mOGsydlVJOG9KVjg?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "us_csis_tech_semiconductors"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.5,
+      "event_tuple": {
+        "who": "중국 인민해방군 / 정부 (China PLA / Gov)",
+        "who_code": "CHINA_PLA_OR_GOV",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "희토류 / 핵심 광물 자원 (Critical Mineral Asset)",
+        "target_code": "CRITICAL_MINERAL_ASSET",
+        "where": "EAST_ASIA",
+        "when": "Tue, 10 Nov 2026 22:10:56 GMT",
+        "supply_impact_tags": [
+          "RARE_EARTHS"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "RARE_EARTHS"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EAST_ASIA"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Tue, 10 Nov 2026 22:10:56 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0042",
+      "signal_id": "SIG-20261112-0042",
+      "representative_title": "Securing Semiconductor Supply Chains: An Affirmative Agenda for International Cooperation - CSIS | Center for Strategic and International Studies",
+      "canonical_title": "Securing Semiconductor Supply Chains: An Affirmative Agenda for International Cooperation - CSIS | Center for Strategic and International Studies",
+      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOY0dEemF6X3djOW5mQjAxT1MwTnZXWkFGOERDNUUxX0I4MjVxSTFwbWhHdlFQT3liTHRBeGhVLVZTQjFVQ09LdXJsbGYyTU5wT0VlOW11bGZHcU5MQUk0blFSbUJRQURmbVp4Nnl6NmlDX3dvcXJjal9VT3VSLXNNRjRaSUxMSVFzb1ljNFE3OExWWUVhZUU4bTBOdW9lR2ExUzQ5dE90ZE53bVN4ekUtVQ?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "us_csis_tech_semiconductors"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.5,
+      "event_tuple": {
+        "who": "미상 / 민간 다국적 출처 (Unspecified / Multiple Sources)",
+        "who_code": "UNKNOWN_OR_UNSPECIFIED",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "글로벌 지정학 해역 (Global Maritime / Geopolitical Area)",
+        "when": "Tue, 02 Aug 2022 07:00:00 GMT",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Tue, 02 Aug 2022 07:00:00 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0044",
+      "signal_id": "SIG-20261112-0044",
+      "representative_title": "The Pillars Necessary for a Strong Domestic Semiconductor Industry - CSIS | Center for Strategic and International Studies",
+      "canonical_title": "The Pillars Necessary for a Strong Domestic Semiconductor Industry - CSIS | Center for Strategic and International Studies",
+      "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQMHpvY0cxbVhDUGIxOTdvQ3dCVDBxbll1dW1JOFVqVzE3ek1BTVhWaHBqbHNKWDk3UGI3ekFTenJReU5zNkFHaEU1U0NiRmM3MnB4dXp5V2NIVFFQaXkxOUdkdm4tajZLcTVNOFN6ZEhHZEZiYUtqYS1Ub2piSmF4RkVSeW1qX1ltR0gtRXZNMA?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "us_csis_tech_semiconductors"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.5,
+      "event_tuple": {
+        "who": "미상 / 민간 다국적 출처 (Unspecified / Multiple Sources)",
+        "who_code": "UNKNOWN_OR_UNSPECIFIED",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "글로벌 지정학 해역 (Global Maritime / Geopolitical Area)",
+        "when": "Fri, 20 May 2022 07:00:00 GMT",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Fri, 20 May 2022 07:00:00 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0045",
+      "signal_id": "SIG-20261112-0045",
+      "representative_title": "A World of Chips Acts: The Future of U.S.-EU Semiconductor Collaboration - CSIS | Center for Strategic and International Studies",
+      "canonical_title": "A World of Chips Acts: The Future of U.S.-EU Semiconductor Collaboration - CSIS | Center for Strategic and International Studies",
+      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxONXBCWVhQS1hQb0xUWDVndmVoT0YwU0dWbmRlX0NHZlhFTmp3aEFCZGI2enNYa210eUtnYnlxTVM2WmRkdnVRNWlIWlJCMHQzMzJZLW9mZGxUelB2dmxKOGI3MzQtbGlTaU5vX2d5b2I1akU2RnRsa2tiNklPRUZDSGRLOTBBdFlyYzdZN2ZjeUg?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "us_csis_tech_semiconductors"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.5,
+      "event_tuple": {
+        "who": "미상 / 민간 다국적 출처 (Unspecified / Multiple Sources)",
+        "who_code": "UNKNOWN_OR_UNSPECIFIED",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "WESTERN_EUROPE",
+        "when": "Tue, 20 Aug 2024 07:00:00 GMT",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "WESTERN_EUROPE"
+      ],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Tue, 20 Aug 2024 07:00:00 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0046",
+      "signal_id": "SIG-20261112-0046",
+      "representative_title": "Can Semiconductor Reshoring Prime a U.S. Manufacturing Renaissance? - CSIS | Center for Strategic and International Studies",
+      "canonical_title": "Can Semiconductor Reshoring Prime a U.S. Manufacturing Renaissance? - CSIS | Center for Strategic and International Studies",
+      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNSklBVWNtQlV2R0Ribl95UzduWnhGdndRZlZwdDItTVJlRl9PcTg1eHFGTXJEZjJJNkhtSURjdUNxa2ZJZjJJamZoTzlkZkxPa3ZURUFRc2ZHekoydDlGSGZKdHl3ZFFxNXRBSzBKMTBmWHdlOUxvQ2kzdjBfcnNxNDg0bXFfVURmZE1UZUE2TTBFVDVQZGg0?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "us_csis_tech_semiconductors"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.5,
+      "event_tuple": {
+        "who": "미상 / 민간 다국적 출처 (Unspecified / Multiple Sources)",
+        "who_code": "UNKNOWN_OR_UNSPECIFIED",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "글로벌 지정학 해역 (Global Maritime / Geopolitical Area)",
+        "when": "Thu, 01 Sep 2022 07:00:00 GMT",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Thu, 01 Sep 2022 07:00:00 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0052",
+      "signal_id": "SIG-20261112-0052",
+      "representative_title": "📝 Вторая любовница 📝 Главу Nvidia попросят на выход? Илон Маск, подвинься — теперь главный скандалист технологического мира это Дженсен Хуанг , основатель и бес...",
+      "canonical_title": "📝 Вторая любовница 📝 Главу Nvidia попросят на выход? Илон Маск, подвинься — теперь главный скандалист технологического мира это Дженсен Хуанг , основатель и бес...",
+      "url": "https://t.me/rybar/84627",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "Telegram_@rybar"
+      ],
+      "source_types": [
+        "telegram_osint"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "primary_language": "ru",
+      "detected_languages": [
+        "ru"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.5,
+      "event_tuple": {
+        "who": "미국 정부 / 군 (US Gov / Military)",
+        "who_code": "US_GOV_OR_MILITARY",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "특정 대상 미상 (Unspecified Target)",
+        "target_code": "UNSPECIFIED_TARGET",
+        "where": "EAST_ASIA, NORTH_AMERICA",
+        "when": "2026-11-12T08:55:30.444897+00:00",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [
+        "EAST_ASIA",
+        "NORTH_AMERICA"
+      ],
+      "has_visual_media": true,
+      "visual_modalities": [],
+      "media_attachments": [
+        {
+          "type": "image",
+          "url": "https://cdn4.telesco.pe/file/jerh97CCjkR1cDW4ZaNz0P0whuaJpv-KICX-W-S_TR_VC3_GGUQroJ8EhZL3sHhOk8TghZQAKjZYt_0Wfp821NJT2FxiBMg3iUH35LV9cm56VTB63_BVOcl2WZ6wV7KHf580r3vexzhPgoWaLHC1TB1ioOpqgTXmogg99Kq2C9tcl7r9F9YY76Fv-DUPV5iVsxP9__ZyobgUuqneemdwRfVnaEJLoDEITiPFo8ByH-vLeF3hPO4wJxlsGBP3_niuZ1WHdqo1b5EE_oisM4yeDXPIfUk7TdN4mtk9pqAToxnS_cmioG6DjJyDtQXo464F6SsKbZ4kExYr_mUDBOlBRg.jpg",
+          "alt_text": "",
+          "source": "Telegram_@rybar"
+        }
+      ],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "2026-11-12T08:55:30.444897+00:00",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0034",
+      "signal_id": "SIG-20261112-0034",
+      "representative_title": "BBC News: US refuelling tankers fly out of RAF Mildenhall - Royal United Services Institute (RUSI)",
+      "canonical_title": "BBC News: US refuelling tankers fly out of RAF Mildenhall - Royal United Services Institute (RUSI)",
+      "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNZnVTVGtLZ1BWNklBdXFXNDlJaVRNY25PMGM5RkVvaFF4djJkNjd2eXhCWGlIUU5tY0tpV1hlSjVRT2R2aDVCajNFY3RabFBHQjdUSE96bmtLaEhHZC1HMzRNVjVkWF9kc3FlS0tRMGxLNUtmcWVWbHJ5TFp4S08zM2Ffd296bndfekdTdmlHdXdXOWFnY1Y2OHVLX1lsQ0Z6OEdFRUln?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "rusi_military"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.2,
+      "event_tuple": {
+        "who": "미국 정부 / 군 (US Gov / Military)",
+        "who_code": "US_GOV_OR_MILITARY",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "원유 수송 유조선 (Crude Oil Tanker)",
+        "target_code": "CRUDE_OIL_TANKER",
+        "where": "글로벌 지정학 해역 (Global Maritime / Geopolitical Area)",
+        "when": "Tue, 10 Nov 2026 18:13:45 GMT",
+        "supply_impact_tags": [
+          "CRUDE_OIL"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "CRUDE_OIL"
+      ],
+      "event_types": [],
+      "hotspot_regions": [],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Tue, 10 Nov 2026 18:13:45 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0048",
+      "signal_id": "SIG-20261112-0048",
+      "representative_title": "Innovation Lightbulb: Tracking CHIPS Act Incentives - CSIS | Center for Strategic and International Studies",
+      "canonical_title": "Innovation Lightbulb: Tracking CHIPS Act Incentives - CSIS | Center for Strategic and International Studies",
+      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPaXpIelpXOXZhWXhhcGduc0V3M1dJRFZRYnZDaEJnbnprYUNicUpnSkIxZmFUTUVKZkR5SFN4QXFVRmswaW1JR2ZBTmN6c251aWMzUUpkZlVSbTFaX3JjQjh5RmJsVmNPOTJTRDk0YnBxeWlZVExtTklMYW9TbjVxeEpOczhaNzQ?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "us_csis_tech_semiconductors"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.2,
+      "event_tuple": {
+        "who": "미상 / 민간 다국적 출처 (Unspecified / Multiple Sources)",
+        "who_code": "UNKNOWN_OR_UNSPECIFIED",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "글로벌 지정학 해역 (Global Maritime / Geopolitical Area)",
+        "when": "Fri, 25 Apr 2025 07:00:00 GMT",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [
+        "ELECTION_GOVERNMENT"
+      ],
+      "hotspot_regions": [],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Fri, 25 Apr 2025 07:00:00 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    },
+    {
+      "cluster_id": "CLUST-0049",
+      "signal_id": "SIG-20261112-0049",
+      "representative_title": "The Strategic Importance of Legacy Chips - CSIS | Center for Strategic and International Studies",
+      "canonical_title": "The Strategic Importance of Legacy Chips - CSIS | Center for Strategic and International Studies",
+      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1xZFRIdEc0QnhqWTVJNk82OHhGc0ZRZ3ZYWnZLTjdfekxENHcwNms0VWstSVNCSlZpMEtJcEltWDJyYkY2M2Fmb0tOU3BLakQ4cnEzZEp1eWZ2OVRYc19YSjhVMTFQeVRUaUNPZDBRQ0Q?oc=5",
+      "cluster_size": 1,
+      "unique_sources_count": 1,
+      "sources": [
+        "us_csis_tech_semiconductors"
+      ],
+      "source_types": [
+        "independent_media"
+      ],
+      "observed_lanes": [
+        "CONTEXT"
+      ],
+      "primary_language": "en",
+      "detected_languages": [
+        "en"
+      ],
+      "is_cross_lingual": false,
+      "purity_tier": "TIER_2_VERIFIED_ENTITY",
+      "relevance_score": 0.2,
+      "event_tuple": {
+        "who": "미상 / 민간 다국적 출처 (Unspecified / Multiple Sources)",
+        "who_code": "UNKNOWN_OR_UNSPECIFIED",
+        "action": "일반 정세 보고 및 모니터링 (General Geopolitical Observation)",
+        "action_code": "MONITORING_OR_GENERAL_EVENT",
+        "target": "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)",
+        "target_code": "SEMICONDUCTOR_SUPPLY_ASSET",
+        "where": "글로벌 지정학 해역 (Global Maritime / Geopolitical Area)",
+        "when": "Fri, 03 Mar 2023 08:00:00 GMT",
+        "supply_impact_tags": [
+          "SEMICONDUCTOR"
+        ],
+        "threat_severity": "MONITORING",
+        "threat_description": "🔍 상시 모니터링 (잠재 위험 징후 추적)"
+      },
+      "chokepoints": [],
+      "supply_chain_tags": [
+        "SEMICONDUCTOR"
+      ],
+      "event_types": [],
+      "hotspot_regions": [],
+      "has_visual_media": false,
+      "visual_modalities": [],
+      "media_attachments": [],
+      "visual_alt_texts": [],
+      "visual_verification_state": "UNVERIFIED_METADATA_ONLY",
+      "published_at": "Fri, 03 Mar 2023 08:00:00 GMT",
+      "verification_state": "UNVERIFIED",
+      "alert_level_set": false,
+      "preprocessed_at": "2026-11-12T15:17:11.711951+00:00"
+    }
+  ]
+}

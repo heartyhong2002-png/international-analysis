@@ -77,6 +77,16 @@ ollama serve   # 별도 터미널
 # Linux / cloud
 .venv/bin/python scripts/run_pipeline.py
 .venv/bin/python scripts/dashboard/generate_dashboard_v2.py
+
+# Local unified HTML console (prototype, no deploy)
+#   Opens http://127.0.0.1:8765 — one-click collect / DB / dashboard presets
+.\.venv\Scripts\python.exe scripts/console/app.py
+
+# Streamlit all-in-one control center (local only, loopback bind)
+#   Opens http://127.0.0.1:8501 — never bind 0.0.0.0 / all interfaces
+#   Windows: scripts\ops\start_streamlit_app.bat
+#   Linux:   scripts/ops/start_streamlit_app.sh
+#   Or: .venv\Scripts\python.exe -m streamlit run app.py --server.address 127.0.0.1
 ```
 
 개별 단계(정부 발표 수집, GDELT Cloud 사건 수집, 해협·항만 센서, 현지 공개 여론 수집 등)를 따로 돌리는 방법은
