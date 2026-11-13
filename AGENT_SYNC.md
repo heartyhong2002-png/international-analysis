@@ -85,6 +85,7 @@ Cursor / ANTIGRAVITY / 로컬 터미널이 **같은 폴더**(Desktop Junction �
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
+| done | ANTIGRAVITY | validation / multi-judge-audit-runner | `scripts/validation/run_multi_judge_audit.py`, `data/validation/multi_judge_audit_latest.json`, `data/tev1_backtest_results.json` | §10.4 다자간 직교 검증단(`tev1`·`Gemma2`·`DeepSeek-R1`) 실행기 구현 및 7개 권역 실측 감사·`tev1` 10건 백테스트 완결 | 2026-11-14 |
 | done | ANTIGRAVITY | llm-analysis / 3-tier-signal-gap-refresh | `scripts/analysis/analyze_signal_gap.py`, `data/signal_gap/signal_gap_analysis.json` | LLM 3-Tier(Qwen 2.5 팩트추출 ➔ EXAONE 3.5 한국어 브리핑 & Llama 3.1 영문 정제) 및 결정론적 경보 산식 재분석 완결 (독립 검증단은 QA 세션 분리 보존) | 2026-11-13 |
 | done | ANTIGRAVITY | preprocessing / nlp-event-tuple-and-language-labeling | scripts/automation/preprocess_signals.py, scripts/pipeline/bridge_preprocess_lanes.py, data/automation/* | 텍스트마이닝·자연어처리 연계: 5W1H 정형 이벤트 튜플(who/action/target/where/when/threat_severity) 자동 추출기 및 ISO-639 다국어 라벨링(10개 언어 감지·교차언어 클러스터 지표) 구현 완료 | 2026-11-13 |
 | done | ANTIGRAVITY | agent-ops / hermes-optimization | `config.yaml`, `SOUL.md`, `nul` 삭제 | Hermes Agent 추론 엔진 전면 교체(Groq Qwen 27B ➔ Google Gemini 3 Flash Preview 100만 토큰), SOUL.md 프로젝트 맵 주입, Windows nul 장치 충돌 제거 및 백그라운드 게이트웨이(PID: 8780) 정상 재기동 완료 | 2026-11-12 |
@@ -144,6 +145,20 @@ Cursor / ANTIGRAVITY / 로컬 터미널이 **같은 폴더**(Desktop Junction �
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-14 [ANTIGRAVITY / Validation·QA · §10.4 다자간 직교 검증단 구현 및 실측 감사 완결 Handoff]
+- 한 일:
+  1. `scripts/validation/run_multi_judge_audit.py` 구현:
+     - `VALIDATION_PLAN.md` §10.4 규격에 따라 `tev1:latest`(단계·산식 마스킹), `gemma2:9b`(근거 충실도), `deepseek-r1:7b`(추론·비약 비판) 3심제 직교 감사를 16GB RAM 순차 로딩(`keep_alive="15s"` 배치 + 모델별 명시적 언로드)으로 실행.
+     - 빈 근거(`evidence_phrases=[]`) 권역에 대해 `gemma2`가 결정론적 `unverifiable_source_missing`을 반환하도록 정제.
+  2. `backtest_tev1.py` 10/10 동결 백테스트 정상 완결(일치 5건 / 불일치 5건) 및 `data/signal_gap/signal_gap_analysis.json` 7개 권역 실측 감사 완료:
+     - `Middle_East`: `gemma2`가 아랍어 `E-02`(시리아 경제)를 이란으로 연결한 오류를 `unsupported`(`T2`)로 적발, `deepseek-r1`도 `scope_leap` 확인(`invalidated_by_unsupported_fact=true`).
+     - `United_States_Policy_Tech`: `gemma2`가 여권 발급 동의서(`E-01`)를 `unsupported`(`T2`)로 적발, `deepseek-r1`도 `scope_leap` 적발.
+     - `China`: `gemma2` `partial`(`E-01` 튀르키예-이스라엘 성명 맥락 누락), `deepseek-r1` `overstated`(`missing_bridge`) → `T3, T4, T5`.
+     - `Russia`: `gemma2` `supported`, `deepseek-r1` `overstated`(`scope_leap`) → `T4`.
+- 바꾼 파일: `scripts/validation/run_multi_judge_audit.py`, `data/validation/multi_judge_audit_latest.json`, `data/tev1_backtest_results.json`, `AGENT_SYNC.md`.
+- 확인한 것: Ollama 순차 실행 OOM 없이 완주, 모든 권역 `auto_accept=false` 및 `needs_human_review=true` 트리거 정상 기록.
+- 다음 작업: 적발된 `Middle_East`·`United_States_Policy_Tech`·`China` 근거 추출 필터 보강 또는 QA Stage 1 블라인드 검수 적재.
 
 2026-11-13 [ANTIGRAVITY / llm-analysis · LLM 3-Tier 분석 & 결정론적 경보 산식 파이프라인 재분석 완결 Handoff]
 - 한 일:
