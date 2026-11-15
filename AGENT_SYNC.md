@@ -85,6 +85,7 @@ Cursor / ANTIGRAVITY / 로컬 터미널이 **같은 폴더**(Desktop Junction �
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
+| done | ANTIGRAVITY | validation / human-blind-review-cli | `scripts/validation/human_blind_review.py`, `data/validation/pending_blind_review_stage1.csv`, `scripts/validation/run_multi_judge_audit.py` | §10.4.3 블라인드 2단계 사람 검수 CLI(`--export`, `--interactive`, `--reveal`, `--status`) 구축, 7개 권역 Stage 1 시트 추출 및 Notion 검증 단계 페이지 신설 | 2026-11-16 |
 | done | ANTIGRAVITY | validation / multi-judge-audit-runner | `scripts/validation/run_multi_judge_audit.py`, `data/validation/multi_judge_audit_latest.json`, `data/tev1_backtest_results.json` | §10.4 다자간 직교 검증단(`tev1`·`Gemma2`·`DeepSeek-R1`) 실행기 구현 및 7개 권역 실측 감사·`tev1` 10건 백테스트 완결 | 2026-11-14 |
 | done | ANTIGRAVITY | llm-analysis / 3-tier-signal-gap-refresh | `scripts/analysis/analyze_signal_gap.py`, `data/signal_gap/signal_gap_analysis.json` | LLM 3-Tier(Qwen 2.5 팩트추출 ➔ EXAONE 3.5 한국어 브리핑 & Llama 3.1 영문 정제) 및 결정론적 경보 산식 재분석 완결 (독립 검증단은 QA 세션 분리 보존) | 2026-11-13 |
 | done | ANTIGRAVITY | preprocessing / nlp-event-tuple-and-language-labeling | scripts/automation/preprocess_signals.py, scripts/pipeline/bridge_preprocess_lanes.py, data/automation/* | 텍스트마이닝·자연어처리 연계: 5W1H 정형 이벤트 튜플(who/action/target/where/when/threat_severity) 자동 추출기 및 ISO-639 다국어 라벨링(10개 언어 감지·교차언어 클러스터 지표) 구현 완료 | 2026-11-13 |
@@ -145,6 +146,16 @@ Cursor / ANTIGRAVITY / 로컬 터미널이 **같은 폴더**(Desktop Junction �
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-16 [ANTIGRAVITY / Validation·QA · §10.4.3 블라인드 사람 검수 CLI 및 Notion 검증 페이지 구축 Handoff]
+- 한 일:
+  1. `scripts/validation/human_blind_review.py` 구현:
+     - `VALIDATION_PLAN.md` §10.4.3 규약(Stage 1 모델 출력 완전 마스킹 ➔ `stage1_locked=true` 잠금 ➔ Stage 2 3모델 결과 공개 및 번복 시 `human_final_*` 분리 기록)을 따르는 CLI(`--export`, `--interactive`, `--reveal`, `--status`) 구축.
+     - `data/validation/pending_blind_review_stage1.csv` 7개 권역 Stage 1 블라인드 검수 시트 추출 완료 (현재 잠금 `0/7`).
+  2. Notion 허브(`international-analysis 프로젝트`) 하위에 `🛡️ 검증 단계 (Validation Stage)` 전용 페이지 신설 (`417de224-b441-81b0-bdb9-e8975a4eb81b`).
+  3. `scripts/validation/run_multi_judge_audit.py`에 `--critic-model` (`CRITIC_MODEL`, 기본 `nemotron-3-nano:4b`) 선택 인자 반영.
+- 바꾼 파일: `scripts/validation/human_blind_review.py`, `data/validation/pending_blind_review_stage1.csv`, `scripts/validation/run_multi_judge_audit.py`, `AGENT_SYNC.md`.
+- 다음 작업: `human_blind_review.py --interactive --reviewer jungi` 또는 `pending_blind_review_stage1.csv` 작성 후 `--reveal`로 7개 권역 사람 검수 완료.
 
 2026-11-14 [ANTIGRAVITY / Validation·QA · §10.4 다자간 직교 검증단 구현 및 실측 감사 완결 Handoff]
 - 한 일:

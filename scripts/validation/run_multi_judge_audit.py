@@ -1,9 +1,9 @@
 """Orthogonal Multi-Judge Validation Audit Runner (VALIDATION_PLAN.md §10.4).
 
 Runs the 3-judge orthogonal validation suite sequentially on 16GB RAM:
-  1. tev1:latest     -> alert stage verdict (formula alert masked)
-  2. gemma2:9b       -> claim-level evidence grounding (factuality only)
-  3. deepseek-r1:7b  -> inference & leap critic (overstatement/leap only)
+  1. tev1:latest         -> alert stage verdict (formula alert masked)
+  2. gemma2:9b           -> claim-level evidence grounding (factuality only)
+  3. nemotron-3-nano:4b  -> inference & leap critic (overstatement/leap only)
 
 Evaluates T1-T8 human-review triggers without majority-vote averaging or auto-accept.
 """
@@ -13,6 +13,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import random
 import re
 import sys
@@ -36,6 +37,7 @@ DEFAULT_OUTPUT = ROOT / "data" / "validation" / "multi_judge_audit_latest.json"
 OLLAMA_BASE = "http://localhost:11434"
 SYSTEMONE_URL = f"{OLLAMA_BASE}/v1/systemone"
 CHAT_URL = f"{OLLAMA_BASE}/api/chat"
+DEFAULT_CRITIC_MODEL = os.getenv("CRITIC_MODEL", "nemotron-3-nano:4b")
 
 STAGE_OPTIONS = {
     "NORMAL": "Low or absent risk signals.",
@@ -283,7 +285,11 @@ def _validate_deepseek(obj: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def run_deepseek_critic(item: dict[str, Any], keep_alive: str | int = "15s") -> dict[str, Any]:
+def run_deepseek_critic(
+    item: dict[str, Any],
+    keep_alive: str | int = "15s",
+    model_id: str = DEFAULT_CRITIC_MODEL,
+) -> dict[str, Any]:
     """Evaluate inference leaps / overstatement ONLY. Does not re-judge raw truth."""
     evidence = item.get("evidence_phrases") or []
     ev_lines = (
@@ -308,13 +314,13 @@ def run_deepseek_critic(item: dict[str, Any], keep_alive: str | int = "15s") -> 
         "Output JSON only."
     )
     parsed, err_kind, err, ms = _call_chat_json(
-        "deepseek-r1:7b", system_prompt, user_prompt, _validate_deepseek, keep_alive=keep_alive
+        model_id, system_prompt, user_prompt, _validate_deepseek, keep_alive=keep_alive
     )
     if parsed is None:
         return {
             "alert_id": item["alert_id"],
             "schema_version": "v1",
-            "model_id": "deepseek-r1:7b",
+            "model_id": model_id,
             "input_snapshot_id": item["snapshot_id"],
             "inference_verdict": None,
             "latency_ms": ms,
@@ -324,7 +330,7 @@ def run_deepseek_critic(item: dict[str, Any], keep_alive: str | int = "15s") -> 
     return {
         "alert_id": item["alert_id"],
         "schema_version": "v1",
-        "model_id": "deepseek-r1:7b",
+        "model_id": model_id,
         "input_snapshot_id": item["snapshot_id"],
         **parsed,
         "latency_ms": ms,
@@ -387,6 +393,7 @@ def main() -> None:
     parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--regions", type=str, default="", help="Comma-separated region keys to audit.")
+    parser.add_argument("--critic-model", type=str, default=DEFAULT_CRITIC_MODEL, help="Ollama critic model ID.")
     args = parser.parse_args()
 
     raw = json.loads(args.input.read_text(encoding="utf-8"))
@@ -410,8 +417,11 @@ def main() -> None:
     _unload_model("tev1:latest")
     gemma_results = {it["region"]: run_gemma_grounding(it, keep_alive="15s") for it in items}
     _unload_model("gemma2:9b")
-    deepseek_results = {it["region"]: run_deepseek_critic(it, keep_alive="15s") for it in items}
-    _unload_model("deepseek-r1:7b")
+    deepseek_results = {
+        it["region"]: run_deepseek_critic(it, keep_alive="15s", model_id=args.critic_model)
+        for it in items
+    }
+    _unload_model(args.critic_model)
 
     audit_rows: list[dict[str, Any]] = []
     all_pass_indices: list[int] = []
@@ -463,7 +473,7 @@ def main() -> None:
             f"- {r['region']:28s} | Formula={r['formula_alert_en']:21s} | "
             f"tev1={str(r['tev1'].get('stage_verdict')):21s} | "
             f"Gemma={str(r['gemma2'].get('worst_verdict')):26s} | "
-            f"DeepSeek={str(r['deepseek_r1'].get('inference_verdict')):12s} | "
+            f"Critic={str(r['deepseek_r1'].get('inference_verdict')):12s} | "
             f"Triggers={gov['triggers']}"
         )
     print(f"\nSaved audit report to: {args.output}")
