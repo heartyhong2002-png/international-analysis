@@ -85,6 +85,8 @@ Cursor / ANTIGRAVITY / 로컬 터미널이 **같은 폴더**(Desktop Junction �
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
+| done | ANTIGRAVITY | validation / nemotron-hybrid-judge | `scripts/validation/run_multi_judge_audit.py`, `scripts/validation/human_blind_review.py`, `data/validation/multi_judge_audit_latest.json`, `AGENT_SYNC.md` | `deepseek-r1:7b` 삭제 및 `nemotron-3-nano:4b`(2.8GB 로컬) 교체, `--nim-escalate`(`nvidia/nemotron-3-ultra-550b-a55b`) 2차 심층 감사 연동 및 7개 권역 하이브리드 감사 실행(6/7 NIM `ok`, `Global_Trade_Investigative` 1건 `call_error`) | 2026-11-16 |
+| done | ANTIGRAVITY | agent-ops / s20-ultra-migration | `S20 Ultra (Termux Ubuntu 26.04)`, `AGENT_SYNC.md` | Hermes Agent 24/7 모바일 관제탑 S20 울트라(proot-distro Ubuntu 26.04) 이관 및 Termux 수집기 폴더 심볼릭 링크 연동 완료 (`gemini-3.1-flash-lite` 1,500 RPD, PC 게이트웨이 정지) | 2026-11-16 |
 | done | ANTIGRAVITY | validation / human-blind-review-cli | `scripts/validation/human_blind_review.py`, `data/validation/pending_blind_review_stage1.csv`, `scripts/validation/run_multi_judge_audit.py` | §10.4.3 블라인드 2단계 사람 검수 CLI(`--export`, `--interactive`, `--reveal`, `--status`) 구축, 7개 권역 Stage 1 시트 추출 및 Notion 검증 단계 페이지 신설 | 2026-11-16 |
 | done | ANTIGRAVITY | validation / multi-judge-audit-runner | `scripts/validation/run_multi_judge_audit.py`, `data/validation/multi_judge_audit_latest.json`, `data/tev1_backtest_results.json` | §10.4 다자간 직교 검증단(`tev1`·`Gemma2`·`DeepSeek-R1`) 실행기 구현 및 7개 권역 실측 감사·`tev1` 10건 백테스트 완결 | 2026-11-14 |
 | done | ANTIGRAVITY | llm-analysis / 3-tier-signal-gap-refresh | `scripts/analysis/analyze_signal_gap.py`, `data/signal_gap/signal_gap_analysis.json` | LLM 3-Tier(Qwen 2.5 팩트추출 ➔ EXAONE 3.5 한국어 브리핑 & Llama 3.1 영문 정제) 및 결정론적 경보 산식 재분석 완결 (독립 검증단은 QA 세션 분리 보존) | 2026-11-13 |
@@ -146,6 +148,15 @@ Cursor / ANTIGRAVITY / 로컬 터미널이 **같은 폴더**(Desktop Junction �
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-16 [ANTIGRAVITY / agent-ops · Hermes Agent S20 울트라(Termux Ubuntu) 24/7 모바일 이관 완료]
+- 한 일:
+  1. 노트북 이동성·전원 오프 제약을 해소하기 위해 24/7 상시 엣지 노드인 갤럭시 S20 울트라(`proot-distro` Ubuntu 26.04)에 `hermes-agent` + `discord.py` 설치 및 이관 완료.
+  2. Google AI Studio 무료 티어 할당량 정밀 검증: `gemini-3-flash-preview`(일 20회/503 과부하)에서 프로덕션 대용량 무료 쿼터(일 1,500회/분당 30회, 100만 토큰)를 제공하는 `gemini-3.1-flash-lite`(+ `gemini-3.5-flash-lite` fallback)로 최종 확정.
+  3. Termux 수집기 폴더(`/data/data/com.termux/files/home/international-analysis`)를 Ubuntu 홈(`~/international-analysis`)으로 심볼릭 링크 연동하여 수집기 상태(`data/phone_collector_status.json`) 조회 및 원격 실행 기반 확보.
+  4. Discord 봇 토큰 중복 접속 방지를 위해 PC 게이트웨이 정지 상태 유지 확인.
+- 바꾼 파일: PC `C:\Users\홍준기\AppData\Local\hermes\config.yaml` / `.env` / `SOUL.md`, S20 Ultra `~/.hermes/*`, `AGENT_SYNC.md`.
+- 다음 작업: 노트북은 개발/대시보드/DB 작업 시에만 켜서 `git pull` 후 활용, 상시 관제·수집은 S20 울트라에서 24/7 무중단 운영.
 
 2026-11-16 [ANTIGRAVITY / Validation·QA · §10.4.3 블라인드 사람 검수 CLI 및 Notion 검증 페이지 구축 Handoff]
 - 한 일:

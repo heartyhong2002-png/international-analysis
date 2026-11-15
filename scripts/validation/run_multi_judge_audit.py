@@ -38,6 +38,8 @@ OLLAMA_BASE = "http://localhost:11434"
 SYSTEMONE_URL = f"{OLLAMA_BASE}/v1/systemone"
 CHAT_URL = f"{OLLAMA_BASE}/api/chat"
 DEFAULT_CRITIC_MODEL = os.getenv("CRITIC_MODEL", "nemotron-3-nano:4b")
+NVIDIA_NIM_CHAT_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
+DEFAULT_NIM_MODEL = os.getenv("NVIDIA_NIM_MODEL", "nvidia/nemotron-3-ultra-550b-a55b")
 
 STAGE_OPTIONS = {
     "NORMAL": "Low or absent risk signals.",
@@ -61,11 +63,35 @@ VALID_FACT_VERDICTS = set(FACT_WORST_ORDER.keys())
 VALID_INFERENCE_VERDICTS = {"supported", "overstated", "insufficient"}
 
 
-def _post_json(url: str, payload: dict[str, Any], timeout: int = 180) -> dict[str, Any]:
+def _load_env_var(name: str) -> str:
+    val = os.getenv(name, "").strip()
+    if val:
+        return val
+    env_file = ROOT / ".env"
+    if env_file.exists():
+        for raw_line in env_file.read_text(encoding="utf-8", errors="ignore").splitlines():
+            line = raw_line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            k, v = line.split("=", 1)
+            if k.strip() == name:
+                return v.strip().strip('"').strip("'")
+    return ""
+
+
+def _post_json(
+    url: str,
+    payload: dict[str, Any],
+    timeout: int = 180,
+    extra_headers: dict[str, str] | None = None,
+) -> dict[str, Any]:
+    headers = {"Content-Type": "application/json"}
+    if extra_headers:
+        headers.update(extra_headers)
     req = Request(
         url,
         data=json.dumps(payload).encode("utf-8"),
-        headers={"Content-Type": "application/json"},
+        headers=headers,
         method="POST",
     )
     started = time.perf_counter()
@@ -338,6 +364,88 @@ def run_deepseek_critic(
     }
 
 
+def _validate_nim_escalation(obj: dict[str, Any]) -> dict[str, Any]:
+    fact_v = str(obj.get("fact_verdict", "")).strip()
+    inf_v = str(obj.get("inference_verdict", "")).strip()
+    if fact_v not in VALID_FACT_VERDICTS:
+        raise ValueError(f"Invalid NIM fact_verdict: {fact_v}")
+    if inf_v not in VALID_INFERENCE_VERDICTS:
+        raise ValueError(f"Invalid NIM inference_verdict: {inf_v}")
+    return {
+        "fact_verdict": fact_v,
+        "inference_verdict": inf_v,
+        "leap_type": str(obj.get("leap_type", "none")),
+        "cited_evidence_ids": [str(x) for x in (obj.get("cited_evidence_ids") or [])],
+        "note": str(obj.get("note", ""))[:400],
+    }
+
+
+def run_nim_escalation(
+    item: dict[str, Any],
+    api_key: str,
+    model_id: str = DEFAULT_NIM_MODEL,
+) -> dict[str, Any]:
+    """Optional Stage-2 deep audit via NVIDIA NIM for flagged items (never auto-accepts)."""
+    evidence = item.get("evidence_phrases") or []
+    ev_lines = (
+        "\n".join(f"- E-{i:02d}: {txt}" for i, txt in enumerate(evidence, 1))
+        if evidence
+        else "- E-01: (NO EVIDENCE PHRASES PROVIDED)"
+    )
+    claim_text = item.get("narrative_differences_en") or item.get("narrative_differences") or ""
+    system_prompt = (
+        "You are a senior second-stage geopolitical risk auditor. Given the issued alert stage, "
+        "summary, and evidence snippets, evaluate BOTH factual grounding and inference leap risk. "
+        "Allowed fact_verdict: supported, partial, unsupported, unverifiable_source_missing. "
+        "Allowed inference_verdict: supported, overstated, insufficient. "
+        "Return ONLY valid JSON: "
+        '{"fact_verdict":"...","inference_verdict":"...","leap_type":"none|causal_leap|scope_leap|missing_bridge","cited_evidence_ids":["E-01"],"note":"..."}'
+    )
+    user_prompt = (
+        f"Region: {item['region']}\n"
+        f"Issued Alert Stage: {item['formula_alert_en']} ({item.get('alert_level')})\n"
+        f"Summary:\n{claim_text}\n\n"
+        f"Evidence:\n{ev_lines}\n\n"
+        "Output JSON only."
+    )
+    payload = {
+        "model": model_id,
+        "temperature": 0.1,
+        "max_tokens": 1024,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt},
+        ],
+    }
+    try:
+        resp = _post_json(
+            NVIDIA_NIM_CHAT_URL,
+            payload,
+            timeout=120,
+            extra_headers={"Authorization": f"Bearer {api_key}"},
+        )
+        content = resp["choices"][0]["message"]["content"]
+        parsed = _validate_nim_escalation(_extract_json_object(content))
+        return {
+            "alert_id": item["alert_id"],
+            "schema_version": "v1",
+            "model_id": model_id,
+            "input_snapshot_id": item["snapshot_id"],
+            **parsed,
+            "latency_ms": resp.get("_latency_ms", 0.0),
+            "status": "ok",
+        }
+    except Exception as exc:
+        return {
+            "alert_id": item["alert_id"],
+            "schema_version": "v1",
+            "model_id": model_id,
+            "input_snapshot_id": item["snapshot_id"],
+            "status": "call_error",
+            "error": str(exc)[:300],
+        }
+
+
 def evaluate_triggers(
     formula_en: str,
     tev1_res: dict[str, Any],
@@ -394,6 +502,8 @@ def main() -> None:
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--regions", type=str, default="", help="Comma-separated region keys to audit.")
     parser.add_argument("--critic-model", type=str, default=DEFAULT_CRITIC_MODEL, help="Ollama critic model ID.")
+    parser.add_argument("--nim-escalate", action="store_true", help="Escalate flagged rows to NVIDIA NIM.")
+    parser.add_argument("--nim-model", type=str, default=DEFAULT_NIM_MODEL, help="NVIDIA NIM model ID.")
     args = parser.parse_args()
 
     raw = json.loads(args.input.read_text(encoding="utf-8"))
@@ -454,6 +564,20 @@ def main() -> None:
             audit_rows[idx]["governance"]["triggers"].append("T8")
             audit_rows[idx]["governance"]["needs_human_review"] = True
             audit_rows[idx]["governance"]["random_audit_sample"] = True
+
+    if args.nim_escalate:
+        nim_key = _load_env_var("NVIDIA_API_KEY")
+        if not nim_key:
+            print("[WARN] --nim-escalate requested, but NVIDIA_API_KEY is not set. Skipping NIM escalation.")
+        else:
+            item_by_region = {it["region"]: it for it in items}
+            for row in audit_rows:
+                if row["governance"]["needs_human_review"]:
+                    row["nim_escalation"] = run_nim_escalation(
+                        item_by_region[row["region"]],
+                        api_key=nim_key,
+                        model_id=args.nim_model,
+                    )
 
     summary = {
         "generated_at": datetime.now(timezone.utc).isoformat(),

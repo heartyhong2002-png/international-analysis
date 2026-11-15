@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-13T19:42:12.789065+00:00",
+  "generated_at": "2026-11-15T20:01:13.915453+00:00",
   "schema_version": "multi_judge_audit_v1",
   "source_file": "C:\\dev\\international-analysis\\data\\signal_gap\\signal_gap_analysis.json",
   "total_audited": 7,
@@ -33,7 +33,7 @@
           "source_item_count",
           "evidence_count"
         ],
-        "latency_ms": 15386.7,
+        "latency_ms": 14601.8,
         "status": "ok"
       },
       "gemma2": {
@@ -56,27 +56,41 @@
       "deepseek_r1": {
         "alert_id": "SG-Latin_America_Mexico",
         "schema_version": "v1",
-        "model_id": "deepseek-r1:7b",
+        "model_id": "nemotron-3-nano:4b",
         "input_snapshot_id": "8c82b8d89dd2",
-        "inference_verdict": "overstated",
-        "leap_type": "causal_leap|scope_leap",
+        "inference_verdict": "supported",
+        "leap_type": "none",
         "cited_evidence_ids": [
           "E-01"
         ],
-        "note": "The conclusion overstates the issue as there is insufficient evidence to support the claim of missing formal or independent signals, leading to an unjustified inference without a valid bridge to the evidence provided.",
-        "latency_ms": 55261.9,
+        "note": "No causal or scope leap; the conclusion that confirmation is needed aligns with the insufficient evidence indicated.",
+        "latency_ms": 33553.6,
         "status": "ok"
       },
       "governance": {
         "triggers": [
           "T2",
-          "T5",
           "T6"
         ],
         "needs_human_review": true,
         "priority": "high",
         "invalidated_by_unsupported_fact": false,
         "auto_accept": false
+      },
+      "nim_escalation": {
+        "alert_id": "SG-Latin_America_Mexico",
+        "schema_version": "v1",
+        "model_id": "nvidia/nemotron-3-ultra-550b-a55b",
+        "input_snapshot_id": "8c82b8d89dd2",
+        "fact_verdict": "unverifiable_source_missing",
+        "inference_verdict": "insufficient",
+        "leap_type": "missing_bridge",
+        "cited_evidence_ids": [
+          "E-01"
+        ],
+        "note": "No evidence phrases provided (E-01 explicitly states 'NO EVIDENCE PHRASES PROVIDED'), making factual verification impossible and any inference unsupported due to complete absence of source material.",
+        "latency_ms": 2729.4,
+        "status": "ok"
       }
     },
     {
@@ -107,7 +121,7 @@
           "source_item_count",
           "evidence_count"
         ],
-        "latency_ms": 6484.1,
+        "latency_ms": 6365.9,
         "status": "ok"
       },
       "gemma2": {
@@ -130,27 +144,41 @@
       "deepseek_r1": {
         "alert_id": "SG-Japan_EastAsia",
         "schema_version": "v1",
-        "model_id": "deepseek-r1:7b",
+        "model_id": "nemotron-3-nano:4b",
         "input_snapshot_id": "70270da2a05b",
-        "inference_verdict": "overstated",
+        "inference_verdict": "supported",
         "leap_type": "none",
         "cited_evidence_ids": [
           "E-01"
         ],
-        "note": "The conclusion is overstated because it is based on an alert stage without provided evidence to support the claim of insufficient signals.",
-        "latency_ms": 63310.6,
+        "note": "The conclusion that confirmation is needed is consistent with the insufficient evidence stage and does not overstate or make a causal/scope leap.",
+        "latency_ms": 24935.5,
         "status": "ok"
       },
       "governance": {
         "triggers": [
           "T2",
-          "T5",
           "T6"
         ],
         "needs_human_review": true,
         "priority": "high",
         "invalidated_by_unsupported_fact": false,
         "auto_accept": false
+      },
+      "nim_escalation": {
+        "alert_id": "SG-Japan_EastAsia",
+        "schema_version": "v1",
+        "model_id": "nvidia/nemotron-3-ultra-550b-a55b",
+        "input_snapshot_id": "70270da2a05b",
+        "fact_verdict": "supported",
+        "inference_verdict": "supported",
+        "leap_type": "none",
+        "cited_evidence_ids": [
+          "E-01"
+        ],
+        "note": "Summary accurately reflects absence of evidence phrases; no inferential leap beyond stating need for further verification.",
+        "latency_ms": 20529.7,
+        "status": "ok"
       }
     },
     {
@@ -181,7 +209,7 @@
           "source_item_count",
           "evidence_count"
         ],
-        "latency_ms": 6279.5,
+        "latency_ms": 6348.5,
         "status": "ok"
       },
       "gemma2": {
@@ -204,16 +232,19 @@
       "deepseek_r1": {
         "alert_id": "SG-Global_Trade_Investigative",
         "schema_version": "v1",
-        "model_id": "deepseek-r1:7b",
+        "model_id": "nemotron-3-nano:4b",
         "input_snapshot_id": "906a5f3d0639",
-        "inference_verdict": null,
-        "latency_ms": 51352.4,
-        "status": "schema_error",
-        "error": "Invalid inference_verdict: unsupported"
+        "inference_verdict": "supported",
+        "leap_type": "none",
+        "cited_evidence_ids": [
+          "E-01"
+        ],
+        "note": "No evidence phrases provided; conclusion merely notes insufficient evidence, no causal or scope leap.",
+        "latency_ms": 24554.7,
+        "status": "ok"
       },
       "governance": {
         "triggers": [
-          "SCHEMA_OR_CALL_ERROR",
           "T2",
           "T6"
         ],
@@ -221,6 +252,14 @@
         "priority": "high",
         "invalidated_by_unsupported_fact": false,
         "auto_accept": false
+      },
+      "nim_escalation": {
+        "alert_id": "SG-Global_Trade_Investigative",
+        "schema_version": "v1",
+        "model_id": "nvidia/nemotron-3-ultra-550b-a55b",
+        "input_snapshot_id": "906a5f3d0639",
+        "status": "call_error",
+        "error": "No JSON object found in model output"
       }
     },
     {
@@ -251,7 +290,7 @@
           "source_item_count",
           "evidence_count"
         ],
-        "latency_ms": 6357.4,
+        "latency_ms": 6309.5,
         "status": "ok"
       },
       "gemma2": {
@@ -274,32 +313,49 @@
           }
         ],
         "worst_verdict": "supported",
-        "latency_ms": 39842.3,
+        "latency_ms": 43408.3,
         "status": "ok"
       },
       "deepseek_r1": {
         "alert_id": "SG-Russia",
         "schema_version": "v1",
-        "model_id": "deepseek-r1:7b",
+        "model_id": "nemotron-3-nano:4b",
         "input_snapshot_id": "f93384571cbe",
+        "inference_verdict": "supported",
+        "leap_type": "none",
+        "cited_evidence_ids": [
+          "E-01",
+          "E-02"
+        ],
+        "note": "The summary's claim that differing media focus creates a discrepancy in geopolitical risk signals is a reasonable interpretation of the provided evidence.",
+        "latency_ms": 32732.4,
+        "status": "ok"
+      },
+      "governance": {
+        "triggers": [
+          "T8"
+        ],
+        "needs_human_review": true,
+        "priority": "normal",
+        "invalidated_by_unsupported_fact": false,
+        "auto_accept": false,
+        "random_audit_sample": true
+      },
+      "nim_escalation": {
+        "alert_id": "SG-Russia",
+        "schema_version": "v1",
+        "model_id": "nvidia/nemotron-3-ultra-550b-a55b",
+        "input_snapshot_id": "f93384571cbe",
+        "fact_verdict": "partial",
         "inference_verdict": "overstated",
         "leap_type": "missing_bridge",
         "cited_evidence_ids": [
           "E-01",
           "E-02"
         ],
-        "note": "The conclusion overstates the impact of media focus on geopolitical risk signals as there is insufficient evidence linking differing media coverage to discrepancies in risk signals. The causal leap is unsupported without evidence of how media focus translates into risk discrepancies.",
-        "latency_ms": 55748.1,
+        "note": "E-01 supports official focus on defense capabilities (Belarus exercise); E-02 supports humanitarian operation proposal. However, no evidence provided for: (1) independent/exiled media emphasis on leadership changes in companies, (2) cybersecurity initiatives in state media, (3) that the two evidence items represent contrasting media ecosystems (both appear official/Russian-aligned). The inference ",
+        "latency_ms": 27069.5,
         "status": "ok"
-      },
-      "governance": {
-        "triggers": [
-          "T4"
-        ],
-        "needs_human_review": true,
-        "priority": "high",
-        "invalidated_by_unsupported_fact": false,
-        "auto_accept": false
       }
     },
     {
@@ -330,7 +386,7 @@
           "source_item_count",
           "evidence_count"
         ],
-        "latency_ms": 6270.1,
+        "latency_ms": 6330.2,
         "status": "ok"
       },
       "gemma2": {
@@ -353,13 +409,13 @@
           }
         ],
         "worst_verdict": "partial",
-        "latency_ms": 22588.3,
+        "latency_ms": 21308.3,
         "status": "ok"
       },
       "deepseek_r1": {
         "alert_id": "SG-China",
         "schema_version": "v1",
-        "model_id": "deepseek-r1:7b",
+        "model_id": "nemotron-3-nano:4b",
         "input_snapshot_id": "3352c3f14f12",
         "inference_verdict": "overstated",
         "leap_type": "scope_leap",
@@ -367,8 +423,8 @@
           "E-01",
           "E-02"
         ],
-        "note": "The conclusion overstates by generalizing from a specific issue (North Korea's internet disruption) to broader geopolitical and economic risks without sufficient evidence support.",
-        "latency_ms": 39401.2,
+        "note": "Summary adds claim about internet disruptions in Myanmar, which is not supported by evidence.",
+        "latency_ms": 36577.5,
         "status": "ok"
       },
       "governance": {
@@ -381,6 +437,22 @@
         "priority": "high",
         "invalidated_by_unsupported_fact": false,
         "auto_accept": false
+      },
+      "nim_escalation": {
+        "alert_id": "SG-China",
+        "schema_version": "v1",
+        "model_id": "nvidia/nemotron-3-ultra-550b-a55b",
+        "input_snapshot_id": "3352c3f14f12",
+        "fact_verdict": "unsupported",
+        "inference_verdict": "overstated",
+        "leap_type": "scope_leap",
+        "cited_evidence_ids": [
+          "E-01",
+          "E-02"
+        ],
+        "note": "The summary attributes contrasting coverage priorities to Chinese official state media versus independent media, but the provided evidence (E-01: Turkish condemnation of Israeli settlements; E-02: North Korean worker affordability crisis) contains no reference to Chinese media outlets, their editorial choices, or any comparative analysis of their reporting. The evidence supports the existence of t",
+        "latency_ms": 23941.2,
+        "status": "ok"
       }
     },
     {
@@ -411,7 +483,7 @@
           "source_item_count",
           "evidence_count"
         ],
-        "latency_ms": 6304.8,
+        "latency_ms": 6350.0,
         "status": "ok"
       },
       "gemma2": {
@@ -434,13 +506,13 @@
           }
         ],
         "worst_verdict": "unsupported",
-        "latency_ms": 35164.7,
+        "latency_ms": 34195.1,
         "status": "ok"
       },
       "deepseek_r1": {
         "alert_id": "SG-Middle_East",
         "schema_version": "v1",
-        "model_id": "deepseek-r1:7b",
+        "model_id": "nemotron-3-nano:4b",
         "input_snapshot_id": "5875f351246e",
         "inference_verdict": "overstated",
         "leap_type": "scope_leap",
@@ -448,8 +520,8 @@
           "E-01",
           "E-02"
         ],
-        "note": "The conclusion may be making an unjustified causal or scope leap beyond the provided evidence, as it infers broader implications not directly supported by the evidence snippets.",
-        "latency_ms": 62016.8,
+        "note": "The summary links sanctions and economic issues to Iran, but evidence E-02 discusses Syrian economy, not Iran, creating an unjustified scope leap.",
+        "latency_ms": 50884.0,
         "status": "ok"
       },
       "governance": {
@@ -461,6 +533,21 @@
         "priority": "high",
         "invalidated_by_unsupported_fact": true,
         "auto_accept": false
+      },
+      "nim_escalation": {
+        "alert_id": "SG-Middle_East",
+        "schema_version": "v1",
+        "model_id": "nvidia/nemotron-3-ultra-550b-a55b",
+        "input_snapshot_id": "5875f351246e",
+        "fact_verdict": "partial",
+        "inference_verdict": "overstated",
+        "leap_type": "scope_leap",
+        "cited_evidence_ids": [
+          "E-01"
+        ],
+        "note": "E-01 partially supports state media narrative (Kayhan) regarding enemy threats and preserving current situation. E-02 discusses Syrian economy/banking, not Iran, providing no evidence for claims about Iranian independent media, sanctions impact on Iran, social media role, or state media downplaying Iran's economic issues. Summary overgeneralizes from one Iranian state media snippet and one unrelat",
+        "latency_ms": 10348.2,
+        "status": "ok"
       }
     },
     {
@@ -491,7 +578,7 @@
           "source_item_count",
           "evidence_count"
         ],
-        "latency_ms": 6278.7,
+        "latency_ms": 6496.0,
         "status": "ok"
       },
       "gemma2": {
@@ -514,13 +601,13 @@
           }
         ],
         "worst_verdict": "unsupported",
-        "latency_ms": 23689.3,
+        "latency_ms": 22798.3,
         "status": "ok"
       },
       "deepseek_r1": {
         "alert_id": "SG-United_States_Policy_Tech",
         "schema_version": "v1",
-        "model_id": "deepseek-r1:7b",
+        "model_id": "nemotron-3-nano:4b",
         "input_snapshot_id": "eb011457d128",
         "inference_verdict": "overstated",
         "leap_type": "scope_leap",
@@ -528,8 +615,8 @@
           "E-01",
           "E-02"
         ],
-        "note": "The conclusion incorrectly generalizes the media gap to include international or geopolitical issues, which is not supported by the provided evidence.",
-        "latency_ms": 45657.9,
+        "note": "Conclusion overstates significance of domestic vs. international emphasis, which is not supported by the domestic‑only evidence.",
+        "latency_ms": 34978.3,
         "status": "ok"
       },
       "governance": {
@@ -541,6 +628,22 @@
         "priority": "high",
         "invalidated_by_unsupported_fact": true,
         "auto_accept": false
+      },
+      "nim_escalation": {
+        "alert_id": "SG-United_States_Policy_Tech",
+        "schema_version": "v1",
+        "model_id": "nvidia/nemotron-3-ultra-550b-a55b",
+        "input_snapshot_id": "eb011457d128",
+        "fact_verdict": "partial",
+        "inference_verdict": "overstated",
+        "leap_type": "scope_leap",
+        "cited_evidence_ids": [
+          "E-01",
+          "E-02"
+        ],
+        "note": "E-01 supports government focus on domestic administrative procedure (passport issuance). E-02 supports independent media coverage of domestic Congressional political dynamics. However, 'state media' mischaracterizes .gov publications; 'exiled media' mischaracterizes Politico. Critically, neither evidence addresses international/geopolitical emphasis, making the claimed 'gap' regarding domestic vs ",
+        "latency_ms": 25559.8,
+        "status": "ok"
       }
     }
   ]
