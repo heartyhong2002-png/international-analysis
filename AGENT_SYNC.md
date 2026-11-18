@@ -85,6 +85,8 @@ Cursor / ANTIGRAVITY / 로컬 터미널이 **같은 폴더**(Desktop Junction �
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
+| done | ANTIGRAVITY | validation / mistral-presiding-judge-and-expert-report | `scripts/validation/run_multi_judge_audit.py`, `scripts/validation/human_blind_review.py`, `scripts/validation/generate_expert_review_report.py`, `data/validation/multi_judge_audit_latest.json`, `docs/advisor_meeting/EXPERT_VALIDATION_REPORT.md`, `docs/advisor_meeting/EXPERT_VALIDATION_REPORT_A4.docx` | `mistral:7b` 재판관(Presiding Judge) 도입·7개 권역 전수 감사(오류 0건), Stage 2 블라인드 검수 CLI 연동 및 연구실(교수님·대학원생)·Bluesky 이중 검증 보고서(MD/DOCX) 생성 완료 | 2026-11-18 |
+| done | ANTIGRAVITY | prototype / integrated-e2e-and-notion-redesign | `scripts/dashboard/prototype_data.py`, `scripts/dashboard/generate_dashboard_v2.py`, `scripts/dashboard/streamlit_dashboard.py`, `scripts/run_pipeline.py`, `output/dashboard/index.html`, `docs/current/*` | 통합 프로토타입 구축: E2E 오케스트레이터(`--with-early-warning`, `--prototype-refresh`, `--nim-escalate`), 정적 HTML + Streamlit 통합 관제 뷰 연결, Notion 허브 3열 카드·Mermaid 그래프·요약표 개편 및 핵심 MD 문서 최신화 | 2026-11-16 |
 | done | ANTIGRAVITY | validation / nemotron-hybrid-judge | `scripts/validation/run_multi_judge_audit.py`, `scripts/validation/human_blind_review.py`, `data/validation/multi_judge_audit_latest.json`, `AGENT_SYNC.md` | `deepseek-r1:7b` 삭제 및 `nemotron-3-nano:4b`(2.8GB 로컬) 교체, `--nim-escalate`(`nvidia/nemotron-3-ultra-550b-a55b`) 2차 심층 감사 연동 및 7개 권역 하이브리드 감사 실행(6/7 NIM `ok`, `Global_Trade_Investigative` 1건 `call_error`) | 2026-11-16 |
 | done | ANTIGRAVITY | agent-ops / s20-ultra-migration | `S20 Ultra (Termux Ubuntu 26.04)`, `AGENT_SYNC.md` | Hermes Agent 24/7 모바일 관제탑 S20 울트라(proot-distro Ubuntu 26.04) 이관 및 Termux 수집기 폴더 심볼릭 링크 연동 완료 (`gemini-3.1-flash-lite` 1,500 RPD, PC 게이트웨이 정지) | 2026-11-16 |
 | done | ANTIGRAVITY | validation / human-blind-review-cli | `scripts/validation/human_blind_review.py`, `data/validation/pending_blind_review_stage1.csv`, `scripts/validation/run_multi_judge_audit.py` | §10.4.3 블라인드 2단계 사람 검수 CLI(`--export`, `--interactive`, `--reveal`, `--status`) 구축, 7개 권역 Stage 1 시트 추출 및 Notion 검증 단계 페이지 신설 | 2026-11-16 |
@@ -148,6 +150,15 @@ Cursor / ANTIGRAVITY / 로컬 터미널이 **같은 폴더**(Desktop Junction �
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-18 [ANTIGRAVITY / Validation·QA · `mistral:7b` 재판관 도입 및 연구실·Bluesky 전문가 검증 보고서 구축 Handoff]
+- 한 일:
+  1. **생성·검증 모델 계열 완전 분리**: 분석/번역 모델(`qwen2.5:7b`, `exaone3.5:7.8b`, `llama3.1:8b`)과 독립 검증단을 분리하고, 로컬 Ollama에 `mistral:7b`(4.4 GB)를 설치해 **재판관(`presiding_judge`)**으로 연동 (`scripts/validation/run_multi_judge_audit.py`).
+  2. **7개 권역 4모델 순차 감사 완결**: `tev1:latest` ➔ `gemma2:9b` ➔ `nemotron-3-nano:4b` ➔ `mistral:7b` 실행 결과 스키마/호출 오류 0건 (`reject_candidate` 1건, `revise_candidate` 6건, `auto_accept=false`).
+  3. **사람 블라인드 검수 연동 (`human_blind_review.py`)**: Stage 1에서는 `mistral:7b` 판결문도 마스킹하고 `stage1_locked=true` 이후 Stage 2에서만 공개하도록 보완.
+  4. **전문가·커뮤니티 이중 검증 보고서 생성기 (`scripts/validation/generate_expert_review_report.py`)**: 지도교수님·연구실 대학원생 Stage 1 블라인드 검수지 + Stage 2 AI 감사 대조 부록 + Bluesky 연계 프로토콜을 담은 `docs/advisor_meeting/EXPERT_VALIDATION_REPORT.md` 및 `EXPERT_VALIDATION_REPORT_A4.docx` 생성.
+- 바꾼 파일: `scripts/validation/run_multi_judge_audit.py`, `scripts/validation/human_blind_review.py`, `scripts/validation/generate_expert_review_report.py`, `data/validation/multi_judge_audit_latest.json`, `docs/advisor_meeting/EXPERT_VALIDATION_REPORT.md`, `docs/advisor_meeting/EXPERT_VALIDATION_REPORT_A4.docx`, `AGENT_SYNC.md`.
+- 다음 작업: 연구실 교수님·대학원생 Stage 1 블라인드 검수 진행 및 Bluesky·Mastodon·Manifold 무료 API 외부 피드백 채널 연계.
 
 2026-11-16 [ANTIGRAVITY / agent-ops · Hermes Agent S20 울트라(Termux Ubuntu) 24/7 모바일 이관 완료]
 - 한 일:

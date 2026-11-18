@@ -117,6 +117,10 @@ REVIEW_LOG_COLUMNS = [
     "tev1_verdict",
     "gemma2_worst",
     "deepseek_verdict",
+    "critic_model",
+    "judge_recommended_decision",
+    "judge_key_dispute",
+    "judge_ruling_rationale",
     "triggers",
 ]
 
@@ -244,13 +248,18 @@ def _extract_model_summary(audit_item: Dict[str, Any]) -> Dict[str, Any]:
     tev1 = audit_item.get("tev1", {})
     gemma = audit_item.get("gemma2", {})
     deepseek = audit_item.get("deepseek_r1", {})
+    judge = audit_item.get("presiding_judge") or {}
     gov = audit_item.get("governance", {})
     return {
         "tev1_verdict": tev1.get("stage_verdict") or tev1.get("status", "error"),
         "gemma2_worst": gemma.get("worst_verdict") or gemma.get("status", "error"),
-        "critic_model": deepseek.get("model_id", "deepseek-r1:7b"),
+        "critic_model": deepseek.get("model_id", "nemotron-3-nano:4b"),
         "deepseek_verdict": deepseek.get("inference_verdict") or deepseek.get("status", "error"),
         "deepseek_note": deepseek.get("note", ""),
+        "judge_model_id": judge.get("model_id", "mistral:7b"),
+        "judge_recommended_decision": judge.get("recommended_decision") or judge.get("status", ""),
+        "judge_key_dispute": judge.get("key_dispute", ""),
+        "judge_ruling_rationale": judge.get("ruling_rationale", ""),
         "triggers": gov.get("triggers", []),
     }
 
@@ -325,6 +334,10 @@ def _write_stage2_sheet(reviews: Dict[str, Dict[str, Any]], audit_by_id: Dict[st
         "tev1_verdict",
         "gemma2_worst",
         "deepseek_verdict",
+        "critic_model_id",
+        "judge_recommended_decision",
+        "judge_key_dispute",
+        "judge_ruling_rationale",
         "triggers",
         "deepseek_note",
         "stage2_overridden",
@@ -419,13 +432,19 @@ def run_interactive(reviewer_id: str, dual_blind: bool = False) -> None:
             **msum,
         }
 
-        print("\n🔒 Stage 1 잠금 완료! 이제 [Stage 2] 모델 3종 감사 결과를 공개합니다:")
+        print("\n🔒 Stage 1 잠금 완료! 이제 [Stage 2] 모델 감사 및 재판관 권고안을 공개합니다:")
         print(f"   • tev1:latest       : {msum['tev1_verdict']}")
         print(f"   • gemma2:9b         : {msum['gemma2_worst']}")
         print(f"   • {msum['critic_model']:18s}: {msum['deepseek_verdict']}")
         if msum["deepseek_note"]:
             print(f"   • critic 메모       : {msum['deepseek_note'][:220]}")
-        print(f"   • Trigger Flags  : {msum['triggers']}")
+        if msum.get("judge_recommended_decision"):
+            print(f"   • 재판관({msum['judge_model_id']}) 권고: {msum['judge_recommended_decision']}")
+            if msum.get("judge_key_dispute"):
+                print(f"   • 재판관 쟁점 요약  : {msum['judge_key_dispute']}")
+            if msum.get("judge_ruling_rationale"):
+                print(f"   • 재판관 판결문 초안: {msum['judge_ruling_rationale']}")
+        print(f"   • Trigger Flags     : {msum['triggers']}")
 
         override = _prompt_choice("Stage 2에서 Stage 1 판정을 번복하시겠습니까?", VALID_YN, default="no")
         rec["stage2_reviewed_at"] = datetime.now(timezone.utc).isoformat()

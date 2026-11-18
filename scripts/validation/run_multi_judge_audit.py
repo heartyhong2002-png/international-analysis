@@ -1,9 +1,10 @@
 """Orthogonal Multi-Judge Validation Audit Runner (VALIDATION_PLAN.md §10.4).
 
-Runs the 3-judge orthogonal validation suite sequentially on 16GB RAM:
+Runs the 3-judge orthogonal validation suite + presiding judge sequentially on 16GB RAM:
   1. tev1:latest         -> alert stage verdict (formula alert masked)
   2. gemma2:9b           -> claim-level evidence grounding (factuality only)
   3. nemotron-3-nano:4b  -> inference & leap critic (overstatement/leap only)
+  4. mistral:7b          -> presiding judge (advisory synthesis for human Stage 2; never auto-accepts)
 
 Evaluates T1-T8 human-review triggers without majority-vote averaging or auto-accept.
 """
@@ -38,6 +39,7 @@ OLLAMA_BASE = "http://localhost:11434"
 SYSTEMONE_URL = f"{OLLAMA_BASE}/v1/systemone"
 CHAT_URL = f"{OLLAMA_BASE}/api/chat"
 DEFAULT_CRITIC_MODEL = os.getenv("CRITIC_MODEL", "nemotron-3-nano:4b")
+DEFAULT_JUDGE_MODEL = os.getenv("JUDGE_MODEL", "mistral:7b")
 NVIDIA_NIM_CHAT_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
 DEFAULT_NIM_MODEL = os.getenv("NVIDIA_NIM_MODEL", "nvidia/nemotron-3-ultra-550b-a55b")
 
@@ -61,6 +63,7 @@ STAGE_RANK = {"NORMAL": 0, "WATCH": 1, "WARNING": 2, "CRITICAL": 3, "INSUFFICIEN
 FACT_WORST_ORDER = {"unsupported": 3, "unverifiable_source_missing": 2, "partial": 1, "supported": 0}
 VALID_FACT_VERDICTS = set(FACT_WORST_ORDER.keys())
 VALID_INFERENCE_VERDICTS = {"supported", "overstated", "insufficient"}
+VALID_RECOMMENDED_DECISIONS = {"accept_candidate", "revise_candidate", "reject_candidate"}
 
 
 def _load_env_var(name: str) -> str:
@@ -364,6 +367,80 @@ def run_deepseek_critic(
     }
 
 
+def _validate_presiding_judge(obj: dict[str, Any]) -> dict[str, Any]:
+    rec = str(obj.get("recommended_decision", "")).strip()
+    if rec not in VALID_RECOMMENDED_DECISIONS:
+        raise ValueError(f"Invalid recommended_decision: {rec}")
+    return {
+        "recommended_decision": rec,
+        "key_dispute": str(obj.get("key_dispute", ""))[:300],
+        "ruling_rationale": str(obj.get("ruling_rationale", ""))[:500],
+    }
+
+
+def run_presiding_judge(
+    item: dict[str, Any],
+    tev1_res: dict[str, Any],
+    gemma_res: dict[str, Any],
+    critic_res: dict[str, Any],
+    gov_eval: dict[str, Any],
+    keep_alive: str | int = "15s",
+    model_id: str = DEFAULT_JUDGE_MODEL,
+) -> dict[str, Any]:
+    """Synthesize the 3 orthogonal judges into an advisory draft for human Stage 2 review."""
+    evidence = item.get("evidence_phrases") or []
+    ev_lines = (
+        "\n".join(f"- E-{i:02d}: {txt}" for i, txt in enumerate(evidence[:6], 1))
+        if evidence
+        else "- E-01: (NO EVIDENCE PHRASES PROVIDED)"
+    )
+    claim_text = item.get("korean_briefing") or item.get("narrative_differences") or ""
+    system_prompt = (
+        "You are an independent Presiding Judge (재판관) reviewing an early-warning alert audit. "
+        "You DO NOT have final authority (humans decide); you synthesize the 3 jurors' orthogonal verdicts "
+        "and governance triggers into a concise advisory ruling in Korean.\n"
+        "Allowed recommended_decision: accept_candidate, revise_candidate, reject_candidate.\n"
+        "Rules:\n"
+        "- If Gemma worst_verdict is 'unsupported' or 'unverifiable_source_missing', NEVER recommend accept_candidate.\n"
+        "- Return ONLY valid JSON: "
+        '{"recommended_decision":"...","key_dispute":"한국어 쟁점 요약 (1문장)","ruling_rationale":"한국어 판결문 초안 (2~3문장)"}'
+    )
+    user_prompt = (
+        f"Region: {item['region']}\n"
+        f"Formula Alert: {item['formula_alert_en']} ({item.get('alert_level')})\n"
+        f"Summary:\n{claim_text}\n\n"
+        f"Evidence:\n{ev_lines}\n\n"
+        f"Juror 1 (tev1 stage_verdict): {tev1_res.get('stage_verdict')}\n"
+        f"Juror 2 (Gemma2 factuality worst_verdict): {gemma_res.get('worst_verdict')}\n"
+        f"Juror 3 (Critic inference_verdict): {critic_res.get('inference_verdict')} | note={critic_res.get('note', '')[:180]}\n"
+        f"Governance Triggers: {gov_eval.get('triggers')} | invalidated_by_unsupported_fact={gov_eval.get('invalidated_by_unsupported_fact')}\n\n"
+        "Output JSON only."
+    )
+    parsed, err_kind, err, ms = _call_chat_json(
+        model_id, system_prompt, user_prompt, _validate_presiding_judge, keep_alive=keep_alive
+    )
+    if parsed is None:
+        return {
+            "alert_id": item["alert_id"],
+            "schema_version": "v1",
+            "model_id": model_id,
+            "input_snapshot_id": item["snapshot_id"],
+            "recommended_decision": None,
+            "latency_ms": ms,
+            "status": err_kind or "call_error",
+            "error": err,
+        }
+    return {
+        "alert_id": item["alert_id"],
+        "schema_version": "v1",
+        "model_id": model_id,
+        "input_snapshot_id": item["snapshot_id"],
+        **parsed,
+        "latency_ms": ms,
+        "status": "ok",
+    }
+
+
 def _validate_nim_escalation(obj: dict[str, Any]) -> dict[str, Any]:
     fact_v = str(obj.get("fact_verdict", "")).strip()
     inf_v = str(obj.get("inference_verdict", "")).strip()
@@ -502,6 +579,8 @@ def main() -> None:
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--regions", type=str, default="", help="Comma-separated region keys to audit.")
     parser.add_argument("--critic-model", type=str, default=DEFAULT_CRITIC_MODEL, help="Ollama critic model ID.")
+    parser.add_argument("--judge-model", type=str, default=DEFAULT_JUDGE_MODEL, help="Ollama presiding judge model ID.")
+    parser.add_argument("--skip-judge", action="store_true", help="Skip the presiding judge synthesis step.")
     parser.add_argument("--nim-escalate", action="store_true", help="Escalate flagged rows to NVIDIA NIM.")
     parser.add_argument("--nim-model", type=str, default=DEFAULT_NIM_MODEL, help="NVIDIA NIM model ID.")
     args = parser.parse_args()
@@ -565,6 +644,21 @@ def main() -> None:
             audit_rows[idx]["governance"]["needs_human_review"] = True
             audit_rows[idx]["governance"]["random_audit_sample"] = True
 
+    if not args.skip_judge:
+        item_by_region = {it["region"]: it for it in items}
+        for row in audit_rows:
+            reg = row["region"]
+            row["presiding_judge"] = run_presiding_judge(
+                item_by_region[reg],
+                row["tev1"],
+                row["gemma2"],
+                row["deepseek_r1"],
+                row["governance"],
+                keep_alive="15s",
+                model_id=args.judge_model,
+            )
+        _unload_model(args.judge_model)
+
     if args.nim_escalate:
         nim_key = _load_env_var("NVIDIA_API_KEY")
         if not nim_key:
@@ -598,6 +692,7 @@ def main() -> None:
             f"tev1={str(r['tev1'].get('stage_verdict')):21s} | "
             f"Gemma={str(r['gemma2'].get('worst_verdict')):26s} | "
             f"Critic={str(r['deepseek_r1'].get('inference_verdict')):12s} | "
+            f"Judge={str((r.get('presiding_judge') or {}).get('recommended_decision')):16s} | "
             f"Triggers={gov['triggers']}"
         )
     print(f"\nSaved audit report to: {args.output}")

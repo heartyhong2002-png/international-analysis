@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-15T20:01:13.915453+00:00",
+  "generated_at": "2026-11-18T10:07:56.224357+00:00",
   "schema_version": "multi_judge_audit_v1",
   "source_file": "C:\\dev\\international-analysis\\data\\signal_gap\\signal_gap_analysis.json",
   "total_audited": 7,
@@ -33,7 +33,7 @@
           "source_item_count",
           "evidence_count"
         ],
-        "latency_ms": 14601.8,
+        "latency_ms": 15167.2,
         "status": "ok"
       },
       "gemma2": {
@@ -63,8 +63,8 @@
         "cited_evidence_ids": [
           "E-01"
         ],
-        "note": "No causal or scope leap; the conclusion that confirmation is needed aligns with the insufficient evidence indicated.",
-        "latency_ms": 33553.6,
+        "note": "Conclusion aligns with alert stage, no leap.",
+        "latency_ms": 34188.9,
         "status": "ok"
       },
       "governance": {
@@ -77,19 +77,15 @@
         "invalidated_by_unsupported_fact": false,
         "auto_accept": false
       },
-      "nim_escalation": {
+      "presiding_judge": {
         "alert_id": "SG-Latin_America_Mexico",
         "schema_version": "v1",
-        "model_id": "nvidia/nemotron-3-ultra-550b-a55b",
+        "model_id": "mistral:7b",
         "input_snapshot_id": "8c82b8d89dd2",
-        "fact_verdict": "unverifiable_source_missing",
-        "inference_verdict": "insufficient",
-        "leap_type": "missing_bridge",
-        "cited_evidence_ids": [
-          "E-01"
-        ],
-        "note": "No evidence phrases provided (E-01 explicitly states 'NO EVIDENCE PHRASES PROVIDED'), making factual verification impossible and any inference unsupported due to complete absence of source material.",
-        "latency_ms": 2729.4,
+        "recommended_decision": "reject_candidate",
+        "key_dispute": "부족한 증거로 인해 경보 발생 거부",
+        "ruling_rationale": "공식 발표 또는 독립 언론 측의 지정학·경제 비교 기사가 부족하여 경보 산정을 거부합니다. 경보 발생을 위한 증거 수집이 필요합니다.",
+        "latency_ms": 29707.2,
         "status": "ok"
       }
     },
@@ -121,7 +117,7 @@
           "source_item_count",
           "evidence_count"
         ],
-        "latency_ms": 6365.9,
+        "latency_ms": 6116.5,
         "status": "ok"
       },
       "gemma2": {
@@ -151,8 +147,8 @@
         "cited_evidence_ids": [
           "E-01"
         ],
-        "note": "The conclusion that confirmation is needed is consistent with the insufficient evidence stage and does not overstate or make a causal/scope leap.",
-        "latency_ms": 24935.5,
+        "note": "No causal or scope leap; conclusion aligns with insufficient evidence.",
+        "latency_ms": 28573.7,
         "status": "ok"
       },
       "governance": {
@@ -165,19 +161,15 @@
         "invalidated_by_unsupported_fact": false,
         "auto_accept": false
       },
-      "nim_escalation": {
+      "presiding_judge": {
         "alert_id": "SG-Japan_EastAsia",
         "schema_version": "v1",
-        "model_id": "nvidia/nemotron-3-ultra-550b-a55b",
+        "model_id": "mistral:7b",
         "input_snapshot_id": "70270da2a05b",
-        "fact_verdict": "supported",
-        "inference_verdict": "supported",
-        "leap_type": "none",
-        "cited_evidence_ids": [
-          "E-01"
-        ],
-        "note": "Summary accurately reflects absence of evidence phrases; no inferential leap beyond stating need for further verification.",
-        "latency_ms": 20529.7,
+        "recommended_decision": "revise_candidate",
+        "key_dispute": "부족한 증거로 인해 경보 산정이 불가능함",
+        "ruling_rationale": "경보 산정을 위한 공식 발표 또는 독립 언론 측의 지정학·경제 비교 기사가 부족하여 경보 산정을 보류합니다. 경보 산정을 위한 추가 증거 수집이 필요합니다.",
+        "latency_ms": 20998.4,
         "status": "ok"
       }
     },
@@ -209,7 +201,7 @@
           "source_item_count",
           "evidence_count"
         ],
-        "latency_ms": 6348.5,
+        "latency_ms": 6128.4,
         "status": "ok"
       },
       "gemma2": {
@@ -239,8 +231,8 @@
         "cited_evidence_ids": [
           "E-01"
         ],
-        "note": "No evidence phrases provided; conclusion merely notes insufficient evidence, no causal or scope leap.",
-        "latency_ms": 24554.7,
+        "note": "The summary only notes insufficient evidence and the need for confirmation, which does not constitute a causal or scope leap beyond the evidence.",
+        "latency_ms": 25526.0,
         "status": "ok"
       },
       "governance": {
@@ -253,13 +245,16 @@
         "invalidated_by_unsupported_fact": false,
         "auto_accept": false
       },
-      "nim_escalation": {
+      "presiding_judge": {
         "alert_id": "SG-Global_Trade_Investigative",
         "schema_version": "v1",
-        "model_id": "nvidia/nemotron-3-ultra-550b-a55b",
+        "model_id": "mistral:7b",
         "input_snapshot_id": "906a5f3d0639",
-        "status": "call_error",
-        "error": "No JSON object found in model output"
+        "recommended_decision": "revise_candidate",
+        "key_dispute": "부족한 증거로 인해 경보 산정을 보류한 결과 다시 검토가 필요합니다.",
+        "ruling_rationale": "경보 산정을 위한 공식 발표 또는 독립 언론 측의 지정학·경제 비교 기사가 부족하여 경보 산정을 보류한 결과, 추가 증거 수집이 필요합니다. 또한, 경보 산정을 위한 정보의 신뢰성을 보장하기 위해 유효한 출처로부터 증거를 수집해야 합니다.",
+        "latency_ms": 27649.4,
+        "status": "ok"
       }
     },
     {
@@ -290,7 +285,7 @@
           "source_item_count",
           "evidence_count"
         ],
-        "latency_ms": 6309.5,
+        "latency_ms": 6195.8,
         "status": "ok"
       },
       "gemma2": {
@@ -313,7 +308,7 @@
           }
         ],
         "worst_verdict": "supported",
-        "latency_ms": 43408.3,
+        "latency_ms": 39336.2,
         "status": "ok"
       },
       "deepseek_r1": {
@@ -321,40 +316,34 @@
         "schema_version": "v1",
         "model_id": "nemotron-3-nano:4b",
         "input_snapshot_id": "f93384571cbe",
-        "inference_verdict": "supported",
-        "leap_type": "none",
+        "inference_verdict": "overstated",
+        "leap_type": "causal_leap",
         "cited_evidence_ids": [
           "E-01",
           "E-02"
         ],
-        "note": "The summary's claim that differing media focus creates a discrepancy in geopolitical risk signals is a reasonable interpretation of the provided evidence.",
-        "latency_ms": 32732.4,
+        "note": "The evidence only provides specific statements about defense exercises and a proposed humanitarian operation; it does not support the claim that differing media focus creates a significant discrepancy in geopolitical risk signals.",
+        "latency_ms": 37980.8,
         "status": "ok"
       },
       "governance": {
         "triggers": [
-          "T8"
+          "T4"
         ],
         "needs_human_review": true,
-        "priority": "normal",
+        "priority": "high",
         "invalidated_by_unsupported_fact": false,
-        "auto_accept": false,
-        "random_audit_sample": true
+        "auto_accept": false
       },
-      "nim_escalation": {
+      "presiding_judge": {
         "alert_id": "SG-Russia",
         "schema_version": "v1",
-        "model_id": "nvidia/nemotron-3-ultra-550b-a55b",
+        "model_id": "mistral:7b",
         "input_snapshot_id": "f93384571cbe",
-        "fact_verdict": "partial",
-        "inference_verdict": "overstated",
-        "leap_type": "missing_bridge",
-        "cited_evidence_ids": [
-          "E-01",
-          "E-02"
-        ],
-        "note": "E-01 supports official focus on defense capabilities (Belarus exercise); E-02 supports humanitarian operation proposal. However, no evidence provided for: (1) independent/exiled media emphasis on leadership changes in companies, (2) cybersecurity initiatives in state media, (3) that the two evidence items represent contrasting media ecosystems (both appear official/Russian-aligned). The inference ",
-        "latency_ms": 27069.5,
+        "recommended_decision": "revise_candidate",
+        "key_dispute": "북유럽 지역의 군사 및 지정학적 이슈에 대한 매체 초점 차이가 위험 신호로 해석되는 것은 증거 부족으로 인해 수락할 수 없습니다.",
+        "ruling_rationale": "관측된 위험 신호는 군사 훈련 및 인도주의적 제안에 대한 특정 정보가 있지만, 매체 초점 차이로 인한 지정학적 불확실성을 증폭시키는 것으로 해석되는 것은 증거 부족으로 인해 수락할 수 없습니다. 추가 증거 수집이 필요합니다.",
+        "latency_ms": 44349.5,
         "status": "ok"
       }
     },
@@ -386,7 +375,7 @@
           "source_item_count",
           "evidence_count"
         ],
-        "latency_ms": 6330.2,
+        "latency_ms": 6315.4,
         "status": "ok"
       },
       "gemma2": {
@@ -397,19 +386,19 @@
         "claims": [
           {
             "id": "E-01",
-            "fact_verdict": "supported",
-            "matched_span": "Turkey said Wednesday Israel's new announcements of settlement construction is provocative despite international warnings, a Turkish official statement said.",
-            "gap_type": "none"
+            "fact_verdict": "partial",
+            "matched_span": "Israel's new announcements of settlement construction is provocative despite international warnings",
+            "gap_type": "topic"
           },
           {
             "id": "E-02",
-            "fact_verdict": "partial",
-            "matched_span": "Workers start every month deep in the red as inflation guts official wages and forces reliance on side hustles.",
+            "fact_verdict": "supported",
+            "matched_span": "inflation guts official wages and forces reliance on side hustles",
             "gap_type": "topic"
           }
         ],
         "worst_verdict": "partial",
-        "latency_ms": 21308.3,
+        "latency_ms": 18245.0,
         "status": "ok"
       },
       "deepseek_r1": {
@@ -423,8 +412,8 @@
           "E-01",
           "E-02"
         ],
-        "note": "Summary adds claim about internet disruptions in Myanmar, which is not supported by evidence.",
-        "latency_ms": 36577.5,
+        "note": "Scope leap: summary attributes an affordability crisis in North Korea to evidence about Turkey's inflation, which is unrelated.",
+        "latency_ms": 32440.6,
         "status": "ok"
       },
       "governance": {
@@ -438,20 +427,15 @@
         "invalidated_by_unsupported_fact": false,
         "auto_accept": false
       },
-      "nim_escalation": {
+      "presiding_judge": {
         "alert_id": "SG-China",
         "schema_version": "v1",
-        "model_id": "nvidia/nemotron-3-ultra-550b-a55b",
+        "model_id": "mistral:7b",
         "input_snapshot_id": "3352c3f14f12",
-        "fact_verdict": "unsupported",
-        "inference_verdict": "overstated",
-        "leap_type": "scope_leap",
-        "cited_evidence_ids": [
-          "E-01",
-          "E-02"
-        ],
-        "note": "The summary attributes contrasting coverage priorities to Chinese official state media versus independent media, but the provided evidence (E-01: Turkish condemnation of Israeli settlements; E-02: North Korean worker affordability crisis) contains no reference to Chinese media outlets, their editorial choices, or any comparative analysis of their reporting. The evidence supports the existence of t",
-        "latency_ms": 23941.2,
+        "recommended_decision": "revise_candidate",
+        "key_dispute": "한국에 관한 경제 불안 요인 및 지정학적 변화를 모니터링하는 데 있어 증거 유효성 문제가 있어 추가 조사 필요",
+        "ruling_rationale": "Juror 3의 판단에 따라 요약에서 벗어난 범위 점츠가 발생하여 증거 유효성에 대한 추가 조사가 필요합니다. 또한 관련 증거가 없는 한국에 대한 경제 불안 요인과 지정학적 변화를 모니터링하는 데 있어 추가 조사가 필요합니다.",
+        "latency_ms": 37450.8,
         "status": "ok"
       }
     },
@@ -483,7 +467,7 @@
           "source_item_count",
           "evidence_count"
         ],
-        "latency_ms": 6350.0,
+        "latency_ms": 6321.8,
         "status": "ok"
       },
       "gemma2": {
@@ -506,7 +490,7 @@
           }
         ],
         "worst_verdict": "unsupported",
-        "latency_ms": 34195.1,
+        "latency_ms": 32095.4,
         "status": "ok"
       },
       "deepseek_r1": {
@@ -520,8 +504,8 @@
           "E-01",
           "E-02"
         ],
-        "note": "The summary links sanctions and economic issues to Iran, but evidence E-02 discusses Syrian economy, not Iran, creating an unjustified scope leap.",
-        "latency_ms": 50884.0,
+        "note": "The evidence discusses Syrian economic conditions and sanctions, not Iran's economic situation, so the claim that independent media provides a critical view of Iran's economy is a scope leap.",
+        "latency_ms": 38275.9,
         "status": "ok"
       },
       "governance": {
@@ -534,19 +518,15 @@
         "invalidated_by_unsupported_fact": true,
         "auto_accept": false
       },
-      "nim_escalation": {
+      "presiding_judge": {
         "alert_id": "SG-Middle_East",
         "schema_version": "v1",
-        "model_id": "nvidia/nemotron-3-ultra-550b-a55b",
+        "model_id": "mistral:7b",
         "input_snapshot_id": "5875f351246e",
-        "fact_verdict": "partial",
-        "inference_verdict": "overstated",
-        "leap_type": "scope_leap",
-        "cited_evidence_ids": [
-          "E-01"
-        ],
-        "note": "E-01 partially supports state media narrative (Kayhan) regarding enemy threats and preserving current situation. E-02 discusses Syrian economy/banking, not Iran, providing no evidence for claims about Iranian independent media, sanctions impact on Iran, social media role, or state media downplaying Iran's economic issues. Summary overgeneralizes from one Iranian state media snippet and one unrelat",
-        "latency_ms": 10348.2,
+        "recommended_decision": "revise_candidate",
+        "key_dispute": "이란의 경제 상황에 대한 독립 언론의 극복적인 보도가 확인되지 않음",
+        "ruling_rationale": "Juror 2(Gemma2)는 제시된 증거가 이란의 경제 상황에 대한 독립 언론의 극복적인 보도를 확인하지 못했다고 판단했습니다. 따라서 경고 수준을 조정하여 추가 증거 수집이 필요합니다.",
+        "latency_ms": 38463.2,
         "status": "ok"
       }
     },
@@ -578,7 +558,7 @@
           "source_item_count",
           "evidence_count"
         ],
-        "latency_ms": 6496.0,
+        "latency_ms": 6074.4,
         "status": "ok"
       },
       "gemma2": {
@@ -601,7 +581,7 @@
           }
         ],
         "worst_verdict": "unsupported",
-        "latency_ms": 22798.3,
+        "latency_ms": 21948.0,
         "status": "ok"
       },
       "deepseek_r1": {
@@ -615,8 +595,8 @@
           "E-01",
           "E-02"
         ],
-        "note": "Conclusion overstates significance of domestic vs. international emphasis, which is not supported by the domestic‑only evidence.",
-        "latency_ms": 34978.3,
+        "note": "Conclusion jumps from domestic evidence to claim about international/geopolitical emphasis, which is not supported.",
+        "latency_ms": 36483.6,
         "status": "ok"
       },
       "governance": {
@@ -629,20 +609,15 @@
         "invalidated_by_unsupported_fact": true,
         "auto_accept": false
       },
-      "nim_escalation": {
+      "presiding_judge": {
         "alert_id": "SG-United_States_Policy_Tech",
         "schema_version": "v1",
-        "model_id": "nvidia/nemotron-3-ultra-550b-a55b",
+        "model_id": "mistral:7b",
         "input_snapshot_id": "eb011457d128",
-        "fact_verdict": "partial",
-        "inference_verdict": "overstated",
-        "leap_type": "scope_leap",
-        "cited_evidence_ids": [
-          "E-01",
-          "E-02"
-        ],
-        "note": "E-01 supports government focus on domestic administrative procedure (passport issuance). E-02 supports independent media coverage of domestic Congressional political dynamics. However, 'state media' mischaracterizes .gov publications; 'exiled media' mischaracterizes Politico. Critically, neither evidence addresses international/geopolitical emphasis, making the claimed 'gap' regarding domestic vs ",
-        "latency_ms": 25559.8,
+        "recommended_decision": "revise_candidate",
+        "key_dispute": "미국 정부 공식 매체의 국내 행정 절차 보도와 독립 언론의 의회 내 정치 갈등 강조 사이의 괴리 해석 부족",
+        "ruling_rationale": "Juror 2의 'unsupported' 판단으로 인해 국내 행정 절차에 대한 보도가 지원되지 않았기 때문에 경보를 발표하는 것은 적절하지 않습니다. 또한 Juror 3의 'overstated' 판단으로 인해 국제 정책 변화와 관련된 지정학적 영향력에 대한 잠재적 불확실성이 시사되는 내용은 과언이 있어 수정이 필요합니다.",
+        "latency_ms": 46658.7,
         "status": "ok"
       }
     }
