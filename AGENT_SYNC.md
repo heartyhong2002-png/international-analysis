@@ -85,6 +85,7 @@ Cursor / ANTIGRAVITY / 로컬 터미널이 **같은 폴더**(Desktop Junction �
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
+| done | ANTIGRAVITY | preprocessing / fine-grained-nlp-refinement | `scripts/automation/preprocess_signals.py`, `data/automation/canonical_signals*.json` | 전처리 세밀화 고도화: 바이라인·제어문자 제거(`clean_text_fine`), 페르시아어(`fa`) 분리·다국어 5W1H 추출(High-Purity `who` 미상률 22.7%→6.3%), 토픽 드리프트·중복 클러스터 병합, 시점 ISO-8601 통일 및 정량 수치(`extracted_metrics`) 추출 완료 | 2026-11-20 |
 | done | ANTIGRAVITY | validation / mistral-presiding-judge-and-expert-report | `scripts/validation/run_multi_judge_audit.py`, `scripts/validation/human_blind_review.py`, `scripts/validation/generate_expert_review_report.py`, `data/validation/multi_judge_audit_latest.json`, `docs/advisor_meeting/EXPERT_VALIDATION_REPORT.md`, `docs/advisor_meeting/EXPERT_VALIDATION_REPORT_A4.docx` | `mistral:7b` 재판관(Presiding Judge) 도입·7개 권역 전수 감사(오류 0건), Stage 2 블라인드 검수 CLI 연동 및 연구실(교수님·대학원생)·Bluesky 이중 검증 보고서(MD/DOCX) 생성 완료 | 2026-11-18 |
 | done | ANTIGRAVITY | prototype / integrated-e2e-and-notion-redesign | `scripts/dashboard/prototype_data.py`, `scripts/dashboard/generate_dashboard_v2.py`, `scripts/dashboard/streamlit_dashboard.py`, `scripts/run_pipeline.py`, `output/dashboard/index.html`, `docs/current/*` | 통합 프로토타입 구축: E2E 오케스트레이터(`--with-early-warning`, `--prototype-refresh`, `--nim-escalate`), 정적 HTML + Streamlit 통합 관제 뷰 연결, Notion 허브 3열 카드·Mermaid 그래프·요약표 개편 및 핵심 MD 문서 최신화 | 2026-11-16 |
 | done | ANTIGRAVITY | validation / nemotron-hybrid-judge | `scripts/validation/run_multi_judge_audit.py`, `scripts/validation/human_blind_review.py`, `data/validation/multi_judge_audit_latest.json`, `AGENT_SYNC.md` | `deepseek-r1:7b` 삭제 및 `nemotron-3-nano:4b`(2.8GB 로컬) 교체, `--nim-escalate`(`nvidia/nemotron-3-ultra-550b-a55b`) 2차 심층 감사 연동 및 7개 권역 하이브리드 감사 실행(6/7 NIM `ok`, `Global_Trade_Investigative` 1건 `call_error`) | 2026-11-16 |
@@ -150,6 +151,15 @@ Cursor / ANTIGRAVITY / 로컬 터미널이 **같은 폴더**(Desktop Junction �
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-20 [ANTIGRAVITY / preprocessing · 전처리 세밀화 고도화 (텍스트 정제·페르시아어 분리·수치 추출·중복 병합) Handoff]
+- 한 일:
+  1. 텍스트 정제 고도화(`clean_text_fine`): 유니코드 방향 제어문자(`\u200f` 등), 선행 장식 이모지, URL 잔여물 및 제목 끝 언론사 바이라인(`- Metrópoles`, `- CSIS | ...` 등) 제거.
+  2. 다국어 5W1H 추출 강화 & 오탐 가드레일: 페르시아어(`fa`) 분리, 페르시아/러시아/포르투갈어·싱크탱크 행위자 규칙 보강으로 High-Purity 행위자 미상률 22.7% → 6.3% 축소. `RECOVERY_OR_REOPENING` 가드레일로 사고 복구 기사의 물리 공격 오탐 차단.
+  3. 토픽 드리프트 방지 & 중복 병합: 해협 단독 기사 간 교차 오병합 차단, 동일 헤드라인 시간창 확장으로 `Panama canal` 중복 클러스터 통합.
+  4. 시점(`when`) ISO-8601 UTC 표준화 및 정량 수치(`extracted_metrics`) 추출기 신설 (금액, 비율 %, 선박/물량/공정 단위).
+- 바꾼 파일: `scripts/automation/preprocess_signals.py`, `data/automation/canonical_signals_latest.json`, `data/automation/canonical_signals_high_purity_latest.json`, `AGENT_SYNC.md`.
+- 확인한 것: `--self-test` 통과, 933건 입력 기준 Standard 419개 / High-Purity 63개 클러스터 정제 완료.
 
 2026-11-18 [ANTIGRAVITY / Validation·QA · `mistral:7b` 재판관 도입 및 연구실·Bluesky 전문가 검증 보고서 구축 Handoff]
 - 한 일:
