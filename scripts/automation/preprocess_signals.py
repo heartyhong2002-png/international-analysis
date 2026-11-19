@@ -450,6 +450,70 @@ def strip_html_tags(text: str) -> str:
     return re.sub(r"\s+", " ", no_tags).strip()
 
 
+_INVISIBLE_CONTROL_RE = re.compile(r"[\u200b-\u200f\u202a-\u202e\ufeff\u00ad\ufe0f]+")
+_LEADING_EMOJI_NOISE_RE = re.compile(r"^[\s\W_]*?(?=[A-Za-z0-9가-힣\u4e00-\u9fff\u0600-\u06ff\u0400-\u04ff\u3040-\u30ff\"'(\[])")
+_URL_IN_TEXT_RE = re.compile(r"https?://\S+")
+_PUBLISHER_BYLINE_RE = re.compile(
+    r"\s+(?:-|—|–|\|)\s+(?:"
+    r"CSIS(?:\s*\|\s*Center for Strategic.*)?|"
+    r"Metrópoles|Folha de S\.Paulo|G1|O Globo|Estadão|"
+    r"Reuters|Bloomberg|Associated Press|AP|AFP|BBC|CNN|CNBC|Financial Times|FT|"
+    r"Wall Street Journal|WSJ|New York Times|NYT|Washington Post|Al Jazeera|"
+    r"IRNA|Tehran Times|Middle East Eye|TASS|RIA Novosti|"
+    r"연합뉴스|조선일보|중앙일보|동아일보|한겨레|매일경제|한국경제|"
+    r"[A-Z][A-Za-z0-9.&'\s]{1,28}"
+    r")\s*$"
+)
+
+
+def clean_text_fine(text: str, *, is_title: bool = False) -> str:
+    """HTML 제거, 제어문자/방향마크·URL 잔여물·선행 장식기호·언론사 바이라인까지 세밀하게 정제합니다."""
+    if not text:
+        return ""
+    cleaned = strip_html_tags(text)
+    cleaned = _INVISIBLE_CONTROL_RE.sub("", cleaned)
+    cleaned = _URL_IN_TEXT_RE.sub(" ", cleaned)
+    cleaned = re.sub(r"\s+", " ", cleaned).strip()
+
+    if is_title and cleaned:
+        # 선행 장식 특수문자/이모지 제거 (실제 문자 시작 전까지)
+        stripped_lead = _LEADING_EMOJI_NOISE_RE.sub("", cleaned).strip()
+        if len(stripped_lead) >= 10:
+            cleaned = stripped_lead
+
+        # 제목 끝 언론사 바이라인(- Metrópoles, - CSIS | ..., | Reuters 등) 제거
+        without_byline = _PUBLISHER_BYLINE_RE.sub("", cleaned).strip()
+        if len(without_byline) >= 18:
+            cleaned = without_byline
+
+    return re.sub(r"\s+", " ", cleaned).strip()
+
+
+_METRIC_PATTERNS = [
+    ("currency_price", re.compile(r"(?:\$|€|£)\s*\d+(?:[.,]\d+)?(?:\s*(?:billion|million|trillion|bn|mn|b|m|k))?|\b\d+(?:[.,]\d+)?\s*(?:억\s*달러|만\s*달러|달러|억원|조원)", re.IGNORECASE)),
+    ("percentage", re.compile(r"[+-]?\d+(?:[.,]\d+)?\s*%")),
+    ("quantity_unit", re.compile(r"\b\d+(?:[.,]\d+)?\s*(?:tankers?|ships?|vessels?|platforms?|missiles?|drones?|bpd|barrels?|mbd|nm|fab|fabs|chips?|tons?|척|기|발|배럴|톤)\b", re.IGNORECASE)),
+]
+
+
+def extract_quantitative_metrics(text: str, max_items: int = 8) -> List[Dict[str, str]]:
+    """텍스트 내 핵심 정량 수치(금액/가격, 비율, 선박·물량·공정 단위)를 구조화 추출합니다."""
+    if not text:
+        return []
+    metrics: List[Dict[str, str]] = []
+    seen: Set[str] = set()
+    for m_type, pat in _METRIC_PATTERNS:
+        for match in pat.finditer(text):
+            val = re.sub(r"\s+", " ", match.group(0)).strip()
+            key = val.lower()
+            if key not in seen:
+                seen.add(key)
+                metrics.append({"type": m_type, "value": val})
+                if len(metrics) >= max_items:
+                    return metrics
+    return metrics
+
+
 def _classify_media_url_type(url: str, default_type: str = "external_card") -> str:
     u = (url or "").lower().split("?")[0]
     if u.endswith(".pdf"):
@@ -569,9 +633,9 @@ def extract_multimodal_metadata(record: Dict[str, Any]) -> Dict[str, Any]:
     for inline_url in _INLINE_MEDIA_URL_RE.findall(combined_raw):
         _add_attachment(inline_url, _classify_media_url_type(inline_url, "image"), "")
 
-    # 4) 본문 HTML 태그 제거
-    clean_title = strip_html_tags(raw_title)
-    clean_summary = strip_html_tags(raw_summary)
+    # 4) 본문 HTML 태그 및 제어문자·바이라인 세밀 정제
+    clean_title = clean_text_fine(raw_title, is_title=True)
+    clean_summary = clean_text_fine(raw_summary, is_title=False)
 
     # 5) 멀티모달 시각 신호 유형(Modality) 태깅
     full_clean_blob = normalize_accents(
@@ -1075,21 +1139,30 @@ LATIN_STOPWORDS = {
 }
 
 
+_PERSIAN_HINT_RE = re.compile(r"[\u067e\u0686\u0698\u06af\u06a9\u06cc]|\b(?:در|است|سپاه|نفتکش|تنگه|هرمز|ایران|پاسداران)\b")
+
+
 def detect_language_detailed(text: str) -> Dict[str, Any]:
     """
-    텍스트의 유니코드 스크립트(한글, CJK한자, 가나, 아랍어, 키릴) 및 기능어(라틴 불용어)를
-    통해 ISO 639-1 언어 코드(ko, en, zh, ru, ar, fr, de, es, pt, ja)와 신뢰도를 반환합니다.
+    텍스트의 유니코드 스크립트(한글, CJK한자, 가나, 아랍/페르시아, 키릴) 및 기능어(라틴 불용어)를
+    통해 ISO 639-1 언어 코드(ko, en, zh, ru, ar, fa, fr, de, es, pt, ja)와 신뢰도를 반환합니다.
     """
     t = (text or "").strip()
     if not t:
         return {"language_code": "unknown", "language_name": "Unknown", "confidence": 0.0}
 
-    # 1. Non-Latin scripts check (CJK, Arabic, Cyrillic)
+    # 1. Non-Latin scripts check (CJK, Arabic/Persian, Cyrillic)
     for code, (pat, name) in LANGUAGE_PATTERNS.items():
         matches = re.findall(pat, t)
         if matches:
             total_chars = sum(len(m) for m in matches)
             confidence = min(0.99, round(total_chars / max(1, len(t) * 0.4), 2))
+            if code == "ar" and len(_PERSIAN_HINT_RE.findall(t)) >= 2:
+                return {
+                    "language_code": "fa",
+                    "language_name": "Persian",
+                    "confidence": max(0.75, confidence),
+                }
             return {
                 "language_code": code,
                 "language_name": name,
@@ -1118,37 +1191,51 @@ def detect_language_detailed(text: str) -> Dict[str, Any]:
 
 
 ACTOR_RULES = [
-    (r"\b(irgc|iranian (navy|military|army|forces)|iran|tehran)\b|이란|혁명수비대|طهران|حرس ثوري", "IRAN_MILITARY_OR_GOV", "이란 혁명수비대 / 정부 (IRGC / Iran)"),
+    (r"\b(irgc|iranian (navy|military|army|forces)|iran|tehran)\b|이란|혁명수비대|طهران|حرس ثوري|سپاه پاسداران|ایران|نیروی دریایی سپاه", "IRAN_MILITARY_OR_GOV", "이란 혁명수비대 / 정부 (IRGC / Iran)"),
     (r"\b(houthi|ansarallah|yahya saree|yemen armed forces)\b|후티|안사룰라|الحوثي|أنصار الله", "HOUTHI_YEMEN", "예멘 후티 반군 (Houthi / Ansarallah)"),
-    (r"\b(idf|israeli (military|forces|army|air force)|israel|netanyahu)\b|이스라엘|네타냐후|إسرائيل", "ISRAEL_IDF", "이스라엘 방위군 / 정부 (IDF / Israel)"),
-    (r"\b(us|u\.s\.|usa|united states|us navy|pentagon|white house|biden|trump|department of commerce|bis|ofac)\b|미국|미군|백악관|미 상무부|재무부|워싱턴|펜타곤|сша", "US_GOV_OR_MILITARY", "미국 정부 / 군 (US Gov / Military)"),
-    (r"\b(russian (military|forces|navy|army)|kremlin|putin|moscow|mod russia)\b|러시아군|크렘린|푸틴|러시아 국방부|минобороны рф|вс рф", "RUSSIA_MILITARY_OR_GOV", "러시아 정부 / 군 (Russia Gov / Military)"),
-    (r"\b(ukrainian (armed forces|military)|zelensky|kyiv|afu)\b|우크라이나군|젤렌스키|키이우|всу", "UKRAINE_GOV_OR_MILITARY", "우크라이나 정부 / 군 (Ukraine Gov / Military)"),
-    (r"\b(pla|chinese (navy|military)|beijing|china)\b|중국군|해방군|중국 해군|인민해방군|중국", "CHINA_PLA_OR_GOV", "중국 인민해방군 / 정부 (China PLA / Gov)"),
-    (r"\b(taiwan (defense ministry|military|navy)|taipei|taiwan)\b|대만 국방부|대만군|타이베이|대만", "TAIWAN_AUTHORITY", "대만 국방부 / 당국 (Taiwan Authority)"),
-    (r"\b(tsmc|sk hynix|samsung( electronics)?|asml|nvidia|applied materials|lam research|intel)\b|삼성전자|sk하이닉스|엔비디아|台積電", "SEMICONDUCTOR_CHIPMAKER", "글로벌 반도체 기업 (Semiconductor Enterprise)"),
-    (r"\b(maersk|frontline|zim|cosco)\b|머스크|프론트라인", "SHIPPING_CARRIER", "글로벌 해운사 (Shipping Carrier)"),
+    (r"\b(idf|israeli (military|forces|army|air force)|israel|netanyahu|uae|emirates)\b|이스라엘|네타냐후|إسرائيل|아랍에미리트", "ISRAEL_OR_MIDEAST_GOV", "이스라엘 / 중동 당국 (Israel / Mideast Authority)"),
+    (r"\b(us|u\.s\.|usa|united states|us navy|pentagon|white house|biden|trump|department of commerce|bis|ofac)\b|미국|미군|백악관|미 상무부|재무부|워싱턴|펜타곤|сша|трамп|американ", "US_GOV_OR_MILITARY", "미국 정부 / 군 (US Gov / Military)"),
+    (r"\b(russian (military|forces|navy|army)|kremlin|putin|moscow|mod russia|russia|gazprom|rosneft)\b|러시아|크렘린|푸틴|러시아 국방부|минобороны рф|вс рф|росси|путин|кремл", "RUSSIA_MILITARY_OR_GOV", "러시아 정부 / 군 (Russia Gov / Military)"),
+    (r"\b(ukrainian (armed forces|military)|zelensky|kyiv|afu|ukraine)\b|우크라이나|젤렌스키|키이우|всу|украин", "UKRAINE_GOV_OR_MILITARY", "우크라이나 정부 / 군 (Ukraine Gov / Military)"),
+    (r"\b(pla|chinese (navy|military)|beijing|china)\b|중국군|해방군|중국 해군|인민해방군|중국|中国|北京", "CHINA_PLA_OR_GOV", "중국 인민해방군 / 정부 (China PLA / Gov)"),
+    (r"\b(taiwan (defense ministry|military|navy)|taipei|taiwan)\b|대만 국방부|대만군|타이베이|대만|台灣|台海", "TAIWAN_AUTHORITY", "대만 국방부 / 당국 (Taiwan Authority)"),
+    (r"\b(tsmc|sk hynix|samsung( electronics)?|asml|nvidia|applied materials|lam research|intel|micron|broadcom|amd|qualcomm)\b|삼성전자|sk하이닉스|엔비디아|台積電", "SEMICONDUCTOR_CHIPMAKER", "글로벌 반도체 기업 (Semiconductor Enterprise)"),
+    (r"\b(petrobras|lula|brasil|brazil|governo|ministério da fazenda)\b|브라질|룰라|페트로브라스", "BRAZIL_GOV_OR_ENERGY", "브라질 정부 / 에너지 국영기업 (Brazil Gov / Petrobras)"),
+    (r"\b(saudi aramco|aramco|adnoc|qatarenergy|opec|opec\+|iea|panama canal authority|suez canal authority|eu|european union|european commission|imf|wto)\b|유럽연합|석유수출국기구|파나마 운하청|수에즈 운하청", "ENERGY_OR_MULTILATERAL_ORG", "글로벌 에너지·운하청 / 국제기구 (Energy / Multilateral Org)"),
+    (r"\b(csis|rand|brookings|chatham house|iiss|sipri|bruegel|kiep|kiet)\b|싱크탱크|전략국제문제연구소", "THINK_TANK_OR_RESEARCH", "글로벌 싱크탱크 / 연구기관 (Think Tank / Policy Research)"),
+    (r"\b(산업통상자원부|외교부|국방부|기획재정부|한국은행|meti|경산성|경제산업성)\b", "ALLIED_GOV_OR_MINISTRY", "한국·일본 정부 부처 (KR/JP Ministry)"),
+    (r"\b(maersk|frontline|zim|cosco|hapag-lloyd|msc|cma cgm)\b|머스크|프론트라인", "SHIPPING_CARRIER", "글로벌 해운사 (Shipping Carrier)"),
 ]
 
 ACTION_RULES = [
+    # 1순위 문맥 가드레일: 사고 수습/재개장이 물리 공격으로 오탐되는 것을 방지
+    (r"\b(reopen|reopens|reopened|cleanup|clean-up|recovered|restored|resumed|repaired)\b|재개장|복구|정화|정상화|통항 재개", "RECOVERY_OR_REOPENING", "사고 수습 / 운영 정상화 (Recovery / Reopening)"),
     (r"\b(struck|strike|strikes|hit|attack|attacked|attacks|bombed|missile strike|drone attack|airstrike|airstrikes|intercepted|intercept)\b|피격|공습|미사일 공격|드론 공격|격추|ضرب|استهداف|هجوم|قصف|удар|атака", "PHYSICAL_STRIKE", "물리적 공격 / 공습 (Physical Strike / Attack)"),
     (r"\b(exploded|explosion|detonated|mine strike|blew up|on fire|catches fire)\b|폭발|기뢰 피격|화재 발생|انفجار|взрыв|пожар", "EXPLOSION_OR_FIRE", "기뢰 폭발 / 선박 화재 (Explosion / Mine Strike)"),
     (r"\b(seized|seizure|hijacked|boarded|detained|blockade|blockaded|diverted|rerouted|stopped shipping)\b|나포|억류|봉쇄|통항 차단|항로 우회|احتجاز|حصار|задержан|перехват", "SEIZURE_OR_BLOCKADE", "선박 나포 / 통항 봉쇄 (Seizure / Maritime Blockade)"),
+    (r"\b(drought|el niño|el nino|low water|water level|traffic cuts?|canal cuts?|facing further cuts|typhoon|hurricane)\b|가뭄|저수위|통항 감축|운하 제한|태풍", "CLIMATE_OR_DROUGHT_DISRUPTION", "기후·가뭄 물류 차질 (Climate / Drought Disruption)"),
     (r"\b(export control|export controls|controls|sanction|sanctions|sanctioned|tariff|tariffs|embargo|blacklist|entity list|countervailing|antidumping|curb)\b|수출통제|제재|관세|엠바고|블랙리스트|규제|عقوبات|санкции|пошлины", "REGULATORY_SANCTION", "수출통제 / 무역제재 (Export Control / Sanctions)"),
-    (r"\b(production shutdown|fab halt|shortage|strike halted|disrupted|supply halt)\b|생산 중단|가동 중단|공급 중단|차질|파업|остановка|сбой", "PRODUCTION_DISRUPTION", "생산 중단 / 공급망 차질 (Production Disruption)"),
+    (r"\b(subsidy|subsidies|subsídio|tax cut|fiscal package|price cap|prorrogar|pacote)\b|보조금|감세|유류세|재정 지원|가격 상한", "FISCAL_OR_SUBSIDY_POLICY", "보조금 / 재정·가격 정책 (Fiscal / Subsidy Policy)"),
+    (r"\b(production shutdown|fab halt|shortage|strike halted|disrupted|supply halt|greve)\b|생산 중단|가동 중단|공급 중단|차질|파업|остановка|сбой", "PRODUCTION_DISRUPTION", "생산 중단 / 공급망 차질 (Production Disruption)"),
+    (r"\b(expands? capacity|amplia capacidade|reshoring|investments?|fab construction|new fab)\b|증설|설비 투자|리쇼어링|공장 건설", "CAPACITY_EXPANSION_OR_INVESTMENT", "생산능력 증설 / 투자 (Capacity Expansion / Investment)"),
     (r"\b(drill|drills|exercise|exercises|maneuver|maneuvers|war game)\b|군사훈련|기동훈련|실사격|تدريبات|учения", "MILITARY_EXERCISE", "군사 훈련 / 무력 시위 (Military Exercise)"),
     (r"\b(scandal|investigation|corruption|probe|lawsuit|antitrust)\b|스캔들|수사|조사|반독점|부패", "LEGAL_OR_COMPLIANCE_PROBE", "규제 조사 / 법적 리스크 (Regulatory / Compliance Probe)"),
-    (r"\b(dialogue|negotiation|talks|ceasefire|truce|agreement|diplomatic)\b|회담|협상|휴전|외교 대화|مفاوضات|هدنة|переговоры", "DIPLOMATIC_NEGOTIATION", "외교 협상 / 휴전 대화 (Diplomatic Negotiation)"),
+    (r"\b(dialogue|negotiation|talks|ceasefire|truce|agreement|diplomatic|сделка)\b|회담|협상|휴전|외교 대화|합의|مفاوضات|هدنة|переговоры", "DIPLOMATIC_NEGOTIATION", "외교 협상 / 합의 (Diplomatic Negotiation / Deal)"),
+    (r"\b(mapping|securing|pillars|strategic importance|tracking chips act|outlook|policy brief|working paper)\b|전략 보고서|시사점|정책 분석", "THINK_TANK_POLICY_ANALYSIS", "전략·정책 분석 보고 (Policy / Think Tank Analysis)"),
 ]
 
 TARGET_RULES = [
-    (r"\b(oil tanker|tanker|tankers|crude tanker|vlcc|petroleum tanker)\b|유조선|원유 운반선|ناقلة نفط|танкер", "CRUDE_OIL_TANKER", "원유 수송 유조선 (Crude Oil Tanker)"),
+    (r"\b(oil tanker|tanker|tankers|crude tanker|vlcc|petroleum tanker)\b|유조선|원유 운반선|ناقلة نفط|نفتکش|танкер", "CRUDE_OIL_TANKER", "원유 수송 유조선 (Crude Oil Tanker)"),
     (r"\b(lng carrier|gas carrier|methane carrier)\b|lng선|가스 운반선|ناقلة غاز", "LNG_GAS_CARRIER", "LNG 천연가스 운반선 (LNG Carrier)"),
     (r"\b(cargo ship|container ship|freighter|merchant vessel|commercial ship)\b|상선|화물선|컨테이너선|سفينة شحن|судно", "COMMERCIAL_CARGO_SHIP", "상선 / 컨테이너 화물선 (Commercial Cargo Ship)"),
-    (r"\b(port|terminal|harbor|dock|refinery|pipeline)\b|항만|터미널|정유소|파이프라인|부두|ميناء|مرفأ|порт|нпз", "PORT_ENERGY_INFRA", "항만 / 정유 / 에너지 인프라 (Port & Energy Infra)"),
+    (r"\b(canal traffic|shipping lane|maritime route|panama canal|suez canal|strait transit)\b|운하 통항|해상 항로|تنگه هرمز", "MARITIME_CHOKEPOINT_ROUTE", "해협 / 운하 해상 통항로 (Maritime Chokepoint Route)"),
+    (r"\b(port|terminal|harbor|dock|refinery|pipeline|beaches)\b|항만|터미널|정유소|파이프라인|부두|ميناء|مرفأ|порт|нпз", "PORT_ENERGY_INFRA", "항만 / 정유 / 연안 인프라 (Port & Coastal Infra)"),
+    (r"\b(platforms?|plataforma|offshore rig|oilfield|gas field)\b|시추선|해상 플랫폼|유전|가스전", "OFFSHORE_ENERGY_PLATFORM", "해상 에너지 플랫폼 / 유전 (Offshore Energy Platform)"),
+    (r"\b(diesel|gasoline|jet fuel|refined fuel|oil spill|дизельного топлива)\b|디젤|경유|휘발유|항공유|기름 유출", "REFINED_FUEL_AND_DIESEL", "정제유 / 디젤·연료 (Refined Fuel / Diesel)"),
     (r"\b(semiconductor|semiconductors|chip|chips|hbm|hbm4|fab|wafer|lithography|euv|gpu)\b|반도체|웨이퍼|팹|노광장비|晶片|полупроводник", "SEMICONDUCTOR_SUPPLY_ASSET", "반도체 칩 / 웨이퍼 / 제조장비 (Semiconductor Asset)"),
     (r"\b(rare earth|rare earths|critical minerals|lithium|nickel|cobalt)\b|희토류|리튬|핵심광물|редкоземельные", "CRITICAL_MINERAL_ASSET", "희토류 / 핵심 광물 자원 (Critical Mineral Asset)"),
     (r"\b(warship|destroyer|frigate|military base|radar|air defense)\b|군함|구축함|군사기지|방공망|военный корабль", "MILITARY_FACILITY_OR_WARSHIP", "군함 / 군사 기지 시설 (Military Asset)"),
+    (r"\b(supply chain|chips act|industrial policy|export policy|trade deal)\b|공급망|칩스법|산업정책|무역협정", "SUPPLY_CHAIN_POLICY_FRAMEWORK", "공급망·산업 정책 체계 (Supply Chain Policy)"),
 ]
 
 
@@ -1161,7 +1248,7 @@ def extract_event_tuple(
     """
     [NLP 정보추출(IE) 기반 5W1H 이벤트 튜플 생성]
     비정형 텍스트에서 주체(Who), 행위(Action), 대상(Target), 장소(Where),
-    시점(When), 공급망 영향(Impact), 위협 심각도(Severity)를 추출하여 정형 튜플로 반환합니다.
+    시점(When ISO-8601), 정량 수치(Metrics), 공급망 영향(Impact), 위협 심각도(Severity)를 추출하여 정형 튜플로 반환합니다.
     """
     blob = f"{title} {summary}".strip()
     blob_lower = blob.lower()
@@ -1205,10 +1292,17 @@ def extract_event_tuple(
         where_parts.extend(hotspots)
     where_label = ", ".join(where_parts) if where_parts else "글로벌 지정학 해역 (Global Maritime / Geopolitical Area)"
 
-    # 5. Supply Impact
+    # 5. When (ISO-8601 UTC 표준화)
+    parsed_dt = _parse_timestamp_utc(str(published_at or ""))
+    when_iso = parsed_dt.strftime("%Y-%m-%dT%H:%M:%SZ") if parsed_dt else (published_at or "최근 관측 (Recent Observation)")
+
+    # 6. Quantitative Metrics (수치·단위 추출)
+    extracted_metrics = extract_quantitative_metrics(blob)
+
+    # 7. Supply Impact
     supplies = list(entities.get("supply_chain_tags", [])) if entities else []
     if not supplies:
-        if target_code == "CRUDE_OIL_TANKER":
+        if target_code in ("CRUDE_OIL_TANKER", "REFINED_FUEL_AND_DIESEL", "OFFSHORE_ENERGY_PLATFORM"):
             supplies = ["CRUDE_OIL"]
         elif target_code == "LNG_GAS_CARRIER":
             supplies = ["NATURAL_GAS_LNG"]
@@ -1217,24 +1311,24 @@ def extract_event_tuple(
         elif target_code == "CRITICAL_MINERAL_ASSET":
             supplies = ["RARE_EARTHS"]
 
-    # 6. Threat Severity
+    # 8. Threat Severity
     if action_code in ("PHYSICAL_STRIKE", "EXPLOSION_OR_FIRE") and target_code in (
-        "CRUDE_OIL_TANKER", "LNG_GAS_CARRIER", "PORT_ENERGY_INFRA"
+        "CRUDE_OIL_TANKER", "LNG_GAS_CARRIER", "PORT_ENERGY_INFRA", "OFFSHORE_ENERGY_PLATFORM"
     ):
         threat_severity = "CRITICAL_DISRUPTION"
         threat_desc = "🚨 치명적 물리 공격 (실제 해운/에너지 인프라 파괴·피격)"
     elif action_code in ("PHYSICAL_STRIKE", "EXPLOSION_OR_FIRE", "SEIZURE_OR_BLOCKADE"):
         threat_severity = "HIGH_DISRUPTION"
         threat_desc = "⚠️ 고위험 교전·나포·봉쇄 (해상 통항 및 공급망 심각한 지연)"
-    elif action_code in ("REGULATORY_SANCTION", "PRODUCTION_DISRUPTION"):
+    elif action_code in ("REGULATORY_SANCTION", "PRODUCTION_DISRUPTION", "CLIMATE_OR_DROUGHT_DISRUPTION"):
         threat_severity = "HIGH_REGULATORY_DISRUPTION"
-        threat_desc = "📋 통상·규제 공급망 타격 (수출통제·생산중단·자산동결)"
-    elif action_code == "MILITARY_EXERCISE":
+        threat_desc = "📋 구조적 공급망 타격 (수출통제·생산중단·운하 통항 감축)"
+    elif action_code in ("MILITARY_EXERCISE", "LEGAL_OR_COMPLIANCE_PROBE", "FISCAL_OR_SUBSIDY_POLICY"):
         threat_severity = "ELEVATED_TENSION"
-        threat_desc = "⚡ 군사 긴장 고조 (무력시위·군사훈련)"
-    elif action_code == "DIPLOMATIC_NEGOTIATION":
+        threat_desc = "⚡ 긴장 고조 / 정책·규제 변동 (무력시위·보조금·법적리스크)"
+    elif action_code in ("DIPLOMATIC_NEGOTIATION", "RECOVERY_OR_REOPENING", "CAPACITY_EXPANSION_OR_INVESTMENT"):
         threat_severity = "MONITORING_DEESCALATION"
-        threat_desc = "🕊️ 긴장 완화 / 외교적 해결 탐색"
+        threat_desc = "🕊️ 긴장 완화 / 복구·증설 (외교 합의·통항 재개·설비 투자)"
     else:
         threat_severity = "MONITORING"
         threat_desc = "🔍 상시 모니터링 (잠재 위험 징후 추적)"
@@ -1247,7 +1341,9 @@ def extract_event_tuple(
         "target": target_label,
         "target_code": target_code,
         "where": where_label,
-        "when": published_at or "최근 관측 (Recent Observation)",
+        "when": when_iso,
+        "when_raw": published_at or "",
+        "extracted_metrics": extracted_metrics,
         "supply_impact_tags": supplies,
         "threat_severity": threat_severity,
         "threat_description": threat_desc,
@@ -1433,10 +1529,16 @@ def deduplicate_and_cluster(
         best_sim = 0.0
 
         for c in clusters:
-            if not _within_time_window(art_dt, c["published_dt"], max_hours=max_time_window_hours):
+            # 서로 다른 구체적 해협(예: 호르무즈 vs 홍해)에 대한 단독 사건은 절대 병합하지 않음
+            if art_cps and c["chokepoints_set"] and not (art_cps & c["chokepoints_set"]):
                 continue
 
-            base_sim = jaccard_similarity(tokens, c["token_set"])
+            core_sim = jaccard_similarity(tokens, c["core_token_set"])
+            effective_window = max_time_window_hours * 5.0 if core_sim >= 0.80 else max_time_window_hours
+            if not _within_time_window(art_dt, c["published_dt"], max_hours=effective_window):
+                continue
+
+            base_sim = max(core_sim, 0.75 * jaccard_similarity(tokens, c["token_set"]))
 
             # 엔티티(5대 해협/6대 공급망/핫스팟/위기유형) 동시 일치 시 보너스 부여
             bonus = 0.0
@@ -1477,6 +1579,7 @@ def deduplicate_and_cluster(
             if hq_score > matched_cluster["best_hq_score"]:
                 matched_cluster["best_hq_score"] = hq_score
                 matched_cluster["representative_title"] = title
+                matched_cluster["core_token_set"] = set(tokens)
                 matched_cluster["url"] = url or matched_cluster["url"]
         else:
             clusters.append({
@@ -1485,6 +1588,7 @@ def deduplicate_and_cluster(
                 "url": url,
                 "published_at": str(pub_raw),
                 "published_dt": art_dt,
+                "core_token_set": set(tokens),
                 "token_set": set(tokens),
                 "chokepoints_set": set(art_cps),
                 "supply_set": set(art_supplies),

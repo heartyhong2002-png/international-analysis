@@ -1,10 +1,11 @@
 """
 강송희 교수님 이메일 피드백 자동 수집 스크립트 (Gmail API 기반)
-- 교수님 발신 메일(또는 지정 키워드)을 검색하여 최신 피드백을 가져옵니다.
-- 읽은 내용을 prof_kang_project/feedbacks/YYYYMMDD_email_feedback.md 양식으로 자동 저장합니다.
+- 강송희 교수님 공식 메일(dellabee@tukorea.ac.kr) 또는 '강송희' 키워드로 검색합니다.
+- 중복 저장을 방지하고, 피드백 문서를 prof_kang_project/feedbacks/ 에 자동 생성합니다.
 """
 
 import os
+import sys
 import base64
 from datetime import datetime
 from google.auth.transport.requests import Request
@@ -12,7 +13,6 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
-# 읽기 전용 권한
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,6 +20,8 @@ CONFIG_DIR = os.path.join(BASE_DIR, 'config')
 FEEDBACKS_DIR = os.path.join(BASE_DIR, 'feedbacks')
 CREDENTIALS_FILE = os.path.join(CONFIG_DIR, 'credentials.json')
 TOKEN_FILE = os.path.join(CONFIG_DIR, 'token.json')
+
+PROFESSOR_EMAIL = 'dellabee@tukorea.ac.kr'
 
 def get_gmail_service():
     """OAuth 2.0 인증을 거쳐 Gmail API 서비스 객체를 반환합니다."""
@@ -97,6 +99,10 @@ def save_feedback_markdown(email_data):
     today_str = datetime.now().strftime('%Y%m%d')
     file_path = os.path.join(FEEDBACKS_DIR, f"{today_str}_email_{email_data['id']}.md")
 
+    if os.path.exists(file_path):
+        print(f"이미 존재하는 피드백 파일입니다: {file_path}")
+        return
+
     md_content = f"""# [이메일 피드백] {email_data['subject']}
 
 - **수신 일시**: {email_data['date']}
@@ -136,14 +142,13 @@ def save_feedback_markdown(email_data):
     print(f"피드백 문서 저장 완료: {file_path}")
 
 def main():
-    # 검색 쿼리: 교수님 성함 또는 특정 발신 주소 필터
-    # 예: 'from:shkang@tukorea.ac.kr' 또는 '강송희'
-    query = '강송희'
+    # 교수님 이메일(dellabee@tukorea.ac.kr) 또는 '강송희' 키워드 메일 검색
+    query = f"from:{PROFESSOR_EMAIL} OR 강송희"
     print(f"Gmail 검색 쿼리 실행 중: '{query}'")
     
     try:
         service = get_gmail_service()
-        messages = search_emails(service, query=query, max_results=3)
+        messages = search_emails(service, query=query, max_results=5)
         
         if not messages:
             print("조건에 맞는 메일이 없습니다.")

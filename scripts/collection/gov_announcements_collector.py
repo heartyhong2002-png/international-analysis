@@ -225,6 +225,35 @@ GOV_FEEDS = {
         "lang": "pt",
         "source_type": "state_media_news",
     },
+    # NOTE (국제회의·다자협의체 공식 RSS 4종 추가): API Key 없이 초경량 XML로 수집
+    "APEC (아시아태평양경제협력체)": {
+        "url": "https://www.apec.org/feeds/rss",
+        "encoding": "utf-8",
+        "country": "APEC",
+        "lang": "en",
+        "source_type": "official_statement",
+    },
+    "ASEAN (동남아시아국가연합)": {
+        "url": "https://asean.org/feed/",
+        "encoding": "utf-8",
+        "country": "ASEAN",
+        "lang": "en",
+        "source_type": "official_statement",
+    },
+    "WTO (세계무역기구)": {
+        "url": "https://www.wto.org/library/rss/latest_news_e.xml",
+        "encoding": "utf-8",
+        "country": "WTO",
+        "lang": "en",
+        "source_type": "official_statement",
+    },
+    "UN News (유엔 공식 뉴스)": {
+        "url": "https://news.un.org/feed/subscribe/en/news/all/rss.xml",
+        "encoding": "utf-8",
+        "country": "UN",
+        "lang": "en",
+        "source_type": "official_statement",
+    },
 }
 
 # 이슈 매칭용 키워드. issue_data_collector.py의 ISSUE_KEYWORDS와 같은 이슈

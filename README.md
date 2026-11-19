@@ -52,6 +52,8 @@ output/dashboard/dashboard_latest.html
 
 ```bash
 python scripts/dashboard/generate_dashboard_v2.py
+# 또는 인터랙티브 통합 프로토타입 웹 UI:
+.\.venv\Scripts\streamlit.exe run scripts/dashboard/streamlit_dashboard.py
 ```
 
 나머지 산출물(이슈별 심층 리포트, 정통 인텔리전스 폼 PDF·Word 공식 보고서, 일일 분석, 벤치마크 검증 리포트, MySQL
@@ -72,6 +74,7 @@ ollama serve   # 별도 터미널
 
 # Windows
 .\.venv\Scripts\python.exe scripts/run_pipeline.py
+.\.venv\Scripts\python.exe scripts/run_pipeline.py --prototype-refresh   # 수집 생략 빠른 통합 갱신
 .\.venv\Scripts\python.exe scripts/dashboard/generate_dashboard_v2.py
 
 # Linux / cloud

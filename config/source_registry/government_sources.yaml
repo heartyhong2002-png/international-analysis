@@ -99,7 +99,7 @@ sources:
     access_method: api
     enabled: true
     pipeline_default: false
-    collector: PENDING
+    collector: scripts/collection/fetch_congress_gov.py
     shared_schema: official_raw_v1
     issue_tags: [US_Debt_Ceiling, US_Trade_Tariff, US_Defense_Budget, US_Industrial_Policy_CHIPS, US_Election_Policy_Signal]
     cadence: daily

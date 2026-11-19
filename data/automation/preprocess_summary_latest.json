@@ -1,112 +1,118 @@
 {
   "schema_version": "preprocess_summary_v1.2_nlp_structured",
-  "generated_at": "2026-11-12T15:15:58.428508+00:00",
+  "generated_at": "2026-11-18T10:35:31.916110+00:00",
   "purity_mode": "standard",
   "alert_level_set": false,
   "verification_state_default": "UNVERIFIED",
   "input_counts": {
-    "total_raw": 818,
-    "FAST": 231,
+    "total_raw": 933,
+    "FAST": 346,
     "CONTEXT": 441,
     "OPINION": 146,
     "BASELINE_SENSORS": 18
   },
   "output_counts": {
-    "canonical_clusters": 355,
-    "rejected_noise": 217,
-    "tier_1_corroborated": 43,
-    "tier_2_verified_entity": 61,
-    "multi_source_clusters": 40,
+    "canonical_clusters": 419,
+    "rejected_noise": 267,
+    "tier_1_corroborated": 37,
+    "tier_2_verified_entity": 58,
+    "multi_source_clusters": 30,
     "cross_lingual_clusters": 6,
-    "clusters_with_visual_media": 130,
-    "total_media_attachments": 188
+    "clusters_with_visual_media": 170,
+    "total_media_attachments": 231
   },
   "tier_distribution": {
-    "TIER_1_CORROBORATED": 43,
-    "TIER_2_VERIFIED_ENTITY": 61,
-    "TIER_3_SINGLE_SOURCE": 251
+    "TIER_1_CORROBORATED": 37,
+    "TIER_2_VERIFIED_ENTITY": 58,
+    "TIER_3_SINGLE_SOURCE": 324
   },
   "reject_reason_breakdown": {
-    "low_geopolitical_relevance": 202,
-    "entertainment_sports_noise": 5,
+    "entertainment_sports_noise": 4,
+    "low_geopolitical_relevance": 250,
+    "ad_or_soft_section": 10,
     "diplomatic_protocol_noise": 1,
-    "empty_title": 2,
-    "ad_or_soft_section": 7
+    "empty_title": 2
   },
   "chokepoint_distribution": {
-    "CHOKEPOINT_HORMUZ": 13,
+    "CHOKEPOINT_HORMUZ": 11,
     "CHOKEPOINT_BAB_EL_MANDEB": 5,
     "CHOKEPOINT_MALACCA": 2,
-    "CHOKEPOINT_BOSPHORUS": 3,
-    "CHOKEPOINT_PANAMA": 5,
+    "CHOKEPOINT_BOSPHORUS": 2,
+    "CHOKEPOINT_PANAMA": 4,
     "CHOKEPOINT_TAIWAN_STRAIT": 6
   },
   "supply_chain_distribution": {
-    "CRUDE_OIL": 25,
-    "NATURAL_GAS_LNG": 5,
-    "SEMICONDUCTOR": 42,
-    "RARE_EARTHS": 7,
-    "BATTERY_MINERALS": 0,
-    "GRAIN_FOOD": 1
+    "CRUDE_OIL": 26,
+    "NATURAL_GAS_LNG": 4,
+    "SEMICONDUCTOR": 41,
+    "RARE_EARTHS": 6,
+    "BATTERY_MINERALS": 1,
+    "GRAIN_FOOD": 0
   },
   "event_type_distribution": {
-    "SANCTIONS_EXPORT_CONTROL": 27,
-    "ELECTION_GOVERNMENT": 72,
-    "MILITARY_CONFLICT": 24,
+    "SANCTIONS_EXPORT_CONTROL": 32,
     "INFRA_LOGISTICS_DISRUPTION": 12,
-    "PROTEST_STRIKE": 8
+    "ELECTION_GOVERNMENT": 78,
+    "PROTEST_STRIKE": 11,
+    "MILITARY_CONFLICT": 26
   },
   "hotspot_distribution": {
-    "MIDDLE_EAST": 72,
     "EAST_ASIA": 71,
+    "WESTERN_EUROPE": 44,
+    "NORTH_AMERICA": 117,
+    "MIDDLE_EAST": 88,
     "EASTERN_EUROPE": 58,
-    "WESTERN_EUROPE": 38,
-    "LATIN_AMERICA": 35,
-    "NORTH_AMERICA": 93,
-    "CENTRAL_AFRICA": 9
+    "LATIN_AMERICA": 34,
+    "CENTRAL_AFRICA": 10
   },
   "language_distribution": {
-    "en": 226,
-    "pt": 27,
-    "ru": 35,
-    "ko": 24,
-    "de": 9,
-    "ar": 14,
+    "en": 292,
+    "pt": 26,
+    "ru": 29,
+    "es": 9,
+    "ko": 25,
+    "ar": 11,
     "zh": 13,
-    "ja": 2,
-    "es": 4,
+    "fa": 2,
+    "ja": 3,
+    "de": 8,
     "fr": 1
   },
   "cross_lingual_cluster_count": 6,
   "threat_severity_distribution": {
-    "HIGH_REGULATORY_DISRUPTION": 29,
-    "CRITICAL_DISRUPTION": 6,
-    "MONITORING": 275,
-    "HIGH_DISRUPTION": 25,
-    "MONITORING_DEESCALATION": 17,
-    "ELEVATED_TENSION": 3
+    "HIGH_DISRUPTION": 24,
+    "CRITICAL_DISRUPTION": 7,
+    "ELEVATED_TENSION": 17,
+    "MONITORING": 313,
+    "HIGH_REGULATORY_DISRUPTION": 38,
+    "MONITORING_DEESCALATION": 20
   },
   "actor_distribution": {
-    "US_GOV_OR_MILITARY": 74,
-    "IRAN_MILITARY_OR_GOV": 52,
-    "CHINA_PLA_OR_GOV": 18,
-    "UNKNOWN_OR_UNSPECIFIED": 184,
-    "SEMICONDUCTOR_CHIPMAKER": 15,
-    "HOUTHI_YEMEN": 4,
-    "ISRAEL_IDF": 1,
-    "TAIWAN_AUTHORITY": 4,
-    "UKRAINE_GOV_OR_MILITARY": 2,
-    "RUSSIA_MILITARY_OR_GOV": 1
+    "US_GOV_OR_MILITARY": 86,
+    "IRAN_MILITARY_OR_GOV": 55,
+    "UNKNOWN_OR_UNSPECIFIED": 148,
+    "HOUTHI_YEMEN": 3,
+    "ISRAEL_OR_MIDEAST_GOV": 7,
+    "UKRAINE_GOV_OR_MILITARY": 11,
+    "SEMICONDUCTOR_CHIPMAKER": 9,
+    "RUSSIA_MILITARY_OR_GOV": 28,
+    "BRAZIL_GOV_OR_ENERGY": 14,
+    "CHINA_PLA_OR_GOV": 19,
+    "TAIWAN_AUTHORITY": 10,
+    "THINK_TANK_OR_RESEARCH": 9,
+    "ENERGY_OR_MULTILATERAL_ORG": 13,
+    "ALLIED_GOV_OR_MINISTRY": 6,
+    "SHIPPING_CARRIER": 1
   },
   "visual_modality_distribution": {
     "FIELD_PHOTO_VIDEO": 6,
-    "OFFICIAL_DOCUMENT_PDF": 13,
+    "OFFICIAL_DOCUMENT_PDF": 26,
     "SATELLITE_IMAGERY": 4
   },
   "media_attachment_type_distribution": {
-    "image": 117,
-    "external_card": 39,
+    "image": 152,
+    "external_card": 33,
     "video": 5,
-    "document_pdf": 27
+    "document_pdf": 41
   }
 }

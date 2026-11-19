@@ -124,10 +124,20 @@ def main():
                          help="백악관 공식 RSS 수집 (기본값: 실행하지 않음)")
     parser.add_argument("--with-federal-register", action="store_true",
                          help="미국 연방관보(Federal Register) 정책·통상·수출통제 공식 고시 수집 (기본값: 실행하지 않음)")
+    parser.add_argument("--with-congress", action="store_true",
+                         help="미국 의회(Congress.gov API v3) 법안·CRS 보고서 수집 (기본값: 실행하지 않음)")
+    parser.add_argument("--with-govinfo", action="store_true",
+                         help="미국 정부 공식 간행물(GovInfo API) 청문회·법률·보고서 수집 (기본값: 실행하지 않음)")
     parser.add_argument("--with-x", action="store_true",
                          help="공식 X API recent search 1페이지 수집 (유료·종량제, 기본값: 실행하지 않음)")
     parser.add_argument("--sync-notion", action="store_true",
                          help="파이프라인 실행 완료 후 Notion 프로젝트 허브(작업 보드 및 보고서) 자동 동기화")
+    parser.add_argument("--with-early-warning", action="store_true",
+                         help="전처리(5W1H) → 3-Tier 경보 분석 → 멀티저지 검증단까지 E2E 연계 실행")
+    parser.add_argument("--nim-escalate", action="store_true",
+                         help="멀티저지 검증단 실행 시 플래그 건에 NVIDIA 550B Ultra 2차 감사 포함")
+    parser.add_argument("--prototype-refresh", action="store_true",
+                         help="외부 수집 없이 기존 데이터로 브릿지→검증단→DB→통합 대시보드만 빠르게 갱신")
     args = parser.parse_args()
     if args.only_db and args.collect_only:
         parser.error("--only-db와 --collect-only는 함께 사용할 수 없습니다.")
@@ -135,7 +145,15 @@ def main():
     # 실행할 작업들을 순서대로 저장할 리스트입니다.
     # 각 항목은 (화면에 표시할 이름, 실행할 파일, 추가 옵션) 형태입니다.
     steps = []
-    if not args.only_db:
+    if args.prototype_refresh:
+        steps.append(("다중 레인 전처리 브릿지 동기화", "pipeline/bridge_preprocess_lanes.py", []))
+        audit_args = ["--nim-escalate"] if args.nim_escalate else []
+        steps.append(("§10.4 멀티저지 직교 검증단 실행", "validation/run_multi_judge_audit.py", audit_args))
+        if not args.skip_db:
+            steps.append(("MySQL DB로 통합", "db/build_database.py", []))
+        if not args.skip_dashboard:
+            steps.append(("인터랙티브 HTML 대시보드 생성", "dashboard/generate_dashboard_v2.py", []))
+    elif not args.only_db:
         # 옵션에 따라 일부 수집 작업을 steps에 넣거나 생략합니다.
         # 여기서는 파일을 바로 실행하지 않고, 실행 순서만 먼저 구성합니다.
         if not args.skip_us:
@@ -175,13 +193,23 @@ def main():
             steps.append(("백악관 공식 RSS 수집", "collection/fetch_whitehouse_official.py", []))
         if args.with_federal_register:
             steps.append(("미국 연방관보(Federal Register) 공식 고시 수집", "collection/fetch_federal_register.py", []))
+        if args.with_congress:
+            steps.append(("미국 의회(Congress.gov API v3) 법안·CRS 보고서 수집", "collection/fetch_congress_gov.py", []))
+        if args.with_govinfo:
+            steps.append(("미국 정부 공식 간행물(GovInfo API) 수집", "collection/fetch_govinfo.py", []))
         if args.with_x:
             steps.append(("X 공개 정보환경 신호 (공식 API, 1페이지)", "collection/fetch_x_public.py", []))
         if not args.skip_cross_verification:
             steps.append(("GDELT 사건 및 복수 계통 시계열 교차검증", "analysis/cross_verify_events.py", []))
     # 수집 전용 실행에서는 DB·대시보드 후처리를 붙이지 않습니다.
     # 기존 --only-db 동작은 유지하되, 새 skip 플래그로 각 후처리 그룹을 선택할 수 있습니다.
-    if not args.collect_only:
+    if not args.prototype_refresh and not args.collect_only:
+        if args.with_early_warning:
+            steps.append(("신호 전처리 (5W1H · 노이즈 필터)", "automation/preprocess_signals.py", []))
+            steps.append(("다중 레인 전처리 브릿지 동기화", "pipeline/bridge_preprocess_lanes.py", []))
+            steps.append(("3-Tier LLM 조기경보 분석", "analysis/analyze_signal_gap.py", []))
+            audit_args = ["--nim-escalate"] if args.nim_escalate else []
+            steps.append(("§10.4 멀티저지 직교 검증단 실행", "validation/run_multi_judge_audit.py", audit_args))
         if not args.skip_db:
             steps.append(("MySQL DB로 통합", "db/build_database.py", []))
             steps.append(("해협 센서 및 교차검증 MySQL DB 동기화", "db/load_cross_verification_to_db.py", []))

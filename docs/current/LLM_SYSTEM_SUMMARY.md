@@ -1,7 +1,7 @@
 # 🧠 국제정세 분석 시스템 LLM 통합 아키텍처 및 업데이트 종합 가이드
 **문서 식별자:** `LLM_SYSTEM_SUMMARY.md`  
-**최종 업데이트:** 2026-11-05  
-**상태:** 프로토타입 / 사람 검수·백테스트 체계 구축 중  
+**최종 업데이트:** 2026-11-16  
+**상태:** 하이브리드 검증단(`nemotron-3-nano:4b` + `550B Ultra`) · 통합 프로토타입 운영 중  
 
 ---
 
@@ -23,15 +23,16 @@
 본 시스템은 **갤럭시 북5 프로 (16GB RAM)** 단일 로컬 환경에서 OOM 없이 안정적으로 구동될 수 있도록 파운데이션 모델 라인업을 6대 정예 모델로 전면 재편했습니다.
 특히 **분석·생성 파이프라인**과 **독립 검증 파이프라인**을 엄격히 분리하여, 생성 모델의 자가 확증 편향(Self-Confirmation Bias)과 단일 심판 모델(`tev1`)의 편향을 원천 차단합니다.
 
-### 2026-11-05 현재 Ollama 6대 정예 모델 설치 현황 (총 29.4GB)
+### 2026-11-16 현재 Ollama 6대 로컬 모델 + NIM 2차 감사 현황 (로컬 총 27.2GB)
 
 ```text
-gemma2:9b        5.4 GB (사실성 및 출처 충실도 감사)
-llama3.1:8b      4.9 GB (글로벌 영문 브리핑 및 국제 표준 요약)
-tev1:latest      4.9 GB (의사결정 선택형 분류 주심)
-exaone3.5:7.8b   4.8 GB (LG AI 연구원 한국어 전략 브리핑)
-deepseek-r1:7b   4.7 GB (CoT 비판적 반박 및 과잉 경보 차단)
-qwen2.5:7b       4.7 GB (다국어 팩트 추출 및 시그널 정제)
+gemma2:9b             5.4 GB (사실성 및 출처 충실도 감사)
+llama3.1:8b           4.9 GB (글로벌 영문 브리핑 및 국제 표준 요약)
+exaone3.5:7.8b        4.8 GB (LG AI 연구원 한국어 전략 브리핑)
+qwen2.5:7b            4.7 GB (다국어 팩트 추출 및 시그널 정제)
+tev1:latest           4.6 GB (의사결정 선택형 분류 주심)
+nemotron-3-nano:4b    2.8 GB (NVIDIA 추론 비평가 · 과잉 경보/비약 차단 — deepseek-r1:7b 대체)
++ [선택 2차] nvidia/nemotron-3-ultra-550b-a55b (NVIDIA NIM API, --nim-escalate 플래그 건 전용)
 ```
 
 | 파이프라인 | 모델명 | 파라미터/용량 | 역할 및 전문 영역 |
@@ -39,9 +40,11 @@ qwen2.5:7b       4.7 GB (다국어 팩트 추출 및 시그널 정제)
 | **분석 & 생성**<br>(실행 3총사) | `qwen2.5:7b` | 7B / 4.7GB | **다국어 팩트 추출 & 신호 정제**: 중·영·일·러·아랍어 등 다국어 원문에서 노이즈를 제거하고 정형 신호 JSON 추출 |
 | | `exaone3.5:7.8b` | 7.8B / 4.8GB | **한국어 전략 브리핑 총괄**: LG AI Research 개발 모델. 대한민국 공급망/외교안보 관점의 고품격 전략 제언 보고서 작성 |
 | | `llama3.1:8b` | 8B / 4.9GB | **글로벌 영문 브리핑 & 국제 표준화**: Meta 최신 파운데이션. 글로벌 외신 및 다국적 기구 표준 영문 보고서 브리핑 전담 |
-| **독립 다자 검증**<br>(검증단 3심제) | `tev1:latest` | 8B / 4.9GB | **의사결정 주심 (Primary Decision Judge)**: 시스템원(System One) 기반 선택형 판정. 리스크 상태를 5대 등급으로 신속 분류 |
-| | `deepseek-r1:7b` | 7B / 4.7GB | **추론 비판관 (Adversarial Critic)**: DeepSeek 추론(CoT) 특화 모델. 과잉 경보(False Alarm) 및 논리적 비약에 대한 적대적 반박 제공 |
+| **독립 다자 검증**<br>(로컬 3심제 + 2차) | `tev1:latest` | 8B / 4.6GB | **의사결정 주심 (Primary Decision Judge)**: 시스템원(System One) 기반 선택형 판정. 리스크 상태를 5대 등급으로 신속 분류 |
+| | `nemotron-3-nano:4b` | 4B / 2.8GB | **추론 비판관 (Adversarial Critic)**: NVIDIA Nemotron 경량 추론 모델(`deepseek-r1:7b` 대체). 과잉 경보(False Alarm) 및 논리적 비약 비판 검증 |
 | | `gemma2:9b` | 9B / 5.4GB | **사실성 감사관 (Factuality Auditor)**: 구글 개발 고성능 모델. 원문 인용문과 모델 주장 간의 왜곡·환각·충실도 엄격 감사 |
+| | `mistral:7b` | 7B / 4.4GB | **재판관 (Presiding Judge)**: 3심 판정과 쟁점을 종합해 사람 검수용 권고안(`recommended_decision`) 및 판결 요지 생성 (`48974a6`) |
+| | `nvidia/nemotron-3-ultra-550b-a55b` | 550B MoE (NIM API) | **2차 심층 감사관 (`--nim-escalate`)**: 로컬 3심제에서 `needs_human_review=true`로 걸린 건만 선별해 사실·비약 정밀 재감사 |
 | **수학적 가드레일** | `calculate_alert_assessment()` | 결정론적 산식 | **결정론적 수학 안전장치**: 출처 다양성, 괴리도, 합의도를 기반으로 LLM의 자의적 판단을 방어하는 수학적 기준선 제공 |
 
 ### 16GB RAM 하드웨어 보호 및 순차 로딩(Sequential Loading) 원칙

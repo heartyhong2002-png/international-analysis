@@ -28,6 +28,7 @@ import json
 import os
 import re
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 import requests
@@ -51,14 +52,16 @@ LICENSE_NOTE = "Public Federal Register REST API; no API key. US government work
 
 BASE_URL = "https://www.federalregister.gov/api/v1/documents.json"
 
-# 조기경보 감시 핵심 기관 슬러그 (통상, 수출통제, 제재, 외교, 안보)
+# 조기경보 감시 핵심 기관 슬러그 (통상, 수출통제, 제재, 외교, 안보, 국방)
 WATCH_AGENCIES = [
     "industry-and-security-bureau",          # 상무부 산업안보국 (수출통제, Entity List)
     "international-trade-administration",     # 상무부 국제무역청 (반덤핑, 상계관세)
     "foreign-assets-control-office",          # 재무부 해외자산통제국 (OFAC 제재)
     "trade-representative-office-of-united-states",  # 미 무역대표부 (USTR 관세, 301조)
     "u-s-customs-and-border-protection",     # 관세국경보호청 (CBP 강제노동 수입금지 공식 슬러그)
-    "state-department",                       # 국무부 (방위물자수출, 제재)
+    "state-department",                       # 국무부 (방위물자수출, 외교·안보, 제재)
+    "defense-department",                     # 국방부 (방위·안보 조달 및 수출통제)
+    "homeland-security-department",           # 국토안보부 (국경·사이버·공급망 안보)
 ]
 
 # 이슈 태그 분류 규칙 (구문/단어 경계 — 짧은 토큰 부분문자열 오탐 방지)
@@ -101,6 +104,19 @@ ISSUE_TAG_RULES = {
         r"forced labor",
         r"uyghur",
     ],
+    "US_Presidential_Action": [
+        r"executive order",
+        r"proclamation",
+        r"presidential",
+        r"national emergency",
+    ],
+    "US_Defense_Security": [
+        r"national security",
+        r"defense",
+        r"foreign policy",
+        r"arms",
+        r"military",
+    ],
 }
 
 
@@ -114,81 +130,114 @@ def tag_issue(title: str, abstract: str) -> list[str]:
     return tags or ["US_General_Policy"]
 
 
+def _parse_fr_doc(doc: dict, observed_at: str) -> dict:
+    """Federal Register API 문서 JSON을 official_raw_v1 스키마 레코드로 변환한다."""
+    doc_num = doc.get("document_number", "")
+    title = (doc.get("title") or "").strip()
+    abstract = (doc.get("abstract") or "").strip()
+    pub_date = doc.get("publication_date", "")
+    html_url = doc.get("html_url", "")
+    pdf_url = doc.get("pdf_url", "")
+    doc_type = doc.get("type", "")
+    action = doc.get("action", "") or ""
+    eo_num = str(doc.get("executive_order_number") or "").strip()
+    agencies = [a.get("name", "") for a in doc.get("agencies", []) if isinstance(a, dict)]
+    agency_names = "; ".join(a for a in agencies if a)
+    if not agency_names and doc_type == "Presidential Document":
+        agency_names = "Executive Office of the President"
+
+    content_hash = hashlib.sha256(
+        f"{doc_num}|{pub_date}|{title}".encode("utf-8", errors="ignore")
+    ).hexdigest()[:16]
+
+    issue_tags = tag_issue(title, abstract)
+
+    return {
+        "source_id": SOURCE_ID,
+        "relationship_role": RELATIONSHIP_ROLE,
+        "packet": PACKET,
+        "document_number": doc_num,
+        "title": title,
+        "publication_date": pub_date,
+        "agencies": agency_names,
+        "action": action,
+        "doc_type": doc_type,
+        "executive_order_number": eo_num,
+        "abstract": abstract,
+        "html_url": html_url,
+        "pdf_url": pdf_url,
+        "issue_tags": ";".join(issue_tags),
+        "content_hash": content_hash,
+        "observed_at": observed_at,
+        "license_access_note": LICENSE_NOTE,
+    }
+
+
 def fetch_federal_register_documents(per_page: int = 20, max_pages: int = 1) -> list[dict]:
-    """Federal Register 공식 REST API를 호출하여 최신 정책·규칙 문서를 수집한다."""
+    """Federal Register 공식 REST API를 호출하여 정책·규칙·외교안보 및 대통령 행정명령을 수집한다."""
     observed_at = datetime.now(timezone.utc).isoformat()
-    all_documents = []
+    all_documents: list[dict] = []
+    seen_doc_nums: set[str] = set()
     headers = {
         "User-Agent": "InternationalAnalysisBot/1.0 (OSINT Research; mailto:contact@example.com)"
     }
 
-    params = {
-        "conditions[type][]": ["RULE", "PRORULE", "NOTICE"],
-        "conditions[agencies][]": WATCH_AGENCIES,
-        "order": "newest",
-        "per_page": per_page,
-    }
+    lanes = [
+        (
+            "규제·정책·외교안보 문서",
+            {
+                "conditions[type][]": ["RULE", "PRORULE", "NOTICE"],
+                "conditions[agencies][]": WATCH_AGENCIES,
+                "order": "newest",
+                "per_page": per_page,
+            },
+            max_pages,
+        ),
+        (
+            "대통령 행정명령·포고령(PRESDOCU)",
+            {
+                "conditions[type][]": ["PRESDOCU"],
+                "order": "newest",
+                "per_page": min(per_page, 15),
+            },
+            1,
+        ),
+    ]
 
-    print(f"[{SOURCE_ID}] Federal Register 공식 API 호출 중 (최신 {per_page * max_pages}건 한도)...")
+    print(f"[{SOURCE_ID}] Federal Register 공식 API 호출 중 (최신 {per_page * max_pages}건 + 대통령 문서 한도)...")
 
-    for page in range(1, max_pages + 1):
-        params["page"] = page
-        try:
-            resp = requests.get(BASE_URL, params=params, headers=headers, timeout=20)
-            if resp.status_code != 200:
-                print(f"  ⚠️ HTTP 오류 ({resp.status_code}): {resp.text[:120]}")
+    for lane_name, base_params, pages in lanes:
+        for page in range(1, pages + 1):
+            params = dict(base_params, page=page)
+            try:
+                resp = requests.get(BASE_URL, params=params, headers=headers, timeout=20)
+                if resp.status_code != 200:
+                    print(f"  ⚠️ [{lane_name}] HTTP 오류 ({resp.status_code}): {resp.text[:120]}")
+                    break
+
+                data = resp.json()
+                results = data.get("results", [])
+                if not results:
+                    print(f"  ℹ️ [{lane_name}] 추가 문서가 없습니다.")
+                    break
+
+                added = 0
+                for doc in results:
+                    rec = _parse_fr_doc(doc, observed_at)
+                    doc_num = rec["document_number"]
+                    if doc_num and doc_num in seen_doc_nums:
+                        continue
+                    if doc_num:
+                        seen_doc_nums.add(doc_num)
+                    all_documents.append(rec)
+                    added += 1
+
+                print(f"  ✓ [{lane_name}] {page}페이지 수집 완료: {added}건 (중복 제외)")
+                time.sleep(0.25)
+
+            except Exception as e:
+                print(f"  ❌ [{lane_name}] API 요청 실패 (page {page}): {e}")
                 break
-
-            data = resp.json()
-            results = data.get("results", [])
-            if not results:
-                print("  ℹ️ 추가 문서가 없습니다.")
-                break
-
-            for doc in results:
-                doc_num = doc.get("document_number", "")
-                title = doc.get("title", "").strip()
-                abstract = (doc.get("abstract") or "").strip()
-                pub_date = doc.get("publication_date", "")
-                html_url = doc.get("html_url", "")
-                pdf_url = doc.get("pdf_url", "")
-                doc_type = doc.get("type", "")
-                action = doc.get("action", "")
-                agencies = [a.get("name", "") for a in doc.get("agencies", []) if isinstance(a, dict)]
-                agency_names = "; ".join(agencies)
-
-                # 고유 식별 해시 (문서번호 + 공표일 + 제목)
-                content_hash = hashlib.sha256(
-                    f"{doc_num}|{pub_date}|{title}".encode("utf-8", errors="ignore")
-                ).hexdigest()[:16]
-
-                issue_tags = tag_issue(title, abstract)
-
-                record = {
-                    "source_id": SOURCE_ID,
-                    "relationship_role": RELATIONSHIP_ROLE,
-                    "packet": PACKET,
-                    "document_number": doc_num,
-                    "title": title,
-                    "publication_date": pub_date,
-                    "agencies": agency_names,
-                    "action": action,
-                    "doc_type": doc_type,
-                    "abstract": abstract,
-                    "html_url": html_url,
-                    "pdf_url": pdf_url,
-                    "issue_tags": ";".join(issue_tags),
-                    "content_hash": content_hash,
-                    "observed_at": observed_at,
-                    "license_access_note": LICENSE_NOTE,
-                }
-                all_documents.append(record)
-
-            print(f"  ✓ {page}페이지 수집 완료: {len(results)}건")
-
-        except Exception as e:
-            print(f"  ❌ API 요청 실패 (page {page}): {e}")
-            break
 
     return all_documents
 
@@ -207,7 +256,7 @@ def save_documents_and_receipt(documents: list[dict]) -> None:
     # 2. CSV 저장 (빈 결과여도 헤더만 써 JSON과 동기화 — stale CSV 방지)
     fieldnames = list(documents[0].keys()) if documents else [
         "source_id", "relationship_role", "packet", "document_number", "title",
-        "publication_date", "agencies", "action", "doc_type", "abstract",
+        "publication_date", "agencies", "action", "doc_type", "executive_order_number", "abstract",
         "html_url", "pdf_url", "issue_tags", "content_hash", "observed_at",
         "license_access_note",
     ]

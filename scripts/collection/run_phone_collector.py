@@ -34,7 +34,7 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 DATA_DIR = ROOT / "data"
 STATUS_FILE = DATA_DIR / "phone_collector_status.json"
 
-# 스마트폰 엣지 노드에서 안전하게 가동되는 경량 수집기 8종
+# 스마트폰 엣지 노드에서 안전하게 가동되는 경량 수집기 10종
 # Timeouts must exceed per-request budgets inside collectors (often 10–20s × N).
 EDGE_COLLECTORS = [
     {
@@ -83,6 +83,18 @@ EDGE_COLLECTORS = [
         "id": "local_opinions",
         "name": "로컬 포럼 및 대안 여론 센서 (PTT/핀충/로컬뉴스)",
         "script": "scripts/collection/fetch_local_opinions.py",
+        "timeout": 180,
+    },
+    {
+        "id": "congress_gov",
+        "name": "미국 의회(Congress.gov) 입법·법안·CRS 보고서",
+        "script": "scripts/collection/fetch_congress_gov.py",
+        "timeout": 180,
+    },
+    {
+        "id": "govinfo",
+        "name": "미국 정부 간행물(GovInfo) GAO·청문회·공법",
+        "script": "scripts/collection/fetch_govinfo.py",
         "timeout": 180,
     },
 ]

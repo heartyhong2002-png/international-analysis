@@ -1,0 +1,50 @@
+{
+  "collector": "scripts/collection/fetch_govinfo.py",
+  "source_id": "us_govinfo_api",
+  "relationship_role": "domestic_us",
+  "packet": "A",
+  "observed_at": "2026-11-17T15:03:18.683412+00:00",
+  "total_items_collected": 47,
+  "status": "SUCCESS",
+  "collections": [
+    {
+      "collection": "GAOREPORTS",
+      "http_status": 200,
+      "status": "SUCCESS",
+      "items": 0,
+      "error": null
+    },
+    {
+      "collection": "CHRG",
+      "http_status": 200,
+      "status": "SUCCESS",
+      "items": 15,
+      "error": null
+    },
+    {
+      "collection": "CREC",
+      "http_status": 200,
+      "status": "SUCCESS",
+      "items": 12,
+      "error": null
+    },
+    {
+      "collection": "PLAW",
+      "http_status": 200,
+      "status": "SUCCESS",
+      "items": 5,
+      "error": null
+    },
+    {
+      "collection": "CPD",
+      "http_status": 200,
+      "status": "SUCCESS",
+      "items": 15,
+      "error": null
+    }
+  ],
+  "error": null,
+  "alert_level_set": false,
+  "verification_state_set": false,
+  "notes": "GovInfo API ingestion under official_raw_v1 contract. No API key stored in artifacts."
+}

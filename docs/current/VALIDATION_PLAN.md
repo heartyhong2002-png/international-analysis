@@ -214,8 +214,9 @@
 | 계층 | 모델/도구 | 성격 | 주요 감사 역할 |
 |---|---|---|---|
 | **주심** | `tev1:latest` | 정량 선택형 분류 | 리스크 지표 및 요약 신호를 바탕으로 5대 조기경보 등급(`NORMAL`, `WATCH`, `WARNING`, `CRITICAL`, `INSUFFICIENT_EVIDENCE`) 1차 판정 |
-| **비판관** | `deepseek-r1:7b` | CoT 추론 및 적대적 반박 | Chain-of-Thought 사고 과정을 통해 "과잉 경보가 아닌가?", "지나친 비약은 없는가?"를 비판적으로 반박 검증 (Adversarial Critic) |
+| **비판관** | `nemotron-3-nano:4b` | 경량 추론 및 적대적 반박 | `deepseek-r1:7b` 대체(2026-11-16). "과잉 경보가 아닌가?", "지나친 비약은 없는가?"를 비판적으로 반박 검증 (Adversarial Critic). 플래그 건은 `--nim-escalate`로 `nvidia/nemotron-3-ultra-550b-a55b` 2차 심층 감사 가능 |
 | **감사관** | `gemma2:9b` | 사실성 및 원문 충실도 | 구글의 엄격한 사실성 가이드라인을 기반으로, 원문 인용문 대비 모델 주장의 왜곡·환각 유무를 2진/3진 척도로 감사 |
+| **재판관** | `mistral:7b` | 종합 판결 요약 (`presiding_judge`) | 3심제 판정·트리거를 종합해 사람 검수용 권고 결정(`recommended_decision`)과 핵심 쟁점·판결 요지 작성 (`48974a6`) |
 | **수학적 가드레일** | `calculate_alert_assessment()` | 결정론적 산식 | 수집 출처 수, 신호 괴리도(Signal Gap), 합의도(Consensus)를 토대로 LLM의 자의적 판단을 방어하는 수학적 경계선 제공 |
 
 ### 10.3 5대 감시축 10건 동결 벤치마크 백테스트 체계
@@ -231,7 +232,7 @@
 |---|---|---|---|---|
 | `tev1:latest` | 경보 단계 | `NORMAL` / `WATCH` / `WARNING` / `CRITICAL` / `INSUFFICIENT_EVIDENCE` | `reviewer_decision`(단계 수용 여부) | **산식 Alert 단계**, 타 모델 출력, 사람 라벨, cutoff 이후 지식 |
 | `gemma2:9b` | 근거 충실도 (claim 단위) | `supported` / `partial` / `unsupported` / `unverifiable_source_missing` | `evidence_quote_supported` | 경보 단계, 해석 수위, 타 모델·사람 라벨 |
-| `deepseek-r1:7b` | 해석·비약 | `supported` / `overstated` / `insufficient` (+ `leap_type`) | `interpretation_assessment` | 근거 진위 재판정, 타 모델·사람 라벨. **발령 단계·경보 문장은 입력 가능** |
+| `nemotron-3-nano:4b` (및 2차 `550B Ultra`) | 해석·비약 | `supported` / `overstated` / `insufficient` (+ `leap_type`) | `interpretation_assessment` | 근거 진위 재판정, 타 모델·사람 라벨. **발령 단계·경보 문장은 입력 가능** |
 
 - 같은 5단계 라벨로 3자 투표하지 않는다.
 - Gemma는 claim별 판정 후 시스템이 `worst(claims)`로 롤업한다. 모델이 종합 등급을 내지 않는다.

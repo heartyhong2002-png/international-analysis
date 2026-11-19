@@ -16,7 +16,7 @@
         UNCLASSIFIED // FOR OFFICIAL USE ONLY
       </div>
       <div style="font-size: 11px; color: #4B5563; margin-top: 2px;">
-        2026-09-21
+        2026-11-16
       </div>
     </div>
   </div>
@@ -54,7 +54,7 @@
         <span style="display: inline-block; width: 26px; color: #2563EB;">01.</span> 북한 핵 & 트럼프-김정은 관계
       </div>
       <div style="font-size: 12px; color: #64748B;">
-        <span style="font-weight: 600; color: #1E293B;">위험 지수:</span> 58/100 | <span style="font-weight: 600; color: #1E293B;">권역:</span> Asia-Pacific
+        <span style="font-weight: 600; color: #1E293B;">기준자료 신호 강도:</span> 58/100 | <span style="font-weight: 600; color: #1E293B;">권역:</span> Asia-Pacific
       </div>
     </div>
     <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 4px;">
@@ -62,7 +62,7 @@
         <span style="display: inline-block; width: 26px; color: #2563EB;">02.</span> 대만 해협 긴장
       </div>
       <div style="font-size: 12px; color: #64748B;">
-        <span style="font-weight: 600; color: #1E293B;">위험 지수:</span> 68/100 | <span style="font-weight: 600; color: #1E293B;">권역:</span> Asia-Pacific
+        <span style="font-weight: 600; color: #1E293B;">기준자료 신호 강도:</span> 68/100 | <span style="font-weight: 600; color: #1E293B;">권역:</span> Asia-Pacific
       </div>
     </div>
     <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 4px;">
@@ -70,7 +70,7 @@
         <span style="display: inline-block; width: 26px; color: #2563EB;">03.</span> 우크라이나 전쟁
       </div>
       <div style="font-size: 12px; color: #64748B;">
-        <span style="font-weight: 600; color: #1E293B;">위험 지수:</span> 62/100 | <span style="font-weight: 600; color: #1E293B;">권역:</span> Europe
+        <span style="font-weight: 600; color: #1E293B;">기준자료 신호 강도:</span> 62/100 | <span style="font-weight: 600; color: #1E293B;">권역:</span> Europe
       </div>
     </div>
     <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 4px;">
@@ -78,7 +78,7 @@
         <span style="display: inline-block; width: 26px; color: #2563EB;">04.</span> 이란 핵협상 & 긴장
       </div>
       <div style="font-size: 12px; color: #64748B;">
-        <span style="font-weight: 600; color: #1E293B;">위험 지수:</span> 88/100 | <span style="font-weight: 600; color: #1E293B;">권역:</span> Middle East
+        <span style="font-weight: 600; color: #1E293B;">기준자료 신호 강도:</span> 88/100 | <span style="font-weight: 600; color: #1E293B;">권역:</span> Middle East
       </div>
     </div>
     <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 4px;">
@@ -86,7 +86,7 @@
         <span style="display: inline-block; width: 26px; color: #2563EB;">05.</span> 미-중 무역 전쟁
       </div>
       <div style="font-size: 12px; color: #64748B;">
-        <span style="font-weight: 600; color: #1E293B;">위험 지수:</span> 58/100 | <span style="font-weight: 600; color: #1E293B;">권역:</span> Global
+        <span style="font-weight: 600; color: #1E293B;">기준자료 신호 강도:</span> 58/100 | <span style="font-weight: 600; color: #1E293B;">권역:</span> Global
       </div>
     </div>
   </div>
@@ -121,7 +121,7 @@
         UNCLASSIFIED // FOR OFFICIAL USE ONLY
       </div>
       <div style="font-size: 11px; color: #4B5563; margin-top: 2px;">
-        2026년 09월 21일
+        2026년 11월 16일
       </div>
     </div>
   </div>
@@ -165,7 +165,7 @@
           WHAT WE FOUND
         </div>
         <p style="margin: 0 0 6px 0;">
-          <strong>종합 위험도: 경계 (58/100)</strong>
+          <strong>경보 단계: 확인 필요</strong>
         </p>
         <p style="margin: 0 0 8px 0;">
           2025년 3월 북한의 핵추진잠수함 공개, 2025년 10월 APEC 방한 중 연쇄 미사일 발사, 2026년 8월 단거리탄도미사일 약 12발 발사 등 도발이 이어지는 가운데, 같은 시기 트럼프는 을지프리덤실드 훈련 축소를 지시하는 등 상반된 신호가 공존하고 있다.
@@ -295,14 +295,14 @@
 
   <!-- 7. Section 4: PERFORMANCE BENCHMARKS AND GAP ANALYSIS -->
   <h2 style="font-size: 15px; font-weight: 900; color: #0F172A; border-bottom: 1.5px solid #CBD5E1; padding-bottom: 4px; margin: 26px 0 10px 0; letter-spacing: 0.5px; text-transform: uppercase;">
-    4. RISK OUTLOOK AND UNCERTAINTY ANALYSIS
+    4. RISK SIGNAL CONTEXT AND UNCERTAINTY
   </h2>
   <div style="font-size: 13px; color: #334155; margin-bottom: 12px;">
-    <p style="margin: 0 0 6px 0;"><strong>단기 전망 (3~6개월):</strong> 2026년 말까지는 북한의 간헐적 미사일 시험과 트럼프의 대화 제스처가 반복되는 '양가적 국면'이 지속될 가능성이 높으며, 공식 정상회담 성사보다는 실무선 물밑 접촉 여부가 관건이 될 전망이다.</p>
-    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ 가능성 높은 시나리오:</em> 9월 예정된 푸틴-김정은 정상회담 결과와 한미일 프리덤 에지 연합훈련(9월 7~11일) 이후 북한의 대응 수위가 향후 몇 달간 긴장 수준을 가늠하는 핵심 변수가 될 것으로 보인다.</p>
-    <p style="margin: 0 0 6px 0;"><strong>중기 전망 (1~3년):</strong> 카네기국제평화재단 등 전문가들은 2026년 초 북한 노동당 대회와 트럼프의 국정연설이라는 두 정치적 계기가 맞물려 미국이 '비핵화' 대신 '안정적 공존' 프레임으로 전환할 경우 대화 재개의 문이 열릴 수 있다고 본다.</p>
-    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ 예상 전환점:</em> 미국이 '완전한 비핵화'를 협상 전제조건에서 제외하고 위험감소·군비통제 중심 접근으로 선회하는지 여부가 향후 국면 전환의 분수령이 될 것으로 전문가들은 지적한다.</p>
-    <p style="margin: 0 0 6px 0;"><strong>장기 구조적 변화:</strong> 다수 전문가는 지난 네 정부의 실패 사례에 비춰 압박이 아닌 대화·외교만이 북한 핵프로그램을 제약해온 유일한 방식이었다고 평가하며, 트럼프 2기가 이를 어떻게 활용하느냐에 따라 장기적 한반도 안보구도가 달라질 것으로 전망한다.</p>
+    <p style="margin: 0 0 6px 0;"><strong>단기 관찰 맥락 (3~6개월):</strong> 2026년 말까지는 북한의 간헐적 미사일 시험과 트럼프의 대화 제스처가 반복되는 '양가적 국면'이 지속될 가능성이 높으며, 공식 정상회담 성사보다는 실무선 물밑 접촉 여부가 관건이 될 전망이다.</p>
+    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ 추가 확인할 신호:</em> 9월 예정된 푸틴-김정은 정상회담 결과와 한미일 프리덤 에지 연합훈련(9월 7~11일) 이후 북한의 대응 수위가 향후 몇 달간 긴장 수준을 가늠하는 핵심 변수가 될 것으로 보인다.</p>
+    <p style="margin: 0 0 6px 0;"><strong>중기 관찰 맥락 (1~3년):</strong> 카네기국제평화재단 등 전문가들은 2026년 초 북한 노동당 대회와 트럼프의 국정연설이라는 두 정치적 계기가 맞물려 미국이 '비핵화' 대신 '안정적 공존' 프레임으로 전환할 경우 대화 재개의 문이 열릴 수 있다고 본다.</p>
+    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ 확인할 변화 지점:</em> 미국이 '완전한 비핵화'를 협상 전제조건에서 제외하고 위험감소·군비통제 중심 접근으로 선회하는지 여부가 향후 국면 전환의 분수령이 될 것으로 전문가들은 지적한다.</p>
+    <p style="margin: 0 0 6px 0;"><strong>장기 구조적 맥락:</strong> 다수 전문가는 지난 네 정부의 실패 사례에 비춰 압박이 아닌 대화·외교만이 북한 핵프로그램을 제약해온 유일한 방식이었다고 평가하며, 트럼프 2기가 이를 어떻게 활용하느냐에 따라 장기적 한반도 안보구도가 달라질 것으로 전망한다.</p>
     <p style="margin: 0 0 12px 0; color: #1E40AF;"><em>▶ 구조적 리스크:</em> 북한의 사실상 핵보유국 지위 고착화와 러시아·중국을 축으로 한 진영화 심화는 비핵화를 전제로 한 기존 협상 틀 자체의 근본적 재설계를 요구하는 구조적 변화로 평가된다.</p>
   </div>
 
@@ -385,7 +385,7 @@
         UNCLASSIFIED // FOR OFFICIAL USE ONLY
       </div>
       <div style="font-size: 11px; color: #4B5563; margin-top: 2px;">
-        2026년 09월 21일
+        2026년 11월 16일
       </div>
     </div>
   </div>
@@ -429,7 +429,7 @@
           WHAT WE FOUND
         </div>
         <p style="margin: 0 0 6px 0;">
-          <strong>종합 위험도: 경계 (68/100)</strong>
+          <strong>경보 단계: 확인 필요</strong>
         </p>
         <p style="margin: 0 0 8px 0;">
           대만 국방부 집계 기준 중국 군용기의 대만해협 중간선 침범은 2022년 8월 펠로시 방문 이후 300회 이상 누적되며 2025~2026년에는 '거의 매일' 발생하는 수준으로 상시화됐고, 2025년 4월 '해협뇌정(Strait Thunder)-2025A'와 12월 '정의사명(Justice Mission)-2025' 등 대규모 명명 훈련이 반복되며 로켓이 대만 접속수역 안까지 낙하하는 등 강도도 높아지고 있다.
@@ -559,14 +559,14 @@
 
   <!-- 7. Section 4: PERFORMANCE BENCHMARKS AND GAP ANALYSIS -->
   <h2 style="font-size: 15px; font-weight: 900; color: #0F172A; border-bottom: 1.5px solid #CBD5E1; padding-bottom: 4px; margin: 26px 0 10px 0; letter-spacing: 0.5px; text-transform: uppercase;">
-    4. RISK OUTLOOK AND UNCERTAINTY ANALYSIS
+    4. RISK SIGNAL CONTEXT AND UNCERTAINTY
   </h2>
   <div style="font-size: 13px; color: #334155; margin-bottom: 12px;">
-    <p style="margin: 0 0 6px 0;"><strong>단기 전망 (3~6개월):</strong> 향후 3~6개월은 중국의 회색지대 군사활동(거의 매일 수준의 중간선 침범·해경 초계)이 계속되는 가운데 대규모 명명훈련이 추가로 발생할 가능성이 높지만, 즉각적인 전면 무력충돌 가능성은 낮다는 것이 대체적 평가다.</p>
-    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ 가능성 높은 시나리오:</em> 가장 개연성 높은 단기 시나리오는 중국이 대만 특별국방예산 통과나 미국의 무기판매 재개 등 특정 계기에 대응해 추가 훈련·봉쇄성 초계로 압박 수위를 조절하는 '경고성 강압'의 반복이다.</p>
-    <p style="margin: 0 0 6px 0;"><strong>중기 전망 (1~3년):</strong> 1~3년 시계에서는 트럼프 행정부의 대중 정상회담 사이클과 대만 국방예산 심의, 2028년 대만 총통선거를 앞둔 정치 일정이 맞물리며 긴장의 진폭이 주기적으로 커질 개연성이 있다.</p>
-    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ 예상 전환점:</em> 대만 특별국방예산의 최종 통과 여부와 미국의 140억 달러 무기판매 재개 여부가 향후 긴장 국면의 방향을 가늠할 핵심 전환점이 될 것으로 보인다.</p>
-    <p style="margin: 0 0 6px 0;"><strong>장기 구조적 변화:</strong> 장기적으로는 군사력 균형이 중국에 유리하게 이동하는 추세가 이어질 경우 미국의 억지력에 대한 지역 동맹국들의 신뢰가 잠식될 위험이 있으며, 이는 일본·한국 등의 독자적 방위태세 강화 압력으로 이어질 수 있다.</p>
+    <p style="margin: 0 0 6px 0;"><strong>단기 관찰 맥락 (3~6개월):</strong> 향후 3~6개월은 중국의 회색지대 군사활동(거의 매일 수준의 중간선 침범·해경 초계)이 계속되는 가운데 대규모 명명훈련이 추가로 발생할 가능성이 높지만, 즉각적인 전면 무력충돌 가능성은 낮다는 것이 대체적 평가다.</p>
+    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ 추가 확인할 신호:</em> 가장 개연성 높은 단기 시나리오는 중국이 대만 특별국방예산 통과나 미국의 무기판매 재개 등 특정 계기에 대응해 추가 훈련·봉쇄성 초계로 압박 수위를 조절하는 '경고성 강압'의 반복이다.</p>
+    <p style="margin: 0 0 6px 0;"><strong>중기 관찰 맥락 (1~3년):</strong> 1~3년 시계에서는 트럼프 행정부의 대중 정상회담 사이클과 대만 국방예산 심의, 2028년 대만 총통선거를 앞둔 정치 일정이 맞물리며 긴장의 진폭이 주기적으로 커질 개연성이 있다.</p>
+    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ 확인할 변화 지점:</em> 대만 특별국방예산의 최종 통과 여부와 미국의 140억 달러 무기판매 재개 여부가 향후 긴장 국면의 방향을 가늠할 핵심 전환점이 될 것으로 보인다.</p>
+    <p style="margin: 0 0 6px 0;"><strong>장기 구조적 맥락:</strong> 장기적으로는 군사력 균형이 중국에 유리하게 이동하는 추세가 이어질 경우 미국의 억지력에 대한 지역 동맹국들의 신뢰가 잠식될 위험이 있으며, 이는 일본·한국 등의 독자적 방위태세 강화 압력으로 이어질 수 있다.</p>
     <p style="margin: 0 0 12px 0; color: #1E40AF;"><em>▶ 구조적 리스크:</em> 가장 근본적인 구조 변화는 미국이 대만 무기판매를 중국과 사전 조율 없이 결정한다는 1982년 이래의 원칙을 트럼프 행정부가 사실상 허물기 시작했다는 점으로, 이는 향후 미국의 대만 공약 방식 자체를 바꿀 수 있는 선례로 평가된다.</p>
   </div>
 
@@ -649,7 +649,7 @@
         UNCLASSIFIED // FOR OFFICIAL USE ONLY
       </div>
       <div style="font-size: 11px; color: #4B5563; margin-top: 2px;">
-        2026년 09월 21일
+        2026년 11월 16일
       </div>
     </div>
   </div>
@@ -693,7 +693,7 @@
           WHAT WE FOUND
         </div>
         <p style="margin: 0 0 6px 0;">
-          <strong>종합 위험도: 경계 (62/100)</strong>
+          <strong>경보 단계: 확인 필요</strong>
         </p>
         <p style="margin: 0 0 8px 0;">
           2026년 7월 기준 러시아는 우크라이나 영토의 약 19~20%를 통제하고 있으며, 최근 1년간(2025년 7월~2026년 7월) 순증 점령 면적은 약 1,100제곱마일로 우크라이나 전체 국토의 약 0.5%에 불과해 전선은 사실상 정체 상태에 가깝다.
@@ -823,14 +823,14 @@
 
   <!-- 7. Section 4: PERFORMANCE BENCHMARKS AND GAP ANALYSIS -->
   <h2 style="font-size: 15px; font-weight: 900; color: #0F172A; border-bottom: 1.5px solid #CBD5E1; padding-bottom: 4px; margin: 26px 0 10px 0; letter-spacing: 0.5px; text-transform: uppercase;">
-    4. RISK OUTLOOK AND UNCERTAINTY ANALYSIS
+    4. RISK SIGNAL CONTEXT AND UNCERTAINTY
   </h2>
   <div style="font-size: 13px; color: #334155; margin-bottom: 12px;">
-    <p style="margin: 0 0 6px 0;"><strong>단기 전망 (3~6개월):</strong> 향후 수개월간은 부분적·단기적 휴전이 반복적으로 시도되되 완전한 정전으로 이어지지 못하고, 전선에서는 저강도 소모전이 지속될 가능성이 높다.</p>
-    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ 가능성 높은 시나리오:</em> 가장 가능성이 높은 단기 시나리오는 '협상은 계속되나 전투도 계속되는' 현 상태의 연장으로, 국지적 인도적 휴전과 포로 교환은 성사되지만 포괄적 종전 합의는 2026년 내 타결되지 않을 공산이 크다.</p>
-    <p style="margin: 0 0 6px 0;"><strong>중기 전망 (1~3년):</strong> 중기적으로는 양측 모두 결정적 군사적 승리가 어려운 상황에서 실질적인 사실상의 정전선을 따라 '동결된 분쟁(frozen conflict)' 형태로 전환될 가능성이 제기되고 있다.</p>
-    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ 예상 전환점:</em> 안전보장 체제(15~50년 안보 공약)의 미 의회·나토 승인 여부와 우크라이나 국민투표 실시 여부가 전쟁의 다음 국면을 가르는 분수령이 될 것으로 보인다.</p>
-    <p style="margin: 0 0 6px 0;"><strong>장기 구조적 변화:</strong> 장기적으로는 한반도 분단선과 유사한 형태의 실질적 경계선이 고착화되고, 우크라이나의 나토 미가입 상태에서 서방의 양자적 안전보장으로 대체되는 '준동맹' 체제가 정착될 가능성이 유럽 안보 논의에서 거론되고 있다.</p>
+    <p style="margin: 0 0 6px 0;"><strong>단기 관찰 맥락 (3~6개월):</strong> 향후 수개월간은 부분적·단기적 휴전이 반복적으로 시도되되 완전한 정전으로 이어지지 못하고, 전선에서는 저강도 소모전이 지속될 가능성이 높다.</p>
+    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ 추가 확인할 신호:</em> 가장 가능성이 높은 단기 시나리오는 '협상은 계속되나 전투도 계속되는' 현 상태의 연장으로, 국지적 인도적 휴전과 포로 교환은 성사되지만 포괄적 종전 합의는 2026년 내 타결되지 않을 공산이 크다.</p>
+    <p style="margin: 0 0 6px 0;"><strong>중기 관찰 맥락 (1~3년):</strong> 중기적으로는 양측 모두 결정적 군사적 승리가 어려운 상황에서 실질적인 사실상의 정전선을 따라 '동결된 분쟁(frozen conflict)' 형태로 전환될 가능성이 제기되고 있다.</p>
+    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ 확인할 변화 지점:</em> 안전보장 체제(15~50년 안보 공약)의 미 의회·나토 승인 여부와 우크라이나 국민투표 실시 여부가 전쟁의 다음 국면을 가르는 분수령이 될 것으로 보인다.</p>
+    <p style="margin: 0 0 6px 0;"><strong>장기 구조적 맥락:</strong> 장기적으로는 한반도 분단선과 유사한 형태의 실질적 경계선이 고착화되고, 우크라이나의 나토 미가입 상태에서 서방의 양자적 안전보장으로 대체되는 '준동맹' 체제가 정착될 가능성이 유럽 안보 논의에서 거론되고 있다.</p>
     <p style="margin: 0 0 12px 0; color: #1E40AF;"><em>▶ 구조적 리스크:</em> 이번 전쟁을 계기로 유럽은 자체 방위산업 역량 강화와 러시아 에너지 의존 탈피를 구조적으로 가속화하고 있으며, 이는 한국을 포함한 비유럽 방산 수출국들의 유럽 시장 진출 기회 확대로 이어지는 구조적 변화를 낳고 있다.</p>
   </div>
 
@@ -913,7 +913,7 @@
         UNCLASSIFIED // FOR OFFICIAL USE ONLY
       </div>
       <div style="font-size: 11px; color: #4B5563; margin-top: 2px;">
-        2026년 09월 21일
+        2026년 11월 16일
       </div>
     </div>
   </div>
@@ -957,7 +957,7 @@
           WHAT WE FOUND
         </div>
         <p style="margin: 0 0 6px 0;">
-          <strong>종합 위험도: 위험 (88/100)</strong>
+          <strong>경보 단계: 확인 필요</strong>
         </p>
         <p style="margin: 0 0 8px 0;">
           9월 1일 미 중부사령부가 이란 혁명수비대(IRGC) 목표물(반다르아바스·차바하르·라락섬)을 재타격했으며 WTI 유가는 배럴당 90달러에 근접, 2026년 들어 에너지 비용이 45% 이상 상승했다. IAEA는 이란이 60% 농축 우라늄 재고의 소재 정보 제공을 거부해 '지식의 연속성'을 상실했다고 경고했다.
@@ -1087,14 +1087,14 @@
 
   <!-- 7. Section 4: PERFORMANCE BENCHMARKS AND GAP ANALYSIS -->
   <h2 style="font-size: 15px; font-weight: 900; color: #0F172A; border-bottom: 1.5px solid #CBD5E1; padding-bottom: 4px; margin: 26px 0 10px 0; letter-spacing: 0.5px; text-transform: uppercase;">
-    4. RISK OUTLOOK AND UNCERTAINTY ANALYSIS
+    4. RISK SIGNAL CONTEXT AND UNCERTAINTY
   </h2>
   <div style="font-size: 13px; color: #334155; margin-bottom: 12px;">
-    <p style="margin: 0 0 6px 0;"><strong>단기 전망 (3~6개월):</strong> 향후 수개월간은 호르무즈 해협을 둘러싼 저강도 공격과 미군의 보복 공습이 간헐적으로 반복되며 유가 변동성이 지속될 가능성이 높고, 카타르·파키스탄 중재의 공식 협상 재개는 제한적일 것으로 보인다.</p>
-    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ 가능성 높은 시나리오:</em> 가장 유력한 단기 시나리오는 전면적 재확전도 완전한 평화협정도 아닌 '불안정한 소강상태'로, 해협 통항이 부분 회복(전쟁 전 대비 약 절반 수준)된 상태에서 산발적 공격이 반복되는 흐름이다.</p>
-    <p style="margin: 0 0 6px 0;"><strong>중기 전망 (1~3년):</strong> 6월 MOU에서 설정된 기술 실무협상(핵·제재·분쟁해결)이 재가동될지가 관건이며, 성사되면 300억~500억 달러 규모 석유·가스 인프라 복구와 최대 3,000억 달러 재건기금 논의가 본격화될 수 있다.</p>
-    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ 예상 전환점:</em> 검증 가능한 핵 합의 체결과 호르무즈 완전 재개방 여부가 중기 국면의 전환점으로, 이것이 이뤄지면 중동 건설·에너지 시장이 재건 특수 국면으로 전환되고 실패하면 장기 소모전으로 고착될 것이다.</p>
-    <p style="margin: 0 0 6px 0;"><strong>장기 구조적 변화:</strong> RAND 등 전문가들은 하메네이 사후 이란 정치체제가 근본적으로 변형되었으며 정통성 회복에는 수년~수십 년이 걸릴 수 있다고 평가하고, 이란의 대리세력(헤즈볼라 등) 네트워크는 구조적으로 약화되는 반면 이스라엘-아랍권 관계는 재편될 가능성이 있다고 본다.</p>
+    <p style="margin: 0 0 6px 0;"><strong>단기 관찰 맥락 (3~6개월):</strong> 향후 수개월간은 호르무즈 해협을 둘러싼 저강도 공격과 미군의 보복 공습이 간헐적으로 반복되며 유가 변동성이 지속될 가능성이 높고, 카타르·파키스탄 중재의 공식 협상 재개는 제한적일 것으로 보인다.</p>
+    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ 추가 확인할 신호:</em> 가장 유력한 단기 시나리오는 전면적 재확전도 완전한 평화협정도 아닌 '불안정한 소강상태'로, 해협 통항이 부분 회복(전쟁 전 대비 약 절반 수준)된 상태에서 산발적 공격이 반복되는 흐름이다.</p>
+    <p style="margin: 0 0 6px 0;"><strong>중기 관찰 맥락 (1~3년):</strong> 6월 MOU에서 설정된 기술 실무협상(핵·제재·분쟁해결)이 재가동될지가 관건이며, 성사되면 300억~500억 달러 규모 석유·가스 인프라 복구와 최대 3,000억 달러 재건기금 논의가 본격화될 수 있다.</p>
+    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ 확인할 변화 지점:</em> 검증 가능한 핵 합의 체결과 호르무즈 완전 재개방 여부가 중기 국면의 전환점으로, 이것이 이뤄지면 중동 건설·에너지 시장이 재건 특수 국면으로 전환되고 실패하면 장기 소모전으로 고착될 것이다.</p>
+    <p style="margin: 0 0 6px 0;"><strong>장기 구조적 맥락:</strong> RAND 등 전문가들은 하메네이 사후 이란 정치체제가 근본적으로 변형되었으며 정통성 회복에는 수년~수십 년이 걸릴 수 있다고 평가하고, 이란의 대리세력(헤즈볼라 등) 네트워크는 구조적으로 약화되는 반면 이스라엘-아랍권 관계는 재편될 가능성이 있다고 본다.</p>
     <p style="margin: 0 0 12px 0; color: #1E40AF;"><em>▶ 구조적 리스크:</em> 이번 사태로 중동의 힘의 균형이 이란 축에서 걸프 산유국·이스라엘 축으로 이동하고 있으며, 오만·카타르 등 중재국의 외교적 영향력이 확대되는 구조적 변화가 나타나고 있다.</p>
   </div>
 
@@ -1177,7 +1177,7 @@
         UNCLASSIFIED // FOR OFFICIAL USE ONLY
       </div>
       <div style="font-size: 11px; color: #4B5563; margin-top: 2px;">
-        2026년 09월 21일
+        2026년 11월 16일
       </div>
     </div>
   </div>
@@ -1221,7 +1221,7 @@
           WHAT WE FOUND
         </div>
         <p style="margin: 0 0 6px 0;">
-          <strong>종합 위험도: 경계 (58/100)</strong>
+          <strong>경보 단계: 확인 필요</strong>
         </p>
         <p style="margin: 0 0 8px 0;">
           2026년 7월 기준 미국의 대중국 무역가중 평균 관세율은 29.7%로, 2025년 4월 '해방의 날' 직후 최고치(145%)보다 크게 낮아졌지만, 전기차(약 114.5%), 자동차(40%대), 원자로(40.8%) 등 품목별로는 여전히 초고율 관세가 중첩 적용되고 있다.
@@ -1351,14 +1351,14 @@
 
   <!-- 7. Section 4: PERFORMANCE BENCHMARKS AND GAP ANALYSIS -->
   <h2 style="font-size: 15px; font-weight: 900; color: #0F172A; border-bottom: 1.5px solid #CBD5E1; padding-bottom: 4px; margin: 26px 0 10px 0; letter-spacing: 0.5px; text-transform: uppercase;">
-    4. RISK OUTLOOK AND UNCERTAINTY ANALYSIS
+    4. RISK SIGNAL CONTEXT AND UNCERTAINTY
   </h2>
   <div style="font-size: 13px; color: #334155; margin-bottom: 12px;">
-    <p style="margin: 0 0 6px 0;"><strong>단기 전망 (3~6개월):</strong> 향후 수개월간은 2025년 11월 합의(관세 예외 2026년 12월 31일까지 연장, 희토류 일반허가 유지)의 틀 안에서 대체로 안정을 유지하되, 8월 거론된 '과잉생산 관세' 등 산발적 압박 카드가 계속 등장할 가능성이 크다.</p>
-    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ 가능성 높은 시나리오:</em> 가장 유력한 시나리오는 전면 재확전보다는 반도체 장비·조선·특정 소재 등 부문별로 국지적 조치가 간헐적으로 발생하며 협상이 계속되는 '관리된 긴장'의 지속이다.</p>
-    <p style="margin: 0 0 6px 0;"><strong>중기 전망 (1~3년):</strong> 2026년 11월 부산 합의 만료를 전후해 재협상이 이뤄질 것으로 예상되며, 그 결과에 따라 관세 수준이 추가로 낮아지거나 다시 상향될 갈림길에 설 것이다.</p>
-    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ 예상 전환점:</em> 2026년 11월 미중 관세 휴전 만료 시점과 그 직전 예정될 추가 정상회담이 향후 국면을 가르는 핵심 분기점이 될 전망이다.</p>
-    <p style="margin: 0 0 6px 0;"><strong>장기 구조적 변화:</strong> 장기적으로는 반도체·희토류·배터리 등 전략 산업에서 '관리된 디커플링'이 구조화되어, 완전한 통합도 완전한 단절도 아닌 프렌드쇼어링·니어쇼어링 기반의 재편된 공급망 질서가 정착될 가능성이 높다는 것이 다수 통상 전문가들의 견해다.</p>
+    <p style="margin: 0 0 6px 0;"><strong>단기 관찰 맥락 (3~6개월):</strong> 향후 수개월간은 2025년 11월 합의(관세 예외 2026년 12월 31일까지 연장, 희토류 일반허가 유지)의 틀 안에서 대체로 안정을 유지하되, 8월 거론된 '과잉생산 관세' 등 산발적 압박 카드가 계속 등장할 가능성이 크다.</p>
+    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ 추가 확인할 신호:</em> 가장 유력한 시나리오는 전면 재확전보다는 반도체 장비·조선·특정 소재 등 부문별로 국지적 조치가 간헐적으로 발생하며 협상이 계속되는 '관리된 긴장'의 지속이다.</p>
+    <p style="margin: 0 0 6px 0;"><strong>중기 관찰 맥락 (1~3년):</strong> 2026년 11월 부산 합의 만료를 전후해 재협상이 이뤄질 것으로 예상되며, 그 결과에 따라 관세 수준이 추가로 낮아지거나 다시 상향될 갈림길에 설 것이다.</p>
+    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ 확인할 변화 지점:</em> 2026년 11월 미중 관세 휴전 만료 시점과 그 직전 예정될 추가 정상회담이 향후 국면을 가르는 핵심 분기점이 될 전망이다.</p>
+    <p style="margin: 0 0 6px 0;"><strong>장기 구조적 맥락:</strong> 장기적으로는 반도체·희토류·배터리 등 전략 산업에서 '관리된 디커플링'이 구조화되어, 완전한 통합도 완전한 단절도 아닌 프렌드쇼어링·니어쇼어링 기반의 재편된 공급망 질서가 정착될 가능성이 높다는 것이 다수 통상 전문가들의 견해다.</p>
     <p style="margin: 0 0 12px 0; color: #1E40AF;"><em>▶ 구조적 리스크:</em> 관세전쟁은 단순 세율 문제를 넘어 반도체 장비·첨단 AI칩·희토류 등 전략물자에 대한 수출통제 상시화, 개별국과의 양자 투자·구매 패키지 딜 방식으로 국제무역 질서의 구조 자체를 바꾸고 있다.</p>
   </div>
 

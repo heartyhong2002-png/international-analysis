@@ -49,6 +49,10 @@ if sys.platform == "win32":
 load_dotenv()
 
 _SCRIPT_DIR = Path(__file__).resolve().parent
+if str(_SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPT_DIR))
+from prototype_data import build_integrated_region_rows, load_canonical_summary  # noqa: E402
+
 PROJECT_ROOT = _SCRIPT_DIR.parent.parent
 OUTPUT_DIR = PROJECT_ROOT / "output" / "dashboard"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -300,6 +304,8 @@ def fetch_all_dashboard_data(conn):
 
     return {
         "signal_gap_data": signal_gap_data,
+        "integrated_regions": build_integrated_region_rows(),
+        "canonical_summary": load_canonical_summary(),
         "financial_proxy": financial_proxy,
         "telegram_osint": telegram_osint,
         "google_trends_data": google_trends_data,
@@ -354,10 +360,40 @@ def generate_dashboard_html(data):
         else:
             tg_osint_html += f"<p>{html.escape(line)}</p>"
 
+    integrated_rows = data.get("integrated_regions", [])
+    canonical_summary = data.get("canonical_summary", {})
+    integrated_table_rows = ""
+    for r in integrated_rows:
+        triggers_txt = ", ".join(r.get("triggers") or []) or "-"
+        nim_txt = (
+            f"{r['nim_fact']} / {r['nim_inference']}"
+            if r.get("nim_status") == "ok"
+            else (r.get("nim_status") or "-")
+        )
+        badge_cls = "tag-danger" if r.get("needs_human_review") else "tag-success"
+        integrated_table_rows += f"""
+        <tr>
+          <td><strong>{html.escape(str(r.get('region', '-')))}</strong></td>
+          <td><span class="kpi-tag {badge_cls}">{html.escape(str(r.get('alert_level_ko', '-')))} ({html.escape(str(r.get('formula_alert_en', '-')))})</span></td>
+          <td>{safe_float(r.get('risk_signal_score', 0.0)):.1f}</td>
+          <td>{html.escape(str(r.get('tev1_verdict', '-')))}</td>
+          <td>{html.escape(str(r.get('gemma2_verdict', '-')))}</td>
+          <td>{html.escape(str(r.get('critic_verdict', '-')))}</td>
+          <td>{html.escape(str(r.get('presiding_decision', '-')))}</td>
+          <td>{html.escape(nim_txt)}</td>
+          <td>{html.escape(triggers_txt)}</td>
+        </tr>
+        """
+    if not integrated_table_rows:
+        integrated_table_rows = '<tr><td colspan="9" style="text-align:center;color:var(--text-muted);">통합 검증 데이터가 없습니다.</td></tr>'
+    cluster_badge = f"전처리 클러스터 {canonical_summary.get('cluster_count', 0)}건" if canonical_summary.get("available") else "전처리 대기"
+
     # Create Signal Gap and Financial Proxy Cards
     sg_html = ""
     for region, details in sg_data.items():
         raw_score = details.get("discrepancy_score")
+        if raw_score is None:
+            raw_score = details.get("risk_signal_score")
         score = float(raw_score) if raw_score is not None else 0.0
         color_cls = "tag-danger" if score >= 80 else ("tag-amber" if score >= 50 else "tag-info")
         sg_html += f"""
@@ -601,6 +637,36 @@ def generate_dashboard_html(data):
         <div class="chart-title" style="margin-bottom:10px;">💰 금융 대체 지표 (Financial Proxies)</div>
         {fp_html}
       </div>
+    </div>
+  </section>
+
+  <!-- Integrated Early-Warning + Multi-Judge Prototype Section -->
+  <section class="chart-card" style="margin-bottom: 28px;">
+    <div class="chart-header">
+      <div>
+        <div class="chart-title">🛡️ 통합 조기경보 · §10.4 멀티저지 직교 검증단 (프로토타입 통합 뷰)</div>
+        <div class="chart-subtitle">전처리 → 3-Tier 경보 산식 → 로컬 3심제(tev1 · Gemma2 · Nemotron-3-Nano) → 550B Ultra 2차 감사 ({html.escape(cluster_badge)})</div>
+      </div>
+    </div>
+    <div style="overflow-x: auto;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+        <thead>
+          <tr style="border-bottom: 1px solid rgba(255,255,255,0.12); text-align: left;">
+            <th style="padding: 8px;">권역</th>
+            <th style="padding: 8px;">공식 경보</th>
+            <th style="padding: 8px;">리스크 점수</th>
+            <th style="padding: 8px;">tev1</th>
+            <th style="padding: 8px;">Gemma2</th>
+            <th style="padding: 8px;">Nemotron-3-Nano</th>
+            <th style="padding: 8px;">Mistral 재판관</th>
+            <th style="padding: 8px;">550B Ultra (NIM)</th>
+            <th style="padding: 8px;">검수 트리거</th>
+          </tr>
+        </thead>
+        <tbody>
+          {integrated_table_rows}
+        </tbody>
+      </table>
     </div>
   </section>
 
