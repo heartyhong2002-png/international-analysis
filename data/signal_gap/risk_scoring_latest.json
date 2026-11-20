@@ -1,0 +1,47 @@
+{
+  "run_key": "RS-20261027143228-3f787bb6",
+  "scoring_version": "risk-signal-consensus-v1",
+  "executed_at": "2026-10-27T14:32:28.735392Z",
+  "regions": [
+    "Russia"
+  ],
+  "models": [
+    "mistral-nemo:latest",
+    "qwen2.5:7b",
+    "exaone3.5:7.8b"
+  ],
+  "issues": [
+    {
+      "issue_key": "RSS_RUSSIA",
+      "region": "Russia",
+      "assessment": {
+        "scoring_version": "early-warning-v1",
+        "risk_signal_score": 83.7,
+        "signal_gap_score": 85.0,
+        "evidence_coverage": 73.3,
+        "source_diversity": 2,
+        "source_item_count": 20,
+        "consensus_agreement": 66.7,
+        "alert_level": "고경보",
+        "alert_reason": "복수 근거의 위험 신호가 강하게 관측되어 우선 확인이 필요함",
+        "human_review_required": true
+      },
+      "db_alert_level": "CRITICAL",
+      "consensus_status": "MAJORITY",
+      "verification_state": "PARTIALLY_CONFIRMED",
+      "discrepancy_score": 85.0,
+      "tev1_aux": {
+        "ok": false,
+        "error": "HTTP Error 400: Bad Request",
+        "advisory_only": true
+      },
+      "will_raise_alert": true
+    }
+  ],
+  "bundle_summary": {
+    "score_count": 3,
+    "gap_count": 1,
+    "alert_count": 1,
+    "judgment_count": 1
+  }
+}
