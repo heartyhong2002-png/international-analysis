@@ -52,6 +52,8 @@ output/dashboard/dashboard_latest.html
 
 ```bash
 python scripts/dashboard/generate_dashboard_v2.py
+# 또는 인터랙티브 통합 프로토타입 웹 UI:
+.\.venv\Scripts\streamlit.exe run scripts/dashboard/streamlit_dashboard.py
 ```
 
 나머지 산출물(이슈별 심층 리포트, 정통 인텔리전스 폼 PDF·Word 공식 보고서, 일일 분석, 벤치마크 검증 리포트, MySQL
@@ -72,11 +74,22 @@ ollama serve   # 별도 터미널
 
 # Windows
 .\.venv\Scripts\python.exe scripts/run_pipeline.py
+.\.venv\Scripts\python.exe scripts/run_pipeline.py --prototype-refresh   # 수집 생략 빠른 통합 갱신
 .\.venv\Scripts\python.exe scripts/dashboard/generate_dashboard_v2.py
 
 # Linux / cloud
 .venv/bin/python scripts/run_pipeline.py
 .venv/bin/python scripts/dashboard/generate_dashboard_v2.py
+
+# Local unified HTML console (prototype, no deploy)
+#   Opens http://127.0.0.1:8765 — one-click collect / DB / dashboard presets
+.\.venv\Scripts\python.exe scripts/console/app.py
+
+# Streamlit all-in-one control center (local only, loopback bind)
+#   Opens http://127.0.0.1:8501 — never bind 0.0.0.0 / all interfaces
+#   Windows: scripts\ops\start_streamlit_app.bat
+#   Linux:   scripts/ops/start_streamlit_app.sh
+#   Or: .venv\Scripts\python.exe -m streamlit run app.py --server.address 127.0.0.1
 ```
 
 개별 단계(정부 발표 수집, GDELT Cloud 사건 수집, 해협·항만 센서, 현지 공개 여론 수집 등)를 따로 돌리는 방법은

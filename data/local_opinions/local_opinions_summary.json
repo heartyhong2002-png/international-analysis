@@ -1,155 +1,155 @@
 {
-  "generated_at": "2026-09-29T21:10:21.487346",
-  "total_count": 44,
+  "generated_at": "2026-11-12T17:55:57.710385",
+  "total_count": 80,
   "by_platform": {
-    "PTT_Military": 5,
+    "PTT_Military": 10,
     "PTT_Gossiping": 5,
-    "Pincong_Forum": 5,
-    "Bluesky_Social": 9,
-    "GoogleNews_TW": 5,
-    "GoogleNews_RU": 5,
-    "Telegram_@army21ye": 5,
-    "Telegram_@rybar": 5
+    "Bluesky_Social": 15,
+    "GoogleNews_TW": 10,
+    "GoogleNews_RU": 10,
+    "GoogleNews_BR": 10,
+    "Telegram_@army21ye": 10,
+    "Telegram_@rybar": 10
   },
   "by_region": {
-    "TW": 15,
-    "CN": 5,
-    "GLOBAL": 9,
-    "RU": 10,
-    "ME": 5
+    "TW": 25,
+    "GLOBAL": 15,
+    "RU": 20,
+    "BR": 10,
+    "ME": 10
   },
   "featured_signals": [
     {
       "source_platform": "PTT_Military",
       "country_or_region": "TW",
-      "title_or_text": "[情報] Axios：川普願意以解除制裁換取伊朗放棄核武",
-      "url": "https://www.ptt.cc/bbs/Military/M.1790615517.A.F50.html",
+      "title_or_text": "[分享] 軍盲瞎槓錄(20)：NASAMS主雷達",
+      "url": "https://www.ptt.cc/bbs/Military/M.1794393436.A.AD9.html",
       "author": "PTT_User",
-      "published_at": "2026-09-29",
+      "published_at": "2026-11-12",
       "risk_theme": "양안 긴장·대만 방위·반도체 민심",
       "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
-      "collected_at": "2026-09-29 21:10:21"
+      "collected_at": "2026-11-12 17:55:57"
     },
     {
       "source_platform": "PTT_Military",
       "country_or_region": "TW",
-      "title_or_text": "Re: [新聞] 義大利研發新戰車 配30公厘反無人機",
-      "url": "https://www.ptt.cc/bbs/Military/M.1790642250.A.C38.html",
+      "title_or_text": "[新聞] 川普稱共和黨敗選涉戰爭油價 選民極度反感以色列",
+      "url": "https://www.ptt.cc/bbs/Military/M.1794393655.A.DCB.html",
       "author": "PTT_User",
-      "published_at": "2026-09-29",
+      "published_at": "2026-11-12",
       "risk_theme": "양안 긴장·대만 방위·반도체 민심",
       "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
-      "collected_at": "2026-09-29 21:10:21"
+      "collected_at": "2026-11-12 17:55:57"
     },
     {
       "source_platform": "PTT_Military",
       "country_or_region": "TW",
-      "title_or_text": "[情報] NATO防空機關砲彈藥規格與運用現狀2026",
-      "url": "https://www.ptt.cc/bbs/Military/M.1790642762.A.23A.html",
+      "title_or_text": "[情報] 俄軍在攔截無人機時損失兩架Ka-52",
+      "url": "https://www.ptt.cc/bbs/Military/M.1794394045.A.B50.html",
       "author": "PTT_User",
-      "published_at": "2026-09-29",
+      "published_at": "2026-11-12",
       "risk_theme": "양안 긴장·대만 방위·반도체 민심",
       "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
-      "collected_at": "2026-09-29 21:10:21"
+      "collected_at": "2026-11-12 17:55:57"
     },
     {
       "source_platform": "PTT_Military",
       "country_or_region": "TW",
-      "title_or_text": "Re: [情報] 川普曾問習近平願不願意購買美國軍武",
-      "url": "https://www.ptt.cc/bbs/Military/M.1790642879.A.70A.html",
+      "title_or_text": "[分享] 軍盲瞎槓錄(21)：抗彈板標準",
+      "url": "https://www.ptt.cc/bbs/Military/M.1794394345.A.344.html",
       "author": "PTT_User",
-      "published_at": "2026-09-29",
+      "published_at": "2026-11-12",
       "risk_theme": "양안 긴장·대만 방위·반도체 민심",
       "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
-      "collected_at": "2026-09-29 21:10:21"
+      "collected_at": "2026-11-12 17:55:57"
     },
     {
       "source_platform": "PTT_Military",
       "country_or_region": "TW",
-      "title_or_text": "Re: [新聞] 義大利研發新戰車 配30公厘反無人機砲",
-      "url": "https://www.ptt.cc/bbs/Military/M.1790643357.A.74E.html",
+      "title_or_text": "Re: [情報] 俄軍在攔截無人機時損失兩架Ka-52",
+      "url": "https://www.ptt.cc/bbs/Military/M.1794406835.A.49D.html",
       "author": "PTT_User",
-      "published_at": "2026-09-29",
+      "published_at": "2026-11-12",
       "risk_theme": "양안 긴장·대만 방위·반도체 민심",
       "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
-      "collected_at": "2026-09-29 21:10:21"
+      "collected_at": "2026-11-12 17:55:57"
+    },
+    {
+      "source_platform": "PTT_Military",
+      "country_or_region": "TW",
+      "title_or_text": "工作李(5)[新聞] 不只供貨給陸軍！亞拓無人機涉",
+      "url": "https://www.ptt.cc/bbs/Military/M.1794408640.A.144.html",
+      "author": "PTT_User",
+      "published_at": "2026-11-12",
+      "risk_theme": "양안 긴장·대만 방위·반도체 민심",
+      "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
+      "collected_at": "2026-11-12 17:55:57"
+    },
+    {
+      "source_platform": "PTT_Military",
+      "country_or_region": "TW",
+      "title_or_text": "[新聞] 俄談判代表團長：所有屬於俄國的土地都將以某種方式取回",
+      "url": "https://www.ptt.cc/bbs/Military/M.1794410055.A.DD5.html",
+      "author": "PTT_User",
+      "published_at": "2026-11-12",
+      "risk_theme": "양안 긴장·대만 방위·반도체 민심",
+      "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
+      "collected_at": "2026-11-12 17:55:57"
+    },
+    {
+      "source_platform": "PTT_Military",
+      "country_or_region": "TW",
+      "title_or_text": "[情報] 烏軍官方殲敵統計 (26/11/11)",
+      "url": "https://www.ptt.cc/bbs/Military/M.1794412897.A.A07.html",
+      "author": "PTT_User",
+      "published_at": "2026-11-12",
+      "risk_theme": "양안 긴장·대만 방위·반도체 민심",
+      "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
+      "collected_at": "2026-11-12 17:55:57"
+    },
+    {
+      "source_platform": "PTT_Military",
+      "country_or_region": "TW",
+      "title_or_text": "Re: [情報] 俄軍在攔截無人機時損失兩架直升機與一架戰機",
+      "url": "https://www.ptt.cc/bbs/Military/M.1794443828.A.017.html",
+      "author": "PTT_User",
+      "published_at": "2026-11-12",
+      "risk_theme": "양안 긴장·대만 방위·반도체 민심",
+      "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
+      "collected_at": "2026-11-12 17:55:57"
+    },
+    {
+      "source_platform": "PTT_Military",
+      "country_or_region": "TW",
+      "title_or_text": "[情報] 烏克蘭戰況簡報2026/11/11",
+      "url": "https://www.ptt.cc/bbs/Military/M.1794444190.A.E4D.html",
+      "author": "PTT_User",
+      "published_at": "2026-11-12",
+      "risk_theme": "양안 긴장·대만 방위·반도체 민심",
+      "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
+      "collected_at": "2026-11-12 17:55:57"
     },
     {
       "source_platform": "PTT_Gossiping",
       "country_or_region": "TW",
-      "title_or_text": "[問卦] Ai短劇有點好看，台灣不投入到這一塊？",
-      "url": "https://www.ptt.cc/bbs/Gossiping/M.1790683558.A.442.html",
+      "title_or_text": "[問卦] 上次是忘記丟掉羅大佑專輯嗎?",
+      "url": "https://www.ptt.cc/bbs/Gossiping/M.1794473425.A.B14.html",
       "author": "PTT_User",
-      "published_at": "2026-09-29",
+      "published_at": "2026-11-12",
       "risk_theme": "양안 긴장·대만 방위·반도체 민심",
       "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
-      "collected_at": "2026-09-29 21:10:21"
+      "collected_at": "2026-11-12 17:55:57"
     },
     {
       "source_platform": "PTT_Gossiping",
       "country_or_region": "TW",
-      "title_or_text": "[新聞] 河北彩花將登僑光科大校慶！來台開唱粉絲",
-      "url": "https://www.ptt.cc/bbs/Gossiping/M.1790683586.A.C43.html",
+      "title_or_text": "[問卦] 幹 買了GTA6沒有遊戲片",
+      "url": "https://www.ptt.cc/bbs/Gossiping/M.1794473479.A.570.html",
       "author": "PTT_User",
-      "published_at": "2026-09-29",
+      "published_at": "2026-11-12",
       "risk_theme": "양안 긴장·대만 방위·반도체 민심",
       "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
-      "collected_at": "2026-09-29 21:10:21"
-    },
-    {
-      "source_platform": "PTT_Gossiping",
-      "country_or_region": "TW",
-      "title_or_text": "[問卦] 賠了1億，怎麼辦？",
-      "url": "https://www.ptt.cc/bbs/Gossiping/M.1790683654.A.77C.html",
-      "author": "PTT_User",
-      "published_at": "2026-09-29",
-      "risk_theme": "양안 긴장·대만 방위·반도체 민심",
-      "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
-      "collected_at": "2026-09-29 21:10:21"
-    },
-    {
-      "source_platform": "PTT_Gossiping",
-      "country_or_region": "TW",
-      "title_or_text": "Re: [新聞] 未來持有電子煙恐開罰 全台432處回收桶上",
-      "url": "https://www.ptt.cc/bbs/Gossiping/M.1790683671.A.976.html",
-      "author": "PTT_User",
-      "published_at": "2026-09-29",
-      "risk_theme": "양안 긴장·대만 방위·반도체 민심",
-      "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
-      "collected_at": "2026-09-29 21:10:21"
-    },
-    {
-      "source_platform": "PTT_Gossiping",
-      "country_or_region": "TW",
-      "title_or_text": "[新聞] 美高中生發現兩個正在碰撞合併的螺旋星系",
-      "url": "https://www.ptt.cc/bbs/Gossiping/M.1790683728.A.B63.html",
-      "author": "PTT_User",
-      "published_at": "2026-09-29",
-      "risk_theme": "양안 긴장·대만 방위·반도체 민심",
-      "supply_chain_impact": "대만 해협 봉쇄 리스크 및 TSMC 파운드리 영향 체감",
-      "collected_at": "2026-09-29 21:10:21"
-    },
-    {
-      "source_platform": "Pincong_Forum",
-      "country_or_region": "CN",
-      "title_or_text": "如何看待国企下岗职工每月退休金3000多？",
-      "url": "https://pincong.rocks/question/77949",
-      "author": "Pincong_User",
-      "published_at": "2026-09-29",
-      "risk_theme": "중국 내부 경제 위기·청년 실업·이민(润)·체제 불만",
-      "supply_chain_impact": "중국 내수 경기 침체 및 제조업·부동산 리스크 조기 감지",
-      "collected_at": "2026-09-29 21:10:21"
-    },
-    {
-      "source_platform": "Pincong_Forum",
-      "country_or_region": "CN",
-      "title_or_text": "如果粉红大批量转换为反贼会怎么样？",
-      "url": "https://pincong.rocks/question/77951",
-      "author": "Pincong_User",
-      "published_at": "2026-09-29",
-      "risk_theme": "중국 내부 경제 위기·청년 실업·이민(润)·체제 불만",
-      "supply_chain_impact": "중국 내수 경기 침체 및 제조업·부동산 리스크 조기 감지",
-      "collected_at": "2026-09-29 21:10:21"
+      "collected_at": "2026-11-12 17:55:57"
     }
   ]
 }

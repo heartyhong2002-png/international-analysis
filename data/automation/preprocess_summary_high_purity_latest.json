@@ -1,0 +1,109 @@
+{
+  "schema_version": "preprocess_summary_v1.2_nlp_structured",
+  "generated_at": "2026-11-18T10:36:37.225204+00:00",
+  "purity_mode": "high",
+  "alert_level_set": false,
+  "verification_state_default": "UNVERIFIED",
+  "input_counts": {
+    "total_raw": 933,
+    "FAST": 346,
+    "CONTEXT": 441,
+    "OPINION": 146,
+    "BASELINE_SENSORS": 18
+  },
+  "output_counts": {
+    "canonical_clusters": 63,
+    "rejected_noise": 709,
+    "tier_1_corroborated": 20,
+    "tier_2_verified_entity": 43,
+    "multi_source_clusters": 17,
+    "cross_lingual_clusters": 7,
+    "clusters_with_visual_media": 33,
+    "total_media_attachments": 58
+  },
+  "tier_distribution": {
+    "TIER_1_CORROBORATED": 20,
+    "TIER_2_VERIFIED_ENTITY": 43
+  },
+  "reject_reason_breakdown": {
+    "high_purity_missing_hard_entity": 671,
+    "entertainment_sports_noise": 4,
+    "ad_or_soft_section": 10,
+    "diplomatic_protocol_noise": 1,
+    "empty_title": 2,
+    "high_purity_social_threshold_unmet": 21
+  },
+  "chokepoint_distribution": {
+    "CHOKEPOINT_HORMUZ": 9,
+    "CHOKEPOINT_BAB_EL_MANDEB": 5,
+    "CHOKEPOINT_MALACCA": 2,
+    "CHOKEPOINT_BOSPHORUS": 2,
+    "CHOKEPOINT_PANAMA": 4,
+    "CHOKEPOINT_TAIWAN_STRAIT": 4
+  },
+  "supply_chain_distribution": {
+    "CRUDE_OIL": 18,
+    "NATURAL_GAS_LNG": 3,
+    "SEMICONDUCTOR": 35,
+    "RARE_EARTHS": 4,
+    "BATTERY_MINERALS": 0,
+    "GRAIN_FOOD": 0
+  },
+  "event_type_distribution": {
+    "SANCTIONS_EXPORT_CONTROL": 11,
+    "INFRA_LOGISTICS_DISRUPTION": 4,
+    "ELECTION_GOVERNMENT": 7,
+    "PROTEST_STRIKE": 5,
+    "MILITARY_CONFLICT": 5
+  },
+  "hotspot_distribution": {
+    "EAST_ASIA": 25,
+    "WESTERN_EUROPE": 5,
+    "NORTH_AMERICA": 16,
+    "MIDDLE_EAST": 17,
+    "EASTERN_EUROPE": 5,
+    "LATIN_AMERICA": 5,
+    "CENTRAL_AFRICA": 1
+  },
+  "language_distribution": {
+    "en": 45,
+    "pt": 5,
+    "ru": 2,
+    "zh": 6,
+    "fa": 2,
+    "es": 1,
+    "ja": 2
+  },
+  "cross_lingual_cluster_count": 7,
+  "threat_severity_distribution": {
+    "HIGH_DISRUPTION": 3,
+    "CRITICAL_DISRUPTION": 5,
+    "HIGH_REGULATORY_DISRUPTION": 13,
+    "MONITORING": 36,
+    "ELEVATED_TENSION": 4,
+    "MONITORING_DEESCALATION": 2
+  },
+  "actor_distribution": {
+    "US_GOV_OR_MILITARY": 14,
+    "IRAN_MILITARY_OR_GOV": 12,
+    "UNKNOWN_OR_UNSPECIFIED": 4,
+    "HOUTHI_YEMEN": 3,
+    "SEMICONDUCTOR_CHIPMAKER": 6,
+    "ISRAEL_OR_MIDEAST_GOV": 1,
+    "CHINA_PLA_OR_GOV": 7,
+    "TAIWAN_AUTHORITY": 7,
+    "BRAZIL_GOV_OR_ENERGY": 2,
+    "THINK_TANK_OR_RESEARCH": 6,
+    "ENERGY_OR_MULTILATERAL_ORG": 1
+  },
+  "visual_modality_distribution": {
+    "FIELD_PHOTO_VIDEO": 2,
+    "OFFICIAL_DOCUMENT_PDF": 2
+  },
+  "media_attachment_type_distribution": {
+    "image": 26,
+    "external_card": 28,
+    "video": 2,
+    "document_pdf": 2
+  }
+}

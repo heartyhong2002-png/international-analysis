@@ -47,8 +47,24 @@ def save_env_key(key, value):
     if not found:
         new_lines.append(f"{key}={value}\n")
 
+    is_win = sys.platform == "win32"
+    if is_win and ENV_PATH.exists():
+        try:
+            import ctypes
+            ctypes.windll.kernel32.SetFileAttributesW(str(ENV_PATH), 0x80)
+        except Exception:
+            pass
+
     with open(ENV_PATH, "w", encoding="utf-8") as f:
         f.writelines(new_lines)
+
+    if is_win and ENV_PATH.exists():
+        try:
+            import ctypes
+            ctypes.windll.kernel32.SetFileAttributesW(str(ENV_PATH), 0x02)
+        except Exception:
+            pass
+
     os.environ[key] = value
 
 

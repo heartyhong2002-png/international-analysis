@@ -488,3 +488,9 @@ international-analysis/
   - `scripts/analysis/analyze_signal_gap.py`에 `_normalize_evidence_phrases()` 및 `_build_news_digest()`를 도입해 복합 인용문 단일 문자열 반환 오류와 비정치·문화 기사 오탐을 차단했다.
   - `scripts/validation/backtest_tev1.py`를 5대 핵심 감시축 10건 시간 동결(time-frozen) 사례로 확장하고, 결정론적 `Risk Signal Score` 산식과 `tev1` 판정 간의 불일치(Discrepancy) 감사를 수행해 `data/tev1_backtest_results.json`에 저장했다.
   - 10건 중 5건 일치·5건 불일치를 통해 단일 출처 미검증(`UNVERIFIED`)에 대한 산식 가드레일 작동 및 `tev1`의 `CROSS_VERIFIED` 키워드 과민 반응(`BT-2026-ALLY-02`) 방어를 실증하고 `docs/current/LLM_SYSTEM_SUMMARY.md`, `docs/current/VALIDATION_PLAN.md`에 문서화했다.
+
+- 2026-11-10 [ANTIGRAVITY / 미국 기술안보 수집망 보강, Docker 정리 및 7대 한글 번호표 폴더 구축]
+  - 젠슨 황(NVIDIA CEO) 중국계 스파이 연루 의혹 조사 및 미 중간선거·의회 CHIPS Act 리스크를 실시간 포착하기 위해 etch_bluesky_public.py(전략 쿼리 3종) 및 etch_signal_gap_rss.py(United_States_Policy_Tech 권역 6개 피드)를 신설 확장함.
+  - preprocess_signals.py 엔티티 사전에 젠슨 황, 엔비디아, 스파이/간첩, 중간선거, 미 의회 등을 등록하고 고순도 전처리 브릿지(ridge_preprocess_lanes.py --purity-mode high)를 가동하여 57개 고순도 클러스터(The Hill, Politico, 외신 등 8개 독립 소스 13개 보도가 결합된 TIER_1_CORROBORATED 젠슨 황 조사 클러스터) 형성을 실증함.
+  - 복잡한 Docker/Airflow 컨테이너 환경을 정리하고 단일 실행기인 Streamlit 올인원 웹 관제 센터(pp.py)로 일원화함.
+  - 탐색기에서 직관적으로 관리할 수 있도록 7대 한글 번호표 정션 폴더( 0_프로젝트_핵심문서 ~  6_강교수님_과제자료)를 구축하고, 루트의 .env, .gitignore 및 엔진 파일 10종을 '탐색기 숨김(Hidden)' 처리하여 마우스 드래그/실수 삭제를 원천 차단함.

@@ -53,7 +53,7 @@ OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
 
 # 교차 검증에 투입되는 3대 독립 모델
 CONSENSUS_MODELS = [
-    {"name": "mistral-nemo:latest", "role": "Western/US Perspective (영미권/서방)", "origin": "Mistral AI (France/US)"},
+    {"name": "llama3.1:8b", "role": "Western/US Perspective (영미권/서방)", "origin": "Meta (US)"},
     {"name": "qwen2.5:7b", "role": "Multilingual/Asian Perspective (아시아/글로벌)", "origin": "Alibaba (China)"},
     {"name": "exaone3.5:7.8b", "role": "Korean/East Asian Perspective (한국 기준)", "origin": "LG AI Research (Korea)"},
 ]

@@ -16,7 +16,7 @@
         UNCLASSIFIED // FOR OFFICIAL USE ONLY
       </div>
       <div style="font-size: 11px; color: #4B5563; margin-top: 2px;">
-        2026-09-21
+        2026-11-16
       </div>
     </div>
   </div>
@@ -54,7 +54,7 @@
         <span style="display: inline-block; width: 26px; color: #2563EB;">01.</span> North Korea Nuclear & Trump-Kim Relationship
       </div>
       <div style="font-size: 12px; color: #64748B;">
-        <span style="font-weight: 600; color: #1E293B;">Risk Score:</span> 58/100 | <span style="font-weight: 600; color: #1E293B;">Region:</span> Asia-Pacific
+        <span style="font-weight: 600; color: #1E293B;">Baseline signal context:</span> 58/100 | <span style="font-weight: 600; color: #1E293B;">Region:</span> Asia-Pacific
       </div>
     </div>
     <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 4px;">
@@ -62,7 +62,7 @@
         <span style="display: inline-block; width: 26px; color: #2563EB;">02.</span> Taiwan Strait Tensions
       </div>
       <div style="font-size: 12px; color: #64748B;">
-        <span style="font-weight: 600; color: #1E293B;">Risk Score:</span> 68/100 | <span style="font-weight: 600; color: #1E293B;">Region:</span> Asia-Pacific
+        <span style="font-weight: 600; color: #1E293B;">Baseline signal context:</span> 68/100 | <span style="font-weight: 600; color: #1E293B;">Region:</span> Asia-Pacific
       </div>
     </div>
     <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 4px;">
@@ -70,7 +70,7 @@
         <span style="display: inline-block; width: 26px; color: #2563EB;">03.</span> Ukraine War
       </div>
       <div style="font-size: 12px; color: #64748B;">
-        <span style="font-weight: 600; color: #1E293B;">Risk Score:</span> 62/100 | <span style="font-weight: 600; color: #1E293B;">Region:</span> Europe
+        <span style="font-weight: 600; color: #1E293B;">Baseline signal context:</span> 62/100 | <span style="font-weight: 600; color: #1E293B;">Region:</span> Europe
       </div>
     </div>
     <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 4px;">
@@ -78,7 +78,7 @@
         <span style="display: inline-block; width: 26px; color: #2563EB;">04.</span> Iran Nuclear & Tensions
       </div>
       <div style="font-size: 12px; color: #64748B;">
-        <span style="font-weight: 600; color: #1E293B;">Risk Score:</span> 88/100 | <span style="font-weight: 600; color: #1E293B;">Region:</span> Middle East
+        <span style="font-weight: 600; color: #1E293B;">Baseline signal context:</span> 88/100 | <span style="font-weight: 600; color: #1E293B;">Region:</span> Middle East
       </div>
     </div>
     <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 4px;">
@@ -86,7 +86,7 @@
         <span style="display: inline-block; width: 26px; color: #2563EB;">05.</span> US-China Trade War
       </div>
       <div style="font-size: 12px; color: #64748B;">
-        <span style="font-weight: 600; color: #1E293B;">Risk Score:</span> 58/100 | <span style="font-weight: 600; color: #1E293B;">Region:</span> Global
+        <span style="font-weight: 600; color: #1E293B;">Baseline signal context:</span> 58/100 | <span style="font-weight: 600; color: #1E293B;">Region:</span> Global
       </div>
     </div>
   </div>
@@ -121,7 +121,7 @@
         UNCLASSIFIED // FOR OFFICIAL USE ONLY
       </div>
       <div style="font-size: 11px; color: #4B5563; margin-top: 2px;">
-        2026년 09월 21일
+        2026년 11월 16일
       </div>
     </div>
   </div>
@@ -165,7 +165,7 @@
           WHAT WE FOUND
         </div>
         <p style="margin: 0 0 6px 0;">
-          <strong>Risk Severity: MEDIUM (58/100)</strong>
+          <strong>Alert Level: Confirmation Required</strong>
         </p>
         <p style="margin: 0 0 8px 0;">
           Provocations have continued -- North Korea's unveiling of a nuclear-powered submarine in March 2025, missile launches during Trump's October 2025 APEC visit, and roughly a dozen short-range ballistic missiles fired in August 2026 -- even as Trump ordered a scaled-back Ulchi Freedom Shield exercise around the same period, producing starkly mixed signals.
@@ -293,16 +293,16 @@
     <p style="font-size: 13px; color: #334155; margin: 0;"><strong>Expert Assessment:</strong> Experts such as Ankit Panda of the Carnegie Endowment argue that real progress requires dropping 'denuclearization' as a negotiating precondition in favor of a 'stable coexistence' framework, while other analysts point to the administration's policy incoherence and weak follow-through as the more fundamental constraint.</p>
   </div>
 
-  <!-- 7. Section 4: RISK OUTLOOK AND UNCERTAINTIES -->
+  <!-- 7. Section 4: RISK SIGNAL CONTEXT AND UNCERTAINTIES -->
   <h2 style="font-size: 15px; font-weight: 900; color: #0F172A; border-bottom: 1.5px solid #CBD5E1; padding-bottom: 4px; margin: 26px 0 10px 0; letter-spacing: 0.5px; text-transform: uppercase;">
-    4. PERFORMANCE BENCHMARKS AND GAP ANALYSIS
+    4. RISK SIGNAL CONTEXT AND UNCERTAINTY
   </h2>
   <div style="font-size: 13px; color: #334155; margin-bottom: 12px;">
-    <p style="margin: 0 0 6px 0;"><strong>Short Term (3-6 months):</strong> Through the end of 2026, a recurring pattern of intermittent North Korean missile tests alongside Trump's conciliatory gestures is likely to continue, with the key question being whether working-level contacts advance rather than whether a formal summit occurs.</p>
-    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ Most Likely Scenario:</em> The outcome of the anticipated September Putin-Kim summit and North Korea's response to the US-South Korea-Japan Freedom Edge joint exercise (September 7-11) are likely to be key variables shaping the tension level over the following months.</p>
-    <p style="margin: 0 0 6px 0;"><strong>Medium Term (1-3 years):</strong> Analysts at the Carnegie Endowment note that the alignment of North Korea's Workers' Party Congress (expected early 2026) and Trump's State of the Union address creates a potential window for the US to shift from a 'denuclearization' precondition to a 'stable coexistence' framework, which could reopen the door to dialogue.</p>
-    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ Expected Inflection Point:</em> Experts identify whether the US drops 'complete denuclearization' as a precondition in favor of a risk-reduction and arms-control-centered approach as the key inflection point for any future shift in the situation.</p>
-    <p style="margin: 0 0 6px 0;"><strong>Long Term Structural Trajectory:</strong> Many experts, citing the failures of the past four US administrations, argue that only sustained engagement and diplomacy -- not pressure alone -- has ever constrained North Korea's nuclear program, and that how the second Trump administration wields this lesson will shape the long-term security architecture of the Korean Peninsula.</p>
+    <p style="margin: 0 0 6px 0;"><strong>Near-term observation context (3-6 months):</strong> Through the end of 2026, a recurring pattern of intermittent North Korean missile tests alongside Trump's conciliatory gestures is likely to continue, with the key question being whether working-level contacts advance rather than whether a formal summit occurs.</p>
+    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ Signal to verify:</em> The outcome of the anticipated September Putin-Kim summit and North Korea's response to the US-South Korea-Japan Freedom Edge joint exercise (September 7-11) are likely to be key variables shaping the tension level over the following months.</p>
+    <p style="margin: 0 0 6px 0;"><strong>Medium-term observation context (1-3 years):</strong> Analysts at the Carnegie Endowment note that the alignment of North Korea's Workers' Party Congress (expected early 2026) and Trump's State of the Union address creates a potential window for the US to shift from a 'denuclearization' precondition to a 'stable coexistence' framework, which could reopen the door to dialogue.</p>
+    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ Change point to verify:</em> Experts identify whether the US drops 'complete denuclearization' as a precondition in favor of a risk-reduction and arms-control-centered approach as the key inflection point for any future shift in the situation.</p>
+    <p style="margin: 0 0 6px 0;"><strong>Long-term structural context:</strong> Many experts, citing the failures of the past four US administrations, argue that only sustained engagement and diplomacy -- not pressure alone -- has ever constrained North Korea's nuclear program, and that how the second Trump administration wields this lesson will shape the long-term security architecture of the Korean Peninsula.</p>
     <p style="margin: 0 0 12px 0; color: #1E40AF;"><em>▶ Structural Changes:</em> The entrenchment of North Korea's de facto nuclear-weapons-state status alongside deepening alignment with Russia and China is seen as a structural shift that demands a fundamental redesign of the traditional denuclearization-based negotiating framework.</p>
   </div>
 
@@ -385,7 +385,7 @@
         UNCLASSIFIED // FOR OFFICIAL USE ONLY
       </div>
       <div style="font-size: 11px; color: #4B5563; margin-top: 2px;">
-        2026년 09월 21일
+        2026년 11월 16일
       </div>
     </div>
   </div>
@@ -429,7 +429,7 @@
           WHAT WE FOUND
         </div>
         <p style="margin: 0 0 6px 0;">
-          <strong>Risk Severity: MEDIUM (68/100)</strong>
+          <strong>Alert Level: Confirmation Required</strong>
         </p>
         <p style="margin: 0 0 8px 0;">
           Per Taiwan's Ministry of National Defense, PLA aircraft crossings of the Taiwan Strait median line have exceeded 300 since Pelosi's August 2022 visit and now occur on a near-daily basis, while large named exercises -- 'Strait Thunder-2025A' in April 2025 and 'Justice Mission-2025' in December 2025 -- have grown in scale and provocativeness, with live rockets landing inside Taiwan's contiguous zone for the first time.
@@ -557,16 +557,16 @@
     <p style="font-size: 13px; color: #334155; margin: 0;"><strong>Expert Assessment:</strong> US think tanks including Brookings and NBR note that South Korea has long remained a 'strategic blind spot' on Taiwan and warn that failing to clarify its role in a contingency risks significant policy confusion should a crisis actually erupt.</p>
   </div>
 
-  <!-- 7. Section 4: RISK OUTLOOK AND UNCERTAINTIES -->
+  <!-- 7. Section 4: RISK SIGNAL CONTEXT AND UNCERTAINTIES -->
   <h2 style="font-size: 15px; font-weight: 900; color: #0F172A; border-bottom: 1.5px solid #CBD5E1; padding-bottom: 4px; margin: 26px 0 10px 0; letter-spacing: 0.5px; text-transform: uppercase;">
-    4. PERFORMANCE BENCHMARKS AND GAP ANALYSIS
+    4. RISK SIGNAL CONTEXT AND UNCERTAINTY
   </h2>
   <div style="font-size: 13px; color: #334155; margin-bottom: 12px;">
-    <p style="margin: 0 0 6px 0;"><strong>Short Term (3-6 months):</strong> Over the next 3-6 months, China's near-daily gray-zone military activity is likely to continue and further large named exercises are plausible, but most assessments see low probability of imminent full-scale conflict.</p>
-    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ Most Likely Scenario:</em> The most likely near-term scenario is a recurring pattern of 'warning coercion' -- China calibrating additional drills or quasi-blockade patrols in response to specific triggers such as passage of Taiwan's special defense budget or resumption of US arms sales.</p>
-    <p style="margin: 0 0 6px 0;"><strong>Medium Term (1-3 years):</strong> Over a 1-3 year horizon, the amplitude of tension is likely to fluctuate periodically in tandem with the Trump administration's summit cycle with Beijing, Taiwan's defense budget deliberations, and political timing ahead of Taiwan's 2028 presidential election.</p>
-    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ Expected Inflection Point:</em> Whether Taiwan's special defense budget is ultimately passed and whether the US resumes the $14 billion arms package will be key inflection points shaping the trajectory of tensions ahead.</p>
-    <p style="margin: 0 0 6px 0;"><strong>Long Term Structural Trajectory:</strong> In the long run, if the military balance continues shifting in China's favor, regional allies' confidence in US deterrence could erode further, potentially pressuring Japan and South Korea toward more independent defense buildups.</p>
+    <p style="margin: 0 0 6px 0;"><strong>Near-term observation context (3-6 months):</strong> Over the next 3-6 months, China's near-daily gray-zone military activity is likely to continue and further large named exercises are plausible, but most assessments see low probability of imminent full-scale conflict.</p>
+    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ Signal to verify:</em> The most likely near-term scenario is a recurring pattern of 'warning coercion' -- China calibrating additional drills or quasi-blockade patrols in response to specific triggers such as passage of Taiwan's special defense budget or resumption of US arms sales.</p>
+    <p style="margin: 0 0 6px 0;"><strong>Medium-term observation context (1-3 years):</strong> Over a 1-3 year horizon, the amplitude of tension is likely to fluctuate periodically in tandem with the Trump administration's summit cycle with Beijing, Taiwan's defense budget deliberations, and political timing ahead of Taiwan's 2028 presidential election.</p>
+    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ Change point to verify:</em> Whether Taiwan's special defense budget is ultimately passed and whether the US resumes the $14 billion arms package will be key inflection points shaping the trajectory of tensions ahead.</p>
+    <p style="margin: 0 0 6px 0;"><strong>Long-term structural context:</strong> In the long run, if the military balance continues shifting in China's favor, regional allies' confidence in US deterrence could erode further, potentially pressuring Japan and South Korea toward more independent defense buildups.</p>
     <p style="margin: 0 0 12px 0; color: #1E40AF;"><em>▶ Structural Changes:</em> The most fundamental structural shift is the Trump administration's effective erosion of the post-1982 norm against consulting Beijing before Taiwan arms sales -- a precedent that could permanently alter how future US administrations manage Taiwan commitments.</p>
   </div>
 
@@ -649,7 +649,7 @@
         UNCLASSIFIED // FOR OFFICIAL USE ONLY
       </div>
       <div style="font-size: 11px; color: #4B5563; margin-top: 2px;">
-        2026년 09월 21일
+        2026년 11월 16일
       </div>
     </div>
   </div>
@@ -693,7 +693,7 @@
           WHAT WE FOUND
         </div>
         <p style="margin: 0 0 6px 0;">
-          <strong>Risk Severity: MEDIUM (62/100)</strong>
+          <strong>Alert Level: Confirmation Required</strong>
         </p>
         <p style="margin: 0 0 8px 0;">
           As of July 2026, Russia controls roughly 19-20% of Ukrainian territory; net territorial gains over the prior 12 months totaled about 1,100 square miles (~0.5% of Ukraine's territory), indicating a largely stalemated front line.
@@ -821,16 +821,16 @@
     <p style="font-size: 13px; color: #334155; margin: 0;"><strong>Expert Assessment:</strong> Former US envoy Kurt Volker assessed that Russia is 'not negotiating in good faith,' and most experts judge that fundamental disagreements over territory and security guarantees make a breakthrough within 2026 unrealistic, with the conflict likely to prolong into an effectively frozen state.</p>
   </div>
 
-  <!-- 7. Section 4: RISK OUTLOOK AND UNCERTAINTIES -->
+  <!-- 7. Section 4: RISK SIGNAL CONTEXT AND UNCERTAINTIES -->
   <h2 style="font-size: 15px; font-weight: 900; color: #0F172A; border-bottom: 1.5px solid #CBD5E1; padding-bottom: 4px; margin: 26px 0 10px 0; letter-spacing: 0.5px; text-transform: uppercase;">
-    4. PERFORMANCE BENCHMARKS AND GAP ANALYSIS
+    4. RISK SIGNAL CONTEXT AND UNCERTAINTY
   </h2>
   <div style="font-size: 13px; color: #334155; margin-bottom: 12px;">
-    <p style="margin: 0 0 6px 0;"><strong>Short Term (3-6 months):</strong> Over the coming months, partial and temporary truces are likely to be attempted repeatedly without leading to a full ceasefire, while low-intensity attritional fighting is likely to continue along the front.</p>
-    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ Most Likely Scenario:</em> The most likely short-term scenario is a continuation of the current state where negotiations proceed alongside continued fighting -- localized humanitarian truces and prisoner exchanges will likely occur, but a comprehensive peace settlement within 2026 appears unlikely.</p>
-    <p style="margin: 0 0 6px 0;"><strong>Medium Term (1-3 years):</strong> In the medium term, with neither side able to achieve decisive military victory, analysts increasingly point to a transition toward a 'frozen conflict' along an effective de facto ceasefire line.</p>
-    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ Expected Inflection Point:</em> Whether the US Congress and NATO approve the 15-50 year security guarantee framework, and whether Ukraine holds a national referendum on any settlement, are likely to be the pivotal turning points for the war's next phase.</p>
-    <p style="margin: 0 0 6px 0;"><strong>Long Term Structural Trajectory:</strong> In the long term, European security discussions increasingly reference the possibility of an entrenched de facto boundary resembling the Korean DMZ, with Ukraine remaining outside NATO but backed by a 'quasi-alliance' system of bilateral Western security guarantees.</p>
+    <p style="margin: 0 0 6px 0;"><strong>Near-term observation context (3-6 months):</strong> Over the coming months, partial and temporary truces are likely to be attempted repeatedly without leading to a full ceasefire, while low-intensity attritional fighting is likely to continue along the front.</p>
+    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ Signal to verify:</em> The most likely short-term scenario is a continuation of the current state where negotiations proceed alongside continued fighting -- localized humanitarian truces and prisoner exchanges will likely occur, but a comprehensive peace settlement within 2026 appears unlikely.</p>
+    <p style="margin: 0 0 6px 0;"><strong>Medium-term observation context (1-3 years):</strong> In the medium term, with neither side able to achieve decisive military victory, analysts increasingly point to a transition toward a 'frozen conflict' along an effective de facto ceasefire line.</p>
+    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ Change point to verify:</em> Whether the US Congress and NATO approve the 15-50 year security guarantee framework, and whether Ukraine holds a national referendum on any settlement, are likely to be the pivotal turning points for the war's next phase.</p>
+    <p style="margin: 0 0 6px 0;"><strong>Long-term structural context:</strong> In the long term, European security discussions increasingly reference the possibility of an entrenched de facto boundary resembling the Korean DMZ, with Ukraine remaining outside NATO but backed by a 'quasi-alliance' system of bilateral Western security guarantees.</p>
     <p style="margin: 0 0 12px 0; color: #1E40AF;"><em>▶ Structural Changes:</em> The war is structurally accelerating Europe's push to build indigenous defense-industrial capacity and reduce dependence on Russian energy, which is in turn expanding market opportunities in Europe for non-European defense exporters, including South Korea.</p>
   </div>
 
@@ -913,7 +913,7 @@
         UNCLASSIFIED // FOR OFFICIAL USE ONLY
       </div>
       <div style="font-size: 11px; color: #4B5563; margin-top: 2px;">
-        2026년 09월 21일
+        2026년 11월 16일
       </div>
     </div>
   </div>
@@ -957,7 +957,7 @@
           WHAT WE FOUND
         </div>
         <p style="margin: 0 0 6px 0;">
-          <strong>Risk Severity: HIGH (88/100)</strong>
+          <strong>Alert Level: Confirmation Required</strong>
         </p>
         <p style="margin: 0 0 8px 0;">
           On September 1, US Central Command struck IRGC targets near Bandar Abbas, Chabahar and Larak Island; WTI crude approached $90/barrel, with energy costs up more than 45% since the start of 2026. The IAEA warned it has lost 'continuity of knowledge' after Iran refused to disclose the location of its 60%-enriched uranium stockpile.
@@ -1085,16 +1085,16 @@
     <p style="font-size: 13px; color: #334155; margin: 0;"><strong>Expert Assessment:</strong> Korean economists note that Korea is hit harder than Japan, China or the US by the same shock because of its structural dependence (70% of crude, 20% of LNG via the Middle East/Hormuz) and per-capita energy consumption 44% above the OECD average, compounded by refineries optimized for heavy crude that make rapid source diversification difficult.</p>
   </div>
 
-  <!-- 7. Section 4: RISK OUTLOOK AND UNCERTAINTIES -->
+  <!-- 7. Section 4: RISK SIGNAL CONTEXT AND UNCERTAINTIES -->
   <h2 style="font-size: 15px; font-weight: 900; color: #0F172A; border-bottom: 1.5px solid #CBD5E1; padding-bottom: 4px; margin: 26px 0 10px 0; letter-spacing: 0.5px; text-transform: uppercase;">
-    4. PERFORMANCE BENCHMARKS AND GAP ANALYSIS
+    4. RISK SIGNAL CONTEXT AND UNCERTAINTY
   </h2>
   <div style="font-size: 13px; color: #334155; margin-bottom: 12px;">
-    <p style="margin: 0 0 6px 0;"><strong>Short Term (3-6 months):</strong> Intermittent low-level attacks around Hormuz and US retaliatory strikes are likely to continue for months, keeping oil prices volatile, with only limited prospects for formal talks resuming under Qatari-Pakistani mediation.</p>
-    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ Most Likely Scenario:</em> The most likely near-term scenario is an unstable stalemate -- neither full war nor peace -- with Hormuz shipping partially restored (roughly half of prewar levels) alongside sporadic attacks.</p>
-    <p style="margin: 0 0 6px 0;"><strong>Medium Term (1-3 years):</strong> Whether the technical working groups (nuclear, sanctions, dispute resolution) envisioned in the June MOU resume will determine if $30-50 billion in oil/gas infrastructure repair and a proposed up to $300 billion reconstruction fund move forward.</p>
-    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ Expected Inflection Point:</em> A verifiable nuclear agreement and full reopening of the Strait of Hormuz mark the medium-term pivot point -- success would shift Middle East construction and energy markets into a reconstruction boom, while failure risks a prolonged war of attrition.</p>
-    <p style="margin: 0 0 6px 0;"><strong>Long Term Structural Trajectory:</strong> RAND and other experts assess that Iran's political system has been fundamentally altered by Khamenei's death and could take years or decades to restabilize, with Iran's proxy network (Hezbollah, etc.) structurally weakened while Israel-Arab relations may realign.</p>
+    <p style="margin: 0 0 6px 0;"><strong>Near-term observation context (3-6 months):</strong> Intermittent low-level attacks around Hormuz and US retaliatory strikes are likely to continue for months, keeping oil prices volatile, with only limited prospects for formal talks resuming under Qatari-Pakistani mediation.</p>
+    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ Signal to verify:</em> The most likely near-term scenario is an unstable stalemate -- neither full war nor peace -- with Hormuz shipping partially restored (roughly half of prewar levels) alongside sporadic attacks.</p>
+    <p style="margin: 0 0 6px 0;"><strong>Medium-term observation context (1-3 years):</strong> Whether the technical working groups (nuclear, sanctions, dispute resolution) envisioned in the June MOU resume will determine if $30-50 billion in oil/gas infrastructure repair and a proposed up to $300 billion reconstruction fund move forward.</p>
+    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ Change point to verify:</em> A verifiable nuclear agreement and full reopening of the Strait of Hormuz mark the medium-term pivot point -- success would shift Middle East construction and energy markets into a reconstruction boom, while failure risks a prolonged war of attrition.</p>
+    <p style="margin: 0 0 6px 0;"><strong>Long-term structural context:</strong> RAND and other experts assess that Iran's political system has been fundamentally altered by Khamenei's death and could take years or decades to restabilize, with Iran's proxy network (Hezbollah, etc.) structurally weakened while Israel-Arab relations may realign.</p>
     <p style="margin: 0 0 12px 0; color: #1E40AF;"><em>▶ Structural Changes:</em> The crisis is shifting the regional balance of power away from the Iran axis toward the Gulf states and Israel, while expanding the diplomatic influence of mediators like Oman and Qatar.</p>
   </div>
 
@@ -1177,7 +1177,7 @@
         UNCLASSIFIED // FOR OFFICIAL USE ONLY
       </div>
       <div style="font-size: 11px; color: #4B5563; margin-top: 2px;">
-        2026년 09월 21일
+        2026년 11월 16일
       </div>
     </div>
   </div>
@@ -1221,7 +1221,7 @@
           WHAT WE FOUND
         </div>
         <p style="margin: 0 0 6px 0;">
-          <strong>Risk Severity: MEDIUM (58/100)</strong>
+          <strong>Alert Level: Confirmation Required</strong>
         </p>
         <p style="margin: 0 0 8px 0;">
           As of July 2026, the US trade-weighted average tariff on Chinese goods stood at about 29.7% -- sharply down from the post-'Liberation Day' peak of 145% in April 2025 -- but stacked, product-specific tariffs remain extremely high in strategic sectors: roughly 114.5% on EVs, over 40% on autos, and 40.8% on nuclear reactors.
@@ -1349,16 +1349,16 @@
     <p style="font-size: 13px; color: #334155; margin: 0;"><strong>Expert Assessment:</strong> Most trade experts characterize the 2025-2026 US-China agreements not as a strategic resolution but as a tactical truce driven by each side's domestic political and economic needs, expecting the underlying technology-hegemony contest over semiconductors and rare earths to persist structurally for the foreseeable future.</p>
   </div>
 
-  <!-- 7. Section 4: RISK OUTLOOK AND UNCERTAINTIES -->
+  <!-- 7. Section 4: RISK SIGNAL CONTEXT AND UNCERTAINTIES -->
   <h2 style="font-size: 15px; font-weight: 900; color: #0F172A; border-bottom: 1.5px solid #CBD5E1; padding-bottom: 4px; margin: 26px 0 10px 0; letter-spacing: 0.5px; text-transform: uppercase;">
-    4. PERFORMANCE BENCHMARKS AND GAP ANALYSIS
+    4. RISK SIGNAL CONTEXT AND UNCERTAINTY
   </h2>
   <div style="font-size: 13px; color: #334155; margin-bottom: 12px;">
-    <p style="margin: 0 0 6px 0;"><strong>Short Term (3-6 months):</strong> Over the coming months, conditions are likely to remain broadly stable within the framework of the November 2025 deal (tariff exclusions extended through December 31, 2026; general licenses for rare earths in place), even as sporadic pressure tactics -- like the 'overcapacity' tariff floated in August 2026 -- continue to surface.</p>
-    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ Most Likely Scenario:</em> The most probable near-term scenario is continued 'managed tension' -- periodic sector-specific measures (chip equipment, shipbuilding, select materials) rather than a full-scale re-escalation, alongside ongoing negotiation.</p>
-    <p style="margin: 0 0 6px 0;"><strong>Medium Term (1-3 years):</strong> Renegotiation is expected around the November 2026 expiration of the Busan truce, with tariff levels either easing further or ratcheting back up depending on the outcome.</p>
-    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ Expected Inflection Point:</em> The expiration of the truce around November 2026, and any further Trump-Xi summit preceding it, are likely to be the key inflection points shaping the next phase of the conflict.</p>
-    <p style="margin: 0 0 6px 0;"><strong>Long Term Structural Trajectory:</strong> Most trade experts expect a structural 'managed decoupling' to take hold in strategic industries -- semiconductors, rare earths, batteries -- settling into neither full integration nor complete severance but a friend-shoring/near-shoring-based reordering of supply chains.</p>
+    <p style="margin: 0 0 6px 0;"><strong>Near-term observation context (3-6 months):</strong> Over the coming months, conditions are likely to remain broadly stable within the framework of the November 2025 deal (tariff exclusions extended through December 31, 2026; general licenses for rare earths in place), even as sporadic pressure tactics -- like the 'overcapacity' tariff floated in August 2026 -- continue to surface.</p>
+    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ Signal to verify:</em> The most probable near-term scenario is continued 'managed tension' -- periodic sector-specific measures (chip equipment, shipbuilding, select materials) rather than a full-scale re-escalation, alongside ongoing negotiation.</p>
+    <p style="margin: 0 0 6px 0;"><strong>Medium-term observation context (1-3 years):</strong> Renegotiation is expected around the November 2026 expiration of the Busan truce, with tariff levels either easing further or ratcheting back up depending on the outcome.</p>
+    <p style="margin: 0 0 8px 0; color: #1E40AF;"><em>▶ Change point to verify:</em> The expiration of the truce around November 2026, and any further Trump-Xi summit preceding it, are likely to be the key inflection points shaping the next phase of the conflict.</p>
+    <p style="margin: 0 0 6px 0;"><strong>Long-term structural context:</strong> Most trade experts expect a structural 'managed decoupling' to take hold in strategic industries -- semiconductors, rare earths, batteries -- settling into neither full integration nor complete severance but a friend-shoring/near-shoring-based reordering of supply chains.</p>
     <p style="margin: 0 0 12px 0; color: #1E40AF;"><em>▶ Structural Changes:</em> Beyond tariff rates, the conflict is reshaping the structure of global trade policy itself -- institutionalizing export controls on strategic goods (chip equipment, advanced AI chips, rare earths) and normalizing bilateral investment-for-tariff-relief deals as a policy tool.</p>
   </div>
 

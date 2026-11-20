@@ -38,16 +38,14 @@ GDELT Cloud는 학술 계정의 월 5,000 QU 한도를 고려해 FAST 레인에�
 
 싱크탱크와 현지 언론 목록은 코드에 하드코딩하지 않고 `config/source_registry/` 아래에서 관리한다.
 
-현재 초안(2026-10-29):
+현재 상태(2026-11-02):
 
-- `config/source_registry/SCHEMA.md` — `relationship_role`, `issue_tags`, `packet`, `shared_schema` 포함
-- `expert_feeds.yaml`
-- `local_media_feeds.yaml`
-- `government_sources.yaml` — 패킷 A(미국 국내 정책, `pipeline_default: false`) + 패킷 B(동맹 `relationship_role: ally`)
-- `opinion_sources.yaml`
-- `customs_sources.yaml`
-
-패킷 C(`competitor_adversary_axis`, OFAC/BIS)는 A/B 스키마 안정 후 registry만 추가한다.
+- `config/source_registry/SCHEMA.md` — `relationship_role`, `issue_tags`, `packet`(`A`/`B`/`C`/`legacy`), `shared_schema` 포함 (v2)
+- `expert_feeds.yaml` — 패킷 B/C/legacy `relationship_role` 및 `issue_tags` 정렬 완료
+- `local_media_feeds.yaml` — 패킷 A/C/legacy 및 `signal_gap` 독립·망명 언론(`ru_meduza_rss`, `me_raseef22_rss`, `cn_china_digital_times_rss`) `relationship_role: competitor_adversary_axis` 태깅 완료
+- `government_sources.yaml` — 패킷 A(미국 국내 정책, `pipeline_default: false`) + 패킷 B(동맹 `relationship_role: ally`) + 패킷 C(OFAC/BIS/OpenSanctions 제재·수출통제 및 중국·러시아·이란 공식·관영 서사 `relationship_role: competitor_adversary_axis`) 등록 완료
+- `opinion_sources.yaml` — `pincong_public`, `telegram_osint_public` 패킷 C 태깅 및 스키마 v2 정렬 완료
+- `customs_sources.yaml` — 한국 관세청·UN Comtrade 패킷 B 태깅 및 스키마 v2 정렬 완료
 
 각 항목은 최소한 다음을 가진다.
 
@@ -74,7 +72,7 @@ lane: CONTEXT
 
 ## 공식 발표 공통 원시 스키마·중복 제거
 
-`fetch_whitehouse_official.py`(선택, `--with-whitehouse`)와 `gov_announcements_collector.py`(기본 파이프라인)는 모두 공식·국영 채널이지만 **저장 경로와 호출 플래그가 다르다**. 교차검증·DB 세션으로 넘기기 전 수집 계층에서는 아래 원시 필드를 맞춘다.
+`fetch_whitehouse_official.py`(선택, `--with-whitehouse`)와 `gov_announcements_collector.py`(기본 파이프라인)는 모두 공식·국영 채널이지만 **호출 플래그가 다르다**. 정부 RSS 산출물은 엣지 `--sync-git`와 맞추기 위해 `data/gov_announcements/`에 둔다(구 `scripts/data/`는 gitignore라 원격 동기화에서 빠졌음). 교차검증·DB 세션으로 넘기기 전 수집 계층에서는 아래 원시 필드를 맞춘다.
 
 공통 필드(해석·경보 없음):
 
@@ -152,7 +150,11 @@ python scripts/run_pipeline.py --skip-db
 python scripts/run_pipeline.py --skip-dashboard
 python scripts/run_pipeline.py --only-db
 python scripts/run_pipeline.py --collect-only --with-gdelt-cloud  # QU 가드가 있는 선택 실행
+python scripts/run_pipeline.py --collect-only --with-x            # X API recent search 1페이지(종량제)
 ```
+
+X 공개 신호(`scripts/collection/fetch_x_public.py`)는 OPINION 레인의 선택 센서다. `X_BEARER_TOKEN`이 필요하고 기본 `--collect-only`에서는 호출하지 않는다. 결과는 `online_information_environment_signal`이며 국민 여론·Alert Level이 아니다.
+
 
 다음 구현 단계에서 레인 이름을 추가한다.
 

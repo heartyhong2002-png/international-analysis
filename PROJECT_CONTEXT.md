@@ -73,6 +73,7 @@ GDELT Cloud는 현재 Academic & Research 계정(월 5,000 QU)을 사용한다. 
 15. `docs/REPOSITORY_STRUCTURE.md` when moving or classifying files
 16. `project-handoff.md` only when detailed history or coordination context is needed
 17. `docs/history/PROJECT_EVOLUTION_TIMELINE.md` when the pivot story is needed
+18. `docs/current/AI_AGENT_SESSION_PROMPT.md` when configuring or managing AI agent infrastructure (Hermes, Discord, MCP)
 
 ## Notion Hub
 
@@ -93,6 +94,7 @@ Use Notion for human-facing project management, learning notes, weekly plans, an
 - `docs/current/PRESENTATION_PORTFOLIO_NARRATIVE.md`: presentation and portfolio narrative for external readers
 - `docs/current/LLM_SYSTEM_SUMMARY.md`: LLM routing and analysis architecture
 - `docs/current/DATABASE_SETUP.md`: MySQL schema and evidence storage layer
+- `docs/current/AI_AGENT_SESSION_PROMPT.md`: handoff prompt for AI agent operations & multi-agent infrastructure
 
 ## History Documents
 
@@ -111,7 +113,7 @@ Most existing code and data should not be discarded. They are reused with a diff
 - Government announcements become official-position signals.
 - Independent/local media, public Telegram, Bluesky, local forums, Google Trends, and Reddit become non-official public information-environment signals.
 - Maritime chokepoint, port, freight/insurance, financial, and trade data become supply-chain proxy signals.
-- LLM tone classification becomes framing and risk-signal extraction.
+- LLM tone classification becomes framing and risk-signal extraction via a 3-tier canonical pivot pipeline (multilingual extraction -> Korean & English briefings).
 - Model consensus and human review become trust and validation layers.
 
 ## Terms to Prefer

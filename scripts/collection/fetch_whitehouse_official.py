@@ -167,7 +167,17 @@ def collect(*, days: int, limit: int, include_sitemap: bool) -> dict[str, Any]:
 
         # 원문 XML을 보존해 나중에 동일 응답을 재검토할 수 있게 한다.
         OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-        (OUTPUT_DIR / "rss_latest.xml").write_bytes(rss_bytes)
+        rss_xml_path = OUTPUT_DIR / "rss_latest.xml"
+        for _attempt in range(3):
+            try:
+                rss_xml_path.write_bytes(rss_bytes)
+                break
+            except OSError:
+                import time as _time
+                _time.sleep(0.3)
+        else:
+            # rss_latest.xml 잠금 시에도 JSON 아카이브 생성은 계속 진행
+            receipt["errors"].append("rss_latest.xml write skipped due to file lock")
 
         try:
             records = rss_records(rss_bytes, cutoff=cutoff, observed_at=observed_at)[:limit]

@@ -1,15 +1,44 @@
 {
-  "scanned_at": "2026-10-29T08:22:20.062181+00:00",
+  "scanned_at": "2026-11-04T10:30:15.702175+00:00",
   "hotspots_top5": [
     {
-      "title": "Red Sea Shipping Update: Another vessel attacked near Bab al-Mandab strait causing Cape of Good Hope detours",
-      "score": 75.2,
-      "z_score": 7.17,
+      "title": "Houthi anti-ship ballistic missile hits commercial container ship in southern Red Sea near Bab-el-Mandeb",
+      "score": 79.2,
+      "z_score": 8.0,
       "chokepoints": [
         "바브엘만데브 해협 및 홍해 (Bab-el-Mandeb & Red Sea)"
       ],
       "supplies": [],
+      "events": [
+        "MILITARY_CONFLICT"
+      ]
+    },
+    {
+      "title": "Panama Canal drought restricts daily vessel transit slots, causing LNG and grain bulk carrier backlog",
+      "score": 77.8,
+      "z_score": 6.67,
+      "chokepoints": [
+        "파나마 운하 (Panama Canal)"
+      ],
+      "supplies": [
+        "NATURAL_GAS_LNG",
+        "GRAIN_FOOD"
+      ],
       "events": []
+    },
+    {
+      "title": "Russian drone strikes disrupt grain export terminal infrastructure near Bosphorus and Danube corridor",
+      "score": 74.8,
+      "z_score": 6.5,
+      "chokepoints": [
+        "보스포루스 및 흑해 해협 (Bosphorus & Turkish Straits)"
+      ],
+      "supplies": [
+        "GRAIN_FOOD"
+      ],
+      "events": [
+        "MILITARY_CONFLICT"
+      ]
     },
     {
       "title": "Oil tankers navigate cautiously as tensions spike in Strait of Hormuz after IRGC seizure warning",
@@ -24,35 +53,13 @@
       "events": []
     },
     {
-      "title": "Russian drone strikes disrupt grain export terminal infrastructure near Bosphorus and Danube corridor",
-      "score": 67.6,
-      "z_score": 5.67,
-      "chokepoints": [
-        "보스포루스 및 흑해 해협 (Bosphorus & Turkish Straits)"
-      ],
-      "supplies": [
-        "GRAIN_FOOD"
-      ],
-      "events": []
-    },
-    {
-      "title": "Brasil: Vitória de Lula nas eleições presidenciais repercute no mercado de petróleo e Petrobras",
+      "title": "France: Grève générale et blocage des raffineries de pétrole à Paris suite aux manifestations",
       "score": 62.8,
       "z_score": 5.17,
       "chokepoints": [],
       "supplies": [
         "CRUDE_OIL"
       ],
-      "events": [
-        "ELECTION_GOVERNMENT"
-      ]
-    },
-    {
-      "title": "Tensions en France: Nouvelles manifestations massives et grève dans les transports et terminaux pétroliers",
-      "score": 50.2,
-      "z_score": 4.17,
-      "chokepoints": [],
-      "supplies": [],
       "events": [
         "PROTEST_STRIKE"
       ]

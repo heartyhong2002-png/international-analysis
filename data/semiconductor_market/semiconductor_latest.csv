@@ -1,0 +1,12 @@
+﻿category,ticker,name,role,currency,latest_price,day_change_pct,week_change_pct,month_change_pct,status_signal,observed_date
+1_INDEX_CHIPMAKER,^SOX,필라델피아 반도체 지수 (SOX),글로벌 반도체 30대 기업 종합 벤치마크,pt,10033.93,6.85,-2.85,-24.09,🔥 강세 급등 (SURGE),2026-11-09
+1_INDEX_CHIPMAKER,NVDA,NVIDIA (엔비디아),AI GPU(H100·B200) 독점 설계 및 대중 수출통제 핵심 타깃,USD,178.67,-4.27,-11.58,-25.32,⚠️ 급락 주의 (VOLATILE_DROP),2026-11-09
+1_INDEX_CHIPMAKER,TSM,TSMC (ADR),글로벌 첨단 파운드리 1위 · 대만해협 지정학 직결,USD,388.62,3.51,-2.51,-19.42,🔥 강세 급등 (SURGE),2026-11-09
+1_INDEX_CHIPMAKER,000660.KS,SK하이닉스,글로벌 HBM(고대역폭 메모리) 1위 · 한국 공급망 핵심,KRW,1212000.0,6.69,-13.3,-31.64,⚠️ 급락 주의 (VOLATILE_DROP),2026-11-10
+1_INDEX_CHIPMAKER,005930.KS,삼성전자,글로벌 메모리 1위 및 종합반도체(IDM),KRW,198900.0,4.74,-9.38,-26.88,⚠️ 급락 주의 (VOLATILE_DROP),2026-11-10
+2_EQUIPMENT_CHOKEPOINT,ASML,ASML (네덜란드),EUV(극자외선) 노광장비 전 세계 100% 독점 · 대중 제재 핵심,USD,1513.25,6.21,-0.84,-17.38,🔥 강세 급등 (SURGE),2026-11-09
+2_EQUIPMENT_CHOKEPOINT,AMAT,Applied Materials (AMAT),글로벌 1위 종합 반도체 증착·식각 설비,USD,370.55,11.37,-1.06,-30.12,🔥 강세 급등 (SURGE),2026-11-09
+2_EQUIPMENT_CHOKEPOINT,LRCX,Lam Research (램리서치),글로벌 1위 식각(Etch) 및 HBM/3D NAND 수직적층 핵심 설비,USD,221.31,10.41,-2.75,-33.72,🔥 강세 급등 (SURGE),2026-11-09
+2_EQUIPMENT_CHOKEPOINT,KLAC,KLA Corp,웨이퍼 결함 검사 및 수율 계측(Metrology) 독점 설비,USD,151.38,9.31,-1.13,-23.34,🔥 강세 급등 (SURGE),2026-11-09
+3_MATERIALS_MINERALS,4063.T,신에츠 화학 (Shin-Etsu),글로벌 실리콘 웨이퍼(원판) 시장 점유율 1위 (일본),JPY,5658.0,3.99,-4.44,-10.49,🔥 강세 급등 (SURGE),2026-11-10
+3_MATERIALS_MINERALS,MP,MP Materials,북미 최대 희토류(네오디뮴 등) 광산·정련 공급망,USD,37.75,6.61,-1.56,-22.21,🔥 강세 급등 (SURGE),2026-11-09

@@ -77,18 +77,14 @@ if sys.platform == "win32":
     except Exception:
         pass
 
-# NOTE (수정 사항 v1.1 — 작업 디렉터리 문제): issue_data_collector.py /
-# gov_announcements_collector.py와 동일하게, 실행 위치에 상관없이 이 스크립트
-# 파일 기준(scripts/data/...)으로 고정합니다. 실제로 사용자 환경에서
-# "issues_summary 0행, gov_announcements 0건"으로 나온 원인이 바로 이거였습니다
-# — 터미널을 프로젝트 루트에서 열었을 때와 scripts 폴더에서 열었을 때
-# "data/issues"가 서로 다른 곳을 가리켜서, 실제 수집 데이터(scripts/data/)와
-# build_database.py가 찾는 곳(당시 작업 디렉터리 기준)이 어긋났습니다.
+# NOTE (수정 사항 v1.1 — 작업 디렉터리 문제): cwd와 무관하게 프로젝트 루트 기준.
+# NOTE (2026-11-03): gov 산출물은 `data/gov_announcements/`로 통일(폰 --sync-git 대응).
+# issues는 당분간 기존 `scripts/data/issues/`를 유지한다(gitignore·대용량).
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 _SCRIPTS_DIR = os.path.dirname(_SCRIPT_DIR)
 _PROJECT_ROOT = os.path.dirname(_SCRIPTS_DIR)
 ISSUES_DIR = os.path.join(_SCRIPTS_DIR, "data", "issues")
-GOV_DIR = os.path.join(_SCRIPTS_DIR, "data", "gov_announcements")
+GOV_DIR = os.path.join(_PROJECT_ROOT, "data", "gov_announcements")
 
 MYSQL_HOST = os.getenv("MYSQL_HOST", "localhost")
 MYSQL_PORT = int(os.getenv("MYSQL_PORT", "3306"))
@@ -1202,6 +1198,75 @@ def load_us_signals(conn):
     print(f"  ✓ us_signals: Dip {t1}행, Mac {t2}행, Act {t3}행 적재")
 
 
+def load_us_gov_apis(conn):
+    """Federal Register / Congress.gov / GovInfo 3대 미국 정부 API JSON을 기존 스키마(gov_announcements, us_presidential_actions)에 적재한다."""
+    cur = conn.cursor(buffered=True)
+    today_str = datetime.now().strftime("%Y-%m-%d")
+    gov_cnt, pres_cnt = 0, 0
+
+    sources = [
+        (
+            "Federal_Register_API",
+            os.path.join(_PROJECT_ROOT, "data", "federal_register", "federal_register_latest.json"),
+        ),
+        (
+            "Congress_Gov_API",
+            os.path.join(_PROJECT_ROOT, "data", "congress_gov", "congress_gov_latest.json"),
+        ),
+        (
+            "GovInfo_API",
+            os.path.join(_PROJECT_ROOT, "data", "govinfo", "govinfo_latest.json"),
+        ),
+    ]
+
+    for source_label, json_path in sources:
+        if not os.path.exists(json_path):
+            continue
+        try:
+            with open(json_path, "r", encoding="utf-8") as f:
+                items = json.load(f)
+        except Exception as exc:
+            print(f"  ⚠ {source_label} JSON 읽기 실패 ({json_path}): {exc}")
+            continue
+        if not isinstance(items, list):
+            continue
+
+        for item in items:
+            if not isinstance(item, dict):
+                continue
+            title = (item.get("title") or "").strip()[:255]
+            if not title:
+                continue
+            link = (item.get("html_url") or item.get("source_url") or item.get("api_url") or "").strip() or None
+            pub_date = str(item.get("publication_date") or today_str)[:60]
+            doc_type = str(item.get("doc_type") or "official_statement")[:50]
+            desc = (item.get("abstract") or item.get("summary") or "").strip()
+            collected_date = str(item.get("observed_at") or today_str)[:10]
+
+            cur.execute("""
+                INSERT IGNORE INTO gov_announcements
+                    (source, source_type, title, link, pub_date, description, collected_date, source_file)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            """, (source_label, doc_type, title, link, pub_date, desc, collected_date, json_path))
+            gov_cnt += cur.rowcount
+
+            # 대통령 문서(Federal Register PRESDOCU / GovInfo CPD)는 us_presidential_actions에도 함께 적재
+            col_code = (item.get("collection_code") or "").upper()
+            if doc_type in ("Presidential Document", "presidential_document") or col_code == "CPD":
+                eo_num = str(item.get("executive_order_number") or "")[:50] or None
+                pdf_url = (item.get("pdf_url") or "").strip() or None
+                cur.execute("""
+                    INSERT IGNORE INTO us_presidential_actions
+                        (date, type, title, executive_order_number, abstract, html_url, pdf_url, source)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                """, (pub_date[:50], doc_type[:100], title[:300], eo_num, desc, link, pdf_url, source_label))
+                pres_cnt += cur.rowcount
+
+    conn.commit()
+    cur.close()
+    print(f"  ✓ us_gov_apis: gov_announcements +{gov_cnt}건, us_presidential_actions +{pres_cnt}건 신규 적재")
+
+
 def create_analytics_views(conn):
     """
     scripts/create_views.sql을 읽어서 포트폴리오용 고급 분석 뷰 4종을 생성/갱신합니다.
@@ -1398,6 +1463,7 @@ def main():
     load_news_data(conn)
     load_signal_gap(conn)
     load_us_signals(conn)
+    load_us_gov_apis(conn)
 
 
     print("\n[분석 뷰(Views) 생성]")

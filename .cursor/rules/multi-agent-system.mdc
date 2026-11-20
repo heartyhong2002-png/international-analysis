@@ -1,0 +1,18 @@
+---
+description: Unified Agent Protocol for Antigravity, Hermes, and Cursor
+alwaysApply: true
+---
+
+# Unified Multi-Agent Protocol (Cursor ↔ Antigravity ↔ Hermes)
+
+This project is actively maintained by three synchronized AI agents:
+1. **Antigravity (Brain Architect)**: Core pipeline design, large refactors, anomaly detection logic, and Notion architecture.
+2. **Hermes Agent (Discord Mobile / On-the-go)**: Remote pipeline triggers, fast signal summaries, mobile OSINT query via Discord on iPad.
+3. **Cursor Agent (IDE Specialist)**: In-editor interactive coding, UI micro-tuning, and direct code review.
+
+## Key Rules
+- **Workspace Root**: `C:\dev\international-analysis` (Mirrored at `Desktop\international-analysis` junction).
+- **Python venv**: Use `C:\dev\international-analysis\.venv\Scripts\python.exe`.
+- **Single Source of Truth**: Always read `PROJECT_CONTEXT.md` and `AGENT_SYNC.md` before starting tasks.
+- **Handoff**: Document meaningful script runs or edits in `AGENT_SYNC.md` (Active Work Board).
+- **Sync Command**: Run `c:\dev\international-analysis\.venv\Scripts\python.exe scripts/notion/notion_manager.py --all` to mirror local docs and Notion board.

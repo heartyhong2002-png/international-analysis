@@ -1,0 +1,71 @@
+# 의존성 패키지 (토큰 낭비의 주범)
+node_modules/
+vendor/
+.pnpm-store/
+
+# 빌드 및 배포 결과물
+dist/
+build/
+out/
+.next/
+.nuxt/
+.output/
+target/
+bin/
+obj/
+
+# 환경 변수 및 시크릿 키 (보안상 절대 AI에게 노출되면 안 되는 파일)
+.env
+.env.*
+!.env.example
+
+# 로그 및 시스템 캐시 파일
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.turbo/
+.cache/
+.parcel-cache/
+.vite/
+
+# 에디터 및 IDE 설정
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# OS 생성 파일
+.DS_Store
+Thumbs.db
+
+# 대용량 미디어 및 바이너리 파일
+*.zip
+*.tar
+*.gz
+*.rar
+*.7z
+*.mp4
+*.mov
+*.avi
+*.mp3
+*.wav
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.webp
+
+# 데이터베이스 및 대용량 파일
+*.sqlite
+*.sqlite3
+*.db
+*.csv
+*.parquet

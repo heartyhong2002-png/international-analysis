@@ -1,0 +1,31 @@
+---
+description: Multi-agent sync status protocol (Cursor ↔ ANTIGRAVITY ↔ local)
+alwaysApply: true
+---
+
+# Agent sync status
+
+Desktop and `C:\dev\international-analysis` are the same Junction. Cursor and ANTIGRAVITY share one repo; divergence usually comes from stale chat context, uncommitted files, or missing `git fetch`.
+
+## When the user asks to sync / check sync
+
+Triggers include: `동기화`, `동기화해줘`, `동기화된 내용 확인해봐`, `싱크 맞춰줘`, `최신 tip`.
+
+Run **status-check only** (`AGENT_SYNC.md` §A). Do **not** implement features, rewrite docs wholesale, or commit unless asked.
+
+1. `git fetch origin` (and `git fetch desktop-local` if that remote exists)
+2. Compare `HEAD` vs `origin/<branch>` (and `desktop-local/<branch>` if present)
+3. Read Active Work Board top + newest handoff in `AGENT_SYNC.md`
+4. List dirty/untracked paths only — do not auto-commit
+
+Report briefly: tip · remote match · new commits · board deltas · dirty or clean.
+
+**Source of truth = git tip**, not prior chat summaries.
+
+## Trio-Sync
+
+Only if the user explicitly asks for Trio / Notion / MD+GitHub+Notion (`AGENT_SYNC.md` §B).
+
+## Copy-paste prompt
+
+Full text lives in `docs/SESSION_PROMPTS.md` § Sync Status.

@@ -27,7 +27,7 @@ OLLAMA_URL = "http://localhost:11434/api/generate"
 
 # 기관별 전담 LLM 매핑
 IB_LLM_ROUTING = {
-    "ING_Think": "mistral-nemo:latest",   # 유럽 시각 (프랑스 Mistral AI)
+    "ING_Think": "llama3.1:8b",           # 유럽/영미 시각 (Meta Llama 3.1)
     "Nomura_Research": "qwen2.5:7b"       # 아시아 시각 (다국어/아시아 특화 Qwen)
 }
 FINAL_LLM = "exaone3.5:7.8b"              # 최종 보고서 작성 (한국 LG AI EXAONE)

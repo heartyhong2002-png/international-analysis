@@ -1,16 +1,19 @@
-# CONTEXT lane — local / independent media not already listed under expert_feeds.
+# CONTEXT lane — local / independent / exiled media not already listed under expert_feeds.
 # Candidate APIs stay pipeline_default:false until auth and quotas are stable.
+# Packet C adds signal_gap independent/exiled feeds with relationship_role: competitor_adversary_axis.
 
-schema_version: 1
-updated_at: "2026-10-28"
+schema_version: 2
+updated_at: "2026-11-02"
 
 sources:
   - source_id: mediacloud_search_us_national
     source_type: news_api
     source_role: discovery_only
+    relationship_role: domestic_us
     required: false
     fallback: []
     license_access_note: "Media Cloud Search API; requires MEDIACLOUD_API_KEY as Authorization Token; academic/research ToS; do not log key; metadata only (no story body by default)."
+    robots_note: "n/a-api — Token auth + bounded single-page query"
     url: https://search.mediacloud.org/api/
     endpoint: search/story-list
     country: US
@@ -19,17 +22,24 @@ sources:
     enabled: true
     pipeline_default: false
     collector: scripts/collection/fetch_mediacloud.py
+    issue_tags:
+      - US_Trade_Tariff
+      - US_Export_Control
+      - US_Election_Policy_Signal
     cadence: manual
     priority: low
     lane: CONTEXT
+    packet: A
     notes: "Host api.mediacloud.org is dead DNS. Default probe collection cs=34412234. Not an alert basis."
 
   - source_id: event_registry_news
     source_type: news_api
     source_role: discovery_only
+    relationship_role: other
     required: false
     fallback: []
     license_access_note: "Event Registry API key required; prefer academic approval; bounded probes only."
+    robots_note: "n/a-api — API key required"
     url: https://eventregistry.org/
     country: MULTI
     language: multi
@@ -40,13 +50,16 @@ sources:
     cadence: manual
     priority: low
     lane: CONTEXT
+    packet: legacy
 
   - source_id: acled_events
     source_type: event_api
     source_role: secondary
+    relationship_role: multilateral
     required: false
     fallback: []
     license_access_note: "ACLED OAuth account required; academic/research redistribution limits; store event ids + receipt only."
+    robots_note: "n/a-api — OAuth API"
     url: https://acleddata.com/
     country: MULTI
     language: en
@@ -54,16 +67,24 @@ sources:
     enabled: true
     pipeline_default: false
     collector: scripts/collection/fetch_acled.py
+    issue_tags:
+      - Ukraine_War
+      - Israel_Palestine
+      - Sudan_Conflict
+      - Myanmar_Crisis
     cadence: manual
     priority: medium
     lane: CONTEXT
+    packet: legacy
 
   - source_id: folha_sp_poder_rss
     source_type: local_media
     source_role: secondary
+    relationship_role: other
     required: false
-    fallback: []
+    fallback: [br_agencia_brasil]
     license_access_note: "Folha de S.Paulo public RSS; major Brazilian national newspaper covering presidential politics, Petrobras, and commodities."
+    robots_note: "checked-via-existing-collector — RSS only"
     url: https://feeds.folha.uol.com.br/poder/rss091.xml
     country: BR
     language: pt
@@ -71,6 +92,528 @@ sources:
     enabled: true
     pipeline_default: false
     collector: scripts/collection/fetch_local_opinions.py
+    issue_tags:
+      - Brazil_Politics
+      - Venezuela_Crisis
+      - Argentina_Economy
     cadence: daily
     priority: medium
     lane: CONTEXT
+    packet: legacy
+
+  # ---------------------------------------------------------------------------
+  # Packet C — Signal Gap Independent / Exiled Media (competitor_adversary_axis)
+  # Counterpart sensors to state_media_news (ru_tass_en_rss, cn_people_daily_world_rss, ir_tehran_times_rss)
+  # ---------------------------------------------------------------------------
+  - source_id: ru_meduza_rss
+    source_type: local_media
+    source_role: secondary
+    relationship_role: competitor_adversary_axis
+    required: false
+    fallback: [moscow_times_en]
+    license_access_note: "Meduza public RSS (HTTP 200 verified 2026-11-02); independent Russian-language exiled media in Riga; retain URL; used as independent counterpart to TASS in Signal Gap analysis."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://meduza.io/rss/all
+    country: RU
+    language: ru
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Ukraine_War
+      - EU_Russia
+      - Baltic_Security
+    orientation: independent-in-exile
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: C
+
+  - source_id: cn_china_digital_times_rss
+    source_type: local_media
+    source_role: secondary
+    relationship_role: competitor_adversary_axis
+    required: false
+    fallback: [pincong_public, taiwan_ptt_public]
+    license_access_note: "China Digital Times Chinese feed; independent censorship-archive & counter-narrative aggregator; retain source URL. Returned HTTP 403/timeout on 2026-11-02 probe — do not bypass blocks; collector records BLOCKED/TIMEOUT in receipt and falls back to pincong_public/taiwan_ptt_public."
+    robots_note: "pending — chinadigitaltimes.net returned HTTP 403 on 2026-11-02 probe; keep enabled=false until public RSS access confirmed"
+    url: https://chinadigitaltimes.net/chinese/feed/
+    country: CN
+    language: zh
+    access_method: rss
+    enabled: false
+    pipeline_default: false
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Taiwan_Strait
+      - South_China_Sea
+      - US_Export_Control
+      - US_Trade_Tariff
+    orientation: overseas_independent_archive
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: C
+
+  - source_id: me_raseef22_rss
+    source_type: local_media
+    source_role: secondary
+    relationship_role: competitor_adversary_axis
+    required: false
+    fallback: [al_monitor]
+    license_access_note: "Raseef22 Arabic public RSS (HTTP 200 verified 2026-11-02); independent pan-Arab media network; used as independent Middle East counterpart to Tehran Times/IRNA in Signal Gap analysis."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://raseef22.net/feed/
+    country: MULTI
+    language: ar
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Iran_Nuclear
+      - Israel_Palestine
+      - Middle_East_Energy
+    orientation: independent_pan-arab_media
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: C
+
+  # ---------------------------------------------------------------------------
+  # Packet C Extension — Exiled Investigative, Non-Censored & Cross-Regional Media
+  # (Russia, China, Middle East, Latin America, Mexico, Japan, US Investigative)
+  # ---------------------------------------------------------------------------
+  - source_id: ru_istories_rss
+    source_type: local_media
+    source_role: secondary
+    relationship_role: competitor_adversary_axis
+    required: false
+    fallback: []
+    license_access_note: "iStories (Important Stories) public RSS; Russian exiled investigative outlet tracking military smuggling & sanctions evasion."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://istories.media/rss/all.xml
+    country: RU
+    language: ru
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Ukraine_War
+      - EU_Russia
+      - Baltic_Security
+    orientation: independent_exiled_investigative
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: C
+
+  - source_id: ru_insider_rss
+    source_type: local_media
+    source_role: secondary
+    relationship_role: competitor_adversary_axis
+    required: false
+    fallback: []
+    license_access_note: "The Insider Russia public RSS; Riga-based exiled investigative outlet tracking intelligence operations & hybrid warfare."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://news.google.com/rss/search?q=site:theins.ru&hl=ru&gl=RU&ceid=RU:ru
+    country: RU
+    language: ru
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Ukraine_War
+      - EU_Russia
+    orientation: independent_exiled_investigative
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: C
+
+  - source_id: bellingcat_rss
+    source_type: local_media
+    source_role: secondary
+    relationship_role: other
+    required: false
+    fallback: []
+    license_access_note: "Bellingcat public RSS; open-source intelligence and investigative journalism."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://www.bellingcat.com/feed/
+    country: NL
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Ukraine_War
+      - Middle_East_Energy
+    orientation: open_source_investigative_collective
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: C
+
+  - source_id: cn_rfa_rss
+    source_type: local_media
+    source_role: secondary
+    relationship_role: competitor_adversary_axis
+    required: false
+    fallback: []
+    license_access_note: "Radio Free Asia public RSS; covers Xinjiang, South China Sea, and Chinese censorship."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://www.rfa.org/english/RSS
+    country: US
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - South_China_Sea
+      - Taiwan_Strait
+      - US_Export_Control
+    orientation: independent_regional_broadcaster
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: C
+
+  - source_id: me_iranwire_rss
+    source_type: local_media
+    source_role: secondary
+    relationship_role: competitor_adversary_axis
+    required: false
+    fallback: []
+    license_access_note: "IranWire public RSS; exiled Iranian journalists and citizen reporter network."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://iranwire.com/en/feed/
+    country: GB
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Iran_Nuclear
+      - Middle_East_Energy
+      - Israel_Palestine
+    orientation: exiled_iranian_diaspora_media
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: C
+
+  - source_id: me_middle_east_eye_rss
+    source_type: local_media
+    source_role: secondary
+    relationship_role: other
+    required: false
+    fallback: []
+    license_access_note: "Middle East Eye public RSS; London-based independent Middle East news outlet."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://www.middleeasteye.net/rss
+    country: GB
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Middle_East_Energy
+      - Israel_Palestine
+      - Iran_Nuclear
+    orientation: independent_middle_east_coverage
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: C
+
+  - source_id: global_occrp_rss
+    source_type: local_media
+    source_role: secondary
+    relationship_role: other
+    required: false
+    fallback: []
+    license_access_note: "OCCRP public RSS; global investigative reporting on organized crime, shell companies, and sanctions evasion."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://www.occrp.org/en/feed
+    country: MULTI
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Ukraine_War
+      - US_Export_Control
+    orientation: transnational_investigative_network
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: C
+
+  - source_id: us_propublica_rss
+    source_type: local_media
+    source_role: secondary
+    relationship_role: domestic_us
+    required: false
+    fallback: []
+    license_access_note: "ProPublica public RSS; non-profit investigative journalism in the public interest."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://feeds.propublica.org/propublica/main
+    country: US
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - US_Election_Policy_Signal
+      - US_Trade_Tariff
+      - US_Export_Control
+    orientation: nonpartisan_investigative_newsroom
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: B
+
+  - source_id: mx_el_universal_rss
+    source_type: local_media
+    source_role: secondary
+    relationship_role: other
+    required: false
+    fallback: []
+    license_access_note: "El Universal public RSS; major Mexican national daily covering Mexico-US border & economy."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://www.eluniversal.com.mx/arc/outboundfeeds/rss/?outputType=xml
+    country: MX
+    language: es
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - US_Trade_Tariff
+      - US_Election_Policy_Signal
+    orientation: national_newspaper_of_record
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: B
+
+  - source_id: mx_animal_politico_rss
+    source_type: local_media
+    source_role: secondary
+    relationship_role: other
+    required: false
+    fallback: []
+    license_access_note: "Animal Político via Google News targeted RSS; premier Mexican independent investigative journalism on cartels & border."
+    robots_note: "checked-via-existing-collector — RSS via Google News"
+    url: https://news.google.com/rss/search?q=site:animalpolitico.com&hl=es-419&gl=MX&ceid=MX:es-419
+    country: MX
+    language: es
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - US_Trade_Tariff
+    orientation: independent_investigative_outlet
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: B
+
+  - source_id: ar_clarin_rss
+    source_type: local_media
+    source_role: secondary
+    relationship_role: other
+    required: false
+    fallback: []
+    license_access_note: "Clarín public RSS; major Argentine daily covering Milei administration & Mercosur."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://www.clarin.com/rss/lo-ultimo/
+    country: AR
+    language: es
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Argentina_Economy
+    orientation: center_right_national_newspaper
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: B
+
+  - source_id: ar_pagina12_rss
+    source_type: local_media
+    source_role: secondary
+    relationship_role: other
+    required: false
+    fallback: []
+    license_access_note: "Página/12 via Google News targeted RSS; Argentine progressive daily covering union strikes and economic opposition."
+    robots_note: "checked-via-existing-collector — RSS via Google News"
+    url: https://news.google.com/rss/search?q=site:pagina12.com.ar&hl=es-419&gl=AR&ceid=AR:es-419
+    country: AR
+    language: es
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Argentina_Economy
+    orientation: left_progressive_opposition
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: B
+
+  - source_id: br_agencia_publica_rss
+    source_type: local_media
+    source_role: secondary
+    relationship_role: other
+    required: false
+    fallback: []
+    license_access_note: "Agência Pública public RSS; premier Brazilian non-profit investigative journalism."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://apublica.org/feed/
+    country: BR
+    language: pt
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Brazil_Politics
+    orientation: independent_investigative_agency
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: B
+
+  - source_id: ve_armando_info_rss
+    source_type: local_media
+    source_role: secondary
+    relationship_role: competitor_adversary_axis
+    required: false
+    fallback: []
+    license_access_note: "Armando.info public RSS; Venezuelan exiled investigative journalism tracking state corruption & oil smuggling."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://armando.info/feed/
+    country: VE
+    language: es
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Venezuela_Crisis
+      - Middle_East_Energy
+    orientation: exiled_investigative_outlet
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: C
+
+  - source_id: jp_mainichi_rss
+    source_type: local_media
+    source_role: secondary
+    relationship_role: ally
+    required: false
+    fallback: []
+    license_access_note: "Mainichi Shimbun English public RSS; Japanese national daily covering LDP politics & defense budget."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://news.google.com/rss/search?q=site:mainichi.jp&hl=ja&gl=JP&ceid=JP:ja
+    country: JP
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Japan_Korea
+      - Taiwan_Strait
+    orientation: center_left_national_newspaper
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: B
+
+  - source_id: jp_asahi_rss
+    source_type: local_media
+    source_role: secondary
+    relationship_role: ally
+    required: false
+    fallback: []
+    license_access_note: "Asahi Shimbun Japanese headlines public RSS; liberal perspective on Japanese parliament, LDP factions, and defense."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://rss.asahi.com/rss/asahi/newsheadlines.rdf
+    country: JP
+    language: ja
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Japan_Korea
+      - Taiwan_Strait
+    orientation: liberal_opposition_leaning_daily
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: B
+
+  - source_id: jp_bunshun_rss
+    source_type: local_media
+    source_role: secondary
+    relationship_role: ally
+    required: false
+    fallback: []
+    license_access_note: "Bunshun Online via Google News targeted RSS; renowned investigative reporting on Japanese political funding & scandals."
+    robots_note: "checked-via-existing-collector — RSS via Google News"
+    url: https://news.google.com/rss/search?q=site:bunshun.jp&hl=ja&gl=JP&ceid=JP:ja
+    country: JP
+    language: ja
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Japan_Korea
+    orientation: investigative_tabloid_scandal_watchdog
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: B
+
+  - source_id: jp_japan_times_rss
+    source_type: local_media
+    source_role: secondary
+    relationship_role: ally
+    required: false
+    fallback: []
+    license_access_note: "The Japan Times public RSS; independent English daily covering Japanese national policy & diplomacy."
+    robots_note: "checked-via-existing-collector — RSS only"
+    url: https://www.japantimes.co.jp/feed/
+    country: JP
+    language: en
+    access_method: rss
+    enabled: true
+    pipeline_default: true
+    collector: scripts/collection/fetch_signal_gap_rss.py
+    issue_tags:
+      - Japan_Korea
+      - Taiwan_Strait
+    orientation: independent_english_newspaper
+    cadence: daily
+    priority: high
+    lane: CONTEXT
+    packet: B
+

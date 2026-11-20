@@ -206,6 +206,8 @@ def call_tev1(state: dict) -> dict:
     payload = {
         "model": "tev1",
         "state": state,
+        "keep_alive": "30s",
+        "options": {"num_ctx": 2048},
         "questions": {
             "alert_status": {
                 "type": "choice",

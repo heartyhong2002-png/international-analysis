@@ -1,0 +1,9 @@
+{
+  "collector": "fetch_semiconductor_market.py",
+  "collected_at_utc": "2026-11-10T13:50:48.974734+00:00",
+  "equities_collected": 11,
+  "spot_items_collected": 11,
+  "output_json": "data\\semiconductor_market\\semiconductor_latest.json",
+  "output_csv": "data\\semiconductor_market\\semiconductor_latest.csv",
+  "status": "SUCCESS"
+}

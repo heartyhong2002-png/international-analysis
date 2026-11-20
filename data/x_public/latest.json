@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "receipt": {
+    "collector": "x_public",
+    "source_id": "x_public_api",
+    "endpoint": "https://api.x.com/2/tweets/search/recent",
+    "auth_method": "HTTP Authorization Bearer; token not stored",
+    "query": "(\"Red Sea\" OR Hormuz OR Houthi) (shipping OR tanker OR strait) -is:retweet lang:en",
+    "observed_at": "2026-11-02T07:56:36.609820+00:00",
+    "complete": false,
+    "rows": 0,
+    "status": "AUTH_REQUIRED",
+    "http_status": null,
+    "content_hash": null,
+    "raw_ref": null,
+    "access_note": "Set X_BEARER_TOKEN (or TWITTER_BEARER_TOKEN) from the X Developer Portal. No request was sent. Recent search is pay-per-use.",
+    "license_access_note": "Official X API v2 recent search only. Pay-per-use credits apply. Bearer token stays in the Authorization header and is never written to receipts. Public posts only; online_information_environment_signal, not national opinion or alert basis. Not called by the default pipeline.",
+    "signal_class": "online_information_environment_signal",
+    "error": null,
+    "max_results": 10
+  },
+  "posts": []
+}
