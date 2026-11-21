@@ -1,4 +1,4 @@
 ﻿Asset_Name,Ticker,Price_1_Month_Ago,Price_Latest,Monthly_Change_Percent,Risk_Signal,Updated_At
-China_Stock_CSI300_ETF,ASHR,32.11,30.76,-4.2,안정적 (Stable),2026-11-12 15:00:31
-USD_CNY_Exchange,CNY=X,6.69,6.67,-0.32,안정적 (Stable),2026-11-12 15:00:31
-Safe_Haven_Gold,GC=F,4177.3,4000.5,-4.23,안정적 (Stable),2026-11-12 15:00:31
+China_Stock_CSI300_ETF,ASHR,30.44,29.22,-4.01,안정적 (Stable),2026-11-21 03:04:35
+USD_CNY_Exchange,CNY=X,6.68,6.67,-0.17,안정적 (Stable),2026-11-21 03:04:35
+Safe_Haven_Gold,GC=F,4060.4,3539.0,-12.84,안정적 (Stable),2026-11-21 03:04:35
