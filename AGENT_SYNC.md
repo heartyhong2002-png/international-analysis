@@ -34,6 +34,15 @@ ANTIGRAVITY는 주로 다음 작업을 맡긴다.
 
 두 도구가 같은 파일을 동시에 고치지 않는 것이 원칙이다.
 
+### Qwen Code (컨트롤타워 + 서브세션 파견, 2026-11-22~)
+
+Qwen Code는 독립 챗세션을 여러 개 여는 분업 대신, 컨트롤타워 세션 하나가 트랙 작업을
+서브세션으로 파견(`create_sub_session`)하고 결과를 수신해 diff 리뷰·검증·커밋·보드 반영까지
+단일 수행한다. 프로토콜: `docs/current/CONTROL_TOWER_ORCHESTRATION.md`.
+
+- 서브세션은 커밋·push·`AGENT_SYNC.md` 수정 금지 — 보드 발행 권한은 컨트롤타워에 단일화.
+- 외부 도구(Cursor/ANTIGRAVITY) 세션이 병존하는 기간엔 기존 §A/§B 규약이 그대로 유효하다.
+
 ## Synchronization Protocol
 
 Cursor / ANTIGRAVITY / 로컬 터미널이 **같은 폴더**(Desktop Junction → `C:\dev\international-analysis`)를 쓰더라도, **대화 컨텍스트·미커밋·fetch 시점**이 다르면 “최신”이 어긋나 보인다. 아래 두 모드를 구분한다.
@@ -85,6 +94,7 @@ Cursor / ANTIGRAVITY / 로컬 터미널이 **같은 폴더**(Desktop Junction �
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
+| done | Qwen Code / Control Tower | orchestration / control-tower-subsession-model | `docs/current/CONTROL_TOWER_ORCHESTRATION.md`, `docs/SESSION_PROMPTS.md`, `AGENT_SYNC.md`, `PROJECT_CONTEXT.md` | 다중 세션 분업+MD 보드 조율을 대체: 컨트롤타워 1세션이 서브세션으로 트랙 작업 파견, 보드 발행·커밋 권한 단일화 프로토콜 도입 | 2026-11-22 |
 | done | ANTIGRAVITY | preprocessing / fine-grained-nlp-refinement | `scripts/automation/preprocess_signals.py`, `data/automation/canonical_signals*.json` | 전처리 세밀화 고도화: 바이라인·제어문자 제거(`clean_text_fine`), 페르시아어(`fa`) 분리·다국어 5W1H 추출(High-Purity `who` 미상률 22.7%→6.3%), 토픽 드리프트·중복 클러스터 병합, 시점 ISO-8601 통일 및 정량 수치(`extracted_metrics`) 추출 완료 | 2026-11-20 |
 | done | ANTIGRAVITY | validation / mistral-presiding-judge-and-expert-report | `scripts/validation/run_multi_judge_audit.py`, `scripts/validation/human_blind_review.py`, `scripts/validation/generate_expert_review_report.py`, `data/validation/multi_judge_audit_latest.json`, `docs/advisor_meeting/EXPERT_VALIDATION_REPORT.md`, `docs/advisor_meeting/EXPERT_VALIDATION_REPORT_A4.docx` | `mistral:7b` 재판관(Presiding Judge) 도입·7개 권역 전수 감사(오류 0건), Stage 2 블라인드 검수 CLI 연동 및 연구실(교수님·대학원생)·Bluesky 이중 검증 보고서(MD/DOCX) 생성 완료 | 2026-11-18 |
 | done | ANTIGRAVITY | prototype / integrated-e2e-and-notion-redesign | `scripts/dashboard/prototype_data.py`, `scripts/dashboard/generate_dashboard_v2.py`, `scripts/dashboard/streamlit_dashboard.py`, `scripts/run_pipeline.py`, `output/dashboard/index.html`, `docs/current/*` | 통합 프로토타입 구축: E2E 오케스트레이터(`--with-early-warning`, `--prototype-refresh`, `--nim-escalate`), 정적 HTML + Streamlit 통합 관제 뷰 연결, Notion 허브 3열 카드·Mermaid 그래프·요약표 개편 및 핵심 MD 문서 최신화 | 2026-11-16 |
@@ -151,6 +161,16 @@ Cursor / ANTIGRAVITY / 로컬 터미널이 **같은 폴더**(Desktop Junction �
 | done | ANTIGRAVITY | integration / notion-radar-live | `scripts/notion/push_radar_signal.py`, `.env` | 신규 생성된 실시간 글로벌 이상 징후 레이더 DB 스키마 주입 및 실시간 신호 전송 연동 완료 | 2026-10-29 |
 
 Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하나를 쓴다.
+
+2026-11-22 [Qwen Code / 컨트롤타워 · 다중 세션 분업 → 컨트롤타워+서브세션 파견 운영모델 전환]
+- 한 일:
+  1. `docs/current/CONTROL_TOWER_ORCHESTRATION.md` 신규 작성 — 독립 챗세션+MD 보드 조율의 실제 비용(보드 썩임·파일 충돌 사후 발견·handoff 전파 지연)을 진단하고, 컨트롤타워 1세션이 `create_sub_session`으로 트랙 작업을 파견하는 프로토콜(파견 단위 선택표, 7블록 파견 프롬프트 계약, 동시 파견/스코프 규칙, 소비 루프 8단계) 정립.
+  2. 보드 성격 전환: `AGENT_SYNC.md`는 세션 간 실시간 조율판이 아니라 **컨트롤타워만 발행하는 결과 기록**이 됨. 서브세션은 커밋·보드 수정 금지.
+  3. `docs/SESSION_PROMPTS.md`의 역할 1~10은 유지하되, 사람이 복사해 새 세션을 여는 용도에서 **파견 프롬프트의 원본 재료**로 재정의(헤더에 전환 안내 추가).
+  4. `PROJECT_CONTEXT.md` Recommended Reading Order·Current Planning Documents에 신 프로토콜 등록.
+- 바꾼 파일: `docs/current/CONTROL_TOWER_ORCHESTRATION.md`(신규), `docs/SESSION_PROMPTS.md`, `AGENT_SYNC.md`, `PROJECT_CONTEXT.md`.
+- 확인한 것: 문서 전용 변경, 코드·데이터 미수정. 외부 도구(Cursor/ANTIGRAVITY) 세션 병존 기간엔 §A/§B 규약 그대로 유효.
+- 다음 작업: 실제 트랙 작업부터 컨트롤타워 파견 체제로 운영 → 잘 맞으면 SESSION_PROMPTS 공통 규칙에 기본화 반영 → 희망 시 `agent_tasks` MySQL 큐로 보드 기계화(후속).
 
 2026-11-20 [ANTIGRAVITY / preprocessing · 전처리 세밀화 고도화 (텍스트 정제·페르시아어 분리·수치 추출·중복 병합) Handoff]
 - 한 일:

@@ -69,11 +69,12 @@ GDELT Cloud는 현재 Academic & Research 계정(월 5,000 QU)을 사용한다. 
 12. `docs/current/COLLECTION_PIPELINE_ARCHITECTURE.md` when changing collection lanes, source registries, or pipeline boundaries
 12. `docs/current/LLM_SYSTEM_SUMMARY.md`
 13. `docs/current/DATABASE_SETUP.md` when database context is needed
-14. `docs/SESSION_PROMPTS.md` when starting role-specific AI sessions
-15. `docs/REPOSITORY_STRUCTURE.md` when moving or classifying files
-16. `project-handoff.md` only when detailed history or coordination context is needed
-17. `docs/history/PROJECT_EVOLUTION_TIMELINE.md` when the pivot story is needed
-18. `docs/current/AI_AGENT_SESSION_PROMPT.md` when configuring or managing AI agent infrastructure (Hermes, Discord, MCP)
+14. `docs/SESSION_PROMPTS.md` for the role definitions that become sub-session dispatch prompts
+15. `docs/current/CONTROL_TOWER_ORCHESTRATION.md` when a single control-tower session dispatches track work as sub-sessions (default multi-agent operating model since 2026-11-22)
+16. `docs/REPOSITORY_STRUCTURE.md` when moving or classifying files
+17. `project-handoff.md` only when detailed history or coordination context is needed
+18. `docs/history/PROJECT_EVOLUTION_TIMELINE.md` when the pivot story is needed
+19. `docs/current/AI_AGENT_SESSION_PROMPT.md` when configuring or managing AI agent infrastructure (Hermes, Discord, MCP)
 
 ## Notion Hub
 
@@ -95,6 +96,7 @@ Use Notion for human-facing project management, learning notes, weekly plans, an
 - `docs/current/LLM_SYSTEM_SUMMARY.md`: LLM routing and analysis architecture
 - `docs/current/DATABASE_SETUP.md`: MySQL schema and evidence storage layer
 - `docs/current/AI_AGENT_SESSION_PROMPT.md`: handoff prompt for AI agent operations & multi-agent infrastructure
+- `docs/current/CONTROL_TOWER_ORCHESTRATION.md`: multi-agent operating protocol — one control-tower session dispatches track work as sub-sessions (since 2026-11-22)
 
 ## History Documents
 
