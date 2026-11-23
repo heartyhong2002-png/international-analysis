@@ -32,7 +32,7 @@ import csv
 import os
 import sys
 import webbrowser
-from datetime import date, datetime
+from datetime import date, datetime, timedelta, timezone
 from decimal import Decimal
 from pathlib import Path
 
@@ -51,7 +51,14 @@ load_dotenv()
 _SCRIPT_DIR = Path(__file__).resolve().parent
 if str(_SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(_SCRIPT_DIR))
-from prototype_data import build_integrated_region_rows, load_canonical_summary  # noqa: E402
+from prototype_data import (  # noqa: E402
+    CANONICAL_HIGH_PURITY_PATH,
+    CANONICAL_PATH,
+    build_event_tuple_evidence,
+    build_integrated_region_rows,
+    load_canonical_refinement,
+    load_canonical_summary,
+)
 
 PROJECT_ROOT = _SCRIPT_DIR.parent.parent
 OUTPUT_DIR = PROJECT_ROOT / "output" / "dashboard"
@@ -306,6 +313,11 @@ def fetch_all_dashboard_data(conn):
         "signal_gap_data": signal_gap_data,
         "integrated_regions": build_integrated_region_rows(),
         "canonical_summary": load_canonical_summary(),
+        "canonical_refinement": {
+            "standard": load_canonical_refinement(CANONICAL_PATH),
+            "high_purity": load_canonical_refinement(CANONICAL_HIGH_PURITY_PATH),
+        },
+        "event_tuple_evidence": build_event_tuple_evidence(limit=12),
         "financial_proxy": financial_proxy,
         "telegram_osint": telegram_osint,
         "google_trends_data": google_trends_data,
@@ -361,7 +373,6 @@ def generate_dashboard_html(data):
             tg_osint_html += f"<p>{html.escape(line)}</p>"
 
     integrated_rows = data.get("integrated_regions", [])
-    canonical_summary = data.get("canonical_summary", {})
     integrated_table_rows = ""
     for r in integrated_rows:
         triggers_txt = ", ".join(r.get("triggers") or []) or "-"
@@ -386,7 +397,109 @@ def generate_dashboard_html(data):
         """
     if not integrated_table_rows:
         integrated_table_rows = '<tr><td colspan="9" style="text-align:center;color:var(--text-muted);">통합 검증 데이터가 없습니다.</td></tr>'
-    cluster_badge = f"전처리 클러스터 {canonical_summary.get('cluster_count', 0)}건" if canonical_summary.get("available") else "전처리 대기"
+
+    # 전처리 세밀화(2026-11-20) 산출물 소비: event_tuple의 who / when / extracted_metrics 커버리지.
+    # 표시 전용 — Risk Signal Score·Alert Level 산식에는 절대 연결하지 않는다.
+    refine = data.get("canonical_refinement", {})
+    std_ref = refine.get("standard") or {}
+    high_ref = refine.get("high_purity") or {}
+
+    def _refine_value(info: dict, key: str, suffix: str = "") -> str:
+        if not info.get("available"):
+            return "확인 필요"
+        return f"{info.get(key, 0)}{suffix}"
+
+    def _preprocess_stamp(info: dict) -> str:
+        raw = str(info.get("generated_at") or "")
+        if not raw:
+            return "확인 필요"
+        try:
+            moment = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+            if moment.tzinfo is None:
+                moment = moment.replace(tzinfo=timezone.utc)
+            return moment.astimezone(timezone(timedelta(hours=9))).strftime("%Y-%m-%d %H:%M") + " KST"
+        except ValueError:
+            return raw
+
+    cluster_badge = (
+        f"전처리 클러스터 Standard {std_ref.get('cluster_count', 0)}건 · "
+        f"High-Purity {high_ref.get('cluster_count', 0)}건"
+        if std_ref.get("available") else "전처리 대기"
+    )
+
+    refine_tiles_html = f"""
+        <div class="refine-tile">
+          <div class="refine-label">5W1H 이벤트 튜플</div>
+          <div class="refine-value">{_refine_value(high_ref, 'cluster_count', ' 건')}</div>
+          <div class="refine-sub">High-Purity · Standard {_refine_value(std_ref, 'cluster_count', '건')}<br>전처리 생성 {_preprocess_stamp(high_ref or std_ref)}</div>
+        </div>
+        <div class="refine-tile">
+          <div class="refine-label">행위자(who) 확인</div>
+          <div class="refine-value">{_refine_value(high_ref, 'who_resolved_pct', '%')}</div>
+          <div class="refine-sub">High 미상 {high_ref.get('who_unresolved', 0)}건 · Standard {_refine_value(std_ref, 'who_resolved_pct', '%')} 확인<br>미확정 행은 '확인 필요'로 표시</div>
+        </div>
+        <div class="refine-tile">
+          <div class="refine-label">when ISO-8601 정제</div>
+          <div class="refine-value">{_refine_value(high_ref, 'when_iso_pct', '%')}</div>
+          <div class="refine-sub">High {high_ref.get('when_iso', 0)}/{high_ref.get('cluster_count', 0)}건 정규화<br>Standard {_refine_value(std_ref, 'when_iso_pct', '%')} (미정제는 원문 표기 유지)</div>
+        </div>
+        <div class="refine-tile">
+          <div class="refine-label">정량 수치 (extracted_metrics)</div>
+          <div class="refine-value">{_refine_value(high_ref, 'metric_values', ' 건')}</div>
+          <div class="refine-sub">High {high_ref.get('metric_clusters', 0)}개 클러스터에서 확보<br>Standard {std_ref.get('metric_clusters', 0)}개 클러스터 · {_refine_value(std_ref, 'metric_values', '건')}</div>
+        </div>
+    """
+
+    evidence_rows = data.get("event_tuple_evidence", [])
+    event_tuple_rows_html = ""
+    for r in evidence_rows:
+        title_txt = html.escape(str(r.get("title") or "확인 필요"))
+        link = str(r.get("url") or "")
+        title_cell = (
+            f'<a href="{html.escape(link, quote=True)}" target="_blank" rel="noopener noreferrer">{title_txt}</a>'
+            if link.startswith("http") else title_txt
+        )
+        who_txt = "확인 필요" if r.get("who_unresolved") else html.escape(str(r.get("who") or "확인 필요"))
+        when_raw = str(r.get("when") or "")
+        if not when_raw:
+            when_cell = "확인 필요"
+        elif r.get("when_normalized"):
+            when_cell = f'<span style="color:#6ee7b7;">{html.escape(when_raw)}</span>'
+        else:
+            when_cell = f'{html.escape(when_raw)} <span class="kpi-tag tag-amber" style="font-size:9px;">원문 표기</span>'
+
+        metrics = r.get("metrics") or []
+        if metrics:
+            more = f' <span style="color:var(--text-muted);">+{len(metrics) - 4}건</span>' if len(metrics) > 4 else ""
+            metrics_cell = " · ".join(html.escape(m) for m in metrics[:4]) + more
+        else:
+            metrics_cell = '<span style="color:var(--text-muted);">정량 수치 확인 필요</span>'
+
+        severity = str(r.get("threat_severity") or "")
+        sev_cls = "tag-danger" if "CRITICAL" in severity else ("tag-amber" if severity.startswith("HIGH") else "tag-info")
+        sev_cell = f'<span class="kpi-tag {sev_cls}" style="font-size:10px;">{html.escape(severity)}</span>' if severity else "확인 필요"
+        vstate = str(r.get("verification_state") or "")
+        vstate_cell = f'<span class="kpi-tag tag-info" style="font-size:10px;">{html.escape(vstate)}</span>' if vstate else "확인 필요"
+        lang_txt = html.escape(str(r.get("primary_language") or "-"))
+        if r.get("is_cross_lingual"):
+            lang_txt += " · cross-lingual"
+        evidence = f"출처 {r.get('unique_sources_count', 0)}개 · 기사 {r.get('cluster_size', 0)}건<br><span style='color:var(--text-muted);font-size:11px;'>{lang_txt}</span>"
+
+        event_tuple_rows_html += f"""
+        <tr style="border-bottom: 1px solid rgba(255,255,255,0.07);">
+          <td style="padding: 9px 8px; max-width: 320px;"><strong>{title_cell}</strong></td>
+          <td style="padding: 9px 8px;">{who_txt}</td>
+          <td style="padding: 9px 8px; font-size: 12px;">{html.escape(str(r.get('action') or '확인 필요'))}<br><span style="color:var(--text-muted);">→ {html.escape(str(r.get('target') or '확인 필요'))}</span></td>
+          <td style="padding: 9px 8px; font-size: 11px; color: var(--text-muted);">{html.escape(str(r.get('where') or '확인 필요'))}</td>
+          <td style="padding: 9px 8px; font-size: 11px;">{when_cell}</td>
+          <td style="padding: 9px 8px; font-size: 12px;">{metrics_cell}</td>
+          <td style="padding: 9px 8px;">{vstate_cell}<br>{sev_cell}</td>
+          <td style="padding: 9px 8px; font-size: 11px;">{evidence}</td>
+        </tr>
+        """
+    if not event_tuple_rows_html:
+        event_tuple_rows_html = '<tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:18px;">High-Purity 전처리 산출물이 없습니다. 전처리 세션을 실행해 <code>canonical_signals_high_purity_latest.json</code>을 생성하세요.</td></tr>'
+    evidence_metric_hits = sum(1 for r in evidence_rows if r.get("metrics"))
 
     # Create Signal Gap and Financial Proxy Cards
     sg_html = ""
@@ -668,6 +781,44 @@ def generate_dashboard_html(data):
         </tbody>
       </table>
     </div>
+  </section>
+
+  <!-- 5W1H Event-Tuple Quantitative Evidence Section (preprocessing fine-grained output) -->
+  <section class="chart-card" style="margin-bottom: 28px;">
+    <div class="chart-header">
+      <div>
+        <div class="chart-title">🧬 5W1H 이벤트 튜플 · 정량 근거 (전처리 세밀화 반영)</div>
+        <div class="chart-subtitle"><code>event_tuple</code>의 행위자(who)·시점(when)·정량 수치(extracted_metrics)는 전처리 추출 스냅샷입니다. 경보 확정 근거가 아니며, Risk Signal Score와 Alert Level 산식에는 사용되지 않습니다.</div>
+      </div>
+      <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+        <span class="kpi-tag tag-info" style="font-size:11px;">📦 High-Purity {html.escape(str(high_ref.get('file_name', '확인 필요')))}</span>
+        <span class="kpi-tag tag-amber" style="font-size:11px;">🔎 근거 없는 항목은 '확인 필요'</span>
+      </div>
+    </div>
+    <div class="refine-grid">{refine_tiles_html}</div>
+    <div style="overflow-x: auto;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+        <thead>
+          <tr style="border-bottom: 1px solid rgba(255,255,255,0.12); text-align: left;">
+            <th style="padding: 8px;">이벤트 (원문 링크)</th>
+            <th style="padding: 8px;">행위자 (who)</th>
+            <th style="padding: 8px;">행위 · 대상</th>
+            <th style="padding: 8px;">장소 (where)</th>
+            <th style="padding: 8px;">시점 (when)</th>
+            <th style="padding: 8px;">정량 수치 (extracted_metrics)</th>
+            <th style="padding: 8px;">검증 상태 · 전처리 심각도</th>
+            <th style="padding: 8px;">근거 두께</th>
+          </tr>
+        </thead>
+        <tbody>
+          {event_tuple_rows_html}
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size: 11px; color: var(--text-muted); margin-top: 12px; line-height: 1.6;">
+      위 표는 High-Purity 클러스터 {html.escape(str(high_ref.get('cluster_count', 0)))}건 중 정량 수치를 확보한 {evidence_metric_hits}건을 포함해 근거 두께 순으로 표시한 것입니다.
+      <b>전처리 심각도</b>는 문구 규칙 기반 잠정 판정이고 <code>verification_state</code>가 <code>UNVERIFIED</code>인 행이 대부분이므로, 사람이 원문 링크를 확인한 뒤 검토 후보로만 다뤄야 합니다.
+    </p>
   </section>
 
   <!-- Google Trends & 5 Local Opinion Sensors Section -->
@@ -998,6 +1149,12 @@ def generate_dashboard_html(data):
   .tag-danger {{ background: rgba(239, 68, 68, 0.15); color: var(--accent-red); }}
   .tag-success {{ background: rgba(16, 185, 129, 0.15); color: var(--accent-green); }}
   .tag-info {{ background: rgba(56, 189, 248, 0.15); color: var(--accent-cyan); }}
+  .tag-amber {{ background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); }}
+  .refine-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); gap: 12px; margin-bottom: 18px; }}
+  .refine-tile {{ background: rgba(0, 0, 0, 0.25); border: 1px solid var(--border); border-radius: 8px; padding: 13px 15px; }}
+  .refine-label {{ font-size: 11px; color: var(--text-muted); font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }}
+  .refine-value {{ font-size: 22px; font-weight: 800; margin-top: 6px; color: var(--accent-cyan); }}
+  .refine-sub {{ font-size: 11px; color: var(--text-muted); margin-top: 6px; line-height: 1.55; }}
 
   /* Chart Layout Grid */
   .charts-grid {{

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -10,6 +11,21 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 SIGNAL_GAP_PATH = PROJECT_ROOT / "data" / "signal_gap" / "signal_gap_analysis.json"
 MULTI_JUDGE_PATH = PROJECT_ROOT / "data" / "validation" / "multi_judge_audit_latest.json"
 CANONICAL_PATH = PROJECT_ROOT / "data" / "automation" / "canonical_signals_latest.json"
+CANONICAL_HIGH_PURITY_PATH = (
+    PROJECT_ROOT / "data" / "automation" / "canonical_signals_high_purity_latest.json"
+)
+
+# 전처리 event_tuple의 표기 규칙. 누락·미확정 값은 대시보드에서 결측으로 처리한다.
+_ISO_8601_RE = re.compile(
+    r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(\.\d+)?)?(Z|[+-]\d{2}:?\d{2})?$"
+)
+_METRIC_KIND_KO = {
+    "currency_price": "금액",
+    "percentage": "비율",
+    "quantity_unit": "물량·단위",
+}
+_UNRESOLVED_ACTOR_KEYWORDS = ("미상", "unspecified", "unknown", "multiple sources")
+_EMPTY_TOKENS = {"", "-", "none", "null", "n/a"}
 
 
 def _read_json(path: Path) -> dict[str, Any]:
@@ -38,6 +54,123 @@ def load_canonical_summary() -> dict[str, Any]:
         "generated_at": data.get("generated_at") or data.get("timestamp") or "",
         "cluster_count": len(clusters) if isinstance(clusters, list) else 0,
     }
+
+
+def _signals_of(data: dict[str, Any]) -> list[dict[str, Any]]:
+    clusters = data.get("signals") or data.get("clusters") or data.get("items") or []
+    return [c for c in clusters if isinstance(c, dict)] if isinstance(clusters, list) else []
+
+
+def _is_blank(value: str) -> bool:
+    return value.strip().lower() in _EMPTY_TOKENS
+
+
+def _is_iso8601(value: str) -> bool:
+    return not _is_blank(value) and bool(_ISO_8601_RE.match(value.strip()))
+
+
+def _actor_unresolved(value: str) -> bool:
+    if _is_blank(value):
+        return True
+    text = value.strip()
+    return any(k in text.lower() for k in _UNRESOLVED_ACTOR_KEYWORDS) or "미상" in text
+
+
+def format_event_metrics(raw: Any) -> list[str]:
+    """`event_tuple.extracted_metrics`를 사람이 읽는 문자열로 바꾼다. 비정형 항목은 버린다."""
+    if not isinstance(raw, list):
+        return []
+    out: list[str] = []
+    for item in raw:
+        if isinstance(item, dict):
+            value = str(item.get("value") or "").strip()
+            if _is_blank(value):
+                continue
+            kind = str(item.get("type") or "").strip()
+            out.append(f"{value} · {_METRIC_KIND_KO.get(kind, kind)}" if kind else value)
+        else:
+            value = str(item or "").strip()
+            if not _is_blank(value):
+                out.append(value)
+    return out
+
+
+def load_canonical_refinement(path: Path = CANONICAL_PATH) -> dict[str, Any]:
+    """전처리 세밀화(행위자·ISO-8601 시점·정량 수치)의 실제 커버리지를 클러스터 단위로 집계한다."""
+    data = _read_json(path)
+    signals = _signals_of(data)
+    who_resolved = when_iso = metric_clusters = metric_values = 0
+    for signal in signals:
+        tuple_ = signal.get("event_tuple") or {}
+        if not _actor_unresolved(str(tuple_.get("who") or "")):
+            who_resolved += 1
+        if _is_iso8601(str(tuple_.get("when") or "")):
+            when_iso += 1
+        metrics = format_event_metrics(tuple_.get("extracted_metrics"))
+        if metrics:
+            metric_clusters += 1
+            metric_values += len(metrics)
+
+    total = len(signals)
+
+    def pct(part: int) -> float:
+        return round(part / total * 100, 1) if total else 0.0
+
+    return {
+        "available": bool(data),
+        "file_name": path.name,
+        "generated_at": str(data.get("generated_at") or ""),
+        "purity_mode": str(data.get("purity_mode") or ""),
+        "cluster_count": total,
+        "tuple_count": sum(1 for s in signals if s.get("event_tuple")),
+        "who_resolved": who_resolved,
+        "who_unresolved": total - who_resolved,
+        "who_resolved_pct": pct(who_resolved),
+        "when_iso": when_iso,
+        "when_iso_pct": pct(when_iso),
+        "metric_clusters": metric_clusters,
+        "metric_values": metric_values,
+        "metric_cluster_pct": pct(metric_clusters),
+    }
+
+
+def build_event_tuple_evidence(
+    limit: int = 12, path: Path = CANONICAL_HIGH_PURITY_PATH
+) -> list[dict[str, Any]]:
+    """High-Purity 클러스터의 5W1H 튜플 근거 행.
+
+    값이 없으면 빈 문자열로 둔다 — 결측을 "확인 필요"로 바꾸는 책임은 렌더러에 있다.
+    """
+    rows: list[dict[str, Any]] = []
+    for signal in _signals_of(_read_json(path)):
+        tuple_ = signal.get("event_tuple") or {}
+        when = str(tuple_.get("when") or "")
+        who = str(tuple_.get("who") or "")
+        rows.append({
+            "title": str(signal.get("canonical_title") or signal.get("representative_title") or ""),
+            "who": who,
+            "who_unresolved": _actor_unresolved(who),
+            "action": str(tuple_.get("action") or ""),
+            "target": str(tuple_.get("target") or ""),
+            "where": str(tuple_.get("where") or ""),
+            "when": when,
+            "when_normalized": _is_iso8601(when),
+            "metrics": format_event_metrics(tuple_.get("extracted_metrics")),
+            "threat_severity": str(tuple_.get("threat_severity") or ""),
+            "supply_chain_tags": [str(t) for t in (signal.get("supply_chain_tags") or []) if t],
+            "chokepoints": [str(c) for c in (signal.get("chokepoints") or []) if c],
+            "verification_state": str(signal.get("verification_state") or ""),
+            "purity_tier": str(signal.get("purity_tier") or ""),
+            "cluster_size": int(signal.get("cluster_size") or 0),
+            "unique_sources_count": int(signal.get("unique_sources_count") or 0),
+            "primary_language": str(signal.get("primary_language") or ""),
+            "is_cross_lingual": bool(signal.get("is_cross_lingual")),
+            "url": str(signal.get("url") or ""),
+        })
+    # 정량 수치를 확보한 클러스터를 우선하되, 근거 두께(출처 수 → 기사 수)를 2·3순위로 본다.
+    rows.sort(key=lambda r: (bool(r["metrics"]), r["unique_sources_count"], r["cluster_size"]),
+              reverse=True)
+    return rows[:limit]
 
 
 def build_integrated_region_rows() -> list[dict[str, Any]]:

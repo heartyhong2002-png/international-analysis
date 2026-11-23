@@ -23,7 +23,11 @@ if str(_SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(_SCRIPT_DIR))
 
 from prototype_data import (  # noqa: E402
+    CANONICAL_HIGH_PURITY_PATH,
+    CANONICAL_PATH,
+    build_event_tuple_evidence,
     build_integrated_region_rows,
+    load_canonical_refinement,
     load_canonical_summary,
     load_multi_judge_audit,
 )
@@ -161,6 +165,60 @@ with tab_integrated:
                 st.error(sel["nim_note"])
             else:
                 st.caption("NIM 2차 감사 미실행 (`--nim-escalate` 필요)")
+
+    # --- 5W1H 이벤트 튜플 · 정량 근거 (전처리 세밀화 반영, 표시 전용) ---
+    st.divider()
+    st.subheader("🧬 5W1H 이벤트 튜플 · 정량 근거")
+    st.caption(
+        "`event_tuple`의 행위자(who)·시점(when)·정량 수치(extracted_metrics)는 전처리 추출 스냅샷입니다. "
+        "경보를 확정하는 근거가 아니며 Risk Signal Score·Alert Level 산식에는 사용되지 않습니다. "
+        "근거가 없는 항목은 경보로 승격하지 않고 '확인 필요'로 표시합니다."
+    )
+    std_ref = load_canonical_refinement(CANONICAL_PATH)
+    high_ref = load_canonical_refinement(CANONICAL_HIGH_PURITY_PATH)
+    if not high_ref.get("available"):
+        st.warning(
+            "High-Purity 전처리 산출물이 없습니다 — 전처리 세션에서 "
+            "`canonical_signals_high_purity_latest.json`을 생성한 뒤 새로고침하세요."
+        )
+
+    def _shown(info: dict, text: str) -> str:
+        return text if info.get("available") else "확인 필요"
+
+    t1, t2, t3, t4 = st.columns(4)
+    t1.metric("High-Purity 클러스터", _shown(high_ref, f"{high_ref['cluster_count']} 건"),
+              f"Standard {std_ref['cluster_count']} 건" if std_ref.get("available") else None)
+    t2.metric("행위자(who) 확인", _shown(high_ref, f"{high_ref['who_resolved_pct']}%"),
+              f"미상 {high_ref['who_unresolved']}건" if high_ref.get("available") else None)
+    t3.metric("when ISO-8601 정제", _shown(high_ref, f"{high_ref['when_iso_pct']}%"),
+              f"{high_ref['when_iso']}/{high_ref['cluster_count']}건 정규화" if high_ref.get("available") else None)
+    t4.metric("정량 수치 확보", _shown(high_ref, f"{high_ref['metric_values']} 건"),
+              f"{high_ref['metric_clusters']}개 클러스터" if high_ref.get("available") else None)
+
+    evidence_rows = build_event_tuple_evidence(limit=20)
+    if evidence_rows:
+        st.dataframe(
+            pd.DataFrame([
+                {
+                    "이벤트": r["title"][:90],
+                    "행위자(who)": "확인 필요" if r["who_unresolved"] else (r["who"] or "확인 필요"),
+                    "행위": r["action"] or "확인 필요",
+                    "대상": r["target"] or "확인 필요",
+                    "시점(when)": (r["when"] or "확인 필요") + ("" if r["when_normalized"] or not r["when"] else " (원문 표기)"),
+                    "정량 수치(extracted_metrics)": " · ".join(r["metrics"]) or "정량 수치 확인 필요",
+                    "검증 상태": r["verification_state"] or "확인 필요",
+                    "전처리 심각도": r["threat_severity"] or "확인 필요",
+                    "출처": r["unique_sources_count"],
+                    "언어": r["primary_language"] + (" · cross-lingual" if r["is_cross_lingual"] else ""),
+                }
+                for r in evidence_rows
+            ]),
+            use_container_width=True,
+            hide_index=True,
+        )
+        st.caption("전처리 심각도는 문구 규칙 기반 잠정 판정입니다. `UNVERIFIED` 행은 원문 링크 확인 후 검토 후보로만 다룹니다.")
+    else:
+        st.info("표시할 이벤트 튜플 근거가 없습니다 — '확인 필요' 상태입니다.")
 
 with tab_mysql:
     try:
