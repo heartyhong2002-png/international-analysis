@@ -19,8 +19,8 @@
 8. 표준 런타임은 **Python 3.13** (프로젝트 `.venv`). PATH의 구형 Python을 쓰지 않는다.
 9. 개인 포트폴리오 트랙(`docs/`, `scripts/`, `output/`)과 강송희 교수님 트랙(`prof_kang_project/`)은 문서를 섞지 않는다.
 
-기준일: 2026-11-02.
-현재 스냅샷: 패킷 A+B registry 보강 진행 중 · 증거 writer 완료 · 3단계 LLM 파이프라인·tev1 역할 분리 완료 · tev1 10건 시운전(일치5/불일치5, 합격 게이트 미고정) · HTML 대시보드 Information 축 교정 완료 · Streamlit 유지보수 진행 중 · 이상징후 스캐너·Notion 트리오 동기화 가동.
+기준일: 2026-11-22.
+현재 스냅샷: 수집 패킷 A·B·C 완료 · 폰 8대 수집기 24/7 + Airflow DAG 가동 · 전처리 세밀화 완료(Standard 419 / High-Purity 63 클러스터, 행위자 미상률 6.3%) · 3단계 LLM 파이프라인 가동, 합격 판정은 tev1 단독에서 4모델 다자간 감사(tev1·gemma2·nemotron-3-nano·mistral 재판관, 11-18 감사 스키마 오류 0건·reject 1건·revise 6건)로 대체 — 최종 잠금은 사람 블라인드 검수(Stage 1 현재 0/7 권역)에 대기 · DB evidence_writer 완료 · HTML+Streamlit E2E 통합 프로토타입 구축(11-16), 11-20 전처리 반영 갱신 진행 · 전문가 검증 보고서(MD/DOCX) 생성 · 이상징후 스캐너·Notion 트리오 동기화 가동.
 
 ---
 
@@ -45,12 +45,12 @@
 
 너는 컨트롤타워 담당이다. 전체 방향, 작업 우선순위, 문서 정합성, 세션 간 역할 충돌 방지, Git 커밋 단위 정리를 맡는다. 수집기·LLM 산식·DB 스키마·대시보드 구현은 직접 하지 말고, 어느 세션이 맡아야 하는지만 제안해.
 
-우선순위(조율용, 2026-11-02):
-1. 수집 세션: 패킷 A Federal Register 선택 수집기 → 패킷 B 동맹 registry 안정화 → 패킷 C(경쟁·대립축 role/OFAC·BIS)
-2. LLM 세션: tev1 합격 게이트(동결 원문·URL·인용·사람검수) 고정. 성능 주장·t-test/ANOVA 금지
-3. DB 세션: LLM 결과 → evidence_writer 입력 계약 연결, 공식 뷰에 실제 운영 행 확인(TEST-FIXTURE는 성과 아님)
-4. 대시보드: 공식 뷰 행이 생긴 뒤 HTML 재생성; Streamlit은 Active Work Board 소유 확인 후만
-5. QA: 과장 표현·오탐/미탐 append-only·tev1 불일치 5건 사람 검수
+우선순위(조율용, 2026-11-22):
+1. QA: Stage 1 사람 블라인드 검수 잠금 — 7개 권역 중 현재 0건(human_blind_review.py --interactive/--reveal). 11-18 감사의 reject 1건·revise 6건 후속 검수. 성능 주장·t-test/ANOVA 금지 계속
+2. 대시보드: E2E 통합 프로토타입에 11-20 전처리 세밀화 결과 반영 갱신(파견 진행 중); Streamlit은 Active Work Board 소유 확인 후에만 수정(보드 2026-09-28 in-progress 줄의 유효성은 보드 관리자가 별도 논의)
+3. 외부 연계: 11-18 전문가 검증 보고서 후속으로 Bluesky·Mastodon·Manifold 무료 API 외부 피드백 채널 연계
+4. 완료 영역(패킷 A·B·C, 폰 8대 24/7+Airflow, 3단계 LLM·다자간 감사단, evidence_writer)은 유지보수·확장만 파견
+5. QA 상시: 과장 표현 제거·오탐/미탐 append-only(VALIDATION_PLAN §8 표현 원칙)
 6. 발표/교수님 문서는 현재 구현 상태에 맞추기(미구현을 완성처럼 쓰지 마)
 
 담당 범위 밖 코드는 수정하지 마. 끝나면 AGENT_SYNC.md에 handoff만 남겨.
@@ -279,7 +279,7 @@ Alert Level은 v_dashboard_current_alerts만 읽는다. 없으면 확인 필요.
 | 교수님 보고서·PPT·논문 | 세션 8 |
 | AI 에이전트 인프라·Hermes·Discord·MCP | 세션 10 |
 
-권장 병렬: **1+2+4+7/8** → **3+6(게이트·검수)** → **5(공식 행 후)**.
+권장 병렬(2026-11-22): 현재 병목은 **6(Stage 1 사람 검수·감사 후속)** + **5(프로토타입에 11-20 전처리 반영)** + Bluesky 외부 연계 — 이들을 병렬 파견하고 **7/8**은 현재 상태 문서화; 2/2-1/3/4는 완료 영역의 유지보수·확장 건이 있을 때만.
 
 ---
 
