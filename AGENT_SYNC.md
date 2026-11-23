@@ -94,6 +94,9 @@ Cursor / ANTIGRAVITY / 로컬 터미널이 **같은 폴더**(Desktop Junction �
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
+| done | ANTIGRAVITY | spatial / geopandas-risk-overlay | `config/spatial/supply_chain_assets.geojson`, `scripts/analysis/spatial_risk_overlay.py`, `AGENT_SYNC.md` | `geopandas 1.2.0` 설치 및 지적학·GIS 공간 리스크 중첩 프로토타입 구축 (5대 해협 Polygon + 6대 반도체·희토류 거점 Point, `EPSG:4326`→`EPSG:6933` 미터 투영 300km 버퍼·`gpd.sjoin` 교차·최단거리 산출, 실행 테스트 대기) | 2026-11-23 |
+| done | Qwen Code / 검증·QA | validation / tev1-review-and-cross-audit | `data/validation_backtest_log.csv`, `data/false_alarm_missed_signal_log.csv`, `AGENT_SYNC.md` | tev1 불일치 5건 검수 판정 append(revise 2·accept 3, 단일 검수자 잠정)·오탐/evidence_gap 7건 기록·ANTIGRAVITY 검증단 보강 역검수 전 항목 실측 통과·게이트 보고(Stage 1 잠금 0/7, KPI 분모 0) | 2026-11-23 |
+| in-progress | ANTIGRAVITY | validation / critic-ablation-and-rule-kpi | `scripts/validation/run_multi_judge_audit.py`, `scripts/validation/generate_expert_review_report.py`, `AGENT_SYNC.md` | [우선순위 2·3·4 코드 반영] NIM 외부 전송 한계 고지 추가, `rule_recommended_decision` 결정론적 롤업 KPI 및 `gemma2` 교차참조 NIM 저비용 필터 구현 (우선순위 1 `deepseek-r1:7b` 재설치 승인 및 실측 실행 대기) | 2026-11-23 |
 | done | Qwen Code / Control Tower | prototype+validation+docs / first-dispatch-batch | `scripts/dashboard/prototype_data.py`, `scripts/dashboard/generate_dashboard_v2.py`, `scripts/dashboard/streamlit_dashboard.py`, `docs/advisor_meeting/STAGE1_BLIND_REVIEW_PROCEDURE.md`, `docs/SESSION_PROMPTS.md` | 서브세션 첫 병렬 파견(D1·D2·D3) 수신·diff 리뷰·py_compile 검증·커밋: 대시보드에 11-20 전처리 세밀화 반영(5W1H 커버리지 타일·High-Purity 근거 표·결측 '확인 필요' 가드레일, 산식 미연결), Stage 1 블라인드 검수 1장 절차서 신설, SESSION_PROMPTS 우선순위를 11-22 라이브 기준 갱신 | 2026-11-23 |
 | done | Qwen Code / Control Tower | orchestration / control-tower-subsession-model | `docs/current/CONTROL_TOWER_ORCHESTRATION.md`, `docs/SESSION_PROMPTS.md`, `AGENT_SYNC.md`, `PROJECT_CONTEXT.md` | 다중 세션 분업+MD 보드 조율을 대체: 컨트롤타워 1세션이 서브세션으로 트랙 작업 파견, 보드 발행·커밋 권한 단일화 프로토콜 도입 | 2026-11-22 |
 | done | ANTIGRAVITY | preprocessing / fine-grained-nlp-refinement | `scripts/automation/preprocess_signals.py`, `data/automation/canonical_signals*.json` | 전처리 세밀화 고도화: 바이라인·제어문자 제거(`clean_text_fine`), 페르시아어(`fa`) 분리·다국어 5W1H 추출(High-Purity `who` 미상률 22.7%→6.3%), 토픽 드리프트·중복 클러스터 병합, 시점 ISO-8601 통일 및 정량 수치(`extracted_metrics`) 추출 완료 | 2026-11-20 |
@@ -172,6 +175,35 @@ Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하�
 - 바꾼 파일: `docs/current/CONTROL_TOWER_ORCHESTRATION.md`(신규), `docs/SESSION_PROMPTS.md`, `AGENT_SYNC.md`, `PROJECT_CONTEXT.md`.
 - 확인한 것: 문서 전용 변경, 코드·데이터 미수정. 외부 도구(Cursor/ANTIGRAVITY) 세션 병존 기간엔 §A/§B 규약 그대로 유효.
 - 다음 작업: 실제 트랙 작업부터 컨트롤타워 파견 체제로 운영 → 잘 맞으면 SESSION_PROMPTS 공통 규칙에 기본화 반영 → 희망 시 `agent_tasks` MySQL 큐로 보드 기계화(후속).
+
+2026-11-23 [ANTIGRAVITY / Validation·QA · LLM 검증단 보강(규칙 롤업 KPI·NIM 저비용 필터·외부 전송 고지) Handoff]
+- 한 일:
+  1. **[우선순위 2]** `scripts/validation/generate_expert_review_report.py`에 `--nim-escalate` 실행 시 프롬프트가 외부 API(NVIDIA NIM)로 전송된다는 한계 고지 콜아웃 추가.
+  2. **[우선순위 3]** `scripts/validation/run_multi_judge_audit.py`에 `derive_rule_recommended_decision()` 추가 — `T1~T8` 트리거 기반 `rule_recommended_decision`을 결정론적으로 유도하고 `rule_vs_judge_kpi`(일치/불일치 건수)를 출력 JSON에 기록 (`auto_accept=false` 유지).
+  3. **[우선순위 4]** `should_escalate_to_nim()` 저비용 필터 추가 — `gemma2`가 이미 `unsupported` 또는 `unverifiable_source_missing`으로 판정한 건(`SCHEMA_OR_CALL_ERROR` 제외)은 외부 NIM 호출을 생략(`skipped_by_gemma_filter`)해 에스컬레이션 빈도를 절감.
+- 미수행 / 승인·환경 확인 필요:
+  - **[우선순위 1]** `deepseek-r1:7b`(~4.7 GB) 재설치 및 `nemotron-3-nano:4b` vs `deepseek-r1:7b` 7개 권역 대조 실험 미실행 (규칙상 대량 다운로드 전 사용자 승인 필요 + 현재 `c:\Users\홍준기\Desktop\international-analysis` 디렉터리 부재로 `run_command` 쉘 실행 차단 상태).
+  - 보고서 재생성(`generate_expert_review_report.py`) 및 `py_compile`/실측 재실행도 정션 복구 후 실행 필요.
+- QA 관할 이관 사항 (본 세션 미수정):
+  - `calculate_alert_assessment` 산식의 `signal_gap` 가중치 검토 제안 및 `TEST` fixture 분리 처리는 QA 관할로 이관.
+
+2026-11-23 [Qwen Code / 검증·QA · tev1 불일치 검수 + 검증단 보강 역검수(상호 검증 방향 A 첫 기록) Handoff]
+- 한 일:
+  1. **tev1 불일치 5건 검수 판정**을 `data/validation_backtest_log.csv`에 append — revise 2건(`BT-2026-UKR-02`·`BT-2024-TWN-01`: PARTIALLY_CONFIRMED 상태에서 고경보 과배정), accept 3건(`BT-2024-REDSEA-01`·`BT-2026-USCN-02`: 판단 보류 가드레일 작동 확인, `BT-2026-ALLY-02`: 산식 NORMAL 수용). 전부 `single_reviewer_provisional`·open review(모델 출력 열람 후 판정, 눈가림 미적용) 명시 — §10.4.3 블라인드 절차의 대체물이 아니며 랩 검수의 참고 감사 기록.
+  2. **오탐 후보 3건 + evidence_gap 4건**(`VAL-20261123-01~07`)을 `data/false_alarm_missed_signal_log.csv`에 append-only 기록(open, recheck 2026-12-07). 핵심: tev1 CROSS_VERIFIED 과민, 산식 gap 과배정 후보 2건, placeholder URL(`t.me/s/osint_sample`), frozen_date↔URL 날짜 불일치(`BT-2022-UKR-01`), 섹션 레벨 URL 6/10건, 검수 로그 TEST-FIXTURE 혼입. 미탐 후보는 사후 공개 정보만으로 판정 불가하여 이번 배치에 없음(§6 준수).
+  3. **ANTIGRAVITY 검증단 보강 역검수 — 전 항목 실측 통과**:
+     - 비판관 대조(우선 1): git 히스토리 `e77c31e`의 deepseek 실행본(generated_at 2026-11-13T19:42Z) vs 11-18 nemotron 실행본을 권역별 `input_snapshot_id` 동일성 확인 후 대조 — 전체 일치 4/7, WARNING 4권역 일치 4/4, 불일치 3건 전부 근거 공백 보류 권역(deepseek overstated 2+schema_error 1 vs nemotron supported 3). 보고 수치와 완전 일치. 재설치 없이 히스토리 데이터로 수행한 방식 인정.
+     - NIM 고지(우선 2): `generate_expert_review_report.py:88` 문구 존재 확인. 산출물(MD/DOCX) 재생성은 미수행(정션 환경 이슈) — **부분 완료**로 기록.
+     - 규칙 롤업(우선 3): `derive_rule_recommended_decision` 로직 검토 + 11-18 감사 JSON 대조 — 일치 4/불일치 3, 권역별 상세(Latin_Am rule=revise vs judge=reject, Middle_East·US_Policy_Tech rule=reject vs judge=revise) 보고와 동일.
+     - gemma 필터(우선 4): `should_escalate_to_nim` 실제 함수 호출 대조 — NIM 대상 2건(Russia·China), 생략 5건(unverifiable_source_missing 3+unsupported 2) 보고와 동일.
+     - `py_compile` 2종 통과, QA 소유 CSV 5종 메인 체크아웃 미수정 확인(git status).
+- 검증 메모(비차단):
+  1. 규칙 롤업이 T1 단독 불일치를 `accept_candidate`로 분류 — T1은 §10.4.4 사람 검수 강제 트리거이므로 KPI 보고 시 `needs_human_review=true`와 반드시 병기(오독 방지).
+  2. ANTIGRAVITY 역제안(근거 공백 시 LLM 호출 없이 결정론적 `insufficient`)은 방향 동의 — 구현 시 모델 판정과 규칙 판정의 provenance 필드 구분 필수.
+  3. 보드 정정 제안: ANTIGRAVITY 행(`critic-ablation-and-rule-kpi`)의 "우선 1 실측 실행 대기" 표현은 stale — 대조는 히스토리 데이터로 완료, 재설치만 보류 상태이므로 행 설명 갱신 권장.
+- 게이트 충족 보고: Stage 1 잠금 **0/7**, §10.5 스키마 완료 검수 **0건**(fixture 제외) → §7 KPI 분모 0. tev1 10건·검증단 일치율을 Human acceptance로 보고 금지 유지. `sample_backtest_01`(review_log, 헤더 컬럼 수 불일치)·`sample_pending_01`(pending_human_review) fixture 행은 삭제 승인 대기 — 미실행.
+- 바꾼 파일: (worktree `quick-elm-eb96ff`) `data/validation_backtest_log.csv`·`data/false_alarm_missed_signal_log.csv` / (메인 체크아웃) `AGENT_SYNC.md` 본 블록+보드 행.
+- 다음 작업(컨트롤타워): 두 트리 변경 통합 커밋(메인=검증 스크립트 2종+보드, worktree=QA CSV 2종) → 정션 복구 후 보고서 재생성·감사 재실행 → Stage 1 7/7 잠금(랩, 절차서 따름) → fixture 분리 승인 → 산식 gap 가중치 검토는 산식 소유 세션으로 이관(QA·LLM 세션 변경 금지).
 
 2026-11-23 [Qwen Code / 컨트롤타워 · 첫 병렬 파견 배치(D1·D2·D3) 소비 완결]
 - 한 일:
