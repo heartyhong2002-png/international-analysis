@@ -94,6 +94,7 @@ Cursor / ANTIGRAVITY / 로컬 터미널이 **같은 폴더**(Desktop Junction �
 
 | Status | Owner | Area | Files | Task | Last Updated |
 | --- | --- | --- | --- | --- | --- |
+| done | Qwen Code / Control Tower | prototype+validation+docs / first-dispatch-batch | `scripts/dashboard/prototype_data.py`, `scripts/dashboard/generate_dashboard_v2.py`, `scripts/dashboard/streamlit_dashboard.py`, `docs/advisor_meeting/STAGE1_BLIND_REVIEW_PROCEDURE.md`, `docs/SESSION_PROMPTS.md` | 서브세션 첫 병렬 파견(D1·D2·D3) 수신·diff 리뷰·py_compile 검증·커밋: 대시보드에 11-20 전처리 세밀화 반영(5W1H 커버리지 타일·High-Purity 근거 표·결측 '확인 필요' 가드레일, 산식 미연결), Stage 1 블라인드 검수 1장 절차서 신설, SESSION_PROMPTS 우선순위를 11-22 라이브 기준 갱신 | 2026-11-23 |
 | done | Qwen Code / Control Tower | orchestration / control-tower-subsession-model | `docs/current/CONTROL_TOWER_ORCHESTRATION.md`, `docs/SESSION_PROMPTS.md`, `AGENT_SYNC.md`, `PROJECT_CONTEXT.md` | 다중 세션 분업+MD 보드 조율을 대체: 컨트롤타워 1세션이 서브세션으로 트랙 작업 파견, 보드 발행·커밋 권한 단일화 프로토콜 도입 | 2026-11-22 |
 | done | ANTIGRAVITY | preprocessing / fine-grained-nlp-refinement | `scripts/automation/preprocess_signals.py`, `data/automation/canonical_signals*.json` | 전처리 세밀화 고도화: 바이라인·제어문자 제거(`clean_text_fine`), 페르시아어(`fa`) 분리·다국어 5W1H 추출(High-Purity `who` 미상률 22.7%→6.3%), 토픽 드리프트·중복 클러스터 병합, 시점 ISO-8601 통일 및 정량 수치(`extracted_metrics`) 추출 완료 | 2026-11-20 |
 | done | ANTIGRAVITY | validation / mistral-presiding-judge-and-expert-report | `scripts/validation/run_multi_judge_audit.py`, `scripts/validation/human_blind_review.py`, `scripts/validation/generate_expert_review_report.py`, `data/validation/multi_judge_audit_latest.json`, `docs/advisor_meeting/EXPERT_VALIDATION_REPORT.md`, `docs/advisor_meeting/EXPERT_VALIDATION_REPORT_A4.docx` | `mistral:7b` 재판관(Presiding Judge) 도입·7개 권역 전수 감사(오류 0건), Stage 2 블라인드 검수 CLI 연동 및 연구실(교수님·대학원생)·Bluesky 이중 검증 보고서(MD/DOCX) 생성 완료 | 2026-11-18 |
@@ -171,6 +172,16 @@ Status 값은 `open`, `in-progress`, `review-needed`, `done`, `blocked` 중 하�
 - 바꾼 파일: `docs/current/CONTROL_TOWER_ORCHESTRATION.md`(신규), `docs/SESSION_PROMPTS.md`, `AGENT_SYNC.md`, `PROJECT_CONTEXT.md`.
 - 확인한 것: 문서 전용 변경, 코드·데이터 미수정. 외부 도구(Cursor/ANTIGRAVITY) 세션 병존 기간엔 §A/§B 규약 그대로 유효.
 - 다음 작업: 실제 트랙 작업부터 컨트롤타워 파견 체제로 운영 → 잘 맞으면 SESSION_PROMPTS 공통 규칙에 기본화 반영 → 희망 시 `agent_tasks` MySQL 큐로 보드 기계화(후속).
+
+2026-11-23 [Qwen Code / 컨트롤타워 · 첫 병렬 파견 배치(D1·D2·D3) 소비 완결]
+- 한 일:
+  1. **D2 대시보드 갱신**: `prototype_data.py`에 전처리 세밀화 소비 로더(`load_canonical_refinement`·`build_event_tuple_evidence`·`format_event_metrics`) 신설, HTML·Streamlit에 5W1H 커버리지 타일(who/when-ISO-8601/extracted_metrics)과 High-Purity 근거 표 추가. 표시 전용이며 Risk Signal Score·Alert Level 산식 미연결, 결측은 '확인 필요' 처리(VALIDATION_PLAN §8 준수).
+  2. **D1 검수 절차서**: `docs/advisor_meeting/STAGE1_BLIND_REVIEW_PROCEDURE.md` 1장 — Stage 1 5항목 작성→잠금→Stage 2 개방 절차와 경로 A(`--export`/`--reveal`)·B(`--interactive`) 선택 트레이드오프 명문화. 현재 Stage 1 잠금 0/7.
+  3. **D3 문서 정합**: SESSION_PROMPTS 기준일/스냅샷·역할 1 우선순위·권장 병렬을 11-22 라이브 상태 기준으로 갱신(보드 handoff 근거 매핑 확인).
+- 바꾼 파일: `scripts/dashboard/prototype_data.py`, `scripts/dashboard/generate_dashboard_v2.py`, `scripts/dashboard/streamlit_dashboard.py`, `docs/advisor_meeting/STAGE1_BLIND_REVIEW_PROCEDURE.md`(신규), `docs/SESSION_PROMPTS.md`, `AGENT_SYNC.md`. 커밋 4종(`7b7830f`·`9d78ff9`·`8662e2f` + 보드).
+- 확인한 것: 서브세션 산출 diff 전량 리뷰, `py_compile` 3종 통과, `output/dashboard/index.html` 11-22 21:06 재생본 산출 확인(산출물은 gitignore 대상). `human_blind_review.py --status`는 읽기 전용.
+- 다음 작업: Stage 1 사람 검수 7/7 잠금(사용자·랩, 절차서 따름) → D2 스트리프트 실기동 확인 → Bluesky/Mastodon·Manifold 외부 피드백 연계 → 원하면 stale 보드 줄(`in-progress dashboard/ui 09-28`) 정리.
+- 주의: `git fetch`가 고아 worktree 관리 디렉터리(`.git/worktrees/keen-pine-df1a27`) 삭제를 물어보며 멈춤 — 메인 체크아웃에서 `git worktree prune` 직접 실행 필요(자동 모드에서는 차단됨).
 
 2026-11-20 [ANTIGRAVITY / preprocessing · 전처리 세밀화 고도화 (텍스트 정제·페르시아어 분리·수치 추출·중복 병합) Handoff]
 - 한 일:
