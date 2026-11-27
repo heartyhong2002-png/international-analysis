@@ -15,3 +15,12 @@
 ## 3. MySQL MCP (`international_analysis` DB)
 - **Tools**: `mcp_mysql_execute_sql`, `mcp_mysql_get_schema_info`, `mcp_mysql_get_table_sample`
 - **Key Tables**: `alert_events`, `rss_signal_gap`, `maritime_chokepoint_signals`, `cross_verified_events`, `financial_proxy`
+
+## 4. Antigravity ↔ Qwen Code 병행 연동 규칙 (충돌 방지)
+1. **Worktree / 브랜치 격리**:
+   - Qwen Code는 `.qwen/worktrees/*` (`qwen/*` 브랜치)에서 작업하고, Antigravity는 메인 워킹트리(`cursor/actions-light-collection` 또는 전용 `antigravity/*` 브랜치)에서 작업한다. (`.qwen/`은 `.gitignore`로 커밋 제외)
+2. **파일 소유권 분리 (동시 수정 금지)**:
+   - 작업 시작 전 `git status -sb`와 `AGENT_SYNC.md` 상단을 확인해 상대가 수정 중인 파일을 동시에 건드리지 않는다.
+   - `AGENT_SYNC.md` 보드 갱신과 최종 `origin/cursor/actions-light-collection` 푸시는 통합 시점에 한 번에 반영한다.
+3. **작업 연동 절차**:
+   - Qwen Code 작업 완료 후 전용 브랜치(`qwen/*`)에 커밋 → 메인 브랜치에서 `git merge --no-ff qwen/<branch>` (또는 `cherry-pick`)로 병합 → `py_compile` 검증 후 `origin` 푸시.

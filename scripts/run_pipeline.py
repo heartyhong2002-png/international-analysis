@@ -151,6 +151,9 @@ def main():
         steps.append(("§10.4 멀티저지 직교 검증단 실행", "validation/run_multi_judge_audit.py", audit_args))
         if not args.skip_db:
             steps.append(("MySQL DB로 통합", "db/build_database.py", []))
+            if os.getenv("DB_BACKEND", "postgres").strip().lower() == "postgres":
+                steps.append(("MySQL -> PostgreSQL 이관 동기화", "db/migrate_mysql_to_postgres.py", []))
+                steps.append(("PostgreSQL 신규 데이터셋 동기화", "db/load_new_datasets_to_postgres.py", []))
         if not args.skip_dashboard:
             steps.append(("인터랙티브 HTML 대시보드 생성", "dashboard/generate_dashboard_v2.py", []))
     elif not args.only_db:
@@ -213,6 +216,9 @@ def main():
         if not args.skip_db:
             steps.append(("MySQL DB로 통합", "db/build_database.py", []))
             steps.append(("해협 센서 및 교차검증 MySQL DB 동기화", "db/load_cross_verification_to_db.py", []))
+            if os.getenv("DB_BACKEND", "postgres").strip().lower() == "postgres":
+                steps.append(("MySQL -> PostgreSQL 이관 동기화", "db/migrate_mysql_to_postgres.py", []))
+                steps.append(("PostgreSQL 신규 데이터셋 동기화", "db/load_new_datasets_to_postgres.py", []))
         if not args.skip_dashboard:
             steps.append(("인터랙티브 HTML 대시보드 생성", "dashboard/generate_dashboard_v2.py", []))
         if args.sync_notion:

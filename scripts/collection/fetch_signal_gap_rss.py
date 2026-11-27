@@ -103,6 +103,27 @@ RSS_FEEDS = {
                 "relationship_role": "competitor_adversary_axis",
                 "packet": "C",
                 "license_access_note": "People's Daily English World RSS; Chinese state media narrative layer."
+            },
+            {
+                "source_id": "cn_people_daily_zh_politics_rss",
+                "url": "http://www.people.com.cn/rss/politics.xml",
+                "relationship_role": "competitor_adversary_axis",
+                "packet": "C",
+                "license_access_note": "People's Daily Simplified Chinese Politics RSS; Chinese state media narrative layer."
+            },
+            {
+                "source_id": "cn_people_daily_zh_world_rss",
+                "url": "http://www.people.com.cn/rss/world.xml",
+                "relationship_role": "competitor_adversary_axis",
+                "packet": "C",
+                "license_access_note": "People's Daily Simplified Chinese World RSS; Chinese state media narrative layer."
+            },
+            {
+                "source_id": "cn_chinanews_zh_rss",
+                "url": "https://www.chinanews.com.cn/rss/scroll-news.xml",
+                "relationship_role": "competitor_adversary_axis",
+                "packet": "C",
+                "license_access_note": "China News Service (中新网) Simplified Chinese public RSS; Chinese state media layer."
             }
         ],
         "Independent": [
@@ -112,6 +133,62 @@ RSS_FEEDS = {
                 "relationship_role": "competitor_adversary_axis",
                 "packet": "C",
                 "license_access_note": "Radio Free Asia public RSS; covers Xinjiang, South China Sea, and Chinese censorship."
+            },
+            {
+                "source_id": "cn_bbc_zh_rss",
+                "url": "https://feeds.bbci.co.uk/zhongwen/simp/rss.xml",
+                "relationship_role": "competitor_adversary_axis",
+                "packet": "C",
+                "license_access_note": "BBC Chinese (Simplified) public RSS; independent Chinese-language reporting."
+            },
+            {
+                "source_id": "cn_rfa_zh_rss",
+                "url": "https://www.rfa.org/mandarin/RSS",
+                "relationship_role": "competitor_adversary_axis",
+                "packet": "C",
+                "license_access_note": "Radio Free Asia Mandarin public RSS; Chinese-language censorship, Xinjiang, and domestic signals."
+            },
+            {
+                "source_id": "cn_dw_zh_rss",
+                "url": "https://rss.dw.com/xml/rss-chi-all",
+                "relationship_role": "competitor_adversary_axis",
+                "packet": "C",
+                "license_access_note": "Deutsche Welle Chinese public RSS; independent European Chinese-language analysis."
+            },
+            {
+                "source_id": "cn_cdt_zh_rss",
+                "url": "https://chinadigitaltimes.net/chinese/feed",
+                "relationship_role": "competitor_adversary_axis",
+                "packet": "C",
+                "license_access_note": "China Digital Times Chinese public RSS; censorship archive and civil discourse tracker."
+            },
+            {
+                "source_id": "tw_cna_politics_zh_rss",
+                "url": "https://feeds.feedburner.com/rsscna/politics",
+                "relationship_role": "ally",
+                "packet": "B",
+                "license_access_note": "Central News Agency (Taiwan) Traditional Chinese Politics RSS; cross-strait security and policy."
+            },
+            {
+                "source_id": "tw_reporter_zh_rss",
+                "url": "https://www.twreporter.org/a/rss2.xml",
+                "relationship_role": "ally",
+                "packet": "B",
+                "license_access_note": "The Reporter (報導者) Traditional Chinese public RSS; non-profit investigative journalism in Taiwan."
+            },
+            {
+                "source_id": "cn_gnews_semiconductor_zh_rss",
+                "url": "https://news.google.com/rss/search?q=%E5%8D%8A%E5%AF%BC%E4%BD%93+OR+%E5%87%BA%E5%8F%A3%E7%AE%A1%E5%88%B6+OR+%E5%8F%B0%E6%B5%B7&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+                "relationship_role": "competitor_adversary_axis",
+                "packet": "C",
+                "license_access_note": "Google News Simplified Chinese targeted RSS for semiconductor, export controls, and Taiwan Strait."
+            },
+            {
+                "source_id": "tw_gnews_strait_zh_rss",
+                "url": "https://news.google.com/rss/search?q=%E5%8F%B0%E6%B5%B7+OR+%E5%8D%8A%E5%B0%8E%E9%AB%94+OR+%E4%B8%AD%E5%85%B1&hl=zh-TW&gl=TW&ceid=TW:zh-Hant",
+                "relationship_role": "ally",
+                "packet": "B",
+                "license_access_note": "Google News Traditional Chinese targeted RSS for Taiwan Strait, semiconductor supply chain, and CCP policy."
             },
             {
                 "source_id": "csis_global",

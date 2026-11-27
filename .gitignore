@@ -71,6 +71,7 @@ Claude outputs/
 output/
 logs/
 .run/
+.qwen/
 scratch/
 
 # 압축파일

@@ -14,6 +14,9 @@ CANONICAL_PATH = PROJECT_ROOT / "data" / "automation" / "canonical_signals_lates
 CANONICAL_HIGH_PURITY_PATH = (
     PROJECT_ROOT / "data" / "automation" / "canonical_signals_high_purity_latest.json"
 )
+SPATIAL_ASSETS_PATH = PROJECT_ROOT / "data" / "spatial" / "spatial_assets_exposure.geojson"
+SPATIAL_SIGNALS_PATH = PROJECT_ROOT / "data" / "spatial" / "spatial_signals_latest.geojson"
+SPATIAL_SUMMARY_PATH = PROJECT_ROOT / "data" / "spatial" / "spatial_exposure_summary.json"
 
 # 전처리 event_tuple의 표기 규칙. 누락·미확정 값은 대시보드에서 결측으로 처리한다.
 _ISO_8601_RE = re.compile(
@@ -220,3 +223,113 @@ def build_integrated_region_rows() -> list[dict[str, Any]]:
             "evidence_phrases": s_item.get("evidence_phrases") or [],
         })
     return rows
+
+
+def _feature_center(geometry: dict[str, Any]) -> tuple[float, float] | None:
+    """Return (lon, lat) center for Point or Polygon GeoJSON geometry."""
+    gtype = geometry.get("type")
+    coords = geometry.get("coordinates")
+    if not coords:
+        return None
+    if gtype == "Point" and len(coords) >= 2:
+        return float(coords[0]), float(coords[1])
+    if gtype == "Polygon" and coords and coords[0]:
+        ring = coords[0]
+        lons = [float(p[0]) for p in ring if len(p) >= 2]
+        lats = [float(p[1]) for p in ring if len(p) >= 2]
+        if lons and lats:
+            return round(sum(lons) / len(lons), 4), round(sum(lats) / len(lats), 4)
+    return None
+
+
+def load_spatial_overlay() -> dict[str, Any]:
+    """Load GeoPandas spatial risk overlay outputs for dashboard visualization.
+
+    보조 지표 전용 로더: 공간 노출도(spatial_exposure_level)는 시각화·해석 보조 신호이며
+    결정론적 경보 산식(calculate_alert_assessment)에 절대 연결하지 않는다.
+    """
+    summary = _read_json(SPATIAL_SUMMARY_PATH)
+    assets_geo = _read_json(SPATIAL_ASSETS_PATH)
+    signals_geo = _read_json(SPATIAL_SIGNALS_PATH)
+
+    asset_features = assets_geo.get("features") if isinstance(assets_geo.get("features"), list) else []
+    signal_features = signals_geo.get("features") if isinstance(signals_geo.get("features"), list) else []
+
+    asset_rows: list[dict[str, Any]] = []
+    for feat in asset_features:
+        props = feat.get("properties") or {}
+        geom = feat.get("geometry") or {}
+        center = _feature_center(geom)
+        asset_rows.append({
+            "asset_id": str(props.get("asset_id") or ""),
+            "name": str(props.get("name") or ""),
+            "asset_type": str(props.get("asset_type") or ""),
+            "sector": str(props.get("sector") or ""),
+            "region": str(props.get("region") or ""),
+            "overlapping_signals": int(float(props.get("overlapping_signals") or 0)),
+            "tier1_overlapping": int(float(props.get("tier1_overlapping") or 0)),
+            "nearest_signal_km": round(float(props.get("nearest_signal_km") or 0.0), 1),
+            "spatial_exposure_level": str(props.get("spatial_exposure_level") or "NONE"),
+            "geometry_type": str(geom.get("type") or ""),
+            "lon": center[0] if center else 0.0,
+            "lat": center[1] if center else 0.0,
+        })
+
+    asset_rows.sort(key=lambda r: (-r["overlapping_signals"], r["nearest_signal_km"], r["asset_id"]))
+
+    # Aggregate geocoded signals by coordinate + place_name so overlapping points render cleanly
+    cluster_map: dict[tuple[str, float, float], dict[str, Any]] = {}
+    for feat in signal_features:
+        props = feat.get("properties") or {}
+        geom = feat.get("geometry") or {}
+        center = _feature_center(geom)
+        if not center:
+            continue
+        lon, lat = round(center[0], 4), round(center[1], 4)
+        place = str(props.get("place_name") or "Unknown")
+        key = (place, lon, lat)
+        if key not in cluster_map:
+            cluster_map[key] = {
+                "place_name": place,
+                "lon": lon,
+                "lat": lat,
+                "geo_method": str(props.get("geo_method") or ""),
+                "signal_count": 0,
+                "tier1_count": 0,
+                "tier2_count": 0,
+                "tier3_count": 0,
+                "sample_titles": [],
+            }
+        bucket = cluster_map[key]
+        bucket["signal_count"] += 1
+        tier = str(props.get("purity_tier") or "")
+        if tier == "TIER_1_CORROBORATED":
+            bucket["tier1_count"] += 1
+        elif tier == "TIER_2_VERIFIED_ENTITY":
+            bucket["tier2_count"] += 1
+        else:
+            bucket["tier3_count"] += 1
+        title = str(props.get("title") or "").strip()
+        if title and len(bucket["sample_titles"]) < 4 and title not in bucket["sample_titles"]:
+            bucket["sample_titles"].append(title[:110])
+
+    signal_clusters = sorted(
+        cluster_map.values(),
+        key=lambda c: (-c["tier1_count"], -c["signal_count"], c["place_name"]),
+    )
+
+    available = bool(asset_features)
+    return {
+        "available": available,
+        "generated_at": str(summary.get("generated_at") or ""),
+        "geopandas_version": str(summary.get("geopandas_version") or ""),
+        "crs_input": str(summary.get("crs_input") or "EPSG:4326"),
+        "crs_metric_analysis": str(summary.get("crs_metric_analysis") or "EPSG:6933"),
+        "buffer_km": float(summary.get("buffer_km") or 300.0),
+        "total_canonical_signals": int(summary.get("total_canonical_signals") or 0),
+        "geocoded_signals": int(summary.get("geocoded_signals") or len(signal_features)),
+        "assets_geojson": assets_geo if available else {"type": "FeatureCollection", "features": []},
+        "signals_geojson": signals_geo if signal_features else {"type": "FeatureCollection", "features": []},
+        "asset_rows": asset_rows,
+        "signal_clusters": signal_clusters,
+    }

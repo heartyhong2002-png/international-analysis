@@ -523,6 +523,38 @@ def run_nim_escalation(
         }
 
 
+def derive_rule_recommended_decision(
+    gemma_worst: str | None,
+    triggers: list[str],
+) -> str:
+    """Deterministically derive an advisory recommendation from T1-T8 triggers (KPI only; never auto-accepts)."""
+    if gemma_worst == "unsupported":
+        return "reject_candidate"
+    substantive = {"T2", "T3", "T4", "T5", "T6", "SCHEMA_OR_CALL_ERROR"}
+    if any(t in substantive for t in triggers):
+        return "revise_candidate"
+    return "accept_candidate"
+
+
+def should_escalate_to_nim(row: dict[str, Any]) -> tuple[bool, str]:
+    """Low-cost filter: avoid external NIM calls when gemma2 already invalidated or flagged missing evidence."""
+    gov = row.get("governance") or {}
+    if not gov.get("needs_human_review"):
+        return False, "no_human_review_trigger"
+    triggers = set(gov.get("triggers") or [])
+    gemma_worst = (row.get("gemma2") or {}).get("worst_verdict")
+    critic_verdict = (row.get("deepseek_r1") or {}).get("inference_verdict")
+    if (
+        gemma_worst in {"unsupported", "unverifiable_source_missing"}
+        and "SCHEMA_OR_CALL_ERROR" not in triggers
+    ):
+        return (
+            False,
+            f"skipped_by_gemma_filter(gemma2={gemma_worst}, critic={critic_verdict})",
+        )
+    return True, "eligible"
+
+
 def evaluate_triggers(
     formula_en: str,
     tev1_res: dict[str, Any],
@@ -564,11 +596,14 @@ def evaluate_triggers(
         and ds_verdict == "supported"
     )
 
+    rule_rec = derive_rule_recommended_decision(gemma_worst, triggers)
+
     return {
         "triggers": triggers,
         "needs_human_review": bool(triggers),
         "priority": "low" if only_normal_watch_diff else ("high" if triggers else "normal"),
         "invalidated_by_unsupported_fact": invalidated_by_fact,
+        "rule_recommended_decision": rule_rec,
         "auto_accept": False,
     }
 
@@ -666,12 +701,35 @@ def main() -> None:
         else:
             item_by_region = {it["region"]: it for it in items}
             for row in audit_rows:
-                if row["governance"]["needs_human_review"]:
+                eligible, reason = should_escalate_to_nim(row)
+                if eligible:
                     row["nim_escalation"] = run_nim_escalation(
                         item_by_region[row["region"]],
                         api_key=nim_key,
                         model_id=args.nim_model,
                     )
+                elif row["governance"]["needs_human_review"]:
+                    row["nim_escalation"] = {
+                        "alert_id": row["alert_id"],
+                        "schema_version": "v1",
+                        "model_id": args.nim_model,
+                        "status": "skipped_by_gemma_filter",
+                        "reason": reason,
+                    }
+
+    disagreements: list[dict[str, Any]] = []
+    compared_count = 0
+    for r in audit_rows:
+        rule_rec = r["governance"].get("rule_recommended_decision")
+        judge_rec = (r.get("presiding_judge") or {}).get("recommended_decision")
+        if rule_rec and judge_rec:
+            compared_count += 1
+            if rule_rec != judge_rec:
+                disagreements.append({
+                    "region": r["region"],
+                    "rule_recommended_decision": rule_rec,
+                    "judge_recommended_decision": judge_rec,
+                })
 
     summary = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
@@ -679,6 +737,12 @@ def main() -> None:
         "source_file": str(args.input),
         "total_audited": len(audit_rows),
         "needs_human_review_count": sum(1 for r in audit_rows if r["governance"]["needs_human_review"]),
+        "rule_vs_judge_kpi": {
+            "compared_count": compared_count,
+            "agreement_count": compared_count - len(disagreements),
+            "disagreement_count": len(disagreements),
+            "disagreements": disagreements,
+        },
         "results": audit_rows,
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)

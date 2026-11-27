@@ -36,8 +36,12 @@ from datetime import date, datetime, timedelta, timezone
 from decimal import Decimal
 from pathlib import Path
 
-import mysql.connector
 from dotenv import load_dotenv
+
+_DB_SCRIPTS_DIR = Path(__file__).resolve().parents[1] / "db"
+if str(_DB_SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(_DB_SCRIPTS_DIR))
+from db_conn import get_connection as get_unified_connection  # noqa: E402
 
 if sys.platform == "win32":
     try:
@@ -58,6 +62,7 @@ from prototype_data import (  # noqa: E402
     build_integrated_region_rows,
     load_canonical_refinement,
     load_canonical_summary,
+    load_spatial_overlay,
 )
 
 PROJECT_ROOT = _SCRIPT_DIR.parent.parent
@@ -187,13 +192,7 @@ def fetch_cross_verification_data(conn=None):
 
 
 def get_connection():
-    return mysql.connector.connect(
-        host=MYSQL_HOST,
-        port=MYSQL_PORT,
-        user=MYSQL_USER,
-        password=MYSQL_PASSWORD,
-        database=MYSQL_DATABASE,
-    )
+    return get_unified_connection()
 
 
 def fetch_warning_snapshot(cur):
@@ -211,10 +210,10 @@ def fetch_warning_snapshot(cur):
                    COALESCE(signal_gap_summary, '확인 필요') AS signal_gap_summary,
                    evidence_coverage_pct AS evidence_coverage,
                    evidence_count,
-                   CASE WHEN requires_human_review = 1 THEN 'human_review_required'
+                   CASE WHEN requires_human_review THEN 'human_review_required'
                         WHEN alert_event_id IS NULL THEN 'no_alert_event'
                         ELSE COALESCE(alert_status, '확인 필요') END AS validation_status,
-                   CASE WHEN requires_human_review = 1 THEN '확인 필요'
+                   CASE WHEN requires_human_review THEN '확인 필요'
                         ELSE '자동 검수 대기' END AS human_review_status,
                    COALESCE(triggered_at, scored_at) AS assessed_at
             FROM v_dashboard_current_alerts
@@ -222,7 +221,7 @@ def fetch_warning_snapshot(cur):
         """)
         rows = cur.fetchall()
         return rows, bool(rows), "official_view_with_rows" if rows else "official_view_empty"
-    except mysql.connector.Error:
+    except Exception:
         return [], False, "official_view_unavailable"
 
 
@@ -318,6 +317,7 @@ def fetch_all_dashboard_data(conn):
             "high_purity": load_canonical_refinement(CANONICAL_HIGH_PURITY_PATH),
         },
         "event_tuple_evidence": build_event_tuple_evidence(limit=12),
+        "spatial_overlay": load_spatial_overlay(),
         "financial_proxy": financial_proxy,
         "telegram_osint": telegram_osint,
         "google_trends_data": google_trends_data,
@@ -500,6 +500,92 @@ def generate_dashboard_html(data):
     if not event_tuple_rows_html:
         event_tuple_rows_html = '<tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:18px;">High-Purity 전처리 산출물이 없습니다. 전처리 세션을 실행해 <code>canonical_signals_high_purity_latest.json</code>을 생성하세요.</td></tr>'
     evidence_metric_hits = sum(1 for r in evidence_rows if r.get("metrics"))
+
+    # GIS Spatial Risk Overlay (보조 지표 전용 — 결정론적 경보 산식 calculate_alert_assessment 미반영)
+    spatial = data.get("spatial_overlay") or {}
+    spatial_available = bool(spatial.get("available"))
+    spatial_assets = spatial.get("asset_rows") or []
+    spatial_clusters = spatial.get("signal_clusters") or []
+    spatial_buffer_km = safe_float(spatial.get("buffer_km"), 300.0)
+    spatial_total_sig = int(spatial.get("total_canonical_signals") or 0)
+    spatial_geo_sig = int(spatial.get("geocoded_signals") or 0)
+    spatial_geo_pct = round((spatial_geo_sig / spatial_total_sig * 100.0), 1) if spatial_total_sig else 0.0
+    spatial_high_cnt = sum(1 for a in spatial_assets if a.get("spatial_exposure_level") == "HIGH")
+    spatial_high_choke = sum(
+        1 for a in spatial_assets
+        if a.get("spatial_exposure_level") == "HIGH" and a.get("asset_type") == "maritime_chokepoint"
+    )
+    spatial_high_hub = spatial_high_cnt - spatial_high_choke
+    spatial_total_overlap = sum(int(a.get("overlapping_signals") or 0) for a in spatial_assets)
+    spatial_total_tier1 = sum(int(a.get("tier1_overlapping") or 0) for a in spatial_assets)
+    spatial_crs_label = str(spatial.get("crs_metric_analysis") or "EPSG:6933")
+    spatial_gpd_ver = str(spatial.get("geopandas_version") or "-")
+    spatial_stamp = _preprocess_stamp({"generated_at": spatial.get("generated_at", "")})
+
+    spatial_tiles_html = f"""
+        <div class="refine-tile">
+          <div class="refine-label">지오코딩 신호 커버리지</div>
+          <div class="refine-value">{f"{spatial_geo_sig} / {spatial_total_sig}건" if spatial_available else "확인 필요"}</div>
+          <div class="refine-sub">{f"커버리지 {spatial_geo_pct}% · {len(spatial_clusters)}개 좌표 클러스터" if spatial_available else "spatial_risk_overlay.py 실행 필요"}<br>산출 시각 {spatial_stamp}</div>
+        </div>
+        <div class="refine-tile">
+          <div class="refine-label">HIGH 노출 공급망 자산</div>
+          <div class="refine-value" style="color: var(--accent-red);">{f"{spatial_high_cnt} / {len(spatial_assets)}개" if spatial_available else "확인 필요"}</div>
+          <div class="refine-sub">해협 {spatial_high_choke}곳 · 반도체/희토류 거점 {spatial_high_hub}곳<br>보조 지표 (공식 경보 단계 미변경)</div>
+        </div>
+        <div class="refine-tile">
+          <div class="refine-label">{int(spatial_buffer_km)}km 버퍼 중첩 (sjoin)</div>
+          <div class="refine-value">{f"{spatial_total_overlap}건" if spatial_available else "확인 필요"}</div>
+          <div class="refine-sub">Tier-1 교차검증 신호 중첩 {spatial_total_tier1}건<br>중복 자산 반경 교차 합계</div>
+        </div>
+        <div class="refine-tile">
+          <div class="refine-label">GIS 투영좌표계 · 엔진</div>
+          <div class="refine-value" style="font-size:19px;">{html.escape(spatial_crs_label)}</div>
+          <div class="refine-sub">WGS84(EPSG:4326) → 등적 미터 투영<br>GeoPandas {html.escape(spatial_gpd_ver)} · 반경 {int(spatial_buffer_km)}km</div>
+        </div>
+    """
+
+    spatial_asset_rows_html = ""
+    for a in spatial_assets:
+        lvl = str(a.get("spatial_exposure_level") or "NONE")
+        lvl_cls = (
+            "tag-danger" if lvl == "HIGH"
+            else ("tag-amber" if lvl == "MODERATE" else ("tag-info" if lvl == "LOW" else "badge-gray"))
+        )
+        atype = str(a.get("asset_type") or "")
+        if atype == "maritime_chokepoint":
+            type_lbl = "⚓ 해협 (Polygon)"
+        elif atype == "critical_minerals_hub":
+            type_lbl = "⛏️ 희토류 거점 (Point)"
+        else:
+            type_lbl = "🔬 반도체 거점 (Point)"
+        zoom_lvl = 5 if atype == "maritime_chokepoint" else 6
+        lat_v = safe_float(a.get("lat"), 0.0)
+        lon_v = safe_float(a.get("lon"), 0.0)
+        spatial_asset_rows_html += f"""
+        <tr style="border-bottom: 1px solid rgba(255,255,255,0.07);">
+          <td style="padding: 9px 8px;"><strong>{html.escape(str(a.get('name') or '-'))}</strong><br><span style="font-size:11px;color:var(--text-muted);">{html.escape(str(a.get('asset_id') or ''))} · {html.escape(str(a.get('sector') or ''))}</span></td>
+          <td style="padding: 9px 8px; font-size: 12px;">{type_lbl}</td>
+          <td style="padding: 9px 8px;"><span class="kpi-tag {lvl_cls}">{html.escape(lvl)}</span></td>
+          <td style="padding: 9px 8px; font-weight: 700;">{int(a.get('overlapping_signals') or 0)}건</td>
+          <td style="padding: 9px 8px; color: {'#f87171' if int(a.get('tier1_overlapping') or 0) > 0 else 'var(--text-muted)'}; font-weight: 600;">{int(a.get('tier1_overlapping') or 0)}건</td>
+          <td style="padding: 9px 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px;">{safe_float(a.get('nearest_signal_km'), 0.0):.1f} km</td>
+          <td style="padding: 9px 8px;"><button type="button" class="pill-btn" style="padding:4px 10px;font-size:11px;" onclick="focusSpatialAsset({lat_v}, {lon_v}, {zoom_lvl})">이동</button></td>
+        </tr>
+        """
+    if not spatial_asset_rows_html:
+        spatial_asset_rows_html = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);padding:18px;">공간 중첩 산출물이 없습니다. <code>scripts/analysis/spatial_risk_overlay.py</code>를 먼저 실행하세요.</td></tr>'
+
+    spatial_assets_json = json.dumps(
+        spatial.get("assets_geojson") or {"type": "FeatureCollection", "features": []},
+        ensure_ascii=False,
+        default=custom_json_serializer,
+    )
+    spatial_clusters_json = json.dumps(
+        spatial_clusters,
+        ensure_ascii=False,
+        default=custom_json_serializer,
+    )
 
     # Create Signal Gap and Financial Proxy Cards
     sg_html = ""
@@ -821,6 +907,60 @@ def generate_dashboard_html(data):
     </p>
   </section>
 
+  <!-- GIS Spatial Risk Overlay Section (Auxiliary Indicator Only) -->
+  <section class="chart-card" style="margin-bottom: 28px;">
+    <div class="chart-header" style="flex-wrap: wrap; gap: 10px;">
+      <div>
+        <div class="chart-title">🗺️ GIS · 공급망 공간 리스크 중첩 지도 (5대 해협 · 6대 반도체/희토류 거점)</div>
+        <div class="chart-subtitle"><code>EPSG:4326 → {html.escape(spatial_crs_label)}</code> 등적 미터 투영 기반 {int(spatial_buffer_km)}km 버퍼 중첩(<code>gpd.sjoin</code>) 및 최단거리 산출 결과입니다. <b>공간 노출도는 보조 지표</b>이며 결정론적 경보 산식(<code>calculate_alert_assessment</code>)에는 반영되지 않습니다.</div>
+      </div>
+      <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+        <span class="kpi-tag tag-info" style="font-size:11px;">🌐 GeoPandas {html.escape(spatial_gpd_ver)} · {int(spatial_buffer_km)}km 버퍼</span>
+        <span class="kpi-tag tag-amber" style="font-size:11px;">🛡️ 보조 지표 (공식 경보 산식 미연결)</span>
+      </div>
+    </div>
+    <div class="refine-grid">{spatial_tiles_html}</div>
+    <div class="spatial-toolbar">
+      <button type="button" class="pill-btn active" onclick="focusSpatialAsset(24, 55, 2, this)">🌍 전체 글로벌 뷰</button>
+      <button type="button" class="pill-btn" onclick="focusSpatialAsset(21.5, 38.0, 5, this)">⚓ 홍해·수에즈</button>
+      <button type="button" class="pill-btn" onclick="focusSpatialAsset(23.8, 120.2, 6, this)">🔬 대만 해협·TSMC</button>
+      <button type="button" class="pill-btn" onclick="focusSpatialAsset(26.35, 56.35, 6, this)">⛽ 호르무즈</button>
+      <button type="button" class="pill-btn" onclick="focusSpatialAsset(37.04, 127.06, 6, this)">🇰🇷 한국 반도체</button>
+      <button type="button" class="pill-btn" onclick="focusSpatialAsset(33.45, -112.07, 5, this)">🇺🇸 애리조나 팹</button>
+      <button type="button" class="pill-btn" onclick="focusSpatialAsset(51.41, 5.41, 5, this)">🇳🇱 ASML EUV</button>
+      <button type="button" class="pill-btn" onclick="focusSpatialAsset(9.1, -79.75, 6, this)">🚢 파나마 운하</button>
+      <button type="button" class="pill-btn" onclick="focusSpatialAsset(3.25, 102.0, 6, this)">⚓ 말라카 해협</button>
+    </div>
+    <div id="spatialRiskMap" class="spatial-map-canvas"></div>
+    <div class="spatial-legend-bar">
+      <span><i class="legend-swatch" style="background:rgba(239,68,68,0.45);border:1.5px solid #ef4444;"></i> HIGH 노출 해협/거점</span>
+      <span><i class="legend-swatch" style="background:rgba(245,158,11,0.4);border:1.5px solid #f59e0b;"></i> MODERATE 노출</span>
+      <span><i class="legend-swatch" style="background:rgba(56,189,248,0.35);border:1.5px solid #38bdf8;"></i> LOW 노출</span>
+      <span><i class="legend-swatch" style="background:rgba(148,163,184,0.25);border:1.5px solid #94a3b8;"></i> NONE (반경 외)</span>
+      <span><i class="legend-swatch legend-circle" style="border:1.5px dashed #38bdf8;background:rgba(56,189,248,0.12);"></i> {int(spatial_buffer_km)}km 영향 반경</span>
+      <span><i class="legend-swatch legend-circle" style="background:#f43f5e;border:1.5px solid #fff;"></i> Tier-1 포함 신호 클러스터</span>
+      <span style="margin-left:auto;color:var(--text-muted);">우측 상단 레이어 컨트롤로 해협·거점·반경·신호 토글 가능</span>
+    </div>
+    <div style="overflow-x: auto; margin-top: 16px;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+        <thead>
+          <tr style="border-bottom: 1px solid rgba(255,255,255,0.12); text-align: left;">
+            <th style="padding: 8px;">공급망 자산 (ID · 섹터)</th>
+            <th style="padding: 8px;">지형 유형</th>
+            <th style="padding: 8px;">공간 노출도 (보조)</th>
+            <th style="padding: 8px;">{int(spatial_buffer_km)}km 중첩 신호</th>
+            <th style="padding: 8px;">Tier-1 중첩</th>
+            <th style="padding: 8px;">최단 신호 거리</th>
+            <th style="padding: 8px;">포커스</th>
+          </tr>
+        </thead>
+        <tbody>
+          {spatial_asset_rows_html}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
   <!-- Google Trends & 5 Local Opinion Sensors Section -->
   <section class="charts-grid" style="margin-bottom: 28px;">
     <div class="chart-card">
@@ -1016,6 +1156,8 @@ def generate_dashboard_html(data):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 <style>
   :root {{
     --bg-main: #0a0e17;
@@ -1155,6 +1297,35 @@ def generate_dashboard_html(data):
   .refine-label {{ font-size: 11px; color: var(--text-muted); font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }}
   .refine-value {{ font-size: 22px; font-weight: 800; margin-top: 6px; color: var(--accent-cyan); }}
   .refine-sub {{ font-size: 11px; color: var(--text-muted); margin-top: 6px; line-height: 1.55; }}
+
+  /* GIS Spatial Map Styles */
+  .spatial-toolbar {{ display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }}
+  .spatial-map-canvas {{
+    width: 100%; height: 470px; border-radius: 10px;
+    border: 1px solid var(--border-strong); background: #070b14;
+    z-index: 1;
+  }}
+  .spatial-legend-bar {{
+    display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+    margin-top: 10px; padding: 8px 12px; border-radius: 8px;
+    background: rgba(0, 0, 0, 0.25); border: 1px solid var(--border);
+    font-size: 11px; color: var(--text-main);
+  }}
+  .legend-swatch {{
+    display: inline-block; width: 12px; height: 12px; border-radius: 3px;
+    vertical-align: middle; margin-right: 5px;
+  }}
+  .legend-circle {{ border-radius: 50%; }}
+  .leaflet-popup-content-wrapper, .leaflet-popup-tip {{
+    background: #0f172a; color: #f8fafc; border: 1px solid rgba(148, 163, 184, 0.35);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.55);
+  }}
+  .leaflet-popup-content {{ font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; line-height: 1.5; }}
+  .leaflet-control-layers {{
+    background: rgba(15, 23, 42, 0.92) !important; color: #f8fafc !important;
+    border: 1px solid rgba(148, 163, 184, 0.3) !important; border-radius: 8px !important;
+  }}
+  .leaflet-container a {{ color: #38bdf8; }}
 
   /* Chart Layout Grid */
   .charts-grid {{
@@ -1583,6 +1754,144 @@ def generate_dashboard_html(data):
         }}
       }});
     }}
+
+    // 4. GIS 공간 리스크 중첩 지도 (Leaflet Interactive Map)
+    let spatialMapInstance = null;
+    function focusSpatialAsset(lat, lon, zoom, btn) {{
+      if (btn) {{
+        document.querySelectorAll('.spatial-toolbar .pill-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }}
+      if (spatialMapInstance) {{
+        spatialMapInstance.flyTo([lat, lon], zoom, {{ duration: 0.9 }});
+      }}
+    }}
+
+    (function initSpatialRiskMap() {{
+      const mapEl = document.getElementById('spatialRiskMap');
+      if (!mapEl) return;
+      if (typeof L === 'undefined') {{
+        mapEl.innerHTML = '<div style="padding:24px;color:#94a3b8;font-size:13px;">Leaflet 지도 라이브러리를 불러오지 못했습니다 (오프라인 환경). 하단 공간 노출도 표를 참고하세요.</div>';
+        return;
+      }}
+
+      const assetsGeo = {spatial_assets_json};
+      const signalClusters = {spatial_clusters_json};
+      const bufferMeters = {spatial_buffer_km} * 1000;
+
+      const exposureColor = (lvl) => {{
+        if (lvl === 'HIGH') return '#ef4444';
+        if (lvl === 'MODERATE') return '#f59e0b';
+        if (lvl === 'LOW') return '#38bdf8';
+        return '#94a3b8';
+      }};
+
+      const map = L.map('spatialRiskMap', {{
+        center: [24, 55],
+        zoom: 2,
+        minZoom: 2,
+        maxZoom: 12,
+        worldCopyJump: true,
+      }});
+      spatialMapInstance = map;
+
+      L.tileLayer('https://{{s}}.basemaps.cartocdn.com/dark_all/{{z}}/{{x}}/{{y}}{{r}}.png', {{
+        attribution: '&copy; OpenStreetMap &copy; CARTO',
+        subdomains: 'abcd',
+        maxZoom: 19,
+      }}).addTo(map);
+
+      const chokepointLayer = L.layerGroup().addTo(map);
+      const hubLayer = L.layerGroup().addTo(map);
+      const bufferLayer = L.layerGroup().addTo(map);
+      const signalLayer = L.layerGroup().addTo(map);
+
+      const escapeHtml = (str) => String(str || '').replace(/[&<>"']/g, m => ({{
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }}[m]));
+
+      // 1) 해협 Polygon & 반도체/희토류 거점 Point
+      (assetsGeo.features || []).forEach(feat => {{
+        const p = feat.properties || {{}};
+        const g = feat.geometry || {{}};
+        const lvl = p.spatial_exposure_level || 'NONE';
+        const col = exposureColor(lvl);
+        const popupHtml = `
+          <div style="min-width:210px;">
+            <div style="font-weight:800;font-size:13px;margin-bottom:4px;">${{escapeHtml(p.name)}}</div>
+            <div style="color:#94a3b8;font-size:11px;margin-bottom:6px;">${{escapeHtml(p.asset_id)}} · ${{escapeHtml(p.sector)}}</div>
+            <div><b>공간 노출도 (보조):</b> <span style="color:${{col}};font-weight:700;">${{escapeHtml(lvl)}}</span></div>
+            <div><b>300km 중첩 신호:</b> ${{Math.round(p.overlapping_signals || 0)}}건 (Tier-1: ${{Math.round(p.tier1_overlapping || 0)}}건)</div>
+            <div><b>최단 신호 거리:</b> ${{Number(p.nearest_signal_km || 0).toFixed(1)}} km</div>
+          </div>
+        `;
+
+        if (g.type === 'Polygon') {{
+          L.geoJSON(feat, {{
+            style: {{
+              color: col,
+              weight: 2.2,
+              fillColor: col,
+              fillOpacity: lvl === 'HIGH' ? 0.34 : 0.2,
+              dashArray: lvl === 'NONE' ? '4 4' : null,
+            }}
+          }}).bindPopup(popupHtml).bindTooltip(`${{p.name}} [${{lvl}}]`, {{ sticky: true }}).addTo(chokepointLayer);
+        }} else if (g.type === 'Point' && Array.isArray(g.coordinates)) {{
+          const [lon, lat] = g.coordinates;
+          const marker = L.circleMarker([lat, lon], {{
+            radius: lvl === 'HIGH' ? 9 : 7,
+            color: '#f8fafc',
+            weight: 2,
+            fillColor: col,
+            fillOpacity: 0.92,
+          }}).bindPopup(popupHtml).bindTooltip(`${{p.name}} [${{lvl}}]`, {{ direction: 'top' }});
+          marker.addTo(hubLayer);
+        }}
+      }});
+
+      // 2) 300km 영향 반경 & OSINT 신호 클러스터
+      signalClusters.forEach(c => {{
+        const hasT1 = (c.tier1_count || 0) > 0;
+        const ringColor = hasT1 ? '#f43f5e' : '#38bdf8';
+
+        // 300km metric buffer ring
+        L.circle([c.lat, c.lon], {{
+          radius: bufferMeters,
+          color: ringColor,
+          weight: 1.2,
+          dashArray: '5 5',
+          fillColor: ringColor,
+          fillOpacity: hasT1 ? 0.08 : 0.04,
+          interactive: false,
+        }}).addTo(bufferLayer);
+
+        // Signal cluster marker
+        const r = Math.max(5, Math.min(16, 4 + Math.sqrt(c.signal_count || 1) * 1.9));
+        const samples = (c.sample_titles || []).map(t => `<li style="margin-top:3px;">${{escapeHtml(t)}}</li>`).join('');
+        const sigPopup = `
+          <div style="max-width:290px;">
+            <div style="font-weight:800;font-size:13px;color:#38bdf8;">📍 ${{escapeHtml(c.place_name)}}</div>
+            <div style="font-size:11px;color:#94a3b8;margin:3px 0 6px;">방식: ${{escapeHtml(c.geo_method)}} · 좌표 (${{c.lat}}, ${{c.lon}})</div>
+            <div><b>지오코딩 신호:</b> ${{c.signal_count}}건 (Tier-1: <span style="color:#f87171;font-weight:700;">${{c.tier1_count}}</span> / Tier-2: ${{c.tier2_count}})</div>
+            ${{samples ? `<ul style="margin:6px 0 0 14px;padding:0;font-size:11px;color:#cbd5e1;">${{samples}}</ul>` : ''}}
+          </div>
+        `;
+        L.circleMarker([c.lat, c.lon], {{
+          radius: r,
+          color: '#ffffff',
+          weight: 1.2,
+          fillColor: hasT1 ? '#f43f5e' : '#38bdf8',
+          fillOpacity: 0.78,
+        }}).bindPopup(sigPopup).bindTooltip(`${{c.place_name}} (${{c.signal_count}}건)`, {{ direction: 'top' }}).addTo(signalLayer);
+      }});
+
+      L.control.layers(null, {{
+        '⚓ 5대 해협 폴리곤': chokepointLayer,
+        '🔬 반도체·희토류 거점': hubLayer,
+        '⭕ 300km 영향 반경': bufferLayer,
+        '📡 OSINT 신호 클러스터': signalLayer,
+      }}, {{ collapsed: false }}).addTo(map);
+    }})();
   </script>
 </body>
 </html>"""
@@ -1600,8 +1909,9 @@ def main():
 
     try:
         conn = get_connection()
-    except mysql.connector.Error as e:
-        print(f"✗ MySQL 접속 실패: {e}")
+        print(f"✓ DB 연결 완료 ({getattr(conn, 'backend', 'unknown').upper()})")
+    except Exception as e:
+        print(f"✗ DB 접속 실패: {e}")
         sys.exit(1)
 
     data = fetch_all_dashboard_data(conn)
