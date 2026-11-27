@@ -1,0 +1,121 @@
+{
+  "generated_at": "2026-11-23T14:43:10.732672+00:00",
+  "geopandas_version": "1.2.0",
+  "crs_input": "EPSG:4326",
+  "crs_metric_analysis": "EPSG:6933",
+  "buffer_km": 300.0,
+  "total_canonical_signals": 419,
+  "geocoded_signals": 308,
+  "assets": [
+    {
+      "asset_id": "CHK-REDSEA",
+      "name": "Bab el-Mandeb & Suez Corridor (홍해·수에즈)",
+      "asset_type": "maritime_chokepoint",
+      "sector": "Container_Energy",
+      "overlapping_signals": 39,
+      "tier1_overlapping": 6,
+      "nearest_signal_km": 0.0,
+      "spatial_exposure_level": "HIGH"
+    },
+    {
+      "asset_id": "SEMI-US-ARIZONA",
+      "name": "US Semiconductor Fab Hub (미국 애리조나 피닉스)",
+      "asset_type": "semiconductor_hub",
+      "sector": "Foundry_CHIPS_Act",
+      "overlapping_signals": 33,
+      "tier1_overlapping": 5,
+      "nearest_signal_km": 0.0,
+      "spatial_exposure_level": "HIGH"
+    },
+    {
+      "asset_id": "CHK-PANAMA",
+      "name": "Panama Canal (파나마 운하)",
+      "asset_type": "maritime_chokepoint",
+      "sector": "Global_Container_LNG",
+      "overlapping_signals": 15,
+      "tier1_overlapping": 1,
+      "nearest_signal_km": 0.0,
+      "spatial_exposure_level": "HIGH"
+    },
+    {
+      "asset_id": "SEMI-ASML-VELDHOVEN",
+      "name": "ASML Veldhoven EUV HQ (네덜란드)",
+      "asset_type": "semiconductor_hub",
+      "sector": "Lithography_Equipment",
+      "overlapping_signals": 14,
+      "tier1_overlapping": 1,
+      "nearest_signal_km": 0.0,
+      "spatial_exposure_level": "HIGH"
+    },
+    {
+      "asset_id": "CHK-TAIWAN",
+      "name": "Taiwan Strait (대만 해협)",
+      "asset_type": "maritime_chokepoint",
+      "sector": "Semiconductor_Container",
+      "overlapping_signals": 12,
+      "tier1_overlapping": 0,
+      "nearest_signal_km": 0.0,
+      "spatial_exposure_level": "HIGH"
+    },
+    {
+      "asset_id": "SEMI-TSMC-HSINCHU",
+      "name": "TSMC Hsinchu / Fab Cluster (대만 신주·타이난)",
+      "asset_type": "semiconductor_hub",
+      "sector": "Foundry_Advanced",
+      "overlapping_signals": 12,
+      "tier1_overlapping": 0,
+      "nearest_signal_km": 0.0,
+      "spatial_exposure_level": "HIGH"
+    },
+    {
+      "asset_id": "CHK-HORMUZ",
+      "name": "Strait of Hormuz (호르무즈 해협)",
+      "asset_type": "maritime_chokepoint",
+      "sector": "Energy_LNG_Crude",
+      "overlapping_signals": 5,
+      "tier1_overlapping": 4,
+      "nearest_signal_km": 0.0,
+      "spatial_exposure_level": "HIGH"
+    },
+    {
+      "asset_id": "SEMI-KR-PYEONGTAEK",
+      "name": "Samsung Pyeongtaek & SK hynix Icheon (한국 반도체 클러스터)",
+      "asset_type": "semiconductor_hub",
+      "sector": "Memory_Foundry",
+      "overlapping_signals": 4,
+      "tier1_overlapping": 0,
+      "nearest_signal_km": 52.3,
+      "spatial_exposure_level": "MODERATE"
+    },
+    {
+      "asset_id": "CHK-MALACCA",
+      "name": "Strait of Malacca (말라카 해협)",
+      "asset_type": "maritime_chokepoint",
+      "sector": "Global_Trade_Energy",
+      "overlapping_signals": 2,
+      "tier1_overlapping": 0,
+      "nearest_signal_km": 0.0,
+      "spatial_exposure_level": "LOW"
+    },
+    {
+      "asset_id": "SEMI-JP-KUMAMOTO",
+      "name": "Japan Semiconductor Materials & Kumamoto Cluster (일본)",
+      "asset_type": "semiconductor_hub",
+      "sector": "Materials_Foundry",
+      "overlapping_signals": 0,
+      "tier1_overlapping": 0,
+      "nearest_signal_km": 614.5,
+      "spatial_exposure_level": "NONE"
+    },
+    {
+      "asset_id": "SEMI-CN-BAYANOBO",
+      "name": "Bayan Obo Rare Earth Hub (중국 내몽골 희토류)",
+      "asset_type": "critical_minerals_hub",
+      "sector": "Rare_Earth_Materials",
+      "overlapping_signals": 0,
+      "tier1_overlapping": 0,
+      "nearest_signal_km": 646.1,
+      "spatial_exposure_level": "NONE"
+    }
+  ]
+}

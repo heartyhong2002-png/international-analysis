@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: pgvector/pgvector:0.8.0-pg16
+    container_name: intl_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-intl_admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-intl_pg_password_2026}
+      POSTGRES_DB: ${POSTGRES_DATABASE:-international_analysis}
+      TZ: Asia/Seoul
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - intl_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-intl_admin} -d ${POSTGRES_DATABASE:-international_analysis}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  intl_pgdata:
