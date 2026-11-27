@@ -26,10 +26,13 @@ MD 보드와 handoff 문서로 조율 → "자기 담당 파일 건드리지 말
    보드/Notion 반영·사용자 보고는 항상 컨트롤타워가 직접 한다. 서브세션에는
    "뭘 만들지"가 아니라 "어디까지, 뭐로 검증하고, 뭘 보고할지"가 확정된 과제를 던진다.
 2. **파견 프롬프트는 자기완결(self-contained).** 서브세션은 이 대화를 보지 못한다.
-   목적·배경·必读 파일·파일 스코프·금지사항·검증 명령·출력 형식을 모두 프롬프트에 담는다.
+   목적·배경·필독 파일·파일 스코프·금지사항·검증 명령·출력 형식을 모두 프롬프트에 담는다.
    "알아서 조사해서 고쳐와" 식의 이해 위임(no delegation of understanding)은 금지.
-3. **서브세션은 커밋·보드 수정 금지.** git과 `AGENT_SYNC.md`/Notion 쓰는 권한은
-   컨트롤타워에 단일화한다. 충돌 가능성이 구조적으로 사라진다.
+3. **서브세션은 커밋·보드 수정 금지.** 커밋은 컨트롤타워가 전용 `qwen/*` 브랜치
+   (`.qwen/worktrees/*`)에서만 한다. 메인 브랜치(`cursor/actions-light-collection`)
+   병합·`origin` 푸시와 `AGENT_SYNC.md` 보드 발행은 **통합 시점에 사용자**가 수행한다
+   (`AGENTS.md` §4 Antigravity ↔ Qwen Code 병행 연동 규칙, 2026-11-27). 충돌 가능성이
+   구조적으로 사라진다.
 
 ## 3. 파견 단위 선택
 
@@ -88,26 +91,31 @@ canonical_signals_high_purity_latest.json의 who 미상률 수치 변화 확인(
 - **의존이면 직렬 or 후속 파견.** 예: DB 세션 결과 확인 후 대시보드 파견. 같은
   `sessionId`에 `--reveal`/후속 지시를 보내 컨텍스트를 재사용한다.
 - **스코프가 겹치면** (a) 직렬화하거나, (b) 트랙별 git worktree + 브랜치에서
-  작업시키고 merge는 컨트롤타워만 (diff 리뷰가 곧 QA가 된다). 현재 Qwen Code
-  세션 자체가 이미 worktree에서 도는 형태를 지원하고 있다.
+  작업시키고 병합은 통합 시점에 사용자(`--no-ff`)가 수행 (diff 리뷰가 곧 QA가 된다).
+  현재 Qwen Code 세션 자체가 이미 worktree에서 도는 형태를 지원하고 있다.
 - **중복 실행 금지.** 파견한 과제를 같은 내용으로 다시 조사/실행하지 말 것.
 
 ## 7. 컨트롤타워 소비 루프
 
-1. 과제 분해: 파일 스코프가 겹치지 않게 쪼갠다.
+0. 기준선 동기화: `git fetch origin` 후 `qwen/*` 브랜치를 `origin/cursor/actions-light-collection`
+   tip에 `--ff-only`로 정렬한다. 그 다음 `git status -sb`(메인)와 `AGENT_SYNC.md` 보드 상단의
+   `in-progress` 줄로 Antigravity 점유 파일을 확인한다 (`AGENTS.md` §4).
+1. 과제 분해: 파일 스코프가 겹치지 않게 쪼갠다. Antigravity `in-progress` 레인은 파견 대상에서 배제.
 2. 파견: §4 골격 프롬프트, 병렬이면 `sent`.
 3. 수신: 결과 블록 5종을 읽는다. 불충분하면 같은 `sessionId`로 후속 1회만 더 지시(재파견은 스코프 변경 시에만).
 4. diff 리뷰: `git diff`로 실제 변경을 확인 — 서브세션의 자기보고를 그대로 신뢰하지 않는다.
 5. 검증 재실행: 컨트롤타워가 자체 명령으로 최종 확인(테스트·생성물).
-6. 커밋: 작은 focused commit. 커밋 메시지는 출력 형식의 '한 일/확인한 것'에서 생성.
-7. 보드 반영: `AGENT_SYNC.md`에 handoff 블록 1개 + Active Work Board 줄 1개를 **컨트롤타워가** 작성.
+6. 커밋: 전용 `qwen/*` 브랜치에 작은 focused commit. 메인 브랜치 병합·push는 하지 않는다 —
+   사용자가 통합 시점에 `git merge --no-ff`(또는 cherry-pick)로 병합하고 `origin`에 푸시한다.
+7. 보고: 브랜치명 + 변경 파일 목록 + 검증 결과(`py_compile` 등)만 사용자에게 전달.
+   `AGENT_SYNC.md`는 단독으로 갱신하지 않는다 — 보드 발행은 통합 시점에 함께 반영된다.
 8. (명시 요청 시) Trio-Sync §B: MD → Notion → GitHub. 파견 기록이 곧 생성 소스.
 
 ## 8. 보드·문서 역할 변화
 
 | 문서 | 이전 | 이후 |
 |---|---|---|
-| `AGENT_SYNC.md` | 세션 간 실시간 조율 보드 | 컨트롤타워만 쓰는 발행 기록 + 상태 확인(§A) 기준 |
+| `AGENT_SYNC.md` | 세션 간 실시간 조율 보드 | 통합 시점에 발행되는 결과 기록(보드·메인 push는 사용자 권한) + 상태 확인(§A) 기준 |
 | `docs/SESSION_PROMPTS.md` | 사람이 복사해 새 챗세션에 붙여넣는 시작 프롬프트 | 파견 프롬프트의 역할 원본(1~10) + 파일 소유표 |
 | `project-handoff.md` | 세션 간 조율·작업 로그 | 의사결정 히스토리 전용(실시간 조율 기능 종료) |
 | Notion 보드 | 수동 동기화 | 파견 기록에서 생성(§B 실행 시) |
@@ -119,5 +127,6 @@ canonical_signals_high_purity_latest.json의 who 미상률 수치 변화 확인(
 
 1. (완료) 이 문서 작성 + 보드/문서에 포인터 등록.
 2. 다음 실작업부터 컨트롤타워 1세션 체제로 파견 실행 — 스크립트 변경 없음.
-3. 잘 작동하면 `SESSION_PROMPTS.md` 기준일·common 규칙에 파견 모드 기본화 반영.
+3. ~~SESSION_PROMPTS 기본화~~ → 2026-11-27 `AGENTS.md` §4 병행 연동 규칙으로 최종 확정 —
+   통합(병합·보드·push) 권한은 사용자, Qwen Code는 `qwen/*` 브랜치 산만 커밋·보고.
 4. 원하면 §3의 `agent_tasks` MySQL 큐로 보드를 기계화(별도 후속 과제).
